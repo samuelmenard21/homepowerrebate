@@ -1,0 +1,24 @@
+name = "homepowerrebate-lead-router"
+main = "lead-router.js"
+compatibility_date = "2026-07-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Route the Worker to leads.homepowerrebate.com
+routes = [
+  {
+    pattern = "leads.homepowerrebate.com/*",
+    zone_name = "homepowerrebate.com"
+  }
+]
+
+# Environment variables (non-sensitive config goes here)
+vars = { ENVIRONMENT = "production" }
+
+# Secrets are set via `wrangler secret put` in the terminal — not stored in this file
+# Required secrets:
+#   - RESEND_API_KEY          (from https://resend.com)
+#   - GSHEET_WEBHOOK_URL      (from Google Apps Script)
+#   - OPS_EMAIL               (operations inbox)
+
+[triggers]
+crons = []

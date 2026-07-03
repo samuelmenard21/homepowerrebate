@@ -523,7 +523,13 @@ footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--i
         </div>
       </div>
 
-      <div style="background: var(--green-money); color: #fff; border-radius: 10px; padding: 24px; margin-top: 28px; text-align: center;">
+      <!-- CRITICAL: Peak Saver 14-day window warning -->
+      <div style="background: #c85a54; color: #fff; border-radius: 10px; padding: 24px; margin-top: 28px; border-left: 5px solid #fff;">
+        <p style="font-size: 13px; font-weight: 600; margin: 0 0 8px; text-transform: uppercase; letter-spacing: .05em;">⚠️ Critical: Peak Saver 14-Day Window</p>
+        <p style="font-size: 15px; margin: 0; line-height: 1.5;">After your battery is installed and connected to BC Hydro, you have <strong>exactly 14 days to enroll in Peak Saver</strong>. Miss this window and your $5,000 battery rebate drops to $1,500. That's $3,500 lost. Your installer should handle enrollment automatically, but <strong>confirm they have a documented process before you sign.</strong></p>
+      </div>
+
+      <div style="background: var(--green-money); color: #fff; border-radius: 10px; padding: 24px; margin-top: 16px; text-align: center;">
         <p style="font-size: 12px; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; opacity: .9;">Ready to see your options?</p>
         <button class="btn" style="background: #fff; color: var(--green-money); font-weight: 700;" onclick="matchInstaller()">Get matched with one local installer →</button>
       </div>
@@ -549,14 +555,17 @@ footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--i
 
     <div class="retrofit-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
       <div class="retrofit-card">
+        <!-- Image placeholder: <img src="/images/calculator-icon.svg" alt="Solar savings calculator for Kelowna homeowners" style="width:60px; margin-bottom:12px;"> -->
         <h3 style="font-size: 16px;">1. Check your savings</h3>
         <p>Use the calculators above to estimate your rebates based on what you're installing and your income level.</p>
       </div>
       <div class="retrofit-card">
-        <h3 style="font-size: 16px;">2. Get matched</h3>
+        <!-- Image placeholder: <img src="/images/installer-match-icon.svg" alt="HPCN-certified installer matching process" style="width:60px; margin-bottom:12px;"> -->
+        <h3 style="font-size: 16px;">2. Get matched with <span style="background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 12px; color: var(--green-money); font-weight: 700;">HPCN Certified</span></h3>
         <p>Share your contact info. You'll hear from one HPCN-certified local installer within one business day.</p>
       </div>
       <div class="retrofit-card">
+        <!-- Image placeholder: <img src="/images/installation-icon.svg" alt="Professional solar and heat pump installation in Kelowna" style="width:60px; margin-bottom:12px;"> -->
         <h3 style="font-size: 16px;">3. Free quote & install</h3>
         <p>They visit your home, give a free quote, and handle all BC Hydro paperwork. Rebate cheque arrives in 30–45 days.</p>
       </div>
@@ -682,8 +691,137 @@ footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--i
           <p>Typically 4–8 weeks from signing. BC Hydro pre-approval takes 1–2 weeks, installation 1–3 days, final inspection 1 week. Rebate cheque arrives 30–45 days after connection.</p>
         </div>
       </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          <span>What if my roof isn't suitable for solar?</span>
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Your installer will assess roof orientation, shading, and structural integrity on their free site visit. If your roof isn't ideal, they may suggest ground-mounted systems or defer solar and focus on heat pump + battery instead. Not all homes are solar-suitable, but most retrofit upgrades still qualify for rebates.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          <span>Do I need to upgrade my electrical panel?</span>
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Maybe. If your home is pre-1980 or you're adding heat pump + EV charging simultaneously, a panel upgrade ($500 CleanBC rebate) may be required. Your installer confirms this at the site visit—it's factored into their quote. Panel work typically adds 1–2 weeks to the timeline.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          <span>What warranty comes with solar panels and battery?</span>
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Solar panels: 25-year performance warranty (output degrades &lt;0.5%/year). Battery: 10-year warranty on Eguana (covers capacity loss beyond normal degradation). Inverter: 10-year. Your installer explains all warranties—BC Hydro rebate cheque is not contingent on extended warranties.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          <span>What if the installer goes out of business?</span>
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-a">
+          <p>All HPCN-certified installers carry liability insurance and are bonded. If they fail to deliver, your warranty claims go to the equipment manufacturer (Eguana, Enphase, etc.) or third-party warranty provider. BC Hydro rebates are paid directly to you once the system passes inspection—never contingent on installer viability.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          <span>Can I expand my solar system or battery later?</span>
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Yes. You can add panels or a second battery 2–3 years later if your household grows or your needs change. You'll need BC Hydro re-approval and may qualify for additional rebates if programs are still active. Plan for expandable inverter/battery capacity during initial install to reduce future costs.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          <span>What if I sell my home during or after installation?</span>
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Solar systems increase your home's resale value (+4% typical). If you sell before the system is finished, the new owner inherits the installation and rebate eligibility. If you sell after installation, you keep the BC Hydro rebate cheque—it's paid to you, not the new owner. The system and warranty transfer to them.</p>
+        </div>
+      </div>
     </div>
   </section>
+
+<!-- LEAD FORM MODAL -->
+<div id="match-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(10,42,46,0.6); z-index:100; overflow-y:auto;">
+  <div style="background:#fff; border-radius:16px; padding:36px; max-width:500px; margin:40px auto; box-shadow:0 12px 48px rgba(10,42,46,0.24);">
+    <button onclick="closeMatchModal()" style="float:right; background:none; border:none; font-size:24px; color:var(--ink-soft); cursor:pointer;">×</button>
+    <h3 style="color:var(--teal-deep); margin:0 0 8px; font-family:'Fraunces',serif; font-size:24px;">Get matched with a local installer</h3>
+    <p style="color:var(--ink-soft); font-size:14px; margin:0 0 24px;">One installer, one call, no competing bids. Takes 60 seconds.</p>
+
+    <form onsubmit="submitMatchForm(event)" style="display:grid; gap:18px;">
+      <div>
+        <label style="display:block; font-weight:600; font-size:13px; margin-bottom:6px; color:var(--ink);">Household income (helps determine rebate tier)</label>
+        <select id="form-income" style="width:100%; padding:10px; border:1px solid var(--rule); border-radius:8px; font-size:14px;">
+          <option value="">Select your income tier...</option>
+          <option value="tier1">Tier 1: Under $87K (max $16K heat pump rebate)</option>
+          <option value="tier2">Tier 2: $87K–$115K (max $12K heat pump rebate)</option>
+          <option value="tier3">Tier 3: Over $115K (max $10.5K heat pump rebate)</option>
+          <option value="standard">Not income-qualified (standard rebates apply)</option>
+        </select>
+        <p style="font-size:12px; color:var(--ink-soft); margin:6px 0 0;">Optional. Helps us show your actual rebate amounts.</p>
+      </div>
+
+      <div>
+        <label style="display:block; font-weight:600; font-size:13px; margin-bottom:10px; color:var(--ink);">What are you interested in? (select all that apply)</label>
+        <label style="display:flex; gap:8px; margin-bottom:8px; align-items:center;">
+          <input type="checkbox" name="interested" value="Solar panels" required>
+          <span style="font-size:14px;">☀️ Solar panels</span>
+        </label>
+        <label style="display:flex; gap:8px; margin-bottom:8px; align-items:center;">
+          <input type="checkbox" name="interested" value="Home battery">
+          <span style="font-size:14px;">🔋 Home battery (Eguana)</span>
+        </label>
+        <label style="display:flex; gap:8px; margin-bottom:8px; align-items:center;">
+          <input type="checkbox" name="interested" value="Heat pump">
+          <span style="font-size:14px;">🔥 Heat pump</span>
+        </label>
+        <label style="display:flex; gap:8px; margin-bottom:8px; align-items:center;">
+          <input type="checkbox" name="interested" value="Water heater">
+          <span style="font-size:14px;">💧 Heat pump water heater</span>
+        </label>
+        <label style="display:flex; gap:8px; align-items:center;">
+          <input type="checkbox" name="interested" value="Smart thermostat">
+          <span style="font-size:14px;">📱 Smart thermostat</span>
+        </label>
+      </div>
+
+      <div>
+        <label style="display:block; font-weight:600; font-size:13px; margin-bottom:6px; color:var(--ink);">Your name</label>
+        <input type="text" id="form-name" placeholder="John Smith" style="width:100%; padding:10px; border:1px solid var(--rule); border-radius:8px; font-size:14px;">
+      </div>
+
+      <div>
+        <label style="display:block; font-weight:600; font-size:13px; margin-bottom:6px; color:var(--ink);">Email</label>
+        <input type="email" id="form-email" placeholder="john@example.com" style="width:100%; padding:10px; border:1px solid var(--rule); border-radius:8px; font-size:14px;">
+      </div>
+
+      <div>
+        <label style="display:block; font-weight:600; font-size:13px; margin-bottom:6px; color:var(--ink);">Phone number</label>
+        <input type="tel" id="form-phone" placeholder="(604) 555-1234" style="width:100%; padding:10px; border:1px solid var(--rule); border-radius:8px; font-size:14px;">
+      </div>
+
+      <div style="background:var(--paper-warm); padding:12px; border-radius:8px; font-size:12px; color:var(--ink-soft);">
+        <strong>Next step:</strong> Our matched installer will call within 1 business day with your free quote and rebate details.
+      </div>
+
+      <button type="submit" style="background:var(--amber); color:#fff; padding:14px; border:none; border-radius:999px; font-weight:600; font-size:15px; cursor:pointer;">Get matched now →</button>
+      <button type="button" onclick="closeMatchModal()" style="background:transparent; color:var(--teal-deep); padding:12px; border:1px solid var(--rule); border-radius:8px; font-weight:600; cursor:pointer;">Cancel</button>
+    </form>
+  </div>
+</div>
 
   <!-- RELATED RESOURCES -->
   <section style="padding: 48px 0; background: var(--paper-warm); border-top: 1px solid var(--rule);">
@@ -704,13 +842,23 @@ footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--i
           </ul>
         </div>
 
-        <!-- Product Guides -->
+        <!-- Assessments & Tools -->
         <div style="background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 24px;">
-          <h3 style="font-size: 16px; color: var(--teal-deep); margin-bottom: 12px; font-weight: 600;">Product Guides</h3>
+          <h3 style="font-size: 16px; color: var(--teal-deep); margin-bottom: 12px; font-weight: 600;">Assess Your Retrofit</h3>
           <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;">
-            <li><a href="/eguana" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">Eguana Evolve Battery (BC choice)</a></li>
-            <li><a href="/smart-thermostats" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">Smart Thermostat Comparison</a></li>
-            <li><a href="/programs" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">All BC Rebate Programs</a></li>
+            <li><a href="/retrofit-assessment" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">Full Retrofit Checklist (see all options)</a></li>
+            <li><a href="/heat-pump-water-heater" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">Heat Pump Water Heater ($3.5K rebate)</a></li>
+            <li><a href="/hrv-heat-recovery-ventilation" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">HRV Ventilation ($1.6K rebate)</a></li>
+          </ul>
+        </div>
+
+        <!-- Product Guides & Comparisons -->
+        <div style="background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 24px;">
+          <h3 style="font-size: 16px; color: var(--teal-deep); margin-bottom: 12px; font-weight: 600;">Product Comparisons</h3>
+          <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;">
+            <li><a href="/blog/tesla-powerwall-vs-eguana-evolve" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">Battery: Tesla Powerwall vs Eguana</a></li>
+            <li><a href="/blog/heat-pump-brands-comparison-mitsubishi-daikin-bosch" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">Heat Pump Brands: Mitsubishi vs Daikin vs Bosch</a></li>
+            <li><a href="/smart-thermostats" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">Smart Thermostat Comparison (Nest, Ecobee, Mysa)</a></li>
           </ul>
         </div>
 
@@ -719,7 +867,7 @@ footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--i
           <h3 style="font-size: 16px; color: var(--teal-deep); margin-bottom: 12px; font-weight: 600;">Learn More</h3>
           <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;">
             <li><a href="/blog/heat-pump-vs-air-conditioner-furnace" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">Heat Pump vs Furnace Comparison</a></li>
-            <li><a href="/blog/peak-saver-14-day-window-3500-mistake" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">Peak Saver 14-Day Deadline</a></li>
+            <li><a href="/blog/cleanbc-rebate-changes-july-2026" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">CleanBC Rebate Changes (July 6)</a></li>
             <li><a href="/blog" style="color: var(--teal-deep); text-decoration: none; font-weight: 500; font-size: 14px;">All blog articles</a></li>
           </ul>
         </div>
@@ -729,7 +877,7 @@ footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--i
 </div>
 
 <footer>
-  <p>&copy; 2026 HomePowerRebate. Independent installer matching. <a href="/eguana" style="color: rgba(250,247,242,.75);">Learn about Eguana battery</a></p>
+  <p>&copy; 2026 HomePowerRebate. Independent installer matching.</p>
 </footer>
 
 <script>
@@ -750,34 +898,95 @@ function updateCalc(type) {
 }
 
 function updateStackingCalc() {
-  const solar = document.getElementById('install-solar').checked ? 13000 : 0;
-  const heatpump = document.getElementById('install-heatpump').checked ? 4000 : 0;
-  const waterheater = document.getElementById('install-waterheater').checked ? 1000 : 0;
-  const smart = document.getElementById('install-smart').checked ? 200 : 0;
+  // BC Hydro rebates (income-independent)
+  const solar = document.getElementById('install-solar').checked ? 10000 : 0; // $5K solar + $5K battery
+  const smart = document.getElementById('install-smart').checked ? 150 : 0;
+
+  // CleanBC rebates (income-qualified)
   const income = document.getElementById('income-stacking').value;
+  let heatpump = 0;
+  let waterheater = 0;
 
-  let total = solar + heatpump + waterheater + smart;
+  if (document.getElementById('install-heatpump').checked) {
+    // Assuming gas/oil heating (higher tier). For electric homes, subtract $5.5K from each tier.
+    if (income === 'tier3') heatpump = 10500;
+    else if (income === 'tier2') heatpump = 12000;
+    else if (income === 'tier1') heatpump = 16000;
+    else heatpump = 4000; // standard (no income qualification)
+  }
 
-  // Income tier multipliers
-  if (income === 'tier3') total = total * 2;
-  else if (income === 'tier2') total = Math.floor(total * 1.5);
-  else if (income === 'tier1') total = Math.floor(total * 1.3);
+  if (document.getElementById('install-waterheater').checked) {
+    waterheater = 3500; // CleanBC water heater rebate (consistent across tiers)
+  }
 
+  const total = solar + heatpump + waterheater + smart;
   document.getElementById('stacking-result').textContent = '$' + total.toLocaleString();
 
   const breakdown = [
-    solar > 0 ? 'Solar $5K + Battery $5K' : '',
-    heatpump > 0 ? (income === 'tier3' ? 'Heat Pump $16K' : income === 'tier2' ? '$12K' : income === 'tier1' ? '$8K' : '$4K') : '',
-    waterheater > 0 ? 'Water Heater $1K' : '',
-    smart > 0 ? 'Smart Device $200' : ''
+    solar > 0 ? 'Solar + Battery $10K' : '',
+    heatpump > 0 ? `Heat Pump $${heatpump.toLocaleString()}` : '',
+    waterheater > 0 ? 'Water Heater $3.5K' : '',
+    smart > 0 ? 'Smart Thermostat $150' : ''
   ].filter(Boolean).join(' + ');
 
   document.getElementById('stacking-detail').textContent = breakdown + ' = $' + total.toLocaleString();
 }
 
 function matchInstaller() {
-  // TODO: Route to matching form
-  alert('Routing to installer matching form...');
+  const modal = document.getElementById('match-modal');
+  if (modal) modal.style.display = 'block';
+  else alert('Form loading... redirecting to matching page.');
+}
+
+function closeMatchModal() {
+  document.getElementById('match-modal').style.display = 'none';
+}
+
+function submitMatchForm(e) {
+  e.preventDefault();
+  const income = document.getElementById('form-income').value;
+  const interested = Array.from(document.querySelectorAll('input[name="interested"]:checked'))
+    .map(cb => cb.value).join(', ');
+  const name = document.getElementById('form-name').value;
+  const email = document.getElementById('form-email').value;
+  const phone = document.getElementById('form-phone').value;
+
+  if (!name || !email || !phone || !interested) {
+    alert('Please fill in all fields.');
+    return;
+  }
+
+  // Show loading state
+  const btn = document.querySelector('button[type="submit"]');
+  const originalText = btn.textContent;
+  btn.textContent = 'Submitting...';
+  btn.disabled = true;
+
+  // Send to Zapier webhook (CORS-safe, no response body needed)
+  fetch('https://hooks.zapier.com/hooks/catch/28140456/4u3j8o2/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: name,
+      email: email,
+      phone: phone,
+      income: income || 'standard',
+      interested: interested,
+      city: 'Kelowna'
+    }),
+    mode: 'no-cors' // Zapier doesn't return CORS headers, so we use no-cors mode
+  })
+  .then(() => {
+    // In no-cors mode, we assume success if fetch doesn't throw
+    alert(`Thanks, ${name}! We're matching you with an installer in Kelowna. Check your email within 24 hours.`);
+    closeMatchModal();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    btn.textContent = originalText;
+    btn.disabled = false;
+    alert('Connection issue. Please email hello@homepowerrebate.com or try again.');
+  });
 }
 </script>
 

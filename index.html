@@ -31,7 +31,7 @@
   "alternateName": "Go Power Switch",
   "url": "https://homepowerrebate.com",
   "logo": "https://homepowerrebate.com/logo.png",
-  "description": "Independent matching service that connects homeowners with one approved local installer per city for solar + battery rebate programs. Currently serves 11 British Columbia cities.",
+  "description": "Independent matching service that connects homeowners with one approved local installer per city for solar + battery rebate programs. Currently serves 14 British Columbia cities.",
   "foundingDate": "2026",
   "areaServed": [
     { "@type": "City", "name": "Abbotsford" },
@@ -943,12 +943,18 @@ body {
       <span class="logo-mark"></span>
       <span>Home<span class="logo-power">Power</span>Rebate</span>
     </a>
-    <div style="display:flex; align-items:center; gap:20px;">
+    <div style="display:flex; align-items:center; gap:16px;">
+      <a href="/retrofit-assessment" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Assessment</a>
       <a href="/blog" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
       <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
         Pick your city
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
+    </div>
+
+    <!-- Mobile CTA (hidden on desktop) -->
+    <div style="display:none; @media(max-width:768px){display:block;} margin-top:12px;">
+      <a href="/retrofit-assessment" style="display:inline-block; background:var(--amber); color:#fff; padding:10px 16px; border-radius:999px; text-decoration:none; font-weight:600; font-size:13px;">See your options</a>
     </div>
   </div>
 
@@ -1661,13 +1667,16 @@ body {
         </ul>
       </div>
       <div>
-        <div class="footer-col-title">Guides</div>
+        <div class="footer-col-title">Guides &amp; Tools</div>
         <ul class="footer-col-links">
-          <li><a href="/smart-thermostats">Smart Thermostats</a></li>
+          <li><a href="/retrofit-assessment">Retrofit Assessment</a></li>
+          <li><a href="/smart-thermostats">Smart Thermostat Comparison</a></li>
+          <li><a href="/heat-pump-water-heater">Heat Pump Water Heater</a></li>
+          <li><a href="/hrv-heat-recovery-ventilation">HRV Ventilation</a></li>
           <li><a href="/eguana">Eguana Evolve Battery</a></li>
-          <li><a href="/blog/tesla-powerwall-mistake">Tesla &amp; the Rebate</a></li>
+          <li><a href="/blog/tesla-powerwall-vs-eguana-evolve">Battery Comparison</a></li>
+          <li><a href="/blog/heat-pump-brands-comparison-mitsubishi-daikin-bosch">Heat Pump Brands</a></li>
           <li><a href="/ca/bc">BC Rebate Overview</a></li>
-          <li><a href="/programs">All Programs</a></li>
           <li><a href="/blog">Blog</a></li>
         </ul>
       </div>

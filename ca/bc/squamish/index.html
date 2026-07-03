@@ -1499,6 +1499,19 @@ body {
   </div>
 </div>
 
+
+<!-- STACKING CTA BUTTON -->
+<div style="background:var(--paper-warm); border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); padding:24px 0;">
+  <div class="section-warm-inner">
+    <div style="max-width:760px; margin:0 auto; text-align:center;">
+      <p style="font-size:14px; color:var(--sage); text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; font-weight:600;">Thinking bigger?</p>
+      <h3 style="font-family:'Fraunces', serif; font-size:24px; margin:0 0 12px; color:var(--ink);">Your potential: $10K–$35K depending on what you install</h3>
+      <p style="font-size:15px; color:var(--ink-soft); margin-bottom:20px;">See your full rebate potential when you combine solar, heat pump, and water heater upgrades.</p>
+      <button onclick="document.getElementById('stacking-modal').style.display='flex'" style="background:var(--amber); color:#fff; padding:14px 28px; border:none; border-radius:999px; font-weight:600; cursor:pointer; font-size:15px;">See your full potential →</button>
+    </div>
+  </div>
+</div>
+
 <section class="section" id="how-it-works">
   <div class="section-header">
     <div class="section-eyebrow">Easy from start to finish</div>
@@ -2327,6 +2340,76 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
     submitBtn.disabled = false;
     submitBtn.textContent = 'Match me with my installer →';
   }
+});
+</script>
+
+
+<!-- STACKING CALCULATOR MODAL -->
+<div id="stacking-modal" style="display:none; position:fixed; inset:0; background:rgba(10,42,46,.7); z-index:100; padding:20px; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:16px; max-width:500px; width:100%; max-height:90vh; overflow-y:auto; padding:32px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+      <h2 style="font-family:'Fraunces', serif; font-size:24px; color:var(--ink); margin:0;">Your Full Potential</h2>
+      <button onclick="document.getElementById('stacking-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--rule);">×</button>
+    </div>
+    
+    <p style="color:var(--ink-soft); margin-bottom:24px; font-size:15px;">See how much you could get back when combining multiple upgrades.</p>
+    
+    <div style="margin-bottom:24px;">
+      <label style="display:block; font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin-bottom:10px;">What are you installing?</label>
+      <div style="display:grid; gap:10px;">
+        <label style="display:flex; align-items:center; gap:10px; padding:12px; border:1px solid var(--rule); border-radius:8px; cursor:pointer;">
+          <input type="radio" name="retrofit" value="solar" checked> <span style="font-weight:500;">Solar + Battery</span>
+        </label>
+        <label style="display:flex; align-items:center; gap:10px; padding:12px; border:1px solid var(--rule); border-radius:8px; cursor:pointer;">
+          <input type="radio" name="retrofit" value="heat-pump"> <span style="font-weight:500;">Heat Pump</span>
+        </label>
+        <label style="display:flex; align-items:center; gap:10px; padding:12px; border:1px solid var(--rule); border-radius:8px; cursor:pointer;">
+          <input type="radio" name="retrofit" value="full"> <span style="font-weight:500;">Full Retrofit (Solar + Heat Pump + Water Heater)</span>
+        </label>
+      </div>
+    </div>
+    
+    <div style="margin-bottom:24px;">
+      <label style="display:block; font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin-bottom:10px;">Household income?</label>
+      <select id="income-level" style="width:100%; padding:12px; border:1px solid var(--rule); border-radius:8px; font-size:15px;">
+        <option value="standard">Standard (~$95k+)</option>
+        <option value="tier1">Income Level 1 (~$95k)</option>
+        <option value="tier2">Income Level 2 (~$140k)</option>
+        <option value="tier3">Income Level 3 (~$185k)</option>
+      </select>
+    </div>
+    
+    <div id="stacking-result" style="background:var(--paper-warm); border:1px solid var(--rule); border-left:4px solid var(--green-money); border-radius:8px; padding:20px; text-align:center;">
+      <p style="font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--sage); margin-bottom:8px;">Your potential rebates</p>
+      <div style="font-family:'Fraunces', serif; font-size:32px; font-weight:600; color:var(--green-money); margin-bottom:12px;">$17,000</div>
+      <p style="font-size:13px; color:var(--ink-soft); margin:0;">Varies by home. Actual amounts depend on energy usage and current program rules.</p>
+    </div>
+    
+    <button onclick="document.getElementById('stacking-modal').style.display='none'; window.location.href='/ca/bc'" style="width:100%; margin-top:24px; background:var(--amber); color:#fff; padding:14px; border:none; border-radius:8px; font-weight:600; cursor:pointer; font-size:15px;">See installers in my city →</button>
+  </div>
+</div>
+
+<script>
+function updateStackingResult() {
+  const retrofit = document.querySelector('input[name="retrofit"]:checked').value;
+  const income = document.getElementById('income-level').value;
+  
+  const amounts = {
+    solar: { standard: 10000, tier1: 10000, tier2: 10000, tier3: 10000 },
+    'heat-pump': { standard: 4000, tier1: 8000, tier2: 12000, tier3: 16000 },
+    full: { standard: 17000, tier1: 25000, tier2: 28000, tier3: 35000 }
+  };
+  
+  const total = amounts[retrofit][income];
+  document.getElementById('stacking-result').innerHTML = `
+    <p style="font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--sage); margin-bottom:8px;">Your potential rebates</p>
+    <div style="font-family:'Fraunces', serif; font-size:32px; font-weight:600; color:var(--green-money); margin-bottom:12px;">$${total.toLocaleString()}</div>
+    <p style="font-size:13px; color:var(--ink-soft); margin:0;">Varies by home and program rules.</p>
+  `;
+}
+
+document.querySelectorAll('input[name="retrofit"], #income-level').forEach(el => {
+  el.addEventListener('change', updateStackingResult);
 });
 </script>
 

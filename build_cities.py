@@ -119,6 +119,36 @@ CITIES = [
         'payback': '8-11 yr payback',
         'lat': '48.4281',
         'lon': '-123.3656'
+    },
+    {
+        'name': 'Burnaby',
+        'slug': 'burnaby',
+        'region': 'Metro Vancouver',
+        'phone': '(604) 555-0550',
+        'value': '$18,500',
+        'payback': '9-12 yr payback',
+        'lat': '49.2504',
+        'lon': '-122.9945'
+    },
+    {
+        'name': 'Penticton',
+        'slug': 'penticton',
+        'region': 'South Okanagan',
+        'phone': '(250) 555-0850',
+        'value': '$22,500',
+        'payback': '6-9 yr payback',
+        'lat': '49.5008',
+        'lon': '-119.5886'
+    },
+    {
+        'name': 'Fort St. John',
+        'slug': 'fort-st-john',
+        'region': 'Northeast BC',
+        'phone': '(250) 555-1100',
+        'value': '$21,000',
+        'payback': '7-10 yr payback',
+        'lat': '56.2507',
+        'lon': '-120.8425'
     }
 ]
 

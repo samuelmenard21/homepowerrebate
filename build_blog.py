@@ -516,6 +516,66 @@ POSTS.append({
     'related': ['why-solar-quotes-vary-so-much', 'tesla-powerwall-mistake']
 })
 
+
+# ---------------------------------------------------------------------------
+POSTS.append({
+    'slug': 'heat-pump-bc-winter-actually-works',
+    'title': 'Heat Pumps Work in BC Winter at -25°C: Data, Not Fear',
+    'description': 'Modern cold-climate heat pumps extract heat even at -25°C and work reliably in BC winters. Here's the data.',
+    'eyebrow': 'Cold climate guide',
+    'published': '2026-07-03',
+    'body': """<p>Every BC homeowner asks: "Will a heat pump actually heat my house at -20°C?" Yes, modern cold-climate heat pumps work reliably in BC winters.</p>
+    <h2>How it works in extreme cold</h2>
+    <p>A heat pump extracts heat from outside air and moves it inside. Modern units use enhanced vapor injection compressors and advanced inverters to work at -25°C or lower with 80%+ efficiency. Mitsubishi Hyper-Heat, Fujitsu XLTH, Daikin Fit, and Bosch IDS 2.0 all qualify for BC Hydro rebates and work reliably in BC.</p>
+    <h2>The payback</h2>
+    <p>Cost: $8,000–$12,000. BC Hydro rebate: $4,000 (whole-home) or $1,500 (partial). Annual savings: $1,000–$2,000 depending on fuel. Payback: 4–6 years, often free if income-qualified ($16,000 rebate instead of $4,000).</p>
+    <div class="callout"><p><strong>Bottom line:</strong> BC winters don't break modern heat pumps. The engineering is solid.</p></div>""",
+    'cta': cta("Check your heat pump savings", "See what a heat pump retrofit costs and returns in your city.", "/ca/bc", "Find my city"),
+    'related': ['solar-heat-pump-water-heater-stacking-real-numbers', 'is-bc-hydro-solar-rebate-worth-it']
+})
+
+# ---------------------------------------------------------------------------
+POSTS.append({
+    'slug': 'peak-saver-14-day-window-3500-mistake',
+    'title': 'The $3,500 Mistake: Peak Saver Enrollment and the 14-Day Window',
+    'description': 'If you install a battery but miss Peak Saver enrollment within 14 days, your rebate shrinks from $5,000 to $1,500. Here's how to avoid it.',
+    'eyebrow': 'Critical deadline',
+    'published': '2026-07-03',
+    'body': """<p>Your battery is installed. You got a $5,000 rebate. Done, right? Wrong. If you don't enroll in Peak Saver within 14 days of interconnection approval, your rebate shrinks to $1,500. That's a $3,500 mistake happening constantly.</p>
+    <h2>What changed April 1, 2026</h2>
+    <p>Before: install battery, claim $5,000. After: $5,000 only if enrolled in Peak Saver within 14 days, else $1,500. Same battery. Different payout. One deadline.</p>
+    <h2>The 14-day clock</h2>
+    <p>Timeline: installer installs → submits to BC Hydro → BC Hydro approves (5–10 days) → 14-day clock starts. You must enroll by day 14 or lose $3,500. BC Hydro won't waive it.</p>
+    <h2>Make sure it doesn't happen</h2>
+    <ul><li>Before signing: Ask installer "Will you enroll my battery in Peak Saver?" Get it in writing.</li>
+    <li>After approval: Installer contacts you immediately. Day 1, not day 10.</li>
+    <li>If no contact by day 3: Call them. Don't wait.</li></ul>
+    <div class="callout"><p><strong>Why this matters:</strong> an installer who doesn't mention Peak Saver or leaves it to you is signaling they don't manage critical details.</p></div>""",
+    'cta': cta("Get matched with a detail-oriented installer", "We work with installers who handle Peak Saver so you don't lose $3,500 by accident.", "/ca/bc", "Find my city"),
+    'related': ['is-bc-hydro-solar-rebate-worth-it', 'tesla-powerwall-mistake']
+})
+
+# ---------------------------------------------------------------------------
+POSTS.append({
+    'slug': 'solar-heat-pump-water-heater-stacking-real-numbers',
+    'title': 'Stack $18,000 in BC Energy Rebates: Solar + Heat Pump + Water Heater',
+    'description': 'BC homeowners can stack rebates from BC Hydro, CleanBC, and federal programs. Here's how one project returns $19,000.',
+    'eyebrow': 'Full home retrofit',
+    'published': '2026-07-03',
+    'body': """<p>Most BC homeowners don't know you can stack rebates. They see solar ($5,000) and maybe heat pump ($4,000) but don't realize you can claim both, plus water heater, plus multi-upgrade bonuses. Total: $15,000–$22,000 in one year.</p>
+    <h2>The stacking rule</h2>
+    <p>BC Hydro, CleanBC, and federal programs stack—you can claim from multiple programs for different upgrades in the same project. Solar + battery + heat pump + water heater all in one year. All on one house.</p>
+    <h2>Real example: Metro Vancouver homeowner</h2>
+    <p>Solar (8 kW): $5,000 | Battery (5 kWh): $5,000 | Heat pump: $4,000 | Water heater: $1,000 | Multi-upgrade bonus: $2,000 | <strong>Total: $17,000</strong></p>
+    <h2>Income-qualified: $35,000+</h2>
+    <p>If you qualify (household income under $95k–$185k depending on family size), CleanBC income-qualified rebates 2x the amounts. Heat pump alone jumps from $4k to $16k. Same project, different income bracket = $28,000–$35,000 back.</p>
+    <div class="callout"><p><strong>The gotcha:</strong> installers often specialize in solar OR heat pumps, not both. They quote solar ($5k) and miss stacking heat pump ($4k) and water heater ($1k) opportunities. You need someone who sees the whole home.</p></div>""",
+    'cta': cta("See your stacking potential", "Each BC city has different climate and costs. Get your specific numbers.", "/ca/bc", "Check my city"),
+    'related': ['peak-saver-14-day-window-3500-mistake', 'fortisbc-vs-bc-hydro-rebates']
+})
+
+# ---------------------------------------------------------------------------
+
 def slugify_title_map():
     return {p['slug']: p['title'] for p in POSTS}
 

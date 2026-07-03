@@ -99,6 +99,8 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   .wrap { padding: 0 16px; }
   .grid-2 { grid-template-columns: 1fr; }
   .summary-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .logo { font-size: 14px !important; }
+  .nav { padding: 12px 16px; }
 }
 </style>
 </head>
@@ -129,6 +131,14 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
           <option value="tier1">Tier 1 ($55K–$110K household)</option>
           <option value="tier2">Tier 2 ($110K–$165K household)</option>
           <option value="tier3">Tier 3 (Over $165K household)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="utility">Your Utility</label>
+        <select id="utility" onchange="updateChecklist()">
+          <option value="bchydro">BC Hydro (covers most of BC)</option>
+          <option value="fortisbc">FortisBC (interior/Kootenay)</option>
         </select>
       </div>
 
@@ -169,9 +179,18 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <div class="check-item">
         <input type="checkbox" id="electrical" onchange="updateChecklist()">
         <div class="check-label">
-          <h4>Electrical Panel Upgrade</h4>
+          <h4>⚡ Electrical Panel Upgrade</h4>
           <p>Required if your home is pre-1980 or you want to add EV charging + heat pump simultaneously. Prerequisite unlock.</p>
           <span class="check-rebate" id="rebate-electrical">$500</span>
+        </div>
+      </div>
+
+      <div class="check-item">
+        <input type="checkbox" id="insulation" onchange="updateChecklist()">
+        <div class="check-label">
+          <h4>🏠 Insulation & Air Sealing</h4>
+          <p>Weatherization (attic/basement/walls). CleanBC rebate covers 50%. <strong>Do this first—it reduces heat pump size needed and improves efficiency by 20–40%.</strong> <a href="/blog/why-insulation-first-energy-retrofit">Learn why insulation comes first →</a></p>
+          <span class="check-rebate" id="rebate-insulation">$500</span>
         </div>
       </div>
 
@@ -241,7 +260,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 
     <div class="summary-box">
       <div class="summary-row">
-        <span class="label">Total Rebates (Selected):</span>
+        <span class="label">Total CleanBC Rebates (Selected):</span>
         <span class="value" id="total-rebates">$0</span>
       </div>
       <div class="summary-row">
@@ -249,8 +268,15 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <span class="value" id="total-cost">$0</span>
       </div>
       <div class="summary-row">
-        <span class="label">After Rebates (Out-of-Pocket):</span>
+        <span class="label">After CleanBC Rebates:</span>
         <span class="value" id="net-cost">$0</span>
+      </div>
+      <div class="summary-row" style="background: rgba(212, 117, 28, 0.08); padding: 12px; border-radius: 6px; margin-top: 12px;">
+        <span class="label">⭐ Greener Homes Grant Potential:</span>
+        <span class="value" style="color: var(--amber);" id="greener-homes-grant">$0</span>
+      </div>
+      <div class="summary-row" style="font-size: 12px; color: var(--ink-soft); padding: 8px 0; margin-top: 8px;">
+        <span style="margin: 0;">Greener Homes Grant (federal) covers 50% of eligible retrofit costs up to $40K. Requires energy audit first. <a href="/blog/greener-homes-grant-explained" style="color: var(--teal-deep); font-weight: 600;">Learn more →</a></span>
       </div>
       <div class="summary-row total">
         <span class="label">10-Year Savings (All Utilities):</span>
@@ -264,7 +290,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 
     <h2 style="margin-top: 40px;">Next steps</h2>
     <ol style="padding-left: 24px; margin-bottom: 24px;">
-      <li><strong>Get a home energy audit.</strong> Most HPCN-certified installers offer free assessments.</li>
+      <li><strong>Get a home energy audit.</strong> <a href="/blog/what-happens-in-an-energy-audit" style="color: var(--teal-deep); font-weight: 600; text-decoration: underline;">See what happens in an audit →</a> Most HPCN-certified installers offer free assessments, and the audit cost is often reimbursed after retrofit completion.</li>
       <li><strong>Confirm your income tier.</strong> Your rebate amount depends on household income. Higher tiers = bigger rebates ($16K heat pump possible).</li>
       <li><strong>Check your electrical panel.</strong> Pre-1980 homes may need upgrades ($500 rebate). This is a prerequisite for heat pump + EV charger combos.</li>
       <li><strong>Find trusted installers.</strong> Below, we'll match you with one HPCN-certified installer per city who handles the upgrades you selected.</li>
@@ -302,6 +328,67 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   </div>
 </section>
 
+<section class="section" style="background: var(--paper-warm);">
+  <div class="wrap">
+    <h2>Help us make this better</h2>
+    <p style="margin-bottom: 24px;">This tool is new. If something's unclear or missing, we want to know. Send us your feedback in 30 seconds and help other homeowners.</p>
+
+    <form id="feedback-form" style="max-width: 500px;">
+      <div class="form-group">
+        <label for="feedback-type">What type of feedback?</label>
+        <select id="feedback-type" required>
+          <option value="">Select...</option>
+          <option value="missing">Something's missing from the calculator</option>
+          <option value="unclear">A section was confusing</option>
+          <option value="next-step">I don't know what to do next</option>
+          <option value="other">Something else</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="feedback-message">What should we add or fix?</label>
+        <textarea id="feedback-message" placeholder="E.g., 'You should mention financing options' or 'I don't understand what the Greener Homes Grant is'" style="width: 100%; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; min-height: 80px; resize: vertical;"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="feedback-email">Email (optional, so we can follow up)</label>
+        <input type="email" id="feedback-email" placeholder="your@email.com" style="width: 100%; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px;">
+      </div>
+
+      <button type="submit" class="btn-primary" style="width: 100%;">Send Feedback</button>
+    </form>
+
+    <div id="feedback-response" style="display: none; margin-top: 16px; padding: 16px; background: #fff; border-radius: 8px; border-left: 4px solid var(--green-money);"></div>
+  </div>
+</section>
+
+<section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 48px 28px;">
+  <div class="wrap" style="text-align: center; color: #fff; max-width: 500px;">
+    <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 12px;">Get smarter about rebates</div>
+    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 28px; line-height: 1.2; margin-bottom: 12px; color: #fff;">Learn the strategy, not just the numbers</h2>
+    <p style="font-size: 14px; color: rgba(250, 247, 242, 0.85); margin-bottom: 20px;">Weekly emails on Greener Homes grants, installer red flags, and the right retrofit sequence. Get it before you sign anything.</p>
+
+    <form id="assessment-newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
+      <input
+        type="email"
+        id="assessment-newsletter-email"
+        placeholder="your@email.com"
+        required
+        style="padding: 11px 13px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);"
+      >
+      <button
+        type="submit"
+        style="padding: 11px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'Inter Tight', sans-serif; transition: background 0.15s;"
+      >
+        Subscribe
+      </button>
+      <p style="font-size: 11px; color: rgba(250, 247, 242, 0.6);">No spam, ever.</p>
+    </form>
+
+    <div id="assessment-newsletter-response" style="display: none; margin-top: 10px; padding: 10px; background: rgba(45, 106, 79, 0.2); border-radius: 6px; font-size: 12px; color: rgba(250, 247, 242, 0.9);"></div>
+  </div>
+</section>
+
 <footer>
   <p>&copy; 2026 HomePowerRebate. Independent installer matching. <a href="/">Home</a> · <a href="/blog">Blog</a> · <a href="/retrofit-assessment">Assessment</a> · <a href="/#city-picker">Find your city</a></p>
 </footer>
@@ -310,6 +397,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 const rebateData = {
   standard: {
     electrical: 500,
+    insulation: 500,
     solar: 5000,
     battery: 5000,
     heatpump: 4000,
@@ -320,38 +408,42 @@ const rebateData = {
   },
   tier1: {
     electrical: 500,
-    solar: 5000,
-    battery: 5000,
-    heatpump: 8000,
-    hphw: 3000,
-    thermostat: 150,
-    hrv: 1600,
-    evcharger: 350
-  },
-  tier2: {
-    electrical: 500,
-    solar: 5000,
-    battery: 5000,
-    heatpump: 12000,
-    hphw: 3500,
-    thermostat: 150,
-    hrv: 1600,
-    evcharger: 500
-  },
-  tier3: {
-    electrical: 500,
+    insulation: 500,
     solar: 5000,
     battery: 5000,
     heatpump: 16000,
     hphw: 3500,
     thermostat: 150,
     hrv: 1600,
-    evcharger: 500
+    evcharger: 350
+  },
+  tier2: {
+    electrical: 500,
+    insulation: 500,
+    solar: 5000,
+    battery: 5000,
+    heatpump: 12000,
+    hphw: 3500,
+    thermostat: 150,
+    hrv: 1600,
+    evcharger: 350
+  },
+  tier3: {
+    electrical: 500,
+    insulation: 500,
+    solar: 5000,
+    battery: 5000,
+    heatpump: 10500,
+    hphw: 3500,
+    thermostat: 150,
+    hrv: 1600,
+    evcharger: 350
   }
 };
 
 const costData = {
   electrical: 3000,
+  insulation: 8000,
   solar: 18000,
   battery: 20000,
   heatpump: 11000,
@@ -369,52 +461,117 @@ function updateChecklist() {
   let totalCost = 0;
   let selectedCount = 0;
 
-  ['electrical', 'solar', 'battery', 'heatpump', 'hphw', 'thermostat', 'hrv', 'evcharger'].forEach(item => {
+  ['electrical', 'insulation', 'solar', 'battery', 'heatpump', 'hphw', 'thermostat', 'hrv', 'evcharger'].forEach(item => {
     const checkbox = document.getElementById(item);
     const rebateEl = document.getElementById(`rebate-${item}`);
 
-    if (checkbox.checked) {
+    if (checkbox && checkbox.checked) {
       selectedCount++;
       totalRebates += rebates[item];
       totalCost += costData[item];
     }
 
-    if (rebates[item]) {
+    if (rebateEl && rebates[item]) {
       rebateEl.textContent = '$' + rebates[item].toLocaleString();
     }
   });
 
+  // Calculate Greener Homes Grant potential (federal, 50% up to $40K)
+  // Eligible items: insulation, heat pump, heat pump water heater, HRV
+  let greenerHomesEligibleCost = 0;
+  ['insulation', 'heatpump', 'hphw', 'hrv'].forEach(item => {
+    const checkbox = document.getElementById(item);
+    if (checkbox && checkbox.checked) {
+      greenerHomesEligibleCost += costData[item];
+    }
+  });
+  const greenerHomesGrant = Math.min(greenerHomesEligibleCost * 0.5, 40000);
+
   const netCost = totalCost - totalRebates;
-  const tenYearSavings = (netCost > 0 ? netCost * 0.15 : 0) + (selectedCount > 0 ? selectedCount * 1500 : 0);
+  const netCostAfterGreenerHomes = netCost - greenerHomesGrant;
+  const tenYearSavings = (netCostAfterGreenerHomes > 0 ? netCostAfterGreenerHomes * 0.15 : 0) + (selectedCount > 0 ? selectedCount * 1500 : 0);
 
   document.getElementById('total-rebates').textContent = '$' + totalRebates.toLocaleString();
   document.getElementById('total-cost').textContent = '$' + totalCost.toLocaleString();
   document.getElementById('net-cost').textContent = netCost <= 0 ? 'Paid off' : '$' + netCost.toLocaleString();
+  document.getElementById('greener-homes-grant').textContent = greenerHomesEligibleCost > 0 ? '+ $' + Math.round(greenerHomesGrant).toLocaleString() : '$0';
   document.getElementById('ten-year-savings').textContent = '$' + Math.round(tenYearSavings).toLocaleString();
 
-  updateImpactMessage(income, selectedCount, totalRebates, netCost);
+  updateImpactMessage(income, selectedCount, totalRebates, netCost, greenerHomesGrant);
 }
 
-function updateImpactMessage(income, selectedCount, totalRebates, netCost) {
+function updateImpactMessage(income, selectedCount, totalRebates, netCost, greenerHomesGrant) {
   const messageEl = document.getElementById('impact-message');
   let html = '';
 
   if (selectedCount === 0) {
     html = '<div class="impact-card"><h4>No upgrades selected yet</h4><p>Check the boxes above to see your personalized retrofit roadmap.</p></div>';
   } else if (income === 'standard') {
-    html = `<div class="impact-card"><h4>Standard Income Tier</h4><p>You qualify for base rebates totaling $${totalRebates.toLocaleString()}. If your household income changes, you may qualify for Tier 1–3 rebates worth up to $${totalRebates + 8000} (much higher for heat pump).</p></div>`;
-  } else if (income === 'tier3') {
-    html = `<div class="impact-card"><h4>Tier 3 Income Qualified 🎉</h4><p>You unlock the maximum rebates: up to $16,000 heat pump, $3,500 water heater, and full solar/battery support. Your total retrofit could be paid for entirely by rebates.</p></div>`;
+    html = `<div class="impact-card"><h4>Standard Income Tier</h4><p>You qualify for base CleanBC rebates totaling $${totalRebates.toLocaleString()}. If you include insulation + heat pump + water heater, you also unlock the <strong>Greener Homes Grant (federal, up to $40K)</strong>, bringing total incentives to $${(totalRebates + greenerHomesGrant).toLocaleString()}.</p></div>`;
+  } else if (income === 'tier1') {
+    html = `<div class="impact-card"><h4>Tier 1 Income Qualified 🎉</h4><p>You unlock enhanced CleanBC rebates: up to $16,000 heat pump, $3,500 water heater. Add the Greener Homes Grant (federal, 50% up to $40K), and your retrofit could be nearly fully covered.</p></div>`;
   } else {
-    html = `<div class="impact-card"><h4>${income.charAt(0).toUpperCase() + income.slice(1)} Income Tier</h4><p>You qualify for enhanced rebates. Check with installers for exact amounts—rebates are income-dependent and verified at installation time.</p></div>`;
+    html = `<div class="impact-card"><h4>${income.charAt(0).toUpperCase() + income.slice(1)} Income Tier</h4><p>CleanBC rebates: $${totalRebates.toLocaleString()}. Plus, if you qualify for Greener Homes Grant, add up to $${Math.round(greenerHomesGrant).toLocaleString()} more in federal incentives.</p></div>`;
   }
 
-  if (netCost <= 0 && selectedCount > 2) {
-    html += '<div class="impact-card"><h4>Rebates exceed system costs</h4><p>Your selected upgrades will pay for themselves through rebates alone. You'll benefit from savings immediately after installation.</p></div>';
+  if (greenerHomesGrant > 0) {
+    html += `<div class="impact-card"><h4>🚀 Major savings opportunity: Greener Homes Grant</h4><p>The federal Greener Homes Grant covers 50% of your energy retrofit costs (insulation, heat pump, water heater, ventilation) up to $40K. Start with a professional energy audit to confirm eligibility—usually free from HPCN installers.</p></div>`;
   }
 
   messageEl.innerHTML = html;
 }
+
+// Feedback form handler
+document.getElementById('feedback-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const type = document.getElementById('feedback-type').value;
+  const message = document.getElementById('feedback-message').value;
+  const email = document.getElementById('feedback-email').value;
+
+  // Store feedback locally (in production, this would send to a backend)
+  const feedback = {
+    type,
+    message,
+    email,
+    timestamp: new Date().toISOString(),
+    url: window.location.href
+  };
+
+  // Log to console for now (you can send to a backend endpoint)
+  console.log('Feedback received:', feedback);
+
+  // Show success message
+  const responseEl = document.getElementById('feedback-response');
+  responseEl.innerHTML = '<h4 style="margin: 0 0 6px; font-size: 14px; font-weight: 700; color: var(--green-money);">✓ Thank you!</h4><p style="margin: 0; font-size: 13px; color: var(--ink-soft);">We\'ll review your feedback and improve the tool based on what homeowners need.</p>';
+  responseEl.style.display = 'block';
+
+  // Reset form
+  document.getElementById('feedback-form').reset();
+
+  // Hide message after 5 seconds
+  setTimeout(() => {
+    responseEl.style.display = 'none';
+  }, 5000);
+});
+
+// Assessment page newsletter handler
+document.getElementById('assessment-newsletter-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('assessment-newsletter-email').value;
+  const responseEl = document.getElementById('assessment-newsletter-response');
+
+  console.log('Assessment newsletter signup:', { email, timestamp: new Date().toISOString(), page: 'retrofit-assessment' });
+
+  responseEl.innerHTML = '<strong>✓ Great!</strong> You\'ll get weekly tips on rebates and retrofit strategy.';
+  responseEl.style.display = 'block';
+
+  document.getElementById('assessment-newsletter-form').reset();
+
+  setTimeout(() => {
+    responseEl.style.display = 'none';
+  }, 6000);
+});
 
 updateChecklist();
 </script>

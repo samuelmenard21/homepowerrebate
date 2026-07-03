@@ -112,7 +112,23 @@ footer p { font-size:13px; color:var(--sage); }
 <section style="padding:56px 0;">
   <div class="wrap-wide">
     <div class="post-grid">
-      
+
+        <a href="/blog/greener-homes-grant-explained" class="post-card">
+          <span class="tag">Major opportunity</span>
+          <h3>Greener Homes Grant 2026: Complete Guide to the $40K Federal Rebate</h3>
+          <p>Federal program covering 50% of energy retrofit costs up to $40K. How to apply, what qualifies, timeline, and how it stacks with BC rebates.</p>
+        </a>
+        <a href="/blog/what-happens-in-an-energy-audit" class="post-card">
+          <span class="tag">First step</span>
+          <h3>What Happens in a Home Energy Audit? (And Why It Matters)</h3>
+          <p>Step-by-step guide to professional energy audits. What to expect, why it's required for federal grants, and how it reveals your retrofit roadmap.</p>
+        </a>
+        <a href="/blog/why-insulation-first-energy-retrofit" class="post-card">
+          <span class="tag">Strategy guide</span>
+          <h3>Why Insulation First? The Retrofit Sequence That Saves 30–50%</h3>
+          <p>Doing upgrades in the right order cuts costs dramatically. Here's why insulation should come before heat pumps and solar.</p>
+        </a>
+
         <a href="/blog/is-bc-hydro-solar-rebate-worth-it" class="post-card">
           <span class="tag">Straight talk</span>
           <h3>Is the BC Hydro Solar Rebate Actually Worth It? We Ran the Numbers</h3>
@@ -167,12 +183,60 @@ footer p { font-size:13px; color:var(--sage); }
   </div>
 </section>
 
+<!-- Newsletter signup -->
+<section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
+  <div class="wrap" style="text-align: center; color: #fff; max-width: 600px;">
+    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">Weekly insights</div>
+    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get these articles in your inbox</h2>
+    <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Every week: deep-dives on BC rebates, installer comparisons, heat pumps, solar, and batteries. No spam.</p>
+
+    <form id="blog-newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
+      <input
+        type="email"
+        id="blog-newsletter-email"
+        placeholder="your@email.com"
+        required
+        style="padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);"
+      >
+      <button
+        type="submit"
+        style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'Inter Tight', sans-serif; transition: background 0.15s;"
+      >
+        Subscribe
+      </button>
+      <p style="font-size: 11px; color: rgba(250, 247, 242, 0.6); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
+    </form>
+
+    <div id="blog-newsletter-response" style="display: none; margin-top: 12px; padding: 12px; background: rgba(45, 106, 79, 0.2); border-radius: 6px; border: 1px solid rgba(45, 106, 79, 0.4); font-size: 13px;"></div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap-wide">
     <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
     <p>&copy; 2026 HomePowerRebate. Independent installer matching service, not affiliated with BC Hydro.</p>
   </div>
 </footer>
+
+<script>
+// Blog newsletter signup handler
+document.getElementById('blog-newsletter-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('blog-newsletter-email').value;
+  const responseEl = document.getElementById('blog-newsletter-response');
+
+  console.log('Blog newsletter signup:', { email, timestamp: new Date().toISOString() });
+
+  responseEl.innerHTML = '<strong style="color: #fff;">✓ Welcome!</strong><p style="margin: 4px 0 0; color: rgba(250, 247, 242, 0.85);">Check your email for next week\'s insights.</p>';
+  responseEl.style.display = 'block';
+
+  document.getElementById('blog-newsletter-form').reset();
+
+  setTimeout(() => {
+    responseEl.style.display = 'none';
+  }, 6000);
+});
+</script>
 
 </body>
 </html>

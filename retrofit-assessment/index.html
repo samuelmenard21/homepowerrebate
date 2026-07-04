@@ -555,22 +555,60 @@ document.getElementById('feedback-form').addEventListener('submit', async (e) =>
   }, 5000);
 });
 
-// Assessment page newsletter handler
+// Assessment page newsletter handler — Resend integration
+const RESEND_API_KEY = 're_Tk3drtA2_9A7SmeJTwMpw6RibZbRVdmrQ';
+const AUDIENCE_ID = 'c8b63b68-01ad-4727-a62e-2484dbe25ae9';
+
 document.getElementById('assessment-newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('assessment-newsletter-email').value;
   const responseEl = document.getElementById('assessment-newsletter-response');
+  const button = document.querySelector('#assessment-newsletter-form button');
+  const originalText = button.textContent;
 
-  console.log('Assessment newsletter signup:', { email, timestamp: new Date().toISOString(), page: 'retrofit-assessment' });
+  button.disabled = true;
+  button.textContent = 'Subscribing...';
 
-  responseEl.innerHTML = '<strong>✓ Great!</strong> You\'ll get weekly tips on rebates and retrofit strategy.';
-  responseEl.style.display = 'block';
+  try {
+    const response = await fetch(`https://api.resend.com/audiences/${AUDIENCE_ID}/contacts`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        unsubscribed: false
+      })
+    });
 
-  document.getElementById('assessment-newsletter-form').reset();
-
-  setTimeout(() => {
-    responseEl.style.display = 'none';
-  }, 6000);
+    if (response.ok) {
+      responseEl.innerHTML = '<strong>✓ Great!</strong> You\'ll get weekly tips on rebates and retrofit strategy.';
+      responseEl.style.display = 'block';
+      document.getElementById('assessment-newsletter-form').reset();
+      button.textContent = originalText;
+      button.disabled = false;
+      setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+    } else {
+      const error = await response.json();
+      if (error.message && error.message.includes('already exists')) {
+        responseEl.innerHTML = '<strong>✓ Already subscribed!</strong> Check your email for updates.';
+      } else {
+        throw new Error(error.message || 'Signup failed');
+      }
+      responseEl.style.display = 'block';
+      button.textContent = originalText;
+      button.disabled = false;
+      setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+    }
+  } catch (error) {
+    responseEl.innerHTML = '<strong>⚠ Something went wrong.</strong> Try again or email hello@homepowerrebate.com';
+    responseEl.style.display = 'block';
+    button.textContent = originalText;
+    button.disabled = false;
+    console.error('Newsletter signup error:', error);
+    setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+  }
 });
 
 updateChecklist();

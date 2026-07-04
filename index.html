@@ -1801,26 +1801,60 @@ waitlistForm.addEventListener('submit', async (e) => {
   }
 });
 
-// Newsletter signup handler
+// Newsletter signup handler — Resend integration
+const RESEND_API_KEY = 're_Tk3drtA2_9A7SmeJTwMpw6RibZbRVdmrQ';
+const AUDIENCE_ID = 'c8b63b68-01ad-4727-a62e-2484dbe25ae9';
+
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;
   const responseEl = document.getElementById('newsletter-response');
+  const button = document.querySelector('#newsletter-form button');
+  const originalText = button.textContent;
 
-  // Log to console (in production, send to email service)
-  console.log('Newsletter signup:', { email, timestamp: new Date().toISOString(), url: window.location.href });
+  button.disabled = true;
+  button.textContent = 'Signing up...';
 
-  // Show success message
-  responseEl.innerHTML = '<strong style="color: #fff;">✓ Welcome!</strong><p style="margin: 6px 0 0; font-size: 13px; color: rgba(250, 247, 242, 0.85);">Check your email for insights. You\'ll get weekly deep-dives on rebates, installers, and heat pumps. No spam, promise.</p>';
-  responseEl.style.display = 'block';
+  try {
+    const response = await fetch(`https://api.resend.com/audiences/${AUDIENCE_ID}/contacts`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        unsubscribed: false
+      })
+    });
 
-  // Reset form
-  document.getElementById('newsletter-form').reset();
-
-  // Hide message after 6 seconds
-  setTimeout(() => {
-    responseEl.style.display = 'none';
-  }, 6000);
+    if (response.ok) {
+      responseEl.innerHTML = '<strong style="color: #fff;">✓ Welcome!</strong><p style="margin: 6px 0 0; font-size: 13px; color: rgba(250, 247, 242, 0.85);">Check your email for insights. You\'ll get weekly deep-dives on rebates, installers, and heat pumps. No spam, promise.</p>';
+      responseEl.style.display = 'block';
+      document.getElementById('newsletter-form').reset();
+      button.textContent = originalText;
+      button.disabled = false;
+      setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+    } else {
+      const error = await response.json();
+      if (error.message && error.message.includes('already exists')) {
+        responseEl.innerHTML = '<strong style="color: #fff;">✓ You\'re already subscribed!</strong><p style="margin: 6px 0 0; font-size: 13px; color: rgba(250, 247, 242, 0.85);">Check your email for the latest rebate insights.</p>';
+      } else {
+        throw new Error(error.message || 'Signup failed');
+      }
+      responseEl.style.display = 'block';
+      button.textContent = originalText;
+      button.disabled = false;
+      setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+    }
+  } catch (error) {
+    responseEl.innerHTML = '<strong style="color: #fff;">⚠ Something went wrong.</strong><p style="margin: 6px 0 0; font-size: 13px; color: rgba(250, 247, 242, 0.85);">Try again or email hello@homepowerrebate.com</p>';
+    responseEl.style.display = 'block';
+    button.textContent = originalText;
+    button.disabled = false;
+    console.error('Newsletter signup error:', error);
+    setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+  }
 });
 </script>
 

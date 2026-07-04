@@ -219,22 +219,60 @@ footer p { font-size:13px; color:var(--sage); }
 </footer>
 
 <script>
-// Blog newsletter signup handler
+// Blog newsletter signup handler — Resend integration
+const RESEND_API_KEY = 're_Tk3drtA2_9A7SmeJTwMpw6RibZbRVdmrQ';
+const AUDIENCE_ID = 'c8b63b68-01ad-4727-a62e-2484dbe25ae9';
+
 document.getElementById('blog-newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('blog-newsletter-email').value;
   const responseEl = document.getElementById('blog-newsletter-response');
+  const button = document.querySelector('#blog-newsletter-form button');
+  const originalText = button.textContent;
 
-  console.log('Blog newsletter signup:', { email, timestamp: new Date().toISOString() });
+  button.disabled = true;
+  button.textContent = 'Subscribing...';
 
-  responseEl.innerHTML = '<strong style="color: #fff;">✓ Welcome!</strong><p style="margin: 4px 0 0; color: rgba(250, 247, 242, 0.85);">Check your email for next week\'s insights.</p>';
-  responseEl.style.display = 'block';
+  try {
+    const response = await fetch(`https://api.resend.com/audiences/${AUDIENCE_ID}/contacts`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        unsubscribed: false
+      })
+    });
 
-  document.getElementById('blog-newsletter-form').reset();
-
-  setTimeout(() => {
-    responseEl.style.display = 'none';
-  }, 6000);
+    if (response.ok) {
+      responseEl.innerHTML = '<strong style="color: #fff;">✓ Welcome!</strong><p style="margin: 4px 0 0; color: rgba(250, 247, 242, 0.85);">Check your email for next week\'s insights.</p>';
+      responseEl.style.display = 'block';
+      document.getElementById('blog-newsletter-form').reset();
+      button.textContent = originalText;
+      button.disabled = false;
+      setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+    } else {
+      const error = await response.json();
+      if (error.message && error.message.includes('already exists')) {
+        responseEl.innerHTML = '<strong style="color: #fff;">✓ Already subscribed!</strong><p style="margin: 4px 0 0; color: rgba(250, 247, 242, 0.85);">Check your email for updates.</p>';
+      } else {
+        throw new Error(error.message || 'Signup failed');
+      }
+      responseEl.style.display = 'block';
+      button.textContent = originalText;
+      button.disabled = false;
+      setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+    }
+  } catch (error) {
+    responseEl.innerHTML = '<strong style="color: #fff;">⚠ Something went wrong.</strong><p style="margin: 4px 0 0; color: rgba(250, 247, 242, 0.85);">Try again or email hello@homepowerrebate.com</p>';
+    responseEl.style.display = 'block';
+    button.textContent = originalText;
+    button.disabled = false;
+    console.error('Newsletter signup error:', error);
+    setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+  }
 });
 </script>
 

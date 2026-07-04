@@ -121,7 +121,8 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   <div class="wrap">
 
     <h2>Quick questions</h2>
-    <p style="margin-bottom: 28px;">We'll use this to personalize your retrofit checklist and show rebates that actually apply to you.</p>
+    <p style="margin-bottom: 16px;">We'll use this to personalize your retrofit checklist and show rebates that actually apply to you.</p>
+    <div id="assess-city-banner" style="display:none; margin-bottom: 24px; padding: 12px 16px; background: rgba(45,106,79,0.1); border-left: 4px solid var(--green-money); border-radius: 6px; font-size: 14px; font-weight: 600; color: var(--teal-deep);"></div>
 
     <div class="grid-2">
       <div class="form-group">
@@ -271,12 +272,12 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <span class="label">After CleanBC Rebates:</span>
         <span class="value" id="net-cost">$0</span>
       </div>
-      <div class="summary-row" style="background: rgba(212, 117, 28, 0.08); padding: 12px; border-radius: 6px; margin-top: 12px;">
-        <span class="label">⭐ Greener Homes Grant Potential:</span>
-        <span class="value" style="color: var(--amber);" id="greener-homes-grant">$0</span>
+      <div class="summary-row" style="background: rgba(45, 106, 79, 0.08); padding: 12px; border-radius: 6px; margin-top: 12px;">
+        <span class="label">⭐ Income-qualified bonus:</span>
+        <span class="value" style="color: var(--green-money);" id="greener-homes-grant">—</span>
       </div>
       <div class="summary-row" style="font-size: 12px; color: var(--ink-soft); padding: 8px 0; margin-top: 8px;">
-        <span style="margin: 0;">Greener Homes Grant (federal) covers 50% of eligible retrofit costs up to $40K. Requires energy audit first. <a href="/blog/greener-homes-grant-explained" style="color: var(--teal-deep); font-weight: 600;">Learn more →</a></span>
+        <span style="margin: 0;">Lower-income households can get a heat pump, insulation and weatherization installed <strong>free</strong> through ECAP — the federal Affordability money now flows through it. (The old federal Greener Homes Grant/Loan both closed in 2025.) <a href="/blog/free-heat-pump-bc-income-qualified" style="color: var(--teal-deep); font-weight: 600;">See if you qualify →</a></span>
       </div>
       <div class="summary-row total">
         <span class="label">10-Year Savings (All Utilities):</span>
@@ -496,50 +497,62 @@ function updateChecklist() {
     }
   });
 
-  // Calculate Greener Homes Grant potential (federal, 50% up to $40K)
-  // Eligible items: insulation, heat pump, heat pump water heater, HRV
-  let greenerHomesEligibleCost = 0;
-  ['insulation', 'heatpump', 'hphw', 'hrv'].forEach(item => {
-    const checkbox = document.getElementById(item);
-    if (checkbox && checkbox.checked) {
-      greenerHomesEligibleCost += costData[item];
-    }
-  });
-  const greenerHomesGrant = Math.min(greenerHomesEligibleCost * 0.5, 40000);
-
   const netCost = totalCost - totalRebates;
-  const netCostAfterGreenerHomes = netCost - greenerHomesGrant;
-  const tenYearSavings = (netCostAfterGreenerHomes > 0 ? netCostAfterGreenerHomes * 0.15 : 0) + (selectedCount > 0 ? selectedCount * 1500 : 0);
+  const tenYearSavings = (netCost > 0 ? netCost * 0.15 : 0) + (selectedCount > 0 ? selectedCount * 1500 : 0);
+
+  // Income-qualified households (lower income) may get free installs via ECAP
+  const incomeQualified = (income === 'tier1');
 
   document.getElementById('total-rebates').textContent = '$' + totalRebates.toLocaleString();
   document.getElementById('total-cost').textContent = '$' + totalCost.toLocaleString();
   document.getElementById('net-cost').textContent = netCost <= 0 ? 'Paid off' : '$' + netCost.toLocaleString();
-  document.getElementById('greener-homes-grant').textContent = greenerHomesEligibleCost > 0 ? '+ $' + Math.round(greenerHomesGrant).toLocaleString() : '$0';
+  document.getElementById('greener-homes-grant').textContent = incomeQualified ? 'Free install may apply' : '—';
   document.getElementById('ten-year-savings').textContent = '$' + Math.round(tenYearSavings).toLocaleString();
 
-  updateImpactMessage(income, selectedCount, totalRebates, netCost, greenerHomesGrant);
+  updateImpactMessage(income, selectedCount, totalRebates, netCost, incomeQualified);
 }
 
-function updateImpactMessage(income, selectedCount, totalRebates, netCost, greenerHomesGrant) {
+function updateImpactMessage(income, selectedCount, totalRebates, netCost, incomeQualified) {
   const messageEl = document.getElementById('impact-message');
   let html = '';
 
   if (selectedCount === 0) {
     html = '<div class="impact-card"><h4>No upgrades selected yet</h4><p>Check the boxes above to see your personalized retrofit roadmap.</p></div>';
-  } else if (income === 'standard') {
-    html = `<div class="impact-card"><h4>Standard Income Tier</h4><p>You qualify for base CleanBC rebates totaling $${totalRebates.toLocaleString()}. If you include insulation + heat pump + water heater, you also unlock the <strong>Greener Homes Grant (federal, up to $40K)</strong>, bringing total incentives to $${(totalRebates + greenerHomesGrant).toLocaleString()}.</p></div>`;
   } else if (income === 'tier1') {
-    html = `<div class="impact-card"><h4>Tier 1 Income Qualified 🎉</h4><p>You unlock enhanced CleanBC rebates: up to $16,000 heat pump, $3,500 water heater. Add the Greener Homes Grant (federal, 50% up to $40K), and your retrofit could be nearly fully covered.</p></div>`;
+    html = `<div class="impact-card"><h4>Enhanced (lower-income) rebates 🎉</h4><p>You unlock the highest CleanBC amounts — up to $16,000 heat pump and $3,500 water heater — for $${totalRebates.toLocaleString()} in rebates on what you selected. You may also qualify to have a heat pump, insulation and weatherization installed <strong>free</strong> through ECAP.</p></div>`;
+  } else if (income === 'standard') {
+    html = `<div class="impact-card"><h4>Standard rebates</h4><p>You qualify for base CleanBC rebates totaling $${totalRebates.toLocaleString()} on what you selected. Confirm your income tier — if your household income is lower than expected, your heat pump rebate can jump to $12,000–$16,000.</p></div>`;
   } else {
-    html = `<div class="impact-card"><h4>${income.charAt(0).toUpperCase() + income.slice(1)} Income Tier</h4><p>CleanBC rebates: $${totalRebates.toLocaleString()}. Plus, if you qualify for Greener Homes Grant, add up to $${Math.round(greenerHomesGrant).toLocaleString()} more in federal incentives.</p></div>`;
+    html = `<div class="impact-card"><h4>Enhanced rebates</h4><p>CleanBC rebates on your selection total $${totalRebates.toLocaleString()}. Your heat pump amount scales with income — the lower your household income, the larger the rebate (up to $16,000).</p></div>`;
   }
 
-  if (greenerHomesGrant > 0) {
-    html += `<div class="impact-card"><h4>🚀 Major savings opportunity: Greener Homes Grant</h4><p>The federal Greener Homes Grant covers 50% of your energy retrofit costs (insulation, heat pump, water heater, ventilation) up to $40K. Start with a professional energy audit to confirm eligibility—usually free from HPCN installers.</p></div>`;
+  if (incomeQualified) {
+    html += `<div class="impact-card"><h4>🚀 You may qualify for a free heat pump</h4><p>Lower-income households can get a heat pump, insulation and weatherization installed at no cost through the Energy Conservation Assistance Program (ECAP) — the federal Affordability money now flows through it. <a href="/blog/free-heat-pump-bc-income-qualified" style="color: var(--teal-deep); font-weight: 600;">See if you qualify →</a></p></div>`;
   }
 
   messageEl.innerHTML = html;
 }
+
+// Pre-fill from homepage hand-off (?city=&income=&heating=&utility=)
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var setSel = function (id, val) {
+    var el = document.getElementById(id);
+    if (el && val && [].some.call(el.options, function (o) { return o.value === val; })) { el.value = val; }
+  };
+  setSel('income', params.get('income'));
+  setSel('heating', params.get('heating'));
+  setSel('utility', params.get('utility'));
+  var city = params.get('city');
+  if (city) {
+    var banner = document.getElementById('assess-city-banner');
+    if (banner) {
+      banner.textContent = 'Showing estimates for ' + city + ' — adjust anything below.';
+      banner.style.display = 'block';
+    }
+  }
+  if (typeof updateChecklist === 'function') updateChecklist();
+})();
 
 // Feedback form handler
 document.getElementById('feedback-form').addEventListener('submit', async (e) => {

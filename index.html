@@ -1006,6 +1006,69 @@ body {
     Homeowners in BC can get <strong>$4,000 to $35,000</strong> in rebates for upgrading their homes. Most people don't know about it. We make it simple: See your options. Get a fair price. One installer handles everything.
   </p>
 
+  <!-- INLINE ASSESSMENT WIDGET -->
+  <div id="hpr-assess" style="max-width:560px; margin:8px auto 28px; background:var(--paper); color:var(--ink); border-radius:16px; padding:26px 24px; text-align:left; box-shadow:0 20px 48px rgba(0,0,0,0.28);">
+    <div style="font-size:12px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--amber); margin-bottom:6px;">Free 20-second check</div>
+    <div id="hpr-step-title" style="font-family:'Fraunces',Georgia,serif; font-size:21px; font-weight:600; color:var(--teal-deep); margin-bottom:16px; line-height:1.25;">See how much your home qualifies for</div>
+
+    <div id="hpr-questions">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div>
+          <label for="hpr-city" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Your city</label>
+          <select id="hpr-city" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+            <option value="">Choose your city…</option>
+            <option>Abbotsford</option><option>Burnaby</option><option>Chilliwack</option>
+            <option>Fort St. John</option><option>Kamloops</option><option>Kelowna</option>
+            <option>Nanaimo</option><option>Penticton</option><option>Prince George</option>
+            <option>Squamish</option><option>Surrey</option><option>Vancouver</option>
+            <option>Vernon</option><option>Victoria</option>
+          </select>
+        </div>
+        <div>
+          <label for="hpr-heating" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">How do you heat your home?</label>
+          <select id="hpr-heating" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+            <option value="">Choose one…</option>
+            <option value="furnace">Natural gas furnace</option>
+            <option value="electric">Electric baseboards</option>
+            <option value="oil">Oil or propane</option>
+            <option value="notsure">Not sure</option>
+          </select>
+        </div>
+        <div>
+          <label for="hpr-income" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Household income</label>
+          <select id="hpr-income" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+            <option value="">Choose a range…</option>
+            <option value="tier1">Under $110,000</option>
+            <option value="tier2">$110,000 – $165,000</option>
+            <option value="tier3">Over $165,000</option>
+          </select>
+        </div>
+      </div>
+      <button id="hpr-go" style="width:100%; margin-top:16px; padding:14px; background:var(--amber); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">See my estimate →</button>
+      <p id="hpr-err" style="display:none; margin:10px 0 0; font-size:13px; color:#b04545; text-align:center;">Please answer all three to see your estimate.</p>
+      <p style="margin:12px 0 0; font-size:12px; color:var(--sage); text-align:center;">No sales calls. We never sell your info.</p>
+    </div>
+
+    <div id="hpr-result" style="display:none;">
+      <div style="background:var(--paper-warm); border-radius:12px; padding:20px; text-align:center; margin-bottom:18px;">
+        <div style="font-size:13px; color:var(--ink-soft); margin-bottom:4px;">You likely qualify for up to</div>
+        <div id="hpr-big" style="font-family:'Fraunces',Georgia,serif; font-size:40px; font-weight:700; color:var(--amber); line-height:1;">$16,000</div>
+        <div style="font-size:13px; color:var(--ink-soft); margin-top:4px;">on a heat pump alone</div>
+        <div id="hpr-stack" style="font-size:14px; color:var(--ink); margin-top:12px; line-height:1.6;"></div>
+      </div>
+      <div style="font-size:14px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Get your full breakdown + your city's local programs</div>
+      <form id="hpr-email-form" style="display:flex; flex-direction:column; gap:10px;">
+        <input type="email" id="hpr-email" placeholder="your@email.com" required style="width:100%; padding:13px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+        <button type="submit" id="hpr-email-btn" style="width:100%; padding:14px; background:var(--teal-deep); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">Email my breakdown →</button>
+        <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; color:var(--sage); cursor:pointer;">
+          <input type="checkbox" id="hpr-news" checked style="margin-top:2px;">
+          <span>Also send me weekly BC rebate tips (unsubscribe anytime)</span>
+        </label>
+      </form>
+      <div id="hpr-done" style="display:none; text-align:center; margin-top:6px;"></div>
+    </div>
+  </div>
+
   <div class="hero-cta-row">
     <a href="#city-picker" class="btn-primary">
       Pick your city
@@ -1874,6 +1937,75 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
   }
 });
+</script>
+
+<!-- INLINE ASSESSMENT WIDGET LOGIC -->
+<script>
+(function () {
+  var HP = { tier1: 16000, tier2: 12000, tier3: 10500 };
+  var citySlug = {
+    'Abbotsford':'abbotsford','Burnaby':'burnaby','Chilliwack':'chilliwack','Fort St. John':'fort-st-john',
+    'Kamloops':'kamloops','Kelowna':'kelowna','Nanaimo':'nanaimo','Penticton':'penticton',
+    'Prince George':'prince-george','Squamish':'squamish','Surrey':'surrey','Vancouver':'vancouver',
+    'Vernon':'vernon','Victoria':'victoria'
+  };
+  var $ = function (id) { return document.getElementById(id); };
+  var city, heating, income, stacked;
+
+  $('hpr-go').addEventListener('click', function () {
+    city = $('hpr-city').value;
+    heating = $('hpr-heating').value;
+    income = $('hpr-income').value;
+    if (!city || !heating || !income) { $('hpr-err').style.display = 'block'; return; }
+    $('hpr-err').style.display = 'none';
+
+    var hp = HP[income];
+    stacked = hp + 5000 + 5500 + 3000 + 2000; // heat pump + solar + insulation + water heater + windows
+    $('hpr-big').textContent = '$' + hp.toLocaleString();
+
+    var fuelLine = '';
+    if (heating === 'furnace' || heating === 'oil') {
+      fuelLine = 'Because you heat with ' + (heating === 'oil' ? 'oil/propane' : 'gas') + ', you’re the ideal candidate for the fuel-switching rebate. ';
+    } else if (heating === 'electric') {
+      fuelLine = 'Switching baseboards to a heat pump also adds cooling. ';
+    }
+    $('hpr-stack').innerHTML = '<strong>' + fuelLine + '</strong>Stack solar ($5,000), insulation (up to $5,500), a battery, water heater and EV rebates and your total in <strong>' + city + '</strong> can reach <strong>~$' + stacked.toLocaleString() + '</strong>.';
+
+    $('hpr-step-title').textContent = 'Your ' + city + ' rebate estimate';
+    $('hpr-questions').style.display = 'none';
+    $('hpr-result').style.display = 'block';
+  });
+
+  $('hpr-email-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var email = $('hpr-email').value;
+    var btn = $('hpr-email-btn');
+    btn.disabled = true; var orig = btn.textContent; btn.textContent = 'Sending…';
+
+    var utility = (city === 'Kelowna') ? 'fortisbc' : 'bchydro';
+    var qs = '?city=' + encodeURIComponent(city) + '&income=' + income + '&heating=' + heating + '&utility=' + utility;
+    var fullUrl = '/retrofit-assessment' + qs;
+
+    try {
+      await fetch('/api/newsletter-signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email, city: city, page: 'homepage-assessment',
+          heating: heating, income: income, estimate: stacked,
+          newsletter: $('hpr-news').checked
+        })
+      });
+    } catch (err) { console.error('lead capture error', err); }
+
+    $('hpr-email-form').style.display = 'none';
+    var done = $('hpr-done');
+    done.style.display = 'block';
+    done.innerHTML = '<div style="font-family:\'Fraunces\',Georgia,serif; font-size:18px; font-weight:600; color:var(--green-money); margin-bottom:8px;">✓ On its way!</div>' +
+      '<p style="font-size:14px; color:var(--ink-soft); margin-bottom:14px;">Check your inbox. Now see your full interactive breakdown for ' + city + ':</p>' +
+      '<a href="' + fullUrl + '" style="display:inline-block; background:var(--amber); color:#fff; padding:13px 26px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Open my ' + city + ' assessment →</a>';
+  });
+})();
 </script>
 
 </body>

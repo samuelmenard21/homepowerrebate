@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { email, city } = req.body;
+    const { email, city, heating, income, estimate } = req.body;
 
     if (!email) {
       return res.status(400).json({ error: 'Email is required' });
@@ -44,8 +44,11 @@ export default async function handler(req, res) {
     signups.push({
       email,
       city: city || 'Not specified',
-      date: new Date().toISOString(),
-      page: req.body.page || 'unknown'
+      page: req.body.page || 'unknown',
+      heating: heating || null,
+      income: income || null,
+      estimate: estimate || null,
+      date: new Date().toISOString()
     });
 
     fs.writeFileSync(signupsFile, JSON.stringify(signups, null, 2));

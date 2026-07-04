@@ -3,3 +3,8 @@
 node_modules/
 .wrangler/
 .dev.vars
+
+# Secrets and local lead data (never commit)
+.env.local
+.env
+data/

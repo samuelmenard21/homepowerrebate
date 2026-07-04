@@ -19,7 +19,7 @@ app.use(express.static('.'));
 // Newsletter signup endpoint
 app.post('/api/newsletter-signup', async (req, res) => {
   try {
-    const { email, city, page } = req.body;
+    const { email, city, page, heating, income, estimate } = req.body;
 
     if (!email) {
       return res.status(400).json({ error: 'Email is required' });
@@ -45,6 +45,9 @@ app.post('/api/newsletter-signup', async (req, res) => {
       email,
       city: city || 'Not specified',
       page: page || 'unknown',
+      heating: heating || null,
+      income: income || null,
+      estimate: estimate || null,
       date: new Date().toISOString()
     });
 

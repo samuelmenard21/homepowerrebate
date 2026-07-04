@@ -239,10 +239,7 @@ footer p { font-size:13px; color:var(--sage); }
 </footer>
 
 <script>
-// Blog newsletter signup handler — Resend integration
-const RESEND_API_KEY = 're_Tk3drtA2_9A7SmeJTwMpw6RibZbRVdmrQ';
-const AUDIENCE_ID = 'c8b63b68-01ad-4727-a62e-2484dbe25ae9';
-
+// Blog newsletter signup handler — backend integration
 document.getElementById('blog-newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('blog-newsletter-email').value;
@@ -255,18 +252,15 @@ document.getElementById('blog-newsletter-form')?.addEventListener('submit', asyn
   button.textContent = 'Subscribing...';
 
   try {
-    const response = await fetch(`https://api.resend.com/audiences/${AUDIENCE_ID}/contacts`, {
+    const response = await fetch('/api/newsletter-signup', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         email: email,
-        unsubscribed: false,
-        first_name: '',
-        last_name: '',
-        city: city || 'Not specified'
+        city: city || 'Not specified',
+        page: 'blog'
       })
     });
 

@@ -1660,6 +1660,26 @@ body {
         required
         style="padding: 14px 16px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 16px; background: #fff; color: var(--ink);"
       >
+      <select
+        id="newsletter-city"
+        style="padding: 14px 16px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 16px; background: #fff; color: var(--ink);"
+      >
+        <option value="">Which BC city are you in?</option>
+        <option value="Abbotsford">Abbotsford</option>
+        <option value="Burnaby">Burnaby</option>
+        <option value="Chilliwack">Chilliwack</option>
+        <option value="Fort St. John">Fort St. John</option>
+        <option value="Kamloops">Kamloops</option>
+        <option value="Kelowna">Kelowna</option>
+        <option value="Nanaimo">Nanaimo</option>
+        <option value="Penticton">Penticton</option>
+        <option value="Prince George">Prince George</option>
+        <option value="Squamish">Squamish</option>
+        <option value="Surrey">Surrey</option>
+        <option value="Vancouver">Vancouver</option>
+        <option value="Vernon">Vernon</option>
+        <option value="Victoria">Victoria</option>
+      </select>
       <button
         type="submit"
         style="padding: 14px 28px; background: #d4751c; color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; font-family: 'Inter Tight', sans-serif; transition: background 0.15s;"
@@ -1808,6 +1828,7 @@ const AUDIENCE_ID = 'c8b63b68-01ad-4727-a62e-2484dbe25ae9';
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;
+  const city = document.getElementById('newsletter-city').value;
   const responseEl = document.getElementById('newsletter-response');
   const button = document.querySelector('#newsletter-form button');
   const originalText = button.textContent;
@@ -1824,7 +1845,8 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       },
       body: JSON.stringify({
         email: email,
-        unsubscribed: false
+        unsubscribed: false,
+        city: city || 'Not specified'
       })
     });
 

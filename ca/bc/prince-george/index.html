@@ -170,7 +170,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
           </form>
         </div>
         <div id="hpr-cw-refer-step" style="display:none;">
-          <div style="background:var(--paper-warm); border-radius:10px; padding:14px; margin-bottom:14px; font-size:13px; color:var(--ink);">&#10003; Sent. <strong>Want your local Prince George installer to prepare this exact quote &mdash; free?</strong> Add your name and number and we&rsquo;ll match you with the one approved installer for your city.</div>
+          <div style="background:var(--paper-warm); border-radius:10px; padding:14px; margin-bottom:14px; font-size:13px; color:var(--ink);">&#10003; Sent. <strong>Want a vetted local installer to prepare this exact quote &mdash; free?</strong> Add your name and number and we&rsquo;ll personally line one up for you &mdash; no obligation, no spam.</div>
           <form id="hpr-cw-refer-form" style="display:flex; flex-direction:column; gap:10px;">
             <input type="text" id="hpr-cw-name" placeholder="First name" required style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
             <input type="tel" id="hpr-cw-phone" placeholder="Phone number" required style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
@@ -610,8 +610,8 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     } catch (err) { console.error("estimate-lead error", err); }
     $("hpr-cw-refer-step").style.display = "none";
     var d = $("hpr-cw-done"); d.style.display = "block";
-    d.innerHTML = '<div style="font-family:\'Fraunces\',Georgia,serif; font-size:18px; font-weight:600; color:var(--green-money); margin-bottom:8px;">✓ You’re matched!</div>' +
-      '<p style="font-size:14px; color:var(--ink-soft); margin-bottom:14px;">Your local installer will reach out within one business day. Meanwhile, see your full interactive breakdown:</p>' +
+    d.innerHTML = '<div style="font-family:\'Fraunces\',Georgia,serif; font-size:18px; font-weight:600; color:var(--green-money); margin-bottom:8px;">✓ Got it — you’re on the list!</div>' +
+      '<p style="font-size:14px; color:var(--ink-soft); margin-bottom:14px;">We’ll personally review your details and reach out within one business day to line up your vetted local installer. Meanwhile, see your full interactive breakdown:</p>' +
       '<a href="' + fullUrl() + '" style="display:inline-block; background:var(--amber); color:#fff; padding:12px 24px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Open my full assessment &rarr;</a>';
   });
 })();

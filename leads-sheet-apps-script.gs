@@ -30,6 +30,7 @@
  */
 
 // ====== CONFIG — edit these ======
+var SHEET_ID = '1MQAx_i-e4DqEf1E9eXCWjE-nFWD08YR9P2OHfTKi-8M'; // the leads Google Sheet (from its URL)
 var NOTIFY_EMAIL = 'samuelmenard@gmail.com';   // where lead alerts go
 var NOTIFY_ON = ['lead', 'subscriber', 'waitlist']; // record types that email you
 // ==================================
@@ -73,7 +74,7 @@ function doPost(e) {
  * `status` and `received_at` are pinned as the first columns for scanning.
  */
 function writeRow(tabName, record) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = SpreadsheetApp.openById(SHEET_ID);
   var sheet = ss.getSheetByName(tabName);
   if (!sheet) {
     sheet = ss.insertSheet(tabName);

@@ -118,12 +118,57 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 </section>
 
 <section class="assess-band">
-  <div class="assess-inner">
+  <div class="assess-inner" style="flex-direction:column; align-items:stretch; gap:18px;">
     <div class="assess-copy">
-      <h2>Not sure what you qualify for?</h2>
-      <p>Answer 5 quick questions about your home and income. We'll show your exact Nanaimo rebate total in under a minute — free, no sales calls.</p>
+      <h2>See exactly what your Nanaimo home qualifies for</h2>
+      <p>Two quick questions &mdash; free, instant estimate, no sales calls.</p>
     </div>
-    <a href="/retrofit-assessment?city=Nanaimo" class="assess-cta">Estimate my rebates &rarr;</a>
+    <div id="hpr-cw" style="background:#fff; color:var(--ink); border-radius:14px; padding:22px; max-width:640px; text-align:left;">
+      <div id="hpr-cw-q">
+        <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:12px;">Free 15-second check</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div>
+            <label for="hpr-cw-heating" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">How you heat</label>
+            <select id="hpr-cw-heating" style="width:100%; padding:11px 12px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+              <option value="">Choose&hellip;</option>
+              <option value="furnace">Natural gas furnace</option>
+              <option value="electric">Electric baseboards</option>
+              <option value="oil">Oil or propane</option>
+              <option value="notsure">Not sure</option>
+            </select>
+          </div>
+          <div>
+            <label for="hpr-cw-income" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Household income</label>
+            <select id="hpr-cw-income" style="width:100%; padding:11px 12px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+              <option value="">Choose&hellip;</option>
+              <option value="tier1">Under $110,000</option>
+              <option value="tier2">$110,000 &ndash; $165,000</option>
+              <option value="tier3">Over $165,000</option>
+            </select>
+          </div>
+        </div>
+        <button id="hpr-cw-go" style="width:100%; margin-top:14px; padding:13px; background:var(--amber); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">See my estimate &rarr;</button>
+        <p id="hpr-cw-err" style="display:none; margin:10px 0 0; font-size:13px; color:#b04545; text-align:center;">Please answer both to see your estimate.</p>
+      </div>
+      <div id="hpr-cw-result" style="display:none;">
+        <div style="background:var(--paper-warm); border-radius:12px; padding:18px; text-align:center; margin-bottom:16px;">
+          <div style="font-size:13px; color:var(--ink-soft);">You likely qualify for up to</div>
+          <div id="hpr-cw-big" style="font-family:'Fraunces',Georgia,serif; font-size:38px; font-weight:700; color:var(--amber); line-height:1.1;">$16,000</div>
+          <div style="font-size:13px; color:var(--ink-soft);">on a heat pump alone</div>
+          <div id="hpr-cw-stack" style="font-size:14px; color:var(--ink); margin-top:10px; line-height:1.6;"></div>
+        </div>
+        <div style="font-size:14px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Get your full breakdown emailed to you</div>
+        <form id="hpr-cw-form" style="display:flex; flex-direction:column; gap:10px;">
+          <input type="email" id="hpr-cw-email" placeholder="your@email.com" required style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+          <button type="submit" id="hpr-cw-btn" style="width:100%; padding:13px; background:var(--teal-deep); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">Email my breakdown &rarr;</button>
+          <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; color:var(--sage); cursor:pointer;">
+            <input type="checkbox" id="hpr-cw-news" checked style="margin-top:2px;">
+            <span>Also send me weekly BC rebate tips (unsubscribe anytime)</span>
+          </label>
+        </form>
+        <div id="hpr-cw-done" style="display:none; text-align:center; margin-top:6px;"></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -501,6 +546,46 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   <p>&copy; 2026 HomePowerRebate. <a href="/">Home</a> &middot; <a href="/blog">Blog</a> &middot; <a href="/retrofit-assessment">Assessment</a> &middot; <a href="/#city-picker">All cities</a></p>
   <p style="margin-top:10px; font-size:11px; color:rgba(250,247,242,.45);">Independent guide, not affiliated with BC Hydro, FortisBC, or the Province of BC. Rebate amounts change &mdash; always confirm current figures on the official program sites linked above.</p>
 </footer>
+
+<script>
+(function () {
+  var CITY = "Nanaimo", SLUG = "nanaimo", UTILITY = "bchydro";
+  var HP = { tier1: 16000, tier2: 12000, tier3: 10500 };
+  var $ = function (id) { return document.getElementById(id); };
+  var heating, income, stacked;
+  var go = $("hpr-cw-go");
+  if (!go) return;
+  go.addEventListener("click", function () {
+    heating = $("hpr-cw-heating").value; income = $("hpr-cw-income").value;
+    if (!heating || !income) { $("hpr-cw-err").style.display = "block"; return; }
+    $("hpr-cw-err").style.display = "none";
+    var hp = HP[income]; stacked = hp + 5000 + 5500 + 3000 + 2000;
+    $("hpr-cw-big").textContent = "$" + hp.toLocaleString();
+    var fuel = "";
+    if (heating === "furnace" || heating === "oil") { fuel = "Because you heat with " + (heating === "oil" ? "oil/propane" : "gas") + ", you’re the ideal fuel-switching candidate. "; }
+    else if (heating === "electric") { fuel = "Switching baseboards to a heat pump also adds cooling. "; }
+    $("hpr-cw-stack").innerHTML = "<strong>" + fuel + "</strong>Stack solar ($5,000), insulation (up to $5,500), a battery, water heater and EV rebates and your " + CITY + " total can reach <strong>~$" + stacked.toLocaleString() + "</strong>.";
+    $("hpr-cw-q").style.display = "none"; $("hpr-cw-result").style.display = "block";
+  });
+  $("hpr-cw-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var email = $("hpr-cw-email").value, btn = $("hpr-cw-btn");
+    btn.disabled = true; btn.textContent = "Sending…";
+    var url = "/retrofit-assessment?city=" + encodeURIComponent(CITY) + "&income=" + income + "&heating=" + heating + "&utility=" + UTILITY;
+    try {
+      await fetch("/api/newsletter-signup", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, city: CITY, page: "city-" + SLUG, heating: heating, income: income, estimate: stacked, newsletter: $("hpr-cw-news").checked })
+      });
+    } catch (err) { console.error("lead capture error", err); }
+    $("hpr-cw-form").style.display = "none";
+    var d = $("hpr-cw-done"); d.style.display = "block";
+    d.innerHTML = '<div style="font-family:\'Fraunces\',Georgia,serif; font-size:18px; font-weight:600; color:var(--green-money); margin-bottom:8px;">✓ On its way!</div>' +
+      '<p style="font-size:14px; color:var(--ink-soft); margin-bottom:14px;">Check your inbox, then see your full interactive breakdown:</p>' +
+      '<a href="' + url + '" style="display:inline-block; background:var(--amber); color:#fff; padding:12px 24px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Open my full assessment &rarr;</a>';
+  });
+})();
+</script>
 
 </body>
 </html>

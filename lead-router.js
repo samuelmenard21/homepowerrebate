@@ -158,6 +158,9 @@ const CORS_HEADERS = {
 // For local testing, uncomment:
 // CORS_HEADERS['Access-Control-Allow-Origin'] = '*';
 
+// Resend audience for the newsletter / list-building (not secret — the API key is).
+const RESEND_AUDIENCE_ID = 'c8b63b68-01ad-4727-a62e-2484dbe25ae9';
+
 // ===========================================================================
 // MAIN HANDLER — path-based router
 // ===========================================================================
@@ -178,6 +181,8 @@ export default {
 
     if (path === '/submit') return handleLeadSubmit(request, env);
     if (path === '/waitlist') return handleWaitlistSubmit(request, env);
+    if (path === '/newsletter') return handleNewsletter(request, env);
+    if (path === '/estimate-lead') return handleEstimateLead(request, env);
 
     return jsonResponse({ error: `Unknown route: ${path}` }, 404);
   }
@@ -377,6 +382,177 @@ async function handleWaitlistSubmit(request, env) {
     success: true,
     waitlist_id: waitlistId
   }, 200);
+}
+
+// ===========================================================================
+// ROUTE 3 — /newsletter (list-building: email + estimate context)
+// ===========================================================================
+// Lightweight top-of-funnel capture from the homepage/city assessment widget.
+// Adds the contact to the Resend audience AND logs to the Google Sheet
+// (record_type: 'subscriber') with the estimate context so you can spot
+// high-intent subscribers by city. No installer routing — these are
+// subscribers, not yet referrals (no phone number).
+
+async function handleNewsletter(request, env) {
+  let p;
+  try { p = await request.json(); } catch (e) { return jsonResponse({ error: 'Invalid JSON' }, 400); }
+
+  if (p.website) return jsonResponse({ success: true }, 200); // honeypot
+  if (!p.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email)) {
+    return jsonResponse({ error: 'Invalid email' }, 400);
+  }
+
+  const record = {
+    record_type: 'subscriber',
+    timestamp: new Date().toISOString(),
+    email: cleanString(p.email),
+    city: cleanString(p.city || ''),
+    heating: cleanString(p.heating || ''),
+    income: cleanString(p.income || ''),
+    estimate: cleanString(String(p.estimate || '')),
+    source: cleanString(p.source || p.page || ''),
+    status: 'new'
+  };
+
+  await Promise.allSettled([
+    addToResendAudience(record.email, env),
+    logToSheet(record, env)
+  ]);
+
+  return jsonResponse({ success: true }, 200);
+}
+
+// ===========================================================================
+// ROUTE 4 — /estimate-lead (a referral: adds name + phone to an estimate)
+// ===========================================================================
+// The second tier of the assessment widget. Once a subscriber adds their
+// name + phone, they become an installer-ready referral: routed to the
+// matched heat-pump installer (or ops if none/placeholder), logged to the
+// Sheet as a 'lead', and kept on the Resend list.
+
+async function handleEstimateLead(request, env) {
+  let p;
+  try { p = await request.json(); } catch (e) { return jsonResponse({ error: 'Invalid JSON' }, 400); }
+
+  if (p.website) return jsonResponse({ success: true }, 200); // honeypot
+
+  const required = ['email', 'firstname', 'phone', 'city'];
+  const missing = required.filter(f => !p[f]);
+  if (missing.length) return jsonResponse({ error: `Missing fields: ${missing.join(', ')}` }, 400);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email)) return jsonResponse({ error: 'Invalid email' }, 400);
+
+  const city = String(p.city || '').toLowerCase().trim();
+  const service = 'heat-pump';
+  const installer = (INSTALLER_ROUTING[service] || {})[city];
+  // Don't email placeholder addresses (they'd bounce) — route to ops instead.
+  const isReal = installer && !/example\.com$/i.test(installer.email);
+
+  const lead = {
+    record_type: 'lead',
+    lead_id: crypto.randomUUID(),
+    timestamp: new Date().toISOString(),
+    city,
+    service,
+    installer_assigned: installer ? installer.name : 'UNASSIGNED — needs manual follow-up',
+    installer_email: isReal ? installer.email : '',
+    firstname: cleanString(p.firstname),
+    lastname: cleanString(p.lastname || ''),
+    email: cleanString(p.email),
+    phone: cleanString(p.phone),
+    postal: cleanString(p.postal || ''),
+    current_heat: cleanString(p.heating || 'unknown'),
+    income_band: cleanString(p.income || 'unknown'),
+    estimated_value: cleanString(String(p.estimate || 'unknown')),
+    page_url: cleanString(p.source || p.page || ''),
+    referrer: cleanString(p.referrer || 'estimate-widget'),
+    status: 'new'
+  };
+
+  const tasks = [
+    sendOpsEstimateLead(lead, env),
+    logToSheet(lead, env),
+    addToResendAudience(lead.email, env)
+  ];
+  if (isReal) tasks.unshift(sendEstimateInstallerEmail(lead, installer, env));
+
+  await Promise.allSettled(tasks);
+
+  return jsonResponse({
+    success: true,
+    lead_id: lead.lead_id,
+    installer_name: installer ? installer.name : null,
+    installer_phone: installer ? installer.phone : null
+  }, 200);
+}
+
+// ===========================================================================
+// EMAIL: compact installer + ops notifications for estimate leads
+// ===========================================================================
+
+async function sendEstimateInstallerEmail(lead, installer, env) {
+  return resendEmail(env.RESEND_API_KEY, {
+    from: 'HomePowerRebate Leads <leads@homepowerrebate.com>',
+    to: installer.email,
+    cc: installer.cc || undefined,
+    reply_to: lead.email,
+    subject: `New heat pump lead: ${lead.firstname} in ${capitalize(lead.city)}`,
+    html: `
+      <div style="font-family:-apple-system,sans-serif;max-width:560px;margin:0 auto;padding:20px;color:#0a2a2e;">
+        <h2 style="color:#08363f;">New HomePowerRebate referral</h2>
+        <p>A homeowner asked to be matched after seeing their rebate estimate.</p>
+        <ul>
+          <li><strong>Name:</strong> ${lead.firstname} ${lead.lastname}</li>
+          <li><strong>Phone:</strong> <a href="tel:${lead.phone}">${lead.phone}</a></li>
+          <li><strong>Email:</strong> <a href="mailto:${lead.email}">${lead.email}</a></li>
+          <li><strong>City:</strong> ${capitalize(lead.city)}, BC</li>
+          <li><strong>Current heating:</strong> ${lead.current_heat}</li>
+          <li><strong>Estimate shown:</strong> up to ${lead.estimated_value}</li>
+        </ul>
+        <p style="background:#0a2a2e;color:#faf7f2;padding:16px;border-radius:10px;text-align:center;">
+          Call this homeowner within 1 business day.<br>
+          <a href="tel:${lead.phone}" style="display:inline-block;margin-top:10px;background:#d4751c;color:#fff;padding:10px 22px;border-radius:999px;text-decoration:none;font-weight:600;">Call ${lead.phone}</a>
+        </p>
+        <p style="font-size:12px;color:#1a3d42;">Source: ${lead.page_url} · ${new Date(lead.timestamp).toLocaleString('en-CA', { timeZone: 'America/Vancouver' })}</p>
+      </div>`
+  });
+}
+
+async function sendOpsEstimateLead(lead, env) {
+  if (!env.OPS_EMAIL) return Promise.resolve();
+  const warn = lead.installer_email ? '' :
+    `<p style="background:#fef3e6;border:1px solid #e8b87a;padding:10px 14px;border-radius:8px;"><strong>⚠️ No live heat-pump installer for ${lead.city} yet.</strong> Follow up manually / forward to a partner.</p>`;
+  return resendEmail(env.RESEND_API_KEY, {
+    from: 'HomePowerRebate <ops@homepowerrebate.com>',
+    to: env.OPS_EMAIL,
+    subject: `[Referral] ${capitalize(lead.city)} — ${lead.firstname} (${lead.estimated_value})`,
+    html: `${warn}
+      <p>New estimate referral (routed to <strong>${lead.installer_assigned}</strong>).</p>
+      <ul>
+        <li><strong>Name:</strong> ${lead.firstname} ${lead.lastname}</li>
+        <li><strong>Phone:</strong> ${lead.phone}</li>
+        <li><strong>Email:</strong> ${lead.email}</li>
+        <li><strong>City:</strong> ${lead.city}</li>
+        <li><strong>Heating:</strong> ${lead.current_heat}</li>
+        <li><strong>Income band:</strong> ${lead.income_band}</li>
+        <li><strong>Estimate:</strong> ${lead.estimated_value}</li>
+        <li><strong>Source:</strong> ${lead.page_url}</li>
+      </ul>`
+  });
+}
+
+// ===========================================================================
+// RESEND: add a contact to the newsletter audience
+// ===========================================================================
+
+async function addToResendAudience(email, env) {
+  if (!env.RESEND_API_KEY) return Promise.resolve();
+  const res = await fetch(`https://api.resend.com/audiences/${RESEND_AUDIENCE_ID}/contacts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.RESEND_API_KEY}` },
+    body: JSON.stringify({ email, unsubscribed: false })
+  });
+  // "already exists" is fine — don't throw.
+  return res.ok ? res.json() : Promise.resolve();
 }
 
 // ===========================================================================

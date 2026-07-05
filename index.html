@@ -1056,15 +1056,29 @@ body {
         <div style="font-size:13px; color:var(--ink-soft); margin-top:4px;">on a heat pump alone</div>
         <div id="hpr-stack" style="font-size:14px; color:var(--ink); margin-top:12px; line-height:1.6;"></div>
       </div>
-      <div style="font-size:14px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Get your full breakdown + your city's local programs</div>
-      <form id="hpr-email-form" style="display:flex; flex-direction:column; gap:10px;">
-        <input type="email" id="hpr-email" placeholder="your@email.com" required style="width:100%; padding:13px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
-        <button type="submit" id="hpr-email-btn" style="width:100%; padding:14px; background:var(--teal-deep); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">Email my breakdown →</button>
-        <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; color:var(--sage); cursor:pointer;">
-          <input type="checkbox" id="hpr-news" checked style="margin-top:2px;">
-          <span>Also send me weekly BC rebate tips (unsubscribe anytime)</span>
-        </label>
-      </form>
+      <!-- Tier 1: email (list-building) -->
+      <div id="hpr-email-step">
+        <div style="font-size:14px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Get your full breakdown + your city's local programs</div>
+        <form id="hpr-email-form" style="display:flex; flex-direction:column; gap:10px;">
+          <input type="email" id="hpr-email" placeholder="your@email.com" required style="width:100%; padding:13px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+          <input type="text" id="hpr-hp" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px;" aria-hidden="true">
+          <button type="submit" id="hpr-email-btn" style="width:100%; padding:14px; background:var(--teal-deep); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">Email my breakdown →</button>
+          <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; color:var(--sage); cursor:pointer;">
+            <input type="checkbox" id="hpr-news" checked style="margin-top:2px;">
+            <span>Also send me weekly BC rebate tips (unsubscribe anytime)</span>
+          </label>
+        </form>
+      </div>
+      <!-- Tier 2: get matched with installer (referral) -->
+      <div id="hpr-refer-step" style="display:none;">
+        <div style="background:var(--paper-warm); border-radius:10px; padding:14px; margin-bottom:14px; font-size:13px; color:var(--ink);">✓ Sent. <strong>Want your local installer to prepare this exact quote — free?</strong> Add your name and number and we'll match you with the one approved installer for your city.</div>
+        <form id="hpr-refer-form" style="display:flex; flex-direction:column; gap:10px;">
+          <input type="text" id="hpr-name" placeholder="First name" required style="width:100%; padding:13px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+          <input type="tel" id="hpr-phone" placeholder="Phone number" required style="width:100%; padding:13px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+          <button type="submit" id="hpr-refer-btn" style="width:100%; padding:14px; background:var(--amber); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">Match me with my installer →</button>
+        </form>
+        <a href="#" id="hpr-skip" style="display:block; text-align:center; margin-top:12px; font-size:13px; color:var(--sage); text-decoration:underline;">No thanks — just open my full assessment</a>
+      </div>
       <div id="hpr-done" style="display:none; text-align:center; margin-top:6px;"></div>
     </div>
   </div>
@@ -1897,7 +1911,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
   button.textContent = 'Signing up...';
 
   try {
-    const response = await fetch('/api/newsletter-signup', {
+    const response = await fetch('https://leads.homepowerrebate.com/newsletter', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -1976,34 +1990,45 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     $('hpr-result').style.display = 'block';
   });
 
+  var WORKER = 'https://leads.homepowerrebate.com';
+  var leadEmail = '';
+  function fullUrl() {
+    var utility = (city === 'Kelowna') ? 'fortisbc' : 'bchydro';
+    return '/retrofit-assessment?city=' + encodeURIComponent(city) + '&income=' + income + '&heating=' + heating + '&utility=' + utility;
+  }
+
+  // Tier 1 — email captures to the newsletter list (Resend + Google Sheet)
   $('hpr-email-form').addEventListener('submit', async function (e) {
     e.preventDefault();
-    var email = $('hpr-email').value;
-    var btn = $('hpr-email-btn');
-    btn.disabled = true; var orig = btn.textContent; btn.textContent = 'Sending…';
-
-    var utility = (city === 'Kelowna') ? 'fortisbc' : 'bchydro';
-    var qs = '?city=' + encodeURIComponent(city) + '&income=' + income + '&heating=' + heating + '&utility=' + utility;
-    var fullUrl = '/retrofit-assessment' + qs;
-
+    if ($('hpr-hp').value) return; // honeypot
+    leadEmail = $('hpr-email').value;
+    var btn = $('hpr-email-btn'); btn.disabled = true; btn.textContent = 'Sending…';
     try {
-      await fetch('/api/newsletter-signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: email, city: city, page: 'homepage-assessment',
-          heating: heating, income: income, estimate: stacked,
-          newsletter: $('hpr-news').checked
-        })
+      await fetch(WORKER + '/newsletter', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: leadEmail, city: city, heating: heating, income: income, estimate: stacked, source: 'homepage-assessment', newsletter: $('hpr-news').checked })
       });
-    } catch (err) { console.error('lead capture error', err); }
+    } catch (err) { console.error('newsletter error', err); }
+    $('hpr-email-step').style.display = 'none';
+    $('hpr-skip').setAttribute('href', fullUrl());
+    $('hpr-refer-step').style.display = 'block';
+  });
 
-    $('hpr-email-form').style.display = 'none';
-    var done = $('hpr-done');
-    done.style.display = 'block';
-    done.innerHTML = '<div style="font-family:\'Fraunces\',Georgia,serif; font-size:18px; font-weight:600; color:var(--green-money); margin-bottom:8px;">✓ On its way!</div>' +
-      '<p style="font-size:14px; color:var(--ink-soft); margin-bottom:14px;">Check your inbox. Now see your full interactive breakdown for ' + city + ':</p>' +
-      '<a href="' + fullUrl + '" style="display:inline-block; background:var(--amber); color:#fff; padding:13px 26px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Open my ' + city + ' assessment →</a>';
+  // Tier 2 — name + phone turns the subscriber into an installer referral
+  $('hpr-refer-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var btn = $('hpr-refer-btn'); btn.disabled = true; btn.textContent = 'Matching…';
+    try {
+      await fetch(WORKER + '/estimate-lead', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: leadEmail, firstname: $('hpr-name').value, phone: $('hpr-phone').value, city: city, heating: heating, income: income, estimate: stacked, source: 'homepage-assessment' })
+      });
+    } catch (err) { console.error('estimate-lead error', err); }
+    $('hpr-refer-step').style.display = 'none';
+    var done = $('hpr-done'); done.style.display = 'block';
+    done.innerHTML = '<div style="font-family:\'Fraunces\',Georgia,serif; font-size:18px; font-weight:600; color:var(--green-money); margin-bottom:8px;">✓ You’re matched!</div>' +
+      '<p style="font-size:14px; color:var(--ink-soft); margin-bottom:14px;">Your local installer will reach out within one business day. Meanwhile, explore your full breakdown for ' + city + ':</p>' +
+      '<a href="' + fullUrl() + '" style="display:inline-block; background:var(--amber); color:#fff; padding:13px 26px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Open my ' + city + ' assessment →</a>';
   });
 })();
 </script>

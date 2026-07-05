@@ -5,10 +5,7 @@ compatibility_flags = ["nodejs_compat"]
 
 # Route the Worker to leads.homepowerrebate.com
 routes = [
-  {
-    pattern = "leads.homepowerrebate.com/*",
-    zone_name = "homepowerrebate.com"
-  }
+  { pattern = "leads.homepowerrebate.com/*", zone_name = "homepowerrebate.com" }
 ]
 
 # Environment variables (non-sensitive config goes here)

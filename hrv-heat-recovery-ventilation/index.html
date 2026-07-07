@@ -271,8 +271,77 @@ footer a { color: rgba(250,247,242,.75); border-bottom: 1px solid rgba(250,247,2
   <a href="/#city-picker" class="btn">See your city →</a>
 </div>
 
-<footer>
-  <p>&copy; 2026 HomePowerRebate. Independent installer matching. <a href="/">Home</a> · <a href="/blog">Blog</a> · <a href="/#city-picker">Find your city</a></p>
+<footer class="hprf">
+<style>
+.hprf{background:var(--ink);color:rgba(250,247,242,.65);padding:56px 28px 32px;font-family:'Inter Tight',-apple-system,sans-serif;line-height:1.6;}
+.hprf a{text-decoration:none;}
+.hprf-inner{max-width:1180px;margin:0 auto;}
+.hprf-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:32px;border-bottom:1px solid rgba(250,247,242,.1);}
+.hprf-brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;color:var(--paper);letter-spacing:-.02em;margin-bottom:12px;}
+.hprf-brand span{color:var(--amber);}
+.hprf-tag{font-size:13px;color:rgba(250,247,242,.4);max-width:320px;margin:0;}
+.hprf-ct{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(250,247,242,.7);margin-bottom:14px;}
+.hprf-links{list-style:none;display:grid;gap:8px;font-size:14px;margin:0;padding:0;}
+.hprf-links a{color:rgba(250,247,242,.45);}
+.hprf-links a:hover{color:var(--amber);}
+.hprf-bottom{max-width:1180px;margin:0 auto;padding-top:24px;font-size:12px;color:rgba(250,247,242,.35);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+@media(max-width:880px){.hprf-top{grid-template-columns:1fr 1fr;gap:28px;}}
+@media(max-width:520px){.hprf-top{grid-template-columns:1fr;}}
+</style>
+  <div class="hprf-inner">
+    <div class="hprf-top">
+      <div>
+        <div class="hprf-brand">Home<span>Power</span>Rebate</div>
+        <p class="hprf-tag">Helping BC homeowners claim every rebate they qualify for. One match, one trusted installer, no spam.</p>
+      </div>
+      <div>
+        <div class="hprf-ct">BC Cities</div>
+        <ul class="hprf-links">
+          <li><a href="/ca/bc/abbotsford">Abbotsford</a></li>
+          <li><a href="/ca/bc/burnaby">Burnaby</a></li>
+          <li><a href="/ca/bc/chilliwack">Chilliwack</a></li>
+          <li><a href="/ca/bc/fort-st-john">Fort St. John</a></li>
+          <li><a href="/ca/bc/kamloops">Kamloops</a></li>
+          <li><a href="/ca/bc/kelowna">Kelowna</a></li>
+          <li><a href="/ca/bc/nanaimo">Nanaimo</a></li>
+          <li><a href="/ca/bc/penticton">Penticton</a></li>
+          <li><a href="/ca/bc/prince-george">Prince George</a></li>
+          <li><a href="/ca/bc/squamish">Squamish</a></li>
+          <li><a href="/ca/bc/surrey">Surrey</a></li>
+          <li><a href="/ca/bc/vancouver">Vancouver</a></li>
+          <li><a href="/ca/bc/vernon">Vernon</a></li>
+          <li><a href="/ca/bc/victoria">Victoria</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Guides &amp; Tools</div>
+        <ul class="hprf-links">
+          <li><a href="/retrofit-assessment">Rebate Assessment</a></li>
+          <li><a href="/ca/bc">BC Rebate Overview</a></li>
+          <li><a href="/blog/heat-pumps-explained-bc">Heat Pumps Explained</a></li>
+          <li><a href="/blog/free-heat-pump-bc-income-qualified">Free Heat Pump?</a></li>
+          <li><a href="/blog/bc-approved-home-battery-rebate">Choosing a Battery</a></li>
+          <li><a href="/eguana">Eguana Evolve Battery</a></li>
+          <li><a href="/blog/energy-saving-ideas-bc-home">Cut Your Bill Now</a></li>
+          <li><a href="/smart-thermostats">Smart Thermostats</a></li>
+          <li><a href="/blog">Full Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Company</div>
+        <ul class="hprf-links">
+          <li><a href="/#about">About</a></li>
+          <li><a href="/ca/bc">All Cities</a></li>
+          <li><a href="/retrofit-assessment">Free Estimate</a></li>
+          <li><a href="mailto:hello@homepowerrebate.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hprf-bottom">
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide &amp; installer matching. Not affiliated with BC Hydro or FortisBC.</div>
+      <div>Made in Canada &#127464;&#127462;</div>
+    </div>
+  </div>
 </footer>
 
 </body>

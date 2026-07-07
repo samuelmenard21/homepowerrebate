@@ -1957,14 +1957,8 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 <script>
 (function () {
   var HP = { tier1: 16000, tier2: 12000, tier3: 10500 };
-  var citySlug = {
-    'Abbotsford':'abbotsford','Burnaby':'burnaby','Chilliwack':'chilliwack','Fort St. John':'fort-st-john',
-    'Kamloops':'kamloops','Kelowna':'kelowna','Nanaimo':'nanaimo','Penticton':'penticton',
-    'Prince George':'prince-george','Squamish':'squamish','Surrey':'surrey','Vancouver':'vancouver',
-    'Vernon':'vernon','Victoria':'victoria'
-  };
   var $ = function (id) { return document.getElementById(id); };
-  var city, heating, income, stacked;
+  var city, heating, income, stacked, newsletterOptIn = true;
 
   $('hpr-go').addEventListener('click', function () {
     city = $('hpr-city').value;
@@ -2002,11 +1996,12 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     e.preventDefault();
     if ($('hpr-hp').value) return; // honeypot
     leadEmail = $('hpr-email').value;
+    newsletterOptIn = $('hpr-news').checked;
     var btn = $('hpr-email-btn'); btn.disabled = true; btn.textContent = 'Sending…';
     try {
       await fetch(WORKER + '/newsletter', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: leadEmail, city: city, heating: heating, income: income, estimate: stacked, source: 'homepage-assessment', newsletter: $('hpr-news').checked })
+        body: JSON.stringify({ email: leadEmail, city: city, heating: heating, income: income, estimate: stacked, source: 'homepage-assessment', newsletter: newsletterOptIn, website: $('hpr-hp').value })
       });
     } catch (err) { console.error('newsletter error', err); }
     $('hpr-email-step').style.display = 'none';
@@ -2021,7 +2016,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     try {
       await fetch(WORKER + '/estimate-lead', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: leadEmail, firstname: $('hpr-name').value, phone: $('hpr-phone').value, city: city, heating: heating, income: income, estimate: stacked, source: 'homepage-assessment' })
+        body: JSON.stringify({ email: leadEmail, firstname: $('hpr-name').value, phone: $('hpr-phone').value, city: city, heating: heating, income: income, estimate: stacked, source: 'homepage-assessment', newsletter: newsletterOptIn })
       });
     } catch (err) { console.error('estimate-lead error', err); }
     $('hpr-refer-step').style.display = 'none';

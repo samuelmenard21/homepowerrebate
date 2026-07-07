@@ -414,10 +414,10 @@ async function handleNewsletter(request, env) {
     status: 'new'
   };
 
-  await Promise.allSettled([
-    addToResendAudience(record.email, env),
-    logToSheet(record, env)
-  ]);
+  const tasks = [logToSheet(record, env)];
+  // Only add to the newsletter audience if they didn't opt out (CASL).
+  if (p.newsletter !== false) tasks.unshift(addToResendAudience(record.email, env));
+  await Promise.allSettled(tasks);
 
   return jsonResponse({ success: true }, 200);
 }
@@ -470,9 +470,10 @@ async function handleEstimateLead(request, env) {
 
   const tasks = [
     sendOpsEstimateLead(lead, env),
-    logToSheet(lead, env),
-    addToResendAudience(lead.email, env)
+    logToSheet(lead, env)
   ];
+  // Only add to the newsletter audience if they didn't opt out (CASL).
+  if (p.newsletter !== false) tasks.push(addToResendAudience(lead.email, env));
   if (isReal) tasks.unshift(sendEstimateInstallerEmail(lead, installer, env));
 
   await Promise.allSettled(tasks);
@@ -490,6 +491,9 @@ async function handleEstimateLead(request, env) {
 // ===========================================================================
 
 async function sendEstimateInstallerEmail(lead, installer, env) {
+  const fn = escapeHtml(lead.firstname), ln = escapeHtml(lead.lastname), ph = escapeHtml(lead.phone),
+        em = escapeHtml(lead.email), ct = escapeHtml(capitalize(lead.city)), ch = escapeHtml(lead.current_heat),
+        ev = escapeHtml(lead.estimated_value), src = escapeHtml(lead.page_url);
   return resendEmail(env.RESEND_API_KEY, {
     from: 'HomePowerRebate Leads <leads@homepowerrebate.com>',
     to: installer.email,
@@ -501,41 +505,45 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
         <h2 style="color:#08363f;">New HomePowerRebate referral</h2>
         <p>A homeowner asked to be matched after seeing their rebate estimate.</p>
         <ul>
-          <li><strong>Name:</strong> ${lead.firstname} ${lead.lastname}</li>
-          <li><strong>Phone:</strong> <a href="tel:${lead.phone}">${lead.phone}</a></li>
-          <li><strong>Email:</strong> <a href="mailto:${lead.email}">${lead.email}</a></li>
-          <li><strong>City:</strong> ${capitalize(lead.city)}, BC</li>
-          <li><strong>Current heating:</strong> ${lead.current_heat}</li>
-          <li><strong>Estimate shown:</strong> up to ${lead.estimated_value}</li>
+          <li><strong>Name:</strong> ${fn} ${ln}</li>
+          <li><strong>Phone:</strong> <a href="tel:${ph}">${ph}</a></li>
+          <li><strong>Email:</strong> <a href="mailto:${em}">${em}</a></li>
+          <li><strong>City:</strong> ${ct}, BC</li>
+          <li><strong>Current heating:</strong> ${ch}</li>
+          <li><strong>Estimate shown:</strong> up to ${ev}</li>
         </ul>
         <p style="background:#0a2a2e;color:#faf7f2;padding:16px;border-radius:10px;text-align:center;">
           Call this homeowner within 1 business day.<br>
-          <a href="tel:${lead.phone}" style="display:inline-block;margin-top:10px;background:#d4751c;color:#fff;padding:10px 22px;border-radius:999px;text-decoration:none;font-weight:600;">Call ${lead.phone}</a>
+          <a href="tel:${ph}" style="display:inline-block;margin-top:10px;background:#d4751c;color:#fff;padding:10px 22px;border-radius:999px;text-decoration:none;font-weight:600;">Call ${ph}</a>
         </p>
-        <p style="font-size:12px;color:#1a3d42;">Source: ${lead.page_url} · ${new Date(lead.timestamp).toLocaleString('en-CA', { timeZone: 'America/Vancouver' })}</p>
+        <p style="font-size:12px;color:#1a3d42;">Source: ${src} · ${new Date(lead.timestamp).toLocaleString('en-CA', { timeZone: 'America/Vancouver' })}</p>
       </div>`
   });
 }
 
 async function sendOpsEstimateLead(lead, env) {
   if (!env.OPS_EMAIL) return Promise.resolve();
+  const fn = escapeHtml(lead.firstname), ln = escapeHtml(lead.lastname), ph = escapeHtml(lead.phone),
+        em = escapeHtml(lead.email), ct = escapeHtml(lead.city), ch = escapeHtml(lead.current_heat),
+        ib = escapeHtml(lead.income_band), ev = escapeHtml(lead.estimated_value), src = escapeHtml(lead.page_url),
+        assigned = escapeHtml(lead.installer_assigned);
   const warn = lead.installer_email ? '' :
-    `<p style="background:#fef3e6;border:1px solid #e8b87a;padding:10px 14px;border-radius:8px;"><strong>⚠️ No live heat-pump installer for ${lead.city} yet.</strong> Follow up manually / forward to a partner.</p>`;
+    `<p style="background:#fef3e6;border:1px solid #e8b87a;padding:10px 14px;border-radius:8px;"><strong>⚠️ No live heat-pump installer for ${ct} yet.</strong> Follow up manually / forward to a partner.</p>`;
   return resendEmail(env.RESEND_API_KEY, {
     from: 'HomePowerRebate <ops@homepowerrebate.com>',
     to: env.OPS_EMAIL,
     subject: `[Referral] ${capitalize(lead.city)} — ${lead.firstname} (${lead.estimated_value})`,
     html: `${warn}
-      <p>New estimate referral (routed to <strong>${lead.installer_assigned}</strong>).</p>
+      <p>New estimate referral (routed to <strong>${assigned}</strong>).</p>
       <ul>
-        <li><strong>Name:</strong> ${lead.firstname} ${lead.lastname}</li>
-        <li><strong>Phone:</strong> ${lead.phone}</li>
-        <li><strong>Email:</strong> ${lead.email}</li>
-        <li><strong>City:</strong> ${lead.city}</li>
-        <li><strong>Heating:</strong> ${lead.current_heat}</li>
-        <li><strong>Income band:</strong> ${lead.income_band}</li>
-        <li><strong>Estimate:</strong> ${lead.estimated_value}</li>
-        <li><strong>Source:</strong> ${lead.page_url}</li>
+        <li><strong>Name:</strong> ${fn} ${ln}</li>
+        <li><strong>Phone:</strong> ${ph}</li>
+        <li><strong>Email:</strong> ${em}</li>
+        <li><strong>City:</strong> ${ct}</li>
+        <li><strong>Heating:</strong> ${ch}</li>
+        <li><strong>Income band:</strong> ${ib}</li>
+        <li><strong>Estimate:</strong> ${ev}</li>
+        <li><strong>Source:</strong> ${src}</li>
       </ul>`
   });
 }
@@ -793,6 +801,13 @@ function jsonResponse(data, status = 200) {
 
 function cleanString(s) {
   return String(s || '').trim().replace(/[\r\n\t]/g, ' ').slice(0, 500);
+}
+
+// Escape user-supplied values before putting them in notification email HTML.
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
 }
 
 function capitalize(s) {

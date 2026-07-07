@@ -610,18 +610,19 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     $("hpr-cw-q").style.display = "none"; $("hpr-cw-result").style.display = "block";
   });
   var WORKER = "https://leads.homepowerrebate.com";
-  var leadEmail = "";
+  var leadEmail = "", newsletterOptIn = true;
   function fullUrl() { return "/retrofit-assessment?city=" + encodeURIComponent(CITY) + "&income=" + income + "&heating=" + heating + "&utility=" + UTILITY; }
 
   $("hpr-cw-form").addEventListener("submit", async function (e) {
     e.preventDefault();
     if ($("hpr-cw-hp").value) return;
     leadEmail = $("hpr-cw-email").value;
+    newsletterOptIn = $("hpr-cw-news").checked;
     var btn = $("hpr-cw-btn"); btn.disabled = true; btn.textContent = "Sending…";
     try {
       await fetch(WORKER + "/newsletter", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: leadEmail, city: CITY, heating: heating, income: income, estimate: stacked, source: "city-" + SLUG, newsletter: $("hpr-cw-news").checked })
+        body: JSON.stringify({ email: leadEmail, city: CITY, heating: heating, income: income, estimate: stacked, source: "city-" + SLUG, newsletter: newsletterOptIn, website: $("hpr-cw-hp").value })
       });
     } catch (err) { console.error("newsletter error", err); }
     $("hpr-cw-email-step").style.display = "none";
@@ -635,7 +636,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     try {
       await fetch(WORKER + "/estimate-lead", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: leadEmail, firstname: $("hpr-cw-name").value, phone: $("hpr-cw-phone").value, city: CITY, heating: heating, income: income, estimate: stacked, source: "city-" + SLUG })
+        body: JSON.stringify({ email: leadEmail, firstname: $("hpr-cw-name").value, phone: $("hpr-cw-phone").value, city: CITY, heating: heating, income: income, estimate: stacked, source: "city-" + SLUG, newsletter: newsletterOptIn })
       });
     } catch (err) { console.error("estimate-lead error", err); }
     $("hpr-cw-refer-step").style.display = "none";

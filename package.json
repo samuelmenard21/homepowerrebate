@@ -1,19 +1,13 @@
 {
   "name": "homepowerrebate",
   "version": "1.0.0",
-  "description": "BC solar, heat pump, and home energy rebate matcher",
-  "type": "module",
-  "main": "server.js",
+  "description": "BC solar, heat pump & home energy rebate guide — static site + Cloudflare Worker lead router (lead-router.js).",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3"
+    "start": "python3 -m http.server 8888",
+    "dev": "python3 -m http.server 8888",
+    "deploy": "npx wrangler deploy"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   }
 }

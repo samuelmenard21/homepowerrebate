@@ -4,39 +4,37 @@
 
 **Timeline:** 5 business days (Mon–Fri)
 
+**Pro tip:** Use the Eguana dealer map to find installers. Once you sign Kelowna's installer, repeat this playbook for the other 13 cities using the same map — zoom to each city, grab Eguana dealers, send the same email sequence.
+
 ---
 
 ## Step 1: Find Kelowna HPCN Installers (Monday AM)
 
-**Resources:**
+**Primary Source: Eguana Dealer Map**
 
-1. **HPCN Registry** (official list)
-   - Go to: https://www.energyadvisors.ca/find-an-advisor
-   - Filter by: British Columbia → Kelowna
-   - Export/note names + contact info
+1. Open the Eguana installer map (you have access)
+2. Zoom to Kelowna area
+3. Click each purple pin to see installer name + location
+4. Note all installers in Kelowna region
+5. Grab contact info (phone, email) — click through to their business listing or Google My Business
 
-2. **Google Search**
-   - "HPCN certified heat pump installer Kelowna"
-   - "Solar installer Kelowna HPCN"
-   - Look at Google My Business profiles (pull their rating + review count)
+**Why Eguana dealers:**
+- Already HPCN-certified (Eguana requirement)
+- Already selling batteries + heat pumps (quality vetted)
+- Active, recent reviews
+- No need for extra vetting
 
-3. **BC Hydro Rebate Pages**
-   - https://www.bchydro.com/powersmart/residential/programs/heat-pump-rebate.html
-   - Look for "approved installers" links
-   - Many list by city
-
-4. **Local Business Directories**
-   - Google Maps: Search "heat pump installer Kelowna"
-   - Yelp: Search same
-   - Note business name, phone, email, Google rating
+**If you need extra validation:**
+- Cross-check with HPCN Registry: https://www.energyadvisors.ca/find-an-advisor
+- Or Google: "[Company name] Kelowna HPCN" to confirm rating
 
 **Target criteria:**
-- ✓ HPCN-certified (or can quickly verify)
-- ✓ 4.5+ Google rating (or close, 10+ reviews minimum)
-- ✓ Based in Kelowna (address, not calling from Burnaby)
+- ✓ Eguana dealer (primary)
+- ✓ Located in Kelowna
+- ✓ 4.5+ Google rating (aim for this, not hard requirement)
 - ✓ Active (recent reviews within last 6 months)
 
-**Goal:** 6–8 installers to email
+**Goal:** 6–8 installers to email (grab all Eguana dealers in Kelowna area)
 
 ---
 

@@ -18,8 +18,12 @@
   --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 body { font-family: 'Inter Tight', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
+.toc { max-width: 920px; margin: 0 auto; padding: 14px 28px; display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; border-bottom: 1px solid var(--rule); font-size: 13px; }
+.toc-lbl { font-weight: 700; color: var(--ink); margin-right: 2px; }
+.toc a { color: var(--teal); text-decoration: none; padding: 4px 11px; border: 1px solid var(--rule); border-radius: 999px; white-space: nowrap; }
+.toc a:hover { background: var(--paper-warm); border-color: var(--amber); color: var(--amber); }
 
 .nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); padding: 14px 24px; }
 .logo { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
@@ -184,11 +188,22 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   </div>
 </section>
 
+<nav class="toc" aria-label="On this page">
+  <span class="toc-lbl">On this page:</span>
+  <a href="#rebates">Rebates</a>
+  <a href="#solar-battery">Solar &amp; battery</a>
+  <a href="#programs">All programs</a>
+  <a href="#income">Income tiers</a>
+  <a href="#local">Local context</a>
+  <a href="#faq">FAQ</a>
+  <a href="#tips">Cut your bill</a>
+</nav>
+
 <section class="section">
   <div class="wrap">
 
     <div class="eyebrow">The short version</div>
-    <h2>What Fort St. John homeowners can claim</h2>
+    <h2 id="rebates">What Fort St. John homeowners can claim</h2>
     <p class="lead">Fort St. John runs on BC Hydro electricity, with natural gas from Pacific Northern Gas (not FortisBC). Because it's in BC Hydro's northern zone, the heat pump rebates for switching off fossil heat are <em>bigger</em> here. You stack CleanBC, the northern top-ups, and federal money for lower-income households.</p>
 
     <div class="rebate-grid">
@@ -241,7 +256,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 <section class="section">
   <div class="wrap">
     <div class="eyebrow">Solar &amp; battery up north</div>
-    <h2>What makes sense in Fort St. John</h2>
+    <h2 id="solar-battery">What makes sense in Fort St. John</h2>
     <p>Short winter days mean solar payback is slower here &mdash; though long summer days still produce well. A battery's real value in Fort St. John is backup during deep-cold outages, when losing heat is more than an inconvenience. BC Hydro pays up to $5,000 toward an approved battery through Peak Saver.</p>
     <div class="rebate-grid">
       <div class="rebate-card">
@@ -262,7 +277,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   <div class="wrap">
 
     <div class="eyebrow">Available everywhere in BC</div>
-    <h2>Provincial &amp; utility programs &mdash; what each one is</h2>
+    <h2 id="programs">Provincial &amp; utility programs &mdash; what each one is</h2>
     <p>These are the backbone. They're the same whether you're in Fort St. John or anywhere else in BC &mdash; what changes is which utility runs them for you. Here's each program and how it actually works.</p>
 
     <h3 style="margin-top:28px;">Through CleanBC &amp; BetterHomes BC</h3>
@@ -395,7 +410,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   <div class="wrap">
 
     <div class="eyebrow">How the income tiers work</div>
-    <h2>Why heat pump rebates vary so much</h2>
+    <h2 id="income">Why heat pump rebates vary so much</h2>
     <p>The heat pump rebate isn't one number &mdash; it scales with household income. These are the general CleanBC tiers; your exact amount is confirmed by the EnerGuide evaluation. The <a href="/retrofit-assessment?city=Fort St. John" style="color:var(--teal);font-weight:600;">assessment tool</a> estimates your tier in a minute.</p>
     <div class="rebate-grid">
       <div class="rebate-card">
@@ -425,7 +440,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   <div class="wrap">
 
     <div class="eyebrow">On the ground in Fort St. John</div>
-    <h2>Local context</h2>
+    <h2 id="local">Local context</h2>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0;">
       <div class="local-context">
@@ -472,7 +487,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 <section class="section">
   <div class="wrap">
 
-    <h2>FAQ for Fort St. John residents</h2>
+    <h2 id="faq">FAQ for Fort St. John residents</h2>
 
     <h3>Will solar actually work in Fort St. John?</h3>
     <p>In summer, very much so &mdash; the far north gets long daylight hours from spring through fall. Winter is short on sun (~3.3 peak sun hours annually), so payback runs longer, which is why most Fort St. John homeowners prioritize the heat pump first.</p>
@@ -498,7 +513,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 <section class="section" style="background: var(--paper-warm);">
   <div class="wrap">
     <div class="eyebrow">While you plan the big upgrades</div>
-    <h2>Free &amp; low-cost ways to cut your bill now</h2>
+    <h2 id="tips">Free &amp; low-cost ways to cut your bill now</h2>
     <p>Rebates take a few weeks to line up. These cost little or nothing and start saving immediately &mdash; the dollar figures are BC Hydro's own estimates. <a href="/blog/energy-saving-ideas-bc-home" style="color:var(--teal);font-weight:600;">See all of them in our full guide &rarr;</a></p>
 
     <div class="rebate-grid">

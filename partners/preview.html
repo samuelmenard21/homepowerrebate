@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Your Installer Profile Preview | HomePowerRebate</title>
+<meta name="description" content="This is what your profile looks like when you're featured. Sample preview.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f5f5f5;
+    padding: 40px 20px;
+  }
+  .container { max-width: 1000px; margin: 0 auto; }
+  .watermark {
+    background: rgba(0,0,0,0.08);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+    font-weight: 600;
+  }
+  .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #111;
+  }
+  .page-subtitle {
+    color: #666;
+    margin-bottom: 32px;
+    font-size: 15px;
+  }
+
+  /* City page header */
+  .city-header {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    color: white;
+    padding: 48px 32px;
+    border-radius: 12px 12px 0 0;
+    margin-bottom: 0;
+  }
+  .city-header h1 {
+    font-size: 36px;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .city-header p {
+    font-size: 15px;
+    opacity: 0.9;
+  }
+
+  /* Main content area */
+  .city-page {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Hero content inside city page */
+  .city-content {
+    padding: 40px;
+  }
+
+  .installer-section {
+    margin-bottom: 40px;
+  }
+
+  .installer-section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: #111;
+  }
+
+  /* Installer card */
+  .installer-card {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .installer-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 48px;
+    flex-shrink: 0;
+  }
+
+  .installer-info h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #111;
+  }
+
+  .installer-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .stars {
+    color: #fbbf24;
+    font-size: 16px;
+  }
+
+  .rating-text {
+    font-size: 14px;
+    color: #666;
+  }
+
+  .installer-company {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+  }
+
+  .installer-badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .installer-services {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .installer-location {
+    font-size: 13px;
+    color: #999;
+  }
+
+  .installer-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .cta-button {
+    background: #2563eb;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .cta-button:hover {
+    background: #1d4ed8;
+  }
+
+  .response-time {
+    font-size: 12px;
+    color: #666;
+    background: #f9fafb;
+    padding: 8px 12px;
+    border-radius: 6px;
+  }
+
+  /* Testimonials */
+  .testimonials {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .testimonials h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #111;
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .testimonial {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .testimonial-quote {
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+  }
+
+  .testimonial-detail {
+    font-size: 12px;
+    color: #666;
+  }
+
+  /* Marketing callout */
+  .marketing-section {
+    background: #eff6ff;
+    border: 2px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 32px;
+  }
+
+  .marketing-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1e40af;
+  }
+
+  .marketing-section p {
+    font-size: 14px;
+    color: #1e40af;
+    margin-bottom: 8px;
+  }
+
+  .marketing-section ul {
+    margin-left: 20px;
+    font-size: 14px;
+    color: #1e40af;
+  }
+
+  .marketing-section li {
+    margin-bottom: 6px;
+  }
+
+  /* Footer note */
+  .preview-footer {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .installer-card {
+      grid-template-columns: 1fr;
+    }
+    .city-header {
+      padding: 32px 24px;
+    }
+    .city-content {
+      padding: 24px;
+    }
+    .city-header h1 {
+      font-size: 24px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="watermark">⚠️ PREVIEW ONLY — This is what your profile looks like when featured. Not live.</div>
+
+  <div class="page-title">Your Featured Installer Profile</div>
+  <div class="page-subtitle">Share this page with prospects to show what you'll look like on HomePowerRebate</div>
+
+  <div class="city-page">
+    <div class="city-header">
+      <h1>Heat Pump & Solar Rebates in Kelowna</h1>
+      <p>One trusted installer. Every homeowner matched exclusively.</p>
+    </div>
+
+    <div class="city-content">
+      <div class="installer-section">
+        <h2>Your Featured Installer</h2>
+
+        <div class="installer-card">
+          <div class="installer-photo">🔨</div>
+
+          <div class="installer-info">
+            <h3>Your Company Name</h3>
+            <div class="installer-rating">
+              <div class="stars">★★★★★</div>
+              <div class="rating-text">4.9 (42 reviews)</div>
+            </div>
+            <div class="installer-badge">HPCN Certified</div>
+            <div class="installer-company">Established 2018 · 8-person team</div>
+            <div class="installer-services">Heat pumps, solar, battery storage, insulation</div>
+            <div class="installer-location">Serving Kelowna and surrounding areas</div>
+          </div>
+
+          <div class="installer-cta">
+            <button class="cta-button">Get a Quote</button>
+            <div class="response-time">
+              ⚡ Responds within<br>1 business day
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonials">
+          <h3>What homeowners say</h3>
+          <div class="testimonial-grid">
+            <div class="testimonial">
+              <div class="testimonial-quote">"Professional, knowledgeable, and they walked us through every step of the rebate process. Couldn't be happier."</div>
+              <div class="testimonial-author">— Sarah M., Kelowna</div>
+              <div class="testimonial-detail">Heat pump + solar install, $18K in rebates</div>
+            </div>
+            <div class="testimonial">
+              <div class="testimonial-quote">"They made sure we got every rebate we qualified for. Now our bill is half what it was."</div>
+              <div class="testimonial-author">— James T., Kelowna</div>
+              <div class="testimonial-detail">Heat pump + insulation, $22K rebates, $180/month savings</div>
+            </div>
+            <div class="testimonial">
+              <div class="testimonial-quote">"The whole team was responsive and professional. Highly recommend."</div>
+              <div class="testimonial-author">— Linda P., Kelowna</div>
+              <div class="testimonial-detail">Solar + battery install</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="marketing-section">
+          <h3>You also get:</h3>
+          <p>✓ <strong>Homepage feature:</strong> "Installer of the Week" rotation (5,000+ homeowners/month)</p>
+          <p>✓ <strong>Email newsletter:</strong> Featured in monthly email to 2,000+ subscribers</p>
+          <p>✓ <strong>Social media spotlights:</strong> Before/after photos on Instagram, LinkedIn, TikTok (rotating weekly)</p>
+          <p>✓ <strong>Blog case studies:</strong> Quarterly featured story (e.g., "How [Your Company] Helped [Homeowner] Save $15K")</p>
+          <p style="margin-top: 16px; font-size: 13px; color: #666;">All leads sent to you are owners of eligible homes with personalized rebate plans already in hand. No gatekeeping. No competition on the same lead.</p>
+        </div>
+      </div>
+
+      <div class="preview-footer">
+        <strong>Ready to be featured?</strong> <a href="/partners" style="color: #2563eb; text-decoration: none; font-weight: 600;">Apply for your city →</a>
+        <br><br>
+        Cost: $300/month (first month free). One installer per city. Every homeowner in your city matched to you exclusively.
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

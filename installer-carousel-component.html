@@ -1,0 +1,307 @@
+<!-- INSTALLER CAROUSEL COMPONENT
+     Add this to each city page. Customize the data for each city.
+     Features:
+     - Scrollable carousel per service type (Heat Pump, Solar, Battery)
+     - Tagged installers showing expertise
+     - Responsive on mobile
+     - 2-3 installers per service per city
+     - AEO optimized with LocalBusiness schema
+-->
+
+<!-- LocalBusiness Schema (for each installer - customize per card) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "[Installer Name]",
+  "description": "[Company Name] - Certified heat pump, solar, and battery installer in [CITY], BC",
+  "url": "[Company Website URL]",
+  "telephone": "[Company Phone]",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "[Service Address]",
+    "addressLocality": "[CITY]",
+    "addressRegion": "BC",
+    "addressCountry": "CA"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "[CITY]"
+    },
+    {
+      "@type": "City",
+      "name": "[Neighboring City 1]"
+    },
+    {
+      "@type": "City",
+      "name": "[Neighboring City 2]"
+    }
+  ],
+  "priceRange": "$4000-$8000",
+  "ratingValue": "4.9",
+  "reviewCount": "50",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "50"
+  },
+  "serviceType": ["Heat Pump Installation", "Solar Installation", "Battery Installation"],
+  "certifications": ["HPCN Certified", "Licensed Installer"],
+  "foundingDate": "2018",
+  "image": "[Installer Photo URL]"
+}
+</script>
+
+<style>
+.installer-section { margin: 48px 0 56px; }
+.installer-section h2 { font-family: 'Fraunces', serif; font-size: 26px; color: var(--teal-deep); margin: 0 0 14px; }
+.installer-service-tabs { display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 10px 18px;
+  background: var(--paper-warm);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab-btn:hover { background: var(--amber-bright); color: #fff; border-color: var(--amber-bright); }
+.tab-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+.carousel-wrapper {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 12px;
+  scroll-snap-type: x mandatory;
+}
+.carousel-wrapper::-webkit-scrollbar { height: 6px; }
+.carousel-wrapper::-webkit-scrollbar-track { background: var(--paper-warm); border-radius: 3px; }
+.carousel-wrapper::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+.carousel-wrapper::-webkit-scrollbar-thumb:hover { background: var(--amber); }
+
+.installer-card {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 340px;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 20px;
+  scroll-snap-align: start;
+}
+@media (min-width: 640px) { .installer-card { max-width: 280px; } }
+
+.installer-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.installer-name { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--ink); margin: 0 0 4px; }
+.installer-company { font-size: 13px; color: var(--ink-soft); margin: 0; }
+.installer-rating { font-size: 14px; font-weight: 600; color: var(--green-money); }
+
+.expertise-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 14px; }
+.tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: var(--paper-warm);
+  color: var(--ink-soft);
+}
+.tag.available { background: #e8f5e9; color: var(--green-money); }
+.tag.unavailable { background: #ffebee; color: #c62828; opacity: 0.6; }
+
+.installer-details { font-size: 13px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 14px; }
+.detail-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.detail-label { font-weight: 600; }
+.detail-value { text-align: right; }
+
+.case-study-preview {
+  background: var(--paper-warm);
+  border-left: 3px solid var(--amber);
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+}
+.case-study-preview strong { color: var(--ink); }
+
+.cta-button {
+  display: block;
+  width: 100%;
+  background: var(--amber);
+  color: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cta-button:hover { background: var(--amber-bright); }
+
+.scroll-hint {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 12px;
+  text-align: center;
+}
+@media (min-width: 640px) { .scroll-hint { display: none; } }
+
+.empty-state {
+  background: var(--paper-warm);
+  padding: 32px 20px;
+  border-radius: 8px;
+  text-align: center;
+  color: var(--ink-soft);
+}
+</style>
+
+<div class="installer-section">
+  <h2>Trusted Installers in [CITY]</h2>
+
+  <!-- Service Type Tabs -->
+  <div class="installer-service-tabs">
+    <button class="tab-btn active" data-service="heat-pump">🔥 Heat Pump</button>
+    <button class="tab-btn" data-service="solar">☀️ Solar</button>
+    <button class="tab-btn" data-service="battery">🔋 Battery</button>
+  </div>
+
+  <!-- Carousel Container -->
+  <div class="carousel-container">
+    <div class="carousel-wrapper" id="carousel">
+
+      <!-- HEAT PUMP INSTALLERS (Show by default) -->
+      <div data-service="heat-pump" class="installer-card">
+        <div class="installer-header">
+          <div>
+            <h3 class="installer-name">[Installer Name]</h3>
+            <p class="installer-company">[Company Name]</p>
+          </div>
+          <div class="installer-rating">⭐ 4.9</div>
+        </div>
+
+        <div class="expertise-tags">
+          <span class="tag available">✓ Heat Pump</span>
+          <span class="tag available">✓ Mini-Split</span>
+          <span class="tag unavailable">✗ Solar</span>
+        </div>
+
+        <div class="installer-details">
+          <div class="detail-row">
+            <span class="detail-label">Service Area:</span>
+            <span class="detail-value">[Neighborhoods/Radius]</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Response Time:</span>
+            <span class="detail-value">24 hours</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Experience:</span>
+            <span class="detail-value">8 years, 500+ installs</span>
+          </div>
+        </div>
+
+        <div class="case-study-preview">
+          <strong>Recent project:</strong> [Neighborhood] home, old furnace → cold-climate heat pump. Cost: $5,200 after rebate. Heating savings: $350/year.
+        </div>
+
+        <a href="#get-quote" class="cta-button">Get a Quote →</a>
+      </div>
+
+      <!-- More installer cards follow same pattern -->
+      <!-- Repeat for 2-3 per service type -->
+
+    </div>
+  </div>
+
+  <div class="scroll-hint">← Scroll to see more installers →</div>
+</div>
+
+<script>
+// Tab switching functionality
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const service = btn.dataset.service;
+
+    // Update active tab
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Filter cards
+    const carousel = document.getElementById('carousel');
+    carousel.querySelectorAll('.installer-card').forEach(card => {
+      card.style.display = card.dataset.service === service ? 'block' : 'none';
+    });
+  });
+});
+
+// Initialize: show heat pump by default
+window.addEventListener('load', () => {
+  const carousel = document.getElementById('carousel');
+  carousel.querySelectorAll('.installer-card').forEach(card => {
+    card.style.display = card.dataset.service === 'heat-pump' ? 'block' : 'none';
+  });
+});
+</script>
+
+<!--
+CUSTOMIZATION GUIDE:
+
+For each city, duplicate this component and replace:
+
+1. [CITY] — City name (Victoria, Vancouver, Kelowna, etc.)
+
+2. For each installer card, replace:
+   [Installer Name] — Company/installer name
+   [Company Name] — Full company name
+   [Neighborhoods/Radius] — Service area (e.g., "Victoria, Langford, View Royal")
+   [Neighborhood] — Example neighborhood from case study
+   ⭐ 4.9 — Google review rating (or remove if not available)
+
+3. Repeat the installer-card div for 2-3 installers per service type
+
+4. Update data-service attribute to match tab:
+   data-service="heat-pump"
+   data-service="solar"
+   data-service="battery"
+
+5. Update expertise tags to match actual services:
+   <span class="tag available">✓ Heat Pump</span>
+   <span class="tag available">✓ Solar</span>
+   <span class="tag unavailable">✗ Battery</span>
+
+EXAMPLE for Victoria Heat Pump installers:
+
+Installer 1: Island Heat Solutions (Heat Pump, Mini-Split specialist)
+Installer 2: Pro HVAC Victoria (Central + Ductless)
+Installer 3: Victoria Energy Partners (Heat Pump + Solar combo)
+
+Installer 1: [Solar specialist] (Solar + Battery)
+Installer 2: [Solar specialist 2]
+etc.
+
+DATA YOU'LL NEED:
+- Company name & installer contact
+- Service area / neighborhoods served
+- Google rating
+- Years of experience + # of installations
+- Case study example (neighborhood, old system → new, cost after rebate, annual savings)
+- Expertise: which services do they offer?
+
+STYLING:
+- Colors use CSS variables (--teal, --amber, etc.) — matches site design
+- Responsive on mobile (full width, scrollable)
+- Desktop: 280px cards
+- Accessibility: keyboard navigable tabs, semantic HTML
+-->

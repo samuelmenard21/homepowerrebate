@@ -52,12 +52,16 @@ function toggleCityDropdown() {
     { "@type": "City", "name": "Abbotsford" },
     { "@type": "City", "name": "Burnaby" },
     { "@type": "City", "name": "Chilliwack" },
+    { "@type": "City", "name": "Coquitlam" },
     { "@type": "City", "name": "Fort St. John" },
     { "@type": "City", "name": "Kamloops" },
     { "@type": "City", "name": "Kelowna" },
+    { "@type": "City", "name": "Langley" },
+    { "@type": "City", "name": "Maple Ridge" },
     { "@type": "City", "name": "Nanaimo" },
     { "@type": "City", "name": "Penticton" },
     { "@type": "City", "name": "Prince George" },
+    { "@type": "City", "name": "Richmond" },
     { "@type": "City", "name": "Squamish" },
     { "@type": "City", "name": "Surrey" },
     { "@type": "City", "name": "Vancouver" },
@@ -929,7 +933,7 @@ h1, h2, h3, h4, h5, h6 {
 <section class="hero">
   <div class="hero-eyebrow">
     <span class="hero-eyebrow-dot"></span>
-    Serving 14 BC cities
+    Serving 18 BC cities
   </div>
   <h1 class="hero-h1">
     BC is giving away thousands to upgrade your home. You just need to know what you qualify for.
@@ -957,10 +961,10 @@ h1, h2, h3, h4, h5, h6 {
           <label for="hpr-city" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Your city</label>
           <select id="hpr-city" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
             <option value="">Choose your city…</option>
-            <option>Abbotsford</option><option>Burnaby</option><option>Chilliwack</option>
-            <option>Fort St. John</option><option>Kamloops</option><option>Kelowna</option>
-            <option>Nanaimo</option><option>Penticton</option><option>Prince George</option>
-            <option>Squamish</option><option>Surrey</option><option>Vancouver</option>
+            <option>Abbotsford</option><option>Burnaby</option><option>Chilliwack</option><option>Coquitlam</option>
+            <option>Fort St. John</option><option>Kamloops</option><option>Kelowna</option><option>Langley</option>
+            <option>Maple Ridge</option><option>Nanaimo</option><option>Penticton</option><option>Prince George</option>
+            <option>Richmond</option><option>Squamish</option><option>Surrey</option><option>Vancouver</option>
             <option>Vernon</option><option>Victoria</option>
           </select>
         </div>
@@ -1181,35 +1185,43 @@ h1, h2, h3, h4, h5, h6 {
 
 <!-- ARTICLES SECTION -->
 <div style="padding: 40px 28px; margin: 60px 0; border-top: 1px solid #e5e7eb; max-width: 1100px; margin-left: auto; margin-right: auto;">
-  <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Go deeper with articles</h2>
-  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">Real-world guides on heat pumps vs furnaces, solar payback math, brand comparisons, and what doesn't work in snow. Written for homeowners who want to actually understand their options.</p>
+  <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #d4751c; margin-bottom: 12px;">From the guides</p>
+  <h2 style="font-size: 28px; font-weight: 600; margin-bottom: 12px; color: #0a2a2e; font-family: 'Fraunces', serif;">Honest answers before you sign anything.</h2>
+  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">No sales pitch. Real numbers, common mistakes, and what to check before you commit.</p>
 
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; contain: layout;">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; contain: layout;">
 
     <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; contain: content;">
-      <p style="font-size: 12px; color: #666; margin-bottom: 8px; text-transform: uppercase; font-weight: 600;">Guide</p>
-      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #111;">Heat Pump Rebates by Income: Exactly What You Qualify For</h3>
-      <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Income tiers by household size, Level 1/2/3 amounts, application process. 4-min read.</p>
-      <a href="/blog/2026-07-12-income-tiers-heat-pump-rebates" style="color: #2563eb; text-decoration: none; font-weight: 600; font-size: 12px;">Read →</a>
+      <p style="font-size: 11px; color: #d4751c; margin-bottom: 8px; text-transform: uppercase; font-weight: 600;">Cost Comparison</p>
+      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #111;">Heat Pump vs AC: Cost, Rebates & Savings</h3>
+      <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Compare upfront costs, annual savings, BC rebates ($4K–$16K), and true 10-year ROI.</p>
+      <a href="/blog/heat-pump-vs-ac-cost-rebates-bc" style="color: #d4751c; text-decoration: none; font-weight: 600; font-size: 12px;">Read →</a>
     </div>
 
     <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <p style="font-size: 12px; color: #666; margin-bottom: 8px; text-transform: uppercase; font-weight: 600;">Program Change</p>
-      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #111;">BC Ended Net Metering: What Changed for Solar (July 1, 2026)</h3>
-      <p style="font-size: 13px; color: #666; margin-bottom: 12px;">10¢/kWh export rate, why batteries matter, rebate amounts, Peak Saver 14-day window. 5-min read.</p>
-      <a href="/blog/2026-07-12-bc-net-metering-ended" style="color: #2563eb; text-decoration: none; font-weight: 600; font-size: 12px;">Read →</a>
+      <p style="font-size: 11px; color: #d4751c; margin-bottom: 8px; text-transform: uppercase; font-weight: 600;">Heating Decision</p>
+      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #111;">Furnace vs Heat Pump: Which Gets Rebates?</h3>
+      <p style="font-size: 13px; color: #666; margin-bottom: 12px;">BC only rebates heat pumps. See why and when it makes financial sense to switch.</p>
+      <a href="/blog/furnace-vs-heat-pump-bc-rebates" style="color: #d4751c; text-decoration: none; font-weight: 600; font-size: 12px;">Read →</a>
     </div>
 
     <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <p style="font-size: 12px; color: #666; margin-bottom: 8px; text-transform: uppercase; font-weight: 600;">New Program</p>
-      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #111;">Free Smart Thermostats for All BC Homeowners (October 2026)</h3>
-      <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Up to 5 free Mysa/Sinopé thermostats if you have electric baseboard heat. No income requirement. 3-min read.</p>
-      <a href="/blog" style="color: #2563eb; text-decoration: none; font-weight: 600; font-size: 12px;">Read →</a>
+      <p style="font-size: 11px; color: #d4751c; margin-bottom: 8px; text-transform: uppercase; font-weight: 600;">Federal Programs</p>
+      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #111;">The Greener Homes Grant Has Closed — What Replaced It</h3>
+      <p style="font-size: 13px; color: #666; margin-bottom: 12px;">The $40K federal grant and loan are both gone. Here's where the money actually is.</p>
+      <a href="/blog/greener-homes-grant-closed-replacement" style="color: #d4751c; text-decoration: none; font-weight: 600; font-size: 12px;">Read →</a>
+    </div>
+
+    <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
+      <p style="font-size: 11px; color: #d4751c; margin-bottom: 8px; text-transform: uppercase; font-weight: 600;">Strategy Guide</p>
+      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #111;">Why Insulation First? Save 30–50%</h3>
+      <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Right retrofit sequence cuts costs dramatically. Here's the data.</p>
+      <a href="/blog/why-insulation-first-energy-retrofit" style="color: #d4751c; text-decoration: none; font-weight: 600; font-size: 12px;">Read →</a>
     </div>
   </div>
 
   <p style="text-align: center; margin-top: 32px;">
-    <a href="/blog" style="color: #2563eb; text-decoration: none; font-weight: 600; font-size: 14px;">View all blog posts →</a>
+    <a href="/blog" style="color: #d4751c; text-decoration: none; font-weight: 600; font-size: 14px;">View all guides and articles →</a>
   </p>
 </div>
 
@@ -1287,7 +1299,7 @@ h1, h2, h3, h4, h5, h6 {
 <div class="section" style="padding-bottom: 32px;">
   <div class="section-header center">
     <div class="section-eyebrow">Our coverage</div>
-    <h2 class="section-h2">14 BC cities, fully covered.</h2>
+    <h2 class="section-h2">18 BC cities, fully covered.</h2>
   </div>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; max-width: 1100px; margin: 0 auto;">
     <a href="/ca/bc/abbotsford" style="background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; text-align: center; text-decoration: none; color: inherit; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--paper-warm)'; this.style.borderColor='var(--amber)';" onmouseout="this.style.background='var(--paper)'; this.style.borderColor='var(--rule)';">
@@ -1298,6 +1310,10 @@ h1, h2, h3, h4, h5, h6 {
       <div style="font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; color: var(--teal-deep); margin-bottom: 4px;">Chilliwack</div>
       <div style="font-size: 12px; color: var(--ink-soft);">Fraser Valley E</div>
     </a>
+    <a href="/ca/bc/coquitlam" style="background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; text-align: center; text-decoration: none; color: inherit; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--paper-warm)'; this.style.borderColor='var(--amber)';" onmouseout="this.style.background='var(--paper)'; this.style.borderColor='var(--rule)';">
+      <div style="font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; color: var(--teal-deep); margin-bottom: 4px;">Coquitlam</div>
+      <div style="font-size: 12px; color: var(--ink-soft);">Metro Vancouver</div>
+    </a>
     <a href="/ca/bc/kamloops" style="background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; text-align: center; text-decoration: none; color: inherit; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--paper-warm)'; this.style.borderColor='var(--amber)';" onmouseout="this.style.background='var(--paper)'; this.style.borderColor='var(--rule)';">
       <div style="font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; color: var(--teal-deep); margin-bottom: 4px;">Kamloops</div>
       <div style="font-size: 12px; color: var(--ink-soft);">Thompson</div>
@@ -1306,6 +1322,14 @@ h1, h2, h3, h4, h5, h6 {
       <div style="font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; color: var(--teal-deep); margin-bottom: 4px;">Kelowna</div>
       <div style="font-size: 12px; color: var(--ink-soft);">Central Okanagan</div>
     </a>
+    <a href="/ca/bc/langley" style="background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; text-align: center; text-decoration: none; color: inherit; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--paper-warm)'; this.style.borderColor='var(--amber)';" onmouseout="this.style.background='var(--paper)'; this.style.borderColor='var(--rule)';">
+      <div style="font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; color: var(--teal-deep); margin-bottom: 4px;">Langley</div>
+      <div style="font-size: 12px; color: var(--ink-soft);">Metro Vancouver</div>
+    </a>
+    <a href="/ca/bc/maple-ridge" style="background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; text-align: center; text-decoration: none; color: inherit; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--paper-warm)'; this.style.borderColor='var(--amber)';" onmouseout="this.style.background='var(--paper)'; this.style.borderColor='var(--rule)';">
+      <div style="font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; color: var(--teal-deep); margin-bottom: 4px;">Maple Ridge</div>
+      <div style="font-size: 12px; color: var(--ink-soft);">Metro Vancouver</div>
+    </a>
     <a href="/ca/bc/nanaimo" style="background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; text-align: center; text-decoration: none; color: inherit; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--paper-warm)'; this.style.borderColor='var(--amber)';" onmouseout="this.style.background='var(--paper)'; this.style.borderColor='var(--rule)';">
       <div style="font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; color: var(--teal-deep); margin-bottom: 4px;">Nanaimo</div>
       <div style="font-size: 12px; color: var(--ink-soft);">Vancouver Island</div>
@@ -1313,6 +1337,10 @@ h1, h2, h3, h4, h5, h6 {
     <a href="/ca/bc/prince-george" style="background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; text-align: center; text-decoration: none; color: inherit; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--paper-warm)'; this.style.borderColor='var(--amber)';" onmouseout="this.style.background='var(--paper)'; this.style.borderColor='var(--rule)';">
       <div style="font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; color: var(--teal-deep); margin-bottom: 4px;">Prince George</div>
       <div style="font-size: 12px; color: var(--ink-soft);">Northern BC</div>
+    </a>
+    <a href="/ca/bc/richmond" style="background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; text-align: center; text-decoration: none; color: inherit; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--paper-warm)'; this.style.borderColor='var(--amber)';" onmouseout="this.style.background='var(--paper)'; this.style.borderColor='var(--rule)';">
+      <div style="font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; color: var(--teal-deep); margin-bottom: 4px;">Richmond</div>
+      <div style="font-size: 12px; color: var(--ink-soft);">Metro Vancouver</div>
     </a>
     <a href="/ca/bc/squamish" style="background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; text-align: center; text-decoration: none; color: inherit; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--paper-warm)'; this.style.borderColor='var(--amber)';" onmouseout="this.style.background='var(--paper)'; this.style.borderColor='var(--rule)';">
       <div style="font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; color: var(--teal-deep); margin-bottom: 4px;">Squamish</div>
@@ -1737,18 +1765,18 @@ h1, h2, h3, h4, h5, h6 {
     <div class="future-grid">
       <div class="future-card">
         <span class="future-tag live">Live now</span>
-        <h3 class="future-h3">14 BC cities</h3>
-        <p class="future-text">Abbotsford, Burnaby, Chilliwack, Fort St. John, Kamloops, Kelowna, Nanaimo, Penticton, Prince George, Squamish, Surrey, Vancouver, Vernon, Victoria. 2–3 vetted installers per city.</p>
+        <h3 class="future-h3">18 BC cities</h3>
+        <p class="future-text">Abbotsford, Burnaby, Coquitlam, Chilliwack, Fort St. John, Kamloops, Kelowna, Langley, Maple Ridge, Nanaimo, Penticton, Prince George, Richmond, Squamish, Surrey, Vancouver, Vernon, Victoria. 2–3 vetted installers per city.</p>
       </div>
       <div class="future-card">
-        <span class="future-tag soon">Coming this year</span>
-        <h3 class="future-h3">More BC cities</h3>
-        <p class="future-text">Expanding to additional BC markets through 2026. Every city page already covers the full stack: heat pumps ($4K–$16K), solar, batteries, insulation, water heaters and EV chargers.</p>
+        <span class="future-tag soon">Coming early 2027</span>
+        <h3 class="future-h3">Ontario expansion</h3>
+        <p class="future-text">Moving to Ontario with the same model. Regional utility programs, heat pump rebates, solar incentives. 5 major cities to start: Toronto, Ottawa, Hamilton, London, Kitchener.</p>
       </div>
       <div class="future-card">
         <span class="future-tag next">Phase 2</span>
-        <h3 class="future-h3">California &amp; US states</h3>
-        <p class="future-text">Other provinces and states with strong solar rebate programs. Same model: 2–3 vetted installers per city, you choose, no auctions, no data sales.</p>
+        <h3 class="future-h3">California &amp; other states</h3>
+        <p class="future-text">Other provinces and states with strong rebate programs. Same model: 2–3 vetted installers per city, you choose, no auctions, no data sales.</p>
       </div>
     </div>
 
@@ -1797,7 +1825,7 @@ h1, h2, h3, h4, h5, h6 {
         We took the opposite approach. 2–4 vetted installers per city, picked for HPCN certification, cold-climate performance, and customer reviews. You see their quotes and pick who you trust. No auctions, no bundles, no data sales. Independent of BC Hydro, but transparent about every official source we cite.
       </p>
       <p>
-        Today we serve 14 BC cities. In 2026 we&rsquo;ll be in more. In 2027 we&rsquo;ll expand to other provinces and states. Same model the whole way.
+        Today we serve 18 BC cities. In 2026 we&rsquo;ll be in more. In 2027 we&rsquo;ll expand to other provinces and states. Same model the whole way.
       </p>
       <div class="about-meta">
         <div class="about-meta-item"><strong>Founded</strong>2026</div>

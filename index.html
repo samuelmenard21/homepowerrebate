@@ -558,9 +558,16 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
   box-shadow: var(--shadow);
 }
+.city-picker-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -22px;
+  padding: 0 22px;
+}
 .city-picker-table {
   width: 100%; border-collapse: collapse;
   font-size: 15px;
+  min-width: 700px;
 }
 .city-picker-table th {
   background: var(--paper-warm);
@@ -937,10 +944,12 @@ h1, h2, h3, h4, h5, h6 {
   .philosophy-pillars { grid-template-columns: 1fr; gap: 16px; }
   .waitlist { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
   .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
-  .city-picker-table th, .city-picker-table td { padding: 14px; font-size: 14px; }
-  .city-picker-name { font-size: 17px; }
-  .city-picker-region { font-size: 11px; }
-  .city-picker-cta { padding: 8px 12px; font-size: 12px; }
+  .city-picker-scroll { margin: 0 -16px; padding: 0 16px; }
+  .city-picker-table { min-width: 600px; }
+  .city-picker-table th, .city-picker-table td { padding: 12px 14px; font-size: 13px; }
+  .city-picker-name { font-size: 16px; }
+  .city-picker-region { font-size: 10px; }
+  .city-picker-cta { padding: 8px 12px; font-size: 11px; }
   .trust-card { padding: 24px; gap: 16px; }
   /* Mobile nav fixes */
   .nav-inner { gap: 10px; }
@@ -1432,6 +1441,7 @@ h1, h2, h3, h4, h5, h6 {
     </div>
 
     <div class="city-picker">
+      <div class="city-picker-scroll">
       <table class="city-picker-table">
         <thead>
           <tr>
@@ -1585,6 +1595,7 @@ h1, h2, h3, h4, h5, h6 {
           </tr>
         </tbody>
       </table>
+      </div>
       <div class="city-picker-foot">
         Not in one of these cities? <a href="#waitlist">Join the waitlist &rarr;</a> &mdash; we&rsquo;ll email you when we expand to your area. Or read the <a href="/ca/bc">BC rebate overview &rarr;</a>.
       </div>

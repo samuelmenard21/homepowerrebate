@@ -18,6 +18,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<script>
+function revealEmail() {
+  const user = 'samuelmenard';
+  const domain = 'gmail.com';
+  const email = user + '@' + domain;
+  window.location.href = 'mailto:' + email + '?subject=HomePowerRebate%20questions';
+}
+</script>
+
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -32,12 +41,11 @@
    "description": "Independent guide to home energy rebates and trusted installer matching. Helping homeowners claim heat pump, solar, and battery rebates.",
    "founder": { "@id": "https://homepowerrebate.com/#sam" },
    "foundingDate": "2026",
-   "foundingLocation": "British Columbia, Canada",
+   "foundingLocation": "Ontario, Canada",
    "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+1-604-XXX-XXXX",
     "contactType": "customer service",
-    "email": "hello@homepowerrebate.com",
+    "email": "samuelmenard@gmail.com",
     "availableLanguage": "English"
    },
    "areaServed": [
@@ -210,7 +218,7 @@ strong { color: var(--ink); font-weight: 600; }
     <p><strong>Expansion by Demand.</strong> We prioritize cities based on actual homeowner requests. You can tell us which city you want next.</p>
 
     <div class="callout">
-      <strong>Questions?</strong> Email me at <a href="mailto:samuelmenard@gmail.com">samuelmenard@gmail.com</a>. I read every message.
+      <strong>Questions?</strong> <button onclick="revealEmail()" style="background:none; border:none; color:var(--teal); cursor:pointer; font-weight:600; text-decoration:underline;">Email me</button>. I read every message.
     </div>
 
     <a class="cta" href="/retrofit-assessment">Calculate my rebate →</a>
@@ -226,7 +234,7 @@ strong { color: var(--ink); font-weight: 600; }
       </div>
       <div class="fact">
         <div class="fact-label">Contact</div>
-        <div class="fact-value"><a href="mailto:samuelmenard@gmail.com" style="color: var(--teal); text-decoration: none; border: none; font-weight: 600;">Email Sam</a></div>
+        <div class="fact-value"><button onclick="revealEmail()" style="background:none; border:none; color:var(--teal); text-decoration:none; font-weight:600; cursor:pointer;">Email Sam</button></div>
       </div>
     </div>
 

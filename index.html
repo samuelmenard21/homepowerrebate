@@ -146,66 +146,6 @@ function toggleCityDropdown() {
 }
 </script>
 
-<!-- FAQ schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What is HomePowerRebate?",
-      "acceptedAnswer": { "@type": "Answer", "text": "HomePowerRebate is the easiest way for BC homeowners to claim BC Hydro's solar and battery rebate. You get a real cheque from BC Hydro (up to $10,000), a home that's worth more at sale, and a battery that quietly helps power your neighbourhood when the grid is stressed. We match you with 2–3 vetted local installers — you choose who you like. No pressure. No auctions. Free for homeowners, currently serving 14 BC cities across BC." }
-    },
-    {
-      "@type": "Question",
-      "name": "How is HomePowerRebate different from other solar matching sites?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Most solar lead sites sell your contact info to 5 or 10 installers at once, so you spend weeks fielding cold calls. HomePowerRebate vets 2–3 trusted local installers in your city and lets you choose who you want to talk to — no pressure, no auctions. One match, your choice, no spam. You stay in control." }
-    },
-    {
-      "@type": "Question",
-      "name": "How much does HomePowerRebate cost homeowners?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Nothing. The service is completely free for homeowners. Our installer partners pay us a small referral fee, but only if you decide to book a job with them. If you don't move forward, you owe nothing." }
-    },
-    {
-      "@type": "Question",
-      "name": "What is the BC Hydro solar and battery rebate?",
-      "acceptedAnswer": { "@type": "Answer", "text": "It's part of BC Hydro's $1.1 billion Power Smart 2.0 program. Eligible BC homeowners can claim up to $10,000 — $5,000 for solar panels and $5,000 for a home battery when enrolled in Peak Saver. Add Peak Saver rewards (around $3,000 over 10 years), lower power bills ($5,000 to $9,000 over 10 years depending on city), and a typical home value lift of about 4 percent, and a BC family typically gets $18,000 to $22,000 back over a decade. Plus your enrolled battery helps the grid handle peak demand — that's how BC homes power BC homes." }
-    },
-    {
-      "@type": "Question",
-      "name": "Which cities does HomePowerRebate currently serve?",
-      "acceptedAnswer": { "@type": "Answer", "text": "We currently match homeowners in Kamloops, Kelowna, Nanaimo, Vancouver, and Victoria. We're expanding to more BC cities through 2026, then to California and other US states in Phase 2." }
-    },
-    {
-      "@type": "Question",
-      "name": "Are HomePowerRebate's installers vetted?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every installer in our network is HPCN-certified (Home Performance Contractor Network), which is required by BC Hydro for the rebate as of June 1, 2026. We vet 2–3 trusted local companies per city so you get choice and accountability, not auction-style chaos." }
-    },
-    {
-      "@type": "Question",
-      "name": "Will HomePowerRebate sell my information?",
-      "acceptedAnswer": { "@type": "Answer", "text": "No. We do not sell homeowner data to third parties. Your info goes to one approved installer in your city — that's it. We don't run lead auctions, we don't bundle leads, and we don't pass your details to multiple companies." }
-    },
-    {
-      "@type": "Question",
-      "name": "Why doesn't Tesla Powerwall qualify for the BC Hydro rebate?",
-      "acceptedAnswer": { "@type": "Answer", "text": "BC Hydro doesn't include Tesla products on its approved battery list. If you install a Tesla Powerwall in BC, you get zero rebate — that's $5,000 left on the table. We install BC Hydro-approved batteries (Eguana Evolve) so homeowners get the full rebate." }
-    },
-    {
-      "@type": "Question",
-      "name": "Is HomePowerRebate affiliated with BC Hydro?",
-      "acceptedAnswer": { "@type": "Answer", "text": "No. HomePowerRebate is an independent service. We are not affiliated with, endorsed by, or operated by BC Hydro. We help homeowners navigate BC Hydro's Power Smart 2.0 rebate program by matching them with approved local installers." }
-    },
-    {
-      "@type": "Question",
-      "name": "When will HomePowerRebate expand to other cities or states?",
-      "acceptedAnswer": { "@type": "Answer", "text": "We're expanding through 2026, starting with additional BC cities, then other provinces and states with strong solar rebate programs. Join our waitlist on this page and we'll email you the moment we have an approved local installer ready in your area." }
-    }
-  ]
-}
-</script>
-
 <style>
 :root {
   --ink: #0a2a2e;
@@ -795,48 +735,6 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--red-warning);
   font-size: 14px;
   margin-top: 6px;
-}
-
-/* FAQ */
-.faq-list { display: grid; gap: 14px; max-width: 860px; margin: 0 auto; }
-.faq-item {
-  border: 1px solid var(--rule);
-  border-radius: 14px;
-  background: var(--paper);
-  overflow: hidden;
-}
-.faq-question {
-  width: 100%;
-  padding: 22px 26px;
-  background: transparent; border: none;
-  text-align: left; cursor: pointer;
-  font-family: 'Fraunces', serif;
-  font-weight: 500; font-size: 19px;
-  color: var(--teal-deep);
-  letter-spacing: -0.005em;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.faq-toggle {
-  width: 28px; height: 28px;
-  background: var(--paper-warm);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--amber); flex-shrink: 0;
-  margin-left: 16px;
-  transition: transform 0.2s;
-}
-.faq-item.open .faq-toggle { transform: rotate(45deg); }
-.faq-answer {
-  padding: 0 26px 22px;
-  font-size: 15px; color: var(--ink-soft);
-  display: none;
-}
-.faq-item.open .faq-answer { display: block; }
-.faq-answer a {
-  color: var(--teal-deep);
-  border-bottom: 1px solid var(--amber);
-  text-decoration: none;
-  font-weight: 600;
 }
 
 /* About block */
@@ -1772,57 +1670,6 @@ h1, h2, h3, h4, h5, h6 {
 </section>
 
 <!-- FAQ -->
-<section class="section" id="faq">
-  <div class="section-header center">
-    <div class="section-eyebrow">Common questions</div>
-    <h2 class="section-h2">The questions BC families ask first.</h2>
-    <p class="section-lede">Honest answers about how the service works, what the BC Hydro rebate gets you, and why we do it this way.</p>
-  </div>
-
-  <div class="faq-list">
-    <div class="faq-item">
-      <button class="faq-question" type="button">What is HomePowerRebate?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><p><strong>HomePowerRebate is the easiest way for BC homeowners to claim BC Hydro&rsquo;s solar and battery rebate.</strong> You get a real cheque from BC Hydro (up to $10,000), a home that&rsquo;s worth more at sale, and a battery that quietly helps power your neighbourhood when the grid is stressed. We match you with one approved local installer in your city &mdash; never five &mdash; and then step out of the way. Free for homeowners, currently serving 14 BC cities across BC.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">How is HomePowerRebate different from other solar matching sites?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><p>Most solar lead sites sell your contact info to 5 or 10 installers at once, so you spend weeks fielding cold calls and pushy emails. HomePowerRebate sends your info to exactly one approved local installer &mdash; the same trusted company every time in your city &mdash; and then we step away. <strong>One match, one call, no spam.</strong> You stay in control.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">How much does HomePowerRebate cost?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><p>Nothing for you. The service is completely free for homeowners. Our installer partners pay us a small referral fee, but only when you decide to book a job. If you don&rsquo;t move forward, you owe nothing &mdash; no subscription, no hidden cost, no catch.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">What is the BC Hydro solar and battery rebate?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><p><strong>It&rsquo;s part of <a href="https://www.bchydro.com/powersmart/residential/programs/solar-and-battery-rebate.html" target="_blank" rel="noopener">BC Hydro&rsquo;s Power Smart 2.0 program</a>.</strong> Eligible BC homeowners can claim up to $10,000 &mdash; $5,000 for solar panels and $5,000 for a home battery when enrolled in Peak Saver. Add Peak Saver rewards (~$3,000 over 10 years), lower power bills ($5,000 to $9,000 over a decade depending on city), and a typical <a href="https://www.bchydro.com/powersmart/residential/why-save-power/home-value.html" target="_blank" rel="noopener">home value lift of about 4%</a>, and a BC family gets <strong>$18,000 to $22,000 back over 10 years</strong>. Plus your enrolled battery helps the grid handle peak demand &mdash; that&rsquo;s how BC homes power BC homes. <a href="/ca/bc">Read the BC overview &rarr;</a></p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">Which cities does HomePowerRebate currently serve?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><p>We currently match homeowners in <a href="/ca/bc/abbotsford">Abbotsford</a>, <a href="/ca/bc/chilliwack">Chilliwack</a>, <a href="/ca/bc/kamloops">Kamloops</a>, <a href="/ca/bc/kelowna">Kelowna</a>, <a href="/ca/bc/nanaimo">Nanaimo</a>, <a href="/ca/bc/prince-george">Prince George</a>, <a href="/ca/bc/squamish">Squamish</a>, <a href="/ca/bc/surrey">Surrey</a>, <a href="/ca/bc/vancouver">Vancouver</a>, <a href="/ca/bc/vernon">Vernon</a>, and <a href="/ca/bc/victoria">Victoria</a>. Expanding to more BC cities and California through 2026.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">Are HomePowerRebate&rsquo;s installers vetted?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><p>Yes. Every installer in our network is HPCN-certified (Home Performance Contractor Network), which is required by BC Hydro for the rebate as of June 1, 2026. We vet 2–3 trusted local companies per city so you get choice and accountability, not auction-style chaos.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">Will HomePowerRebate sell my information?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><p><strong>No.</strong> We do not sell homeowner data to third parties. Your info goes to one approved installer in your city &mdash; that&rsquo;s it. We don&rsquo;t run lead auctions, we don&rsquo;t bundle leads, and we don&rsquo;t pass your details to multiple companies.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">Why doesn&rsquo;t Tesla Powerwall qualify for the BC Hydro rebate?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><p>BC Hydro doesn&rsquo;t include Tesla products on its approved battery list. If you install a Tesla Powerwall in BC, you get zero rebate &mdash; that&rsquo;s $5,000 left on the table. We install BC Hydro-approved batteries (Eguana Evolve) so homeowners get the full rebate. <a href="/blog/tesla-powerwall-mistake">Read the full story &rarr;</a></p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">Is HomePowerRebate affiliated with BC Hydro?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><p><strong>No.</strong> HomePowerRebate is an independent service. We are not affiliated with, endorsed by, or operated by BC Hydro. We help homeowners navigate BC Hydro&rsquo;s Power Smart 2.0 rebate program by matching them with approved local installers.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">When will HomePowerRebate expand to other cities or states?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><p>We&rsquo;re expanding through 2026, starting with additional BC cities, then other provinces and states with strong solar rebate programs. <a href="#waitlist">Join our waitlist</a> and we&rsquo;ll email you the moment we have an approved local installer ready in your area.</p></div>
-    </div>
-  </div>
-</section>
-
 <!-- WHERE WE'RE GOING (forward-looking) -->
 <div class="section-dark" id="future">
   <div class="section-dark-inner">
@@ -2035,13 +1882,6 @@ document.addEventListener('click', (e) => {
   if (!nav.contains(e.target)) {
     modal.style.display = 'none';
   }
-});
-
-// FAQ accordion
-document.querySelectorAll('.faq-question').forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.parentElement.classList.toggle('open');
-  });
 });
 
 // Waitlist form

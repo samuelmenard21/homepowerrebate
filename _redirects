@@ -5,3 +5,11 @@
 # Kept so any pre-launch links or crawler-cached paths land on the right page.
 /kelowna            /ca/bc/kelowna      301
 /kelowna.html       /ca/bc/kelowna      301
+
+# Old root-level blog files -> new nested blog locations
+# These were moved from /blog-*.html to /blog/*/index.html structure
+/blog-furnace-vs-heat-pump-which-qualifies-rebate.html        /blog/heat-pump-vs-air-conditioner-furnace    301
+/blog-bc-hydro-vs-fortisbc-rebates.html                       /blog/fortisbc-vs-bc-hydro-rebates            301
+/blog-heat-pump-vs-ac-cost-rebates.html                       /blog/heat-pump-vs-air-conditioner-furnace    301
+/blog-island-vs-mainland-bc-heat-pump.html                    /blog/stack-bc-hydro-greener-homes            301
+/blog-kelowna-vs-kamloops-solar.html                          /blog/is-bc-hydro-solar-rebate-worth-it        301

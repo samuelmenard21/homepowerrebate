@@ -380,7 +380,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     <section class="installer-carousel-section" style="margin: 60px 0; padding: 40px 28px; max-width: 1100px; margin-left: auto; margin-right: auto; border-top: 1px solid #d9d0c1;">
   <div style="margin-bottom: 32px;">
     <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #d4751c; margin-bottom: 8px;">Trusted Partners</p>
-    <h2 style="font-size: 28px; font-weight: 600; color: #0a2a2e; margin-bottom: 8px; font-family: 'Fraunces', serif;">Top Heat Pump Installers in Fort St. John</h2>
+    <h2 style="font-size: 28px; font-weight: 600; color: #0a2a2e; margin-bottom: 8px; font-family: 'Fraunces', serif;">Top Heat Pump Installers in Fort St John</h2>
     <p style="font-size: 15px; color: #666; margin-bottom: 20px;">HPCN-certified, 4+ stars, verified by Google. Browse and pick one.</p>
   </div>
   <div style="display: flex; gap: 12px; margin-bottom: 28px;">
@@ -406,8 +406,26 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <a class="carousel-installer-website" href="#" target="_blank" style="flex: 1; text-align: center; background: #d4751c; color: white; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">🌐 Website</a>
       </div>
     </div>
-    <button class="carousel-prev" style="position: absolute; left: -60px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer;">‹</button>
-    <button class="carousel-next" style="position: absolute; right: -60px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer;">›</button>
+    <button class="carousel-prev" style="position: absolute; left: -60px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10;">‹</button>
+    <button class="carousel-next" style="position: absolute; right: -60px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10;">›</button>
+  </div>
+  <style>
+    @media (max-width: 768px) {
+      .carousel-prev, .carousel-next {
+        left: auto !important;
+        right: auto !important;
+        width: 56px !important;
+        height: 56px !important;
+        font-size: 32px !important;
+      }
+      .carousel-prev {
+        left: 12px !important;
+      }
+      .carousel-next {
+        right: 12px !important;
+      }
+    }
+  </style>
   </div>
   <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 28px;">
     <span class="carousel-counter" style="font-size: 14px; font-weight: 600; color: #0a2a2e;">1 of 5</span>
@@ -421,7 +439,7 @@ class InstallerCarousel {
     this.filteredInstallers = [];
     this.currentIndex = 0;
     this.currentFilter = 'all';
-    this.cityName = 'Fort St. John';
+    this.cityName = 'Fort St John';
     this.init();
   }
   async init() {
@@ -486,9 +504,7 @@ class InstallerCarousel {
 }
 document.addEventListener('DOMContentLoaded', () => { new InstallerCarousel(); });
 </script>
-
-
-  <!-- PRODUCT REBATES QUICK REFERENCE -->
+<!-- PRODUCT REBATES QUICK REFERENCE -->
   <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin: 32px 0;">
     <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #2d6a4f; margin-bottom: 8px;">Quick Win</p>
     <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #0a2a2e;">Product Rebates: $150–$500 Off Appliances</h4>

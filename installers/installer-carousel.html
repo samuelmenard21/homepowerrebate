@@ -56,7 +56,8 @@ class InstallerCarousel {
   }
   async fetchInstallers() {
     try {
-      const response = await fetch(`https://homepowerrebate-installers.samuelmenard.workers.dev/api/installers/${this.cityName.toLowerCase().replace(/ /g, '-')}.json`);
+      const citySlug = this.cityName.toLowerCase().replace(/ /g, '-').replace(/\./g, '');
+      const response = await fetch(`/installers/json/${citySlug}.json`);
       this.allInstallers = await response.json();
       this.updateFiltered();
     } catch (error) {

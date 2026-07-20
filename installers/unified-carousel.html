@@ -9,45 +9,60 @@
     <button class="unified-carousel-type-btn" data-type="solar" style="background: #f5efe5; color: #0a2a2e; border: 1px solid #d9d0c1; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;">Solar</button>
     <button class="unified-carousel-type-btn" data-type="recommended" style="background: #f5efe5; color: #0a2a2e; border: 1px solid #d9d0c1; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;">HomePowerRebate Recommended</button>
   </div>
-  <div style="position: relative;">
-    <div class="unified-carousel-container" style="background: #fff; border: 2px solid #d9d0c1; border-radius: 12px; padding: 40px 28px; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between;">
-      <div style="display: flex; align-items: start; justify-content: space-between; margin-bottom: 20px;">
-        <div>
-          <h3 class="unified-carousel-installer-name" style="font-size: 24px; font-weight: 700; color: #0a2a2e; margin-bottom: 4px;">Loading...</h3>
-          <p class="unified-carousel-installer-specialty" style="font-size: 14px; color: #d4751c; font-weight: 600; margin-bottom: 12px;">Installation</p>
+  <div class="unified-carousel-wrapper" style="display: flex; flex-direction: column;">
+    <div style="position: relative;">
+      <div class="unified-carousel-container" style="background: #fff; border: 2px solid #d9d0c1; border-radius: 12px; padding: 40px 28px; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="display: flex; align-items: start; justify-content: space-between; margin-bottom: 20px;">
+          <div>
+            <h3 class="unified-carousel-installer-name" style="font-size: 24px; font-weight: 700; color: #0a2a2e; margin-bottom: 4px;">Loading...</h3>
+            <p class="unified-carousel-installer-specialty" style="font-size: 14px; color: #d4751c; font-weight: 600; margin-bottom: 12px;">Installation</p>
+          </div>
+          <div style="text-align: right;">
+            <div class="unified-carousel-installer-rating" style="font-size: 32px; font-weight: 700; color: #d4751c;">4.9★</div>
+            <p class="unified-carousel-installer-reviews" style="font-size: 12px; color: #666;">47 reviews</p>
+          </div>
         </div>
-        <div style="text-align: right;">
-          <div class="unified-carousel-installer-rating" style="font-size: 32px; font-weight: 700; color: #d4751c;">4.9★</div>
-          <p class="unified-carousel-installer-reviews" style="font-size: 12px; color: #666;">47 reviews</p>
+        <p class="unified-carousel-installer-location" style="font-size: 14px; color: #666; margin-bottom: 16px;">📍 Location</p>
+        <p class="unified-carousel-installer-description" style="font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 24px; min-height: 60px;">Description</p>
+        <div style="display: flex; gap: 12px; margin-top: 20px;">
+          <a class="unified-carousel-installer-phone" href="tel:+1" style="flex: 1; text-align: center; background: #f5efe5; color: #0d4f5c; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">📞 Call</a>
+          <a class="unified-carousel-installer-website" href="#" target="_blank" style="flex: 1; text-align: center; background: #d4751c; color: white; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">🌐 Website</a>
         </div>
       </div>
-      <p class="unified-carousel-installer-location" style="font-size: 14px; color: #666; margin-bottom: 16px;">📍 Location</p>
-      <p class="unified-carousel-installer-description" style="font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 24px; min-height: 60px;">Description</p>
-      <div style="display: flex; gap: 12px; margin-top: 20px;">
-        <a class="unified-carousel-installer-phone" href="tel:+1" style="flex: 1; text-align: center; background: #f5efe5; color: #0d4f5c; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">📞 Call</a>
-        <a class="unified-carousel-installer-website" href="#" target="_blank" style="flex: 1; text-align: center; background: #d4751c; color: white; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">🌐 Website</a>
-      </div>
+      <button class="unified-carousel-prev" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;">‹</button>
+      <button class="unified-carousel-next" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;">›</button>
     </div>
-    <button class="unified-carousel-prev" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;">‹</button>
-    <button class="unified-carousel-next" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;">›</button>
+    <div class="unified-carousel-mobile-nav" style="display: none; justify-content: center; align-items: center; gap: 12px; margin-top: 16px;">
+      <button class="unified-carousel-prev-mobile" style="background: #d4751c; color: white; border: none; width: 44px; height: 44px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;">‹</button>
+      <span class="unified-carousel-counter" style="font-size: 14px; font-weight: 600; color: #0a2a2e; min-width: 50px; text-align: center;">1 of 5</span>
+      <button class="unified-carousel-next-mobile" style="background: #d4751c; color: white; border: none; width: 44px; height: 44px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;">›</button>
+    </div>
   </div>
   <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 28px;">
     <span class="unified-carousel-counter" style="font-size: 14px; font-weight: 600; color: #0a2a2e;">1 of 5</span>
     <div class="unified-carousel-dots" style="display: flex; gap: 6px;"></div>
   </div>
   <style>
-    @media (max-width: 768px) {
-      .unified-carousel-prev, .unified-carousel-next {
-        width: 56px !important;
-        height: 56px !important;
-        font-size: 32px !important;
+    @media (max-width: 480px) {
+      .unified-carousel-prev,
+      .unified-carousel-next {
+        display: none !important;
       }
+
+      .unified-carousel-mobile-nav {
+        display: flex !important;
+      }
+    }
+
+    @media (max-width: 768px) {
       .unified-carousel-section {
         padding: 40px 16px !important;
         margin: 40px 0 !important;
       }
+
       .unified-carousel-container {
         padding: 24px 16px !important;
+        min-height: 380px !important;
       }
     }
   </style>
@@ -108,6 +123,8 @@ class UnifiedInstallerCarousel {
     });
     document.querySelector('.unified-carousel-prev').addEventListener('click', () => this.prev());
     document.querySelector('.unified-carousel-next').addEventListener('click', () => this.next());
+    document.querySelector('.unified-carousel-prev-mobile').addEventListener('click', () => this.prev());
+    document.querySelector('.unified-carousel-next-mobile').addEventListener('click', () => this.next());
   }
   prev() {
     this.currentIndex = (this.currentIndex - 1 + this.filteredInstallers.length) % this.filteredInstallers.length;
@@ -128,7 +145,8 @@ class UnifiedInstallerCarousel {
     document.querySelector('.unified-carousel-installer-description').textContent = installer.description;
     document.querySelector('.unified-carousel-installer-phone').href = 'tel:' + installer.phone;
     document.querySelector('.unified-carousel-installer-website').href = installer.website;
-    document.querySelector('.unified-carousel-counter').textContent = `${this.currentIndex + 1} of ${this.filteredInstallers.length}`;
+    const counters = document.querySelectorAll('.unified-carousel-counter');
+    counters.forEach(c => c.textContent = `${this.currentIndex + 1} of ${this.filteredInstallers.length}`);
   }
 }
 document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarousel(); });

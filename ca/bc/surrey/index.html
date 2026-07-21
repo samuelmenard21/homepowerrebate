@@ -398,6 +398,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   <div class="unified-carousel-wrapper" style="display: flex; flex-direction: column;">
     <div style="position: relative;">
       <div class="unified-carousel-container" style="background: #fff; border: 2px solid #d9d0c1; border-radius: 12px; padding: 40px 28px; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between;">
+        <img class="unified-carousel-installer-image" src="" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; background: #f0f0f0;" alt="Installer photo" />
         <div style="display: flex; align-items: start; justify-content: space-between; margin-bottom: 20px;">
           <div>
             <h3 class="unified-carousel-installer-name" style="font-size: 24px; font-weight: 700; color: #0a2a2e; margin-bottom: 4px;">Loading...</h3>
@@ -523,6 +524,7 @@ class UnifiedInstallerCarousel {
   render() {
     if (this.filteredInstallers.length === 0) return;
     const installer = this.filteredInstallers[this.currentIndex];
+    document.querySelector('.unified-carousel-installer-image').src = installer.image_url || '';
     document.querySelector('.unified-carousel-installer-name').textContent = installer.name;
     document.querySelector('.unified-carousel-installer-specialty').textContent = installer.specialty || 'Installation';
     document.querySelector('.unified-carousel-installer-rating').textContent = installer.rating.toFixed(1) + '★';

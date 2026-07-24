@@ -96,9 +96,37 @@ footer p { font-size:13px; color:var(--sage); }
 </head>
 <body>
 
-<nav>
+<nav style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
   <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
-  <span class="nav-tag">Blog</span>
+  <div style="display:flex; align-items:center; gap:20px;">
+    <span class="nav-tag">Blog</span>
+    <div style="position:relative;">
+      <button type="button" onclick="var m=this.nextElementSibling; m.style.display=(m.style.display==='grid'?'none':'grid');" style="display:flex; align-items:center; gap:8px; background:var(--teal-deep); color:var(--paper); padding:10px 18px; border-radius:999px; border:none; cursor:pointer; font-family:'Inter Tight',sans-serif; font-weight:600; font-size:14px;">
+        Pick your city
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div style="display:none; position:absolute; top:calc(100% + 10px); right:0; grid-template-columns:1fr 1fr; gap:8px; padding:16px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:60; width:min(340px,86vw); max-height:70vh; overflow-y:auto;">
+        <a href="/ca/bc/abbotsford" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Abbotsford</a>
+        <a href="/ca/bc/burnaby" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Burnaby</a>
+        <a href="/ca/bc/chilliwack" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Chilliwack</a>
+        <a href="/ca/bc/coquitlam" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Coquitlam</a>
+        <a href="/ca/bc/fort-st-john" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Fort St. John</a>
+        <a href="/ca/bc/kamloops" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Kamloops</a>
+        <a href="/ca/bc/kelowna" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Kelowna</a>
+        <a href="/ca/bc/langley" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Langley</a>
+        <a href="/ca/bc/maple-ridge" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Maple Ridge</a>
+        <a href="/ca/bc/nanaimo" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Nanaimo</a>
+        <a href="/ca/bc/penticton" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Penticton</a>
+        <a href="/ca/bc/prince-george" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Prince George</a>
+        <a href="/ca/bc/richmond" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Richmond</a>
+        <a href="/ca/bc/squamish" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Squamish</a>
+        <a href="/ca/bc/surrey" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Surrey</a>
+        <a href="/ca/bc/vancouver" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Vancouver</a>
+        <a href="/ca/bc/vernon" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Vernon</a>
+        <a href="/ca/bc/victoria" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Victoria</a>
+      </div>
+    </div>
+  </div>
 </nav>
 
 <header class="hub-hero">

@@ -9,7 +9,7 @@
     <button class="carousel-filter-btn" data-filter="recommended" style="background: #f5efe5; color: #0a2a2e; border: 1px solid #d9d0c1; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;">HomePowerRebate Recommended</button>
   </div>
   <div style="position: relative;">
-    <div class="carousel-container" style="background: #fff; border: 2px solid #d9d0c1; border-radius: 12px; padding: 40px 28px; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between;">
+    <div class="carousel-container" style="background: #fff; border: 2px solid #d9d0c1; border-radius: 12px; padding: 40px 28px; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: border-color 0.2s; position: relative;" onclick="window.location = document.querySelector('.carousel-profile-link').href">
       <div style="display: flex; align-items: start; justify-content: space-between; margin-bottom: 20px;">
         <div>
           <h3 class="carousel-installer-name" style="font-size: 24px; font-weight: 700; color: #0a2a2e; margin-bottom: 4px;">Loading...</h3>
@@ -22,9 +22,10 @@
       </div>
       <p class="carousel-installer-location" style="font-size: 14px; color: #666; margin-bottom: 16px;">📍 Location</p>
       <p class="carousel-installer-description" style="font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 24px; min-height: 60px;">Description</p>
-      <div style="display: flex; gap: 12px; margin-top: 20px;">
-        <a class="carousel-installer-phone" href="tel:+1" style="flex: 1; text-align: center; background: #f5efe5; color: #0d4f5c; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">📞 Call</a>
-        <a class="carousel-installer-website" href="#" target="_blank" style="flex: 1; text-align: center; background: #d4751c; color: white; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">🌐 Website</a>
+      <div style="display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;">
+        <a class="carousel-installer-phone" href="tel:+1" style="flex: 1; min-width: 100px; text-align: center; background: #f5efe5; color: #0d4f5c; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;" onclick="event.stopPropagation()">📞 Call</a>
+        <a class="carousel-installer-website" href="#" target="_blank" style="flex: 1; min-width: 100px; text-align: center; background: #d4751c; color: white; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;" onclick="event.stopPropagation()">🌐 Website</a>
+        <a class="carousel-profile-link" href="#" style="flex: 1; min-width: 140px; text-align: center; background: #0d4f5c; color: white; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;" onclick="event.stopPropagation()">📋 Full Profile</a>
       </div>
     </div>
     <button class="carousel-prev" style="position: absolute; left: -60px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10;">‹</button>
@@ -120,6 +121,7 @@ class InstallerCarousel {
     document.querySelector('.carousel-installer-description').textContent = installer.description;
     document.querySelector('.carousel-installer-phone').href = 'tel:' + installer.phone;
     document.querySelector('.carousel-installer-website').href = installer.website;
+    document.querySelector('.carousel-profile-link').href = installer.profileUrl;
     document.querySelector('.carousel-counter').textContent = `${this.currentIndex + 1} of ${this.filteredInstallers.length}`;
   }
 }

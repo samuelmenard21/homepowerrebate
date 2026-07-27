@@ -555,17 +555,35 @@ def main():
             w.writeheader()
             w.writerows(url_rows)
 
-        # A dedicated sitemap so 159 new pages get discovered as a set rather
-        # than depending entirely on crawl depth from the nearby-installer
-        # links. Reference this from the main sitemap's <sitemapindex> (or add
-        # its URLs directly) so it's actually submitted to Search Console.
-        def sitemap_entry(r):
-            lastmod = f"<lastmod>{escape(r['Last Updated'])}</lastmod>" if r["Last Updated"] else ""
-            return f"  <url><loc>{escape(r['Profile URL'])}</loc>{lastmod}<changefreq>monthly</changefreq><priority>0.5</priority></url>"
+        # Generate per-city JSON files for the carousel to consume. Each city
+        # gets its own file with all installers in that city, sorted by rating.
+        json_dir = INSTALLERS_DIR / "json"
+        json_dir.mkdir(exist_ok=True)
 
-        urls_xml = "\n".join(sitemap_entry(r) for r in url_rows)
-        sitemap = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls_xml}\n</urlset>\n'
-        (INSTALLERS_DIR / "sitemap-installers.xml").write_text(sitemap)
+        by_city = defaultdict(list)
+        for inst in installers:
+            city_slug = CITY_SLUGS.get(normalize_city(inst["City"]))
+            if not city_slug:
+                continue
+            slug = slugify(inst["Business Name"])
+            by_city[city_slug].append({
+                "name": inst["Business Name"].strip(),
+                "rating": float(inst.get("Google Rating") or 0),
+                "reviews": int(inst.get("Review Count") or 0),
+                "location": inst["City"].strip(),
+                "phone": inst.get("Phone", ""),
+                "website": inst.get("Website", ""),
+                "specialty": " & ".join(REBATE_CONTEXT[k]["label"] for k in sorted(inst["_kinds"])),
+                "description": f"HPCN-certified. {int(inst.get('Review Count') or 0)} reviews on Google.",
+                "profileUrl": f"{SITE_URL}/installers/profiles/{city_slug}/{slug}/",
+                "recommended": False
+            })
+
+        for city_slug, installers_in_city in by_city.items():
+            # Sort by rating desc, then reviews desc
+            installers_in_city.sort(key=lambda x: (x["rating"], x["reviews"]), reverse=True)
+            json_file = json_dir / f"{city_slug}.json"
+            json_file.write_text(json.dumps(installers_in_city, indent=2))
 
     print(f"\n{written} profile page(s) {'would be ' if args.dry_run else ''}written to {OUT_DIR.relative_to(ROOT)}/")
     if skipped:

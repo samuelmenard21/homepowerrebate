@@ -422,6 +422,15 @@
         alert('Error submitting. Please try again or call directly.');
       }
     }
+
+    // Pre-fill city from URL param (?city=vancouver)
+    window.addEventListener('load', () => {
+      const params = new URLSearchParams(window.location.search);
+      const cityParam = params.get('city');
+      if (cityParam && CITY_DATA[cityParam]) {
+        document.getElementById('city').value = cityParam;
+      }
+    });
   </script>
 </body>
 </html>

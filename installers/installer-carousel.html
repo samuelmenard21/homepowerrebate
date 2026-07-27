@@ -122,6 +122,14 @@ class InstallerCarousel {
     document.querySelector('.carousel-installer-phone').href = 'tel:' + installer.phone;
     document.querySelector('.carousel-installer-website').href = installer.website;
     document.querySelector('.carousel-profile-link').href = installer.profileUrl;
+    // Set image if available
+    const img = document.querySelector('.carousel-installer-image');
+    if (img && installer.image_url) {
+      img.src = installer.image_url;
+      img.style.display = 'block';
+    } else if (img) {
+      img.style.display = 'none';
+    }
     document.querySelector('.carousel-counter').textContent = `${this.currentIndex + 1} of ${this.filteredInstallers.length}`;
   }
 }

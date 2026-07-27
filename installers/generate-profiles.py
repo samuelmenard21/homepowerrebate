@@ -573,6 +573,7 @@ def main():
                 "location": inst["City"].strip(),
                 "phone": inst.get("Phone", ""),
                 "website": inst.get("Website", ""),
+                "image_url": inst.get("Image URL", ""),
                 "specialty": " & ".join(REBATE_CONTEXT[k]["label"] for k in sorted(inst["_kinds"])),
                 "description": f"HPCN-certified. {int(inst.get('Review Count') or 0)} reviews on Google.",
                 "profileUrl": f"{SITE_URL}/installers/profiles/{city_slug}/{slug}/",

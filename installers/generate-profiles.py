@@ -36,6 +36,13 @@ OUT_DIR = INSTALLERS_DIR / "profiles"
 SITE_URL = "https://homepowerrebate.com"
 LEADS_ENDPOINT = "https://leads.homepowerrebate.com"
 
+# The "HomePowerRebate Recommended" CSV column reflects a rating/review
+# threshold, not an actual vetting relationship with the installer — no
+# installer has been personally contacted or verified yet. Displaying it as
+# a "recommendation" claims more than is true. Off until there's a real
+# vetting process behind it; flip to True then, no other changes needed.
+SHOW_RECOMMENDED = False
+
 # Keys are pre-normalized (see normalize_city) so punctuation variants from
 # Google Places data ("Fort St. John" vs "Fort St John") both resolve.
 CITY_SLUGS = {
@@ -181,15 +188,16 @@ def render_vetting_card(inst):
     """Honest about what's actually known. A blanket 'Verified' badge on
     every row would undercut the one message these pages are built to carry —
     that vetting is specific, not decorative."""
-    recommended = (inst.get("HomePowerRebate Recommended") or "").strip().lower() == "yes"
     bch = (inst.get("BCH Approved") or "").strip().lower() == "yes"  # optional future column
 
     items = []
     items.append(("Listed on Google Business Profile", True,
                    f'{escape(inst.get("Google Rating",""))}★ from {escape(inst.get("Review Count",""))} reviews'))
-    items.append(("HomePowerRebate rating threshold", recommended,
-                   "Meets our 4★ / 10+ review bar for recommendation" if recommended
-                   else "Below our recommendation threshold — check reviews directly"))
+    if SHOW_RECOMMENDED:
+        recommended = (inst.get("HomePowerRebate Recommended") or "").strip().lower() == "yes"
+        items.append(("HomePowerRebate rating threshold", recommended,
+                       "Meets our 4★ / 10+ review bar for recommendation" if recommended
+                       else "Below our recommendation threshold — check reviews directly"))
     if bch:
         items.append(("BC Hydro approved program", True, "Listed in a BC Hydro approved-contractor program"))
 

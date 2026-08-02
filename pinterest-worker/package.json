@@ -1,0 +1,23 @@
+{
+  "name": "pinterest-automation-worker",
+  "version": "1.0.0",
+  "description": "Automated Pinterest pin posting for HomePowerRebate using Cloudflare Workers",
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "test": "node test.js"
+  },
+  "devDependencies": {
+    "wrangler": "^4.114.0"
+  },
+  "keywords": [
+    "pinterest",
+    "automation",
+    "cloudflare-workers",
+    "homepowerrebate",
+    "social-media"
+  ],
+  "author": "Samuel Menard",
+  "license": "MIT"
+}

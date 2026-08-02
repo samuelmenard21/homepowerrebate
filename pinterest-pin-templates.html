@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pinterest Pin Templates — HomePowerRebate</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; padding: 40px 20px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { text-align: center; margin-bottom: 40px; color: #0a2a2e; }
+
+    .pin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin-bottom: 60px; }
+
+    /* Pin Container */
+    .pin-wrapper { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .pin-type { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #d4751c; margin-bottom: 12px; }
+    .pin-container { width: 280px; height: 420px; background: #faf7f2; border-radius: 8px; overflow: hidden; position: relative; margin: 0 auto; font-family: 'Fraunces', serif; }
+
+    /* Type 1: Blog Post Pin */
+    .pin-blog { display: flex; flex-direction: column; }
+    .blog-image { width: 100%; height: 140px; background: linear-gradient(135deg, #d4751c 0%, #e88a2e 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; }
+    .blog-content { padding: 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .blog-title { font-size: 18px; font-weight: 700; color: #0a2a2e; line-height: 1.2; margin-bottom: 12px; }
+    .blog-stat { font-size: 14px; color: #d4751c; font-weight: 600; }
+    .blog-footer { font-size: 11px; color: #999; padding-top: 8px; border-top: 1px solid #e5e7eb; }
+
+    /* Type 2: Tips/Hacks Pin */
+    .pin-tips { display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #08363f 0%, #0d4f5c 100%); color: white; text-align: center; padding: 24px; }
+    .tips-headline { font-size: 26px; font-weight: 700; line-height: 1.1; margin-bottom: 16px; }
+    .tips-icon { font-size: 48px; margin-bottom: 16px; }
+    .tips-subtitle { font-size: 13px; color: rgba(255,255,255,0.8); }
+    .tips-footer { position: absolute; bottom: 12px; left: 0; right: 0; font-size: 10px; color: rgba(255,255,255,0.6); }
+
+    /* Type 3: City Guide Pin */
+    .pin-city { display: flex; flex-direction: column; background: linear-gradient(135deg, #f5efe5 0%, #faf7f2 100%); padding: 20px; }
+    .city-name { font-size: 48px; font-weight: 700; color: #0a2a2e; margin-bottom: 16px; text-align: center; }
+    .city-rebates { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+    .rebate-line { font-size: 14px; color: #0a2a2e; }
+    .rebate-amount { color: #d4751c; font-weight: 700; }
+    .city-cta { background: #d4751c; color: white; padding: 12px; text-align: center; border-radius: 6px; font-size: 12px; font-weight: 600; margin-top: 12px; }
+
+    /* Label */
+    .pin-label { margin-top: 12px; font-size: 12px; color: #666; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📌 Pinterest Pin Templates (Automated)</h1>
+
+    <div class="pin-grid">
+      <!-- TYPE 1: BLOG POST PIN -->
+      <div class="pin-wrapper">
+        <div class="pin-type">Type 1: Blog Post Pin (40%)</div>
+        <div class="pin-container pin-blog">
+          <div class="blog-image">Featured Image</div>
+          <div class="blog-content">
+            <div class="blog-title">BC Heat Pump Rebates 2026: Get $4K–$16K Back</div>
+            <div class="blog-stat">Covers all programs + stacking strategy</div>
+            <div class="blog-footer">homepowerrebate.com</div>
+          </div>
+        </div>
+        <div class="pin-label">1000×1500px | Featured image + headline + stat</div>
+      </div>
+
+      <!-- TYPE 2: TIPS/HACKS PIN -->
+      <div class="pin-wrapper">
+        <div class="pin-type">Type 2: Tips/Hacks Pin (35%)</div>
+        <div class="pin-container pin-tips">
+          <div class="tips-icon">⚠️</div>
+          <div class="tips-headline">5 Installer Red Flags to STOP</div>
+          <div class="tips-subtitle">Payment before install, no HPCN cert, pressure tactics</div>
+          <div class="tips-footer">homepowerrebate.com</div>
+        </div>
+        <div class="pin-label">1000×1500px | Bold headline + icon + insight</div>
+      </div>
+
+      <!-- TYPE 3: CITY GUIDE PIN -->
+      <div class="pin-wrapper">
+        <div class="pin-type">Type 3: City Guide Pin (25%)</div>
+        <div class="pin-container pin-city">
+          <div class="city-name">Vancouver</div>
+          <div class="city-rebates">
+            <div class="rebate-line">💡 <span class="rebate-amount">$4K–$16K</span> Heat Pump</div>
+            <div class="rebate-line">☀️ <span class="rebate-amount">$5K</span> Solar</div>
+            <div class="rebate-line">🔋 <span class="rebate-amount">$5K</span> Battery</div>
+          </div>
+          <div class="city-cta">See All Rebates for Vancouver →</div>
+        </div>
+        <div class="pin-label">1000×1500px | City + key amounts + CTA</div>
+      </div>
+    </div>
+
+    <hr style="margin: 60px 0; border: none; border-top: 1px solid #ddd;">
+
+    <h2 style="color: #0a2a2e; margin-bottom: 24px;">Design Specs for Canva/Figma</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+      <div style="background: white; padding: 20px; border-radius: 8px;">
+        <h3 style="color: #d4751c; margin-bottom: 12px;">Type 1: Blog Post</h3>
+        <ul style="font-size: 14px; color: #666; line-height: 1.8;">
+          <li><strong>Size:</strong> 1000×1500px</li>
+          <li><strong>Top 30%:</strong> Blog image (auto-pulled)</li>
+          <li><strong>Middle 50%:</strong> Headline text (22pt, bold) + stat (16pt)</li>
+          <li><strong>Bottom 20%:</strong> Logo + "Read full guide"</li>
+          <li><strong>Colors:</strong> Amber accent, dark text on cream bg</li>
+          <li><strong>Font:</strong> Fraunces (title), Inter (body)</li>
+        </ul>
+      </div>
+
+      <div style="background: white; padding: 20px; border-radius: 8px;">
+        <h3 style="color: #d4751c; margin-bottom: 12px;">Type 2: Tips/Hacks</h3>
+        <ul style="font-size: 14px; color: #666; line-height: 1.8;">
+          <li><strong>Size:</strong> 1000×1500px</li>
+          <li><strong>Background:</strong> Gradient (dark teal)</li>
+          <li><strong>Headline:</strong> 60pt, all caps, white, bold</li>
+          <li><strong>Icon:</strong> Large emoji (48pt, centered)</li>
+          <li><strong>Subtitle:</strong> 18pt white, secondary info</li>
+          <li><strong>Style:</strong> High contrast, minimal text</li>
+        </ul>
+      </div>
+
+      <div style="background: white; padding: 20px; border-radius: 8px;">
+        <h3 style="color: #d4751c; margin-bottom: 12px;">Type 3: City Guide</h3>
+        <ul style="font-size: 14px; color: #666; line-height: 1.8;">
+          <li><strong>Size:</strong> 1000×1500px</li>
+          <li><strong>City Name:</strong> 80pt, bold, centered</li>
+          <li><strong>Rebate Amounts:</strong> $4K–$16K Heat Pump, $5K Solar, etc.</li>
+          <li><strong>Icons:</strong> Emoji (💡, ☀️, 🔋)</li>
+          <li><strong>CTA Button:</strong> Amber, "See All Rebates for [City]"</li>
+          <li><strong>Background:</strong> Cream gradient</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr style="margin: 60px 0; border: none; border-top: 1px solid #ddd;">
+
+    <div style="background: #f0fdf4; border-left: 4px solid #16a34a; padding: 20px; border-radius: 6px;">
+      <h2 style="color: #16a34a; margin-bottom: 12px;">✅ Next: Build the Cloudflare Worker</h2>
+      <p style="color: #166534; line-height: 1.6;">
+        The automation agent will:
+      </p>
+      <ul style="color: #166534; margin-left: 20px; margin-top: 12px; line-height: 1.8;">
+        <li>Pull content from your blog posts + city pages</li>
+        <li>Auto-generate pins using these templates + dynamic text</li>
+        <li>Post to Pinterest API on optimal schedule (3-4 pins/day)</li>
+        <li>Track analytics and measure CTR</li>
+        <li>Run completely autonomously — zero manual work</li>
+      </ul>
+      <p style="color: #166534; margin-top: 16px;"><strong>Pinterest Setup Required:</strong></p>
+      <ul style="color: #166534; margin-left: 20px; margin-top: 8px;">
+        <li>Create Business Account on Pinterest.com</li>
+        <li>Generate API access token</li>
+        <li>Store credentials in Cloudflare Worker secrets</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

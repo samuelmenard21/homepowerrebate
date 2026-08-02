@@ -1,0 +1,25 @@
+{
+  "name": "meta-automation-worker",
+  "version": "1.0.0",
+  "description": "Automated Instagram & Facebook posting for HomePowerRebate using Cloudflare Workers",
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "test": "node test.js"
+  },
+  "devDependencies": {
+    "wrangler": "^4.114.0"
+  },
+  "keywords": [
+    "instagram",
+    "facebook",
+    "meta",
+    "automation",
+    "cloudflare-workers",
+    "homepowerrebate",
+    "social-media"
+  ],
+  "author": "Samuel Menard",
+  "license": "MIT"
+}

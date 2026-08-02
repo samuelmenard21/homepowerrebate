@@ -1,0 +1,16 @@
+name = "meta-automation"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# Two posts daily. Cloudflare crons are always UTC.
+#   0 15 * * *  = 08:00 Pacific — question post (no link, earns reach)
+#   0 1  * * *  = 18:00 Pacific — link post (converts it)
+# These strings are matched literally in index.js to route the slot, so any
+# change here has to be mirrored in CRON_QUESTION / CRON_LINK.
+[triggers]
+crons = ["0 15 * * *", "0 1 * * *"]
+
+# Secrets (set via `wrangler secret put`)
+# META_ACCESS_TOKEN = your_meta_access_token
+# INSTAGRAM_BUSINESS_ACCOUNT_ID = your_ig_business_account_id
+# FACEBOOK_PAGE_ID = your_facebook_page_id (optional)

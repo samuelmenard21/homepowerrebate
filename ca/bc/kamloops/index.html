@@ -530,7 +530,14 @@ class UnifiedInstallerCarousel {
     if (this.filteredInstallers.length === 0) return;
     const installer = this.filteredInstallers[this.currentIndex];
     document.querySelector('.unified-carousel-installer-image').src = installer.image_url || '';
-    document.querySelector('.unified-carousel-installer-name').textContent = installer.name;
+    const nameEl = document.querySelector('.unified-carousel-installer-name');
+    nameEl.textContent = installer.name;
+    if (installer.profileUrl) {
+      nameEl.style.cursor = 'pointer';
+      nameEl.style.color = 'var(--teal)';
+      nameEl.style.textDecoration = 'underline';
+      nameEl.onclick = () => window.location.href = installer.profileUrl;
+    }
     document.querySelector('.unified-carousel-installer-specialty').textContent = installer.specialty || 'Installation';
     document.querySelector('.unified-carousel-installer-rating').textContent = installer.rating.toFixed(1) + '★';
     document.querySelector('.unified-carousel-installer-reviews').textContent = installer.reviews + ' reviews';

@@ -302,8 +302,7 @@ function render() {
 
   emptyState.style.display = 'none';
   container.innerHTML = filtered.map(installer => {
-    const slug = installer.slug || installer.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    const profileUrl = `/installers/profiles/${installer.city.toLowerCase().replace(/ /g, '-').replace(/\./g, '')}/${slug}/`;
+    const profileUrl = installer.profileUrl || '#';
     return `
       <a href="${profileUrl}" class="installer-card">
         <h3>${installer.name}</h3>

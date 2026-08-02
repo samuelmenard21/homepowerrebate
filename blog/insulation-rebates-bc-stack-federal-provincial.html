@@ -51,11 +51,27 @@
   a { color: #0d4f5c; text-decoration: underline; }
   .cta { display: inline-block; background: #d4751c; color: white; padding: 14px 32px; border-radius: 999px; text-decoration: none; font-weight: 600; margin-top: 32px; }
   .cta:hover { background: #e88a2e; }
+  .lead-card { margin: 48px 0; border-radius: 16px; background: linear-gradient(135deg, #08363f 0%, #0d4f5c 100%); padding: 4px; }
+  .lead-card-inner { padding: 36px 32px; }
+  .lead-card h2 { margin-top: 0; }
+  .lead-field { margin-bottom: 16px; }
+  .lead-field label { display: block; font-size: 13px; font-weight: 600; color: #e8f0ee; margin-bottom: 6px; }
+  .lead-field input[type="text"], .lead-field input[type="email"], .lead-field input[type="tel"], .lead-field select {
+    width: 100%; padding: 12px 14px; border-radius: 8px; border: none; font-family: inherit; font-size: 15px; background: #fff; color: #0a2a2e;
+  }
+  .lead-checks { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 4px; }
+  .lead-checks label { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 400; color: #e8f0ee; margin-bottom: 0; }
+  .lead-checks input[type="checkbox"] { width: 16px; height: 16px; accent-color: #d4751c; }
+  .city-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin: 24px 0 40px; }
+  .city-grid a { display: block; text-align: center; padding: 12px 10px; border-radius: 8px; border: 1px solid #d9d0c1; background: #fff; text-decoration: none; color: #0a2a2e; font-weight: 500; font-size: 14px; }
+  .city-grid a:hover { border-color: #d4751c; color: #d4751c; }
   @media (max-width: 600px) {
     h1 { font-size: 32px; }
     h2 { font-size: 22px; margin-top: 36px; }
     .rebate-grid { grid-template-columns: 1fr; }
     .container { padding: 28px 18px; }
+    .lead-card-inner { padding: 28px 20px; }
+    .city-grid { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
@@ -143,14 +159,21 @@
   </ul>
   <p><strong>Key detail:</strong> You must use a BetterHomes BC contractor (HPCN member). DIY installations don't qualify.</p>
 
-  <h3>BC Hydro: $900 Flat (Electricity Customers)</h3>
-  <p>Applies to any insulation project. Doesn't stack with other insulation rebates from BC Hydro, but <em>does</em> stack with CleanBC and FortisBC.</p>
-  <ul>
-    <li><strong>Attic:</strong> $900 (regardless of R-value added)</li>
-    <li><strong>Walls or basement:</strong> $900</li>
-    <li><strong>Combined work:</strong> Still just $900 (one rebate per address per year)</li>
-  </ul>
-  <p><strong>Key detail:</strong> Must be HPCN-certified contractor. Invoice required within 6 months of completion.</p>
+  <h3>BC Hydro: Paid by the Square Foot, Not Flat</h3>
+  <p>The rebate scales with how much R-value you're adding and how much area you're covering &mdash; it isn't one flat number. Here's the exact formula for each area of the house:</p>
+  <table class="stack-table">
+    <tr><th>Area</th><th>Formula</th><th>Cap</th></tr>
+    <tr><td>Attic</td><td>$0.02 &times; R-value added &times; sq ft</td><td>$900</td></tr>
+    <tr><td>Basement / crawlspace</td><td>$0.09 &times; R-value added &times; sq ft</td><td>$1,200</td></tr>
+    <tr><td>Exterior wall cavity</td><td>$0.09 &times; R-value added &times; sq ft</td><td>$1,200</td></tr>
+    <tr><td>Exterior wall sheathing</td><td>$0.09 &times; R-value added &times; sq ft</td><td>$1,200</td></tr>
+    <tr><td>Other (floors, headers)</td><td>$0.07 &times; R-value added &times; sq ft</td><td>$1,000</td></tr>
+  </table>
+  <p>A typical 1,000 sq ft attic going from R-12 to R-50 (R-38 added) works out to $0.02 &times; 38 &times; 1,000 = $760 &mdash; under the $900 cap, so you'd get the full $760. These stack independently by area, so a full attic-plus-basement job can clear $1,900 from BC Hydro alone, on top of CleanBC.</p>
+  <div class="callout">
+    <p><strong>Minimum R-values to qualify</strong> (this trips people up): attics and walls need at least <strong>R-12 added</strong>, sheathing needs <strong>R-3.8</strong>, basements need <strong>R-10</strong>, and exposed floors need <strong>R-20</strong>. Add less than that and the rebate doesn't apply at all &mdash; ask your contractor to confirm the post-upgrade R-value in writing before they start.</p>
+  </div>
+  <p><strong>Key detail:</strong> Must be an HPCN-certified contractor &mdash; self-installs never qualify, no exceptions. You have <strong>six months from your paid invoice date</strong> to apply, not six months from when the work started. <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-insulation.html" target="_blank" rel="noopener">BC Hydro's official insulation rebate page &rarr;</a></p>
 
   <h3>FortisBC: $500–$2,000 (Gas Customers)</h3>
   <p>The wildcard. Non-income-qualified homeowners get $500; income-qualified get up to $2,000.</p>
@@ -158,7 +181,9 @@
     <li><strong>Basic rebate:</strong> $500 attic, $500 wall, $500 basement</li>
     <li><strong>Income-qualified:</strong> Up to $2,000 if you earn under ~$75K household income</li>
   </ul>
-  <p><strong>Key detail:</strong> Application window is 90 days after installation. Invoice must show HPCN contractor. Processing takes 4–6 weeks.</p>
+  <p><strong>Key detail:</strong> Application window is 90 days after installation. Invoice must show HPCN contractor. Processing takes 4–6 weeks. <a href="https://www.fortisbc.com/rebates/detail/insulation-rebates" target="_blank" rel="noopener">FortisBC's official insulation rebate page &rarr;</a></p>
+
+  <p style="font-size:14px; color:#666;">For general insulation tips (not rebate-specific), BC Hydro also runs an <a href="https://www.bchydro.com/powersmart/residential/tips-technologies/insulation.html" target="_blank" rel="noopener">insulation basics page</a> worth a skim before you get quotes.</p>
 
   <h2>Real Example: What You Actually Get</h2>
   <p><strong>Scenario:</strong> Vancouver homeowner adds R-30 to attic (current R-12, upgrade to R-42). Project costs $2,800 with contractor.</p>
@@ -241,6 +266,28 @@
   <h3>If You Have Dual Service (Both BC Hydro + FortisBC)</h3>
   <p>You qualify for CleanBC + BC Hydro + FortisBC rebates on the same project. This is rare but possible in some border regions. Stack everything.</p>
 
+  <h2>10 Things to Do While You're Waiting on Quotes</h2>
+  <p class="lede" style="font-size:15px;">Getting a contractor booked and the paperwork sorted takes a few weeks. None of that has to be cold weeks. Here's what actually moves the needle in the meantime &mdash; most of it costs less than a takeout order.</p>
+
+  <div class="callout" style="border-left-color:#0d4f5c;">
+    <p><strong>The uncomfortable truth about home heat:</strong> it's not really about the house. It's about you, in one room, at one moment, feeling cold. A perfectly insulated attic won't help if you're sitting three feet from a drafty window with a laptop on your knees. Fix the room you're actually in first &mdash; the whole-house stuff below is the long game.</p>
+  </div>
+
+  <ol style="margin-left:24px;">
+    <li><strong>Hunt outlet drafts with the back of your hand.</strong> Exterior-wall outlets and switch plates are basically holes in your wall with a thin plastic lid. Unplug, hover the back of your hand near the gap (it's more sensitive to cold than your palm), and feel for a breeze. A pack of foam gaskets is about $5 and takes ten minutes for a whole house.</li>
+    <li><strong>Let the sun do free labour.</strong> Open south- and west-facing blinds on clear winter days &mdash; that's real heat, no thermostat involved. Close everything at night; glass loses heat fast once the sun's down. Reverse the routine in summer.</li>
+    <li><strong>Find the gaps insulation won't fix.</strong> Baseboards, where pipes and wires punch through walls, and the trim around doors are classic leak points that a caulk gun handles in an afternoon &mdash; and they'll undercut your new insulation's performance if left alone.</li>
+    <li><strong>Sleeve your exposed pipes.</strong> Hot water pipes running through an unheated basement or crawlspace lose heat the entire trip. Foam pipe sleeves run about $1/foot and mean your water heater works less to deliver the same shower.</li>
+    <li><strong>Reverse your ceiling fan.</strong> Most fans have a tiny switch on the motor housing. Clockwise in winter (on low) gently pushes the warm air that's pooled at the ceiling back down into the room, without the wind-chill effect.</li>
+    <li><strong>Seal the attic hatch specifically.</strong> It's the single most commonly missed leak in the whole house &mdash; a plywood square with a lid, often with zero insulation or weatherstripping of its own, sitting right above your heated living space. Ask your insulation contractor to weatherstrip it while they're already up there.</li>
+    <li><strong>Check the furnace filter monthly, not seasonally.</strong> A clogged filter makes your system work harder for the same heat &mdash; and it's the cheapest efficiency fix that exists.</li>
+    <li><strong>Heat yourself before you heat the room.</strong> A $30 heated throw or a good pair of wool socks lets you drop the thermostat 1&ndash;2&deg;C without anyone actually feeling colder. That's not a consolation prize &mdash; it's free money, every single day, for the rest of the season.</li>
+    <li><strong>Get quotes now, not in January.</strong> Contractors are slower and more available in fall. Come the first real cold snap, everyone panics at once and both price and wait times jump. Booking now is arguably the highest-value item on this list.</li>
+    <li><strong>Write down where it's actually cold.</strong> Walk your home on a cold evening with a notepad. "Cold by the office window," "draft under the basement door" &mdash; specific notes like this help your contractor prioritize the areas that'll make the biggest difference to how the house <em>feels</em>, not just what the rebate math says.</li>
+  </ol>
+
+  <p style="font-size:13px; color:#888;">Sources for the tips above: <a href="https://www.bchydro.com/news/conservation/2022/outlet-insulator-questions.html" target="_blank" rel="noopener">BC Hydro on outlet insulators</a>, <a href="https://www.bchydro.com/powersmart/residential/tips-technologies/windows-coverings.html" target="_blank" rel="noopener">window coverings</a>, <a href="https://www.bchydro.com/powersmart/residential/tips-technologies/draftproofing.html" target="_blank" rel="noopener">draftproofing</a>, <a href="https://www.bchydro.com/powersmart/residential/tips-technologies/water-pipes.html" target="_blank" rel="noopener">pipe insulation</a>, and BC Hydro's pieces on <a href="https://www.bchydro.com/news/conservation/2023/5-things-to-prepare-for-cold.html" target="_blank" rel="noopener">cold-weather prep</a> and <a href="https://www.bchydro.com/news/conservation/2023/home-heat-is-personal.html" target="_blank" rel="noopener">why home heat is personal</a>.</p>
+
   <h2>Common Questions</h2>
 
   <div class="faq-item">
@@ -273,6 +320,93 @@
     <div class="faq-answer">Each program has a one-per-address-per-year rule. If you claimed insulation rebates in 2025, you're ineligible for 2026. Mark your calendar for next year.</div>
   </div>
 
+  <div class="faq-item">
+    <div class="faq-question">What's the minimum R-value I need to add to qualify?</div>
+    <div class="faq-answer">This is the detail most homeowners miss. Attics and walls need at least R-12 added, sheathing needs R-3.8, basements need R-10, and exposed floors need R-20. Fall short of these thresholds and BC Hydro's rebate doesn't apply at all &mdash; get your contractor to confirm the post-upgrade R-value in writing before work starts.</div>
+  </div>
+
+  <div id="insulation-lead" class="lead-card">
+    <div class="lead-card-inner">
+      <p class="eyebrow" style="color:#e8a76b;">Free &middot; No obligation</p>
+      <h2 style="color:#fff; margin-top:0;">Claim Your Insulation Rebate</h2>
+      <p style="color:#c9d8d5; font-size:15px;">Tell us where you need it and we'll connect you with a vetted, HPCN-certified installer in your city who'll quote the job and handle the rebate paperwork for you.</p>
+
+      <form id="insulation-lead-form">
+        <input type="text" name="website" id="il-hp" style="position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
+        <div class="lead-field">
+          <label for="il-name">Your Name *</label>
+          <input type="text" id="il-name" name="firstname" placeholder="Your Name" required>
+        </div>
+        <div class="lead-field">
+          <label for="il-email">Email Address *</label>
+          <input type="email" id="il-email" name="email" placeholder="Your Email Address" required>
+        </div>
+        <div class="lead-field">
+          <label for="il-phone">Phone *</label>
+          <input type="tel" id="il-phone" name="phone" placeholder="Your Phone Number" required>
+        </div>
+        <div class="lead-field">
+          <label for="il-city">Your City *</label>
+          <select id="il-city" name="city" required>
+            <option value="">Choose your city&hellip;</option>
+            <option value="abbotsford">Abbotsford</option>
+            <option value="burnaby">Burnaby</option>
+            <option value="chilliwack">Chilliwack</option>
+            <option value="coquitlam">Coquitlam</option>
+            <option value="fort-st-john">Fort St. John</option>
+            <option value="kamloops">Kamloops</option>
+            <option value="kelowna">Kelowna</option>
+            <option value="langley">Langley</option>
+            <option value="maple-ridge">Maple Ridge</option>
+            <option value="nanaimo">Nanaimo</option>
+            <option value="penticton">Penticton</option>
+            <option value="prince-george">Prince George</option>
+            <option value="richmond">Richmond</option>
+            <option value="squamish">Squamish</option>
+            <option value="surrey">Surrey</option>
+            <option value="vancouver">Vancouver</option>
+            <option value="vernon">Vernon</option>
+            <option value="victoria">Victoria</option>
+          </select>
+        </div>
+        <div class="lead-field">
+          <label>Where do you need it?</label>
+          <div class="lead-checks">
+            <label><input type="checkbox" name="area" value="Attic"> Attic</label>
+            <label><input type="checkbox" name="area" value="Basement"> Basement</label>
+            <label><input type="checkbox" name="area" value="Crawl Space"> Crawl Space</label>
+            <label><input type="checkbox" name="area" value="Walls, Joists & Exposed Floors"> Walls, Joists &amp; Exposed Floors</label>
+          </div>
+        </div>
+        <button type="submit" id="il-submit" class="cta" style="border:none; cursor:pointer; width:100%; text-align:center;">Get Matched With an Installer &rarr;</button>
+        <p id="il-status" style="font-size:13px; margin-top:12px; color:#c9d8d5; display:none;"></p>
+      </form>
+    </div>
+  </div>
+
+  <h2>Find Your City's Rebates &amp; Installers</h2>
+  <p>Every city guide below has its own local context &mdash; utility mix, typical heating type, and 2&ndash;3 HPCN-certified installers ranked by rating.</p>
+  <div class="city-grid">
+    <a href="/ca/bc/abbotsford/">Abbotsford</a>
+    <a href="/ca/bc/burnaby/">Burnaby</a>
+    <a href="/ca/bc/chilliwack/">Chilliwack</a>
+    <a href="/ca/bc/coquitlam/">Coquitlam</a>
+    <a href="/ca/bc/fort-st-john/">Fort St. John</a>
+    <a href="/ca/bc/kamloops/">Kamloops</a>
+    <a href="/ca/bc/kelowna/">Kelowna</a>
+    <a href="/ca/bc/langley/">Langley</a>
+    <a href="/ca/bc/maple-ridge/">Maple Ridge</a>
+    <a href="/ca/bc/nanaimo/">Nanaimo</a>
+    <a href="/ca/bc/penticton/">Penticton</a>
+    <a href="/ca/bc/prince-george/">Prince George</a>
+    <a href="/ca/bc/richmond/">Richmond</a>
+    <a href="/ca/bc/squamish/">Squamish</a>
+    <a href="/ca/bc/surrey/">Surrey</a>
+    <a href="/ca/bc/vancouver/">Vancouver</a>
+    <a href="/ca/bc/vernon/">Vernon</a>
+    <a href="/ca/bc/victoria/">Victoria</a>
+  </div>
+
   <h2>Next Steps</h2>
   <ol>
     <li>Determine your household income tier (affects CleanBC payout)</li>
@@ -285,6 +419,55 @@
   <a href="/retrofit-assessment" class="cta">Calculate your full rebate stack →</a>
 
 </div>
+
+<script>
+(function () {
+  var WORKER = 'https://leads.homepowerrebate.com';
+  var form = document.getElementById('insulation-lead-form');
+  if (!form) return;
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var status = document.getElementById('il-status');
+    var btn = document.getElementById('il-submit');
+    var areas = Array.prototype.slice.call(form.querySelectorAll('input[name="area"]:checked')).map(function (c) { return c.value; });
+    var payload = {
+      firstname: document.getElementById('il-name').value.trim(),
+      email: document.getElementById('il-email').value.trim(),
+      phone: document.getElementById('il-phone').value.trim(),
+      city: document.getElementById('il-city').value,
+      estimate: areas.length ? areas.join(', ') : 'Not specified',
+      heating: 'unknown',
+      income: 'unknown',
+      source: 'insulation-hub',
+      referrer: 'insulation-hub-form',
+      newsletter: true,
+      website: document.getElementById('il-hp').value
+    };
+    if (!payload.firstname || !payload.email || !payload.phone || !payload.city) {
+      status.style.display = 'block';
+      status.textContent = 'Please fill in your name, email, phone, and city.';
+      return;
+    }
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      var res = await fetch(WORKER + '/estimate-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('Request failed');
+      form.style.display = 'none';
+      status.style.display = 'block';
+      status.style.color = '#fff';
+      status.textContent = '✓ Got it — a vetted local installer will reach out shortly to quote your insulation job and handle the rebate paperwork.';
+    } catch (err) {
+      btn.disabled = false; btn.textContent = 'Get Matched With an Installer →';
+      status.style.display = 'block';
+      status.textContent = 'Something went wrong — please try again in a moment.';
+    }
+  });
+})();
+</script>
 
 </body>
 </html>

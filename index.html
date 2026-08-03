@@ -2153,24 +2153,166 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     $('hpr-refer-step').style.display = 'block';
   });
 
-  // Tier 2 — name + phone turns the subscriber into an installer referral
-  $('hpr-refer-form').addEventListener('submit', async function (e) {
+  // Tier 2 — name + phone → show installer chooser
+  $(‘hpr-refer-form’).addEventListener(‘submit’, async function (e) {
     e.preventDefault();
-    var btn = $('hpr-refer-btn'); btn.disabled = true; btn.textContent = 'Matching…';
+    if ($(‘hpr-hp’).value) return; // honeypot
+    var btn = $(‘hpr-refer-btn’);
+    btn.disabled = true;
+    btn.textContent = ‘Loading installers…’;
+
     try {
-      await fetch(WORKER + '/estimate-lead', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: leadEmail, firstname: $('hpr-name').value, phone: $('hpr-phone').value, city: city, heating: heating, income: income, estimate: stacked, source: 'homepage-assessment', newsletter: newsletterOptIn })
+      // Load installers for selected city
+      const response = await fetch(‘/installers/json/’ + city.toLowerCase().replace(‘ ‘, ‘-’) + ‘.json’);
+      const installers = await response.json();
+
+      if (!installers || installers.length === 0) {
+        alert(‘No installers found for ‘ + city + ‘. Please try again.’);
+        btn.disabled = false;
+        btn.textContent = ‘Choose your installer →’;
+        return;
+      }
+
+      // Show installer chooser modal
+      showInstallerChoosersModal(installers, function(selectedInstaller) {
+        // Submit with selected installer
+        submitToWorker(selectedInstaller);
+      }, function() {
+        // Cancel
+        btn.disabled = false;
+        btn.textContent = ‘Choose your installer →’;
       });
-    } catch (err) { console.error('estimate-lead error', err); }
-    $('hpr-refer-step').style.display = 'none';
-    var done = $('hpr-done'); done.style.display = 'block';
-    done.innerHTML = '<div style="font-family:\'Fraunces\',Georgia,serif; font-size:18px; font-weight:600; color:var(--green-money); margin-bottom:8px;">✓ Got it — you’re on the list!</div>' +
-      '<p style="font-size:14px; color:var(--ink-soft); margin-bottom:14px;">We’ll personally review your details and reach out within one business day to line up your vetted local installer. Meanwhile, explore your full breakdown for ' + city + ':</p>' +
-      '<a href="' + fullUrl() + '" style="display:inline-block; background:var(--amber); color:#fff; padding:13px 26px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Open my ' + city + ' assessment →</a>';
+
+    } catch (err) {
+      console.error(‘installer loading error’, err);
+      alert(‘Error loading installers. Please try again.’);
+      btn.disabled = false;
+      btn.textContent = ‘Choose your installer →’;
+    }
   });
+
+  // Helper: Show installer chooser modal
+  function showInstallerChoosersModal(installers, onSelect, onCancel) {
+    var modal = document.createElement(‘div’);
+    modal.style.cssText = ‘position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:10000;’;
+
+    var content = document.createElement(‘div’);
+    content.style.cssText = ‘background:#fff; border-radius:12px; padding:32px; max-width:600px; max-height:80vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.3);’;
+
+    var title = document.createElement(‘h2’);
+    title.textContent = ‘Choose Your Installer’;
+    title.style.cssText = ‘margin:0 0 16px 0; font-size:24px; color:#08363f; font-family:\’Fraunces\’,Georgia,serif;’;
+    content.appendChild(title);
+
+    var subtitle = document.createElement(‘p’);
+    subtitle.textContent = ‘Select which installer you’d like to connect with:’;
+    subtitle.style.cssText = ‘color:#1a3d42; margin-bottom:20px; font-size:14px;’;
+    content.appendChild(subtitle);
+
+    var list = document.createElement(‘div’);
+    list.style.cssText = ‘margin-bottom:20px;’;
+
+    installers.forEach(function(installer) {
+      var item = document.createElement(‘button’);
+      item.type = ‘button’;
+      item.style.cssText = ‘display:block; width:100%; padding:16px; margin-bottom:8px; border:2px solid #d9d0c1; border-radius:8px; background:#fff; cursor:pointer; text-align:left; transition:all 0.2s;’;
+
+      item.onmouseover = function() { item.style.borderColor = ‘#d4751c’; };
+      item.onmouseout = function() { item.style.borderColor = ‘#d9d0c1’; };
+
+      var name = document.createElement(‘div’);
+      name.style.cssText = ‘font-weight:600; color:#08363f; margin-bottom:4px;’;
+      name.textContent = installer.name;
+
+      var details = document.createElement(‘div’);
+      details.style.cssText = ‘font-size:13px; color:#1a3d42;’;
+      details.textContent = (installer.specialty || ‘Local installer’) + ‘ • ‘ + (installer.rating || ‘★’) + ‘★ (‘ + (installer.reviews || ‘0’) + ‘ reviews)’;
+
+      var contact = document.createElement(‘div’);
+      contact.style.cssText = ‘font-size:12px; color:#6b7d80; margin-top:4px;’;
+      contact.textContent = installer.phone || ‘Contact available’;
+
+      item.appendChild(name);
+      item.appendChild(details);
+      item.appendChild(contact);
+
+      item.onclick = function() {
+        modal.remove();
+        onSelect(installer);
+      };
+
+      list.appendChild(item);
+    });
+
+    content.appendChild(list);
+
+    var buttonContainer = document.createElement(‘div’);
+    buttonContainer.style.cssText = ‘display:flex; gap:12px;’;
+
+    var cancelBtn = document.createElement(‘button’);
+    cancelBtn.type = ‘button’;
+    cancelBtn.textContent = ‘Cancel’;
+    cancelBtn.style.cssText = ‘flex:1; padding:12px; border:1px solid #d9d0c1; background:#fff; border-radius:8px; cursor:pointer; color:#08363f; font-weight:600;’;
+    cancelBtn.onclick = function() {
+      modal.remove();
+      onCancel();
+    };
+
+    buttonContainer.appendChild(cancelBtn);
+    content.appendChild(buttonContainer);
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+  }
+
+  // Helper: Submit lead to Worker with selected installer
+  function submitToWorker(selectedInstaller) {
+    var btn = $(‘hpr-refer-btn’);
+    btn.textContent = ‘Sending to ‘ + selectedInstaller.name.split(‘ ‘)[0] + ‘…’;
+
+    var payload = {
+      email: leadEmail,
+      firstname: $(‘hpr-name’).value,
+      phone: $(‘hpr-phone’).value,
+      city: city,
+      heating: heating,
+      income: income,
+      estimate: stacked,
+      source: ‘homepage-assessment’,
+      newsletter: newsletterOptIn,
+      installer_name: selectedInstaller.name,
+      installer_email: selectedInstaller.email || ‘’,
+      installer_phone: selectedInstaller.phone || ‘’,
+      page_url: window.location.href
+    };
+
+    try {
+      fetch(WORKER + ‘/estimate-lead’, {
+        method: ‘POST’,
+        headers: { ‘Content-Type’: ‘application/json’ },
+        body: JSON.stringify(payload)
+      }).then(function() {
+        $(‘hpr-refer-step’).style.display = ‘none’;
+        var done = $(‘hpr-done’);
+        done.style.display = ‘block’;
+        done.innerHTML = ‘<div style="font-family:\’Fraunces\’,Georgia,serif; font-size:18px; font-weight:600; color:var(--green-money); margin-bottom:8px;">✓ Perfect! You’re matched with ‘ + selectedInstaller.name + ‘</div>’ +
+          ‘<p style="font-size:14px; color:var(--ink-soft); margin-bottom:14px;">We’ve sent your details to them. They’ll contact you within one business day. Meanwhile, here’s your full breakdown:</p>’ +
+          ‘<a href="’ + fullUrl() + ‘" style="display:inline-block; background:var(--amber); color:#fff; padding:13px 26px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Open my ‘ + city + ‘ assessment →</a>’;
+      }).catch(function(err) {
+        console.error(‘submit error’, err);
+        btn.disabled = false;
+        btn.textContent = ‘Choose your installer →’;
+      });
+    } catch (err) {
+      console.error(‘fetch error’, err);
+      btn.disabled = false;
+      btn.textContent = ‘Choose your installer →’;
+    }
+  }
 })();
 </script>
+
+<!-- Form handlers with installer selection -->
+<script src="/form-handlers-with-installer-select.js"></script>
 
 </body>
 </html>

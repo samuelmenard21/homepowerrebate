@@ -197,6 +197,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Works on both homepage (#hpr-refer-form) and city pages (#hpr-cw-refer-form)
   const matchForm = document.getElementById('hpr-refer-form') || document.getElementById('hpr-cw-refer-form');
   if (matchForm) {
+    // Pre-fill email from localStorage if available (from previous step)
+    const storedEmail = localStorage.getItem('hpr_lead_email');
+    const emailInputs = matchForm.querySelectorAll('input[type="email"]');
+    emailInputs.forEach(input => {
+      if (storedEmail) input.value = storedEmail;
+    });
+
     // Add name attributes
     const firstNameInput = matchForm.querySelector('input[placeholder="First name"]');
     if (firstNameInput && !firstNameInput.name) firstNameInput.name = 'firstname';
@@ -207,15 +214,34 @@ document.addEventListener('DOMContentLoaded', () => {
     matchForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Get city from URL
+      // Get city from URL (city pages) or from form data (homepage)
+      let cityName = null;
+
+      // Try to get city from URL first (city pages: /ca/bc/vancouver)
       const cityMatch = window.location.pathname.match(/\/ca\/bc\/([a-z-]+)/);
-      if (!cityMatch) {
-        showMessage(matchForm, '✗ Could not detect your city. Please try again.', false);
-        return;
+      if (cityMatch) {
+        const citySlug = cityMatch[1];
+        cityName = citySlug.replace('-', ' ');
       }
 
-      const citySlug = cityMatch[1];
-      const cityName = citySlug.replace('-', ' ');
+      // If not in URL, check if city is stored in form or localStorage (homepage)
+      if (!cityName) {
+        const formCity = matchForm.querySelector('input[name="city"]');
+        if (formCity) {
+          cityName = formCity.value;
+        } else {
+          // Try to get from page's city selector (homepage calculator)
+          const citySelect = document.getElementById('hpr-city');
+          if (citySelect) {
+            cityName = citySelect.value;
+          }
+        }
+      }
+
+      if (!cityName) {
+        showMessage(matchForm, '✗ Could not detect your city. Please enter your city or select from the dropdown.', false);
+        return;
+      }
 
       const submitBtn = matchForm.querySelector('button[type="submit"]');
       submitBtn.disabled = true;
@@ -246,9 +272,9 @@ document.addEventListener('DOMContentLoaded', () => {
           data.city = cityName;
           data.page_url = window.location.href;
 
-          // Prompt for email if not already provided
+          // Use stored email or prompt if not available
           if (!data.email) {
-            data.email = prompt('Please enter your email address:');
+            data.email = localStorage.getItem('hpr_lead_email') || prompt('Please enter your email address:');
             if (!data.email) return;
           }
 
@@ -314,6 +340,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const formData = new FormData(emailForm);
       const data = Object.fromEntries(formData);
 
+      // Store email in localStorage for next step (installer match)
+      if (data.email) {
+        localStorage.setItem('hpr_lead_email', data.email);
+      }
+      if (data.firstname) {
+        localStorage.setItem('hpr_lead_firstname', data.firstname);
+      }
+
       try {
         const response = await fetch(`${WORKER_URL}/newsletter`, {
           method: 'POST',
@@ -323,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (response.ok) {
           showMessage(emailForm, '✓ Got it! Check your email for your breakdown.', true);
-          emailForm.reset();
+          // Don't reset - keep data for next step
         } else {
           const result = await response.json();
           showMessage(emailForm, `✗ Error: ${result.error}`, false);

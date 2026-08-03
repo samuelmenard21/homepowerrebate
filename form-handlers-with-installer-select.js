@@ -24,7 +24,7 @@ async function loadInstallersForCity(city) {
 }
 
 /**
- * Show installer chooser modal
+ * Show installer chooser modal (with multi-select checkboxes)
  */
 function showInstallerChooser(installers, onSelect, onCancel) {
   const modal = document.createElement('div');
@@ -55,35 +55,54 @@ function showInstallerChooser(installers, onSelect, onCancel) {
   `;
 
   const title = document.createElement('h2');
-  title.textContent = 'Choose Your Installer';
+  title.textContent = 'Choose Your Installer(s)';
   title.style.cssText = 'margin: 0 0 16px 0; font-size: 24px; color: #08363f;';
   modalContent.appendChild(title);
 
   const subtitle = document.createElement('p');
-  subtitle.textContent = 'Select which installer you\'d like to get a quote from:';
+  subtitle.textContent = 'Select which installers you\'d like to get quotes from (you can pick multiple):';
   subtitle.style.cssText = 'color: #1a3d42; margin-bottom: 20px; font-size: 14px;';
   modalContent.appendChild(subtitle);
 
   const list = document.createElement('div');
   list.style.cssText = 'margin-bottom: 20px;';
+  const selectedInstallers = [];
 
-  installers.forEach((installer) => {
-    const item = document.createElement('button');
-    item.type = 'button';
+  installers.forEach((installer, idx) => {
+    const checkboxId = `installer-checkbox-${idx}`;
+    const item = document.createElement('label');
     item.style.cssText = `
-      display: block;
-      width: 100%;
+      display: flex;
+      align-items: flex-start;
       padding: 16px;
       margin-bottom: 8px;
       border: 2px solid #d9d0c1;
       border-radius: 8px;
       background: white;
       cursor: pointer;
-      text-align: left;
       transition: all 0.2s;
     `;
+
     item.onmouseover = () => item.style.borderColor = '#d4751c';
     item.onmouseout = () => item.style.borderColor = '#d9d0c1';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.id = checkboxId;
+    checkbox.style.cssText = 'margin-top: 2px; margin-right: 12px; cursor: pointer;';
+    checkbox.onchange = () => {
+      if (checkbox.checked) {
+        if (!selectedInstallers.find(s => s.name === installer.name)) {
+          selectedInstallers.push(installer);
+        }
+      } else {
+        const idx = selectedInstallers.findIndex(s => s.name === installer.name);
+        if (idx > -1) selectedInstallers.splice(idx, 1);
+      }
+    };
+
+    const content = document.createElement('div');
+    content.style.cssText = 'flex: 1;';
 
     const name = document.createElement('div');
     name.style.cssText = 'font-weight: 600; color: #08363f; margin-bottom: 4px;';
@@ -97,15 +116,12 @@ function showInstallerChooser(installers, onSelect, onCancel) {
     contact.style.cssText = 'font-size: 12px; color: #6b7d80; margin-top: 4px;';
     contact.textContent = installer.phone;
 
-    item.appendChild(name);
-    item.appendChild(details);
-    item.appendChild(contact);
+    content.appendChild(name);
+    content.appendChild(details);
+    content.appendChild(contact);
 
-    item.onclick = () => {
-      modal.remove();
-      onSelect(installer);
-    };
-
+    item.appendChild(checkbox);
+    item.appendChild(content);
     list.appendChild(item);
   });
 
@@ -113,6 +129,28 @@ function showInstallerChooser(installers, onSelect, onCancel) {
 
   const buttonContainer = document.createElement('div');
   buttonContainer.style.cssText = 'display: flex; gap: 12px;';
+
+  const submitBtn = document.createElement('button');
+  submitBtn.type = 'button';
+  submitBtn.textContent = 'Send Requests';
+  submitBtn.style.cssText = `
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #d4751c;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+  `;
+  submitBtn.onclick = () => {
+    if (selectedInstallers.length === 0) {
+      alert('Please select at least one installer');
+      return;
+    }
+    modal.remove();
+    onSelect(selectedInstallers);
+  };
 
   const cancelBtn = document.createElement('button');
   cancelBtn.type = 'button';
@@ -132,6 +170,7 @@ function showInstallerChooser(installers, onSelect, onCancel) {
     onCancel();
   };
 
+  buttonContainer.appendChild(submitBtn);
   buttonContainer.appendChild(cancelBtn);
   modalContent.appendChild(buttonContainer);
   modal.appendChild(modalContent);
@@ -257,20 +296,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Show installer chooser
+      // Show installer chooser (now with multi-select support)
       showInstallerChooser(
         installers,
-        async (selectedInstaller) => {
+        async (selectedInstallers) => {
           // Collect form data
           const formData = new FormData(matchForm);
           const data = Object.fromEntries(formData);
-
-          // Add installer and page context
-          data.installer_name = selectedInstaller.name;
-          data.installer_email = selectedInstaller.email || '';
-          data.installer_phone = selectedInstaller.phone || '';
-          data.city = cityName;
-          data.page_url = window.location.href;
 
           // Use stored email or prompt if not available
           if (!data.email) {
@@ -284,23 +316,47 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
           }
 
-          submitBtn.disabled = true;
-          submitBtn.textContent = `Sending to ${selectedInstaller.name.split(' ')[0]}...`;
+          // Add city and page context (shared for all submissions)
+          data.city = cityName;
+          data.page_url = window.location.href;
 
-          try {
-            const response = await fetch(`${WORKER_URL}/estimate-lead`, {
+          submitBtn.disabled = true;
+          submitBtn.textContent = `Sending to ${selectedInstallers.length} installer${selectedInstallers.length !== 1 ? 's' : ''}...`;
+
+          let successCount = 0;
+          let failCount = 0;
+
+          // Submit to each selected installer in parallel
+          const submissions = selectedInstallers.map(installer =>
+            fetch(`${WORKER_URL}/estimate-lead`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(data)
-            });
+              body: JSON.stringify({
+                ...data,
+                installer_name: installer.name,
+                installer_email: installer.email || '',
+                installer_phone: installer.phone || ''
+              })
+            })
+              .then(response => response.json())
+              .then(result => {
+                if (result.success) successCount++;
+                else failCount++;
+              })
+              .catch(() => failCount++)
+          );
 
-            const result = await response.json();
+          try {
+            await Promise.allSettled(submissions);
 
-            if (response.ok && result.success) {
-              showMessage(matchForm, `✓ Perfect! ${selectedInstaller.name} will contact you soon.`, true);
+            if (successCount > 0) {
+              const msg = successCount === 1
+                ? `✓ Perfect! We've sent your details to ${selectedInstallers[0].name}.`
+                : `✓ Perfect! We've sent your details to ${successCount} installers.`;
+              showMessage(matchForm, msg, true);
               matchForm.reset();
             } else {
-              showMessage(matchForm, `✗ Error: ${result.error || 'Could not submit'}`, false);
+              showMessage(matchForm, '✗ Could not submit to any installers. Please try again.', false);
             }
           } catch (error) {
             showMessage(matchForm, `✗ Connection error: ${error.message}`, false);

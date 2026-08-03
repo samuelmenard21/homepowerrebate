@@ -443,9 +443,29 @@ async function handleEstimateLead(request, env) {
 
   const city = String(p.city || '').toLowerCase().trim();
   const service = 'heat-pump';
-  const installer = (INSTALLER_ROUTING[service] || {})[city];
-  // Don't email placeholder addresses (they'd bounce) — route to ops instead.
-  const isReal = installer && !/example\.com$/i.test(installer.email);
+
+  // Use homeowner-selected installer (from form) OR fall back to routing table
+  const selectedName = String(p.installer_name || '').trim();
+  const selectedEmail = String(p.installer_email || '').trim();
+  const selectedPhone = String(p.installer_phone || '').trim();
+
+  let installer = null;
+  let isReal = false;
+
+  // Prefer homeowner selection if provided
+  if (selectedName && selectedEmail) {
+    installer = {
+      name: selectedName,
+      email: selectedEmail,
+      phone: selectedPhone,
+      cc: ''
+    };
+    isReal = selectedEmail && !/example\.com$/i.test(selectedEmail);
+  } else {
+    // Fall back to routing table (old behavior for direct submits)
+    installer = (INSTALLER_ROUTING[service] || {})[city];
+    isReal = installer && !/example\.com$/i.test(installer.email);
+  }
 
   const lead = {
     record_type: 'lead',

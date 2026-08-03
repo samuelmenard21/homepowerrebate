@@ -194,7 +194,8 @@ function showMessage(element, message, isSuccess) {
 document.addEventListener('DOMContentLoaded', () => {
 
   // ========== FORM: Installer Match (with chooser) =========
-  const matchForm = document.getElementById('hpr-refer-form');
+  // Works on both homepage (#hpr-refer-form) and city pages (#hpr-cw-refer-form)
+  const matchForm = document.getElementById('hpr-refer-form') || document.getElementById('hpr-cw-refer-form');
   if (matchForm) {
     // Add name attributes
     const firstNameInput = matchForm.querySelector('input[placeholder="First name"]');

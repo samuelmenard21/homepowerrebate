@@ -1134,21 +1134,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
     $("hpr-cw-refer-step").style.display = "block";
   });
 
-  $("hpr-cw-refer-form").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    var btn = $("hpr-cw-refer-btn"); btn.disabled = true; btn.textContent = "Matching…";
-    try {
-      await fetch(WORKER + "/estimate-lead", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: leadEmail, firstname: $("hpr-cw-name").value, phone: $("hpr-cw-phone").value, city: CITY, heating: heating, income: income, estimate: stacked, source: "city-" + SLUG, newsletter: newsletterOptIn })
-      });
-    } catch (err) { console.error("estimate-lead error", err); }
-    $("hpr-cw-refer-step").style.display = "none";
-    var d = $("hpr-cw-done"); d.style.display = "block";
-    d.innerHTML = '<div style="font-family:\'Fraunces\',Georgia,serif; font-size:18px; font-weight:600; color:var(--green-money); margin-bottom:8px;">✓ Got it — you’re on the list!</div>' +
-      '<p style="font-size:14px; color:var(--ink-soft); margin-bottom:14px;">We’ll personally review your details and reach out within one business day to line up your vetted local installer. Meanwhile, see your full interactive breakdown:</p>' +
-      '<a href="' + fullUrl() + '" style="display:inline-block; background:var(--amber); color:#fff; padding:12px 24px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Open my full assessment &rarr;</a>';
-  });
+  // OLD FORM HANDLER REMOVED - now handled by form-handlers-with-installer-select.js with installer selection
 })();
 </script>
 

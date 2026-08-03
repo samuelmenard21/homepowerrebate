@@ -1137,14 +1137,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
     $("hpr-cw-refer-step").style.display = "block";
   });
 
-  $("hpr-cw-refer-form").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    var btn = $("hpr-cw-refer-btn"); btn.disabled = true; btn.textContent = "Matching…";
-    try {
-      await fetch(WORKER + "/estimate-lead", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: leadEmail, firstname: $("hpr-cw-name").value, phone: $("hpr-cw-phone").value, city: CITY, heating: heating, income: income, estimate: stacked, source: "city-" + SLUG, newsletter: newsletterOptIn })
-      });
+  // OLD FORM HANDLER REMOVED - now handled by form-handlers-with-installer-select.js
     } catch (err) { console.error("estimate-lead error", err); }
     $("hpr-cw-refer-step").style.display = "none";
     var d = $("hpr-cw-done"); d.style.display = "block";

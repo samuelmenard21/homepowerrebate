@@ -304,15 +304,24 @@ document.addEventListener('DOMContentLoaded', () => {
           const formData = new FormData(matchForm);
           const data = Object.fromEntries(formData);
 
-          // Use stored email or prompt if not available
+          // Use stored email (should be from first form step)
           if (!data.email) {
-            data.email = localStorage.getItem('hpr_lead_email') || prompt('Please enter your email address:');
-            if (!data.email) return;
+            data.email = localStorage.getItem('hpr_lead_email');
           }
 
-          // Validate email
+          // Validate email exists
+          if (!data.email) {
+            showMessage(matchForm, '✗ Please enter your email first.', false);
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Match me with my installer →';
+            return;
+          }
+
+          // Validate email format
           if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
             showMessage(matchForm, '✗ Please enter a valid email address.', false);
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Match me with my installer →';
             return;
           }
 

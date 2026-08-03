@@ -142,6 +142,19 @@ footer a { color:rgba(250,247,242,.75); text-decoration:none; }
 
 <section class="section">
   <div class="wrap">
+    <div class="eyebrow">Filter by Program Qualification</div>
+    <div class="filters">
+      <span class="filter-label">Programs:</span>
+      <button class="filter-program-btn active" data-program="all">All Programs</button>
+      <button class="filter-program-btn" data-program="esp">Energy Savings Program</button>
+      <button class="filter-program-btn" data-program="hrr">Home Renovation Rebate</button>
+      <button class="filter-program-btn" data-program="esp-hrr">Both Programs</button>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
     <div class="eyebrow">Or Select Your City</div>
     <div class="city-tabs" id="city-tabs-container"></div>
   </div>
@@ -220,6 +233,7 @@ const CITIES = [
 let allInstallers = [];
 let currentFilter = 'all';
 let currentCity = 'all';
+let currentProgram = 'all';
 
 async function loadInstallers() {
   try {
@@ -293,6 +307,16 @@ function render() {
     filtered = filtered.filter(i => i.city === currentCity);
   }
 
+  if (currentProgram !== 'all') {
+    filtered = filtered.filter(i => {
+      const programs = (i.bhbc_programs || '').toLowerCase();
+      if (currentProgram === 'esp') return programs.includes('energy savings program');
+      if (currentProgram === 'hrr') return programs.includes('home renovation rebate');
+      if (currentProgram === 'esp-hrr') return programs.includes('energy savings program') && programs.includes('home renovation rebate');
+      return true;
+    });
+  }
+
   const container = document.getElementById('installers-container');
   const emptyState = document.getElementById('empty-state');
 
@@ -305,11 +329,13 @@ function render() {
   emptyState.style.display = 'none';
   container.innerHTML = filtered.map(installer => {
     const profileUrl = installer.profileUrl || '#';
+    const bhbcBadge = installer.bhbc_badge ? `<div style="display: inline-block; background: #e8f5f0; border: 1px solid #2d6a4f; border-radius: 6px; padding: 6px 10px; margin-top: 8px; color: #2d6a4f; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em;"><span style="color: #2d6a4f;">✓</span> ${installer.bhbc_badge}</div>` : '';
     return `
       <a href="${profileUrl}" class="installer-card">
         <h3>${installer.name}</h3>
         <div class="installer-city">📍 ${installer.city}, BC</div>
         ${installer.specialty ? `<span class="installer-specialty">${installer.specialty}</span>` : ''}
+        ${bhbcBadge}
         <div class="installer-rating">${installer.rating.toFixed(1)}★ (${installer.reviews} reviews)</div>
         <p class="installer-desc">${installer.description || 'HPCN-certified installer serving ' + installer.city + '.'}</p>
         <span class="installer-cta">View profile →</span>
@@ -323,6 +349,15 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+document.querySelectorAll('.filter-program-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-program-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentProgram = btn.dataset.program;
     render();
   });
 });

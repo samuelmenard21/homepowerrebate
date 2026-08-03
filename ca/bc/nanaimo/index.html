@@ -253,6 +253,26 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   .assess-inner { flex-direction: column; align-items: flex-start; }
 }
 </style>
+<script>
+// A/B Test: CTA Variant Assignment
+(function() {
+  function getCtaVariant() {
+    let variant = localStorage.getItem('hpr_ab_cta_variant');
+    if (!variant) {
+      const rand = Math.random();
+      variant = rand < 0.33 ? 'A' : rand < 0.66 ? 'B' : 'C';
+      localStorage.setItem('hpr_ab_cta_variant', variant);
+    }
+    return variant;
+  }
+  window.hpr_ab_cta = getCtaVariant();
+  
+  // Log variant view
+  const cityName = document.querySelector('[data-city]')?.getAttribute('data-city') || 'unknown';
+  const img = new Image();
+  img.src = '/api/ab-log?event=view&variant=' + window.hpr_ab_cta + '&city=' + cityName;
+})();
+</script>
 </head>
 <body>
 <nav class="nav" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
@@ -1132,6 +1152,42 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
   });
 })();
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const variantMap = {
+    'A': 'Match me with my installer →',
+    'B': 'Get Matched with a Local HPCN Installer →',
+    'C': 'Free Rebate Review from a Certified Pro →'
+  };
+  
+  const variant = window.hpr_ab_cta || 'A';
+  const ctaBtn = document.getElementById('hpr-cw-refer-btn');
+  if (ctaBtn) {
+    ctaBtn.textContent = variantMap[variant];
+  }
+  
+  // Track click
+  if (ctaBtn) {
+    ctaBtn.addEventListener('click', function() {
+      const img = new Image();
+      img.src = '/api/ab-log?event=click&variant=' + variant + '&city=' + (window.CITY || 'unknown');
+    });
+  }
+  
+  // Track form submit
+  const form = document.getElementById('hpr-cw-refer-form');
+  if (form) {
+    form.addEventListener('submit', function() {
+      const img = new Image();
+      img.src = '/api/ab-log?event=submit&variant=' + variant + '&city=' + (window.CITY || 'unknown');
+    });
+  }
+});
+</script>
+
+<!-- HomePowerRebate Form Handlers (with Installer Selection) -->
+<script src="/form-handlers-with-installer-select.js"></script>
 
 </body>
 </html>

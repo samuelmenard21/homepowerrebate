@@ -294,9 +294,15 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <p style="color: rgba(250,247,242,.85); margin-bottom: 24px;">Get matched with a vetted installer in your city who'll prepare quotes based on your exact selections.</p>
 
       <form id="assessment-lead-form" style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; text-align: left;">
-        <div>
-          <label for="lead-firstname" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">First Name</label>
-          <input type="text" id="lead-firstname" placeholder="Alex" required style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label for="lead-firstname" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">First Name</label>
+            <input type="text" id="lead-firstname" placeholder="Alex" required style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+          </div>
+          <div>
+            <label for="lead-lastname" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">Last Name</label>
+            <input type="text" id="lead-lastname" placeholder="Smith" required style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+          </div>
         </div>
 
         <div>
@@ -304,9 +310,15 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
           <input type="email" id="lead-email" placeholder="your@email.com" required style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
         </div>
 
-        <div>
-          <label for="lead-phone" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">Phone</label>
-          <input type="tel" id="lead-phone" placeholder="(604) 123-4567" required style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label for="lead-phone" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">Phone</label>
+            <input type="tel" id="lead-phone" placeholder="(604) 123-4567" required style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+          </div>
+          <div>
+            <label for="lead-postal" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">Postal Code</label>
+            <input type="text" id="lead-postal" placeholder="V6B 4X8" required style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+          </div>
         </div>
 
         <button type="submit" class="btn-primary" style="width: 100%; background: var(--amber); margin-top: 8px;">Get My Quote →</button>
@@ -744,8 +756,10 @@ document.getElementById('assessment-lead-form')?.addEventListener('submit', asyn
   e.preventDefault();
 
   const firstname = document.getElementById('lead-firstname').value;
+  const lastname = document.getElementById('lead-lastname').value;
   const email = document.getElementById('lead-email').value;
   const phone = document.getElementById('lead-phone').value;
+  const postal = document.getElementById('lead-postal').value;
   const responseEl = document.getElementById('lead-response');
   const button = e.target.querySelector('button[type="submit"]');
   const originalText = button.textContent;
@@ -784,8 +798,10 @@ document.getElementById('assessment-lead-form')?.addEventListener('submit', asyn
       },
       body: JSON.stringify({
         firstname: firstname,
+        lastname: lastname,
         email: email,
         phone: phone,
+        postal: postal,
         city: city,
         upgrades: upgrades,
         income_tier: income,

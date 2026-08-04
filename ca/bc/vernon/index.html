@@ -319,64 +319,15 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <h2>See exactly what your Vernon home qualifies for</h2>
       <p>Two quick questions &mdash; free, instant estimate, no sales calls.</p>
     </div>
-    <div id="hpr-cw" style="background:#fff; color:var(--ink); border-radius:14px; padding:22px; max-width:640px; text-align:left;">
-      <div id="hpr-cw-q">
-        <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:12px;">Free 15-second check</div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-          <div>
-            <label for="hpr-cw-heating" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">How you heat</label>
-            <select id="hpr-cw-heating" style="width:100%; padding:11px 12px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
-              <option value="">Choose&hellip;</option>
-              <option value="furnace">Natural gas furnace</option>
-              <option value="electric">Electric baseboards</option>
-              <option value="oil">Oil or propane</option>
-              <option value="notsure">Not sure</option>
-            </select>
-          </div>
-          <div>
-            <label for="hpr-cw-income" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Household income</label>
-            <select id="hpr-cw-income" style="width:100%; padding:11px 12px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
-              <option value="">Choose&hellip;</option>
-              <option value="tier1">Under $110,000</option>
-              <option value="tier2">$110,000 &ndash; $165,000</option>
-              <option value="tier3">Over $165,000</option>
-            </select>
-          </div>
-        </div>
-        <button id="hpr-cw-go" style="width:100%; margin-top:14px; padding:13px; background:var(--amber); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">See my estimate &rarr;</button>
-        <p id="hpr-cw-err" style="display:none; margin:10px 0 0; font-size:13px; color:#b04545; text-align:center;">Please answer both to see your estimate.</p>
-      </div>
-      <div id="hpr-cw-result" style="display:none;">
-        <div style="background:var(--paper-warm); border-radius:12px; padding:18px; text-align:center; margin-bottom:16px;">
-          <div style="font-size:13px; color:var(--ink-soft);">You likely qualify for up to</div>
-          <div id="hpr-cw-big" style="font-family:'Fraunces',Georgia,serif; font-size:38px; font-weight:700; color:var(--amber); line-height:1.1;">$16,000</div>
-          <div style="font-size:13px; color:var(--ink-soft);">on a heat pump alone</div>
-          <div id="hpr-cw-stack" style="font-size:14px; color:var(--ink); margin-top:10px; line-height:1.6;"></div>
-        </div>
-        <div id="hpr-cw-email-step">
-          <div style="font-size:14px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Get your full breakdown emailed to you</div>
-          <form id="hpr-cw-form" style="display:flex; flex-direction:column; gap:10px;">
-            <input type="email" id="hpr-cw-email" placeholder="your@email.com" required style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
-            <input type="text" id="hpr-cw-hp" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px;" aria-hidden="true">
-            <button type="submit" id="hpr-cw-btn" style="width:100%; padding:13px; background:var(--teal-deep); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">Email my breakdown &rarr;</button>
-            <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; color:var(--sage); cursor:pointer;">
-              <input type="checkbox" id="hpr-cw-news" checked style="margin-top:2px;">
-              <span>Also send me weekly BC rebate tips (unsubscribe anytime)</span>
-            </label>
-          </form>
-        </div>
-        <div id="hpr-cw-refer-step" style="display:none;">
-          <div style="background:var(--paper-warm); border-radius:10px; padding:14px; margin-bottom:14px; font-size:13px; color:var(--ink);">&#10003; Sent. <strong>Want a vetted local installer to prepare this exact quote &mdash; free?</strong> Add your name and number and we&rsquo;ll personally line one up for you &mdash; no obligation, no spam.</div>
-          <form id="hpr-cw-refer-form" style="display:flex; flex-direction:column; gap:10px;">
-            <input type="text" id="hpr-cw-name" placeholder="First name" required style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
-            <input type="tel" id="hpr-cw-phone" placeholder="Phone number" required style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
-            <button type="submit" id="hpr-cw-refer-btn" style="width:100%; padding:13px; background:var(--amber); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">Match me with my installer &rarr;</button>
-          </form>
-          <a href="#" id="hpr-cw-skip" style="display:block; text-align:center; margin-top:12px; font-size:13px; color:var(--sage); text-decoration:underline;">No thanks &mdash; just open my full assessment</a>
-        </div>
-        <div id="hpr-cw-done" style="display:none; text-align:center; margin-top:6px;"></div>
-      </div>
     </div>
+  </div>
+</section>
+
+<section class="cta-box">
+  <div class="wrap">
+    <h2>Get Your Full Estimate</h2>
+    <p>Take our quick 30-second assessment to see exactly what rebates your Vernon home qualifies for.</p>
+    <a href="/retrofit-assessment/?city=vernon" class="btn-primary">Start your assessment →</a>
   </div>
 </section>
 

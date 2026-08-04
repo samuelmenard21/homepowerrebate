@@ -276,6 +276,7 @@ async function handleLeadSubmit(request, env) {
   // (there's no inbox to send to) — ops still gets notified so a human picks
   // it up, and the lead is still logged to the sheet.
   const tasks = [
+    sendLeadConfirmation(lead, installer, env),
     sendOpsEmail(lead, env),
     logToSheet(lead, env)
   ];
@@ -731,6 +732,84 @@ async function sendWaitlistConfirmation(waitlist, env) {
     from: 'HomePowerRebate <hello@homepowerrebate.com>',
     to: waitlist.email,
     subject: `You're on the HomePowerRebate waitlist`,
+    html
+  });
+}
+
+// ===========================================================================
+// EMAIL: confirmation to homeowner after lead submission (NEW)
+// ===========================================================================
+// Warm confirmation that we got their info and an installer will contact them soon.
+
+async function sendLeadConfirmation(lead, installer, env) {
+  if (!env.RESEND_API_KEY) return Promise.resolve();
+
+  const installerLine = installer
+    ? `<p style="font-size:16px;line-height:1.6;margin:0 0 16px;">We've matched you with <strong>${installer.name}</strong>, and they'll reach out within 1 business day at <strong>${lead.phone}</strong> or <strong>${lead.email}</strong>.</p>`
+    : `<p style="font-size:16px;line-height:1.6;margin:0 0 16px;background:#fef3e6;padding:16px;border-radius:8px;border-left:4px solid #e8b87a;"><strong>Note:</strong> We're still building our installer network in ${lead.city}. Your information is safe with us, and we'll route you to a qualified installer as soon as we expand to your area.</p>`;
+
+  const html = `
+    <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:560px;margin:0 auto;padding:20px;color:#0a2a2e;">
+      <div style="background:#08363f;color:#faf7f2;padding:28px 24px;border-radius:14px 14px 0 0;">
+        <div style="font-family:Georgia,serif;font-size:14px;color:#e88a2e;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;">We got it</div>
+        <h1 style="margin:0;font-family:Georgia,serif;font-size:26px;font-weight:500;line-height:1.2;">Your retrofit assessment is submitted.</h1>
+      </div>
+
+      <div style="background:#faf7f2;padding:28px 24px;border-radius:0 0 14px 14px;border:1px solid #d9d0c1;border-top:none;">
+        <p style="font-size:16px;line-height:1.6;margin:0 0 16px;">
+          Thanks for taking the HomePowerRebate assessment. We've logged your information and matched you with a local installer in <strong>${capitalize(lead.city)}</strong>.
+        </p>
+
+        ${installerLine}
+
+        <h2 style="font-size:18px;color:#08363f;margin:24px 0 12px;"><strong>Your assessment summary</strong></h2>
+        <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;margin-bottom:16px;">
+          <table style="width:100%;border-collapse:collapse;font-size:14px;">
+            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:45%;">10-year value estimate:</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${lead.estimated_value}</td></tr>
+            <tr><td style="padding:8px 0;color:#1a3d42;">Payback period:</td><td style="padding:8px 0;font-weight:600;">${lead.payback}</td></tr>
+            <tr><td style="padding:8px 0;color:#1a3d42;">Current heating:</td><td style="padding:8px 0;font-weight:600;">${capitalize(String(lead.current_heat || 'unknown'))}</td></tr>
+            <tr><td style="padding:8px 0;color:#1a3d42;">Monthly power bill:</td><td style="padding:8px 0;font-weight:600;">${lead.monthly_bill}</td></tr>
+            <tr><td style="padding:8px 0;color:#1a3d42;">Utility:</td><td style="padding:8px 0;font-weight:600;">${formatUtility(lead.utility)}</td></tr>
+          </table>
+        </div>
+
+        <div style="background:white;border-left:4px solid #2d6a4f;padding:16px;margin:24px 0;border-radius:6px;">
+          <p style="margin:0;font-size:15px;color:#08363f;"><strong>What happens next:</strong></p>
+          <ol style="margin:8px 0 0;padding-left:20px;font-size:15px;color:#1a3d42;">
+            <li>Installer reviews your assessment (today)</li>
+            <li>Calls or emails you with personalized quotes (within 1 business day)</li>
+            <li>You compare and decide (no pressure — we don't get paid if you don't)</li>
+          </ol>
+        </div>
+
+        <h2 style="font-size:16px;color:#08363f;margin:24px 0 12px;"><strong>Learn more before they call</strong></h2>
+        <p style="font-size:15px;line-height:1.6;margin:0 0 12px;">
+          <a href="https://homepowerrebate.com/blog/heat-pumps-explained-bc" style="display:inline-block;margin-bottom:8px;padding:10px 16px;background:#d4751c;color:#fff;border-radius:6px;text-decoration:none;font-weight:600;">Heat Pumps Explained →</a><br>
+          <a href="https://homepowerrebate.com/blog/bc-approved-home-battery-rebate" style="display:inline-block;margin-bottom:8px;padding:10px 16px;background:#d4751c;color:#fff;border-radius:6px;text-decoration:none;font-weight:600;">Choosing a Battery →</a><br>
+          <a href="https://homepowerrebate.com/blog" style="display:inline-block;margin-bottom:8px;padding:10px 16px;background:#d4751c;color:#fff;border-radius:6px;text-decoration:none;font-weight:600;">All Guides & Articles →</a>
+        </p>
+
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:16px;margin-top:20px;">
+          <p style="margin:0 0 8px;font-size:14px;color:#166534;">
+            <strong>Questions before they call?</strong> Just reply to this email. We read everything.
+          </p>
+          <p style="margin:0;font-size:14px;color:#166534;">
+            <strong>Watch your email and phone</strong> for contact from <strong>${installer ? installer.name : 'your matched installer'}</strong>. Add leads@homepowerrebate.com to your contacts so we don't land in spam.
+          </p>
+        </div>
+
+        <p style="margin:24px 0 0;font-size:12px;color:#6b7d80;text-align:center;">
+          HomePowerRebate &middot; Independent installer matching service<br>
+          Not affiliated with BC Hydro &middot; <a href="https://homepowerrebate.com" style="color:#6b7d80;">homepowerrebate.com</a>
+        </p>
+      </div>
+    </div>
+  `;
+
+  return resendEmail(env.RESEND_API_KEY, {
+    from: 'HomePowerRebate Leads <leads@homepowerrebate.com>',
+    to: lead.email,
+    subject: `Your HomePowerRebate assessment is submitted — ${capitalize(lead.city)} installer standing by`,
     html
   });
 }

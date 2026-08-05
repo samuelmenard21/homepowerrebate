@@ -84,6 +84,16 @@ function writeRow(tabName, record) {
 
   var headers = sheet.getRange(1, 1, 1, Math.max(1, sheet.getLastColumn())).getValues()[0];
 
+  // Ensure received_at and status are in the headers (at positions 0 and 1)
+  if (headers[0] !== 'received_at') headers.unshift('received_at');
+  if (headers[1] !== 'status') {
+    if (headers.length > 1 && headers[1] === 'status') {
+      // Already there
+    } else {
+      headers.splice(1, 0, 'status');
+    }
+  }
+
   // Add any missing columns for keys we haven't seen before.
   var keys = Object.keys(record);
   for (var i = 0; i < keys.length; i++) {
@@ -93,11 +103,17 @@ function writeRow(tabName, record) {
     }
   }
 
-  // Build the row in header order.
+  // Build the row in header order, ensuring received_at and status are populated.
   var row = [];
   for (var c = 0; c < headers.length; c++) {
     var key = headers[c];
-    row.push(record[key] !== undefined ? record[key] : '');
+    if (key === 'received_at') {
+      row.push(record.received_at || new Date().toISOString());
+    } else if (key === 'status') {
+      row.push(record.status || 'new');
+    } else {
+      row.push(record[key] !== undefined ? record[key] : '');
+    }
   }
   sheet.appendRow(row);
 }

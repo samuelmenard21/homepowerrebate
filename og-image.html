@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OG Image Generator</title>
+  <style>
+    body { margin: 0; padding: 0; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="1200" height="630"></canvas>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Background gradient
+    const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+    gradient.addColorStop(0, '#08363f');
+    gradient.addColorStop(1, '#0d4f5c');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 1200, 630);
+
+    // Accent bar
+    ctx.fillStyle = '#d4751c';
+    ctx.fillRect(0, 0, 1200, 12);
+
+    // Logo text
+    ctx.font = 'bold 48px Fraunces, Georgia, serif';
+    ctx.fillStyle = '#faf7f2';
+    ctx.textAlign = 'left';
+    ctx.fillText('HomePowerRebate', 60, 100);
+
+    // Main headline
+    ctx.font = 'bold 72px Fraunces, Georgia, serif';
+    ctx.fillStyle = '#fff';
+    ctx.textAlign = 'left';
+    ctx.lineHeight = 1.2;
+
+    const lines = ['See Your Rebates', 'in 20 Seconds'];
+    let y = 180;
+    for (const line of lines) {
+      ctx.fillText(line, 60, y);
+      y += 90;
+    }
+
+    // Subheading
+    ctx.font = '24px Inter Tight, -apple-system, sans-serif';
+    ctx.fillStyle = 'rgba(250, 247, 242, 0.9)';
+    ctx.textAlign = 'left';
+    ctx.fillText('Free assessment → matched with vetted installers', 60, 420);
+
+    // Value proposition
+    ctx.font = 'bold 40px Fraunces, Georgia, serif';
+    ctx.fillStyle = '#d4751c';
+    ctx.textAlign = 'left';
+    ctx.fillText('Up to $35K in Rebates', 60, 500);
+
+    // CTA
+    ctx.fillStyle = '#d4751c';
+    ctx.fillRect(60, 540, 280, 70);
+    ctx.font = 'bold 28px Inter Tight, -apple-system, sans-serif';
+    ctx.fillStyle = '#08363f';
+    ctx.textAlign = 'center';
+    ctx.fillText('Start Assessment', 200, 580);
+
+    // Bottom accent
+    ctx.fillStyle = 'rgba(212, 117, 28, 0.3)';
+    ctx.fillRect(0, 620, 1200, 10);
+
+    // Download canvas as PNG
+    canvas.toBlob(function(blob) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'og-image.png';
+      a.click();
+    });
+  </script>
+</body>
+</html>

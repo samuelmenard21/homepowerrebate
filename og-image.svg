@@ -1,49 +1,110 @@
 <svg viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background gradient -->
   <defs>
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#08363f;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#0d4f5c;stop-opacity:1" />
+    <!-- Background gradient: deep teal to warm dark -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a2a2e"/>
+      <stop offset="55%" stop-color="#0d4f5c"/>
+      <stop offset="100%" stop-color="#08363f"/>
     </linearGradient>
+    <radialGradient id="glow" cx="82%" cy="18%" r="55%">
+      <stop offset="0%" stop-color="#e88a2e" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#e88a2e" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="90%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#2d6a4f" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#2d6a4f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e88a2e"/>
+      <stop offset="100%" stop-color="#d4751c"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  <!-- Base -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
 
-  <!-- Top accent bar -->
-  <rect width="1200" height="12" fill="#d4751c"/>
+  <!-- Subtle grid texture (house/blueprint feel) -->
+  <g opacity="0.05" stroke="#faf7f2" stroke-width="1">
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="510" x2="1200" y2="510"/>
+    <line x1="820" y1="0" x2="820" y2="630"/>
+  </g>
+
+  <!-- Roofline / house silhouette motif, right side -->
+  <g transform="translate(870,60)" opacity="0.9">
+    <!-- house body -->
+    <path d="M20 220 L20 420 L300 420 L300 220 L160 90 Z" fill="#08363f" stroke="rgba(250,247,242,0.12)" stroke-width="2"/>
+    <!-- roof highlight -->
+    <path d="M20 220 L160 90 L300 220 Z" fill="#0d4f5c"/>
+    <!-- solar panels on roof -->
+    <g transform="translate(60,150)">
+      <rect x="0" y="0" width="90" height="55" rx="3" fill="#0a2a2e" transform="skewX(-14)"/>
+      <g stroke="#e88a2e" stroke-width="1.5" opacity="0.7">
+        <line x1="18" y1="0" x2="4" y2="55" transform="skewX(-14) translate(-14,0)"/>
+      </g>
+      <rect x="0" y="0" width="90" height="55" rx="3" fill="none" stroke="#e88a2e" stroke-width="2" opacity="0.55" transform="skewX(-14)"/>
+      <line x1="30" y1="0" x2="30" y2="55" stroke="#e88a2e" stroke-width="1" opacity="0.35" transform="skewX(-14)"/>
+      <line x1="60" y1="0" x2="60" y2="55" stroke="#e88a2e" stroke-width="1" opacity="0.35" transform="skewX(-14)"/>
+    </g>
+    <!-- heat pump unit box beside house -->
+    <rect x="230" y="330" width="70" height="60" rx="6" fill="#0a2a2e" stroke="rgba(250,247,242,0.18)" stroke-width="2"/>
+    <circle cx="265" cy="360" r="18" fill="none" stroke="#e88a2e" stroke-width="2.5" opacity="0.8"/>
+    <circle cx="265" cy="360" r="4" fill="#e88a2e"/>
+    <line x1="265" y1="345" x2="265" y2="352" stroke="#e88a2e" stroke-width="2"/>
+    <line x1="265" y1="368" x2="265" y2="375" stroke="#e88a2e" stroke-width="2"/>
+    <line x1="250" y1="360" x2="257" y2="360" stroke="#e88a2e" stroke-width="2"/>
+    <line x1="273" y1="360" x2="280" y2="360" stroke="#e88a2e" stroke-width="2"/>
+    <!-- door -->
+    <rect x="140" y="360" width="42" height="60" rx="2" fill="#0a2a2e" stroke="rgba(250,247,242,0.15)" stroke-width="1.5"/>
+    <!-- window -->
+    <rect x="55" y="280" width="46" height="46" rx="3" fill="#e88a2e" opacity="0.18" stroke="rgba(232,138,46,0.5)" stroke-width="1.5"/>
+  </g>
+
+  <!-- Coin / rebate glyphs stacked, subtle, lower right -->
+  <g transform="translate(1010,440)" opacity="0.85">
+    <circle cx="0" cy="40" r="34" fill="url(#amberGrad)" filter="url(#softShadow)"/>
+    <circle cx="0" cy="40" r="34" fill="none" stroke="#faf7f2" stroke-width="1.5" opacity="0.4"/>
+    <text x="0" y="50" font-family="Georgia, serif" font-size="30" font-weight="700" fill="#08363f" text-anchor="middle">$</text>
+    <circle cx="46" cy="14" r="22" fill="url(#amberGrad)" opacity="0.85" filter="url(#softShadow)"/>
+    <text x="46" y="21" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#08363f" text-anchor="middle">$</text>
+  </g>
+
+  <!-- Top accent line -->
+  <rect width="1200" height="6" fill="url(#amberGrad)"/>
+
+  <!-- Eyebrow badge -->
+  <rect x="60" y="66" width="230" height="34" rx="17" fill="rgba(232,138,46,0.14)" stroke="rgba(232,138,46,0.5)" stroke-width="1.5"/>
+  <circle cx="80" cy="83" r="4" fill="#e88a2e"/>
+  <text x="94" y="89" font-family="Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="0.5" fill="#e88a2e">SERVING 18 BC CITIES</text>
 
   <!-- Logo -->
-  <text x="60" y="100" font-family="Georgia, serif" font-size="48" font-weight="bold" fill="#faf7f2">
-    HomePowerRebate
-  </text>
+  <text x="60" y="148" font-family="Georgia, serif" font-size="30" font-weight="700" fill="#faf7f2">Home<tspan fill="#e88a2e" font-style="italic">Power</tspan>Rebate</text>
 
-  <!-- Main headline line 1 -->
-  <text x="60" y="190" font-family="Georgia, serif" font-size="72" font-weight="bold" fill="#ffffff">
-    See Your Rebates
-  </text>
+  <!-- Headline -->
+  <text x="58" y="240" font-family="Georgia, serif" font-size="66" font-weight="700" fill="#ffffff" letter-spacing="-1">See your rebates</text>
+  <text x="58" y="310" font-family="Georgia, serif" font-size="66" font-weight="700" fill="#ffffff" letter-spacing="-1">in <tspan fill="#e88a2e" font-style="italic">20 seconds.</tspan></text>
 
-  <!-- Main headline line 2 -->
-  <text x="60" y="280" font-family="Georgia, serif" font-size="72" font-weight="bold" fill="#ffffff">
-    in 20 Seconds
-  </text>
+  <!-- Subheadline -->
+  <text x="60" y="360" font-family="Arial, sans-serif" font-size="22" fill="rgba(250,247,242,0.72)">Free assessment, matched with vetted local installers.</text>
 
-  <!-- Subheading -->
-  <text x="60" y="420" font-family="Arial, sans-serif" font-size="24" fill="rgba(250, 247, 242, 0.9)">
-    Free assessment → matched with vetted installers
-  </text>
+  <!-- Stat card -->
+  <rect x="60" y="410" width="330" height="130" rx="16" fill="url(#cardGrad)" stroke="rgba(250,247,242,0.14)" stroke-width="1.5"/>
+  <text x="88" y="458" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1" fill="rgba(250,247,242,0.6)">YOU COULD QUALIFY FOR</text>
+  <text x="88" y="512" font-family="Georgia, serif" font-size="52" font-weight="700" fill="#e88a2e">$4K–$35K</text>
 
-  <!-- Value prop -->
-  <text x="60" y="500" font-family="Georgia, serif" font-size="40" font-weight="bold" fill="#d4751c">
-    Up to $35K in Rebates
-  </text>
+  <!-- CTA pill -->
+  <rect x="60" y="562" width="238" height="54" rx="27" fill="url(#amberGrad)" filter="url(#softShadow)"/>
+  <text x="179" y="596" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#08363f" text-anchor="middle">Start Assessment →</text>
 
-  <!-- CTA button -->
-  <rect x="60" y="540" width="280" height="70" rx="8" fill="#d4751c"/>
-  <text x="200" y="585" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#08363f" text-anchor="middle">
-    Start Assessment
-  </text>
-
-  <!-- Bottom accent -->
-  <rect y="620" width="1200" height="10" fill="rgba(212, 117, 28, 0.3)"/>
+  <!-- Trust line -->
+  <text x="330" y="596" font-family="Arial, sans-serif" font-size="15" fill="rgba(250,247,242,0.55)">No spam · No obligation</text>
 </svg>

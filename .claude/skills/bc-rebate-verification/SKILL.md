@@ -21,7 +21,9 @@ Fetch each of these and compare against what's currently published on the BC cit
 6. **ECAP / income-qualified free programs** (free energy kit, free heat pump install, income thresholds e.g. ~$57,200 for family of four) — verify via bchydro.com's income-based savings page.
 7. Confirm whether the "Greener Homes grant/loan are both closed as of late 2025" claim (used on every city page) is still accurate, or whether anything has reopened or changed.
 
-Record each figure as confirmed-unchanged, or flag exactly what changed with the old value, new value, and source URL.
+**Cross-validate every figure against at least two independent sources** before recording it as confirmed — the primary official page (BC Hydro/FortisBC/BetterHomes BC) plus at least one of: a targeted search surfacing multiple independent citations of the same number, a second official page (e.g. a government press release, a program-specific sub-page vs. the general overview page), or a reputable third-party summary that itself cites the primary source. This matters more than it sounds: several BC Hydro/BetterHomes BC pages render key figures via an interactive calculator rather than static text, so a single fetch can come back empty or misleading even when the page is live — don't treat an empty or partial fetch result as "unable to confirm, therefore unchanged." If a figure looks surprising, different from what's published, or expressed in a different unit (e.g. a per-kW/kWh formula vs. a flat dollar cap), that's specifically the signal to pull a second source before concluding anything drifted or stayed the same.
+
+Record each figure as confirmed-unchanged (with both sources noted), or flag exactly what changed with the old value, new value, and source URL(s).
 
 ## Step 2 — Spot-check city-specific local programs
 

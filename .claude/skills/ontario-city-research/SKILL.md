@@ -22,13 +22,14 @@ Run this **before** drafting any content for a new Ontario city, not after.
 2. Look specifically for: municipal financing/loan programs (like Toronto's HELP), local top-up rebates, or city-run energy coaching services.
 3. If nothing city-specific exists, that's a valid finding — don't invent a program. Say explicitly on the page that the city follows the standard provincial HRSP stack with no local top-up, same pattern used for BC cities without a local top-up.
 
-## Step 3 — Validate every link before it goes on the page
+## Step 3 — Validate every link before it goes on the page, with at least two independent sources per material figure
 
 For each official source URL you're about to cite (LDC rebate page, municipal program page, HRSP category page):
 
 1. Fetch the URL and confirm it returns a live page (not a 404, redirect to a generic homepage, or "page moved" notice).
 2. Confirm the page content actually describes the program you're about to cite — a URL that resolves but now describes a *different* or *discontinued* program is worse than an obvious 404, since it reads as verified when it isn't.
 3. If a source has moved, find the current URL rather than leaving the stale one — don't cite from memory or a prior session's data without re-checking, since these programs change.
+4. **Cross-validate every dollar figure, rate, or eligibility rule against a second, independent source** before publishing it — the primary official page plus at least one of: a search that surfaces multiple independent citations of the same figure, a second official page (e.g. a press release or program-overview page), or a reputable third-party summary that itself cites the primary source. A single WebFetch of one page is not enough confidence on its own, especially for pages that render dynamically (calculators, JS-gated content) where a fetch can silently return incomplete or misleading content — if the first source's figure looks surprising or doesn't match what's already published, that's a signal to check a second source, not a reason to skip it.
 
 ## Step 4 — Flag anything unconfirmed
 

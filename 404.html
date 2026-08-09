@@ -85,9 +85,35 @@
     color: var(--teal);
     border: 1px solid #d9d0c1;
   }
+  .logo-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 24px;
+    text-align: left;
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--teal-dark);
+    text-decoration: none;
+  }
+  .logo-power { color: var(--orange); }
+  .contact-link {
+    display: block;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #777;
+  }
+  .contact-link a { color: var(--teal); }
 </style>
 </head>
 <body>
+  <div class="logo-nav">
+    <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
+  </div>
   <div class="wrap">
     <p class="eyebrow">404</p>
     <h1>That page doesn't exist</h1>
@@ -96,6 +122,7 @@
       <a class="btn btn-primary" href="/">Go to homepage</a>
       <a class="btn btn-secondary" href="/calculator/">Check my rebates</a>
     </div>
+    <p class="contact-link">Still stuck? <a href="mailto:hello@homepowerrebate.com">Email us</a> and we'll help you find it.</p>
   </div>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BC Solar Rebates & Heat Pump Incentives 2026 | HomePowerRebate</title>
-<meta name="description" content="BC homeowners: stack a $5,000 solar rebate, up to $5,000 battery, and a $4,000–$16,000 heat pump rebate — plus insulation, water heater and EV charger. Up to ~$35K in rebates. All vetted installers per city. You choose. Free.">
+<title>Canadian Home Energy Rebates 2026 | HomePowerRebate</title>
+<meta name="description" content="Find every home-energy rebate you qualify for — heat pumps, solar, battery, insulation and more — across BC and Ontario. Free 20-second check, then get matched with a vetted local installer. No spam.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://homepowerrebate.com/">
 <meta name="google-site-verification" content="Yyio4MZpG_tVGKuE9hbSKTYb0Yo9LFWoNF_3_UxVkGE" />
@@ -19,7 +19,7 @@
 </script>
 
 <meta property="og:title" content="See Your Rebates in 20 Seconds — HomePowerRebate">
-<meta property="og:description" content="Free 20-second assessment. Find out how much you qualify for (up to $35K). Then get matched with vetted local installers across BC. No spam, no obligation.">
+<meta property="og:description" content="Free 20-second assessment. Find out how much you qualify for. Then get matched with vetted local installers across BC and Ontario. No spam, no obligation.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://homepowerrebate.com/">
 <meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
@@ -42,6 +42,19 @@ function toggleCityDropdown() {
     modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
   }
 }
+function showProvinceCities(prov) {
+  const on = document.getElementById('province-cities-on');
+  const bc = document.getElementById('province-cities-bc');
+  const tabOn = document.getElementById('province-tab-on');
+  const tabBc = document.getElementById('province-tab-bc');
+  if (!on || !bc || !tabOn || !tabBc) return;
+  on.style.display = prov === 'on' ? 'grid' : 'none';
+  bc.style.display = prov === 'bc' ? 'grid' : 'none';
+  tabOn.style.background = prov === 'on' ? 'var(--teal-deep)' : '#fff';
+  tabOn.style.color = prov === 'on' ? '#fff' : 'var(--ink)';
+  tabBc.style.background = prov === 'bc' ? 'var(--teal-deep)' : '#fff';
+  tabBc.style.color = prov === 'bc' ? '#fff' : 'var(--ink)';
+}
 </script>
 
 <!-- Organization schema -->
@@ -53,7 +66,7 @@ function toggleCityDropdown() {
   "alternateName": "Go Power Switch",
   "url": "https://homepowerrebate.com",
   "logo": "https://homepowerrebate.com/logo.png",
-  "description": "Independent matching service that connects homeowners with vetted local installers for solar, heat pump, battery and energy rebate programs. You choose which installer you trust. Currently serves 18 British Columbia cities.",
+  "description": "Independent matching service that connects homeowners with vetted local installers for solar, heat pump, battery and energy rebate programs. You choose which installer you trust. Currently serves 36 cities across British Columbia and Ontario.",
   "foundingDate": "2026",
   "founder": {
     "@type": "Person",
@@ -62,24 +75,8 @@ function toggleCityDropdown() {
     "sameAs": "https://ca.linkedin.com/in/sammenard"
   },
   "areaServed": [
-    { "@type": "City", "name": "Abbotsford" },
-    { "@type": "City", "name": "Burnaby" },
-    { "@type": "City", "name": "Chilliwack" },
-    { "@type": "City", "name": "Coquitlam" },
-    { "@type": "City", "name": "Fort St. John" },
-    { "@type": "City", "name": "Kamloops" },
-    { "@type": "City", "name": "Kelowna" },
-    { "@type": "City", "name": "Langley" },
-    { "@type": "City", "name": "Maple Ridge" },
-    { "@type": "City", "name": "Nanaimo" },
-    { "@type": "City", "name": "Penticton" },
-    { "@type": "City", "name": "Prince George" },
-    { "@type": "City", "name": "Richmond" },
-    { "@type": "City", "name": "Squamish" },
-    { "@type": "City", "name": "Surrey" },
-    { "@type": "City", "name": "Vancouver" },
-    { "@type": "City", "name": "Vernon" },
-    { "@type": "City", "name": "Victoria" }
+    { "@type": "AdministrativeArea", "name": "British Columbia, Canada" },
+    { "@type": "AdministrativeArea", "name": "Ontario, Canada" }
   ],
   "contactPoint": {
     "@type": "ContactPoint",
@@ -130,7 +127,7 @@ function toggleCityDropdown() {
   "@type": "ItemList",
   "name": "Cities where HomePowerRebate matches homeowners with approved solar, heat pump, and home energy installers",
   "itemListOrder": "https://schema.org/ItemListOrderAscending",
-  "numberOfItems": 18,
+  "numberOfItems": 36,
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Abbotsford", "url": "https://homepowerrebate.com/ca/bc/abbotsford" },
     { "@type": "ListItem", "position": 2, "name": "Burnaby", "url": "https://homepowerrebate.com/ca/bc/burnaby" },
@@ -149,7 +146,25 @@ function toggleCityDropdown() {
     { "@type": "ListItem", "position": 15, "name": "Surrey", "url": "https://homepowerrebate.com/ca/bc/surrey" },
     { "@type": "ListItem", "position": 16, "name": "Vancouver", "url": "https://homepowerrebate.com/ca/bc/vancouver" },
     { "@type": "ListItem", "position": 17, "name": "Vernon", "url": "https://homepowerrebate.com/ca/bc/vernon" },
-    { "@type": "ListItem", "position": 18, "name": "Victoria", "url": "https://homepowerrebate.com/ca/bc/victoria" }
+    { "@type": "ListItem", "position": 18, "name": "Victoria", "url": "https://homepowerrebate.com/ca/bc/victoria" },
+    { "@type": "ListItem", "position": 19, "name": "Toronto", "url": "https://homepowerrebate.com/ca/on/toronto" },
+    { "@type": "ListItem", "position": 20, "name": "Ottawa", "url": "https://homepowerrebate.com/ca/on/ottawa" },
+    { "@type": "ListItem", "position": 21, "name": "Mississauga", "url": "https://homepowerrebate.com/ca/on/mississauga" },
+    { "@type": "ListItem", "position": 22, "name": "Brampton", "url": "https://homepowerrebate.com/ca/on/brampton" },
+    { "@type": "ListItem", "position": 23, "name": "Hamilton", "url": "https://homepowerrebate.com/ca/on/hamilton" },
+    { "@type": "ListItem", "position": 24, "name": "Markham", "url": "https://homepowerrebate.com/ca/on/markham" },
+    { "@type": "ListItem", "position": 25, "name": "Vaughan", "url": "https://homepowerrebate.com/ca/on/vaughan" },
+    { "@type": "ListItem", "position": 26, "name": "Richmond Hill", "url": "https://homepowerrebate.com/ca/on/richmond-hill" },
+    { "@type": "ListItem", "position": 27, "name": "Barrie", "url": "https://homepowerrebate.com/ca/on/barrie" },
+    { "@type": "ListItem", "position": 28, "name": "London", "url": "https://homepowerrebate.com/ca/on/london" },
+    { "@type": "ListItem", "position": 29, "name": "Kitchener", "url": "https://homepowerrebate.com/ca/on/kitchener" },
+    { "@type": "ListItem", "position": 30, "name": "Windsor", "url": "https://homepowerrebate.com/ca/on/windsor" },
+    { "@type": "ListItem", "position": 31, "name": "Oakville", "url": "https://homepowerrebate.com/ca/on/oakville" },
+    { "@type": "ListItem", "position": 32, "name": "Oshawa", "url": "https://homepowerrebate.com/ca/on/oshawa" },
+    { "@type": "ListItem", "position": 33, "name": "Whitby", "url": "https://homepowerrebate.com/ca/on/whitby" },
+    { "@type": "ListItem", "position": 34, "name": "Burlington", "url": "https://homepowerrebate.com/ca/on/burlington" },
+    { "@type": "ListItem", "position": 35, "name": "Cambridge", "url": "https://homepowerrebate.com/ca/on/cambridge" },
+    { "@type": "ListItem", "position": 36, "name": "Greater Sudbury", "url": "https://homepowerrebate.com/ca/on/greater-sudbury" }
   ]
 }
 </script>
@@ -935,8 +950,14 @@ h1, h2, h3, h4, h5, h6 {
 
   <!-- Cities Dropdown Modal (mobile) -->
   <div id="city-dropdown-modal" style="display:none; position:absolute; top:56px; right:20px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:49; max-width:300px; max-height:70vh; overflow-y:auto;">
-    <div style="padding:16px; display:grid; gap:8px;">
-      <div style="font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--sage); padding:2px 4px 0;">Ontario</div>
+    <div style="padding:16px 16px 0;">
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
+        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
+      </div>
+    </div>
+    <div style="padding:0 16px 16px;">
+    <div id="province-cities-on" style="display:grid; gap:8px;">
       <a href="/ca/on/toronto" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Toronto</a>
       <a href="/ca/on/ottawa" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Ottawa</a>
       <a href="/ca/on/mississauga" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Mississauga</a>
@@ -955,7 +976,8 @@ h1, h2, h3, h4, h5, h6 {
       <a href="/ca/on/burlington" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Burlington</a>
       <a href="/ca/on/cambridge" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Cambridge</a>
       <a href="/ca/on/greater-sudbury" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Greater Sudbury</a>
-      <div style="font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--sage); padding:8px 4px 0;">British Columbia</div>
+    </div>
+    <div id="province-cities-bc" style="display:none; gap:8px;">
       <a href="/ca/bc/abbotsford" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Abbotsford</a>
       <a href="/ca/bc/burnaby" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Burnaby</a>
       <a href="/ca/bc/chilliwack" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Chilliwack</a>
@@ -975,6 +997,7 @@ h1, h2, h3, h4, h5, h6 {
       <a href="/ca/bc/vernon" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Vernon</a>
       <a href="/ca/bc/victoria" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Victoria</a>
     </div>
+    </div>
   </div>
 </nav>
 
@@ -982,16 +1005,16 @@ h1, h2, h3, h4, h5, h6 {
 <section class="hero">
   <div class="hero-eyebrow">
     <span class="hero-eyebrow-dot"></span>
-    Serving 18 BC cities
+    Serving 36 cities across BC &amp; Ontario
   </div>
   <h1 class="hero-h1">
-    BC is giving away thousands to upgrade your home. You just need to know what you qualify for.
+    Canadian governments are giving away thousands to upgrade your home. You just need to know what you qualify for.
   </h1>
 
   <div class="quick-answer">
     <div class="quick-answer-label">The situation</div>
     <p class="quick-answer-text">
-      Most BC homeowners have no idea how much money they're sitting on. Heat pumps, solar, insulation, water heaters—the government's paying up to 50–70% of the cost through BC Hydro, CleanBC, and federal programs. The trick? You have to ask for it. We do the math for you in seconds.
+      Most homeowners have no idea how much money they're sitting on. Heat pumps, solar, insulation, water heaters—provincial and utility programs are paying up to 50–70% of the cost. The trick? You have to ask for it, and the programs are different in every province. We do the math for your city in seconds.
     </p>
   </div>
 
@@ -1007,38 +1030,66 @@ h1, h2, h3, h4, h5, h6 {
     <div id="hpr-questions">
       <div style="display:flex; flex-direction:column; gap:12px;">
         <div>
-          <label for="hpr-city" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Your city</label>
-          <select id="hpr-city" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
-            <option value="">Choose your city…</option>
-            <option>Abbotsford</option><option>Burnaby</option><option>Chilliwack</option><option>Coquitlam</option>
-            <option>Fort St. John</option><option>Kamloops</option><option>Kelowna</option><option>Langley</option>
-            <option>Maple Ridge</option><option>Nanaimo</option><option>Penticton</option><option>Prince George</option>
-            <option>Richmond</option><option>Squamish</option><option>Surrey</option><option>Vancouver</option>
-            <option>Vernon</option><option>Victoria</option>
+          <label for="hpr-province" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Your province</label>
+          <select id="hpr-province" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+            <option value="">Choose your province…</option>
+            <option value="bc">British Columbia</option>
+            <option value="on">Ontario</option>
           </select>
         </div>
-        <div>
-          <label for="hpr-heating" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">How do you heat your home?</label>
-          <select id="hpr-heating" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
-            <option value="">Choose one…</option>
-            <option value="furnace">Natural gas furnace</option>
-            <option value="electric">Electric baseboards</option>
-            <option value="oil">Oil or propane</option>
-            <option value="notsure">Not sure</option>
-          </select>
+        <div id="hpr-bc-fields" style="display:none; flex-direction:column; gap:12px;">
+          <div>
+            <label for="hpr-city" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Your city</label>
+            <select id="hpr-city" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+              <option value="">Choose your city…</option>
+              <option>Abbotsford</option><option>Burnaby</option><option>Chilliwack</option><option>Coquitlam</option>
+              <option>Fort St. John</option><option>Kamloops</option><option>Kelowna</option><option>Langley</option>
+              <option>Maple Ridge</option><option>Nanaimo</option><option>Penticton</option><option>Prince George</option>
+              <option>Richmond</option><option>Squamish</option><option>Surrey</option><option>Vancouver</option>
+              <option>Vernon</option><option>Victoria</option>
+            </select>
+          </div>
+          <div>
+            <label for="hpr-heating" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">How do you heat your home?</label>
+            <select id="hpr-heating" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+              <option value="">Choose one…</option>
+              <option value="furnace">Natural gas furnace</option>
+              <option value="electric">Electric baseboards</option>
+              <option value="oil">Oil or propane</option>
+              <option value="notsure">Not sure</option>
+            </select>
+          </div>
+          <div>
+            <label for="hpr-income" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Household income</label>
+            <select id="hpr-income" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+              <option value="">Choose a range…</option>
+              <option value="tier1">Under $110,000</option>
+              <option value="tier2">$110,000 – $165,000</option>
+              <option value="tier3">Over $165,000</option>
+            </select>
+          </div>
         </div>
-        <div>
-          <label for="hpr-income" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Household income</label>
-          <select id="hpr-income" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
-            <option value="">Choose a range…</option>
-            <option value="tier1">Under $110,000</option>
-            <option value="tier2">$110,000 – $165,000</option>
-            <option value="tier3">Over $165,000</option>
-          </select>
+        <div id="hpr-on-fields" style="display:none; flex-direction:column; gap:12px;">
+          <div>
+            <label for="hpr-on-city" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Your city</label>
+            <select id="hpr-on-city" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+              <option value="">Choose your city…</option>
+              <option value="toronto">Toronto</option><option value="ottawa">Ottawa</option>
+              <option value="mississauga">Mississauga</option><option value="brampton">Brampton</option>
+              <option value="hamilton">Hamilton</option><option value="markham">Markham</option>
+              <option value="vaughan">Vaughan</option><option value="richmond-hill">Richmond Hill</option>
+              <option value="barrie">Barrie</option><option value="london">London</option>
+              <option value="kitchener">Kitchener</option><option value="windsor">Windsor</option>
+              <option value="oakville">Oakville</option><option value="oshawa">Oshawa</option>
+              <option value="whitby">Whitby</option><option value="burlington">Burlington</option>
+              <option value="cambridge">Cambridge</option><option value="greater-sudbury">Greater Sudbury</option>
+            </select>
+          </div>
+          <p style="font-size:13px; color:var(--ink-soft); margin:0;">Ontario's rebates are tiered by heating fuel, not income &mdash; different enough from BC that we'll take you straight to your city's exact numbers rather than guess here.</p>
         </div>
       </div>
       <button id="hpr-go" style="width:100%; margin-top:16px; padding:14px; background:var(--amber); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">See my estimate →</button>
-      <p id="hpr-err" style="display:none; margin:10px 0 0; font-size:13px; color:#b04545; text-align:center;">Please answer all three to see your estimate.</p>
+      <p id="hpr-err" style="display:none; margin:10px 0 0; font-size:13px; color:#b04545; text-align:center;">Please answer all fields to see your estimate.</p>
       <p style="margin:12px 0 0; font-size:12px; color:var(--sage); text-align:center;">No sales calls. We never sell your info.</p>
     </div>
 
@@ -1375,6 +1426,7 @@ h1, h2, h3, h4, h5, h6 {
   <div class="section-header center">
     <div class="section-eyebrow">Our coverage</div>
     <h2 class="section-h2">18 BC cities, fully covered.</h2>
+    <p class="section-lede">Plus 18 Ontario cities — <a href="/ca/on" style="color:var(--teal); font-weight:600;">see the full Ontario list &rarr;</a></p>
   </div>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; max-width: 1100px; margin: 0 auto;">
     <a href="/ca/bc/abbotsford" style="background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; text-align: center; text-decoration: none; color: inherit; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--paper-warm)'; this.style.borderColor='var(--amber)';" onmouseout="this.style.background='var(--paper)'; this.style.borderColor='var(--rule)';">
@@ -1841,17 +1893,17 @@ h1, h2, h3, h4, h5, h6 {
       <div class="future-card">
         <span class="future-tag live">Live now</span>
         <h3 class="future-h3">18 BC cities</h3>
-        <p class="future-text">Abbotsford, Burnaby, Coquitlam, Chilliwack, Fort St. John, Kamloops, Kelowna, Langley, Maple Ridge, Nanaimo, Penticton, Prince George, Richmond, Squamish, Surrey, Vancouver, Vernon, Victoria. Vetted installers per city.</p>
+        <p class="future-text">Abbotsford, Burnaby, Coquitlam, Chilliwack, Fort St. John, Kamloops, Kelowna, Langley, Maple Ridge, Nanaimo, Penticton, Prince George, Richmond, Squamish, Surrey, Vancouver, Vernon, Victoria. Rebate breakdowns for every city, with vetted installers rolling out per city.</p>
       </div>
       <div class="future-card">
-        <span class="future-tag soon">Coming September 2026</span>
-        <h3 class="future-h3">Ontario expansion</h3>
-        <p class="future-text">Moving to Ontario with the same model. Regional utility programs, heat pump rebates, solar incentives. 5 major cities to start: Toronto, Ottawa, Hamilton, London, Kitchener.</p>
+        <span class="future-tag live">Live now</span>
+        <h3 class="future-h3">18 Ontario cities</h3>
+        <p class="future-text">Toronto, Ottawa, Mississauga, Brampton, Hamilton, Markham, Vaughan, Richmond Hill, Barrie, London, Kitchener, Windsor, Oakville, Oshawa, Whitby, Burlington, Cambridge, Greater Sudbury. Full HRSP rebate breakdowns for every city.</p>
       </div>
       <div class="future-card">
         <span class="future-tag next">Phase 2</span>
-        <h3 class="future-h3">California &amp; other states</h3>
-        <p class="future-text">Other provinces and states with strong rebate programs. Same model: vetted installers per city, you choose, no auctions, no data sales.</p>
+        <h3 class="future-h3">More provinces &amp; states</h3>
+        <p class="future-text">Quebec and other provinces with strong rebate programs, eventually the US. Same model: vetted installers per city, you choose, no auctions, no data sales.</p>
       </div>
     </div>
 
@@ -1900,7 +1952,7 @@ h1, h2, h3, h4, h5, h6 {
         We took the opposite approach. 2–4 vetted installers per city, picked for HPCN certification, cold-climate performance, and customer reviews. You see their quotes and pick who you trust. No auctions, no bundles, no data sales. Independent of BC Hydro, but transparent about every official source we cite.
       </p>
       <p>
-        Today we serve 18 BC cities. In 2026 we&rsquo;ll be in more. In 2027 we&rsquo;ll expand to other provinces and states. Same model the whole way.
+        Today we serve 18 BC cities and 18 Ontario cities. We&rsquo;ll keep adding cities within both provinces, then expand to more provinces and eventually the US. Same model the whole way.
       </p>
       <div class="about-meta">
         <div class="about-meta-item"><strong>Founded</strong>2026</div>
@@ -2180,7 +2232,27 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
   var $ = function (id) { return document.getElementById(id); };
   var city, heating, income, stacked, newsletterOptIn = true;
 
+  var provinceSelect = $('hpr-province');
+  if (provinceSelect) {
+    provinceSelect.addEventListener('change', function () {
+      var bcFields = $('hpr-bc-fields'), onFields = $('hpr-on-fields');
+      bcFields.style.display = provinceSelect.value === 'bc' ? 'flex' : 'none';
+      onFields.style.display = provinceSelect.value === 'on' ? 'flex' : 'none';
+    });
+  }
+
   $('hpr-go').addEventListener('click', function () {
+    var province = $('hpr-province').value;
+    if (!province) { $('hpr-err').style.display = 'block'; return; }
+
+    if (province === 'on') {
+      var onCity = $('hpr-on-city').value;
+      if (!onCity) { $('hpr-err').style.display = 'block'; return; }
+      $('hpr-err').style.display = 'none';
+      window.location.href = '/ca/on/' + onCity;
+      return;
+    }
+
     city = $('hpr-city').value;
     heating = $('hpr-heating').value;
     income = $('hpr-income').value;

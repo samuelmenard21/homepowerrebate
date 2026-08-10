@@ -4,8 +4,10 @@ Scrape REAL heat pump (HVAC) and solar installers from Google Places API (NEW v1
 Writes directly to the HomePowerRebate-Installers Google Sheet.
 
 Usage:
-  python3 scrape_google_places_installers.py YOUR_API_KEY heat-pump
-  python3 scrape_google_places_installers.py YOUR_API_KEY solar --debug
+  python3 scrape_google_places_installers.py heat-pump --province=on
+      (no key on the command line — you'll be prompted, input hidden, nothing saved)
+  python3 scrape_google_places_installers.py YOUR_API_KEY heat-pump --province=on --debug
+      (key still accepted as an explicit first argument if you prefer)
 
 Notes:
   - Uses the NEW Places API (v1) searchText endpoint.
@@ -16,6 +18,7 @@ Notes:
 
 import sys
 import time
+import getpass
 import requests
 from pathlib import Path
 
@@ -515,15 +518,35 @@ def write_to_google_sheet(installers, installer_type, province="bc"):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: python3 scrape_google_places_installers.py API_KEY [heat-pump|solar] [--province=bc|on] [--debug]")
+    positional = [a for a in sys.argv[1:] if not a.startswith("--")]
+    flags = [a for a in sys.argv[1:] if a.startswith("--")]
+
+    if len(positional) < 1:
+        print("Usage: python3 scrape_google_places_installers.py [heat-pump|solar] [--province=bc|on] [--debug]")
+        print("       (omit the API key entirely — you'll be prompted for it, input hidden)")
         sys.exit(1)
 
-    api_key = sys.argv[1]
-    installer_type = sys.argv[2].lower()
-    debug = "--debug" in sys.argv
+    # Accept the key as an explicit first positional arg for backward
+    # compatibility, but the normal path now is: no key on the command line
+    # at all, just the installer type — then prompt interactively so the key
+    # never has to survive a copy-paste, an export, or a shell history file.
+    if positional[0].lower() in ("heat-pump", "solar"):
+        installer_type = positional[0].lower()
+        api_key = getpass.getpass("Google Places API key (input hidden, not saved anywhere): ").strip()
+    elif len(positional) >= 2:
+        api_key = positional[0]
+        installer_type = positional[1].lower()
+    else:
+        print("Usage: python3 scrape_google_places_installers.py [heat-pump|solar] [--province=bc|on] [--debug]")
+        sys.exit(1)
+
+    if not api_key:
+        print("No API key entered — aborting.")
+        sys.exit(1)
+
+    debug = "--debug" in flags
     province = "bc"
-    for arg in sys.argv[3:]:
+    for arg in flags:
         if arg.startswith("--province="):
             province = arg.split("=", 1)[1].lower()
     if province not in PROVINCES:

@@ -54,8 +54,20 @@ CITY_SLUGS = {
     "vancouver": "vancouver", "vernon": "vernon", "victoria": "victoria",
 }
 
+ON_CITY_SLUGS = {
+    "toronto": "toronto", "ottawa": "ottawa", "mississauga": "mississauga",
+    "brampton": "brampton", "hamilton": "hamilton", "markham": "markham",
+    "vaughan": "vaughan", "richmond hill": "richmond-hill", "barrie": "barrie",
+    "london": "london", "kitchener": "kitchener", "windsor": "windsor",
+    "oakville": "oakville", "oshawa": "oshawa", "whitby": "whitby",
+    "burlington": "burlington", "cambridge": "cambridge",
+    "greater sudbury": "greater-sudbury",
+}
+
 # What each service type actually unlocks. This is the part a Maps listing
-# can't show — it's why the page exists at all.
+# can't show — it's why the page exists at all. Split by province since the
+# programs, amounts, and structure are genuinely different (BC: CleanBC,
+# income-tiered; Ontario: HRSP, fuel-tiered) — not a find-and-replace.
 REBATE_CONTEXT = {
     "heat-pump": {
         "label": "Heat Pump",
@@ -74,6 +86,55 @@ REBATE_CONTEXT = {
         ],
         "requires_cert": False,
         "guide": ("/guides/solar-battery-decision-guide/", "Solar vs Battery Decision Guide"),
+    },
+}
+
+ON_REBATE_CONTEXT = {
+    "heat-pump": {
+        "label": "Heat Pump",
+        "programs": [
+            ("HRSP Heat Pump Rebate", "$2,000–$12,000 depending on current fuel and system type", "/blog/ontario-heat-pump-rebate-tiers-explained"),
+            ("Avoiding rejection", "Pre-installation approval + qualified-products-list check needed first", "/blog/ontario-heat-pump-rebate-rejection-mistakes"),
+        ],
+        "requires_cert": True,
+        "guide": ("/blog/ontario-home-renovation-savings-program-explained", "HRSP Explained"),
+    },
+    "solar": {
+        "label": "Solar",
+        "programs": [
+            ("HRSP Solar Rebate", "Up to $5,000 ($1,000/kW, capped at 50% of cost)", "/blog/ontario-solar-rebate-vs-net-metering"),
+            ("Battery bundle", "Up to $10,000 combined when paired with battery storage", "/blog/ontario-home-energy-rebates-2026-listicle"),
+        ],
+        "requires_cert": False,
+        "guide": ("/blog/ontario-solar-rebate-vs-net-metering", "Solar vs. Net Metering"),
+    },
+}
+
+# Per-province config the rest of the script keys off of. BC's values match
+# exactly what was hardcoded before (same URLs, same paths) — adding Ontario
+# doesn't change a single BC output path or existing page.
+PROVINCE_CONFIG = {
+    "bc": {
+        "region_abbrev": "BC",
+        "region_full": "British Columbia",
+        "city_slugs": CITY_SLUGS,
+        "rebate_context": REBATE_CONTEXT,
+        "hub_prefix": "/ca/bc",
+        "profile_prefix": "/installers/profiles",  # unchanged — no /bc/ segment
+        "heat_pump_csv": "heat-pump-installers-real.csv",
+        "solar_csv": "solar-installers-real.csv",
+        "json_dir": "json",
+    },
+    "on": {
+        "region_abbrev": "ON",
+        "region_full": "Ontario",
+        "city_slugs": ON_CITY_SLUGS,
+        "rebate_context": ON_REBATE_CONTEXT,
+        "hub_prefix": "/ca/on",
+        "profile_prefix": "/installers/profiles/on",
+        "heat_pump_csv": "on-heat-pump-installers-real.csv",
+        "solar_csv": "on-solar-installers-real.csv",
+        "json_dir": "json/on",
     },
 }
 
@@ -163,8 +224,8 @@ def render_program_row(name, detail, link):
         </a>"""
 
 
-def render_kind_section(kind, inst, city_slug, rank_info):
-    ctx = REBATE_CONTEXT[kind]
+def render_kind_section(kind, inst, city_slug, rank_info, cfg):
+    ctx = cfg["rebate_context"][kind]
     programs_html = "".join(render_program_row(n, d, SITE_URL + l) for n, d, l in ctx["programs"])
     rank, total = rank_info.get((inst["Business Name"].strip().lower(), inst["City"].strip().lower(), kind), (None, None))
     rank_html = ""
@@ -184,11 +245,11 @@ def render_kind_section(kind, inst, city_slug, rank_info):
       </section>"""
 
 
-def render_vetting_card(inst):
+def render_vetting_card(inst, cfg):
     """Honest about what's actually known. A blanket 'Verified' badge on
     every row would undercut the one message these pages are built to carry —
     that vetting is specific, not decorative."""
-    bch = (inst.get("BCH Approved") or "").strip().lower() == "yes"  # optional future column
+    bch = (inst.get("BCH Approved") or "").strip().lower() == "yes"  # optional future column, BC only
 
     items = []
     items.append(("Listed on Google Business Profile", True,
@@ -198,7 +259,7 @@ def render_vetting_card(inst):
         items.append(("HomePowerRebate rating threshold", recommended,
                        "Meets our 4★ / 10+ review bar for recommendation" if recommended
                        else "Below our recommendation threshold — check reviews directly"))
-    if bch:
+    if bch and cfg["region_abbrev"] == "BC":
         items.append(("BC Hydro approved program", True, "Listed in a BC Hydro approved-contractor program"))
 
     rows = "".join(f"""
@@ -228,7 +289,7 @@ def render_video_section(inst):
       </section>"""
 
 
-def render_intro(inst, kinds, rank_info, city):
+def render_intro(inst, kinds, rank_info, city, cfg):
     """The one piece of prose Google can't find on any other page. Everything
     else on the page (program cards, vetting card labels) is necessarily
     similar across same-kind listings — that's fine, the same way every Yelp
@@ -240,7 +301,7 @@ def render_intro(inst, kinds, rank_info, city):
     """
     rating = float(inst.get("Google Rating") or 0)
     reviews = int(inst.get("Review Count") or 0)
-    kind_label = " and ".join(REBATE_CONTEXT[k]["label"].lower() for k in kinds)
+    kind_label = " and ".join(cfg["rebate_context"][k]["label"].lower() for k in kinds)
 
     best_rank, best_total = None, None
     for k in kinds:
@@ -263,7 +324,7 @@ def render_intro(inst, kinds, rank_info, city):
     return f"{inst['Business Name'].strip()} is {standing}, {rating_clause} from {reviews} review{'s' if reviews != 1 else ''}."
 
 
-def render_nearby(inst, all_installers, city, city_slug, exclude_slug):
+def render_nearby(inst, all_installers, city, city_slug, exclude_slug, cfg):
     """Same-city cross-links. Helps a homeowner comparing options, and gives
     crawlers a path into every page instead of each one being an island only
     reachable from the city index — both a usability and an indexing fix."""
@@ -276,7 +337,7 @@ def render_nearby(inst, all_installers, city, city_slug, exclude_slug):
         return ""
     same_city = sorted(same_city, key=lambda r: float(r.get("Google Rating") or 0), reverse=True)[:4]
     items = "".join(
-        f'<a href="/installers/profiles/{city_slug}/{slugify(i["Business Name"])}/" class="ip-nearby-item">'
+        f'<a href="{cfg["profile_prefix"]}/{city_slug}/{slugify(i["Business Name"])}/" class="ip-nearby-item">'
         f'<span>{escape(i["Business Name"].strip())}</span>'
         f'<span class="ip-nearby-rating">{escape(i.get("Google Rating",""))}★</span></a>'
         for i in same_city
@@ -288,7 +349,7 @@ def render_nearby(inst, all_installers, city, city_slug, exclude_slug):
       </section>"""
 
 
-def render_page(inst, rank_info, city_slug, all_installers):
+def render_page(inst, rank_info, city_slug, all_installers, cfg):
     name = inst["Business Name"].strip()
     city = inst["City"].strip()
     kinds = sorted(inst["_kinds"])
@@ -302,19 +363,20 @@ def render_page(inst, rank_info, city_slug, all_installers):
     address = (inst.get("Address") or "").strip()
     image_url = (inst.get("Image URL") or "").strip()
     slug = slugify(name)
-    page_url = f"{SITE_URL}/installers/profiles/{city_slug}/{slug}/"
+    region = cfg["region_abbrev"]
+    page_url = f"{SITE_URL}{cfg['profile_prefix']}/{city_slug}/{slug}/"
 
-    kind_labels = " & ".join(REBATE_CONTEXT[k]["label"] for k in kinds)
-    kind_sections = "".join(render_kind_section(k, inst, city_slug, rank_info) for k in kinds)
+    kind_labels = " & ".join(cfg["rebate_context"][k]["label"] for k in kinds)
+    kind_sections = "".join(render_kind_section(k, inst, city_slug, rank_info, cfg) for k in kinds)
     video_section = render_video_section(inst)
-    intro = render_intro(inst, kinds, rank_info, city)
-    nearby = render_nearby(inst, all_installers, city, city_slug, slug)
+    intro = render_intro(inst, kinds, rank_info, city, cfg)
+    nearby = render_nearby(inst, all_installers, city, city_slug, slug, cfg)
 
     local_business = {
         "@type": "LocalBusiness",
         "name": name,
         "image": image_url or None,
-        "address": {"@type": "PostalAddress", "streetAddress": address, "addressRegion": "BC", "addressCountry": "CA"},
+        "address": {"@type": "PostalAddress", "streetAddress": address, "addressRegion": region, "addressCountry": "CA"},
         "telephone": phone or None,
         "url": website or None,
         "aggregateRating": ({"@type": "AggregateRating", "ratingValue": rating, "reviewCount": reviews, "bestRating": "5"} if rating else None),
@@ -327,7 +389,7 @@ def render_page(inst, rank_info, city_slug, all_installers):
         "@type": "BreadcrumbList",
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "HomePowerRebate", "item": SITE_URL + "/"},
-            {"@type": "ListItem", "position": 2, "name": city, "item": f"{SITE_URL}/ca/bc/{city_slug}/"},
+            {"@type": "ListItem", "position": 2, "name": city, "item": f"{SITE_URL}{cfg['hub_prefix']}/{city_slug}/"},
             {"@type": "ListItem", "position": 3, "name": name, "item": page_url},
         ],
     }
@@ -338,7 +400,7 @@ def render_page(inst, rank_info, city_slug, all_installers):
     phone_btn = f'<a href="tel:{fmt_phone_href(phone)}" class="ip-btn ip-btn-outline">Call {escape(phone)}</a>' if phone else ""
     maps_link = f'<a href="{maps_url}" target="_blank" rel="noopener" class="ip-maps-link">View on Google Maps</a>' if maps_url else ""
     photo_html = f'<img src="{escape(image_url)}" alt="{escape(name)}" class="ip-photo" loading="lazy" width="760" height="380">' if image_url else ""
-    meta_desc = f"{escape(name)} in {escape(city)}, BC — {escape(rating)}★ ({escape(reviews)} reviews). {escape(kind_labels)} installer. See which BC rebates their work qualifies for and get a quote."
+    meta_desc = f"{escape(name)} in {escape(city)}, {region} — {escape(rating)}★ ({escape(reviews)} reviews). {escape(kind_labels)} installer. See which {region} rebates their work qualifies for and get a quote."
     # Google truncates titles around ~60 characters. Kind label + brand suffix
     # pushed the median well past that, so the title carries only name + city
     # (the two things a searcher actually needs) and everything else — rating,
@@ -346,7 +408,7 @@ def render_page(inst, rank_info, city_slug, all_installers):
     # much larger budget. Long business names will still run past 60 for the
     # title alone; that's unavoidable without truncating the legal name, and
     # is normal for any directory site with real-world business names.
-    page_title = f"{escape(name)} — {escape(city)}, BC | HomePowerRebate"
+    page_title = f"{escape(name)} — {escape(city)}, {region} | HomePowerRebate"
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -358,12 +420,12 @@ def render_page(inst, rank_info, city_slug, all_installers):
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="{page_url}">
 <meta property="og:type" content="business.business">
-<meta property="og:title" content="{escape(name)} — {escape(city)}, BC">
+<meta property="og:title" content="{escape(name)} — {escape(city)}, {region}">
 <meta property="og:description" content="{meta_desc}">
 <meta property="og:url" content="{page_url}">
 {f'<meta property="og:image" content="{escape(image_url)}">' if image_url else ""}
 <meta name="twitter:card" content="{"summary_large_image" if image_url else "summary"}">
-<meta name="twitter:title" content="{escape(name)} — {escape(city)}, BC">
+<meta name="twitter:title" content="{escape(name)} — {escape(city)}, {region}">
 <meta name="twitter:description" content="{meta_desc}">
 {f'<meta name="twitter:image" content="{escape(image_url)}">' if image_url else ""}
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -431,12 +493,12 @@ a {{ color:var(--teal-deep); }}
 </head>
 <body>
 <div class="ip-wrap">
-  <p class="ip-breadcrumb"><a href="/">HomePowerRebate</a> / <a href="/ca/bc/{city_slug}/">{escape(city)}</a> / {escape(name)}</p>
+  <p class="ip-breadcrumb"><a href="/">HomePowerRebate</a> / <a href="{cfg['hub_prefix']}/{city_slug}/">{escape(city)}</a> / {escape(name)}</p>
 
   <div class="ip-hero">
     <div>
       <h1>{escape(name)}</h1>
-      <p class="ip-hero-meta">{escape(kind_labels)} installer &middot; {escape(city)}, BC</p>
+      <p class="ip-hero-meta">{escape(kind_labels)} installer &middot; {escape(city)}, {region}</p>
     </div>
     {f'<div class="ip-rating"><div class="ip-rating-num">{escape(rating)}★</div><div class="ip-rating-count">{escape(reviews)} reviews</div></div>' if rating else ''}
   </div>
@@ -452,13 +514,13 @@ a {{ color:var(--teal-deep); }}
   </div>
 
   {kind_sections}
-  {render_vetting_card(inst)}
+  {render_vetting_card(inst, cfg)}
   {video_section}
   {nearby}
 
   <section class="ip-quote">
     <h2>Get a Quote From {escape(name)}</h2>
-    <p>We'll pass your details along and follow up with your BC rebate breakdown.</p>
+    <p>We'll pass your details along and follow up with your {region} rebate breakdown.</p>
     <form class="ip-quote-form" id="ip-quote-form">
       <input type="text" id="ip-name" placeholder="First name" required>
       <input type="email" id="ip-email" placeholder="your@email.com" required>
@@ -469,7 +531,7 @@ a {{ color:var(--teal-deep); }}
     <p class="ip-quote-done" id="ip-quote-done">✓ Sent — {escape(name)} will be in touch.</p>
   </section>
 
-  <a href="/ca/bc/{city_slug}/" class="ip-city-link">See all {escape(city)} rebates &rarr;</a>
+  <a href="{cfg['hub_prefix']}/{city_slug}/" class="ip-city-link">See all {escape(city)} rebates &rarr;</a>
 
   <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked {escape(inst.get("Last Updated",""))}. Spot an error? <a href="mailto:samuelmenard@gmail.com?subject=Correction: {escape(name)}">Let us know</a>.</p>
 </div>
@@ -505,33 +567,36 @@ a {{ color:var(--teal-deep); }}
 """
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--dry-run", action="store_true")
-    args = ap.parse_args()
+def run_province(prov_key, args, emails):
+    cfg = PROVINCE_CONFIG[prov_key]
+    city_slugs = cfg["city_slugs"]
 
-    rows = load_rows("heat-pump-installers-real.csv", "heat-pump") + load_rows("solar-installers-real.csv", "solar")
+    rows = load_rows(cfg["heat_pump_csv"], "heat-pump") + load_rows(cfg["solar_csv"], "solar")
+    if not rows:
+        print(f"\n[{prov_key}] no CSV data found ({cfg['heat_pump_csv']} / {cfg['solar_csv']} missing or empty) — skipping")
+        return 0, 0, []
+
     installers = merge_and_dedupe(rows)
     rank_info = rank_within_city(installers)
-    emails = load_emails()
 
     written, skipped = 0, 0
     url_rows = []
-    # City-scoped paths (/installers/profiles/{city}/{business}/) rather than
-    # a flat /profiles/{business}/ — a handful of businesses share a name
-    # across branches in different cities (e.g. "Nation Furnace Heating" in
-    # 4 cities), which under a flat structure silently overwrote all but one.
-    # Scoping by city also reads better for local SEO than a bare slug.
+    out_dir = OUT_DIR if prov_key == "bc" else OUT_DIR / "on"
+    # City-scoped paths (/installers/profiles/{city}/{business}/, or
+    # /installers/profiles/on/{city}/{business}/ for Ontario) rather than a
+    # flat /profiles/{business}/ — a handful of businesses share a name across
+    # branches in different cities, which under a flat structure silently
+    # overwrote all but one. Scoping by city also reads better for local SEO.
     for inst in installers:
-        city_slug = CITY_SLUGS.get(normalize_city(inst["City"]))
+        city_slug = city_slugs.get(normalize_city(inst["City"]))
         if not city_slug:
             skipped += 1
             print(f"  SKIP (unknown city): {inst['Business Name']} / {inst['City']}")
             continue
 
         slug = slugify(inst["Business Name"])
-        page_dir = OUT_DIR / city_slug / slug
-        html = render_page(inst, rank_info, city_slug, installers)
+        page_dir = out_dir / city_slug / slug
+        html = render_page(inst, rank_info, city_slug, installers, cfg)
 
         if not args.dry_run:
             page_dir.mkdir(parents=True, exist_ok=True)
@@ -540,29 +605,25 @@ def main():
 
         email = emails.get((inst["Business Name"].strip().lower(), inst["City"].strip().lower()), "")
         url_rows.append({
+            "Province": cfg["region_abbrev"],
             "Business Name": inst["Business Name"].strip(),
             "City": inst["City"].strip(),
             "Email": email,
             "Phone": inst.get("Phone", ""),
             "Google Rating": inst.get("Google Rating", ""),
-            "Profile URL": f"{SITE_URL}/installers/profiles/{city_slug}/{slug}/",
+            "Profile URL": f"{SITE_URL}{cfg['profile_prefix']}/{city_slug}/{slug}/",
             "Last Updated": inst.get("Last Updated", ""),
         })
 
     if not args.dry_run and url_rows:
-        with (INSTALLERS_DIR / "installer-profile-urls.csv").open("w", newline="") as fh:
-            w = csv.DictWriter(fh, fieldnames=list(url_rows[0].keys()))
-            w.writeheader()
-            w.writerows(url_rows)
-
         # Generate per-city JSON files for the carousel to consume. Each city
         # gets its own file with all installers in that city, sorted by rating.
-        json_dir = INSTALLERS_DIR / "json"
-        json_dir.mkdir(exist_ok=True)
+        json_dir = INSTALLERS_DIR / cfg["json_dir"]
+        json_dir.mkdir(parents=True, exist_ok=True)
 
         by_city = defaultdict(list)
         for inst in installers:
-            city_slug = CITY_SLUGS.get(normalize_city(inst["City"]))
+            city_slug = city_slugs.get(normalize_city(inst["City"]))
             if not city_slug:
                 continue
             slug = slugify(inst["Business Name"])
@@ -574,25 +635,53 @@ def main():
                 "phone": inst.get("Phone", ""),
                 "website": inst.get("Website", ""),
                 "image_url": inst.get("Image URL", ""),
-                "specialty": " & ".join(REBATE_CONTEXT[k]["label"] for k in sorted(inst["_kinds"])),
+                "specialty": " & ".join(cfg["rebate_context"][k]["label"] for k in sorted(inst["_kinds"])),
                 "description": f"HPCN-certified. {int(inst.get('Review Count') or 0)} reviews on Google.",
-                "profileUrl": f"{SITE_URL}/installers/profiles/{city_slug}/{slug}/",
+                "profileUrl": f"{SITE_URL}{cfg['profile_prefix']}/{city_slug}/{slug}/",
                 "recommended": False
             })
 
         for city_slug, installers_in_city in by_city.items():
-            # Sort by rating desc, then reviews desc
             installers_in_city.sort(key=lambda x: (x["rating"], x["reviews"]), reverse=True)
             json_file = json_dir / f"{city_slug}.json"
             json_file.write_text(json.dumps(installers_in_city, indent=2))
 
-    print(f"\n{written} profile page(s) {'would be ' if args.dry_run else ''}written to {OUT_DIR.relative_to(ROOT)}/")
+    print(f"[{prov_key}] {written} profile page(s) {'would be ' if args.dry_run else ''}written to {out_dir.relative_to(ROOT)}/")
     if skipped:
-        print(f"{skipped} skipped (city not in CITY_SLUGS map)")
-    with_email = sum(1 for r in url_rows if r["Email"])
-    print(f"{with_email} of {written} have a recovered email for outreach")
+        print(f"[{prov_key}] {skipped} skipped (city not in city_slugs map)")
+
+    return written, skipped, url_rows
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--province", choices=["bc", "on", "all"], default="all")
+    args = ap.parse_args()
+
+    emails = load_emails()
+    provinces = ["bc", "on"] if args.province == "all" else [args.province]
+
+    total_written, total_skipped, all_url_rows = 0, 0, []
+    for prov_key in provinces:
+        w, s, rows = run_province(prov_key, args, emails)
+        total_written += w
+        total_skipped += s
+        all_url_rows.extend(rows)
+
+    if not args.dry_run and all_url_rows:
+        with (INSTALLERS_DIR / "installer-profile-urls.csv").open("w", newline="") as fh:
+            w = csv.DictWriter(fh, fieldnames=list(all_url_rows[0].keys()))
+            w.writeheader()
+            w.writerows(all_url_rows)
+
+    print(f"\n{total_written} profile page(s) total {'would be ' if args.dry_run else ''}written")
+    if total_skipped:
+        print(f"{total_skipped} total skipped (city not in city_slugs map)")
+    with_email = sum(1 for r in all_url_rows if r["Email"])
+    print(f"{with_email} of {total_written} have a recovered email for outreach")
     if not args.dry_run:
-        print(f"Mail-merge source written: installers/installer-profile-urls.csv (business, city, email, profile URL)")
+        print(f"Mail-merge source written: installers/installer-profile-urls.csv (province, business, city, email, profile URL)")
 
 
 if __name__ == "__main__":

@@ -31,6 +31,20 @@ JOBS = [
         "specialty": "Solar Installation",
         "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
     },
+    # Ontario — separate CSVs (scrape_google_places_installers.py --province=on)
+    # and a province-prefixed output dir, so these never collide with BC's files.
+    {
+        "csv": os.path.join(ROOT, "installers/on-heat-pump-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/on"),
+        "specialty": "Heat Pump & HVAC Installation",
+        "description_tpl": "Local heating & cooling pro serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    {
+        "csv": os.path.join(ROOT, "installers/on-solar-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/on/solar"),
+        "specialty": "Solar Installation",
+        "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
 ]
 
 

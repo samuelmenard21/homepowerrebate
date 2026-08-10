@@ -99,6 +99,32 @@ BC_CITIES = {
     "Victoria": {"lat": 48.4261, "lng": -123.3597},
 }
 
+ONTARIO_CITIES = {
+    "Toronto": {"lat": 43.6532, "lng": -79.3832},
+    "Ottawa": {"lat": 45.4215, "lng": -75.6972},
+    "Mississauga": {"lat": 43.5890, "lng": -79.6441},
+    "Brampton": {"lat": 43.7315, "lng": -79.7624},
+    "Hamilton": {"lat": 43.2557, "lng": -79.8711},
+    "Markham": {"lat": 43.8561, "lng": -79.3370},
+    "Vaughan": {"lat": 43.8361, "lng": -79.4985},
+    "Richmond Hill": {"lat": 43.8828, "lng": -79.4403},
+    "Barrie": {"lat": 44.3894, "lng": -79.6903},
+    "London": {"lat": 42.9849, "lng": -81.2453},
+    "Kitchener": {"lat": 43.4516, "lng": -80.4925},
+    "Windsor": {"lat": 42.3149, "lng": -83.0364},
+    "Oakville": {"lat": 43.4675, "lng": -79.6877},
+    "Oshawa": {"lat": 43.8971, "lng": -78.8658},
+    "Whitby": {"lat": 43.8975, "lng": -78.9428},
+    "Burlington": {"lat": 43.3255, "lng": -79.7990},
+    "Cambridge": {"lat": 43.3616, "lng": -80.3144},
+    "Greater Sudbury": {"lat": 46.4917, "lng": -80.9930},
+}
+
+PROVINCES = {
+    "bc": {"cities": BC_CITIES, "abbrev": "BC", "csv_prefix": ""},
+    "on": {"cities": ONTARIO_CITIES, "abbrev": "ON", "csv_prefix": "on-"},
+}
+
 
 def search_text(api_key, query, lat, lng, debug=False):
     """One searchText call. Returns list of place dicts (NEW API shape)."""
@@ -139,13 +165,13 @@ def display_name_text(place):
     return str(dn or "")
 
 
-def city_from_address(address):
+def city_from_address(address, cities):
     """
-    Return the BC_CITIES key that appears in this address, or None.
+    Return the cities-dict key that appears in this address, or None.
     Normalizes periods so 'Fort St John' matches 'Fort St. John'.
     """
     norm = address.lower().replace(".", "")
-    for city in BC_CITIES:
+    for city in cities:
         if city.lower().replace(".", "") in norm:
             return city
     return None
@@ -204,8 +230,12 @@ def resolve_photo_url(api_key, photo_name, debug=False):
         return ""
 
 
-def scrape_installers(api_key, installer_type, debug=False):
+def scrape_installers(api_key, installer_type, province="bc", debug=False):
     all_installers = []
+
+    prov = PROVINCES[province]
+    cities = prov["cities"]
+    prov_abbrev = prov["abbrev"]
 
     if "heat" in installer_type or "pump" in installer_type:
         queries = ["HVAC contractor", "heating contractor", "furnace repair"]
@@ -215,7 +245,7 @@ def scrape_installers(api_key, installer_type, debug=False):
         print(f"Unknown type: {installer_type}")
         return []
 
-    print(f"\n🔍 Searching {installer_type} installers across {len(BC_CITIES)} BC cities")
+    print(f"\n🔍 Searching {installer_type} installers across {len(cities)} {prov_abbrev} cities")
     print(f"   Queries: {queries}")
     print(f"   Criteria: {MIN_RATING}+ stars, {MIN_REVIEWS}+ reviews, max {MAX_PER_CITY} per city")
     print(f"   Filters: real installer types only, assigned to actual city, no cross-city dupes\n")
@@ -225,12 +255,12 @@ def scrape_installers(api_key, installer_type, debug=False):
     n_rejected_type = 0
     n_rejected_offlist = 0
 
-    for city_name, coords in BC_CITIES.items():
+    for city_name, coords in cities.items():
         print(f"  searching near {city_name}...", end=" ", flush=True)
         new_here = 0
 
         for query in queries:
-            full_query = f"{query} in {city_name} BC"
+            full_query = f"{query} in {city_name} {prov_abbrev}"
             time.sleep(RATE_LIMIT_DELAY)
             places = search_text(api_key, full_query, coords["lat"], coords["lng"], debug=debug)
 
@@ -256,9 +286,9 @@ def scrape_installers(api_key, installer_type, debug=False):
 
                 # Assign to the ACTUAL city from the address (not the search city).
                 address = p.get("formattedAddress", "")
-                actual_city = city_from_address(address)
+                actual_city = city_from_address(address, cities)
                 if actual_city is None:
-                    # Business is outside our 18 target cities — skip it.
+                    # Business is outside our target cities — skip it.
                     n_rejected_offlist += 1
                     if debug:
                         print(f"\n      ✗ off-list city: {name[:40]} ({address[:40]})", end="")
@@ -294,7 +324,7 @@ def scrape_installers(api_key, installer_type, debug=False):
     print(f"\n📋 Selecting top {MAX_PER_CITY} per city "
           f"({n_rejected_type} wrong-type + {n_rejected_offlist} off-list rejected)\n")
 
-    for city_name in BC_CITIES:
+    for city_name in cities:
         ranked = sorted(
             by_city.get(city_name, []),
             key=lambda x: (-x["rating"], -x["review_count"]),
@@ -319,8 +349,9 @@ def scrape_installers(api_key, installer_type, debug=False):
     return all_installers
 
 
-def save_to_csv(installers, installer_type):
-    csv_path = Path(f"installers/{installer_type}-installers-real.csv")
+def save_to_csv(installers, installer_type, province="bc"):
+    prefix = PROVINCES[province]["csv_prefix"]
+    csv_path = Path(f"installers/{prefix}{installer_type}-installers-real.csv")
     csv_path.parent.mkdir(parents=True, exist_ok=True)
 
     def esc(v):
@@ -351,9 +382,12 @@ LOG_HEADER = ["Date Added", "Service", "City", "Business Name", "Phone",
               "Website", "Rating", "Reviews", "Google Maps URL"]
 
 
-def tab_name_for(installer_type):
-    """Each service gets its own tab so runs don't overwrite each other."""
-    return "Solar" if "solar" in installer_type else "Heat Pumps"
+def tab_name_for(installer_type, province="bc"):
+    """Each service+province gets its own tab so runs don't overwrite each other.
+    BC keeps its original unsuffixed tab names (no change to existing data);
+    Ontario gets its own tabs so a run here can never clear BC's real data."""
+    base = "Solar" if "solar" in installer_type else "Heat Pumps"
+    return base if province == "bc" else f"{base} - {PROVINCES[province]['abbrev']}"
 
 
 def installer_key(inst):
@@ -421,7 +455,7 @@ def remove_stale_sheet1(spreadsheet):
         print(f"⚠️  Could not remove Sheet1: {e}")
 
 
-def write_to_google_sheet(installers, installer_type):
+def write_to_google_sheet(installers, installer_type, province="bc"):
     if not GSPREAD_AVAILABLE:
         print("⚠️  gspread not installed — skipping Sheet write (CSV still saved).")
         print("   pip install gspread google-auth-oauthlib")
@@ -446,8 +480,8 @@ def write_to_google_sheet(installers, installer_type):
         client = gspread.authorize(creds)
         spreadsheet = client.open_by_key(SHEET_ID)
 
-        # Use a dedicated tab per service (create it if missing).
-        tab = tab_name_for(installer_type)
+        # Use a dedicated tab per service+province (create it if missing).
+        tab = tab_name_for(installer_type, province)
         try:
             ws = spreadsheet.worksheet(tab)
             ws.clear()
@@ -482,19 +516,26 @@ def write_to_google_sheet(installers, installer_type):
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("Usage: python3 scrape_google_places_installers.py API_KEY [heat-pump|solar] [--debug]")
+        print("Usage: python3 scrape_google_places_installers.py API_KEY [heat-pump|solar] [--province=bc|on] [--debug]")
         sys.exit(1)
 
     api_key = sys.argv[1]
     installer_type = sys.argv[2].lower()
     debug = "--debug" in sys.argv
+    province = "bc"
+    for arg in sys.argv[3:]:
+        if arg.startswith("--province="):
+            province = arg.split("=", 1)[1].lower()
+    if province not in PROVINCES:
+        print(f"Unknown province '{province}'. Choices: {list(PROVINCES)}")
+        sys.exit(1)
 
-    installers = scrape_installers(api_key, installer_type, debug=debug)
+    installers = scrape_installers(api_key, installer_type, province=province, debug=debug)
 
     if not installers:
         print("\n❌ No qualified installers found. Re-run with --debug to see raw results.")
         sys.exit(1)
 
     print(f"\n📊 Total qualified: {len(installers)} installers")
-    save_to_csv(installers, installer_type)
-    write_to_google_sheet(installers, installer_type)
+    save_to_csv(installers, installer_type, province=province)
+    write_to_google_sheet(installers, installer_type, province=province)

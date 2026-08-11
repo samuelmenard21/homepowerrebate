@@ -1510,7 +1510,7 @@ h1, h2, h3, h4, h5, h6 {
     <div class="section-header center">
       <div class="section-eyebrow">Everything in one place</div>
       <h2 class="section-h2">Each city page covers all your options.</h2>
-      <p class="section-lede">Solar + battery, heat pump (up to $16K income-qualified), water heater, smart thermostat—all on one page with tabs. See local payback numbers, interactive calculators, and get matched with vetted installers so you can choose.</p>
+      <p class="section-lede">Solar + battery, heat pump, water heater, smart thermostat—all on one page with tabs, and get matched with vetted installers so you can choose. The table below shows BC solar payback specifics — Ontario homes run on a different rebate formula (fuel-tiered, not income-tiered), so <a href="/ca/on" style="color:var(--teal); font-weight:600;">see the Ontario city list here</a> for those numbers instead.</p>
     </div>
 
     <!-- RETROFIT TABS PREVIEW -->
@@ -1957,7 +1957,7 @@ h1, h2, h3, h4, h5, h6 {
       <div class="about-meta">
         <div class="about-meta-item"><strong>Founded</strong>2026</div>
         <div class="about-meta-item"><strong>Headquartered</strong>British Columbia, Canada</div>
-        <div class="about-meta-item"><strong>Contact</strong><a href="mailto:hello@homepowerrebate.com" style="color:var(--ink-soft); text-decoration:underline;">hello@homepowerrebate.com</a></div>
+        <div class="about-meta-item"><strong>Contact</strong><a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==" data-showaddr="1" style="color:var(--ink-soft); text-decoration:underline;">Contact us</a></div>
       </div>
     </div>
   </div>
@@ -2105,7 +2105,7 @@ h1, h2, h3, h4, h5, h6 {
           <li><a href="/partners/">Partners</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>
-          <li><a href="mailto:hello@homepowerrebate.com">Contact</a></li>
+          <li><a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -2165,7 +2165,7 @@ waitlistForm.addEventListener('submit', async (e) => {
     waitlistForm.style.display = 'none';
     waitlistThanks.style.display = 'block';
   } catch (err) {
-    waitlistError.textContent = 'Something went wrong. Please try again, or email hello@homepowerrebate.com.';
+    waitlistError.textContent = 'Something went wrong. Please try again, or email samuelmenard@gmail.com.';
     waitlistError.style.display = 'block';
   }
 });
@@ -2215,7 +2215,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
     }
   } catch (error) {
-    responseEl.innerHTML = '<strong style="color: #fff;">⚠ Something went wrong.</strong><p style="margin: 6px 0 0; font-size: 13px; color: rgba(250, 247, 242, 0.85);">Try again or email hello@homepowerrebate.com</p>';
+    responseEl.innerHTML = '<strong style="color: #fff;">⚠ Something went wrong.</strong><p style="margin: 6px 0 0; font-size: 13px; color: rgba(250, 247, 242, 0.85);">Try again or email samuelmenard@gmail.com</p>';
     responseEl.style.display = 'block';
     button.textContent = originalText;
     button.disabled = false;
@@ -2462,5 +2462,15 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 <!-- Form handlers with installer selection -->
 <script src="/form-handlers-with-installer-select.js"></script>
 
+<script>
+(function(){
+  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
+    var addr = atob(el.getAttribute('data-b64'));
+    var q = el.getAttribute('data-q');
+    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
+    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
+  });
+})();
+</script>
 </body>
 </html>

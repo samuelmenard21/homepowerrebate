@@ -148,7 +148,6 @@ a { color:var(--teal-deep); }
   <div class="ip-actions">
     <a href="https://www.604gosolar.com/?utm_source=Google&utm_medium=GMB" target="_blank" rel="noopener" class="ip-btn ip-btn-primary">Visit Website</a>
     <a href="tel:+16044676527" class="ip-btn ip-btn-outline">Call (604) 467-6527</a>
-    <a href="mailto:admin@604gosolar.com" class="ip-btn ip-btn-outline">📧 Email</a>
     <a href="https://maps.google.com/?cid=12671331233078456779&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" target="_blank" rel="noopener" class="ip-maps-link">View on Google Maps</a>
   </div>
 
@@ -184,31 +183,9 @@ a { color:var(--teal-deep); }
       </aside>
   
   
-      
-      <section class="ip-kind">
-        <div class="ip-kind-head">
-          <h2>Insulation & Building Envelope Rebates</h2>
-          <p class="ip-rank">Often the best first step before a heat pump retrofit</p>
-        </div>
-        <p style="font-size:15px; color:#5a5348; margin:12px 0;">Sealing and insulating your home first makes your heat pump smaller, cheaper, and more efficient. This installer can help you stack attic, wall, crawlspace, window, and door rebates through BetterHomes BC and CleanBC programs.</p>
-        <div class="ip-programs">
-        <a href="https://homepowerrebate.com/blog/insulation-rebates-bc-stack-federal-provincial" class="ip-program">
-          <div class="ip-program-name">Full Insulation Rebates Breakdown</div>
-          <div class="ip-program-detail">Attic ($900 cap), walls ($1,200 cap), floors, windows & doors</div>
-          <span class="ip-program-arrow">&rarr;</span>
-        </a>
-        <a href="https://betterhomesbc.ca/rebates/" class="ip-program" target="_blank" rel="noopener">
-          <div class="ip-program-name">Apply Through BetterHomes BC</div>
-          <div class="ip-program-detail">Your installer coordinates the full application</div>
-          <span class="ip-program-arrow">&rarr;</span>
-        </a>
-        </div>
-      </section>
-
-  
       <section class="ip-nearby">
         <h3>Other Langley Installers</h3>
-        <div class="ip-nearby-list"><a href="/installers/profiles/langley/willowbrook-plumbing-heating-hot-water-tank-installation-langley/" class="ip-nearby-item"><span>Willowbrook Plumbing, Heating &amp; Hot Water Tank Installation Langley</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/langley/langley-home-plumbing-heating/" class="ip-nearby-item"><span>Langley Home Plumbing &amp; Heating</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/langley/freestyle-plumbing-and-heating-ltd/" class="ip-nearby-item"><span>Freestyle Plumbing and Heating Ltd.</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/langley/cloudy-town-heating-cooling/" class="ip-nearby-item"><span>Cloudy Town Heating &amp; Cooling</span><span class="ip-nearby-rating">5★</span></a></div>
+        <div class="ip-nearby-list"><a href="/installers/profiles/langley/willowbrook-plumbing-heating-hot-water-tank-installation-langley/" class="ip-nearby-item"><span>Willowbrook Plumbing, Heating &amp; Hot Water Tank Installation Langley</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/langley/langley-home-plumbing-heating/" class="ip-nearby-item"><span>Langley Home Plumbing &amp; Heating</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/langley/freestyle-plumbing-and-heating-ltd/" class="ip-nearby-item"><span>Freestyle Plumbing and Heating Ltd.</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/langley/cloudy-town-heating-cooling/" class="ip-nearby-item"><span>Cloudy Town Heating &amp; Cooling</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/langley/nation-furnace-heating-air-conditioning-hvac-ltd/" class="ip-nearby-item"><span>Nation Furnace Heating &amp; Air Conditioning HVAC Ltd.</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/langley/vancan-electric-ltd/" class="ip-nearby-item"><span>VanCan Electric Ltd.</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/langley/miller-tech-electric-generators/" class="ip-nearby-item"><span>Miller-Tech Electric (Generators)</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/langley/canadian-energy-vancouver/" class="ip-nearby-item"><span>Canadian Energy Vancouver</span><span class="ip-nearby-rating">4.7★</span></a></div>
       </section>
 
   <section class="ip-quote">
@@ -226,7 +203,7 @@ a { color:var(--teal-deep); }
 
   <a href="/ca/bc/langley/" class="ip-city-link">See all Langley rebates &rarr;</a>
 
-  <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked 2026-07-21. Spot an error? <a href="mailto:samuelmenard@gmail.com?subject=Correction: 604-GO-SOLAR Inc.">Let us know</a>.</p>
+  <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked 2026-07-21. Spot an error? <a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==" data-q="subject=Correction: 604-GO-SOLAR Inc.">Let us know</a>.</p>
 </div>
 <script>
 (function() {
@@ -255,9 +232,13 @@ a { color:var(--teal-deep); }
   });
 })();
 </script>
-
-<!-- HomePowerRebate Form Handlers (with Installer Selection) -->
-<script src="/form-handlers-with-installer-select.js"></script>
-
+<script>
+  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
+    var addr = atob(el.getAttribute('data-b64'));
+    var q = el.getAttribute('data-q');
+    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
+    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
+  });
+</script>
 </body>
 </html>

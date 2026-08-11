@@ -277,7 +277,7 @@ strong { color: var(--ink); font-weight: 600; }
     </ul>
 
     <h2>Questions About Our Process?</h2>
-    <p>Email me: <a href="mailto:samuelmenard@gmail.com">samuelmenard@gmail.com</a></p>
+    <p>Email me: <a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==" data-showaddr="1">Contact us</a></p>
     <p>I'm building this for homeowners. Your feedback helps us stay honest.</p>
 
     <a class="cta" href="/retrofit-assessment">Calculate my rebate →</a>
@@ -285,5 +285,13 @@ strong { color: var(--ink); font-weight: 600; }
   </div>
 </article>
 
+<script>
+  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
+    var addr = atob(el.getAttribute('data-b64'));
+    var q = el.getAttribute('data-q');
+    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
+    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
+  });
+</script>
 </body>
 </html>

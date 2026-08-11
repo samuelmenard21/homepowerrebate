@@ -262,6 +262,13 @@ def render_vetting_card(inst, cfg):
     if bch and cfg["region_abbrev"] == "BC":
         items.append(("BC Hydro approved program", True, "Listed in a BC Hydro approved-contractor program"))
 
+    # HPCN (Home Performance Contractor Network) is a BC-specific, CleanBC-tied
+    # certification — it doesn't exist in Ontario, so the note can't say the
+    # same thing for both provinces without being false for Ontario listings.
+    vet_note = ("Confirm HPCN certification and current insurance directly with any installer before signing a contract"
+                if cfg["region_abbrev"] == "BC" else
+                "Confirm current licensing, insurance, and Home Renovation Savings Program eligibility directly with any installer before signing a contract")
+
     rows = "".join(f"""
         <div class="ip-vet-row {'ip-vet-yes' if ok else 'ip-vet-no'}">
           <span class="ip-vet-icon">{'✓' if ok else '–'}</span>
@@ -272,7 +279,7 @@ def render_vetting_card(inst, cfg):
       <aside class="ip-vetting">
         <h3>What We Checked</h3>
         {rows}
-        <p class="ip-vet-note">Confirm HPCN certification and current insurance directly with any installer before signing a contract — <a href="{SITE_URL}/guides/installer-vetting-checklist/">see the full checklist</a>.</p>
+        <p class="ip-vet-note">{vet_note} — <a href="{SITE_URL}/guides/installer-vetting-checklist/">see the full checklist</a>.</p>
       </aside>"""
 
 
@@ -335,7 +342,12 @@ def render_nearby(inst, all_installers, city, city_slug, exclude_slug, cfg):
     ]
     if not same_city:
         return ""
-    same_city = sorted(same_city, key=lambda r: float(r.get("Google Rating") or 0), reverse=True)[:4]
+    # No cap here (was top-4-by-rating): a hard cap meant lower-rated
+    # installers in a city with 5+ competitors could end up in nobody's
+    # "nearby" list — reachable only from the static directory, well under
+    # the 4-inbound-link bar. City sizes here (max ~10 per kind) stay
+    # readable uncapped; if that changes, cap generously, not at 4.
+    same_city = sorted(same_city, key=lambda r: float(r.get("Google Rating") or 0), reverse=True)
     items = "".join(
         f'<a href="{cfg["profile_prefix"]}/{city_slug}/{slugify(i["Business Name"])}/" class="ip-nearby-item">'
         f'<span>{escape(i["Business Name"].strip())}</span>'
@@ -615,7 +627,13 @@ def run_province(prov_key, args, emails):
             "Last Updated": inst.get("Last Updated", ""),
         })
 
-    if not args.dry_run and url_rows:
+    # BC's installers/json/*.json files are enriched by a separate process
+    # (bhbc_programs, bhbc_badge, recovered email — fields this script doesn't
+    # know about) that this script must never clobber. Learned the hard way:
+    # running this unconditionally for BC silently stripped that enrichment
+    # back to the plain fields below. Only write the internal JSON for
+    # provinces without a richer external source — currently just Ontario.
+    if not args.dry_run and url_rows and prov_key != "bc":
         # Generate per-city JSON files for the carousel to consume. Each city
         # gets its own file with all installers in that city, sorted by rating.
         json_dir = INSTALLERS_DIR / cfg["json_dir"]
@@ -636,7 +654,9 @@ def run_province(prov_key, args, emails):
                 "website": inst.get("Website", ""),
                 "image_url": inst.get("Image URL", ""),
                 "specialty": " & ".join(cfg["rebate_context"][k]["label"] for k in sorted(inst["_kinds"])),
-                "description": f"HPCN-certified. {int(inst.get('Review Count') or 0)} reviews on Google.",
+                "description": (f"HPCN-certified. {int(inst.get('Review Count') or 0)} reviews on Google."
+                                 if cfg["region_abbrev"] == "BC" else
+                                 f"{int(inst.get('Review Count') or 0)} reviews on Google."),
                 "profileUrl": f"{SITE_URL}{cfg['profile_prefix']}/{city_slug}/{slug}/",
                 "recommended": False
             })

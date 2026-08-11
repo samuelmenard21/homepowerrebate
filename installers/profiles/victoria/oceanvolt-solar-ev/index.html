@@ -148,7 +148,6 @@ a { color:var(--teal-deep); }
   <div class="ip-actions">
     <a href="https://www.oceanvoltsolarandev.ca/" target="_blank" rel="noopener" class="ip-btn ip-btn-primary">Visit Website</a>
     <a href="tel:+12364642979" class="ip-btn ip-btn-outline">Call (236) 464-2979</a>
-    <a href="mailto:info@oceanvolt.ca" class="ip-btn ip-btn-outline">📧 Email</a>
     <a href="https://maps.google.com/?cid=10572993752683164656&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" target="_blank" rel="noopener" class="ip-maps-link">View on Google Maps</a>
   </div>
 
@@ -184,31 +183,9 @@ a { color:var(--teal-deep); }
       </aside>
   
   
-      
-      <section class="ip-kind">
-        <div class="ip-kind-head">
-          <h2>Insulation & Building Envelope Rebates</h2>
-          <p class="ip-rank">Often the best first step before a heat pump retrofit</p>
-        </div>
-        <p style="font-size:15px; color:#5a5348; margin:12px 0;">Sealing and insulating your home first makes your heat pump smaller, cheaper, and more efficient. This installer can help you stack attic, wall, crawlspace, window, and door rebates through BetterHomes BC and CleanBC programs.</p>
-        <div class="ip-programs">
-        <a href="https://homepowerrebate.com/blog/insulation-rebates-bc-stack-federal-provincial" class="ip-program">
-          <div class="ip-program-name">Full Insulation Rebates Breakdown</div>
-          <div class="ip-program-detail">Attic ($900 cap), walls ($1,200 cap), floors, windows & doors</div>
-          <span class="ip-program-arrow">&rarr;</span>
-        </a>
-        <a href="https://betterhomesbc.ca/rebates/" class="ip-program" target="_blank" rel="noopener">
-          <div class="ip-program-name">Apply Through BetterHomes BC</div>
-          <div class="ip-program-detail">Your installer coordinates the full application</div>
-          <span class="ip-program-arrow">&rarr;</span>
-        </a>
-        </div>
-      </section>
-
-  
       <section class="ip-nearby">
         <h3>Other Victoria Installers</h3>
-        <div class="ip-nearby-list"><a href="/installers/profiles/victoria/barracuda-mechanical/" class="ip-nearby-item"><span>Barracuda Mechanical</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/victoria/ae-electric-ltd-dba-ae-hvac-systems/" class="ip-nearby-item"><span>AE Electric Ltd dba AE HVAC Systems</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/victoria/bears-heating-cooling-ltd/" class="ip-nearby-item"><span>Bears Heating &amp; Cooling Ltd.</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/victoria/grifflyn-electric-inc/" class="ip-nearby-item"><span>Grifflyn Electric Inc</span><span class="ip-nearby-rating">5★</span></a></div>
+        <div class="ip-nearby-list"><a href="/installers/profiles/victoria/barracuda-mechanical/" class="ip-nearby-item"><span>Barracuda Mechanical</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/victoria/ae-electric-ltd-dba-ae-hvac-systems/" class="ip-nearby-item"><span>AE Electric Ltd dba AE HVAC Systems</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/victoria/bears-heating-cooling-ltd/" class="ip-nearby-item"><span>Bears Heating &amp; Cooling Ltd.</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/victoria/grifflyn-electric-inc/" class="ip-nearby-item"><span>Grifflyn Electric Inc</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/victoria/hakai-energy-solutions/" class="ip-nearby-item"><span>Hakai Energy Solutions</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/victoria/luminous-electrical/" class="ip-nearby-item"><span>Luminous Electrical</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/victoria/enertech-solutions-ltd-energy-consultant/" class="ip-nearby-item"><span>EnerTech Solutions Ltd - Energy Consultant</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/victoria/coastal-heat-pumps/" class="ip-nearby-item"><span>Coastal Heat Pumps</span><span class="ip-nearby-rating">4.9★</span></a><a href="/installers/profiles/victoria/the-clear-choice-plumbing-heating/" class="ip-nearby-item"><span>The Clear Choice Plumbing &amp; Heating</span><span class="ip-nearby-rating">4.9★</span></a></div>
       </section>
 
   <section class="ip-quote">
@@ -226,7 +203,7 @@ a { color:var(--teal-deep); }
 
   <a href="/ca/bc/victoria/" class="ip-city-link">See all Victoria rebates &rarr;</a>
 
-  <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked 2026-07-21. Spot an error? <a href="mailto:samuelmenard@gmail.com?subject=Correction: Oceanvolt Solar &amp; EV">Let us know</a>.</p>
+  <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked 2026-07-21. Spot an error? <a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==" data-q="subject=Correction: Oceanvolt Solar &amp; EV">Let us know</a>.</p>
 </div>
 <script>
 (function() {
@@ -255,9 +232,13 @@ a { color:var(--teal-deep); }
   });
 })();
 </script>
-
-<!-- HomePowerRebate Form Handlers (with Installer Selection) -->
-<script src="/form-handlers-with-installer-select.js"></script>
-
+<script>
+  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
+    var addr = atob(el.getAttribute('data-b64'));
+    var q = el.getAttribute('data-q');
+    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
+    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
+  });
+</script>
 </body>
 </html>

@@ -533,7 +533,7 @@ footer p { font-size:13px; color:var(--sage); }
           <li><a href="/retrofit-assessment">Free Estimate</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>
-          <li><a href="mailto:hello@homepowerrebate.com">Contact</a></li>
+          <li><a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -590,7 +590,7 @@ document.getElementById('blog-newsletter-form')?.addEventListener('submit', asyn
       setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
     }
   } catch (error) {
-    responseEl.innerHTML = '<strong style="color: #fff;">⚠ Something went wrong.</strong><p style="margin: 4px 0 0; color: rgba(250, 247, 242, 0.85);">Try again or email hello@homepowerrebate.com</p>';
+    responseEl.innerHTML = '<strong style="color: #fff;">⚠ Something went wrong.</strong><p style="margin: 4px 0 0; color: rgba(250, 247, 242, 0.85);">Try again or email samuelmenard@gmail.com</p>';
     responseEl.style.display = 'block';
     button.textContent = originalText;
     button.disabled = false;
@@ -600,5 +600,15 @@ document.getElementById('blog-newsletter-form')?.addEventListener('submit', asyn
 });
 </script>
 
+<script>
+(function(){
+  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
+    var addr = atob(el.getAttribute('data-b64'));
+    var q = el.getAttribute('data-q');
+    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
+    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
+  });
+})();
+</script>
 </body>
 </html>

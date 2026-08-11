@@ -1059,7 +1059,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
           <li><a href="/retrofit-assessment">Free Estimate</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>
-          <li><a href="mailto:hello@homepowerrebate.com">Contact</a></li>
+          <li><a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -1158,5 +1158,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- HomePowerRebate Form Handlers (with Installer Selection) -->
 <script src="/form-handlers-with-installer-select.js"></script>
 
+<script>
+(function(){
+  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
+    var addr = atob(el.getAttribute('data-b64'));
+    var q = el.getAttribute('data-q');
+    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
+    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
+  });
+})();
+</script>
 </body>
 </html>

@@ -183,7 +183,7 @@ footer p { font-size: 13px; color: var(--sage); }
     <h1>Become the featured installer in your city.</h1>
     <p class="sub">HomePowerRebate connects BC homeowners with one trusted local installer per city. We handle education, rebate calculations, and all the marketing. Every qualified homeowner in your service area is routed to you exclusively. <strong>$300/month in year 1, first month free.</strong></p>
     <div class="cta-row">
-      <a href="mailto:hello@homepowerrebate.com?subject=Founding%20installer%20partner%20%E2%80%94%20%5Byour%20city%5D&body=Hi%20%E2%80%94%20we%27re%20a%20BC%20installer%20interested%20in%20being%20a%20founding%20partner%20for%3A%0A%0ACity%2Fregion%3A%20%0AServices%20(solar%2Bbattery%2C%20heat%20pump)%3A%20%0AHPCN%20certified%3F%20%0AWebsite%3A%20%0A%0AThanks!" class="btn">Apply for your city →</a>
+      <a href="#" class="btn hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==" data-q="subject=Founding%20installer%20partner%20%E2%80%94%20%5Byour%20city%5D&body=Hi%20%E2%80%94%20we%27re%20a%20BC%20installer%20interested%20in%20being%20a%20founding%20partner%20for%3A%0A%0ACity%2Fregion%3A%20%0AServices%20(solar%2Bbattery%2C%20heat%20pump)%3A%20%0AHPCN%20certified%3F%20%0AWebsite%3A%20%0A%0AThanks!">Apply for your city →</a>
       <a href="#offer" class="btn btn-ghost">See what you get</a>
     </div>
     <p class="cta-note" style="margin-top:16px;">One installer per city. First 10 founders lock in $300/month. After that, $500/month for new partners.</p>
@@ -380,7 +380,7 @@ footer p { font-size: 13px; color: var(--sage); }
     <div class="final">
       <h2>Claim your city before someone else does.</h2>
       <p>One email starts it. Tell us your region and services, and we'll set up a 15-minute call.</p>
-      <a href="mailto:hello@homepowerrebate.com?subject=Founding%20installer%20partner%20%E2%80%94%20%5Byour%20city%5D&body=Hi%20%E2%80%94%20we%27re%20a%20BC%20installer%20interested%20in%20being%20your%20founding%20partner%20for%3A%0A%0ACity%2Fregion%3A%20%0AServices%20(solar%2Bbattery%2C%20heat%20pump)%3A%20%0AHPCN%20certified%3F%20%0AWebsite%3A%20%0A%0AThanks!" class="btn">Email hello@homepowerrebate.com →</a>
+      <a href="#" class="btn hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==" data-q="subject=Founding%20installer%20partner%20%E2%80%94%20%5Byour%20city%5D&body=Hi%20%E2%80%94%20we%27re%20a%20BC%20installer%20interested%20in%20being%20your%20founding%20partner%20for%3A%0A%0ACity%2Fregion%3A%20%0AServices%20(solar%2Bbattery%2C%20heat%20pump)%3A%20%0AHPCN%20certified%3F%20%0AWebsite%3A%20%0A%0AThanks!">Email us →</a>
     </div>
   </div>
 </section>
@@ -449,7 +449,7 @@ footer p { font-size: 13px; color: var(--sage); }
           <li><a href="/retrofit-assessment">Free Estimate</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>
-          <li><a href="mailto:hello@homepowerrebate.com">Contact</a></li>
+          <li><a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -460,5 +460,15 @@ footer p { font-size: 13px; color: var(--sage); }
   </div>
 </footer>
 
+<script>
+(function(){
+  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
+    var addr = atob(el.getAttribute('data-b64'));
+    var q = el.getAttribute('data-q');
+    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
+    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
+  });
+})();
+</script>
 </body>
 </html>

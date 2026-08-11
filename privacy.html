@@ -114,7 +114,7 @@ strong { color: var(--ink); }
     <p>We may update this policy as the service evolves. We'll change the "last updated" date above when we do.</p>
 
     <h2>Contact us</h2>
-    <p>Questions, or want your data removed? Email <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a>.</p>
+    <p>Questions, or want your data removed? Email <a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==" data-showaddr="1">Contact us</a>.</p>
   </div>
 </article>
 
@@ -182,7 +182,7 @@ strong { color: var(--ink); }
           <li><a href="/retrofit-assessment">Free Estimate</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>
-          <li><a href="mailto:hello@homepowerrebate.com">Contact</a></li>
+          <li><a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -193,5 +193,15 @@ strong { color: var(--ink); }
   </div>
 </footer>
 
+<script>
+(function(){
+  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
+    var addr = atob(el.getAttribute('data-b64'));
+    var q = el.getAttribute('data-q');
+    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
+    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
+  });
+})();
+</script>
 </body>
 </html>

@@ -122,7 +122,17 @@
       <a class="btn btn-primary" href="/">Go to homepage</a>
       <a class="btn btn-secondary" href="/calculator/">Check my rebates</a>
     </div>
-    <p class="contact-link">Still stuck? <a href="mailto:hello@homepowerrebate.com">Email us</a> and we'll help you find it.</p>
+    <p class="contact-link">Still stuck? <a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==">Email us</a> and we'll help you find it.</p>
   </div>
+<script>
+(function(){
+  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
+    var addr = atob(el.getAttribute('data-b64'));
+    var q = el.getAttribute('data-q');
+    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
+    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
+  });
+})();
+</script>
 </body>
 </html>

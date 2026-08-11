@@ -214,7 +214,7 @@ a:hover { text-decoration: underline; }
 
     <p><a href="/retrofit-assessment" class="cta">Calculate your BC heat pump rebate →</a></p>
 
-    <p style="margin-top: 28px; font-size: 14px; color: var(--ink-soft);">Once you know your rebate, we'll match you with a vetted local installer in your city. One installer per city, no auctions, no spam calls. <a href="mailto:samuelmenard@gmail.com">Questions? Reach out anytime.</a></p>
+    <p style="margin-top: 28px; font-size: 14px; color: var(--ink-soft);">Once you know your rebate, we'll match you with a vetted local installer in your city. One installer per city, no auctions, no spam calls. <a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==">Questions? Reach out anytime.</a></p>
 
   </div>
 </article>
@@ -223,5 +223,13 @@ a:hover { text-decoration: underline; }
   <p>&copy; 2026 HomePowerRebate. Independent BC energy rebate guide. <a href="/about">Learn more about us</a>.</p>
 </footer>
 
+<script>
+  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
+    var addr = atob(el.getAttribute('data-b64'));
+    var q = el.getAttribute('data-q');
+    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
+    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
+  });
+</script>
 </body>
 </html>

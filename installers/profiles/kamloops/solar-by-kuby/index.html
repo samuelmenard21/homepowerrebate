@@ -183,31 +183,9 @@ a { color:var(--teal-deep); }
       </aside>
   
   
-      
-      <section class="ip-kind">
-        <div class="ip-kind-head">
-          <h2>Insulation & Building Envelope Rebates</h2>
-          <p class="ip-rank">Often the best first step before a heat pump retrofit</p>
-        </div>
-        <p style="font-size:15px; color:#5a5348; margin:12px 0;">Sealing and insulating your home first makes your heat pump smaller, cheaper, and more efficient. This installer can help you stack attic, wall, crawlspace, window, and door rebates through BetterHomes BC and CleanBC programs.</p>
-        <div class="ip-programs">
-        <a href="https://homepowerrebate.com/blog/insulation-rebates-bc-stack-federal-provincial" class="ip-program">
-          <div class="ip-program-name">Full Insulation Rebates Breakdown</div>
-          <div class="ip-program-detail">Attic ($900 cap), walls ($1,200 cap), floors, windows & doors</div>
-          <span class="ip-program-arrow">&rarr;</span>
-        </a>
-        <a href="https://betterhomesbc.ca/rebates/" class="ip-program" target="_blank" rel="noopener">
-          <div class="ip-program-name">Apply Through BetterHomes BC</div>
-          <div class="ip-program-detail">Your installer coordinates the full application</div>
-          <span class="ip-program-arrow">&rarr;</span>
-        </a>
-        </div>
-      </section>
-
-  
       <section class="ip-nearby">
         <h3>Other Kamloops Installers</h3>
-        <div class="ip-nearby-list"><a href="/installers/profiles/kamloops/kdb-hvac/" class="ip-nearby-item"><span>KDB HVAC</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/kamloops/full-spectrum-heating-and-air-conditioning-ltd/" class="ip-nearby-item"><span>Full Spectrum Heating and Air Conditioning Ltd.</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/kamloops/all-things-mechanical/" class="ip-nearby-item"><span>All Things Mechanical</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/kamloops/cal-geothermal-refrigeration-and-heating-ltd/" class="ip-nearby-item"><span>Cal Geothermal Refrigeration and Heating Ltd</span><span class="ip-nearby-rating">5★</span></a></div>
+        <div class="ip-nearby-list"><a href="/installers/profiles/kamloops/kdb-hvac/" class="ip-nearby-item"><span>KDB HVAC</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/kamloops/full-spectrum-heating-and-air-conditioning-ltd/" class="ip-nearby-item"><span>Full Spectrum Heating and Air Conditioning Ltd.</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/kamloops/all-things-mechanical/" class="ip-nearby-item"><span>All Things Mechanical</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/kamloops/cal-geothermal-refrigeration-and-heating-ltd/" class="ip-nearby-item"><span>Cal Geothermal Refrigeration and Heating Ltd</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/kamloops/kta-mechanical-inc/" class="ip-nearby-item"><span>KTA Mechanical Inc.</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/kamloops/riverside-energy-systems/" class="ip-nearby-item"><span>Riverside Energy Systems</span><span class="ip-nearby-rating">4.9★</span></a><a href="/installers/profiles/kamloops/greenfoot-energy-solutions/" class="ip-nearby-item"><span>Greenfoot Energy Solutions</span><span class="ip-nearby-rating">4.8★</span></a><a href="/installers/profiles/kamloops/howell-electric-ltd/" class="ip-nearby-item"><span>Howell Electric Ltd</span><span class="ip-nearby-rating">4.8★</span></a><a href="/installers/profiles/kamloops/nextgen-electrical-services-ltd/" class="ip-nearby-item"><span>NextGen Electrical Services Ltd.</span><span class="ip-nearby-rating">4.7★</span></a></div>
       </section>
 
   <section class="ip-quote">
@@ -225,7 +203,7 @@ a { color:var(--teal-deep); }
 
   <a href="/ca/bc/kamloops/" class="ip-city-link">See all Kamloops rebates &rarr;</a>
 
-  <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked 2026-07-21. Spot an error? <a href="mailto:samuelmenard@gmail.com?subject=Correction: Solar by Kuby">Let us know</a>.</p>
+  <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked 2026-07-21. Spot an error? <a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==" data-q="subject=Correction: Solar by Kuby">Let us know</a>.</p>
 </div>
 <script>
 (function() {
@@ -254,9 +232,13 @@ a { color:var(--teal-deep); }
   });
 })();
 </script>
-
-<!-- HomePowerRebate Form Handlers (with Installer Selection) -->
-<script src="/form-handlers-with-installer-select.js"></script>
-
+<script>
+  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
+    var addr = atob(el.getAttribute('data-b64'));
+    var q = el.getAttribute('data-q');
+    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
+    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
+  });
+</script>
 </body>
 </html>

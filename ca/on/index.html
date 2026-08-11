@@ -58,6 +58,17 @@ p { color: var(--ink-soft); margin-bottom: 16px; font-size: 15px; }
 .city-card.soon { opacity: 0.55; }
 .note-box { background: var(--paper-warm); border-left: 4px solid var(--amber); padding: 18px 22px; border-radius: 8px; margin: 24px 0; }
 .note-box p { margin: 0; font-size: 14px; }
+.sun-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--rule); border-radius: 12px; margin: 24px 0; background: #fff; }
+.sun-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 560px; }
+.sun-table th { background: var(--paper-warm); text-align: left; padding: 12px 16px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); border-bottom: 1px solid var(--rule); }
+.sun-table th.num, .sun-table td.num { text-align: right; }
+.sun-table td { padding: 12px 16px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+.sun-table tr:last-child td { border-bottom: none; }
+.sun-table td.num { font-family: 'Fraunces', serif; font-weight: 500; font-size: 15px; color: var(--teal-deep); }
+.sun-table a.city-link { color: var(--teal-deep); text-decoration: none; border-bottom: 1.5px solid var(--amber); font-weight: 600; }
+.sun-table a.city-link:hover { color: var(--amber); }
+.tag-verified { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #2d6a4f; background: #e3f1e9; padding: 3px 8px; border-radius: 999px; }
+.tag-est { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--amber); background: #fdf0e0; padding: 3px 8px; border-radius: 999px; }
 footer { padding: 40px 28px; border-top: 1px solid var(--rule); background: var(--ink); color: rgba(250,247,242,.6); text-align: center; font-size: 12px; }
 footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 </style>
@@ -157,6 +168,118 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     <div class="note-box">
       <p><strong>Ontario works differently than BC.</strong> Instead of one heat pump rebate tiered by household income, Ontario's Home Renovation Savings Program tiers the amount by which fuel you're currently heating with &mdash; and cities like Toronto add their own low-interest loan on top, rather than a cash top-up. Each city page explains its own local utility and any city-run financing program.</p>
     </div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-warm); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+  <div class="wrap">
+    <h2>Solar sun hours by city</h2>
+    <p>Solar payback depends on how much sun a city actually gets. We pulled annual sunshine-hour data from Environment and Climate Change Canada climate normals for the 5 cities with their own weather station on record. For cities without one, we show the nearest verified station's figure as a labeled estimate &mdash; we don't invent city-specific numbers we can't back up.</p>
+
+    <div class="sun-table-wrap">
+      <table class="sun-table">
+        <thead>
+          <tr>
+            <th>City</th>
+            <th class="num">Sun hrs/yr</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="/ca/on/toronto" class="city-link">Toronto</a></td>
+            <td class="num">2,066</td>
+            <td><span class="tag-verified">Verified</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/ottawa" class="city-link">Ottawa</a></td>
+            <td class="num">2,084</td>
+            <td><span class="tag-verified">Verified</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/hamilton" class="city-link">Hamilton</a></td>
+            <td class="num">2,111</td>
+            <td><span class="tag-verified">Verified</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/london" class="city-link">London</a></td>
+            <td class="num">1,793</td>
+            <td><span class="tag-verified">Verified</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/greater-sudbury" class="city-link">Greater Sudbury</a></td>
+            <td class="num">1,973</td>
+            <td><span class="tag-verified">Verified</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/mississauga" class="city-link">Mississauga</a></td>
+            <td class="num">~2,066</td>
+            <td><span class="tag-est">Est. &mdash; nearest: Toronto</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/brampton" class="city-link">Brampton</a></td>
+            <td class="num">~2,066</td>
+            <td><span class="tag-est">Est. &mdash; nearest: Toronto</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/markham" class="city-link">Markham</a></td>
+            <td class="num">~2,066</td>
+            <td><span class="tag-est">Est. &mdash; nearest: Toronto</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/vaughan" class="city-link">Vaughan</a></td>
+            <td class="num">~2,066</td>
+            <td><span class="tag-est">Est. &mdash; nearest: Toronto</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/richmond-hill" class="city-link">Richmond Hill</a></td>
+            <td class="num">~2,066</td>
+            <td><span class="tag-est">Est. &mdash; nearest: Toronto</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/oshawa" class="city-link">Oshawa</a></td>
+            <td class="num">~2,066</td>
+            <td><span class="tag-est">Est. &mdash; nearest: Toronto</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/whitby" class="city-link">Whitby</a></td>
+            <td class="num">~2,066</td>
+            <td><span class="tag-est">Est. &mdash; nearest: Toronto</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/barrie" class="city-link">Barrie</a></td>
+            <td class="num">~2,066</td>
+            <td><span class="tag-est">Est. &mdash; nearest: Toronto</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/oakville" class="city-link">Oakville</a></td>
+            <td class="num">~2,111</td>
+            <td><span class="tag-est">Est. &mdash; nearest: Hamilton</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/burlington" class="city-link">Burlington</a></td>
+            <td class="num">~2,111</td>
+            <td><span class="tag-est">Est. &mdash; nearest: Hamilton</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/kitchener" class="city-link">Kitchener</a></td>
+            <td class="num">~2,111</td>
+            <td><span class="tag-est">Est. &mdash; nearest: Hamilton</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/cambridge" class="city-link">Cambridge</a></td>
+            <td class="num">~2,111</td>
+            <td><span class="tag-est">Est. &mdash; nearest: Hamilton</span></td>
+          </tr>
+          <tr>
+            <td><a href="/ca/on/windsor" class="city-link">Windsor</a></td>
+            <td class="num">~1,793</td>
+            <td><span class="tag-est">Est. &mdash; nearest: London</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size: 12px; color: var(--ink-soft); margin-top: -8px;">Estimates use the closest city with a verified Environment Canada climate-normal record; actual sunshine at your address may vary by local geography and microclimate.</p>
   </div>
 </section>
 

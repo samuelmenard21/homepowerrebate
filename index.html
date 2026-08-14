@@ -952,6 +952,8 @@ h1, h2, h3, h4, h5, h6 {
             <option value="">Choose your province or state…</option>
             <option value="bc">British Columbia</option>
             <option value="on">Ontario</option>
+            <option value="ab">Alberta</option>
+            <option value="ns">Nova Scotia</option>
             <option value="ma">Massachusetts</option>
           </select>
         </div>
@@ -1019,6 +1021,28 @@ h1, h2, h3, h4, h5, h6 {
             </select>
           </div>
           <p style="font-size:13px; color:var(--ink-soft); margin:0;">Massachusetts rebates run through Mass Save, the same statewide program in every city &mdash; we'll take you straight to your city's exact numbers in USD.</p>
+        </div>
+        <div id="hpr-ab-fields" style="display:none; flex-direction:column; gap:12px;">
+          <div>
+            <label for="hpr-ab-city" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Your city</label>
+            <select id="hpr-ab-city" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+              <option value="">Choose your city…</option>
+              <option value="calgary">Calgary</option><option value="edmonton">Edmonton</option>
+              <option value="red-deer">Red Deer</option><option value="lethbridge">Lethbridge</option>
+              <option value="st-albert">St. Albert</option>
+            </select>
+          </div>
+          <p style="font-size:13px; color:var(--ink-soft); margin:0;">Alberta doesn't have a unified provincial rebate &mdash; it's fragmented across utilities and financing. We'll show you exactly what's real for your city, no exaggeration.</p>
+        </div>
+        <div id="hpr-ns-fields" style="display:none; flex-direction:column; gap:12px;">
+          <div>
+            <label for="hpr-ns-city" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Your city</label>
+            <select id="hpr-ns-city" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+              <option value="">Choose your city…</option>
+              <option value="halifax">Halifax</option>
+            </select>
+          </div>
+          <p style="font-size:13px; color:var(--ink-soft); margin:0;">Nova Scotia's big heat pump program closed in late 2025 &mdash; we'll show you what's actually still available in 2026.</p>
         </div>
       </div>
       <button id="hpr-go" style="width:100%; margin-top:16px; padding:14px; background:var(--amber); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">See my estimate →</button>
@@ -1812,6 +1836,19 @@ h1, h2, h3, h4, h5, h6 {
         </ul>
       </div>
       <div>
+        <div class="footer-col-title">Alberta &amp; Nova Scotia</div>
+        <ul class="footer-col-links">
+          <li><a href="/ca/ab">Alberta Overview</a></li>
+          <li><a href="/ca/ab/calgary">Calgary</a></li>
+          <li><a href="/ca/ab/edmonton">Edmonton</a></li>
+          <li><a href="/ca/ab/red-deer">Red Deer</a></li>
+          <li><a href="/ca/ab/lethbridge">Lethbridge</a></li>
+          <li><a href="/ca/ab/st-albert">St. Albert</a></li>
+          <li><a href="/ca/ns">Nova Scotia Overview</a></li>
+          <li><a href="/ca/ns/halifax">Halifax</a></li>
+        </ul>
+      </div>
+      <div>
         <div class="footer-col-title">Massachusetts</div>
         <ul class="footer-col-links">
           <li><a href="/us/ma">Massachusetts Overview</a></li>
@@ -1987,10 +2024,12 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
   var provinceSelect = $('hpr-province');
   if (provinceSelect) {
     provinceSelect.addEventListener('change', function () {
-      var bcFields = $('hpr-bc-fields'), onFields = $('hpr-on-fields'), maFields = $('hpr-ma-fields');
+      var bcFields = $('hpr-bc-fields'), onFields = $('hpr-on-fields'), maFields = $('hpr-ma-fields'), abFields = $('hpr-ab-fields'), nsFields = $('hpr-ns-fields');
       bcFields.style.display = provinceSelect.value === 'bc' ? 'flex' : 'none';
       onFields.style.display = provinceSelect.value === 'on' ? 'flex' : 'none';
       maFields.style.display = provinceSelect.value === 'ma' ? 'flex' : 'none';
+      abFields.style.display = provinceSelect.value === 'ab' ? 'flex' : 'none';
+      nsFields.style.display = provinceSelect.value === 'ns' ? 'flex' : 'none';
     });
   }
 
@@ -2011,6 +2050,22 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       if (!maCity) { $('hpr-err').style.display = 'block'; return; }
       $('hpr-err').style.display = 'none';
       window.location.href = '/us/ma/' + maCity;
+      return;
+    }
+
+    if (province === 'ab') {
+      var abCity = $('hpr-ab-city').value;
+      if (!abCity) { $('hpr-err').style.display = 'block'; return; }
+      $('hpr-err').style.display = 'none';
+      window.location.href = '/ca/ab/' + abCity;
+      return;
+    }
+
+    if (province === 'ns') {
+      var nsCity = $('hpr-ns-city').value;
+      if (!nsCity) { $('hpr-err').style.display = 'block'; return; }
+      $('hpr-err').style.display = 'none';
+      window.location.href = '/ca/ns/' + nsCity;
       return;
     }
 

@@ -528,10 +528,19 @@ async function handleEstimateLead(request, env) {
     email: cleanString(p.email),
     phone: cleanString(p.phone),
     postal: cleanString(p.postal || ''),
-    current_heat: cleanString(p.heating || 'unknown'),
-    income_band: cleanString(p.income || 'unknown'),
-    estimated_value: cleanString(String(p.estimate || 'unknown')),
-    page_url: cleanString(p.source || p.page || ''),
+    current_heat: cleanString(p.heating || p.current_heating || 'unknown'),
+    income_band: cleanString(p.income || p.income_tier || 'unknown'),
+    income_tier: cleanString(p.income_tier || p.income || 'unknown'),
+    utility: cleanString(p.utility || 'unknown'),
+    water_heating: cleanString(p.water_heating || 'unknown'),
+    year_built: cleanString(p.year_built || 'unknown'),
+    upgrades: Array.isArray(p.upgrades) ? p.upgrades.join(', ') : cleanString(p.upgrades || ''),
+    notes: cleanString(p.notes || ''),
+    estimated_value: cleanString(String(p.estimate || p.estimated_rebates || 'unknown')),
+    total_cost: cleanString(p.total_cost || 'unknown'),
+    net_cost: cleanString(p.net_cost || 'unknown'),
+    ten_year_savings: cleanString(p.ten_year_savings || 'unknown'),
+    page_url: cleanString(p.page_url || p.source || p.page || ''),
     referrer: cleanString(p.referrer || 'estimate-widget'),
     status: 'new'
   };
@@ -810,8 +819,10 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
           <li><strong>Email:</strong> <a href="mailto:${em}">${em}</a></li>
           <li><strong>City:</strong> ${ct}, BC</li>
           <li><strong>Current heating:</strong> ${ch}</li>
+          <li><strong>Upgrades wanted:</strong> ${escapeHtml(lead.upgrades || 'none specified')}</li>
           <li><strong>Estimate shown:</strong> up to ${ev}</li>
         </ul>
+        ${lead.notes ? `<div style="background:#fef9e6;border-left:4px solid #d4751c;padding:14px 16px;border-radius:6px;margin-bottom:16px;"><strong style="color:#08363f;">In their own words:</strong><br>${escapeHtml(lead.notes)}</div>` : ''}
         <p style="background:#0a2a2e;color:#faf7f2;padding:16px;border-radius:10px;text-align:center;">
           Call this homeowner within 1 business day.<br>
           <a href="tel:${ph}" style="display:inline-block;margin-top:10px;background:#d4751c;color:#fff;padding:10px 22px;border-radius:999px;text-decoration:none;font-weight:600;">Call ${ph}</a>
@@ -842,7 +853,9 @@ async function sendOpsEstimateLead(lead, env) {
         <li><strong>City:</strong> ${ct}</li>
         <li><strong>Heating:</strong> ${ch}</li>
         <li><strong>Income band:</strong> ${ib}</li>
+        <li><strong>Upgrades wanted:</strong> ${escapeHtml(lead.upgrades || 'none specified')}</li>
         <li><strong>Estimate:</strong> ${ev}</li>
+        ${lead.notes ? `<li><strong>Notes from homeowner:</strong> ${escapeHtml(lead.notes)}</li>` : ''}
         <li><strong>Source:</strong> ${src}</li>
       </ul>`
   });

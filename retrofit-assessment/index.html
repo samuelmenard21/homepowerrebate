@@ -816,49 +816,87 @@ document.getElementById('assessment-lead-form')?.addEventListener('submit', asyn
   const netCost = document.getElementById('net-cost')?.textContent || 'unknown';
   const tenYearSavings = document.getElementById('ten-year-savings')?.textContent || 'unknown';
 
+  const sharedFields = {
+    firstname, lastname, email, phone, postal, city, notes,
+    upgrades, income_tier: income, utility,
+    current_heating: heating, water_heating: waterheating, year_built: yearbuilt,
+    estimated_rebates: estimatedRebates, total_cost: totalCost, net_cost: netCost,
+    ten_year_savings: tenYearSavings,
+    page_url: location.href, referrer: document.referrer || 'direct'
+  };
+
+  async function submitToInstallers(selectedInstallers) {
+    const submissions = (selectedInstallers.length ? selectedInstallers : [null]).map(installer =>
+      fetch('https://leads.homepowerrebate.com/estimate-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...sharedFields,
+          installer_name: installer?.name || '',
+          installer_email: installer?.email || '',
+          installer_phone: installer?.phone || ''
+        })
+      }).then(r => r.json()).then(r => r.success).catch(() => false)
+    );
+    const results = await Promise.allSettled(submissions);
+    return results.filter(r => r.status === 'fulfilled' && r.value).length;
+  }
+
   button.disabled = true;
-  button.textContent = 'Sending...';
+  button.textContent = 'Loading installers…';
 
   try {
-    const response = await fetch('https://leads.homepowerrebate.com/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        phone: phone,
-        postal: postal,
-        city: city,
-        notes: notes,
-        upgrades: upgrades,
-        income_tier: income,
-        utility: utility,
-        current_heating: heating,
-        water_heating: waterheating,
-        year_built: yearbuilt,
-        estimated_rebates: estimatedRebates,
-        total_cost: totalCost,
-        net_cost: netCost,
-        ten_year_savings: tenYearSavings,
-        page_url: location.href,
-        referrer: document.referrer || 'direct'
-      })
-    });
+    // Merge heat-pump and solar directories for this city — the checklist
+    // covers more than one trade, so either list may have the right match.
+    const citySlug = city.toLowerCase().replace(/\s+/g, '-');
+    const [hpList, solarList] = await Promise.all([
+      loadInstallersForCity(citySlug),
+      fetch(`/installers/json/solar/${citySlug}.json`).then(r => r.ok ? r.json() : []).catch(() => [])
+    ]);
+    const byName = new Map();
+    [...hpList, ...solarList].forEach(inst => { if (inst.email) byName.set(inst.name, inst); });
+    const installers = [...byName.values()];
 
-    if (response.ok) {
-      responseEl.innerHTML = '<strong>✓ Got it!</strong> A local installer will contact you within 24 hours with quotes.';
+    button.textContent = originalText;
+    button.disabled = false;
+
+    if (installers.length === 0) {
+      // No installer directory for this city yet — still capture the lead
+      // honestly (falls back to ops-only, same as before) rather than block.
+      button.disabled = true;
+      button.textContent = 'Sending...';
+      const sent = await submitToInstallers([]);
+      responseEl.innerHTML = sent
+        ? '<strong>✓ Got it!</strong> We\'re still building our installer network in your area — we\'ll follow up personally.'
+        : '<strong>⚠ Something went wrong.</strong> Try again or email samuelmenard@gmail.com';
       responseEl.style.display = 'block';
       document.getElementById('assessment-lead-form').reset();
       button.textContent = originalText;
       button.disabled = false;
       setTimeout(() => { responseEl.style.display = 'none'; }, 8000);
-    } else {
-      const error = await response.json();
-      throw new Error(error.message || 'Submission failed');
+      return;
     }
+
+    showInstallerChooser(
+      installers,
+      async (selectedInstallers) => {
+        button.disabled = true;
+        button.textContent = `Sending to ${selectedInstallers.length} installer${selectedInstallers.length !== 1 ? 's' : ''}...`;
+        const sentCount = await submitToInstallers(selectedInstallers);
+        responseEl.innerHTML = sentCount > 0
+          ? `<strong>✓ Got it!</strong> Sent to ${sentCount} installer${sentCount !== 1 ? 's' : ''} — expect a call within 24 hours.`
+          : '<strong>⚠ Something went wrong.</strong> Try again or email samuelmenard@gmail.com';
+        responseEl.style.display = 'block';
+        document.getElementById('assessment-lead-form').reset();
+        button.textContent = originalText;
+        button.disabled = false;
+        setTimeout(() => { responseEl.style.display = 'none'; }, 8000);
+      },
+      () => {
+        button.textContent = originalText;
+        button.disabled = false;
+      }
+    );
   } catch (error) {
     responseEl.innerHTML = '<strong>⚠ Something went wrong.</strong> Try again or email samuelmenard@gmail.com';
     responseEl.style.display = 'block';
@@ -882,5 +920,7 @@ updateChecklist();
   });
 })();
 </script>
+
+<script src="/form-handlers-with-installer-select.js"></script>
 </body>
 </html>

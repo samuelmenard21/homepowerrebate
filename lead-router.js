@@ -553,7 +553,11 @@ async function handleEstimateLead(request, env) {
   if (p.newsletter !== false) tasks.push(addToResendAudience(lead.email, env));
   if (isReal) tasks.unshift(sendEstimateInstallerEmail(lead, installer, env));
 
-  await Promise.allSettled(tasks);
+  const results = await Promise.allSettled(tasks);
+  const failures = results.filter(r => r.status === 'rejected');
+  if (failures.length) {
+    console.error('Estimate-lead routing partial failure:', failures.map(f => f.reason?.message || f.reason));
+  }
 
   return jsonResponse({
     success: true,
@@ -802,32 +806,67 @@ async function sendOpsOutcomeAlert(record, env) {
 async function sendEstimateInstallerEmail(lead, installer, env) {
   const fn = escapeHtml(lead.firstname), ln = escapeHtml(lead.lastname), ph = escapeHtml(lead.phone),
         em = escapeHtml(lead.email), ct = escapeHtml(capitalize(lead.city)), ch = escapeHtml(lead.current_heat),
-        ev = escapeHtml(lead.estimated_value), src = escapeHtml(lead.page_url);
+        ev = escapeHtml(lead.estimated_value), instName = escapeHtml(installer.name.split(' ')[0] || 'there');
+
+  const notesBlock = lead.notes
+    ? `<div style="background:#fef9e6;border-left:4px solid #d4751c;border-radius:0 8px 8px 0;padding:16px 18px;margin:20px 0;">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#a15d10;margin-bottom:6px;">In their own words</div>
+        <div style="font-size:15px;color:#08363f;">${escapeHtml(lead.notes)}</div>
+      </div>`
+    : '';
+
   return resendEmail(env.RESEND_API_KEY, {
-    from: 'HomePowerRebate Leads <leads@homepowerrebate.com>',
+    from: 'HomePowerRebate <leads@homepowerrebate.com>',
     to: installer.email,
     cc: installer.cc || undefined,
+    bcc: env.OPS_EMAIL || undefined,
     reply_to: lead.email,
-    subject: `New heat pump lead: ${lead.firstname} in ${capitalize(lead.city)}`,
+    subject: `${fn} in ${ct} wants a quote — sent via HomePowerRebate`,
     html: `
-      <div style="font-family:-apple-system,sans-serif;max-width:560px;margin:0 auto;padding:20px;color:#0a2a2e;">
-        <h2 style="color:#08363f;">New HomePowerRebate referral</h2>
-        <p>A homeowner asked to be matched after seeing their rebate estimate.</p>
-        <ul>
-          <li><strong>Name:</strong> ${fn} ${ln}</li>
-          <li><strong>Phone:</strong> <a href="tel:${ph}">${ph}</a></li>
-          <li><strong>Email:</strong> <a href="mailto:${em}">${em}</a></li>
-          <li><strong>City:</strong> ${ct}, BC</li>
-          <li><strong>Current heating:</strong> ${ch}</li>
-          <li><strong>Upgrades wanted:</strong> ${escapeHtml(lead.upgrades || 'none specified')}</li>
-          <li><strong>Estimate shown:</strong> up to ${ev}</li>
-        </ul>
-        ${lead.notes ? `<div style="background:#fef9e6;border-left:4px solid #d4751c;padding:14px 16px;border-radius:6px;margin-bottom:16px;"><strong style="color:#08363f;">In their own words:</strong><br>${escapeHtml(lead.notes)}</div>` : ''}
-        <p style="background:#0a2a2e;color:#faf7f2;padding:16px;border-radius:10px;text-align:center;">
-          Call this homeowner within 1 business day.<br>
-          <a href="tel:${ph}" style="display:inline-block;margin-top:10px;background:#d4751c;color:#fff;padding:10px 22px;border-radius:999px;text-decoration:none;font-weight:600;">Call ${ph}</a>
-        </p>
-        <p style="font-size:12px;color:#1a3d42;">Source: ${src} · ${new Date(lead.timestamp).toLocaleString('en-CA', { timeZone: 'America/Vancouver' })}</p>
+      <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:580px;margin:0 auto;padding:0;color:#0a2a2e;">
+        <div style="background:#08363f;padding:28px 28px 24px;border-radius:14px 14px 0 0;">
+          <div style="font-size:13px;color:#e88a2e;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:10px;">New lead from HomePowerRebate.com</div>
+          <div style="font-size:22px;color:#fff;font-weight:600;line-height:1.3;">Hi ${instName} — a ${ct} homeowner wants your help.</div>
+        </div>
+
+        <div style="background:#faf7f2;padding:28px;border-radius:0 0 14px 14px;border:1px solid #d9d0c1;border-top:none;">
+          <p style="font-size:15px;line-height:1.6;color:#1a3d42;margin:0 0 20px;">
+            ${fn} used HomePowerRebate's free rebate assessment tool, saw what they qualify for, and chose <strong>${escapeHtml(installer.name)}</strong> as one of the installers they'd like a quote from. Here's what they're looking for:
+          </p>
+
+          <div style="background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:20px;margin-bottom:20px;">
+            <table style="width:100%;border-collapse:collapse;font-size:14px;">
+              <tr><td style="padding:6px 0;color:#6b7d80;width:130px;">Name</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${fn} ${ln}</td></tr>
+              <tr><td style="padding:6px 0;color:#6b7d80;">Phone</td><td style="padding:6px 0;font-weight:600;"><a href="tel:${ph}" style="color:#08363f;">${ph}</a></td></tr>
+              <tr><td style="padding:6px 0;color:#6b7d80;">Email</td><td style="padding:6px 0;font-weight:600;"><a href="mailto:${em}" style="color:#08363f;">${em}</a></td></tr>
+              <tr><td style="padding:6px 0;color:#6b7d80;">City</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${ct}, BC</td></tr>
+              <tr><td style="padding:6px 0;color:#6b7d80;">Current heating</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${ch}</td></tr>
+              <tr><td style="padding:6px 0;color:#6b7d80;">Interested in</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${escapeHtml(lead.upgrades || 'not specified')}</td></tr>
+              <tr><td style="padding:6px 0;color:#6b7d80;">Rebate estimate shown</td><td style="padding:6px 0;font-weight:700;color:#2d6a4f;">up to ${ev}</td></tr>
+            </table>
+          </div>
+
+          ${notesBlock}
+
+          <div style="background:#0a2a2e;color:#faf7f2;padding:20px;border-radius:10px;text-align:center;margin-top:8px;">
+            <p style="margin:0 0 4px;font-size:13px;opacity:.75;">They're expecting to hear from you</p>
+            <p style="margin:0 0 14px;font-size:16px;font-weight:600;">Please reach out within 1 business day.</p>
+            <a href="tel:${ph}" style="display:inline-block;background:#d4751c;color:#fff;padding:12px 26px;border-radius:999px;text-decoration:none;font-weight:600;">Call ${ph}</a>
+            <p style="margin:14px 0 0;font-size:12px;opacity:.65;">Prefer email? Just hit reply — it goes straight to ${em}, not to us.</p>
+          </div>
+
+          <p style="font-size:13px;color:#6b7d80;text-align:center;margin:22px 0 0;">
+            Note: this homeowner may have also requested quotes from a couple of other local installers — that's by design, so they can compare.
+          </p>
+
+          <div style="border-top:1px solid #d9d0c1;margin-top:24px;padding-top:18px;text-align:center;">
+            <p style="margin:0;font-size:13px;color:#6b7d80;">
+              Questions about this lead or the partnership? I'm easy to reach.<br>
+              <strong style="color:#08363f;">Sam Menard</strong> · HomePowerRebate.com<br>
+              <a href="mailto:samuelmenard@gmail.com" style="color:#08363f;">samuelmenard@gmail.com</a>
+            </p>
+          </div>
+        </div>
       </div>`
   });
 }
@@ -881,16 +920,20 @@ async function addToResendAudience(email, env) {
 // ===========================================================================
 
 async function sendInstallerEmail(lead, installer, env) {
-  const subject = `New lead: ${lead.firstname} ${lead.lastname} in ${capitalize(lead.city)}`;
+  const instName = escapeHtml((installer.name || '').split(' ')[0] || 'there');
+  const subject = `${escapeHtml(lead.firstname)} in ${capitalize(lead.city)} wants a quote — sent via HomePowerRebate`;
 
   const html = `
     <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:600px;margin:0 auto;padding:20px;color:#0a2a2e;">
-      <div style="background:#d4751c;color:white;padding:20px;border-radius:12px 12px 0 0;">
-        <h1 style="margin:0;font-size:22px;">New HomePowerRebate Lead</h1>
-        <p style="margin:6px 0 0;opacity:0.9;font-size:14px;">Lead ID: ${lead.lead_id}</p>
+      <div style="background:#08363f;color:white;padding:24px 20px 20px;border-radius:12px 12px 0 0;">
+        <div style="font-size:13px;color:#e88a2e;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:8px;">New lead from HomePowerRebate.com</div>
+        <h1 style="margin:0;font-size:22px;font-weight:600;">Hi ${instName} — a ${capitalize(lead.city)} homeowner wants your help.</h1>
       </div>
 
       <div style="background:#faf7f2;padding:24px;border-radius:0 0 12px 12px;border:1px solid #d9d0c1;border-top:none;">
+        <p style="font-size:15px;line-height:1.6;color:#1a3d42;margin:0 0 20px;">
+          ${escapeHtml(lead.firstname)} used HomePowerRebate's free rebate assessment tool and chose <strong>${escapeHtml(installer.name || '')}</strong> as one of the installers they'd like a quote from. Here's what they're looking for:
+        </p>
         <h2 style="margin:0 0 12px;font-size:18px;color:#08363f;">Customer details</h2>
         <table style="width:100%;border-collapse:collapse;">
           <tr><td style="padding:6px 0;color:#1a3d42;width:140px;">Name</td><td style="padding:6px 0;font-weight:600;">${lead.firstname} ${lead.lastname}</td></tr>
@@ -923,13 +966,24 @@ async function sendInstallerEmail(lead, installer, env) {
           <p style="margin:0 0 8px;font-size:14px;opacity:0.7;">Action required</p>
           <p style="margin:0;font-size:16px;font-weight:600;">Call this homeowner within 1 business day.</p>
           <a href="tel:${lead.phone}" style="display:inline-block;margin-top:14px;background:#d4751c;color:white;padding:12px 24px;border-radius:999px;text-decoration:none;font-weight:600;">Call ${lead.phone}</a>
+          <p style="margin:14px 0 0;font-size:12px;opacity:.65;">Prefer email? Just hit reply — it goes straight to ${lead.email}, not to us.</p>
         </div>
 
-        <p style="margin:24px 0 0;font-size:12px;color:#1a3d42;">
-          Source page: ${lead.page_url}<br>
-          Referrer: ${lead.referrer}<br>
+        <p style="font-size:13px;color:#6b7d80;text-align:center;margin:22px 0 0;">
+          Note: this homeowner may have also requested quotes from a couple of other local installers — that's by design, so they can compare.
+        </p>
+
+        <p style="margin:16px 0 0;font-size:12px;color:#1a3d42;">
           Submitted: ${new Date(lead.timestamp).toLocaleString('en-CA', { timeZone: 'America/Vancouver' })}
         </p>
+
+        <div style="border-top:1px solid #d9d0c1;margin-top:24px;padding-top:18px;text-align:center;">
+          <p style="margin:0;font-size:13px;color:#6b7d80;">
+            Questions about this lead or the partnership? I'm easy to reach.<br>
+            <strong style="color:#08363f;">Sam Menard</strong> &middot; HomePowerRebate.com<br>
+            <a href="mailto:samuelmenard@gmail.com" style="color:#08363f;">samuelmenard@gmail.com</a>
+          </p>
+        </div>
       </div>
     </div>
   `;
@@ -938,6 +992,7 @@ async function sendInstallerEmail(lead, installer, env) {
     from: 'HomePowerRebate Leads <leads@homepowerrebate.com>',
     to: installer.email,
     cc: installer.cc || undefined,
+    bcc: env.OPS_EMAIL || undefined,
     reply_to: lead.email,
     subject,
     html
@@ -1172,6 +1227,7 @@ async function resendEmail(apiKey, params) {
     html: params.html
   };
   if (params.cc) body.cc = params.cc;
+  if (params.bcc) body.bcc = params.bcc;
   if (params.reply_to) body.reply_to = params.reply_to;
 
   const response = await fetch('https://api.resend.com/emails', {

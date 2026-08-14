@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Heat Pump & Solar Installers Across BC & Ontario | HomePowerRebate Directory</title>
-<meta name="description" content="Browse 320+ verified heat pump and solar installers across 36 cities in BC and Ontario. Filter by service type and location. All verified, 4+ star rated.">
+<title>Heat Pump & Solar Installers by Region | HomePowerRebate Directory</title>
+<meta name="description" content="Browse 320+ verified heat pump and solar installers across BC and Ontario, with Alberta, Nova Scotia, and Massachusetts coming soon. Pick your region, then filter by service and city.">
 <link rel="canonical" href="https://homepowerrebate.com/installers/">
-<meta property="og:title" content="Heat Pump & Solar Installers Across BC & Ontario | HomePowerRebate Directory">
-<meta property="og:description" content="Browse 320+ verified heat pump and solar installers across 36 cities in BC and Ontario. Filter by service type and location. All verified, 4+ star rated.">
+<meta property="og:title" content="Heat Pump & Solar Installers by Region | HomePowerRebate Directory">
+<meta property="og:description" content="Browse 320+ verified heat pump and solar installers across BC and Ontario, with Alberta, Nova Scotia, and Massachusetts coming soon. Pick your region, then filter by service and city.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://homepowerrebate.com/installers/">
 <meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
@@ -24,11 +24,30 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "LocalBusiness",
+      "@type": "CollectionPage",
       "@id": "https://homepowerrebate.com/installers/#directory",
-      "name": "HomePowerRebate Installer Directory",
-      "description": "Directory of 320+ heat pump and solar installers across BC and Ontario, all rated 4+ stars on Google",
+      "name": "Heat Pump & Solar Installer Directory",
+      "description": "Directory of 320+ heat pump and solar installers across BC and Ontario, all rated 4+ stars on Google, organized by region and city. Alberta, Nova Scotia, and Massachusetts coverage coming soon.",
       "url": "https://homepowerrebate.com/installers/",
+      "isPartOf": { "@type": "WebSite", "name": "HomePowerRebate", "url": "https://homepowerrebate.com" },
+      "about": [
+        { "@type": "AdministrativeArea", "name": "British Columbia, Canada" },
+        { "@type": "AdministrativeArea", "name": "Ontario, Canada" },
+        { "@type": "AdministrativeArea", "name": "Alberta, Canada" },
+        { "@type": "AdministrativeArea", "name": "Nova Scotia, Canada" },
+        { "@type": "AdministrativeArea", "name": "Massachusetts, USA" }
+      ],
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "Installer directory regions",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "British Columbia", "url": "https://homepowerrebate.com/installers/#bc" },
+          { "@type": "ListItem", "position": 2, "name": "Ontario", "url": "https://homepowerrebate.com/installers/#on" },
+          { "@type": "ListItem", "position": 3, "name": "Alberta", "url": "https://homepowerrebate.com/ca/ab" },
+          { "@type": "ListItem", "position": 4, "name": "Nova Scotia", "url": "https://homepowerrebate.com/ca/ns" },
+          { "@type": "ListItem", "position": 5, "name": "Massachusetts", "url": "https://homepowerrebate.com/us/" }
+        ]
+      },
       "knowsAbout": [
         "Heat Pump Installation",
         "Solar Panel Installation",
@@ -100,6 +119,17 @@ p { margin-bottom:16px; font-size:15px; color:var(--ink-soft); }
 .city-tab:hover { border-color:var(--amber); }
 .city-tab.active { background:var(--teal-deep); color:#fff; border-color:var(--teal-deep); }
 
+.region-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin:24px 0; }
+.region-card { background:#fff; border:1.5px solid var(--rule); border-radius:10px; padding:16px 18px; cursor:pointer; text-align:left; transition:all 0.2s; font-family:inherit; }
+.region-card:hover { border-color:var(--amber); }
+.region-card.active { background:var(--teal-deep); border-color:var(--teal-deep); }
+.region-card.active .region-name, .region-card.active .region-count { color:#fff; }
+.region-name { font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--teal-deep); display:block; }
+.region-count { font-size:12.5px; color:#7a7264; margin-top:4px; display:block; }
+.region-card.soon { cursor:default; opacity:0.65; }
+.region-card.soon:hover { border-color:var(--rule); }
+.region-card.soon .region-count { color:var(--amber); font-weight:600; }
+
 .stats-box { background:var(--paper-warm); border-radius:12px; padding:24px; margin:24px 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:20px; text-align:center; }
 .stat { }
 .stat-num { font-family:'Fraunces',serif; font-size:32px; font-weight:700; color:var(--amber); }
@@ -129,9 +159,9 @@ footer a { color:rgba(250,247,242,.75); text-decoration:none; }
 
 <section class="hero">
   <div class="wrap">
-    <h1>Verified Installers Across BC &amp; Ontario</h1>
-    <p>320+ heat pump and solar installers, all rated 4+ stars, across 36 cities.</p>
-    <p class="subnote">Filtered by service type and location — find your local installer.</p>
+    <h1>Verified Installers Across Canada &amp; the US</h1>
+    <p>320+ heat pump and solar installers, all rated 4+ stars, across 36 cities in BC &amp; Ontario — with Alberta, Nova Scotia, and Massachusetts coverage on the way.</p>
+    <p class="subnote">Pick your region, then filter by service type and location — find your local installer.</p>
   </div>
 </section>
 
@@ -150,20 +180,22 @@ footer a { color:rgba(250,247,242,.75); text-decoration:none; }
 
 <section class="section">
   <div class="wrap">
-    <div class="eyebrow">Filter by Program Qualification</div>
-    <div class="filters">
-      <span class="filter-label">Programs:</span>
-      <button class="filter-program-btn active" data-program="all">All Programs</button>
-      <button class="filter-program-btn" data-program="esp">Energy Savings Program</button>
-      <button class="filter-program-btn" data-program="hrr">Home Renovation Rebate</button>
-      <button class="filter-program-btn" data-program="esp-hrr">Both Programs</button>
-    </div>
+    <div class="eyebrow">Step 1 &middot; Select Your Region</div>
+    <h2 style="font-size:20px;">Where are you looking for an installer?</h2>
+    <div class="region-grid" id="region-grid-container"></div>
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="program-filter-section" style="display:none;">
   <div class="wrap">
-    <div class="eyebrow">Or Select Your City</div>
+    <div class="eyebrow">Filter by Program Qualification</div>
+    <div class="filters" id="program-filters-container"></div>
+  </div>
+</section>
+
+<section class="section" id="city-select-section" style="display:none;">
+  <div class="wrap">
+    <div class="eyebrow">Step 2 &middot; Select Your City</div>
     <div class="city-tabs" id="city-tabs-container"></div>
   </div>
 </section>
@@ -187,8 +219,8 @@ footer a { color:rgba(250,247,242,.75); text-decoration:none; }
 
     <h2>Installers Near You</h2>
     <div id="installers-container" class="installer-grid"></div>
-    <div id="empty-state" class="empty-state" style="display:none;">
-      <p>No installers match your filters. Try adjusting your selection.</p>
+    <div id="empty-state" class="empty-state">
+      <p>Select a region above to see verified installers near you.</p>
     </div>
   </div>
 </section>
@@ -757,10 +789,24 @@ const ON_CITIES = [
 // Kept for anything still referencing the old flat name.
 const CITIES = BC_CITIES.concat(ON_CITIES);
 
+// Region definitions drive the "Step 1 · Select Your Region" cards.
+// AB/NS/MA have live rebate hub pages already but no installer directory
+// data yet (that's a separate scrape landing later) — they're shown as
+// "coming soon" so this page doesn't need another structural edit once
+// that data arrives; they simply gain a `cities` list + json/profile bases.
+const REGIONS = [
+  { code: 'BC', name: 'British Columbia', cities: BC_CITIES, jsonBase: '/installers/json', profileBase: '/installers/profiles', ready: true },
+  { code: 'ON', name: 'Ontario', cities: ON_CITIES, jsonBase: '/installers/json/on', profileBase: '/installers/profiles/on', ready: true },
+  { code: 'AB', name: 'Alberta', cities: [], ready: false },
+  { code: 'NS', name: 'Nova Scotia', cities: [], ready: false },
+  { code: 'MA', name: 'Massachusetts', cities: [], ready: false },
+];
+
 let allInstallers = [];
 let currentFilter = 'all';
 let currentCity = 'all';
 let currentProgram = 'all';
+let currentRegion = null;
 
 function citySlug(city) {
   return city.toLowerCase().replace(/ /g, '-').replace(/\./g, '');
@@ -771,10 +817,7 @@ async function loadInstallers() {
     // Load every city's installer JSON — BC files live at /installers/json/,
     // Ontario's at /installers/json/on/ (province-prefixed, mirrors the
     // /installers/profiles/on/ URL split for the profile pages themselves).
-    const provinces = [
-      { cities: BC_CITIES, region: 'BC', jsonBase: '/installers/json', profileBase: '/installers/profiles' },
-      { cities: ON_CITIES, region: 'ON', jsonBase: '/installers/json/on', profileBase: '/installers/profiles/on' },
-    ];
+    const provinces = REGIONS.filter(r => r.ready);
 
     for (const prov of provinces) {
       const heatPumpPromises = prov.cities.map(city =>
@@ -789,26 +832,56 @@ async function loadInstallers() {
       prov.cities.forEach((city, idx) => {
         const slug = citySlug(city);
         [...(heatPumpResults[idx] || []), ...(solarResults[idx] || [])].forEach(installer => {
-          const key = `${prov.region}-${installer.name}-${city}`;
+          const key = `${prov.code}-${installer.name}-${city}`;
           if (!seen.has(key)) {
             seen.add(key);
-            allInstallers.push({ ...installer, city, slug, region: prov.region });
+            allInstallers.push({ ...installer, city, slug, region: prov.code });
           }
         });
       });
     }
 
-    renderCityTabs();
+    renderRegionGrid();
     render();
   } catch (error) {
     console.error('Failed to load installers:', error);
   }
 }
 
+function renderRegionGrid() {
+  const container = document.getElementById('region-grid-container');
+  container.innerHTML = REGIONS.map(r => {
+    const count = r.ready ? `${r.cities.length} cities` : 'Installer data coming soon';
+    const classes = 'region-card' + (r.ready ? '' : ' soon') + (currentRegion === r.code ? ' active' : '');
+    return `<button type="button" class="${classes}" data-region="${r.code}" ${r.ready ? '' : 'disabled aria-disabled="true"'}>
+      <span class="region-name">${r.name}</span>
+      <span class="region-count">${count}</span>
+    </button>`;
+  }).join('');
+
+  container.querySelectorAll('.region-card').forEach(btn => {
+    if (btn.disabled) return;
+    btn.addEventListener('click', () => {
+      const code = btn.dataset.region;
+      currentRegion = code;
+      currentCity = 'all';
+      container.querySelectorAll('.region-card').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('city-select-section').style.display = 'block';
+      renderCityTabs();
+      renderProgramFilters();
+      render();
+    });
+  });
+}
+
 function renderCityTabs() {
+  const region = REGIONS.find(r => r.code === currentRegion);
+  const cities = region ? region.cities : [];
   const container = document.getElementById('city-tabs-container');
-  container.innerHTML = '<button class="city-tab active" data-city="all">All Cities</button>' +
-    CITIES.map(city => `<button class="city-tab" data-city="${city}">${city}</button>`).join('');
+  container.innerHTML = '<button class="city-tab active" data-city="all">All ' + (region ? region.name : '') + ' Cities</button>' +
+    cities.map(city => `<button class="city-tab" data-city="${city}">${city}</button>`).join('');
+  currentCity = 'all';
 
   container.querySelectorAll('.city-tab').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -820,8 +893,41 @@ function renderCityTabs() {
   });
 }
 
+// Program-qualification filtering is BC-specific: BC Hydro/CleanBC's
+// "Energy Savings Program" and "Home Renovation Rebate" tracks are recorded
+// per-installer in the BC JSON (bhbc_programs). Ontario's installer data has
+// no equivalent field yet, so the filter only appears once BC is selected.
+function renderProgramFilters() {
+  const section = document.getElementById('program-filter-section');
+  const container = document.getElementById('program-filters-container');
+  currentProgram = 'all';
+
+  if (currentRegion !== 'BC') {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = 'block';
+  container.innerHTML = `
+    <span class="filter-label">CleanBC / BC Hydro Programs:</span>
+    <button class="filter-program-btn active" data-program="all">All Programs</button>
+    <button class="filter-program-btn" data-program="esp">Energy Savings Program</button>
+    <button class="filter-program-btn" data-program="hrr">Home Renovation Rebate</button>
+    <button class="filter-program-btn" data-program="esp-hrr">Both Programs</button>
+  `;
+
+  container.querySelectorAll('.filter-program-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.filter-program-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentProgram = btn.dataset.program;
+      render();
+    });
+  });
+}
+
 function render() {
-  let filtered = allInstallers;
+  let filtered = currentRegion ? allInstallers.filter(i => i.region === currentRegion) : [];
 
   if (currentFilter !== 'all') {
     filtered = filtered.filter(i => {
@@ -852,6 +958,9 @@ function render() {
 
   if (filtered.length === 0) {
     container.innerHTML = '';
+    emptyState.querySelector('p').textContent = currentRegion
+      ? 'No installers match your filters. Try adjusting your selection.'
+      : 'Select a region above to see verified installers near you.';
     emptyState.style.display = 'block';
     return;
   }
@@ -883,14 +992,8 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
-document.querySelectorAll('.filter-program-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-program-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentProgram = btn.dataset.program;
-    render();
-  });
-});
+// Program-filter buttons are rendered dynamically per-region by
+// renderProgramFilters(), which attaches its own click handlers.
 
 loadInstallers();
 </script>

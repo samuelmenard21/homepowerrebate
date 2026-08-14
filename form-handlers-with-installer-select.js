@@ -8,19 +8,44 @@
 const WORKER_URL = 'https://leads.homepowerrebate.com';
 const INSTALLERS_JSON_BASE = '/installers/json';
 
+// BC's installer JSON lives directly under /installers/json — every other
+// region lives under its own subpath (mirrors installers/json/{on,ab,ns,ma}
+// on disk, from generate_installer_json_from_real.py's per-region out_dir).
+const REGION_PATH_PREFIX = { BC: '', ON: 'on', AB: 'ab', NS: 'ns', MA: 'ma' };
+
 /**
- * Load installers for a city from JSON
+ * Load installers for a city, merging heat-pump + solar directories so a
+ * homeowner interested in either trade sees a complete chooser. Region-aware:
+ * BC reads the flat path, every other province/state reads its own subpath.
  */
-async function loadInstallersForCity(city) {
-  try {
-    const response = await fetch(`${INSTALLERS_JSON_BASE}/${city.toLowerCase().replace(' ', '-')}.json`);
-    if (response.ok) {
-      return await response.json();
+async function loadInstallersForCity(city, province) {
+  const prefix = REGION_PATH_PREFIX[(province || 'BC').toUpperCase()] ?? '';
+  const base = prefix ? `${INSTALLERS_JSON_BASE}/${prefix}` : INSTALLERS_JSON_BASE;
+  const slug = city.toLowerCase().replace(/\s+/g, '-');
+
+  async function safeFetch(url) {
+    try {
+      const r = await fetch(url);
+      return r.ok ? await r.json() : [];
+    } catch (e) {
+      return [];
     }
-  } catch (e) {
-    console.error(`Failed to load installers for ${city}:`, e);
   }
-  return [];
+
+  try {
+    const [hp, solar] = await Promise.all([
+      safeFetch(`${base}/${slug}.json`),
+      safeFetch(`${base}/solar/${slug}.json`)
+    ]);
+    const byName = new Map();
+    [...hp, ...solar].forEach(inst => {
+      if (inst && inst.name && inst.email) byName.set(inst.name, inst);
+    });
+    return [...byName.values()];
+  } catch (e) {
+    console.error(`Failed to load installers for ${city}, ${province}:`, e);
+    return [];
+  }
 }
 
 /**

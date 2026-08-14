@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Quotes From Local Installers | HomePowerRebate</title>
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W33G4TGRHD');
+</script>
+
+<meta name="description" content="Tell us what you're interested in, pick a few local vetted installers, and get quotes — no sales calls, no obligation.">
+<link rel="canonical" href="https://homepowerrebate.com/get-quotes/">
+<meta property="og:title" content="Get Quotes From Local Installers | HomePowerRebate">
+<meta property="og:description" content="Tell us what you're interested in, pick a few local vetted installers, and get quotes — no sales calls, no obligation.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://homepowerrebate.com/get-quotes/">
+<meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
+  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
+  --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1; --error: #c85a54;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter Tight', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); padding: 16px 28px; }
+.logo { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
+.logo-power { color: var(--amber); }
+
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 28px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(30px, 5vw, 44px); line-height: 1.1; letter-spacing: -0.02em; color: var(--teal-deep); margin: 0 0 14px; }
+h2 { font-family: 'Fraunces', serif; font-size: 22px; color: var(--teal-deep); margin: 0 0 16px; }
+p { color: var(--ink-soft); }
+
+.hero { padding: 48px 28px 40px; background: var(--teal-deep); color: var(--paper); text-align: center; }
+.hero .wrap { max-width: 680px; }
+.hero h1 { color: var(--paper); }
+.hero p { color: rgba(250,247,242,.85); font-size: 16px; }
+.hero .city-note { display: inline-block; margin-top: 16px; background: rgba(250,247,242,.1); border: 1px solid rgba(250,247,242,.2); border-radius: 999px; padding: 8px 18px; font-size: 14px; }
+
+.section { padding: 44px 28px; }
+
+.checklist { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 8px; margin-bottom: 32px; }
+.check-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px; border-bottom: 1px solid var(--rule); cursor: pointer; }
+.check-item:last-child { border-bottom: none; }
+.check-item:hover { background: var(--paper-warm); border-radius: 8px; }
+.check-item input[type="checkbox"] { margin-top: 3px; width: 18px; height: 18px; cursor: pointer; accent-color: var(--amber); flex-shrink: 0; }
+.check-label h4 { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+.check-label p { font-size: 13px; color: var(--ink-soft); margin: 0; }
+
+.form-card { background: #fff; border: 1px solid var(--rule); border-radius: 16px; padding: 28px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); }
+.field input, .field textarea, .field select { font-family: inherit; font-size: 15px; padding: 11px 13px; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); color: var(--ink); }
+.field textarea { resize: vertical; }
+.field input:focus, .field textarea:focus, .field select:focus { outline: 2px solid var(--amber); outline-offset: 1px; }
+
+.submit-btn { width: 100%; background: var(--amber); color: #fff; border: none; padding: 15px; border-radius: 999px; font-size: 16px; font-weight: 600; font-family: inherit; cursor: pointer; margin-top: 8px; }
+.submit-btn:hover { background: var(--amber-bright); }
+.submit-btn:disabled { opacity: .6; cursor: not-allowed; }
+.privacy-note { font-size: 12px; color: var(--sage); margin-top: 14px; text-align: center; }
+
+.response-msg { margin-top: 16px; padding: 14px 16px; border-radius: 8px; font-size: 14px; display: none; }
+.response-msg.show { display: block; }
+.response-msg.success { background: #eaf3ee; color: var(--green-money); }
+.response-msg.error { background: #fef3e6; color: #a15d10; border: 1px solid #e8b87a; }
+
+/* Installer chooser modal (matches form-handlers-with-installer-select.js's inline-built markup) */
+.hpr-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center; z-index: 10000; padding: 20px; }
+
+footer { padding: 40px 28px; border-top: 1px solid var(--rule); background: var(--ink); color: rgba(250,247,242,.6); text-align: center; font-size: 12px; }
+footer a { color: rgba(250,247,242,.75); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Get quotes from local installers</h1>
+    <p>Tell us what you're interested in and pick a few vetted installers near you — the same details go to each, so you can compare real quotes instead of chasing multiple forms.</p>
+    <div class="city-note" id="cityNote">Loading your area…</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>What are you interested in?</h2>
+    <div class="checklist" id="upgradeChecklist">
+      <label class="check-item"><input type="checkbox" value="heat-pump"><span class="check-label"><h4>🔥 Heat pump</h4><p>Replaces a furnace or baseboards — heats and cools one machine.</p></span></label>
+      <label class="check-item"><input type="checkbox" value="solar"><span class="check-label"><h4>☀️ Solar panels</h4><p>Rooftop solar, typically 8–12 kW for a home.</p></span></label>
+      <label class="check-item"><input type="checkbox" value="battery"><span class="check-label"><h4>🔋 Home battery</h4><p>Backup power, and pairs well with solar.</p></span></label>
+      <label class="check-item"><input type="checkbox" value="insulation"><span class="check-label"><h4>🏠 Insulation</h4><p>Attic, walls, or crawlspace — often the best first upgrade.</p></span></label>
+      <label class="check-item"><input type="checkbox" value="water-heater"><span class="check-label"><h4>💧 Heat pump water heater</h4><p>Replaces an electric or gas tank.</p></span></label>
+      <label class="check-item"><input type="checkbox" value="windows"><span class="check-label"><h4>🟫 Windows &amp; doors</h4><p>Energy-efficient replacements.</p></span></label>
+      <label class="check-item"><input type="checkbox" value="ev-charger"><span class="check-label"><h4>🚗 EV charger</h4><p>Home Level 2 charger installation.</p></span></label>
+      <label class="check-item"><input type="checkbox" value="thermostat"><span class="check-label"><h4>📱 Smart thermostat</h4><p>Nest, Ecobee, or similar.</p></span></label>
+    </div>
+
+    <h2>Your details</h2>
+    <div class="form-card">
+      <form id="quoteForm">
+        <div class="field-row">
+          <div class="field"><label for="qFirstname">First name</label><input type="text" id="qFirstname" required></div>
+          <div class="field"><label for="qLastname">Last name</label><input type="text" id="qLastname" required></div>
+        </div>
+        <div class="field-row">
+          <div class="field full"><label for="qEmail">Email</label><input type="email" id="qEmail" required></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="qPhone">Phone</label><input type="tel" id="qPhone" required></div>
+          <div class="field"><label for="qPostal">Postal / zip code</label><input type="text" id="qPostal" required></div>
+        </div>
+        <div class="field-row">
+          <div class="field full">
+            <label for="qNotes">Anything else the installer should know? (optional)</label>
+            <textarea id="qNotes" rows="3" placeholder="e.g. timeline, access constraints, an existing quote you're comparing against…"></textarea>
+          </div>
+        </div>
+        <input type="text" id="qWebsite" style="position:absolute;left:-9999px;" tabindex="-1" autocomplete="off">
+        <button type="submit" class="submit-btn" id="quoteSubmitBtn">Choose installers &amp; send my details →</button>
+        <p class="privacy-note">No spam, no auto-dial. Only the installers you pick receive your details.</p>
+        <div class="response-msg" id="quoteResponse"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 HomePowerRebate &middot; Independent guide &amp; installer matching.</p>
+</footer>
+
+<script src="/form-handlers-with-installer-select.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const CITY = params.get('city') || '';
+const PROVINCE = (params.get('province') || '').toUpperCase();
+const CITY_DISPLAY = CITY ? CITY.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : '';
+
+const cityNote = document.getElementById('cityNote');
+cityNote.textContent = CITY_DISPLAY && PROVINCE ? `Showing installers for ${CITY_DISPLAY}, ${PROVINCE}` : 'Enter your details below to get started';
+
+const form = document.getElementById('quoteForm');
+const responseEl = document.getElementById('quoteResponse');
+const submitBtn = document.getElementById('quoteSubmitBtn');
+
+function showResponse(msg, ok) {
+  responseEl.textContent = msg;
+  responseEl.className = 'response-msg show ' + (ok ? 'success' : 'error');
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  if (!CITY || !PROVINCE) {
+    showResponse('Missing your city — please go back to your city\'s rebate page and click through from there.', false);
+    return;
+  }
+
+  const upgrades = [...document.querySelectorAll('#upgradeChecklist input:checked')].map(el => el.value);
+  const sharedFields = {
+    firstname: document.getElementById('qFirstname').value,
+    lastname: document.getElementById('qLastname').value,
+    email: document.getElementById('qEmail').value,
+    phone: document.getElementById('qPhone').value,
+    postal: document.getElementById('qPostal').value,
+    city: CITY,
+    notes: document.getElementById('qNotes').value,
+    upgrades,
+    page_url: location.href,
+    referrer: document.referrer || 'direct',
+    website: document.getElementById('qWebsite').value // honeypot
+  };
+
+  if (sharedFields.website) return; // bot
+
+  async function submitToInstallers(selectedInstallers) {
+    const submissions = (selectedInstallers.length ? selectedInstallers : [null]).map(installer =>
+      fetch('https://leads.homepowerrebate.com/estimate-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...sharedFields,
+          installer_name: installer?.name || '',
+          installer_email: installer?.email || '',
+          installer_phone: installer?.phone || ''
+        })
+      }).then(r => r.json()).then(r => r.success).catch(() => false)
+    );
+    const results = await Promise.allSettled(submissions);
+    return results.filter(r => r.status === 'fulfilled' && r.value).length;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Loading installers…';
+
+  try {
+    const installers = await loadInstallersForCity(CITY, PROVINCE);
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Choose installers & send my details →';
+
+    if (installers.length === 0) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      const sent = await submitToInstallers([]);
+      showResponse(sent
+        ? "Got it! We're still building our installer network in your area — we'll follow up personally."
+        : 'Something went wrong — please try again.', sent);
+      if (sent) form.reset();
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Choose installers & send my details →';
+      return;
+    }
+
+    showInstallerChooser(
+      installers,
+      async (selectedInstallers) => {
+        submitBtn.disabled = true;
+        submitBtn.textContent = `Sending to ${selectedInstallers.length} installer${selectedInstallers.length !== 1 ? 's' : ''}...`;
+        const sentCount = await submitToInstallers(selectedInstallers);
+        showResponse(sentCount > 0
+          ? `Sent to ${sentCount} installer${sentCount !== 1 ? 's' : ''} — expect a call or email within 1 business day.`
+          : 'Something went wrong — please try again.', sentCount > 0);
+        if (sentCount > 0) form.reset();
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Choose installers & send my details →';
+      },
+      () => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Choose installers & send my details →';
+      }
+    );
+  } catch (err) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Choose installers & send my details →';
+    showResponse('Something went wrong — please try again.', false);
+  }
+});
+</script>
+</body>
+</html>

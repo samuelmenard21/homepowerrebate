@@ -150,10 +150,21 @@ const INSTALLER_ROUTING = {
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': 'https://homepowerrebate.com',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
   'Access-Control-Max-Age': '86400'
 };
+
+// Outcomes comparison feature: valid categories (matches the site's 8-category
+// standard) and the minimum sample size before a city/province average is
+// shown, so a handful of self-reports (or one bad-faith submission) can't
+// skew a displayed stat. Below the threshold, callers fall back to the next
+// wider tier (city -> province -> national).
+const OUTCOME_CATEGORIES = [
+  'heat-pump', 'solar', 'battery', 'insulation',
+  'water-heater', 'windows', 'ev-charger', 'thermostat'
+];
+const MIN_SAMPLE = 5;
 
 // For local testing, uncomment:
 // CORS_HEADERS['Access-Control-Allow-Origin'] = '*';
@@ -172,17 +183,25 @@ export default {
       return new Response(null, { status: 204, headers: CORS_HEADERS });
     }
 
+    const url = new URL(request.url);
+    const path = url.pathname.replace(/\/$/, ''); // strip trailing slash
+
+    // GET routes (read-only, no lead capture) — everything else stays POST-only.
+    if (path === '/outcomes/compare') {
+      return request.method === 'GET'
+        ? handleOutcomeCompare(request, env)
+        : jsonResponse({ error: 'Method not allowed' }, 405);
+    }
+
     if (request.method !== 'POST') {
       return jsonResponse({ error: 'Method not allowed' }, 405);
     }
-
-    const url = new URL(request.url);
-    const path = url.pathname.replace(/\/$/, ''); // strip trailing slash
 
     if (path === '/submit') return handleLeadSubmit(request, env);
     if (path === '/waitlist') return handleWaitlistSubmit(request, env);
     if (path === '/newsletter') return handleNewsletter(request, env);
     if (path === '/estimate-lead') return handleEstimateLead(request, env);
+    if (path === '/outcomes/submit') return handleOutcomeSubmit(request, env);
 
     return jsonResponse({ error: `Unknown route: ${path}` }, 404);
   }
@@ -505,6 +524,218 @@ async function handleEstimateLead(request, env) {
     installer_name: installer ? installer.name : null,
     installer_phone: installer ? installer.phone : null
   }, 200);
+}
+
+// ===========================================================================
+// ROUTE 5 — /outcomes/submit (verified-outcomes: "give to get" comparison)
+// ===========================================================================
+// A homeowner reports what they actually paid, post-install. In exchange,
+// the response includes their own comparison stats immediately — that's
+// the incentive to submit (no email round-trip required to see it).
+// Full postal code and address are never stored — only the FSA (first 3
+// characters), city, and province, which is enough to build a comparison
+// without being personally identifying.
+
+async function handleOutcomeSubmit(request, env) {
+  let p;
+  try { p = await request.json(); } catch (e) { return jsonResponse({ error: 'Invalid JSON' }, 400); }
+
+  if (p.website) return jsonResponse({ success: true }, 200); // honeypot
+
+  const required = ['email', 'category', 'postal', 'city', 'province', 'install_month', 'total_cost'];
+  const missing = required.filter(f => p[f] === undefined || p[f] === null || p[f] === '');
+  if (missing.length) return jsonResponse({ error: `Missing fields: ${missing.join(', ')}` }, 400);
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email)) {
+    return jsonResponse({ error: 'Invalid email' }, 400);
+  }
+
+  const category = String(p.category).toLowerCase().trim();
+  if (!OUTCOME_CATEGORIES.includes(category)) {
+    return jsonResponse({ error: `Unknown category: ${category}` }, 400);
+  }
+
+  const postalFsa = extractFsa(p.postal, p.province);
+  if (!postalFsa) return jsonResponse({ error: 'Invalid postal/zip code' }, 400);
+
+  if (!/^\d{4}-\d{2}$/.test(String(p.install_month))) {
+    return jsonResponse({ error: 'install_month must be YYYY-MM' }, 400);
+  }
+
+  const totalCost = Number(p.total_cost);
+  const rebatesReceived = Number(p.rebates_received || 0);
+  if (!Number.isFinite(totalCost) || totalCost <= 0) {
+    return jsonResponse({ error: 'total_cost must be a positive number' }, 400);
+  }
+  if (!Number.isFinite(rebatesReceived) || rebatesReceived < 0) {
+    return jsonResponse({ error: 'rebates_received must be a non-negative number' }, 400);
+  }
+
+  const netCost = Math.max(0, totalCost - rebatesReceived);
+  const city = cleanString(p.city).toLowerCase();
+  const province = cleanString(p.province).toUpperCase();
+  const billBefore = p.monthly_bill_before != null ? Number(p.monthly_bill_before) : null;
+  const billAfter = p.monthly_bill_after != null ? Number(p.monthly_bill_after) : null;
+
+  const id = crypto.randomUUID();
+  const createdAt = new Date().toISOString();
+
+  if (!env.OUTCOMES_DB) {
+    return jsonResponse({ error: 'Outcomes database not configured' }, 500);
+  }
+
+  try {
+    await env.OUTCOMES_DB.prepare(
+      `INSERT INTO outcomes
+        (id, created_at, category, postal_fsa, city, province, install_month,
+         total_cost, rebates_received, net_cost, monthly_bill_before, monthly_bill_after,
+         installer_name, verified, email, status)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 'new')`
+    ).bind(
+      id, createdAt, category, postalFsa, city, province, String(p.install_month),
+      totalCost, rebatesReceived, netCost,
+      Number.isFinite(billBefore) ? billBefore : null,
+      Number.isFinite(billAfter) ? billAfter : null,
+      cleanString(p.installer_name || ''),
+      cleanString(p.email)
+    ).run();
+  } catch (e) {
+    console.error('Outcome insert failed:', e);
+    return jsonResponse({ error: 'Failed to save outcome' }, 500);
+  }
+
+  // Give-to-get: return this homeowner's comparison immediately.
+  const comparison = await computeComparison(env, category, city, province, netCost);
+
+  // Fire-and-forget: log to sheet + notify ops so submissions are visible
+  // alongside leads/waitlist without adding latency to the response.
+  const record = {
+    record_type: 'outcome',
+    outcome_id: id,
+    timestamp: createdAt,
+    category, city, province,
+    postal_fsa: postalFsa,
+    install_month: String(p.install_month),
+    total_cost: totalCost,
+    rebates_received: rebatesReceived,
+    net_cost: netCost,
+    installer_name: cleanString(p.installer_name || ''),
+    email: cleanString(p.email),
+    status: 'new'
+  };
+  Promise.allSettled([logToSheet(record, env), sendOpsOutcomeAlert(record, env)]);
+
+  return jsonResponse({ success: true, outcome_id: id, comparison }, 200);
+}
+
+// ===========================================================================
+// ROUTE 6 — /outcomes/compare (GET: read-only comparison lookup)
+// ===========================================================================
+// Lets a page (e.g. a blog post or city hub) show live comparison stats
+// without requiring a fresh submission — used for the "see how others in
+// BC compare" widgets. Same tiering/threshold logic as the submit response.
+
+async function handleOutcomeCompare(request, env) {
+  const url = new URL(request.url);
+  const category = String(url.searchParams.get('category') || '').toLowerCase().trim();
+  const city = String(url.searchParams.get('city') || '').toLowerCase().trim();
+  const province = String(url.searchParams.get('province') || '').toUpperCase().trim();
+  const valueParam = url.searchParams.get('value');
+  const value = valueParam != null ? Number(valueParam) : null;
+
+  if (!OUTCOME_CATEGORIES.includes(category)) {
+    return jsonResponse({ error: `Unknown or missing category` }, 400);
+  }
+  if (!env.OUTCOMES_DB) {
+    return jsonResponse({ error: 'Outcomes database not configured' }, 500);
+  }
+
+  const comparison = await computeComparison(env, category, city, province, Number.isFinite(value) ? value : null);
+  return jsonResponse({ success: true, comparison }, 200);
+}
+
+// ===========================================================================
+// OUTCOMES: shared aggregation logic (city -> province -> national tiers)
+// ===========================================================================
+
+async function computeComparison(env, category, city, province, netCostForPercentile) {
+  const tiers = [];
+
+  if (city) tiers.push(await tierStats(env, 'city', category, 'city = ?', [city]));
+  if (province) tiers.push(await tierStats(env, 'province', category, 'province = ?', [province]));
+  tiers.push(await tierStats(env, 'national', category, '1 = 1', []));
+
+  // Percentile against the narrowest tier that meets MIN_SAMPLE, falling
+  // back wider if the neighbourhood-level sample is too thin to be useful.
+  let percentile = null;
+  if (netCostForPercentile != null) {
+    for (const tier of tiers) {
+      if (tier.n < MIN_SAMPLE) continue;
+      const scope = tier.scope;
+      const where = scope === 'city' ? 'city = ?' : scope === 'province' ? 'province = ?' : '1 = 1';
+      const binds = scope === 'city' ? [city] : scope === 'province' ? [province] : [];
+      const row = await env.OUTCOMES_DB.prepare(
+        `SELECT COUNT(*) AS below FROM outcomes WHERE category = ? AND ${where} AND net_cost <= ?`
+      ).bind(category, ...binds, netCostForPercentile).first();
+      percentile = {
+        scope,
+        // "you paid less than X% of homeowners" — cheaper is better, so this
+        // is the share of the comparison group at or above your cost.
+        cheaper_than_pct: Math.round((1 - (row.below / tier.n)) * 100)
+      };
+      break;
+    }
+  }
+
+  return {
+    category,
+    tiers: tiers.map(t => ({
+      scope: t.scope,
+      sample_size: t.n,
+      shown: t.n >= MIN_SAMPLE,
+      avg_net_cost: t.n > 0 ? Math.round(t.avgNet) : null
+    })),
+    percentile
+  };
+}
+
+async function tierStats(env, scope, category, whereClause, binds) {
+  const row = await env.OUTCOMES_DB.prepare(
+    `SELECT COUNT(*) AS n, AVG(net_cost) AS avg_net FROM outcomes WHERE category = ? AND ${whereClause}`
+  ).bind(category, ...binds).first();
+  return { scope, n: row?.n || 0, avgNet: row?.avg_net || 0 };
+}
+
+// Derive a privacy-safe area code from a full postal/zip code. Canadian FSA
+// (first 3 chars, e.g. "V6B") or US ZIP3 (first 3 digits, e.g. "021") —
+// never store the full code.
+function extractFsa(postal, province) {
+  const raw = String(postal || '').toUpperCase().replace(/\s/g, '');
+  if (String(province).toUpperCase() === 'MA') {
+    return /^\d{5}$/.test(raw) ? raw.slice(0, 3) : null;
+  }
+  return /^[A-Z]\d[A-Z]\d[A-Z]\d$/.test(raw) ? raw.slice(0, 3) : null;
+}
+
+async function sendOpsOutcomeAlert(record, env) {
+  if (!env.OPS_EMAIL) return Promise.resolve();
+  return resendEmail(env.RESEND_API_KEY, {
+    from: 'HomePowerRebate <ops@homepowerrebate.com>',
+    to: env.OPS_EMAIL,
+    subject: `[Outcome] ${record.category} in ${capitalize(record.city)}, ${record.province} — net $${record.net_cost}`,
+    html: `
+      <p>New verified-outcomes submission.</p>
+      <ul>
+        <li><strong>Category:</strong> ${escapeHtml(record.category)}</li>
+        <li><strong>Location:</strong> ${escapeHtml(capitalize(record.city))}, ${escapeHtml(record.province)} (${escapeHtml(record.postal_fsa)})</li>
+        <li><strong>Install month:</strong> ${escapeHtml(record.install_month)}</li>
+        <li><strong>Total cost:</strong> $${record.total_cost}</li>
+        <li><strong>Rebates received:</strong> $${record.rebates_received}</li>
+        <li><strong>Net cost:</strong> $${record.net_cost}</li>
+        <li><strong>Installer:</strong> ${escapeHtml(record.installer_name || '(not provided)')}</li>
+        <li><strong>Email:</strong> ${escapeHtml(record.email)}</li>
+      </ul>`
+  });
 }
 
 // ===========================================================================

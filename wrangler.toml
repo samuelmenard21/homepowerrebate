@@ -13,6 +13,13 @@ routes = [
 # Environment variables (non-sensitive config goes here)
 vars = { ENVIRONMENT = "production" }
 
+# D1 database for verified outcomes (homeowner-submitted cost/savings data
+# powering the neighbour / province / national comparison feature).
+[[d1_databases]]
+binding = "OUTCOMES_DB"
+database_name = "homepowerrebate-outcomes"
+database_id = "99c47c64-e375-44f7-ae4c-6cc2679624e6"
+
 # Secrets are set via `wrangler secret put` in the terminal — not stored in this file
 # Required secrets:
 #   - RESEND_API_KEY          (from https://resend.com)

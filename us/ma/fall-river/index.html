@@ -245,6 +245,162 @@ footer a { color: rgba(250,247,242,.75); }
   </div>
 </article>
 
+
+<section class="unified-carousel-section" style="margin: 60px 0; padding: 40px 28px; max-width: 1100px; margin-left: auto; margin-right: auto; border-top: 1px solid #d9d0c1;">
+  <div style="margin-bottom: 32px;">
+    <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #d4751c; margin-bottom: 8px;">Trusted Partners</p>
+    <h2 style="font-size: 28px; font-weight: 600; color: #0a2a2e; margin-bottom: 8px; font-family: 'Fraunces', serif;">Top Installers in Fall River</h2>
+    <p style="font-size: 15px; color: #666; margin-bottom: 20px;">Verified by Google ratings and reviews. Browse and pick one &mdash; no auctions, no bidding wars.</p>
+  </div>
+  <div style="display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap;">
+    <button class="unified-carousel-type-btn active" data-type="all" style="background: #d4751c; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;">Heat Pumps</button>
+    <button class="unified-carousel-type-btn" data-type="solar" style="background: #f5efe5; color: #0a2a2e; border: 1px solid #d9d0c1; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;">Solar</button>
+    <button class="unified-carousel-type-btn" data-type="recommended" style="background: #f5efe5; color: #0a2a2e; border: 1px solid #d9d0c1; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;">HomePowerRebate Recommended</button>
+  </div>
+  <div class="unified-carousel-wrapper" style="display: flex; flex-direction: column;">
+    <div style="position: relative;">
+      <div class="unified-carousel-container" style="background: #fff; border: 2px solid #d9d0c1; border-radius: 12px; padding: 40px 28px; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between;">
+        <img class="unified-carousel-installer-image" src="" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; background: #f0f0f0;" alt="Installer photo" />
+        <div style="display: flex; align-items: start; justify-content: space-between; margin-bottom: 20px;">
+          <div>
+            <h3 class="unified-carousel-installer-name" style="font-size: 24px; font-weight: 700; color: #0a2a2e; margin-bottom: 4px;">Loading...</h3>
+            <p class="unified-carousel-installer-specialty" style="font-size: 14px; color: #d4751c; font-weight: 600; margin-bottom: 12px;">Installation</p>
+          </div>
+          <div style="text-align: right;">
+            <div class="unified-carousel-installer-rating" style="font-size: 32px; font-weight: 700; color: #d4751c;">4.9&#9733;</div>
+            <p class="unified-carousel-installer-reviews" style="font-size: 12px; color: #666;">47 reviews</p>
+          </div>
+        </div>
+        <p class="unified-carousel-installer-location" style="font-size: 14px; color: #666; margin-bottom: 16px;">&#128205; Location</p>
+        <p class="unified-carousel-installer-description" style="font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 24px; min-height: 60px;">Description</p>
+        <div style="display: flex; gap: 12px; margin-top: 20px;">
+          <a class="unified-carousel-installer-phone" href="tel:+1" style="flex: 1; text-align: center; background: #f5efe5; color: #0d4f5c; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">&#128222; Call</a>
+          <a class="unified-carousel-installer-website" href="#" target="_blank" style="flex: 1; text-align: center; background: #d4751c; color: white; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">&#127760; Website</a>
+        </div>
+      </div>
+      <button class="unified-carousel-prev" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;">&lsaquo;</button>
+      <button class="unified-carousel-next" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;">&rsaquo;</button>
+    </div>
+    <div class="unified-carousel-mobile-nav" style="display: none; justify-content: center; align-items: center; gap: 12px; margin-top: 16px;">
+      <button class="unified-carousel-prev-mobile" style="background: #d4751c; color: white; border: none; width: 44px; height: 44px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;">&lsaquo;</button>
+      <span class="unified-carousel-counter" style="font-size: 14px; font-weight: 600; color: #0a2a2e; min-width: 50px; text-align: center;">1 of 5</span>
+      <button class="unified-carousel-next-mobile" style="background: #d4751c; color: white; border: none; width: 44px; height: 44px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;">&rsaquo;</button>
+    </div>
+  </div>
+  <div class="unified-carousel-dots" style="display: flex; gap: 6px; align-items: center; justify-content: center; margin-top: 28px;"></div>
+  <style>
+    @media (max-width: 480px) {
+      .unified-carousel-prev, .unified-carousel-next { display: none !important; }
+      .unified-carousel-mobile-nav { display: flex !important; }
+    }
+    @media (max-width: 768px) {
+      .unified-carousel-section { padding: 40px 16px !important; margin: 40px 0 !important; }
+      .unified-carousel-container { padding: 24px 16px !important; min-height: 380px !important; }
+    }
+  </style>
+</section>
+<section style="margin: 0 0 60px; padding: 28px; max-width: 1100px; margin-left: auto; margin-right: auto;">
+  <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #d4751c; margin-bottom: 10px;">Helpful Before You Choose</p>
+  <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+    <a href="/blog/red-flags-choosing-solar-installer/" style="flex: 1; min-width: 220px; background: #f5efe5; border: 1px solid #d9d0c1; border-radius: 8px; padding: 16px 18px; text-decoration: none; color: #0a2a2e; font-weight: 600; font-size: 14px;">Red flags to watch for &rarr;</a>
+    <a href="/blog/why-solar-quotes-vary-so-much/" style="flex: 1; min-width: 220px; background: #f5efe5; border: 1px solid #d9d0c1; border-radius: 8px; padding: 16px 18px; text-decoration: none; color: #0a2a2e; font-weight: 600; font-size: 14px;">Why quotes vary so much &rarr;</a>
+    <a href="/blog/home-energy-assessment-questions-to-ask/" style="flex: 1; min-width: 220px; background: #f5efe5; border: 1px solid #d9d0c1; border-radius: 8px; padding: 16px 18px; text-decoration: none; color: #0a2a2e; font-weight: 600; font-size: 14px;">Questions to ask before you book &rarr;</a>
+  </div>
+</section>
+<script>
+class UnifiedInstallerCarouselMA {
+  constructor() {
+    this.heatPumpInstallers = [];
+    this.solarInstallers = [];
+    this.allRecommended = [];
+    this.filteredInstallers = [];
+    this.currentIndex = 0;
+    this.currentType = 'all';
+    this.citySlug = 'fall-river';
+    this.init();
+  }
+  async init() {
+    await this.fetchInstallers();
+    this.setupEventListeners();
+    this.render();
+  }
+  async fetchInstallers() {
+    try {
+      const [hpResponse, solarResponse] = await Promise.all([
+        fetch(`/installers/json/ma/${this.citySlug}.json`),
+        fetch(`/installers/json/ma/solar/${this.citySlug}.json`)
+      ]);
+      this.heatPumpInstallers = await hpResponse.json();
+      this.solarInstallers = await solarResponse.json();
+      this.allRecommended = [...this.heatPumpInstallers, ...this.solarInstallers].filter(i => i.recommended);
+      this.updateFiltered();
+    } catch (error) {
+      console.error('Failed to load installers:', error);
+    }
+  }
+  updateFiltered() {
+    if (this.currentType === 'all') {
+      this.filteredInstallers = this.heatPumpInstallers.slice(0, 5);
+    } else if (this.currentType === 'solar') {
+      this.filteredInstallers = this.solarInstallers.slice(0, 5);
+    } else if (this.currentType === 'recommended') {
+      this.filteredInstallers = this.allRecommended;
+    }
+    this.currentIndex = 0;
+    this.render();
+  }
+  setupEventListeners() {
+    document.querySelectorAll('.unified-carousel-type-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.unified-carousel-type-btn').forEach(b => {
+          b.style.background = b === e.target ? '#d4751c' : '#f5efe5';
+          b.style.color = b === e.target ? 'white' : '#0a2a2e';
+        });
+        this.currentType = e.target.dataset.type;
+        this.updateFiltered();
+      });
+    });
+    document.querySelector('.unified-carousel-prev').addEventListener('click', () => this.prev());
+    document.querySelector('.unified-carousel-next').addEventListener('click', () => this.next());
+    document.querySelector('.unified-carousel-prev-mobile').addEventListener('click', () => this.prev());
+    document.querySelector('.unified-carousel-next-mobile').addEventListener('click', () => this.next());
+  }
+  prev() {
+    if (this.filteredInstallers.length === 0) return;
+    this.currentIndex = (this.currentIndex - 1 + this.filteredInstallers.length) % this.filteredInstallers.length;
+    this.render();
+  }
+  next() {
+    if (this.filteredInstallers.length === 0) return;
+    this.currentIndex = (this.currentIndex + 1) % this.filteredInstallers.length;
+    this.render();
+  }
+  render() {
+    if (this.filteredInstallers.length === 0) return;
+    const installer = this.filteredInstallers[this.currentIndex];
+    document.querySelector('.unified-carousel-installer-image').src = installer.image_url || '';
+    const nameEl = document.querySelector('.unified-carousel-installer-name');
+    nameEl.textContent = installer.name;
+    if (installer.profileUrl) {
+      nameEl.style.cursor = 'pointer';
+      nameEl.style.color = 'var(--teal, #0d4f5c)';
+      nameEl.style.textDecoration = 'underline';
+      nameEl.onclick = () => window.location.href = installer.profileUrl;
+    }
+    document.querySelector('.unified-carousel-installer-specialty').textContent = installer.specialty || 'Installation';
+    document.querySelector('.unified-carousel-installer-rating').textContent = installer.rating.toFixed(1) + '\u2605';
+    document.querySelector('.unified-carousel-installer-reviews').textContent = installer.reviews + ' reviews';
+    document.querySelector('.unified-carousel-installer-location').textContent = '\ud83d\udccd ' + installer.location;
+    document.querySelector('.unified-carousel-installer-description').textContent = installer.description;
+    document.querySelector('.unified-carousel-installer-phone').href = 'tel:' + installer.phone;
+    document.querySelector('.unified-carousel-installer-website').href = installer.website;
+    const counters = document.querySelectorAll('.unified-carousel-counter');
+    counters.forEach(c => c.textContent = `${this.currentIndex + 1} of ${this.filteredInstallers.length}`);
+  }
+}
+document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarouselMA(); });
+</script>
+
 <footer>
   <div class="wrap">
     <p>&copy; 2026 HomePowerRebate &middot; Independent guide. Not affiliated with Mass Save, Eversource, or National Grid. <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>

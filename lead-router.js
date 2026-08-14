@@ -308,6 +308,7 @@ async function handleLeadSubmit(request, env) {
     // The single most important field: what the homeowner actually wants.
     // Previously captured by the frontend and then silently dropped.
     upgrades: Array.isArray(payload.upgrades) ? payload.upgrades.join(', ') : cleanString(payload.upgrades || ''),
+    notes: cleanString(payload.notes || ''),
     estimated_value: cleanString(payload.estimated_rebates || 'unknown'),
     total_cost: cleanString(payload.total_cost || 'unknown'),
     net_cost: cleanString(payload.net_cost || 'unknown'),
@@ -896,6 +897,8 @@ async function sendInstallerEmail(lead, installer, env) {
           <tr><td style="padding:6px 0;color:#1a3d42;">Income tier</td><td style="padding:6px 0;font-weight:600;">${lead.income_tier}</td></tr>
         </table>
 
+        ${lead.notes ? `<div style="background:#fef9e6;border-left:4px solid #d4751c;padding:14px 16px;border-radius:6px;margin-top:16px;"><strong style="color:#08363f;">In their own words:</strong><br>${escapeHtml(lead.notes)}</div>` : ''}
+
         <h2 style="margin:24px 0 12px;font-size:18px;color:#08363f;">Estimate shown to homeowner</h2>
         <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;">
           <div style="font-size:14px;color:#1a3d42;">CleanBC rebates on selection:</div>
@@ -961,6 +964,7 @@ async function sendOpsEmail(lead, env) {
         <li><strong>Home built:</strong> ${lead.year_built}</li>
         <li><strong>Income tier:</strong> ${lead.income_tier}</li>
         <li><strong>Rebates estimate:</strong> ${lead.estimated_value} &middot; System cost: ${lead.total_cost} &middot; After rebates: ${lead.net_cost}</li>
+        ${lead.notes ? `<li><strong>Notes from homeowner:</strong> ${escapeHtml(lead.notes)}</li>` : ''}
         <li><strong>Source:</strong> ${lead.page_url}</li>
       </ul>
     `

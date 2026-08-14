@@ -335,6 +335,11 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
           </div>
         </div>
 
+        <div>
+          <label for="lead-notes" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">Anything else the installer should know? (optional)</label>
+          <textarea id="lead-notes" rows="3" placeholder="e.g. tight crawlspace access, already have one quote, only available weekends, timeline (ASAP vs. just planning), specific brand preference, renting vs. own…" style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink); resize: vertical;"></textarea>
+        </div>
+
         <button type="submit" class="btn-primary" style="width: 100%; background: var(--amber); margin-top: 8px;">Get My Quote →</button>
         <p style="font-size: 12px; color: rgba(250,247,242,.6); text-align: center; margin: 0;">One match, one installer. No spam calls.</p>
         <div id="lead-response" style="display: none; margin-top: 12px; padding: 14px; background: rgba(45, 106, 79, 0.2); border-radius: 8px; font-size: 13px; color: rgba(250,247,242,.9);"></div>
@@ -775,6 +780,7 @@ document.getElementById('assessment-lead-form')?.addEventListener('submit', asyn
   const email = document.getElementById('lead-email').value;
   const phone = document.getElementById('lead-phone').value;
   const postal = document.getElementById('lead-postal').value;
+  const notes = document.getElementById('lead-notes')?.value || '';
   const responseEl = document.getElementById('lead-response');
   const button = e.target.querySelector('button[type="submit"]');
   const originalText = button.textContent;
@@ -826,6 +832,7 @@ document.getElementById('assessment-lead-form')?.addEventListener('submit', asyn
         phone: phone,
         postal: postal,
         city: city,
+        notes: notes,
         upgrades: upgrades,
         income_tier: income,
         utility: utility,

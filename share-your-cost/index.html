@@ -172,10 +172,6 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 
       <div class="field-row">
         <div class="field">
-          <label for="city">City</label>
-          <input type="text" id="city" placeholder="Kelowna" required>
-        </div>
-        <div class="field">
           <label for="province">Province / state</label>
           <select id="province" required>
             <option value="">Select…</option>
@@ -184,6 +180,12 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
             <option value="AB">Alberta</option>
             <option value="NS">Nova Scotia</option>
             <option value="MA">Massachusetts</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="city">City</label>
+          <select id="city" required disabled>
+            <option value="">Select a province first…</option>
           </select>
         </div>
       </div>
@@ -195,7 +197,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         </div>
         <div class="field"></div>
       </div>
-      <div class="hint">Only the first 3 characters are stored — never the full code or your address.</div>
+      <div class="hint">Only the first 3 characters are stored — never the full code or address. It's what lets us eventually compare you to your specific neighbourhood, not just your whole city.</div>
 
       <div class="field-row">
         <div class="field">
@@ -327,20 +329,56 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 
 const API = 'https://leads.homepowerrebate.com';
 
+// City lists match the site's actual city hub pages (/ca/<prov>/<slug>,
+// /us/ma/<slug>) so every submission maps to a real page — keeps the data
+// clean instead of free-text variants of the same city fragmenting an
+// average that's already gated behind a 5-submission minimum.
+const CITIES_BY_PROVINCE = {
+  BC: ['abbotsford','burnaby','chilliwack','coquitlam','fort-st-john','kamloops','kelowna','langley','maple-ridge','nanaimo','penticton','prince-george','richmond','squamish','surrey','vancouver','vernon','victoria'],
+  ON: ['barrie','brampton','burlington','cambridge','greater-sudbury','hamilton','kitchener','london','markham','mississauga','oakville','oshawa','ottawa','richmond-hill','toronto','vaughan','whitby','windsor'],
+  AB: ['calgary','edmonton','lethbridge','red-deer','st-albert'],
+  NS: ['halifax'],
+  MA: ['boston','brockton','cambridge','fall-river','lowell','lynn','new-bedford','newton','quincy','somerville','springfield','worcester']
+};
+
+function humanizeCity(slug) {
+  const special = {
+    'fort-st-john': 'Fort St. John', 'st-albert': 'St. Albert', 'greater-sudbury': 'Greater Sudbury',
+    'richmond-hill': 'Richmond Hill', 'red-deer': 'Red Deer', 'new-bedford': 'New Bedford',
+    'maple-ridge': 'Maple Ridge', 'fall-river': 'Fall River'
+  };
+  return special[slug] || slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+const provinceSelectEl = document.getElementById('province');
+const citySelectEl = document.getElementById('city');
+
+function populateCities(province, selectSlug) {
+  const slugs = CITIES_BY_PROVINCE[province] || [];
+  citySelectEl.innerHTML = '';
+  if (!slugs.length) {
+    citySelectEl.disabled = true;
+    citySelectEl.innerHTML = '<option value="">Select a province first…</option>';
+    return;
+  }
+  citySelectEl.disabled = false;
+  citySelectEl.innerHTML = '<option value="">Select…</option>' +
+    slugs.map(s => `<option value="${s}">${humanizeCity(s)}</option>`).join('');
+  if (selectSlug && slugs.includes(selectSlug)) {
+    citySelectEl.value = selectSlug;
+  }
+}
+
+provinceSelectEl.addEventListener('change', () => populateCities(provinceSelectEl.value));
+
 // Prefill city/province from a query string when arriving via a city-page CTA.
 (function prefillFromQuery(){
   const params = new URLSearchParams(location.search);
   const city = params.get('city');
   const province = params.get('province');
-  if (city) {
-    const cityInput = document.getElementById('city');
-    cityInput.value = city.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-  }
-  if (province) {
-    const provinceSelect = document.getElementById('province');
-    if ([...provinceSelect.options].some(o => o.value === province)) {
-      provinceSelect.value = province;
-    }
+  if (province && [...provinceSelectEl.options].some(o => o.value === province)) {
+    provinceSelectEl.value = province;
+    populateCities(province, city);
   }
 })();
 const form = document.getElementById('outcomeForm');

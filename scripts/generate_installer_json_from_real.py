@@ -45,6 +45,45 @@ JOBS = [
         "specialty": "Solar Installation",
         "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
     },
+    # Alberta
+    {
+        "csv": os.path.join(ROOT, "installers/ab-heat-pump-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/ab"),
+        "specialty": "Heat Pump & HVAC Installation",
+        "description_tpl": "Local heating & cooling pro serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    {
+        "csv": os.path.join(ROOT, "installers/ab-solar-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/ab/solar"),
+        "specialty": "Solar Installation",
+        "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    # Nova Scotia
+    {
+        "csv": os.path.join(ROOT, "installers/ns-heat-pump-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/ns"),
+        "specialty": "Heat Pump & HVAC Installation",
+        "description_tpl": "Local heating & cooling pro serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    {
+        "csv": os.path.join(ROOT, "installers/ns-solar-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/ns/solar"),
+        "specialty": "Solar Installation",
+        "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    # Massachusetts
+    {
+        "csv": os.path.join(ROOT, "installers/ma-heat-pump-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/ma"),
+        "specialty": "Heat Pump & HVAC Installation",
+        "description_tpl": "Local heating & cooling pro serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    {
+        "csv": os.path.join(ROOT, "installers/ma-solar-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/ma/solar"),
+        "specialty": "Solar Installation",
+        "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
 ]
 
 

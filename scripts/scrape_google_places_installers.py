@@ -123,9 +123,39 @@ ONTARIO_CITIES = {
     "Greater Sudbury": {"lat": 46.4917, "lng": -80.9930},
 }
 
+ALBERTA_CITIES = {
+    "Calgary": {"lat": 51.0447, "lng": -114.0719},
+    "Edmonton": {"lat": 53.5461, "lng": -113.4938},
+    "Red Deer": {"lat": 52.2681, "lng": -113.8112},
+    "Lethbridge": {"lat": 49.6956, "lng": -112.8451},
+    "St. Albert": {"lat": 53.6303, "lng": -113.6256},
+}
+
+NOVA_SCOTIA_CITIES = {
+    "Halifax": {"lat": 44.6488, "lng": -63.5752},
+}
+
+MASSACHUSETTS_CITIES = {
+    "Boston": {"lat": 42.3601, "lng": -71.0589},
+    "Worcester": {"lat": 42.2626, "lng": -71.8023},
+    "Springfield": {"lat": 42.1015, "lng": -72.5898},
+    "Cambridge": {"lat": 42.3736, "lng": -71.1097},
+    "Lowell": {"lat": 42.6334, "lng": -71.3162},
+    "Brockton": {"lat": 42.0834, "lng": -71.0184},
+    "New Bedford": {"lat": 41.6362, "lng": -70.9342},
+    "Quincy": {"lat": 42.2529, "lng": -71.0023},
+    "Lynn": {"lat": 42.4668, "lng": -70.9495},
+    "Fall River": {"lat": 41.7015, "lng": -71.1550},
+    "Newton": {"lat": 42.3370, "lng": -71.2092},
+    "Somerville": {"lat": 42.3876, "lng": -71.0995},
+}
+
 PROVINCES = {
     "bc": {"cities": BC_CITIES, "abbrev": "BC", "csv_prefix": ""},
     "on": {"cities": ONTARIO_CITIES, "abbrev": "ON", "csv_prefix": "on-"},
+    "ab": {"cities": ALBERTA_CITIES, "abbrev": "AB", "csv_prefix": "ab-"},
+    "ns": {"cities": NOVA_SCOTIA_CITIES, "abbrev": "NS", "csv_prefix": "ns-"},
+    "ma": {"cities": MASSACHUSETTS_CITIES, "abbrev": "MA", "csv_prefix": "ma-"},
 }
 
 

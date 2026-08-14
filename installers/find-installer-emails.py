@@ -27,7 +27,13 @@ except ImportError:
     sys.exit("pip3 install requests")
 
 HERE = Path(__file__).parent
-SOURCES = ["heat-pump-installers-real.csv", "solar-installers-real.csv"]
+SOURCES = [
+    "heat-pump-installers-real.csv", "solar-installers-real.csv",
+    "on-heat-pump-installers-real.csv", "on-solar-installers-real.csv",
+    "ab-heat-pump-installers-real.csv", "ab-solar-installers-real.csv",
+    "ns-heat-pump-installers-real.csv", "ns-solar-installers-real.csv",
+    "ma-heat-pump-installers-real.csv", "ma-solar-installers-real.csv",
+]
 OUT = HERE / "installer-emails.csv"
 
 UA = "HomePowerRebateBot/1.0 (+https://homepowerrebate.com; installer directory)"
@@ -48,6 +54,11 @@ BAD_TLDS = ("png", "jpg", "jpeg", "gif", "svg", "webp", "css", "js", "woff", "tt
 
 def clean(email):
     email = email.strip().strip(".,;:'\"()<>").lower()
+    # The regex's local-part class includes "%" (needed for real addresses
+    # like first%2Elast@x.com in the wild), but that also lets it swallow a
+    # leading URL-encoded space ("%20info@...") from unescaped page text.
+    # Strip any leading %XX escape sequences before validating.
+    email = re.sub(r"^(%[0-9a-fA-F]{2})+", "", email)
     if "@" not in email:
         return None
     local, _, domain = email.partition("@")

@@ -166,6 +166,22 @@ const OUTCOME_CATEGORIES = [
 ];
 const MIN_SAMPLE = 5;
 
+// Open submissions (no booking/lead required — anyone who did the work can
+// share it, same as a salary-sharing site) means plausibility bounds are the
+// main defense against joke/bot entries skewing an average. Ranges are
+// deliberately wide (installed cost before rebates, CAD/USD both live here).
+const PLAUSIBLE_COST_RANGE = {
+  'heat-pump': [2000, 35000],
+  'solar': [3000, 60000],
+  'battery': [3000, 40000],
+  'insulation': [500, 25000],
+  'water-heater': [500, 15000],
+  'windows': [1000, 40000],
+  'ev-charger': [300, 8000],
+  'thermostat': [50, 1500]
+};
+const MAX_SUBMISSIONS_PER_EMAIL_PER_DAY = 3;
+
 // For local testing, uncomment:
 // CORS_HEADERS['Access-Control-Allow-Origin'] = '*';
 
@@ -571,6 +587,16 @@ async function handleOutcomeSubmit(request, env) {
     return jsonResponse({ error: 'rebates_received must be a non-negative number' }, 400);
   }
 
+  // Plausibility bounds — this endpoint is open to anyone (no booking or
+  // lead required), so this is the main defense against joke/bot entries.
+  const [minCost, maxCost] = PLAUSIBLE_COST_RANGE[category];
+  if (totalCost < minCost || totalCost > maxCost) {
+    return jsonResponse({ error: `total_cost for ${category} should be between $${minCost} and $${maxCost}` }, 400);
+  }
+  if (rebatesReceived > totalCost) {
+    return jsonResponse({ error: 'rebates_received cannot exceed total_cost' }, 400);
+  }
+
   const netCost = Math.max(0, totalCost - rebatesReceived);
   const city = cleanString(p.city).toLowerCase();
   const province = cleanString(p.province).toUpperCase();
@@ -582,6 +608,16 @@ async function handleOutcomeSubmit(request, env) {
 
   if (!env.OUTCOMES_DB) {
     return jsonResponse({ error: 'Outcomes database not configured' }, 500);
+  }
+
+  // Rate limit: same email can't flood a category/city with fake submissions.
+  const email = cleanString(p.email).toLowerCase();
+  const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+  const recentCount = await env.OUTCOMES_DB.prepare(
+    `SELECT COUNT(*) AS n FROM outcomes WHERE email = ? AND created_at >= ?`
+  ).bind(email, since).first();
+  if ((recentCount?.n || 0) >= MAX_SUBMISSIONS_PER_EMAIL_PER_DAY) {
+    return jsonResponse({ error: 'Too many submissions from this email in the last 24 hours' }, 429);
   }
 
   try {
@@ -597,7 +633,7 @@ async function handleOutcomeSubmit(request, env) {
       Number.isFinite(billBefore) ? billBefore : null,
       Number.isFinite(billAfter) ? billAfter : null,
       cleanString(p.installer_name || ''),
-      cleanString(p.email)
+      email
     ).run();
   } catch (e) {
     console.error('Outcome insert failed:', e);
@@ -620,7 +656,7 @@ async function handleOutcomeSubmit(request, env) {
     rebates_received: rebatesReceived,
     net_cost: netCost,
     installer_name: cleanString(p.installer_name || ''),
-    email: cleanString(p.email),
+    email,
     status: 'new'
   };
   Promise.allSettled([logToSheet(record, env), sendOpsOutcomeAlert(record, env)]);

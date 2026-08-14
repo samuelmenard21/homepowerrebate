@@ -594,20 +594,20 @@ const PROVINCE_CONTEXT = {
     ]
   },
   ON: {
-    programName: "Ontario's Home Renovation Savings Program",
+    programName: 'Home Renovation Savings Program',
     links: [
       { href: 'https://homepowerrebate.com/blog/ontario-home-renovation-savings-program-explained/', label: 'How the Ontario Program Works' },
       { href: 'https://homepowerrebate.com/blog/ontario-home-energy-rebates-2026-listicle/', label: 'All 9 Ontario Rebate Categories' }
     ]
   },
   AB: {
-    programName: "Alberta's rebate programs",
+    programName: 'Alberta',
     links: [
       { href: 'https://homepowerrebate.com/blog/alberta-16-applications-one-grant/', label: 'Alberta Rebate Programs Explained' }
     ]
   },
   NS: {
-    programName: "Nova Scotia's rebate programs",
+    programName: 'Nova Scotia',
     links: [
       { href: 'https://homepowerrebate.com/blog/nova-scotia-heat-pump-rebate-disappeared/', label: 'Nova Scotia Heat Pump Rebate Guide' }
     ]

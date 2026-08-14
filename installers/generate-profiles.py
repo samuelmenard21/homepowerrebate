@@ -64,6 +64,22 @@ ON_CITY_SLUGS = {
     "greater sudbury": "greater-sudbury",
 }
 
+AB_CITY_SLUGS = {
+    "calgary": "calgary", "edmonton": "edmonton", "red deer": "red-deer",
+    "lethbridge": "lethbridge", "st albert": "st-albert",
+}
+
+NS_CITY_SLUGS = {
+    "halifax": "halifax",
+}
+
+MA_CITY_SLUGS = {
+    "boston": "boston", "worcester": "worcester", "springfield": "springfield",
+    "cambridge": "cambridge", "lowell": "lowell", "brockton": "brockton",
+    "new bedford": "new-bedford", "quincy": "quincy", "lynn": "lynn",
+    "fall river": "fall-river", "newton": "newton", "somerville": "somerville",
+}
+
 # What each service type actually unlocks. This is the part a Maps listing
 # can't show — it's why the page exists at all. Split by province since the
 # programs, amounts, and structure are genuinely different (BC: CleanBC,
@@ -110,6 +126,69 @@ ON_REBATE_CONTEXT = {
     },
 }
 
+AB_REBATE_CONTEXT = {
+    "heat-pump": {
+        "label": "Heat Pump",
+        "programs": [
+            ("ENMAX / ATCO Gas Rebates", "$500–$2,000 per unit for ENERGY STAR cold-climate models, availability shifts through the year", "/ca/ab"),
+            ("CEIP Financing", "Property-tax-attached financing (not a rebate) with a 5–10% incentive on the financed cost", "/blog/alberta-100-energy-rebate-vs-heat-pump-rebate"),
+        ],
+        "requires_cert": False,
+        "guide": ("/ca/ab", "Alberta Rebate Breakdown"),
+    },
+    "solar": {
+        "label": "Solar",
+        "programs": [
+            ("No provincial solar rebate", "Alberta has no direct solar grant, unlike BC or Quebec — net metering + CEIP financing only", "/ca/ab"),
+            ("CEIP Financing", "Property-tax-attached financing for solar installs at competitive rates", "/blog/alberta-16-applications-one-grant"),
+        ],
+        "requires_cert": False,
+        "guide": ("/ca/ab", "Alberta Rebate Breakdown"),
+    },
+}
+
+NS_REBATE_CONTEXT = {
+    "heat-pump": {
+        "label": "Heat Pump",
+        "programs": [
+            ("Efficiency Nova Scotia Heat Pump Rebate", "Up to $5,000 for any homeowner, up to $15,000 for moderate-income households", "/ca/ns"),
+            ("HomeWarming", "Free heat pump installation for income-qualified households", "/blog/nova-scotia-heat-pump-rebate-disappeared"),
+        ],
+        "requires_cert": False,
+        "guide": ("/ca/ns", "Nova Scotia Rebate Breakdown"),
+    },
+    "solar": {
+        "label": "Solar",
+        "programs": [
+            ("Efficiency Nova Scotia Solar Rebate", "$0.60/watt, roughly $6,000 on a 10kW system", "/ca/ns"),
+            ("Halifax Solar City", "Property-assessed financing at 4.75% fixed over 10 years, no upfront cost, repaid via property tax", "/ca/ns/halifax"),
+        ],
+        "requires_cert": False,
+        "guide": ("/ca/ns/halifax", "Halifax Solar & Heat Pump Guide"),
+    },
+}
+
+MA_REBATE_CONTEXT = {
+    "heat-pump": {
+        "label": "Heat Pump",
+        "programs": [
+            ("Mass Save Heat Pump Rebate", "$2,650/ton, capped at $8,500, plus up to $1,000 in sizing/weatherization bonuses (up to $9,500 total)", "/us/ma"),
+            ("Income-Qualified Mass Save", "Up to $16,000 for air-source heat pumps, up to $25,000 for ground-source systems", "/blog/mass-save-rebate-check-late-truth"),
+        ],
+        "requires_cert": False,
+        "guide": ("/us/ma", "Massachusetts Mass Save Guide"),
+    },
+    "solar": {
+        "label": "Solar",
+        "programs": [
+            ("SMART 3.0", "Locked-in per-kWh production incentive for 10–20 years once enrolled", "/us/ma"),
+            ("ConnectedSolutions + Battery Adder", "$0.04–0.06/kWh storage adder plus annual demand-response payments", "/blog/mass-save-rebate-check-late-truth"),
+        ],
+        "requires_cert": False,
+        "guide": ("/us/ma", "Massachusetts Mass Save Guide"),
+    },
+}
+
 # Per-province config the rest of the script keys off of. BC's values match
 # exactly what was hardcoded before (same URLs, same paths) — adding Ontario
 # doesn't change a single BC output path or existing page.
@@ -135,6 +214,39 @@ PROVINCE_CONFIG = {
         "heat_pump_csv": "on-heat-pump-installers-real.csv",
         "solar_csv": "on-solar-installers-real.csv",
         "json_dir": "json/on",
+    },
+    "ab": {
+        "region_abbrev": "AB",
+        "region_full": "Alberta",
+        "city_slugs": AB_CITY_SLUGS,
+        "rebate_context": AB_REBATE_CONTEXT,
+        "hub_prefix": "/ca/ab",
+        "profile_prefix": "/installers/profiles/ab",
+        "heat_pump_csv": "ab-heat-pump-installers-real.csv",
+        "solar_csv": "ab-solar-installers-real.csv",
+        "json_dir": "json/ab",
+    },
+    "ns": {
+        "region_abbrev": "NS",
+        "region_full": "Nova Scotia",
+        "city_slugs": NS_CITY_SLUGS,
+        "rebate_context": NS_REBATE_CONTEXT,
+        "hub_prefix": "/ca/ns",
+        "profile_prefix": "/installers/profiles/ns",
+        "heat_pump_csv": "ns-heat-pump-installers-real.csv",
+        "solar_csv": "ns-solar-installers-real.csv",
+        "json_dir": "json/ns",
+    },
+    "ma": {
+        "region_abbrev": "MA",
+        "region_full": "Massachusetts",
+        "city_slugs": MA_CITY_SLUGS,
+        "rebate_context": MA_REBATE_CONTEXT,
+        "hub_prefix": "/us/ma",
+        "profile_prefix": "/installers/profiles/ma",
+        "heat_pump_csv": "ma-heat-pump-installers-real.csv",
+        "solar_csv": "ma-solar-installers-real.csv",
+        "json_dir": "json/ma",
     },
 }
 
@@ -593,7 +705,7 @@ def run_province(prov_key, args, emails):
 
     written, skipped = 0, 0
     url_rows = []
-    out_dir = OUT_DIR if prov_key == "bc" else OUT_DIR / "on"
+    out_dir = OUT_DIR if prov_key == "bc" else OUT_DIR / prov_key
     # City-scoped paths (/installers/profiles/{city}/{business}/, or
     # /installers/profiles/on/{city}/{business}/ for Ontario) rather than a
     # flat /profiles/{business}/ — a handful of businesses share a name across
@@ -633,7 +745,7 @@ def run_province(prov_key, args, emails):
     # running this unconditionally for BC silently stripped that enrichment
     # back to the plain fields below. Only write the internal JSON for
     # provinces without a richer external source — currently just Ontario.
-    if not args.dry_run and url_rows and prov_key != "bc":
+    if not args.dry_run and url_rows and prov_key == "on":
         # Generate per-city JSON files for the carousel to consume. Each city
         # gets its own file with all installers in that city, sorted by rating.
         json_dir = INSTALLERS_DIR / cfg["json_dir"]
@@ -676,11 +788,11 @@ def run_province(prov_key, args, emails):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--province", choices=["bc", "on", "all"], default="all")
+    ap.add_argument("--province", choices=["bc", "on", "ab", "ns", "ma", "all"], default="all")
     args = ap.parse_args()
 
     emails = load_emails()
-    provinces = ["bc", "on"] if args.province == "all" else [args.province]
+    provinces = ["bc", "on", "ab", "ns", "ma"] if args.province == "all" else [args.province]
 
     total_written, total_skipped, all_url_rows = 0, 0, []
     for prov_key in provinces:

@@ -316,6 +316,23 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 })();
 
 const API = 'https://leads.homepowerrebate.com';
+
+// Prefill city/province from a query string when arriving via a city-page CTA.
+(function prefillFromQuery(){
+  const params = new URLSearchParams(location.search);
+  const city = params.get('city');
+  const province = params.get('province');
+  if (city) {
+    const cityInput = document.getElementById('city');
+    cityInput.value = city.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  }
+  if (province) {
+    const provinceSelect = document.getElementById('province');
+    if ([...provinceSelect.options].some(o => o.value === province)) {
+      provinceSelect.value = province;
+    }
+  }
+})();
 const form = document.getElementById('outcomeForm');
 const errorMsg = document.getElementById('errorMsg');
 const resultPanel = document.getElementById('resultPanel');

@@ -428,8 +428,11 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            email, phone, city, savings,
+            email, phone, city,
+            estimate: savings,
             source: 'calculator',
+            page: location.href,
+            referrer: document.referrer || 'direct',
             firstname: email.split('@')[0]
           })
         });

@@ -297,15 +297,22 @@ async function handleLeadSubmit(request, env) {
     email: cleanString(payload.email),
     phone: cleanString(payload.phone),
     postal: cleanString(payload.postal),
-    utility: payload.calc_result?.utility || 'unknown',
-    home_type: payload.calc_result?.home_type || 'unknown',
-    has_solar: payload.calc_result?.has_solar || 'unknown',
-    current_heat: payload.calc_result?.current_heat || 'unknown',
-    coverage: payload.calc_result?.coverage || 'unknown',
-    monthly_bill: payload.calc_result?.monthly_bill || 'unknown',
-    estimated_value: payload.calc_result?.estimated_value || 'unknown',
-    payback: payload.calc_result?.payback || 'unknown',
-    page_url: cleanString(payload.page_url || ''),
+    // The retrofit-assessment checklist sends flat fields, not a calc_result
+    // object — that mismatch previously meant every field below silently
+    // fell back to 'unknown' no matter what the homeowner selected.
+    utility: cleanString(payload.utility || 'unknown'),
+    current_heat: cleanString(payload.current_heating || 'unknown'),
+    water_heating: cleanString(payload.water_heating || 'unknown'),
+    year_built: cleanString(payload.year_built || 'unknown'),
+    income_tier: cleanString(payload.income_tier || 'unknown'),
+    // The single most important field: what the homeowner actually wants.
+    // Previously captured by the frontend and then silently dropped.
+    upgrades: Array.isArray(payload.upgrades) ? payload.upgrades.join(', ') : cleanString(payload.upgrades || ''),
+    estimated_value: cleanString(payload.estimated_rebates || 'unknown'),
+    total_cost: cleanString(payload.total_cost || 'unknown'),
+    net_cost: cleanString(payload.net_cost || 'unknown'),
+    ten_year_savings: cleanString(payload.ten_year_savings || 'unknown'),
+    page_url: cleanString(payload.page_url || payload.page || ''),
     referrer: cleanString(payload.referrer || 'direct'),
     status: 'new'
   };
@@ -879,19 +886,21 @@ async function sendInstallerEmail(lead, installer, env) {
           <tr><td style="padding:6px 0;color:#1a3d42;">City</td><td style="padding:6px 0;font-weight:600;">${capitalize(lead.city)}, BC</td></tr>
         </table>
 
-        <h2 style="margin:24px 0 12px;font-size:18px;color:#08363f;">Their situation</h2>
+        <h2 style="margin:24px 0 12px;font-size:18px;color:#08363f;">What they want</h2>
         <table style="width:100%;border-collapse:collapse;">
-          <tr><td style="padding:6px 0;color:#1a3d42;width:140px;">Power company</td><td style="padding:6px 0;font-weight:600;">${formatUtility(lead.utility)}</td></tr>
-          <tr><td style="padding:6px 0;color:#1a3d42;">Home type</td><td style="padding:6px 0;font-weight:600;">${formatHomeType(lead.home_type)}</td></tr>
-          <tr><td style="padding:6px 0;color:#1a3d42;">Already has solar?</td><td style="padding:6px 0;font-weight:600;">${lead.has_solar === 'yes' ? 'Yes' : 'No'}</td></tr>
-          <tr><td style="padding:6px 0;color:#1a3d42;">Monthly bill</td><td style="padding:6px 0;font-weight:600;">${formatBill(lead.monthly_bill)}</td></tr>
+          <tr><td style="padding:6px 0;color:#1a3d42;width:140px;">Upgrades selected</td><td style="padding:6px 0;font-weight:600;">${lead.upgrades || 'none specified'}</td></tr>
+          <tr><td style="padding:6px 0;color:#1a3d42;">Power company</td><td style="padding:6px 0;font-weight:600;">${formatUtility(lead.utility)}</td></tr>
+          <tr><td style="padding:6px 0;color:#1a3d42;">Current heating</td><td style="padding:6px 0;font-weight:600;">${lead.current_heat}</td></tr>
+          <tr><td style="padding:6px 0;color:#1a3d42;">Current water heating</td><td style="padding:6px 0;font-weight:600;">${lead.water_heating}</td></tr>
+          <tr><td style="padding:6px 0;color:#1a3d42;">Home built</td><td style="padding:6px 0;font-weight:600;">${lead.year_built}</td></tr>
+          <tr><td style="padding:6px 0;color:#1a3d42;">Income tier</td><td style="padding:6px 0;font-weight:600;">${lead.income_tier}</td></tr>
         </table>
 
         <h2 style="margin:24px 0 12px;font-size:18px;color:#08363f;">Estimate shown to homeowner</h2>
         <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;">
-          <div style="font-size:14px;color:#1a3d42;">10-year value estimate:</div>
+          <div style="font-size:14px;color:#1a3d42;">CleanBC rebates on selection:</div>
           <div style="font-size:28px;color:#2d6a4f;font-weight:600;margin:4px 0;">${lead.estimated_value}</div>
-          <div style="font-size:14px;color:#1a3d42;">Payback: <strong>${lead.payback}</strong></div>
+          <div style="font-size:14px;color:#1a3d42;">System cost: <strong>${lead.total_cost}</strong> &middot; After rebates: <strong>${lead.net_cost}</strong> &middot; 10-year savings: <strong>${lead.ten_year_savings}</strong></div>
         </div>
 
         <div style="background:#0a2a2e;color:#faf7f2;padding:20px;border-radius:10px;margin-top:24px;text-align:center;">
@@ -946,10 +955,12 @@ async function sendOpsEmail(lead, env) {
         <li><strong>Phone:</strong> ${lead.phone}</li>
         <li><strong>Postal:</strong> ${lead.postal}</li>
         <li><strong>Utility:</strong> ${lead.utility}</li>
-        <li><strong>Has solar:</strong> ${lead.has_solar}</li>
+        <li><strong>Upgrades wanted:</strong> ${lead.upgrades || 'none specified'}</li>
         <li><strong>Current heat:</strong> ${lead.current_heat}</li>
-        <li><strong>Coverage:</strong> ${lead.coverage}</li>
-        <li><strong>Estimated value:</strong> ${lead.estimated_value}</li>
+        <li><strong>Water heating:</strong> ${lead.water_heating}</li>
+        <li><strong>Home built:</strong> ${lead.year_built}</li>
+        <li><strong>Income tier:</strong> ${lead.income_tier}</li>
+        <li><strong>Rebates estimate:</strong> ${lead.estimated_value} &middot; System cost: ${lead.total_cost} &middot; After rebates: ${lead.net_cost}</li>
         <li><strong>Source:</strong> ${lead.page_url}</li>
       </ul>
     `
@@ -1028,7 +1039,7 @@ async function sendLeadConfirmation(lead, installer, env) {
 
       <div style="background:#faf7f2;padding:28px 24px;border-radius:0 0 14px 14px;border:1px solid #d9d0c1;border-top:none;">
         <p style="font-size:16px;line-height:1.6;margin:0 0 16px;">
-          Thanks for taking the HomePowerRebate assessment. We've logged your information and matched you with a local installer in <strong>${capitalize(lead.city)}</strong>.
+          Thanks for taking the HomePowerRebate assessment. We've logged your information for <strong>${capitalize(lead.city)}</strong>.
         </p>
 
         ${installerLine}
@@ -1036,10 +1047,10 @@ async function sendLeadConfirmation(lead, installer, env) {
         <h2 style="font-size:18px;color:#08363f;margin:24px 0 12px;"><strong>Your assessment summary</strong></h2>
         <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;margin-bottom:16px;">
           <table style="width:100%;border-collapse:collapse;font-size:14px;">
-            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:45%;">10-year value estimate:</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${lead.estimated_value}</td></tr>
-            <tr><td style="padding:8px 0;color:#1a3d42;">Payback period:</td><td style="padding:8px 0;font-weight:600;">${lead.payback}</td></tr>
+            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:45%;">CleanBC rebates on selection:</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${lead.estimated_value}</td></tr>
+            <tr><td style="padding:8px 0;color:#1a3d42;">System cost / after rebates:</td><td style="padding:8px 0;font-weight:600;">${lead.total_cost} / ${lead.net_cost}</td></tr>
+            <tr><td style="padding:8px 0;color:#1a3d42;">Upgrades selected:</td><td style="padding:8px 0;font-weight:600;">${lead.upgrades || 'none specified'}</td></tr>
             <tr><td style="padding:8px 0;color:#1a3d42;">Current heating:</td><td style="padding:8px 0;font-weight:600;">${capitalize(String(lead.current_heat || 'unknown'))}</td></tr>
-            <tr><td style="padding:8px 0;color:#1a3d42;">Monthly power bill:</td><td style="padding:8px 0;font-weight:600;">${lead.monthly_bill}</td></tr>
             <tr><td style="padding:8px 0;color:#1a3d42;">Utility:</td><td style="padding:8px 0;font-weight:600;">${formatUtility(lead.utility)}</td></tr>
           </table>
         </div>

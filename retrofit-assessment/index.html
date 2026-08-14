@@ -802,6 +802,14 @@ document.getElementById('assessment-lead-form')?.addEventListener('submit', asyn
   const waterheating = document.getElementById('waterheating')?.value || 'gas';
   const yearbuilt = document.getElementById('yearbuilt')?.value || 'unknown';
 
+  // Pull the calculated dollar figures straight from the summary box so the
+  // lead record carries the actual numbers the homeowner saw, not just the
+  // categorical selections.
+  const estimatedRebates = document.getElementById('total-rebates')?.textContent || 'unknown';
+  const totalCost = document.getElementById('total-cost')?.textContent || 'unknown';
+  const netCost = document.getElementById('net-cost')?.textContent || 'unknown';
+  const tenYearSavings = document.getElementById('ten-year-savings')?.textContent || 'unknown';
+
   button.disabled = true;
   button.textContent = 'Sending...';
 
@@ -824,7 +832,12 @@ document.getElementById('assessment-lead-form')?.addEventListener('submit', asyn
         current_heating: heating,
         water_heating: waterheating,
         year_built: yearbuilt,
-        page: 'retrofit-assessment'
+        estimated_rebates: estimatedRebates,
+        total_cost: totalCost,
+        net_cost: netCost,
+        ten_year_savings: tenYearSavings,
+        page_url: location.href,
+        referrer: document.referrer || 'direct'
       })
     });
 

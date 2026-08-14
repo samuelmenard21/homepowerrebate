@@ -744,8 +744,9 @@ def run_province(prov_key, args, emails):
     # know about) that this script must never clobber. Learned the hard way:
     # running this unconditionally for BC silently stripped that enrichment
     # back to the plain fields below. Only write the internal JSON for
-    # provinces without a richer external source — currently just Ontario.
-    if not args.dry_run and url_rows and prov_key == "on":
+    # provinces without a richer external source — Ontario, Alberta, Nova
+    # Scotia, and Massachusetts all use this script as their only JSON source.
+    if not args.dry_run and url_rows and prov_key in ("on", "ab", "ns", "ma"):
         # Generate per-city JSON files for the carousel to consume. Each city
         # gets its own file with all installers in that city, sorted by rating.
         json_dir = INSTALLERS_DIR / cfg["json_dir"]
@@ -757,12 +758,14 @@ def run_province(prov_key, args, emails):
             if not city_slug:
                 continue
             slug = slugify(inst["Business Name"])
+            inst_email = emails.get((inst["Business Name"].strip().lower(), inst["City"].strip().lower()), "")
             by_city[city_slug].append({
                 "name": inst["Business Name"].strip(),
                 "rating": float(inst.get("Google Rating") or 0),
                 "reviews": int(inst.get("Review Count") or 0),
                 "location": inst["City"].strip(),
                 "phone": inst.get("Phone", ""),
+                "email": inst_email,
                 "website": inst.get("Website", ""),
                 "image_url": inst.get("Image URL", ""),
                 "specialty": " & ".join(cfg["rebate_context"][k]["label"] for k in sorted(inst["_kinds"])),

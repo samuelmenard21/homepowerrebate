@@ -274,7 +274,11 @@ async function handleLeadSubmit(request, env) {
   }
 
   const installer = serviceTable[city];
-  const hasInstaller = !!installer;
+  // A routing-table entry with a placeholder .example.com email isn't a real,
+  // signed partner — treat it the same as "no installer configured" so a
+  // lead never gets fanned out to an address that can't receive mail. Only
+  // send to an installer once its email is a real domain.
+  const hasInstaller = !!installer && !/example\.com$/i.test(installer.email || '');
 
   const leadId = crypto.randomUUID();
   const timestamp = new Date().toISOString();
@@ -311,7 +315,7 @@ async function handleLeadSubmit(request, env) {
   // (there's no inbox to send to) — ops still gets notified so a human picks
   // it up, and the lead is still logged to the sheet.
   const tasks = [
-    sendLeadConfirmation(lead, installer, env),
+    sendLeadConfirmation(lead, hasInstaller ? installer : null, env),
     sendOpsEmail(lead, env),
     logToSheet(lead, env)
   ];

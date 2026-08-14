@@ -947,11 +947,12 @@ h1, h2, h3, h4, h5, h6 {
     <div id="hpr-questions">
       <div style="display:flex; flex-direction:column; gap:12px;">
         <div>
-          <label for="hpr-province" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Your province</label>
+          <label for="hpr-province" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Your province or state</label>
           <select id="hpr-province" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
-            <option value="">Choose your province…</option>
+            <option value="">Choose your province or state…</option>
             <option value="bc">British Columbia</option>
             <option value="on">Ontario</option>
+            <option value="ma">Massachusetts</option>
           </select>
         </div>
         <div id="hpr-bc-fields" style="display:none; flex-direction:column; gap:12px;">
@@ -1003,6 +1004,21 @@ h1, h2, h3, h4, h5, h6 {
             </select>
           </div>
           <p style="font-size:13px; color:var(--ink-soft); margin:0;">Ontario's rebates are tiered by heating fuel, not income &mdash; different enough from BC that we'll take you straight to your city's exact numbers rather than guess here.</p>
+        </div>
+        <div id="hpr-ma-fields" style="display:none; flex-direction:column; gap:12px;">
+          <div>
+            <label for="hpr-ma-city" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Your city</label>
+            <select id="hpr-ma-city" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+              <option value="">Choose your city…</option>
+              <option value="boston">Boston</option><option value="worcester">Worcester</option>
+              <option value="springfield">Springfield</option><option value="cambridge">Cambridge</option>
+              <option value="lowell">Lowell</option><option value="brockton">Brockton</option>
+              <option value="new-bedford">New Bedford</option><option value="quincy">Quincy</option>
+              <option value="lynn">Lynn</option><option value="fall-river">Fall River</option>
+              <option value="newton">Newton</option><option value="somerville">Somerville</option>
+            </select>
+          </div>
+          <p style="font-size:13px; color:var(--ink-soft); margin:0;">Massachusetts rebates run through Mass Save, the same statewide program in every city &mdash; we'll take you straight to your city's exact numbers in USD.</p>
         </div>
       </div>
       <button id="hpr-go" style="width:100%; margin-top:16px; padding:14px; background:var(--amber); color:#fff; border:none; border-radius:999px; font-family:'Inter Tight',sans-serif; font-weight:700; font-size:16px; cursor:pointer;">See my estimate →</button>
@@ -1799,9 +1815,18 @@ h1, h2, h3, h4, h5, h6 {
         <div class="footer-col-title">Massachusetts</div>
         <ul class="footer-col-links">
           <li><a href="/us/ma">Massachusetts Overview</a></li>
-          <li><a href="/us/ma#mass-save">Mass Save Heat Pump Rebate</a></li>
-          <li><a href="/us/ma#mass-save">Mass Save Insulation Rebate</a></li>
-          <li><a href="/us/ma#mass-save">SMART Solar Program</a></li>
+          <li><a href="/us/ma/boston">Boston</a></li>
+          <li><a href="/us/ma/worcester">Worcester</a></li>
+          <li><a href="/us/ma/springfield">Springfield</a></li>
+          <li><a href="/us/ma/cambridge">Cambridge</a></li>
+          <li><a href="/us/ma/lowell">Lowell</a></li>
+          <li><a href="/us/ma/brockton">Brockton</a></li>
+          <li><a href="/us/ma/new-bedford">New Bedford</a></li>
+          <li><a href="/us/ma/quincy">Quincy</a></li>
+          <li><a href="/us/ma/lynn">Lynn</a></li>
+          <li><a href="/us/ma/fall-river">Fall River</a></li>
+          <li><a href="/us/ma/newton">Newton</a></li>
+          <li><a href="/us/ma/somerville">Somerville</a></li>
         </ul>
       </div>
       <div>
@@ -1962,9 +1987,10 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
   var provinceSelect = $('hpr-province');
   if (provinceSelect) {
     provinceSelect.addEventListener('change', function () {
-      var bcFields = $('hpr-bc-fields'), onFields = $('hpr-on-fields');
+      var bcFields = $('hpr-bc-fields'), onFields = $('hpr-on-fields'), maFields = $('hpr-ma-fields');
       bcFields.style.display = provinceSelect.value === 'bc' ? 'flex' : 'none';
       onFields.style.display = provinceSelect.value === 'on' ? 'flex' : 'none';
+      maFields.style.display = provinceSelect.value === 'ma' ? 'flex' : 'none';
     });
   }
 
@@ -1977,6 +2003,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       if (!onCity) { $('hpr-err').style.display = 'block'; return; }
       $('hpr-err').style.display = 'none';
       window.location.href = '/ca/on/' + onCity;
+      return;
+    }
+
+    if (province === 'ma') {
+      var maCity = $('hpr-ma-city').value;
+      if (!maCity) { $('hpr-err').style.display = 'block'; return; }
+      $('hpr-err').style.display = 'none';
+      window.location.href = '/us/ma/' + maCity;
       return;
     }
 

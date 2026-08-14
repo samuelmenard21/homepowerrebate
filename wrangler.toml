@@ -13,6 +13,11 @@ routes = [
 # Environment variables (non-sensitive config goes here)
 vars = { ENVIRONMENT = "production" }
 
+# Daily drip-email queue (results-recap subscribers) — see runDripQueue() in lead-router.js.
+# 15:00 UTC = 7am PT, well inside CASL's normal-hours guidance.
+[triggers]
+crons = ["0 15 * * *"]
+
 # D1 database for verified outcomes (homeowner-submitted cost/savings data
 # powering the neighbour / province / national comparison feature).
 [[d1_databases]]

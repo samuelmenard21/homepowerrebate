@@ -170,6 +170,21 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         </div>
       </div>
 
+      <div class="field">
+        <label>Anything else included in this project? (optional)</label>
+        <div class="hint" style="margin-bottom:8px;">Doesn't affect your cost comparison — that's based on the primary category only. This just helps us understand combined projects.</div>
+        <div id="otherCategories" style="display:flex;flex-wrap:wrap;gap:8px 16px;">
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="heat-pump"> Heat pump</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="solar"> Solar panels</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="battery"> Home battery</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="insulation"> Insulation</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="water-heater"> Water heater</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="windows"> Windows</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="ev-charger"> EV charger</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="thermostat"> Smart thermostat</label>
+        </div>
+      </div>
+
       <div class="field-row">
         <div class="field">
           <label for="province">Province / state</label>
@@ -403,8 +418,14 @@ form.addEventListener('submit', async function(e) {
   submitBtn.disabled = true;
   submitBtn.textContent = 'Submitting…';
 
+  const primaryCategory = document.getElementById('category').value;
+  const otherCategories = [...document.querySelectorAll('#otherCategories input:checked')]
+    .map(el => el.value)
+    .filter(v => v !== primaryCategory);
+
   const payload = {
-    category: document.getElementById('category').value,
+    category: primaryCategory,
+    other_categories: otherCategories,
     install_month: document.getElementById('install_month').value,
     city: document.getElementById('city').value,
     province: document.getElementById('province').value,

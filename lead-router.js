@@ -337,14 +337,21 @@ async function handleLeadSubmit(request, env) {
   const tasks = [
     sendLeadConfirmation(lead, hasInstaller ? installer : null, env),
     sendOpsEmail(lead, env),
-    logToSheet(lead, env)
+    logToSheet(lead, env),
+    startResultsDrip({
+      email: lead.email, city: lead.city, province: 'BC',
+      heating: lead.current_heat, income: lead.income_tier,
+      estimate: lead.estimated_value, source: 'retrofit-assessment'
+    }, env)
   ];
   if (hasInstaller) {
     tasks.unshift(sendInstallerEmail(lead, installer, env));
   }
 
   const results = await Promise.allSettled(tasks);
-  const taskNames = hasInstaller ? ['installer', 'ops', 'sheet'] : ['ops', 'sheet'];
+  const taskNames = hasInstaller
+    ? ['installer', 'confirmation', 'ops', 'sheet', 'drip']
+    : ['confirmation', 'ops', 'sheet', 'drip'];
 
   const failures = results
     .map((r, i) => ({ r, name: taskNames[i] }))
@@ -500,14 +507,16 @@ async function handleNewsletter(request, env) {
 const DRIP_DAY_MS = 24 * 60 * 60 * 1000;
 
 async function startResultsDrip(p, env) {
-  if (!env.OUTCOMES_DB) return;
+  if (!env.OUTCOMES_DB || !p.email) return;
+  if (p.newsletter === false) return; // respect CASL opt-out on any entry point
 
+  const province = String(p.province || 'BC').toUpperCase();
   const existing = await env.OUTCOMES_DB.prepare('SELECT id FROM subscribers WHERE email = ?').bind(p.email).first();
 
   if (existing) {
     await env.OUTCOMES_DB.prepare(
-      `UPDATE subscribers SET city = ?, heating = ?, income = ?, estimate = ?, source = ? WHERE id = ?`
-    ).bind(p.city, p.heating, p.income, p.estimate, p.source, existing.id).run();
+      `UPDATE subscribers SET city = ?, province = ?, heating = ?, income = ?, estimate = ?, source = ? WHERE id = ?`
+    ).bind(p.city, province, p.heating, p.income, p.estimate, p.source, existing.id).run();
     return;
   }
 
@@ -517,10 +526,10 @@ async function startResultsDrip(p, env) {
 
   await env.OUTCOMES_DB.prepare(
     `INSERT INTO subscribers (id, email, city, province, heating, income, estimate, source, step, next_send_at, unsubscribed, created_at)
-     VALUES (?, ?, ?, 'BC', ?, ?, ?, ?, 1, ?, 0, ?)`
-  ).bind(id, p.email, p.city, p.heating, p.income, p.estimate, p.source, nextSendAt, now.toISOString()).run();
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?, 0, ?)`
+  ).bind(id, p.email, p.city, province, p.heating, p.income, p.estimate, p.source, nextSendAt, now.toISOString()).run();
 
-  await sendResultsRecapEmail({ id, email: p.email, city: p.city, heating: p.heating, estimate: p.estimate }, env);
+  await sendResultsRecapEmail({ id, email: p.email, city: p.city, province, heating: p.heating, estimate: p.estimate }, env);
 }
 
 // Called daily by the Worker's cron trigger (see wrangler.toml [triggers]).
@@ -574,8 +583,64 @@ function dripEmailFooter(sub) {
     </p>`;
 }
 
+// Province-specific "learn more" links + the program name used in copy.
+// Every entry points at a real, published guide — never invent a link here.
+const PROVINCE_CONTEXT = {
+  BC: {
+    programName: 'CleanBC',
+    links: [
+      { href: 'https://homepowerrebate.com/blog/heat-pump-rebate-guide-bc-2026/', label: 'Full BC Heat Pump Rebate Guide' },
+      { href: 'https://homepowerrebate.com/blog/heat-pumps-explained-bc/', label: 'Heat Pumps Explained' }
+    ]
+  },
+  ON: {
+    programName: "Ontario's Home Renovation Savings Program",
+    links: [
+      { href: 'https://homepowerrebate.com/blog/ontario-home-renovation-savings-program-explained/', label: 'How the Ontario Program Works' },
+      { href: 'https://homepowerrebate.com/blog/ontario-home-energy-rebates-2026-listicle/', label: 'All 9 Ontario Rebate Categories' }
+    ]
+  },
+  AB: {
+    programName: "Alberta's rebate programs",
+    links: [
+      { href: 'https://homepowerrebate.com/blog/alberta-16-applications-one-grant/', label: 'Alberta Rebate Programs Explained' }
+    ]
+  },
+  NS: {
+    programName: "Nova Scotia's rebate programs",
+    links: [
+      { href: 'https://homepowerrebate.com/blog/nova-scotia-heat-pump-rebate-disappeared/', label: 'Nova Scotia Heat Pump Rebate Guide' }
+    ]
+  },
+  MA: {
+    programName: 'Mass Save',
+    links: [
+      { href: 'https://homepowerrebate.com/blog/mass-save-home-energy-assessment-explained/', label: 'Mass Save Home Energy Assessment Guide' }
+    ]
+  }
+};
+
+function provinceContext(sub) {
+  return PROVINCE_CONTEXT[String(sub.province || 'BC').toUpperCase()] || PROVINCE_CONTEXT.BC;
+}
+
+function learnMoreBlock(sub) {
+  const ctx = provinceContext(sub);
+  const links = [...ctx.links, { href: 'https://homepowerrebate.com/blog/canada-provinces-ranked-home-energy-rebates/', label: 'How Every Province Compares' }];
+  return `
+    <div style="margin:20px 0 0;padding-top:16px;border-top:1px solid #d9d0c1;">
+      <p style="margin:0 0 8px;font-size:12px;color:#6b7d80;text-transform:uppercase;letter-spacing:0.04em;">Worth reading next</p>
+      ${links.map(l => `<a href="${l.href}" style="display:block;font-size:14px;color:#08363f;text-decoration:underline;margin-bottom:4px;">${escapeHtml(l.label)} →</a>`).join('')}
+    </div>`;
+}
+
+function getQuotesUrl(sub) {
+  return `https://homepowerrebate.com/get-quotes/?city=${encodeURIComponent(sub.city || '')}&province=${encodeURIComponent(String(sub.province || 'BC').toUpperCase())}`;
+}
+
 async function sendResultsRecapEmail(sub, env) {
   if (!env.RESEND_API_KEY) return Promise.resolve();
+  const ctx = provinceContext(sub);
 
   const html = `
     <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:560px;margin:0 auto;padding:20px;color:#0a2a2e;">
@@ -586,13 +651,14 @@ async function sendResultsRecapEmail(sub, env) {
       <div style="background:#faf7f2;padding:28px 24px;border-radius:0 0 14px 14px;border:1px solid #d9d0c1;border-top:none;">
         <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;margin-bottom:16px;">
           <table style="width:100%;border-collapse:collapse;font-size:14px;">
-            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:50%;">Estimated CleanBC rebates:</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${escapeHtml(sub.estimate || 'see your assessment')}</td></tr>
+            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:50%;">Estimated ${escapeHtml(ctx.programName)} rebates:</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${escapeHtml(sub.estimate || 'see your assessment')}</td></tr>
             <tr><td style="padding:8px 0;color:#1a3d42;">City:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(capitalize(sub.city || ''))}</td></tr>
             <tr><td style="padding:8px 0;color:#1a3d42;">Current heating:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(capitalize(String(sub.heating || 'unknown')))}</td></tr>
           </table>
         </div>
         <p style="font-size:15px;line-height:1.6;margin:0 0 12px;">Keep this for reference — in a couple days we'll send you what homeowners near you actually paid, so you can sanity-check any quote against real numbers, not just estimates.</p>
-        <p style="font-size:15px;line-height:1.6;margin:0;"><a href="https://homepowerrebate.com/get-quotes/?city=${encodeURIComponent(sub.city || '')}&province=BC" style="display:inline-block;padding:12px 20px;background:#d4751c;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Get matched with an installer →</a></p>
+        <p style="font-size:15px;line-height:1.6;margin:0;"><a href="${getQuotesUrl(sub)}" style="display:inline-block;padding:12px 20px;background:#d4751c;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Get matched with an installer →</a></p>
+        ${learnMoreBlock(sub)}
         ${dripEmailFooter(sub)}
       </div>
     </div>`;
@@ -607,21 +673,22 @@ async function sendResultsRecapEmail(sub, env) {
 
 async function sendLocalComparisonEmail(sub, env) {
   if (!env.RESEND_API_KEY) return Promise.resolve();
+  const province = String(sub.province || 'BC').toUpperCase();
 
   let comparisonHtml = `<p style="font-size:15px;line-height:1.6;margin:0 0 16px;">We're still building up verified cost data in your area — but homeowners who've had work done are starting to share what they actually paid. <a href="https://homepowerrebate.com/share-your-cost/">Add yours</a> and we'll send you the local average as soon as we have enough submissions.</p>`;
 
   if (env.OUTCOMES_DB) {
     try {
-      const comparison = await computeComparison(env, 'heat-pump', String(sub.city || '').toLowerCase(), 'BC', null);
+      const comparison = await computeComparison(env, 'heat-pump', String(sub.city || '').toLowerCase(), province, null);
       const shownTier = comparison.tiers.find(t => t.shown);
       if (shownTier) {
-        const scopeLabel = shownTier.scope === 'city' ? capitalize(sub.city || '') : shownTier.scope === 'province' ? 'BC-wide' : 'Nationally';
+        const scopeLabel = shownTier.scope === 'city' ? capitalize(sub.city || '') : shownTier.scope === 'province' ? `${province}-wide` : 'Nationally';
         comparisonHtml = `
           <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;margin-bottom:16px;">
             <p style="margin:0 0 6px;font-size:13px;color:#6b7d80;text-transform:uppercase;letter-spacing:0.04em;">${escapeHtml(scopeLabel)} average, based on ${shownTier.sample_size} verified homeowner${shownTier.sample_size === 1 ? '' : 's'}</p>
             <p style="margin:0;font-size:24px;font-weight:700;color:#2d6a4f;">$${shownTier.avg_net_cost.toLocaleString()} <span style="font-size:14px;font-weight:400;color:#1a3d42;">net cost after rebates</span></p>
           </div>
-          <p style="font-size:15px;line-height:1.6;margin:0 0 16px;">Use this as a sanity check against any quote you get — if a number comes in wildly higher, ask why before you sign.</p>`;
+          <p style="font-size:15px;line-height:1.6;margin:0 0 16px;">Use this as a sanity check against any quote you get — if a number comes in wildly higher, ask why before you sign. Based on homeowner-submitted data on <a href="https://homepowerrebate.com/share-your-cost/">homepowerrebate.com/share-your-cost</a>, not official program figures.</p>`;
       }
     } catch (err) {
       console.error('Local comparison lookup failed:', err.message || err);
@@ -636,7 +703,8 @@ async function sendLocalComparisonEmail(sub, env) {
       </div>
       <div style="background:#faf7f2;padding:28px 24px;border-radius:0 0 14px 14px;border:1px solid #d9d0c1;border-top:none;">
         ${comparisonHtml}
-        <p style="font-size:15px;line-height:1.6;margin:0;"><a href="https://homepowerrebate.com/get-quotes/?city=${encodeURIComponent(sub.city || '')}&province=BC" style="display:inline-block;padding:12px 20px;background:#d4751c;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Get matched with an installer →</a></p>
+        <p style="font-size:15px;line-height:1.6;margin:0;"><a href="${getQuotesUrl(sub)}" style="display:inline-block;padding:12px 20px;background:#d4751c;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Get matched with an installer →</a></p>
+        ${learnMoreBlock(sub)}
         ${dripEmailFooter(sub)}
       </div>
     </div>`;
@@ -644,13 +712,14 @@ async function sendLocalComparisonEmail(sub, env) {
   return resendEmail(env.RESEND_API_KEY, {
     from: 'HomePowerRebate <hello@homepowerrebate.com>',
     to: sub.email,
-    subject: `What ${sub.city ? capitalize(sub.city) + ' ' : 'BC '}homeowners actually paid`,
+    subject: `What ${sub.city ? capitalize(sub.city) + ' ' : province + ' '}homeowners actually paid`,
     html
   });
 }
 
 async function sendLockInEmail(sub, env) {
   if (!env.RESEND_API_KEY) return Promise.resolve();
+  const ctx = provinceContext(sub);
 
   const html = `
     <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:560px;margin:0 auto;padding:20px;color:#0a2a2e;">
@@ -659,9 +728,10 @@ async function sendLockInEmail(sub, env) {
         <h1 style="margin:0;font-family:Georgia,serif;font-size:24px;font-weight:500;line-height:1.2;">Rebate amounts and rules change without notice.</h1>
       </div>
       <div style="background:#faf7f2;padding:28px 24px;border-radius:0 0 14px 14px;border:1px solid #d9d0c1;border-top:none;">
-        <p style="font-size:15px;line-height:1.6;margin:0 0 16px;">CleanBC, utility, and municipal programs update their numbers and eligibility rules more often than most homeowners expect. The estimate we sent you was accurate when you ran it — the way to lock in real numbers is to get an actual quote from a local installer while today's programs are still active.</p>
+        <p style="font-size:15px;line-height:1.6;margin:0 0 16px;">${escapeHtml(ctx.programName)}, utility, and municipal programs update their numbers and eligibility rules more often than most homeowners expect. The estimate we sent you was accurate when you ran it — the way to lock in real numbers is to get an actual quote from a local installer while today's programs are still active.</p>
         <p style="font-size:15px;line-height:1.6;margin:0 0 16px;">No obligation, and it costs nothing to ask — you'll see exactly what applies to your home before you decide anything.</p>
-        <p style="font-size:15px;line-height:1.6;margin:0;"><a href="https://homepowerrebate.com/get-quotes/?city=${encodeURIComponent(sub.city || '')}&province=BC" style="display:inline-block;padding:12px 20px;background:#d4751c;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Get a real quote →</a></p>
+        <p style="font-size:15px;line-height:1.6;margin:0;"><a href="${getQuotesUrl(sub)}" style="display:inline-block;padding:12px 20px;background:#d4751c;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Get a real quote →</a></p>
+        ${learnMoreBlock(sub)}
         ${dripEmailFooter(sub)}
       </div>
     </div>`;
@@ -724,6 +794,7 @@ async function handleEstimateLead(request, env) {
     lead_id: crypto.randomUUID(),
     timestamp: new Date().toISOString(),
     city,
+    province: cleanString(p.province || 'BC').toUpperCase(),
     service,
     installer_assigned: installer ? installer.name : 'UNASSIGNED — needs manual follow-up',
     installer_email: isReal ? installer.email : '',
@@ -751,7 +822,13 @@ async function handleEstimateLead(request, env) {
 
   const tasks = [
     sendOpsEstimateLead(lead, env),
-    logToSheet(lead, env)
+    logToSheet(lead, env),
+    startResultsDrip({
+      email: lead.email, city: lead.city, province: lead.province,
+      heating: lead.current_heat, income: lead.income_tier,
+      estimate: lead.estimated_value, source: lead.page_url || 'get-quotes',
+      newsletter: p.newsletter
+    }, env)
   ];
   // Only add to the newsletter audience if they didn't opt out (CASL).
   if (p.newsletter !== false) tasks.push(addToResendAudience(lead.email, env));
@@ -850,18 +927,23 @@ async function handleOutcomeSubmit(request, env) {
   }
 
   try {
+    const otherCategories = Array.isArray(p.other_categories)
+      ? p.other_categories.map(c => String(c).toLowerCase().trim()).filter(c => OUTCOME_CATEGORIES.includes(c) && c !== category)
+      : [];
+
     await env.OUTCOMES_DB.prepare(
       `INSERT INTO outcomes
         (id, created_at, category, postal_fsa, city, province, install_month,
          total_cost, rebates_received, net_cost, monthly_bill_before, monthly_bill_after,
-         installer_name, verified, email, status)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 'new')`
+         installer_name, other_categories, verified, email, status)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 'new')`
     ).bind(
       id, createdAt, category, postalFsa, city, province, String(p.install_month),
       totalCost, rebatesReceived, netCost,
       Number.isFinite(billBefore) ? billBefore : null,
       Number.isFinite(billAfter) ? billAfter : null,
       cleanString(p.installer_name || ''),
+      otherCategories.join(','),
       email
     ).run();
   } catch (e) {

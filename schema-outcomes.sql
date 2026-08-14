@@ -29,6 +29,11 @@ CREATE TABLE IF NOT EXISTS outcomes (
   -- optional installer link (also feeds installer outcome-verification later)
   installer_name TEXT,
 
+  -- other work bundled into the same project, comma-joined (e.g. "insulation,windows").
+  -- Purely informational — never included in cost-comparison math, which is
+  -- always scoped to the single primary `category` above.
+  other_categories TEXT,
+
   -- trust signal, not shown until verification tier ships (Phase 3)
   verified INTEGER NOT NULL DEFAULT 0,
 

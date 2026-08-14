@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What Did Your Heat Pump or Solar Install Actually Cost? | HomePowerRebate</title>
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W33G4TGRHD');
+</script>
+
 <meta name="description" content="Share what you actually paid — after rebates — for your heat pump, solar, battery, or insulation. See instantly how your city compares. No booking required.">
 <link rel="canonical" href="https://homepowerrebate.com/share-your-cost/">
 <meta property="og:title" content="What Did Your Heat Pump or Solar Install Actually Cost? | HomePowerRebate">
@@ -383,6 +393,14 @@ form.addEventListener('submit', async function(e) {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Share my number & see how I compare';
       return;
+    }
+
+    if (typeof gtag === 'function') {
+      gtag('event', 'outcome_submitted', {
+        category: payload.category,
+        city: payload.city,
+        province: payload.province
+      });
     }
 
     renderResult(data.comparison, payload.total_cost - payload.rebates_received);

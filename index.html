@@ -84,7 +84,7 @@ function showProvinceCities(prov) {
   ],
   "contactPoint": {
     "@type": "ContactPoint",
-    "email": "samuelmenard@gmail.com",
+    
     "contactType": "customer support",
     "availableLanguage": "English"
   }
@@ -2022,7 +2022,7 @@ waitlistForm.addEventListener('submit', async (e) => {
     waitlistForm.style.display = 'none';
     waitlistThanks.style.display = 'block';
   } catch (err) {
-    waitlistError.textContent = 'Something went wrong. Please try again, or email samuelmenard@gmail.com.';
+    waitlistError.textContent = 'Something went wrong. Please try again';
     waitlistError.style.display = 'block';
   }
 });
@@ -2072,7 +2072,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
     }
   } catch (error) {
-    responseEl.innerHTML = '<strong style="color: #fff;">⚠ Something went wrong.</strong><p style="margin: 6px 0 0; font-size: 13px; color: rgba(250, 247, 242, 0.85);">Try again or email samuelmenard@gmail.com</p>';
+    responseEl.innerHTML = '<strong style="color: #fff;">⚠ Something went wrong.</strong><p style="margin: 6px 0 0; font-size: 13px; color: rgba(250, 247, 242, 0.85);">Try again or <a href="/contact" style="color: rgba(250, 247, 242, 0.9); text-decoration: underline;">contact us</a></p>';
     responseEl.style.display = 'block';
     button.textContent = originalText;
     button.disabled = false;

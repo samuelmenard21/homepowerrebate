@@ -23,11 +23,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script>
-function revealEmail() {
-  const user = 'samuelmenard';
-  const domain = 'gmail.com';
-  const email = user + '@' + domain;
-  window.location.href = 'mailto:' + email + '?subject=HomePowerRebate%20questions';
+function contactMe() {
+  window.location.href = '/contact?subject=HomePowerRebate+questions';
 }
 </script>
 
@@ -249,7 +246,7 @@ strong { color: var(--ink); font-weight: 600; }
     <p><strong>Expansion by Demand.</strong> We prioritize cities based on actual homeowner requests. You can tell us which city you want next.</p>
 
     <div class="callout">
-      <strong>Questions?</strong> <button onclick="revealEmail()" style="background:none; border:none; color:var(--teal); cursor:pointer; font-weight:600; text-decoration:underline;">Email me</button>. I read every message.
+      <strong>Questions?</strong> <button onclick="contactMe()" style="background:none; border:none; color:var(--teal); cursor:pointer; font-weight:600; text-decoration:underline;">Email me</button>. I read every message.
     </div>
 
     <a class="cta" href="/retrofit-assessment">Calculate my rebate →</a>
@@ -265,7 +262,7 @@ strong { color: var(--ink); font-weight: 600; }
       </div>
       <div class="fact">
         <div class="fact-label">Contact</div>
-        <div class="fact-value"><button onclick="revealEmail()" style="background:none; border:none; color:var(--teal); text-decoration:none; font-weight:600; cursor:pointer;">Email Sam</button></div>
+        <div class="fact-value"><button onclick="contactMe()" style="background:none; border:none; color:var(--teal); text-decoration:none; font-weight:600; cursor:pointer;">Email Sam</button></div>
       </div>
     </div>
 

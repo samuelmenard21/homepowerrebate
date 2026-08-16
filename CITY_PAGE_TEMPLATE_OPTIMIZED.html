@@ -181,7 +181,7 @@ a:hover { text-decoration: underline; }
       <a href="/retrofit-assessment" class="cta-primary">Calculate your rebate →</a>
     </div>
 
-    <p style="margin-top: 28px; font-size: 14px; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 16px;">Questions? <a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==">Email Sam</a> or call 905-320-5091. One match per homeowner. No spam. Free for you.</p>
+    <p style="margin-top: 28px; font-size: 14px; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 16px;">Questions? <a href="/contact">Email Sam</a> or call 905-320-5091. One match per homeowner. No spam. Free for you.</p>
 
   </div>
 </article>
@@ -190,13 +190,6 @@ a:hover { text-decoration: underline; }
   <p>&copy; 2026 HomePowerRebate. Independent BC energy rebate guide. <a href="/about">About us</a> • <a href="/privacy">Privacy</a></p>
 </footer>
 
-<script>
-  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
-    var addr = atob(el.getAttribute('data-b64'));
-    var q = el.getAttribute('data-q');
-    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
-    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
-  });
-</script>
+
 </body>
 </html>

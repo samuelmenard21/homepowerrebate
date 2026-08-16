@@ -103,7 +103,7 @@ strong { color: var(--ink); }
     <p>These terms are governed by the laws of British Columbia and Canada.</p>
 
     <h2>11. Contact</h2>
-    <p>Questions about these terms? Email <a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==" data-showaddr="1">Contact us</a>.</p>
+    <p>Questions about these terms? Email <a href="/contact">Contact us</a>.</p>
 
     <p style="font-size:13px; color:var(--sage); margin-top:24px;">See also our <a href="/privacy">Privacy Policy</a>.</p>
   </div>
@@ -173,7 +173,7 @@ strong { color: var(--ink); }
           <li><a href="/retrofit-assessment">Free Estimate</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>
-          <li><a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==">Contact</a></li>
+          <li><a href="/contact">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -184,15 +184,6 @@ strong { color: var(--ink); }
   </div>
 </footer>
 
-<script>
-(function(){
-  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
-    var addr = atob(el.getAttribute('data-b64'));
-    var q = el.getAttribute('data-q');
-    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
-    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
-  });
-})();
-</script>
+
 </body>
 </html>

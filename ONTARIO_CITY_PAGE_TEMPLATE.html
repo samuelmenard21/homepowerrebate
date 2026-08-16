@@ -329,7 +329,7 @@ a:hover { text-decoration: underline; }
     </p>
 
     <p style="margin-top: 12px; font-size: 14px; color: var(--ink-soft);">
-      Questions about [CITY]'s rebates or installers? <a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==">Email Sam</a> or call 905-320-5091.
+      Questions about [CITY]'s rebates or installers? <a href="/contact">Email Sam</a> or call 905-320-5091.
     </p>
 
   </div>
@@ -339,13 +339,6 @@ a:hover { text-decoration: underline; }
   <p>&copy; 2026 HomePowerRebate. Helping homeowners access rebates across Canada and the US. <a href="/about">About us</a> • <a href="/privacy">Privacy</a></p>
 </footer>
 
-<script>
-  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
-    var addr = atob(el.getAttribute('data-b64'));
-    var q = el.getAttribute('data-q');
-    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
-    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
-  });
-</script>
+
 </body>
 </html>

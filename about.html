@@ -165,7 +165,7 @@ strong { color: var(--ink); }
       </div>
       <div class="fact">
         <div class="fact-label">Contact</div>
-        <div class="fact-value"><a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==" data-showaddr="1" style="color: var(--teal); text-decoration: none; font-weight: 600;">Contact us</a></div>
+        <div class="fact-value"><a href="/contact">Contact us</a></div>
       </div>
     </div>
 
@@ -236,7 +236,7 @@ strong { color: var(--ink); }
           <li><a href="/retrofit-assessment">Free Estimate</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>
-          <li><a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==">Contact</a></li>
+          <li><a href="/contact">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -247,13 +247,6 @@ strong { color: var(--ink); }
   </div>
 </footer>
 
-<script>
-  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
-    var addr = atob(el.getAttribute('data-b64'));
-    var q = el.getAttribute('data-q');
-    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
-    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
-  });
-</script>
+
 </body>
 </html>

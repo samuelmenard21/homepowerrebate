@@ -895,6 +895,7 @@ h1, h2, h3, h4, h5, h6 {
       <div style="display:flex; gap:6px; margin-bottom:12px;">
         <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
         <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
+        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">California (US)</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
         <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Alberta</button>
@@ -1007,6 +1008,7 @@ h1, h2, h3, h4, h5, h6 {
             <option value="on">Ontario</option>
             <option value="ab">Alberta</option>
             <option value="ns">Nova Scotia</option>
+            <option value="ca">California</option>
             <option value="ma">Massachusetts</option>
           </select>
         </div>
@@ -1521,52 +1523,6 @@ h1, h2, h3, h4, h5, h6 {
   </div>
 </div>
 
-<!-- TRUST CARDS -->
-<section class="section">
-  <div class="section-header center">
-    <div class="section-eyebrow">Why trust us</div>
-    <h2 class="section-h2">We don't sell your info. We don't overcharge you.</h2>
-    <p class="section-lede">All vetted installers per city. You choose. No auctions. No spam. No surprises.</p>
-  </div>
-
-  <div class="trust-cards">
-    <div class="trust-card">
-      <div class="trust-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div>
-        <h3>One installer per city</h3>
-        <p>Vetted installers, you choose the one you trust. No auctions. Their name is on the work for years.</p>
-      </div>
-    </div>
-    <div class="trust-card">
-      <div class="trust-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1l3 6 6 .9-4.5 4.4 1 6.5L12 16l-5.5 2.8 1-6.5L3 7.9 9 7z"/></svg></div>
-      <div>
-        <h3>BC Hydro approved</h3>
-        <p>All our installers are certified. Your rebate cheque comes without problems.</p>
-      </div>
-    </div>
-    <div class="trust-card">
-      <div class="trust-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
-      <div>
-        <h3>Free for you</h3>
-        <p>You pay nothing. Ever. We don't charge homeowners anything.</p>
-      </div>
-    </div>
-    <div class="trust-card">
-      <div class="trust-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-      <div>
-        <h3>Your info stays private</h3>
-        <p>We don't sell your number. We don't auction your lead. One call from one local company.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="tesla-alert">
-    <div class="tesla-alert-icon">!</div>
-    <div class="tesla-alert-text">
-      <strong>About Tesla Powerwall:</strong> Tesla isn&rsquo;t on BC Hydro&rsquo;s approved battery list. Installing a Powerwall in BC means zero rebate &mdash; that&rsquo;s $5,000 to $8,000 left on the table. <a href="/blog/tesla-powerwall-mistake">Read the full story &rarr;</a>
-    </div>
-  </div>
-</section>
 
 <!-- FROM THE BLOG -->
 <section class="section" id="blog-preview">

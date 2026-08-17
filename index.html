@@ -1929,6 +1929,22 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       return;
     }
 
+    if (province === 'ca') {
+      var caHub = $('hpr-ca-hub').value;
+      if (!caHub) { $('hpr-err').style.display = 'block'; return; }
+      $('hpr-err').style.display = 'none';
+      window.location.href = '/us/ca/' + caHub;
+      return;
+    }
+
+    if (province === 'ny') {
+      var nyHub = $('hpr-ny-hub').value;
+      if (!nyHub) { $('hpr-err').style.display = 'block'; return; }
+      $('hpr-err').style.display = 'none';
+      window.location.href = '/us/ny/' + nyHub;
+      return;
+    }
+
     city = $('hpr-city').value;
     heating = $('hpr-heating').value;
     income = $('hpr-income').value;

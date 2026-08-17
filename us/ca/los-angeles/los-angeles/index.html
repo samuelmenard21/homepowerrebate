@@ -76,6 +76,170 @@ footer a { color: rgba(250,247,242,.75); }
   </div>
 </section>
 
+<section style="background: var(--paper-warm); padding: 40px 28px;">
+  <div class="wrap">
+    <h2 style="text-align: center; margin-bottom: 32px;">Los Angeles Upgrade Calculators</h2>
+    <p style="text-align: center; color: var(--ink-soft); margin-bottom: 28px;">LADWP rebates for heat pumps, solar, battery, water heaters, and more. Pick an upgrade type below.</p>
+
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 18px; color: var(--teal-deep); margin-bottom: 16px;">Heat Pump Rebate</h3>
+    <div style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-weight: 600; color: var(--teal-deep); margin-bottom: 8px; font-size: 14px;">System size (tons):</label>
+        <select id="la-system-size" style="width: 100%; padding: 10px; font-size: 14px; border: 1px solid var(--rule); border-radius: 8px; font-family: 'Inter Tight', sans-serif;">
+          <option value="">— Pick a size —</option>
+          <option value="3">3-ton</option>
+          <option value="3.5">3.5-ton</option>
+          <option value="4">4-ton</option>
+        </select>
+      </div>
+      <div id="la-calc-result" style="display: none; background: var(--paper); padding: 20px; border-radius: 8px; border-left: 4px solid var(--green-money);">
+        <div style="margin-bottom: 12px;">
+          <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 2px;">LADWP Rebate:</div>
+          <div style="font-size: 28px; font-weight: 700; color: var(--green-money);" id="la-rebate-display">$10,000</div>
+        </div>
+        <div style="font-size: 13px; color: var(--ink-soft); line-height: 1.6;" id="la-calc-details">
+          Typical installation: $13,500 | Your cost after rebate: $3,500 | Annual savings: $1,200 | Payback: 3 years
+        </div>
+        <a href="/retrofit-assessment/?city=los-angeles" style="display: inline-block; margin-top: 14px; background: var(--amber); color: #fff; padding: 11px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 13px;">Get Your Exact Quote →</a>
+      </div>
+      <div id="la-calc-prompt" style="text-align: center; color: var(--ink-soft); font-size: 14px;">
+        ↑ Choose your system size to see your exact rebate
+      </div>
+    </div>
+    </div>
+
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 18px; color: var(--teal-deep); margin-bottom: 16px;">Solar System Rebate</h3>
+      <div style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; font-weight: 600; color: var(--teal-deep); margin-bottom: 8px; font-size: 14px;">System size (kW):</label>
+          <select id="la-solar-size" style="width: 100%; padding: 10px; font-size: 14px; border: 1px solid var(--rule); border-radius: 8px; font-family: 'Inter Tight', sans-serif;">
+            <option value="">— Pick a size —</option>
+            <option value="5">5 kW</option>
+            <option value="6">6 kW</option>
+            <option value="8">8 kW</option>
+            <option value="10">10 kW</option>
+          </select>
+        </div>
+        <div id="la-solar-result" style="display: none; background: var(--paper); padding: 20px; border-radius: 8px; border-left: 4px solid var(--green-money);">
+          <div style="margin-bottom: 12px;">
+            <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 2px;">Total Rebate (LADWP + Federal):</div>
+            <div style="font-size: 28px; font-weight: 700; color: var(--green-money);" id="la-solar-rebate">$8,000+</div>
+          </div>
+          <div style="font-size: 13px; color: var(--ink-soft); line-height: 1.6;" id="la-solar-details">
+            Typical installation: $18,000 | Your cost after rebate: $10,000 | Annual savings: $1,500 | Payback: 6–7 years
+          </div>
+          <a href="/retrofit-assessment/?city=los-angeles" style="display: inline-block; margin-top: 14px; background: var(--amber); color: #fff; padding: 11px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 13px;">Get Your Solar Quote →</a>
+        </div>
+        <div id="la-solar-prompt" style="text-align: center; color: var(--ink-soft); font-size: 14px;">
+          ↑ Choose your system size to see your exact rebate
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 18px; color: var(--teal-deep); margin-bottom: 16px;">Battery Storage</h3>
+      <div style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; font-weight: 600; color: var(--teal-deep); margin-bottom: 8px; font-size: 14px;">Battery capacity (kWh):</label>
+          <select id="la-battery-size" style="width: 100%; padding: 10px; font-size: 14px; border: 1px solid var(--rule); border-radius: 8px; font-family: 'Inter Tight', sans-serif;">
+            <option value="">— Pick a size —</option>
+            <option value="10">10 kWh</option>
+            <option value="13.5">13.5 kWh (Tesla Powerwall)</option>
+            <option value="15">15 kWh</option>
+          </select>
+        </div>
+        <div id="la-battery-result" style="display: none; background: var(--paper); padding: 20px; border-radius: 8px; border-left: 4px solid var(--green-money);">
+          <div style="margin-bottom: 12px;">
+            <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 2px;">Total Rebate:</div>
+            <div style="font-size: 28px; font-weight: 700; color: var(--green-money);" id="la-battery-rebate">$2,000+</div>
+          </div>
+          <div style="font-size: 13px; color: var(--ink-soft); line-height: 1.6;" id="la-battery-details">
+            Typical installation: $10,000 | Your cost after rebate: $8,000 | Annual savings: $300 | Payback: 25+ years (but adds home resilience)
+          </div>
+          <a href="/retrofit-assessment/?city=los-angeles" style="display: inline-block; margin-top: 14px; background: var(--amber); color: #fff; padding: 11px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 13px;">Get Your Battery Quote →</a>
+        </div>
+        <div id="la-battery-prompt" style="text-align: center; color: var(--ink-soft); font-size: 14px;">
+          ↑ Choose your battery size to see your exact rebate
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 18px; color: var(--teal-deep); margin-bottom: 16px;">Home Insulation</h3>
+      <div style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        <div style="background: var(--paper); padding: 16px; border-radius: 8px; border-left: 4px solid var(--amber);">
+          <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 2px;">Rebate Available:</div>
+          <div style="font-size: 20px; font-weight: 700; color: var(--amber);">$5,500+ (California state program)</div>
+          <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">LADWP doesn't offer utility rebates for insulation, but California's state program covers roof, attic, and wall insulation upgrades. <a href="/retrofit-assessment/?city=los-angeles" style="color: var(--teal); font-weight: 600;">See your eligibility →</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 18px; color: var(--teal-deep); margin-bottom: 16px;">Water Heater</h3>
+      <div style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; font-weight: 600; color: var(--teal-deep); margin-bottom: 8px; font-size: 14px;">Water heater type:</label>
+          <select id="la-wh-type" style="width: 100%; padding: 10px; font-size: 14px; border: 1px solid var(--rule); border-radius: 8px; font-family: 'Inter Tight', sans-serif;">
+            <option value="">— Pick a type —</option>
+            <option value="hp">Heat Pump Water Heater</option>
+            <option value="solar">Solar Water Heater</option>
+            <option value="tankless">Tankless (Gas)</option>
+          </select>
+        </div>
+        <div id="la-wh-result" style="display: none; background: var(--paper); padding: 20px; border-radius: 8px; border-left: 4px solid var(--green-money);">
+          <div style="margin-bottom: 12px;">
+            <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 2px;">Total Rebate:</div>
+            <div style="font-size: 28px; font-weight: 700; color: var(--green-money);" id="la-wh-rebate">$3,000+</div>
+          </div>
+          <div style="font-size: 13px; color: var(--ink-soft); line-height: 1.6;" id="la-wh-details">
+            Typical installation: $6,000 | Your cost after rebate: $3,000 | Annual savings: $400 | Payback: 7–8 years
+          </div>
+          <a href="/retrofit-assessment/?city=los-angeles" style="display: inline-block; margin-top: 14px; background: var(--amber); color: #fff; padding: 11px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 13px;">Get Your Water Heater Quote →</a>
+        </div>
+        <div id="la-wh-prompt" style="text-align: center; color: var(--ink-soft); font-size: 14px;">
+          ↑ Choose your water heater type to see your exact rebate
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 18px; color: var(--teal-deep); margin-bottom: 16px;">Windows & Doors</h3>
+      <div style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        <div style="background: var(--paper); padding: 16px; border-radius: 8px; border-left: 4px solid var(--amber);">
+          <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 2px;">Rebate Available:</div>
+          <div style="font-size: 20px; font-weight: 700; color: var(--amber);">$500–$1,500 (California state)</div>
+          <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">LADWP doesn't offer window rebates, but California's state program covers Energy Star certified windows and doors. <a href="/retrofit-assessment/?city=los-angeles" style="color: var(--teal); font-weight: 600;">Check your eligibility →</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 18px; color: var(--teal-deep); margin-bottom: 16px;">EV Charger</h3>
+      <div style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        <div style="background: var(--paper); padding: 16px; border-radius: 8px; border-left: 4px solid var(--amber);">
+          <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 2px;">Rebate Available:</div>
+          <div style="font-size: 20px; font-weight: 700; color: var(--amber);">$500–$1,000 (LADWP + federal)</div>
+          <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">LADWP offers $500–$1,000 for Level 2 home chargers. Federal 30% tax credit also applies (up to $1,000). <a href="/retrofit-assessment/?city=los-angeles" style="color: var(--teal); font-weight: 600;">Get your charger quote →</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 0;">
+      <h3 style="font-size: 18px; color: var(--teal-deep); margin-bottom: 16px;">Smart Thermostat</h3>
+      <div style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        <div style="background: var(--paper); padding: 16px; border-radius: 8px; border-left: 4px solid var(--amber);">
+          <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 2px;">Rebate Available:</div>
+          <div style="font-size: 20px; font-weight: 700; color: var(--amber);">$145–$500</div>
+          <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">LADWP offers $145 for compatible smart thermostats. Pairs well with heat pump installations for maximum savings. <a href="/retrofit-assessment/?city=los-angeles" style="color: var(--teal); font-weight: 600;">See your options →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <article class="article">
   <div class="wrap">
 
@@ -162,5 +326,70 @@ footer a { color: rgba(250,247,242,.75); }
   </div>
 </footer>
 
+<script>
+// Heat pump calculator
+const laHPCalc = {
+  3: { rebate: '$7,500', cost: '$11,000', oop: '$3,500', savings: '$1,100', payback: '3–4 years' },
+  3.5: { rebate: '$8,750', cost: '$12,500', oop: '$3,750', savings: '$1,150', payback: '3–4 years' },
+  4: { rebate: '$10,000', cost: '$13,500', oop: '$3,500', savings: '$1,200', payback: '3 years' }
+};
+
+document.getElementById('la-system-size').addEventListener('change', function(e) {
+  const size = e.target.value;
+  const prompt = document.getElementById('la-calc-prompt');
+  const result = document.getElementById('la-calc-result');
+  if (!size) { prompt.style.display = 'block'; result.style.display = 'none'; return; }
+  const data = laHPCalc[size];
+  document.getElementById('la-rebate-display').textContent = data.rebate;
+  document.getElementById('la-calc-details').textContent = `Typical installation: ${data.cost} | Your cost after rebate: ${data.oop} | Annual savings: ${data.savings} | Payback: ${data.payback}`;
+  prompt.style.display = 'none';
+  result.style.display = 'block';
+});
+
+// Solar calculator
+const laSolarCalc = { 5: { rebate: '$8,000', cost: '$18,000', oop: '$10,000', savings: '$1,500', payback: '6–7 years' }, 6: { rebate: '$9,000', cost: '$20,000', oop: '$11,000', savings: '$1,700', payback: '6–7 years' }, 8: { rebate: '$12,000', cost: '$25,000', oop: '$13,000', savings: '$2,200', payback: '6–7 years' }, 10: { rebate: '$15,000', cost: '$30,000', oop: '$15,000', savings: '$2,800', payback: '5–6 years' } };
+
+document.getElementById('la-solar-size').addEventListener('change', function(e) {
+  const size = e.target.value;
+  const prompt = document.getElementById('la-solar-prompt');
+  const result = document.getElementById('la-solar-result');
+  if (!size) { prompt.style.display = 'block'; result.style.display = 'none'; return; }
+  const data = laSolarCalc[size];
+  document.getElementById('la-solar-rebate').textContent = data.rebate;
+  document.getElementById('la-solar-details').textContent = `Typical installation: ${data.cost} | Your cost after rebate: ${data.oop} | Annual savings: ${data.savings} | Payback: ${data.payback}`;
+  prompt.style.display = 'none';
+  result.style.display = 'block';
+});
+
+// Battery calculator
+const laBatteryCalc = { 10: { rebate: '$1,500', cost: '$8,000', oop: '$6,500', savings: '$300', payback: '20+ years' }, 13.5: { rebate: '$2,000', cost: '$10,000', oop: '$8,000', savings: '$300', payback: '25+ years' }, 15: { rebate: '$2,300', cost: '$11,000', oop: '$8,700', savings: '$350', payback: '25+ years' } };
+
+document.getElementById('la-battery-size').addEventListener('change', function(e) {
+  const size = e.target.value;
+  const prompt = document.getElementById('la-battery-prompt');
+  const result = document.getElementById('la-battery-result');
+  if (!size) { prompt.style.display = 'block'; result.style.display = 'none'; return; }
+  const data = laBatteryCalc[size];
+  document.getElementById('la-battery-rebate').textContent = data.rebate;
+  document.getElementById('la-battery-details').textContent = `Typical installation: ${data.cost} | Your cost after rebate: ${data.oop} | Annual savings: ${data.savings} | Payback: ${data.payback}`;
+  prompt.style.display = 'none';
+  result.style.display = 'block';
+});
+
+// Water heater calculator
+const laWHCalc = { hp: { rebate: '$3,000', cost: '$6,500', oop: '$3,500', savings: '$400', payback: '9 years' }, solar: { rebate: '$2,500', cost: '$7,000', oop: '$4,500', savings: '$200', payback: '22 years' }, tankless: { rebate: '$800', cost: '$3,500', oop: '$2,700', savings: '$100', payback: '27 years' } };
+
+document.getElementById('la-wh-type').addEventListener('change', function(e) {
+  const type = e.target.value;
+  const prompt = document.getElementById('la-wh-prompt');
+  const result = document.getElementById('la-wh-result');
+  if (!type) { prompt.style.display = 'block'; result.style.display = 'none'; return; }
+  const data = laWHCalc[type];
+  document.getElementById('la-wh-rebate').textContent = data.rebate;
+  document.getElementById('la-wh-details').textContent = `Typical installation: ${data.cost} | Your cost after rebate: ${data.oop} | Annual savings: ${data.savings} | Payback: ${data.payback}`;
+  prompt.style.display = 'none';
+  result.style.display = 'block';
+});
+</script>
 </body>
 </html>

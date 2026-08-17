@@ -25,6 +25,12 @@ binding = "OUTCOMES_DB"
 database_name = "homepowerrebate-outcomes"
 database_id = "99c47c64-e375-44f7-ae4c-6cc2679624e6"
 
+# D1 database for centralized rebate program data (source of truth for all city pages)
+[[d1_databases]]
+binding = "PROGRAMS_DB"
+database_name = "homepowerrebate-programs"
+database_id = "TBD"  # Will be created via wrangler d1 create
+
 # Secrets are set via `wrangler secret put` in the terminal — not stored in this file
 # Required secrets:
 #   - RESEND_API_KEY          (from https://resend.com)

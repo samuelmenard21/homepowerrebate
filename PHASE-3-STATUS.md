@@ -1,20 +1,20 @@
 # Phase 3: Data-Driven City Pages (Infrastructure Build)
 
-## Status: 🔨 In Progress (Parallel Agent Work)
+## Status: 🔨 In Progress (Data Loading Phase)
 
-### What's Running (Background Agents)
+### Agents Completed ✅
 
-**Agent 1: CA/NY/MA Research** (adec7ccf01e25b539)
-- Research California (25 cities), New York (6 cities), Massachusetts (13 cities)
-- 8 upgrade categories per city × 3+ verified sources each
-- Outputting: `ca-rebates.csv`, `ny-rebates.csv`, `ma-rebates.csv`
-- ETA: ~2-4 hours (complex research across multiple utility territories)
+**Agent 1: CA/NY/MA Research** (DONE)
+- ✅ 31 cities researched (25 CA + 6 NY)
+- ✅ 8 upgrade categories × 3+ verified sources each
+- ✅ Delivered: ca-ny-rebates.csv + ca-ny-rebates.json
+- ✅ Critical findings documented (federal credits expired Dec 2025, CA programs closed, NY is best opportunity)
 
-**Agent 2: Canadian Data Extraction** (ab6af162c4f975161)
-- Extract from existing BC/ON/AB/NS city pages
-- Fill any missing categories with 2-3 sources
+**Agent 2: Canadian Data Extraction** (IN PROGRESS)
+- Extracting from existing BC/ON/AB/NS city pages
+- Filling gaps with 2-3 verified sources
 - Outputting: `bc-rebates.csv`, `on-rebates.csv`, `ab-ns-rebates.csv`
-- ETA: ~1-2 hours (reading existing pages + light research)
+- ETA: ~30 min (final phase)
 
 ### Infrastructure Built ✅
 

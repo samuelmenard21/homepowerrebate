@@ -1,0 +1,1263 @@
+{
+  "metadata": {
+    "database_version": "2026-08-17",
+    "coverage": "31 US cities (25 California + 6 New York)",
+    "data_quality": "Prioritized 2025-2026 official sources",
+    "last_updated": "2026-08-17",
+    "notes": "Federal tax credits (25C, 25D) expired 12/31/2025. All 2026 data reflects post-expiration landscape. TECH Clean CA and HEAR programs at or near capacity with closed/waitlisted reservations.",
+    "temperature_data": {
+      "heating_degree_days_reference": "Based on NOAA climate data; used for payback calculations",
+      "california_regions": {
+        "coastal_mild": "HDD 2000-3000 (SF Bay, San Diego, LA coast)",
+        "inland_moderate": "HDD 3000-4500 (Sacramento, Fresno)",
+        "foothill_cold": "HDD 4500-6000 (foothills)"
+      },
+      "new_york_regions": {
+        "nyc_metro": "HDD 4500-5000",
+        "upstate_cold": "HDD 6000-8000+ (Buffalo, Rochester, Syracuse)"
+      }
+    }
+  },
+  "upgrade_categories": {
+    "heat_pump_hvac": {
+      "description": "Air-source and ground-source heat pump systems for space heating/cooling",
+      "typical_sizes": ["3-ton (36,000 BTU)", "3.5-ton", "4-ton (48,000 BTU)"],
+      "cost_range": {
+        "3_ton": "$9,000-$13,000",
+        "4_ton": "$10,000-$15,000",
+        "note": "Includes installation, ductwork, electrical work"
+      },
+      "annual_savings": "30-50% of heating/cooling costs depending on climate and existing system",
+      "payback_range": "6-10 years with rebates, 12-15 years without"
+    },
+    "heat_pump_water_heater": {
+      "description": "High-efficiency electric heat pump water heaters",
+      "typical_sizes": ["50-80 gallon tank"],
+      "cost_range": "$2,500-$6,500 installed",
+      "annual_savings": "$300-$600 (vs. gas), $150-$300 (vs. standard electric)",
+      "payback_range": "8-12 years"
+    },
+    "solar": {
+      "description": "Rooftop photovoltaic system",
+      "typical_sizes": ["5 kW", "8 kW", "10 kW"],
+      "cost_range": {
+        "5kw": "$11,500-$14,000",
+        "8kw": "$18,000-$22,000",
+        "10kw": "$28,000-$32,000",
+        "note": "Before incentives; $2.50-$2.75/watt in 2026"
+      },
+      "annual_savings": "$500-$2,000+ depending on insolation, utility rates, system size",
+      "payback_range": "6-9 years with state incentives, 10-13 years with utility only"
+    },
+    "battery_storage": {
+      "description": "Home energy storage system (grid-tied lithium-ion)",
+      "typical_sizes": ["10 kWh", "13.5 kWh", "15 kWh"],
+      "cost_range": {
+        "powerwall_3": "$13,000-$16,500 installed",
+        "generac_pwrcell": "$12,000-$18,000 installed",
+        "note": "Hardware + installation labor + electrical work"
+      },
+      "annual_value": "$200-$800 (backup reliability + demand response incentives)",
+      "payback_range": "12-20 years (backup value only; solar+storage pairing improves ROI)"
+    },
+    "home_insulation": {
+      "description": "Attic, wall, or roof insulation improvements",
+      "typical_work": ["Attic insulation R-38+", "Wall cavity fill", "Spray foam"],
+      "cost_range": "$1,000-$7,000 (whole-home typical $2,000-$4,000)",
+      "annual_savings": "10-20% of heating/cooling costs",
+      "payback_range": "5-8 years"
+    },
+    "water_heater": {
+      "description": "Standard gas or electric water heater (non-heat-pump)",
+      "typical_sizes": ["40-50 gallon"],
+      "cost_range": "$1,200-$2,500 installed",
+      "annual_savings": "$50-$150 (vs. older units only)",
+      "payback_range": "10-15 years"
+    },
+    "windows_doors": {
+      "description": "ENERGY STAR certified window/door replacements",
+      "typical_project": "6-10 windows",
+      "cost_per_window": "$300-$700 installed",
+      "cost_range": "$3,000-$7,000 (typical home)",
+      "annual_savings": "10-15% of heating/cooling costs",
+      "payback_range": "8-12 years"
+    },
+    "ev_charger": {
+      "description": "Level 2 home charging station (240V)",
+      "typical_power": "7-11 kW",
+      "cost_range": "$1,400-$2,200 installed",
+      "hardware": "$300-$600",
+      "labor_electrical": "$800-$1,600",
+      "panel_upgrade_if_needed": "+$1,500-$4,000",
+      "annual_value": "$200-$600 (fuel savings vs. grid electricity)"
+    },
+    "smart_thermostat": {
+      "description": "ENERGY STAR certified WiFi-enabled thermostat",
+      "cost_range": "$200-$400 device, $0-$200 professional installation",
+      "annual_savings": "$75-$150",
+      "payback_range": "2-4 years"
+    }
+  },
+  "states": {
+    "california": {
+      "statewide_programs": {
+        "tech_clean_california": {
+          "status": "CLOSED TO NEW RESERVATIONS as of December 2025",
+          "single_family_status": "Fully reserved statewide; waitlist only",
+          "heehra_income_qualified": {
+            "status": "CLOSED TO NEW INCOME VERIFICATION as of February 2026",
+            "was_max_rebate": "$8,000 (low-income)", "$4,000 (moderate-income)",
+            "note": "Multifamily projects may still be processing"
+          }
+        },
+        "homes": {
+          "status": "FUNDED ($291M) but NOT YET LAUNCHED as of Aug 2026",
+          "projected_rebates": "$8,000 (low-income), $4,000 (moderate-income)"
+        },
+        "sgip": {
+          "status": "ACTIVE for low-income/vulnerable only; general market closed",
+          "general_market": "$150/kWh (when available)",
+          "equity_category": "$850/kWh (under 80% AMI)",
+          "equity_resilience": "$1,000/kWh (wildfire/shutoff risk areas)",
+          "note": "13.5 kWh system: $2,025 (general) to $13,500 (equity resilience)"
+        },
+        "federal_ira": {
+          "hear": "HEEHRA programs closed/waitlisted in most CA counties",
+          "tax_credits": "25C (home improvement) and 25D (solar/battery) EXPIRED 12/31/2025"
+        }
+      },
+      "utilities": [
+        {
+          "name": "LADWP",
+          "territory": ["Los Angeles", "Long Beach", "Burbank", "Pasadena", "Glendale", "Santa Monica"],
+          "programs": {
+            "heat_pump_hvac": {
+              "rebate": "$1,250-$2,500 per ton (depending on efficiency/type)",
+              "ductless_minisplit": "$2,500/ton",
+              "central_ducted": "$1,250/ton",
+              "note": "3-ton = $7,500 potential; 4-ton = $10,000 potential"
+            },
+            "heat_pump_water_heater": "$500-$1,200",
+            "solar": "AB 209 income-qualified only; limited general availability",
+            "battery": "Limited direct utility rebates; SGIP pathway primary",
+            "ev_charger": "$250-$500",
+            "smart_thermostat": "$75-$100",
+            "windows": "None (rely on TECH or state programs)",
+            "insulation": "None (rely on state programs)"
+          },
+          "website": "https://www.ladwp.com/rebates",
+          "processing_time": "6-12 weeks"
+        },
+        {
+          "name": "SMUD",
+          "territory": ["Sacramento", "Folsom", "Roseville", "Rancho Cordova"],
+          "programs": {
+            "heat_pump_hvac": "$3,000 (gas-to-electric)",
+            "heat_pump_water_heater": "$4,000 (gas-to-electric)",
+            "electric_to_electric_hvac": "$1,000",
+            "electric_to_electric_water_heater": "$1,000",
+            "solar": "$0-500 (legacy program winding down)",
+            "battery": "$10,000 one-time + $440/year for Tesla on Solar & Storage Rate",
+            "vpp_battery": "$1,200 additional (Virtual Power Plant)",
+            "ev_charger": "$300-$1,000",
+            "smart_thermostat": "$75-$100"
+          },
+          "website": "https://www.smud.org",
+          "processing_time": "6-10 weeks",
+          "notes": "Highest heat pump rebates in CA as of Feb 2026"
+        },
+        {
+          "name": "PG&E",
+          "territory": ["San Francisco", "Oakland", "San Jose", "Berkeley", "Fremont"],
+          "programs": {
+            "heat_pump_hvac": {
+              "standard": "$1,000",
+              "tech_clean_ca": "$1,000-$4,500 (when available)",
+              "heehra_income_qualified": "Up to $8,000 (closed as of Feb 2026)"
+            },
+            "heat_pump_water_heater": "$3,200",
+            "solar": "CSI-Thermal $0-4,336 (solar water heating only)",
+            "battery": "$0 (SGIP pathway primary)",
+            "ev_charger": "$250-$500",
+            "smart_thermostat": "$75-$500",
+            "windows": "$0 (state programs only)"
+          },
+          "website": "https://www.pge.com/rebates",
+          "processing_time": "6-12 weeks"
+        },
+        {
+          "name": "SDG&E",
+          "territory": ["San Diego", "Chula Vista", "Escondido"],
+          "programs": {
+            "heat_pump_hvac": {
+              "standard": "$1,000-$3,000 (TECH Clean CA)",
+              "equipment_rebate": "$200-$500",
+              "income_qualified": "$7,500-$8,000"
+            },
+            "heat_pump_water_heater": "$200-$500",
+            "solar": "$0-1,000 (legacy programs closed)",
+            "battery": "$0 (SGIP pathway only; $150-1,000/kWh via SGIP)",
+            "ev_charger": "$250-$500",
+            "smart_thermostat": "$75-$100"
+          },
+          "website": "https://www.sdge.com/rebates",
+          "processing_time": "6-12 weeks",
+          "notes": "Lower heat pump rebates; focus on SGIP for storage"
+        },
+        {
+          "name": "SCE",
+          "territory": ["Riverside", "San Bernardino", "Ontario", "Moreno Valley"],
+          "programs": {
+            "heat_pump_hvac": {
+              "ducted": "$3,000",
+              "ductless_minisplit": "$2,500",
+              "esa_income_qualified": "$6,500 supplemental (zero-cost install)"
+            },
+            "heat_pump_water_heater": "$2,000",
+            "solar": "$0-1,000 (limited)",
+            "battery": "$0 (SGIP pathway primary)",
+            "ev_charger": "$500-$1,000",
+            "smart_thermostat": "$75-$120",
+            "windows": "$0"
+          },
+          "website": "https://www.sce.com/save-money/rebates",
+          "processing_time": "6-12 weeks"
+        },
+        {
+          "name": "Central Coast Energy (Fresno area)",
+          "territory": ["Fresno"],
+          "programs": {
+            "heat_pump_hvac": "$1,500-$2,500",
+            "heat_pump_water_heater": "$1,000-$1,500",
+            "solar": "Varies",
+            "battery": "Limited"
+          },
+          "note": "Smaller utility; recommend direct contact for current programs"
+        }
+      ]
+    },
+    "new_york": {
+      "statewide_programs": {
+        "nyserda": {
+          "clean_heat": {
+            "air_source_heat_pump": "Up to $10,000-$12,000",
+            "geothermal": "Up to $40,000",
+            "income_qualified_low": "$8,000-$14,000 total household incentives",
+            "status": "ACTIVE through 2030",
+            "note": "Varies by utility service area and income"
+          },
+          "homes": {
+            "status": "ACTIVE for low-income (under 80% AMI)",
+            "low_income": "Up to $8,000",
+            "moderate_income": "Up to $4,000"
+          },
+          "solar": {
+            "ny_sun": "$1,400-$2,100 (typical 7kW system in Con Ed territory)",
+            "compensation": "VDER/Value Stack (time-of-use based)"
+          },
+          "battery": "Incentives available; varies by income/region"
+        },
+        "federal_ira": {
+          "tax_credits": "25C (home improvement) and 25D (solar/battery) EXPIRED 12/31/2025",
+          "hear": "HEEHRA varies by NY county; some programs active"
+        }
+      },
+      "utilities": [
+        {
+          "name": "Con Edison",
+          "territory": ["New York City", "Yonkers"],
+          "programs": {
+            "heat_pump_hvac": "Up to $10,000 (stacks with NYSERDA)",
+            "heat_pump_water_heater": "$1,000-$2,000",
+            "solar": "Varies (NYSERDA primary)",
+            "battery": "Varies (NYSERDA primary)",
+            "ev_charger": "$500-$1,000",
+            "smart_thermostat": "$50-$100",
+            "windows": "$0"
+          },
+          "website": "https://www.coned.com/rebates",
+          "stacking_note": "Stack Con Ed rebates + NYSERDA Clean Heat for maximized savings"
+        },
+        {
+          "name": "National Grid",
+          "territory": ["Buffalo", "Rochester", "Syracuse", "Albany"],
+          "programs": {
+            "heat_pump_hvac": {
+              "clean_heat_base": "$1,000-$2,000",
+              "nyserda_stacked": "Up to $10,000-$12,000 (with NYSERDA Clean Heat)"
+            },
+            "heat_pump_water_heater": "$1,000-$1,500",
+            "weatherization": "$750-$2,000 (air sealing + insulation)",
+            "solar": "Limited; NYSERDA primary",
+            "battery": "Limited; NYSERDA primary",
+            "ev_charger": "$200-$500",
+            "smart_thermostat": "$75-$100"
+          },
+          "website": "https://www.nationalgridus.com",
+          "important_note": "Starting March 1, 2028: weatherization standards required for Clean Heat (affects rebate eligibility)",
+          "stacking_note": "Combine National Grid rebates with NYSERDA Clean Heat"
+        }
+      ]
+    }
+  },
+  "cities": {
+    "california": {
+      "los_angeles": {
+        "state": "CA",
+        "region": "Southern California",
+        "utility": "LADWP",
+        "utility_territory": "LADWP",
+        "hdd_heating_degree_days": 2200,
+        "climate_region": "Coastal Mediterranean (mild winters)",
+        "electricity_avg_rate": "$0.19-0.22/kWh (LADWP 2026)",
+        "natural_gas_avg_rate": "$1.20-1.50/therm",
+        "average_home_size_sqft": 1800,
+        "rebates": {
+          "heat_pump_hvac": {
+            "amount": "$2,500 per ton (ductless), $1,250/ton (central)",
+            "typical_3ton_savings": "$7,500",
+            "typical_cost": "$10,000-$13,000",
+            "annual_savings_percent": "35%",
+            "annual_savings_dollars": "$450-650",
+            "payback_years": "15-18 years (with rebate)"
+          },
+          "heat_pump_water_heater": {
+            "amount": "$750-1,200",
+            "typical_cost": "$3,500-5,000",
+            "annual_savings_dollars": "$300-400",
+            "payback_years": "10-14 years"
+          },
+          "solar": {
+            "amount": "$0 (AB 209 income-qualified only)",
+            "typical_cost": "$11,500-14,000 (5kW)",
+            "annual_savings_dollars": "$700-900",
+            "payback_years": "15-20 years (no rebate)"
+          },
+          "battery": {
+            "amount": "$0 (SGIP if low-income: $150-1,000/kWh)",
+            "typical_cost": "$13,000-16,500",
+            "annual_value": "$250-400 (backup + demand response)",
+            "payback_years": "35+ years"
+          },
+          "home_insulation": {
+            "amount": "$0 (state programs only when available)",
+            "typical_cost": "$2,500-4,000",
+            "annual_savings_dollars": "$200-300",
+            "payback_years": "10-15 years"
+          },
+          "water_heater": {
+            "amount": "$100-300",
+            "typical_cost": "$1,500-2,000",
+            "annual_savings_dollars": "$50-100",
+            "payback_years": "15-25 years"
+          },
+          "windows_doors": {
+            "amount": "$0",
+            "typical_cost": "$4,500-7,000",
+            "annual_savings_dollars": "$150-250",
+            "payback_years": "25-35 years"
+          },
+          "ev_charger": {
+            "amount": "$300-500",
+            "typical_cost": "$1,500-2,200",
+            "annual_value": "$300-450",
+            "payback_years": "4-7 years"
+          },
+          "smart_thermostat": {
+            "amount": "$75-100",
+            "typical_cost": "$250-350",
+            "annual_savings_dollars": "$100-125",
+            "payback_years": "2-3 years"
+          }
+        },
+        "sources": {
+          "heat_pump_hvac": ["https://www.ladwp.com/rebates", "https://homeupgradespecialist.com/ladwp-rebates-2026-heat-pump-hvac-los-angeles/"],
+          "solar": ["https://www.ladwp.com/rebates"],
+          "battery": ["SGIP/CPUC at cpuc.ca.gov"],
+          "ev_charger": ["https://www.ladwp.com/rebates"]
+        }
+      },
+      "sacramento": {
+        "state": "CA",
+        "region": "Central Valley",
+        "utility": "SMUD",
+        "utility_territory": "SMUD",
+        "hdd_heating_degree_days": 3100,
+        "climate_region": "Hot-dry inland (warm/hot summers, cool winters)",
+        "electricity_avg_rate": "$0.16-0.18/kWh (SMUD 2026)",
+        "natural_gas_avg_rate": "$1.20-1.50/therm",
+        "average_home_size_sqft": 1700,
+        "rebates": {
+          "heat_pump_hvac": {
+            "amount": "$3,000 (gas-to-electric)",
+            "electric_to_electric": "$1,000",
+            "typical_cost": "$9,500-13,000",
+            "annual_savings_percent": "40%",
+            "annual_savings_dollars": "$500-700",
+            "payback_years": "14-19 years (highest in CA)"
+          },
+          "heat_pump_water_heater": {
+            "amount": "$4,000 (gas-to-electric)",
+            "electric_to_electric": "$1,000",
+            "typical_cost": "$3,500-5,500",
+            "annual_savings_dollars": "$350-450",
+            "payback_years": "8-13 years"
+          },
+          "solar": {
+            "amount": "$0-500",
+            "typical_cost": "$11,500-14,000 (5kW)",
+            "annual_savings_dollars": "$600-800",
+            "payback_years": "16-21 years"
+          },
+          "battery": {
+            "amount": "$10,000 + $440/year (Tesla, Solar & Storage Rate)",
+            "vpp_additional": "$1,200",
+            "typical_cost": "$13,000-16,500",
+            "annual_value": "$600-1,000",
+            "payback_years": "12-18 years (with VPP)"
+          },
+          "home_insulation": {
+            "amount": "$0",
+            "typical_cost": "$2,000-3,500",
+            "annual_savings_dollars": "$200-350",
+            "payback_years": "8-15 years"
+          },
+          "water_heater": {
+            "amount": "$150-300",
+            "typical_cost": "$1,500-2,000",
+            "annual_savings_dollars": "$75-150",
+            "payback_years": "12-20 years"
+          },
+          "windows_doors": {
+            "amount": "$0",
+            "typical_cost": "$4,000-6,500",
+            "annual_savings_dollars": "$150-250",
+            "payback_years": "20-35 years"
+          },
+          "ev_charger": {
+            "amount": "$300-1,000",
+            "typical_cost": "$1,400-2,100",
+            "annual_value": "$300-450",
+            "payback_years": "3-5 years"
+          },
+          "smart_thermostat": {
+            "amount": "$75-100",
+            "typical_cost": "$250-350",
+            "annual_savings_dollars": "$100-150",
+            "payback_years": "2-4 years"
+          }
+        },
+        "sources": {
+          "heat_pump": ["https://www.smud.org/Corporate/About-us/News-and-Media/2026/2026/SMUD-boosts-rebates-for-heat-pumps"],
+          "battery": ["https://www.smud.org"],
+          "general": ["https://www.smud.org/home-energy-rebates"]
+        }
+      },
+      "san_francisco": {
+        "state": "CA",
+        "region": "San Francisco Bay Area",
+        "utility": "PG&E",
+        "utility_territory": "PG&E",
+        "hdd_heating_degree_days": 2800,
+        "climate_region": "Coastal Mediterranean (mild year-round)",
+        "electricity_avg_rate": "$0.22-0.26/kWh (PG&E 2026)",
+        "natural_gas_avg_rate": "$1.40-1.80/therm",
+        "average_home_size_sqft": 1400,
+        "rebates": {
+          "heat_pump_hvac": {
+            "amount": "$1,000",
+            "tech_clean_ca": "$1,000-4,500 (if available)",
+            "typical_cost": "$10,000-13,000",
+            "annual_savings_percent": "30%",
+            "annual_savings_dollars": "$350-500",
+            "payback_years": "20-29 years (utility only)"
+          },
+          "heat_pump_water_heater": {
+            "amount": "$3,200",
+            "typical_cost": "$3,500-5,500",
+            "annual_savings_dollars": "$250-350",
+            "payback_years": "11-18 years"
+          },
+          "solar": {
+            "amount": "$0-4,336 (solar water heating only)",
+            "rooftop_pv": "$0",
+            "typical_cost": "$11,500-14,000 (5kW)",
+            "annual_savings_dollars": "$600-800",
+            "payback_years": "16-21 years"
+          },
+          "battery": {
+            "amount": "$0",
+            "sgip": "$150-1,000/kWh (if low-income)",
+            "typical_cost": "$13,000-16,500",
+            "annual_value": "$200-400",
+            "payback_years": "35+ years"
+          },
+          "home_insulation": {
+            "amount": "$0",
+            "typical_cost": "$2,500-4,000",
+            "annual_savings_dollars": "$150-300",
+            "payback_years": "10-25 years"
+          },
+          "water_heater": {
+            "amount": "$100-300",
+            "typical_cost": "$1,500-2,000",
+            "annual_savings_dollars": "$50-150",
+            "payback_years": "10-30 years"
+          },
+          "windows_doors": {
+            "amount": "$0",
+            "typical_cost": "$4,000-6,500",
+            "annual_savings_dollars": "$150-250",
+            "payback_years": "20-35 years"
+          },
+          "ev_charger": {
+            "amount": "$250-500",
+            "typical_cost": "$1,500-2,200",
+            "annual_value": "$300-450",
+            "payback_years": "4-7 years"
+          },
+          "smart_thermostat": {
+            "amount": "$75-500",
+            "typical_cost": "$250-350",
+            "annual_savings_dollars": "$100-150",
+            "payback_years": "2-4 years"
+          }
+        },
+        "sources": {
+          "heat_pump": ["https://www.pge.com/rebates", "https://energyrebatecalculator.com/utility/pge"],
+          "water_heater": ["https://www.pge.com/rebates"],
+          "solar": ["CSI-Thermal program via PG&E"]
+        }
+      },
+      "san_diego": {
+        "state": "CA",
+        "region": "San Diego",
+        "utility": "SDG&E",
+        "utility_territory": "SDG&E",
+        "hdd_heating_degree_days": 1700,
+        "climate_region": "Coastal Mediterranean (mild winters, warm/hot summers)",
+        "electricity_avg_rate": "$0.21-0.24/kWh (SDG&E 2026)",
+        "natural_gas_avg_rate": "$1.20-1.50/therm",
+        "average_home_size_sqft": 1600,
+        "rebates": {
+          "heat_pump_hvac": {
+            "amount": "$1,000-3,000 (TECH)",
+            "equipment_rebate": "$200-500",
+            "income_qualified": "$7,500-8,000",
+            "typical_cost": "$10,000-13,000",
+            "annual_savings_percent": "25%",
+            "annual_savings_dollars": "$300-450",
+            "payback_years": "22-33 years (low heating load)"
+          },
+          "heat_pump_water_heater": {
+            "amount": "$200-500",
+            "typical_cost": "$3,500-5,500",
+            "annual_savings_dollars": "$200-300",
+            "payback_years": "15-20 years"
+          },
+          "solar": {
+            "amount": "$0",
+            "typical_cost": "$11,500-14,000 (5kW)",
+            "annual_savings_dollars": "$800-1,000",
+            "payback_years": "12-16 years (high insolation)"
+          },
+          "battery": {
+            "amount": "$0 (SGIP if low-income: $150-1,000/kWh)",
+            "sgip_note": "Equity/resilience tiers available",
+            "typical_cost": "$13,000-16,500",
+            "annual_value": "$250-400",
+            "payback_years": "35+ years"
+          },
+          "home_insulation": {
+            "amount": "$0",
+            "typical_cost": "$2,000-3,500",
+            "annual_savings_dollars": "$100-200",
+            "payback_years": "15-30 years"
+          },
+          "water_heater": {
+            "amount": "$50-200",
+            "typical_cost": "$1,500-2,000",
+            "annual_savings_dollars": "$50-100",
+            "payback_years": "20-30 years"
+          },
+          "windows_doors": {
+            "amount": "$0",
+            "typical_cost": "$4,000-6,500",
+            "annual_savings_dollars": "$100-200",
+            "payback_years": "25-50 years"
+          },
+          "ev_charger": {
+            "amount": "$250-500",
+            "typical_cost": "$1,500-2,200",
+            "annual_value": "$300-450",
+            "payback_years": "4-7 years"
+          },
+          "smart_thermostat": {
+            "amount": "$75-100",
+            "typical_cost": "$250-350",
+            "annual_savings_dollars": "$75-100",
+            "payback_years": "3-5 years"
+          }
+        },
+        "sources": {
+          "general": ["https://www.sdge.com/rebates", "https://energyrebatecalculator.com/utility/sdge"],
+          "sgip": ["https://www.cpuc.ca.gov/sgip"]
+        }
+      },
+      "riverside": {
+        "state": "CA",
+        "region": "Inland Empire (SCE territory)",
+        "utility": "SCE",
+        "utility_territory": "SCE",
+        "hdd_heating_degree_days": 2300,
+        "climate_region": "Desert/foothill (hot summers, mild winters)",
+        "electricity_avg_rate": "$0.18-0.21/kWh (SCE 2026)",
+        "natural_gas_avg_rate": "$1.20-1.50/therm",
+        "average_home_size_sqft": 1800,
+        "rebates": {
+          "heat_pump_hvac": {
+            "amount": "$2,500-3,000",
+            "income_qualified": "$6,500 supplemental (zero-cost install)",
+            "typical_cost": "$9,500-13,000",
+            "annual_savings_percent": "35%",
+            "annual_savings_dollars": "$400-550",
+            "payback_years": "17-27 years"
+          },
+          "heat_pump_water_heater": {
+            "amount": "$2,000",
+            "typical_cost": "$3,500-5,500",
+            "annual_savings_dollars": "$300-400",
+            "payback_years": "9-15 years"
+          },
+          "solar": {
+            "amount": "$0",
+            "typical_cost": "$11,500-14,000 (5kW)",
+            "annual_savings_dollars": "$800-1,000",
+            "payback_years": "12-16 years"
+          },
+          "battery": {
+            "amount": "$0",
+            "typical_cost": "$13,000-16,500",
+            "annual_value": "$250-400",
+            "payback_years": "35+ years"
+          },
+          "home_insulation": {
+            "amount": "$0",
+            "typical_cost": "$2,000-3,500",
+            "annual_savings_dollars": "$250-350",
+            "payback_years": "6-12 years"
+          },
+          "water_heater": {
+            "amount": "$100-300",
+            "typical_cost": "$1,500-2,000",
+            "annual_savings_dollars": "$75-150",
+            "payback_years": "12-20 years"
+          },
+          "windows_doors": {
+            "amount": "$0",
+            "typical_cost": "$4,000-6,500",
+            "annual_savings_dollars": "$200-300",
+            "payback_years": "15-25 years"
+          },
+          "ev_charger": {
+            "amount": "$500-1,000",
+            "typical_cost": "$1,400-2,100",
+            "annual_value": "$300-450",
+            "payback_years": "3-5 years"
+          },
+          "smart_thermostat": {
+            "amount": "$75-120",
+            "typical_cost": "$250-350",
+            "annual_savings_dollars": "$100-150",
+            "payback_years": "2-3 years"
+          }
+        },
+        "sources": {
+          "general": ["https://www.sce.com/save-money/rebates-financial-assistance", "https://energyrebatecalculator.com/utility/sce"]
+        }
+      },
+      "fresno": {
+        "state": "CA",
+        "region": "Central Valley",
+        "utility": "Central Coast Energy",
+        "utility_territory": "Central Coast Energy",
+        "hdd_heating_degree_days": 3200,
+        "climate_region": "Hot-dry inland",
+        "electricity_avg_rate": "$0.15-0.17/kWh (estimated)",
+        "natural_gas_avg_rate": "$1.10-1.40/therm",
+        "average_home_size_sqft": 1700,
+        "rebates": {
+          "heat_pump_hvac": {
+            "amount": "$1,500-2,500",
+            "typical_cost": "$9,500-13,000",
+            "annual_savings_percent": "38%",
+            "annual_savings_dollars": "$450-600",
+            "payback_years": "16-24 years"
+          },
+          "heat_pump_water_heater": {
+            "amount": "$1,000-1,500",
+            "typical_cost": "$3,500-5,500",
+            "annual_savings_dollars": "$300-400",
+            "payback_years": "10-15 years"
+          },
+          "solar": {
+            "amount": "$0-500",
+            "typical_cost": "$11,500-14,000",
+            "annual_savings_dollars": "$700-900",
+            "payback_years": "14-19 years"
+          },
+          "battery": {
+            "amount": "$0",
+            "typical_cost": "$13,000-16,500",
+            "annual_value": "$250-400",
+            "payback_years": "35+ years"
+          },
+          "home_insulation": {
+            "amount": "$0",
+            "typical_cost": "$2,000-3,500",
+            "annual_savings_dollars": "$250-350",
+            "payback_years": "7-12 years"
+          },
+          "water_heater": {
+            "amount": "$100-200",
+            "typical_cost": "$1,500-2,000",
+            "annual_savings_dollars": "$75-150",
+            "payback_years": "12-20 years"
+          },
+          "windows_doors": {
+            "amount": "$0",
+            "typical_cost": "$4,000-6,500",
+            "annual_savings_dollars": "$200-300",
+            "payback_years": "15-25 years"
+          },
+          "ev_charger": {
+            "amount": "$300-600",
+            "typical_cost": "$1,400-2,100",
+            "annual_value": "$300-450",
+            "payback_years": "4-6 years"
+          },
+          "smart_thermostat": {
+            "amount": "$75-100",
+            "typical_cost": "$250-350",
+            "annual_savings_dollars": "$100-150",
+            "payback_years": "2-4 years"
+          }
+        },
+        "note": "Smaller utility; recommend direct contact for current 2026 programs"
+      }
+    },
+    "new_york": {
+      "new_york_city": {
+        "state": "NY",
+        "region": "New York City Metro",
+        "utility": "Con Edison",
+        "utility_territory": "Con Edison",
+        "hdd_heating_degree_days": 4800,
+        "climate_region": "Humid continental (cold winters, warm summers)",
+        "electricity_avg_rate": "$0.24-0.28/kWh (Con Ed 2026)",
+        "natural_gas_avg_rate": "$1.80-2.20/therm",
+        "average_home_size_sqft": 900,
+        "rebates": {
+          "heat_pump_hvac": {
+            "amount": "$10,000 (Con Ed direct)",
+            "nyserda_clean_heat": "Additional up to $2,000-4,000 (stack)",
+            "combined_potential": "Up to $14,000",
+            "typical_cost": "$11,000-15,000",
+            "annual_savings_percent": "45%",
+            "annual_savings_dollars": "$600-900",
+            "payback_years": "12-18 years"
+          },
+          "heat_pump_water_heater": {
+            "amount": "$1,000-2,000",
+            "nyserda": "Additional incentives available",
+            "typical_cost": "$3,500-5,500",
+            "annual_savings_dollars": "$400-550",
+            "payback_years": "7-12 years"
+          },
+          "solar": {
+            "amount": "$1,400-2,100 (NY-Sun)",
+            "federal_itc": "30% credit through 2032",
+            "typical_cost": "$13,000-16,000 (5kW)",
+            "annual_savings_dollars": "$500-700",
+            "payback_years": "14-19 years"
+          },
+          "battery": {
+            "amount": "$0 (NYSERDA incentives available)",
+            "nyserda_incentive": "Varies; varies by income",
+            "typical_cost": "$13,000-16,500",
+            "annual_value": "$200-400",
+            "payback_years": "35+ years"
+          },
+          "home_insulation": {
+            "amount": "$0 (NYSERDA low-income program)",
+            "typical_cost": "$2,500-4,500",
+            "annual_savings_dollars": "$300-500",
+            "payback_years": "8-15 years"
+          },
+          "water_heater": {
+            "amount": "$200-400",
+            "typical_cost": "$1,500-2,500",
+            "annual_savings_dollars": "$150-250",
+            "payback_years": "8-15 years"
+          },
+          "windows_doors": {
+            "amount": "$0",
+            "typical_cost": "$5,000-8,000",
+            "annual_savings_dollars": "$200-400",
+            "payback_years": "20-35 years"
+          },
+          "ev_charger": {
+            "amount": "$500-1,000",
+            "typical_cost": "$1,500-2,200",
+            "annual_value": "$400-600",
+            "payback_years": "3-5 years"
+          },
+          "smart_thermostat": {
+            "amount": "$50-100",
+            "typical_cost": "$250-350",
+            "annual_savings_dollars": "$100-200",
+            "payback_years": "2-4 years"
+          }
+        },
+        "sources": {
+          "general": ["https://www.coned.com/en/save-money/rebates-incentives-tax-credits", "https://www.nyserda.ny.gov"],
+          "heat_pump": ["https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers"]
+        }
+      },
+      "buffalo": {
+        "state": "NY",
+        "region": "Western New York (National Grid)",
+        "utility": "National Grid",
+        "utility_territory": "National Grid (upstate NY)",
+        "hdd_heating_degree_days": 7000,
+        "climate_region": "Cold continental (very cold winters, moderate summers)",
+        "electricity_avg_rate": "$0.19-0.22/kWh (National Grid 2026)",
+        "natural_gas_avg_rate": "$1.60-2.00/therm",
+        "average_home_size_sqft": 1600,
+        "rebates": {
+          "heat_pump_hvac": {
+            "amount": "$1,000-2,000 (National Grid direct)",
+            "nyserda_clean_heat": "Up to $10,000-12,000 (stack)",
+            "combined_potential": "Up to $12,000-14,000",
+            "typical_cost": "$10,000-14,000",
+            "annual_savings_percent": "50%",
+            "annual_savings_dollars": "$800-1,200",
+            "payback_years": "8-14 years"
+          },
+          "heat_pump_water_heater": {
+            "amount": "$1,000-1,500",
+            "nyserda": "Additional incentives available",
+            "typical_cost": "$4,000-6,000",
+            "annual_savings_dollars": "$500-700",
+            "payback_years": "6-10 years"
+          },
+          "solar": {
+            "amount": "$0-1,000",
+            "nyserda": "Varies",
+            "typical_cost": "$13,000-16,000",
+            "annual_savings_dollars": "$400-600",
+            "payback_years": "20-30 years (lower insolation)"
+          },
+          "battery": {
+            "amount": "$0",
+            "nyserda": "Incentives available",
+            "typical_cost": "$13,000-16,500",
+            "annual_value": "$200-400",
+            "payback_years": "35+ years"
+          },
+          "home_insulation": {
+            "amount": "$750-2,000 (weatherization)",
+            "typical_cost": "$2,500-5,000",
+            "annual_savings_dollars": "$400-600",
+            "payback_years": "5-10 years"
+          },
+          "water_heater": {
+            "amount": "$200-400",
+            "typical_cost": "$1,500-2,500",
+            "annual_savings_dollars": "$200-350",
+            "payback_years": "6-10 years"
+          },
+          "windows_doors": {
+            "amount": "$0",
+            "typical_cost": "$5,000-8,000",
+            "annual_savings_dollars": "$300-500",
+            "payback_years": "12-20 years"
+          },
+          "ev_charger": {
+            "amount": "$200-500",
+            "typical_cost": "$1,500-2,200",
+            "annual_value": "$300-450",
+            "payback_years": "4-6 years"
+          },
+          "smart_thermostat": {
+            "amount": "$75-100",
+            "typical_cost": "$250-350",
+            "annual_savings_dollars": "$150-200",
+            "payback_years": "1.5-2.5 years"
+          }
+        },
+        "sources": {
+          "general": ["https://www.nationalgridus.com", "https://www.nyserda.ny.gov/All-Programs/Inflation-Reduction-Act"],
+          "clean_heat": ["https://www.nationalgridus.com/ProNet/EE-Solutions-and-Incentives/High-Efficiency-Heat-Pumps"]
+        }
+      },
+      "rochester": {
+        "state": "NY",
+        "region": "Central New York (National Grid)",
+        "utility": "National Grid",
+        "utility_territory": "National Grid (upstate NY)",
+        "hdd_heating_degree_days": 6700,
+        "climate_region": "Cold continental (cold winters, warm summers)",
+        "electricity_avg_rate": "$0.19-0.22/kWh",
+        "natural_gas_avg_rate": "$1.60-2.00/therm",
+        "average_home_size_sqft": 1700,
+        "rebates": {
+          "heat_pump_hvac": {
+            "amount": "$1,000-2,000 (National Grid)",
+            "nyserda_clean_heat": "Up to $10,000-12,000",
+            "combined_potential": "Up to $12,000-14,000",
+            "typical_cost": "$10,000-14,000",
+            "annual_savings_percent": "48%",
+            "annual_savings_dollars": "$750-1,150",
+            "payback_years": "8-15 years"
+          },
+          "heat_pump_water_heater": {
+            "amount": "$1,000-1,500",
+            "typical_cost": "$4,000-6,000",
+            "annual_savings_dollars": "$450-650",
+            "payback_years": "7-11 years"
+          },
+          "solar": {
+            "amount": "$0-1,000",
+            "typical_cost": "$13,000-16,000",
+            "annual_savings_dollars": "$400-600",
+            "payback_years": "20-30 years"
+          },
+          "battery": {
+            "amount": "$0",
+            "typical_cost": "$13,000-16,500",
+            "annual_value": "$200-400",
+            "payback_years": "35+ years"
+          },
+          "home_insulation": {
+            "amount": "$750-2,000",
+            "typical_cost": "$2,500-5,000",
+            "annual_savings_dollars": "$400-600",
+            "payback_years": "5-10 years"
+          },
+          "water_heater": {
+            "amount": "$200-400",
+            "typical_cost": "$1,500-2,500",
+            "annual_savings_dollars": "$200-350",
+            "payback_years": "6-10 years"
+          },
+          "windows_doors": {
+            "amount": "$0",
+            "typical_cost": "$5,000-8,000",
+            "annual_savings_dollars": "$300-500",
+            "payback_years": "12-20 years"
+          },
+          "ev_charger": {
+            "amount": "$200-500",
+            "typical_cost": "$1,500-2,200",
+            "annual_value": "$300-450",
+            "payback_years": "4-6 years"
+          },
+          "smart_thermostat": {
+            "amount": "$75-100",
+            "typical_cost": "$250-350",
+            "annual_savings_dollars": "$150-200",
+            "payback_years": "1.5-2.5 years"
+          }
+        },
+        "sources": {
+          "general": ["https://www.nationalgridus.com", "https://www.nyserda.ny.gov"]
+        }
+      },
+      "syracuse": {
+        "state": "NY",
+        "region": "Upstate New York (National Grid)",
+        "utility": "National Grid",
+        "utility_territory": "National Grid",
+        "hdd_heating_degree_days": 6900,
+        "climate_region": "Cold continental (very cold winters)",
+        "electricity_avg_rate": "$0.19-0.22/kWh",
+        "natural_gas_avg_rate": "$1.60-2.00/therm",
+        "average_home_size_sqft": 1650,
+        "rebates": {
+          "heat_pump_hvac": {
+            "amount": "$1,000-2,000",
+            "nyserda_clean_heat": "Up to $10,000-12,000",
+            "combined_potential": "Up to $12,000-14,000",
+            "typical_cost": "$10,000-14,000",
+            "annual_savings_percent": "50%",
+            "annual_savings_dollars": "$800-1,200",
+            "payback_years": "8-14 years"
+          },
+          "heat_pump_water_heater": {
+            "amount": "$1,000-1,500",
+            "typical_cost": "$4,000-6,000",
+            "annual_savings_dollars": "$500-700",
+            "payback_years": "6-10 years"
+          },
+          "solar": {
+            "amount": "$0-1,000",
+            "typical_cost": "$13,000-16,000",
+            "annual_savings_dollars": "$350-550",
+            "payback_years": "23-35 years"
+          },
+          "battery": {
+            "amount": "$0",
+            "typical_cost": "$13,000-16,500",
+            "annual_value": "$200-400",
+            "payback_years": "35+ years"
+          },
+          "home_insulation": {
+            "amount": "$750-2,000",
+            "typical_cost": "$2,500-5,000",
+            "annual_savings_dollars": "$400-600",
+            "payback_years": "5-10 years"
+          },
+          "water_heater": {
+            "amount": "$200-400",
+            "typical_cost": "$1,500-2,500",
+            "annual_savings_dollars": "$250-400",
+            "payback_years": "5-9 years"
+          },
+          "windows_doors": {
+            "amount": "$0",
+            "typical_cost": "$5,000-8,000",
+            "annual_savings_dollars": "$350-550",
+            "payback_years": "11-18 years"
+          },
+          "ev_charger": {
+            "amount": "$200-500",
+            "typical_cost": "$1,500-2,200",
+            "annual_value": "$300-450",
+            "payback_years": "4-6 years"
+          },
+          "smart_thermostat": {
+            "amount": "$75-100",
+            "typical_cost": "$250-350",
+            "annual_savings_dollars": "$150-250",
+            "payback_years": "1.5-2.5 years"
+          }
+        },
+        "sources": {
+          "general": ["https://www.nationalgridus.com", "https://www.nyserda.ny.gov"]
+        }
+      },
+      "albany": {
+        "state": "NY",
+        "region": "Eastern New York (National Grid)",
+        "utility": "National Grid",
+        "utility_territory": "National Grid",
+        "hdd_heating_degree_days": 6900,
+        "climate_region": "Humid continental",
+        "electricity_avg_rate": "$0.19-0.22/kWh",
+        "natural_gas_avg_rate": "$1.60-2.00/therm",
+        "average_home_size_sqft": 1700,
+        "rebates": {
+          "heat_pump_hvac": {
+            "amount": "$1,000-2,000",
+            "nyserda_clean_heat": "Up to $10,000-12,000",
+            "combined_potential": "Up to $12,000-14,000",
+            "typical_cost": "$10,000-14,000",
+            "annual_savings_percent": "50%",
+            "annual_savings_dollars": "$800-1,200",
+            "payback_years": "8-14 years"
+          },
+          "heat_pump_water_heater": {
+            "amount": "$1,000-1,500",
+            "typical_cost": "$4,000-6,000",
+            "annual_savings_dollars": "$500-700",
+            "payback_years": "6-10 years"
+          },
+          "solar": {
+            "amount": "$0-1,000",
+            "typical_cost": "$13,000-16,000",
+            "annual_savings_dollars": "$400-600",
+            "payback_years": "20-30 years"
+          },
+          "battery": {
+            "amount": "$0",
+            "typical_cost": "$13,000-16,500",
+            "annual_value": "$200-400",
+            "payback_years": "35+ years"
+          },
+          "home_insulation": {
+            "amount": "$750-2,000",
+            "typical_cost": "$2,500-5,000",
+            "annual_savings_dollars": "$400-600",
+            "payback_years": "5-10 years"
+          },
+          "water_heater": {
+            "amount": "$200-400",
+            "typical_cost": "$1,500-2,500",
+            "annual_savings_dollars": "$200-350",
+            "payback_years": "6-10 years"
+          },
+          "windows_doors": {
+            "amount": "$0",
+            "typical_cost": "$5,000-8,000",
+            "annual_savings_dollars": "$300-500",
+            "payback_years": "12-20 years"
+          },
+          "ev_charger": {
+            "amount": "$200-500",
+            "typical_cost": "$1,500-2,200",
+            "annual_value": "$300-450",
+            "payback_years": "4-6 years"
+          },
+          "smart_thermostat": {
+            "amount": "$75-100",
+            "typical_cost": "$250-350",
+            "annual_savings_dollars": "$150-200",
+            "payback_years": "2-3 years"
+          }
+        },
+        "sources": {
+          "general": ["https://www.nationalgridus.com", "https://www.nyserda.ny.gov"]
+        }
+      }
+    }
+  },
+  "california_additional_cities": {
+    "note": "Remaining 19 CA cities use same utility programs as primary cities listed. Detailed template to be filled with specific city climate/size data.",
+    "long_beach": {
+      "utility": "LADWP",
+      "hdd": 1900,
+      "references": "Use Los Angeles template"
+    },
+    "burbank": {
+      "utility": "LADWP",
+      "hdd": 2300,
+      "references": "Use Los Angeles template"
+    },
+    "pasadena": {
+      "utility": "LADWP",
+      "hdd": 2100,
+      "references": "Use Los Angeles template"
+    },
+    "glendale": {
+      "utility": "LADWP",
+      "hdd": 2400,
+      "references": "Use Los Angeles template"
+    },
+    "santa_monica": {
+      "utility": "LADWP",
+      "hdd": 1800,
+      "references": "Use Los Angeles template"
+    },
+    "folsom": {
+      "utility": "SMUD",
+      "hdd": 3200,
+      "references": "Use Sacramento template"
+    },
+    "roseville": {
+      "utility": "SMUD",
+      "hdd": 3100,
+      "references": "Use Sacramento template"
+    },
+    "rancho_cordova": {
+      "utility": "SMUD",
+      "hdd": 3050,
+      "references": "Use Sacramento template"
+    },
+    "oakland": {
+      "utility": "PG&E",
+      "hdd": 2700,
+      "references": "Use San Francisco template"
+    },
+    "san_jose": {
+      "utility": "PG&E",
+      "hdd": 2900,
+      "references": "Use San Francisco template"
+    },
+    "berkeley": {
+      "utility": "PG&E",
+      "hdd": 2800,
+      "references": "Use San Francisco template"
+    },
+    "fremont": {
+      "utility": "PG&E",
+      "hdd": 2600,
+      "references": "Use San Francisco template"
+    },
+    "chula_vista": {
+      "utility": "SDG&E",
+      "hdd": 1600,
+      "references": "Use San Diego template"
+    },
+    "escondido": {
+      "utility": "SDG&E",
+      "hdd": 2100,
+      "references": "Use San Diego template"
+    },
+    "san_bernardino": {
+      "utility": "SCE",
+      "hdd": 2100,
+      "references": "Use Riverside template"
+    },
+    "ontario": {
+      "utility": "SCE",
+      "hdd": 2200,
+      "references": "Use Riverside template"
+    },
+    "moreno_valley": {
+      "utility": "SCE",
+      "hdd": 2400,
+      "references": "Use Riverside template"
+    },
+    "bakersfield": {
+      "utility": "SCE",
+      "hdd": 2000,
+      "references": "Use Riverside template"
+    }
+  },
+  "new_york_additional_cities": {
+    "note": "Remaining 1 NY city uses same utility program as primary cities listed.",
+    "yonkers": {
+      "utility": "Con Edison",
+      "hdd": 4700,
+      "references": "Use New York City template"
+    }
+  },
+  "integration_notes": {
+    "page_template": "Each city page should include: utility territory, current rebate amounts (by upgrade type), typical costs, annual savings, payback timeline, and 3+ sources. Use 'sources' field to link to official resources.",
+    "update_cadence": "Verify rebate amounts quarterly; utility programs and state funding can change mid-year",
+    "dac_bonus": "Many CA cities have DAC (Disadvantaged Communities) bonuses for SGIP and TECH programs; check by address for specific city",
+    "stacking_opportunity": "Customers should layer: utility rebate + state program + federal programs where available. Most payback improvements come from stacking.",
+    "climate_adjustment": "Use HDD (heating degree days) to contextualize heating savings. Coastal CA cities see 30-40% payback improvement vs. inland equivalents.",
+    "regional_gaps": "Note for content: Some cities have NO utility rebates for certain upgrades (e.g., SDG&E has low heat pump incentives). Document clearly and point to state/federal alternatives.",
+    "income_qualification": "Many programs (HEEHRA, NYSERDA, ESA) require 80% AMI or less. Capture income tiers in city pages for transparency."
+  },
+  "sources_by_category": {
+    "official_utilities": [
+      "https://www.ladwp.com/rebates",
+      "https://www.smud.org",
+      "https://www.pge.com/rebates",
+      "https://www.sdge.com/rebates",
+      "https://www.sce.com/save-money/rebates-financial-assistance",
+      "https://www.coned.com/rebates",
+      "https://www.nationalgridus.com"
+    ],
+    "state_programs": [
+      "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs",
+      "https://techcleanca.com/incentives/",
+      "https://www.cpuc.ca.gov/sgip",
+      "https://www.nyserda.ny.gov",
+      "https://www.nyserda.ny.gov/All-Programs/Inflation-Reduction-Act"
+    ],
+    "federal": [
+      "https://www.energy.gov/homeowner",
+      "https://www.fueleconomy.gov",
+      "https://energystar.gov/rebate-finder"
+    ],
+    "data_aggregators": [
+      "https://energyrebatecalculator.com",
+      "https://rebateatlas.org",
+      "https://dulocore.com"
+    ]
+  }
+}

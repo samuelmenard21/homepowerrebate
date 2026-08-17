@@ -46,7 +46,7 @@ function toggleCityDropdown() {
   }
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ab', 'ns', 'ma'];
+  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);
@@ -900,7 +900,10 @@ h1, h2, h3, h4, h5, h6 {
       <div style="display:flex; gap:6px; margin-bottom:12px;">
         <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Alberta</button>
         <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Nova Scotia</button>
-        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Massachusetts (US)</button>
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Massachusetts</button>
+        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New York</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -968,6 +971,17 @@ h1, h2, h3, h4, h5, h6 {
       <a href="/us/ma/newton" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Newton</a>
       <a href="/us/ma/somerville" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Somerville</a>
     </div>
+    <div id="province-cities-ca" style="display:none; gap:8px;">
+      <a href="/us/ca/los-angeles/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Los Angeles</a>
+      <a href="/us/ca/sacramento/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Sacramento</a>
+      <a href="/us/ca/bay-area/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Bay Area</a>
+      <a href="/us/ca/san-diego/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">San Diego</a>
+      <a href="/us/ca/inland-empire/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Inland Empire</a>
+    </div>
+    <div id="province-cities-ny" style="display:none; gap:8px;">
+      <a href="/us/ny/con-edison/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">NYC & Westchester</a>
+      <a href="/us/ny/national-grid/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Upstate (Buffalo, Rochester, Syracuse)</a>
+    </div>
     </div>
   </div>
 </nav>
@@ -1009,6 +1023,7 @@ h1, h2, h3, h4, h5, h6 {
             <option value="ab">Alberta</option>
             <option value="ns">Nova Scotia</option>
             <option value="ca">California</option>
+            <option value="ny">New York</option>
             <option value="ma">Massachusetts</option>
           </select>
         </div>
@@ -1729,80 +1744,22 @@ h1, h2, h3, h4, h5, h6 {
         <p class="footer-tagline">Helping homeowners understand rebates and choose trusted installers. Real numbers. Your choice.</p>
       </div>
       <div>
-        <div class="footer-col-title">BC Cities</div>
-        <ul class="footer-col-links">
-          <li><a href="/ca/bc/abbotsford">Abbotsford</a></li>
-          <li><a href="/ca/bc/burnaby">Burnaby</a></li>
-          <li><a href="/ca/bc/chilliwack">Chilliwack</a></li>
-          <li><a href="/ca/bc/fort-st-john">Fort St. John</a></li>
-          <li><a href="/ca/bc/kamloops">Kamloops</a></li>
-          <li><a href="/ca/bc/kelowna">Kelowna</a></li>
-          <li><a href="/ca/bc/nanaimo">Nanaimo</a></li>
-          <li><a href="/ca/bc/penticton">Penticton</a></li>
-          <li><a href="/ca/bc/prince-george">Prince George</a></li>
-          <li><a href="/ca/bc/squamish">Squamish</a></li>
-          <li><a href="/ca/bc/surrey">Surrey</a></li>
-          <li><a href="/ca/bc/vancouver">Vancouver</a></li>
-          <li><a href="/ca/bc/vernon">Vernon</a></li>
-          <li><a href="/ca/bc/victoria">Victoria</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-col-title">Ontario</div>
+        <div class="footer-col-title">Canada</div>
         <ul class="footer-col-links">
           <li><a href="/ca/">All Provinces</a></li>
-          <li><a href="/ca/on">Ontario Overview</a></li>
-          <li><a href="/ca/on/toronto">Toronto</a></li>
-          <li><a href="/ca/on/ottawa">Ottawa</a></li>
-          <li><a href="/ca/on/mississauga">Mississauga</a></li>
-          <li><a href="/ca/on/brampton">Brampton</a></li>
-          <li><a href="/ca/on/hamilton">Hamilton</a></li>
-          <li><a href="/ca/on/markham">Markham</a></li>
-          <li><a href="/ca/on/vaughan">Vaughan</a></li>
-          <li><a href="/ca/on/richmond-hill">Richmond Hill</a></li>
-          <li><a href="/ca/on/barrie">Barrie</a></li>
-          <li><a href="/ca/on/london">London</a></li>
-          <li><a href="/ca/on/kitchener">Kitchener</a></li>
-          <li><a href="/ca/on/windsor">Windsor</a></li>
-          <li><a href="/ca/on/oakville">Oakville</a></li>
-          <li><a href="/ca/on/oshawa">Oshawa</a></li>
-          <li><a href="/ca/on/whitby">Whitby</a></li>
-          <li><a href="/ca/on/burlington">Burlington</a></li>
-          <li><a href="/ca/on/cambridge">Cambridge</a></li>
-          <li><a href="/ca/on/greater-sudbury">Greater Sudbury</a></li>
-          <li><a href="/ca/on/toronto/heat-pump">Toronto Heat Pump Rebates</a></li>
-          <li><a href="/ca/on/toronto/solar">Toronto Solar Rebates</a></li>
+          <li><a href="/ca/bc">British Columbia</a></li>
+          <li><a href="/ca/on">Ontario</a></li>
+          <li><a href="/ca/ab">Alberta</a></li>
+          <li><a href="/ca/ns">Nova Scotia</a></li>
         </ul>
       </div>
       <div>
-        <div class="footer-col-title">Alberta &amp; Nova Scotia</div>
+        <div class="footer-col-title">United States</div>
         <ul class="footer-col-links">
-          <li><a href="/ca/ab">Alberta Overview</a></li>
-          <li><a href="/ca/ab/calgary">Calgary</a></li>
-          <li><a href="/ca/ab/edmonton">Edmonton</a></li>
-          <li><a href="/ca/ab/red-deer">Red Deer</a></li>
-          <li><a href="/ca/ab/lethbridge">Lethbridge</a></li>
-          <li><a href="/ca/ab/st-albert">St. Albert</a></li>
-          <li><a href="/ca/ns">Nova Scotia Overview</a></li>
-          <li><a href="/ca/ns/halifax">Halifax</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-col-title">Massachusetts</div>
-        <ul class="footer-col-links">
-          <li><a href="/us/ma">Massachusetts Overview</a></li>
-          <li><a href="/us/ma/boston">Boston</a></li>
-          <li><a href="/us/ma/worcester">Worcester</a></li>
-          <li><a href="/us/ma/springfield">Springfield</a></li>
-          <li><a href="/us/ma/cambridge">Cambridge</a></li>
-          <li><a href="/us/ma/lowell">Lowell</a></li>
-          <li><a href="/us/ma/brockton">Brockton</a></li>
-          <li><a href="/us/ma/new-bedford">New Bedford</a></li>
-          <li><a href="/us/ma/quincy">Quincy</a></li>
-          <li><a href="/us/ma/lynn">Lynn</a></li>
-          <li><a href="/us/ma/fall-river">Fall River</a></li>
-          <li><a href="/us/ma/newton">Newton</a></li>
-          <li><a href="/us/ma/somerville">Somerville</a></li>
+          <li><a href="/us/">All States</a></li>
+          <li><a href="/us/ca">California</a></li>
+          <li><a href="/us/ny">New York</a></li>
+          <li><a href="/us/ma">Massachusetts</a></li>
         </ul>
       </div>
       <div>
@@ -1835,7 +1792,7 @@ h1, h2, h3, h4, h5, h6 {
           <li><a href="/partners/">Partners</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>
-          <li><a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==">Contact</a></li>
+          <li><a href="/contact">Contact</a></li>
         </ul>
       </div>
     </div>

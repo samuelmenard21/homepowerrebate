@@ -46,13 +46,30 @@ echo ""
 echo "📍 STEP 3/4: Loading 89 Cities of Rebate Data..."
 echo "→ Converting CSV to SQL..."
 
-# Create SQL INSERT from CSV
+# Create SQL INSERT from CSV (native JS, no dependencies)
 node - <<'EONODE'
 const fs = require('fs');
-const csv = require('csv-parse/sync');
+
+// Simple CSV parser (native JS)
+function parseCSV(csvText) {
+  const lines = csvText.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim());
+  const records = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    const values = lines[i].split(',').map(v => v.trim());
+    const record = {};
+    headers.forEach((header, idx) => {
+      record[header] = values[idx] || '';
+    });
+    records.push(record);
+  }
+  return records;
+}
 
 const csvData = fs.readFileSync('scripts/all-rebates-consolidated.csv', 'utf-8');
-const records = csv.parse(csvData, { columns: true, trim: true });
+const records = parseCSV(csvData);
 
 let sql = '';
 
@@ -76,12 +93,14 @@ sql += 'BEGIN TRANSACTION;\n';
 
 // Cities inserts
 citiesMap.forEach((city, id) => {
-  sql += `INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('${city.id}', '${city.region}', '${city.city}', '${city.country}', '${city.utility}', ${city.hdd || 0});\n`;
+  const escaped = (str) => (str || '').replace(/'/g, "''");
+  sql += `INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('${city.id}', '${city.region}', '${escaped(city.city)}', '${city.country}', '${escaped(city.utility)}', ${city.hdd || 0});\n`;
 });
 
-// Programs inserts (simplified - one entry per category per city for now)
+// Programs inserts
 records.forEach(row => {
   const cityId = `${row.region}_${row.city.toLowerCase().replace(/\s+/g, '_')}`;
+  const escaped = (str) => (str || '').replace(/'/g, "''");
 
   const categories = [
     { name: 'heat_pump', rebate: row.heat_pump_rebate },
@@ -96,8 +115,8 @@ records.forEach(row => {
 
   categories.forEach(cat => {
     const progId = `${cityId}_${cat.name}`;
-    const rebate = cat.rebate || '$0';
-    sql += `INSERT INTO programs (id, city_id, category, rebate_amount, verified_date, source_1_url, source_2_url, source_3_url) VALUES ('${progId}', '${cityId}', '${cat.name}', '${rebate}', '${row.verified_date}', '${row.source_utility || ''}', '${row.source_state || ''}', '${row.source_city || ''}');\n`;
+    const rebate = escaped(cat.rebate || '$0');
+    sql += `INSERT INTO programs (id, city_id, category, rebate_amount, verified_date, source_1_url, source_2_url, source_3_url) VALUES ('${progId}', '${cityId}', '${cat.name}', '${rebate}', '${row.verified_date}', '${escaped(row.source_utility || '')}', '${escaped(row.source_state || '')}', '${escaped(row.source_city || '')}');\n`;
   });
 });
 

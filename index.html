@@ -84,7 +84,7 @@ function showProvinceCities(prov) {
   ],
   "contactPoint": {
     "@type": "ContactPoint",
-    "email": "samuelmenard@gmail.com",
+    "url": "https://homepowerrebate.com/contact",
     "contactType": "customer support",
     "availableLanguage": "English"
   }
@@ -1692,7 +1692,7 @@ h1, h2, h3, h4, h5, h6 {
     <div class="section-header center" style="margin-left:auto; margin-right:auto;">
       <div class="section-eyebrow" style="color: var(--amber-bright);">Where we&rsquo;re going next</div>
       <h2 class="section-h2">We&rsquo;re building this one city at a time.</h2>
-      <p class="section-lede">Building this right is slow work &mdash; 2&ndash;3 vetted installers per city, one strong partnership at a time. Here&rsquo;s the roadmap.</p>
+      <p class="section-lede">Scaling region by region with the same approach: vetted installers, you choose, no auctions, no data sales. Here&rsquo;s our growth roadmap.</p>
     </div>
 
     <div class="future-grid">
@@ -1778,8 +1778,8 @@ h1, h2, h3, h4, h5, h6 {
       </p>
       <div class="about-meta">
         <div class="about-meta-item"><strong>Founded</strong>2026</div>
-        <div class="about-meta-item"><strong>Headquartered</strong>British Columbia, Canada</div>
-        <div class="about-meta-item"><strong>Contact</strong><a href="#" class="hpr-mailto" data-b64="c2FtdWVsbWVuYXJkQGdtYWlsLmNvbQ==" data-showaddr="1" style="color:var(--ink-soft); text-decoration:underline;">Contact us</a></div>
+        <div class="about-meta-item"><strong>Headquartered</strong>Toronto, Ontario</div>
+        <div class="about-meta-item"><strong>Contact</strong><a href="/contact" style="color:var(--teal); text-decoration:none;">Get in touch</a></div>
       </div>
     </div>
   </div>
@@ -2020,7 +2020,7 @@ waitlistForm.addEventListener('submit', async (e) => {
     waitlistForm.style.display = 'none';
     waitlistThanks.style.display = 'block';
   } catch (err) {
-    waitlistError.textContent = 'Something went wrong. Please try again, or email samuelmenard@gmail.com.';
+    waitlistError.textContent = 'Something went wrong. Please try again or contact us.';
     waitlistError.style.display = 'block';
   }
 });
@@ -2070,7 +2070,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
     }
   } catch (error) {
-    responseEl.innerHTML = '<strong style="color: #fff;">⚠ Something went wrong.</strong><p style="margin: 6px 0 0; font-size: 13px; color: rgba(250, 247, 242, 0.85);">Try again or email samuelmenard@gmail.com</p>';
+    responseEl.innerHTML = '<strong style="color: #fff;">⚠ Something went wrong.</strong><p style="margin: 6px 0 0; font-size: 13px; color: rgba(250, 247, 242, 0.85);"><a href="/contact" style="color: rgba(250, 247, 242, 0.85); text-decoration: underline;">Contact us</a> if this persists.</p>';
     responseEl.style.display = 'block';
     button.textContent = originalText;
     button.disabled = false;

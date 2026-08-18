@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Furnace & Heat Pump Rebates in Maple Ridge 2026 | How Much C</title>
+<title>Maple Ridge Heat Pump & Solar Rebates 2026 | HomePowerRebate</title>
 
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
@@ -68,10 +68,10 @@
   },
   {
    "@type": "Question",
-   "name": "Can I do this if I rent or live in a strata?",
+   "name": "Can I do this if I rent or live in a condo?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "Renters can't claim the structural rebates (your landlord would), but the free energy-saving kit and smart-thermostat offers are open to you. In a strata, in-unit upgrades like a heat pump water heater or windows may qualify with strata approval; whole-building work goes through the strata council and a separate condo/apartment program."
+    "text": "Renters can't claim the structural rebates (your landlord would), but the free energy-saving kit and smart-thermostat offers are open to you. In a condo, in-unit upgrades like a heat pump water heater or windows may qualify with your building's approval; whole-building work goes through the condo board and a separate multi-unit program."
    }
   },
   {
@@ -270,6 +270,32 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   h1 { font-size: 28px; }
   .assess-inner { flex-direction: column; align-items: flex-start; }
 }
+
+/* ===== Canonical sitewide nav/footer CSS (from _partials/nav-footer.html) ===== */
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
+.nav-inner { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.logo-mark { width: 30px; height: 30px; background: var(--amber); border-radius: 50%; position: relative; box-shadow: 0 2px 8px rgba(212, 117, 28, 0.3); }
+.logo-mark::after { content: ''; position: absolute; inset: 8px; background: var(--paper); border-radius: 50%; }
+.logo-power { color: var(--amber); font-weight: 700; }
+.nav-pick { display: flex; align-items: center; gap: 8px; background: var(--teal-deep); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; transition: all 0.2s; border: none; cursor: pointer; }
+.nav-pick:hover { background: var(--amber); transform: translateY(-1px); }
+.nav-desktop-only { display: flex !important; }
+.nav-mobile-only { display: none !important; }
+@media (max-width: 768px) { .nav-desktop-only { display: none !important; } .nav-mobile-only { display: flex !important; } }
+.footer { background: var(--ink); color: rgba(250, 247, 242, 0.65); padding: 56px 28px 32px; }
+.footer-inner { max-width: 1180px; margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 32px; border-bottom: 1px solid rgba(250, 247, 242, 0.1); }
+.footer-brand { font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; color: var(--paper); letter-spacing: -0.02em; margin-bottom: 12px; }
+.footer-tagline { font-size: 13px; color: rgba(250, 247, 242, 0.4); max-width: 320px; }
+.footer-col-title { font-family: 'Inter Tight', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250, 247, 242, 0.7); margin-bottom: 14px; }
+.footer-col-links { list-style: none; display: grid; gap: 8px; font-size: 14px; margin: 0; padding: 0; }
+.footer-col-links a { color: rgba(250, 247, 242, 0.45); text-decoration: none; }
+.footer-col-links a:hover { color: var(--amber); }
+.footer-bottom { padding-top: 24px; font-size: 12px; color: rgba(250, 247, 242, 0.35); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
+@media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
+#city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
 </style>
 <script>
 // A/B Test: CTA Variant Assignment
@@ -293,35 +319,88 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 </script>
 </head>
 <body>
-<nav class="nav" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
-  <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
-    <div style="position:relative;">
-      <button type="button" onclick="var m=this.nextElementSibling; m.style.display=(m.style.display==='grid'?'none':'grid');" style="display:flex; align-items:center; gap:8px; background:var(--teal-deep); color:var(--paper); padding:10px 18px; border-radius:999px; border:none; cursor:pointer; font-family:'Inter Tight',sans-serif; font-weight:600; font-size:14px;">
-        Pick your city
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-      <div style="display:none; position:absolute; top:calc(100% + 10px); right:0; grid-template-columns:1fr 1fr; gap:8px; padding:16px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:60; width:min(340px,86vw); max-height:70vh; overflow-y:auto;">
-      <a href="/ca/bc/abbotsford" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Abbotsford</a>
-      <a href="/ca/bc/burnaby" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Burnaby</a>
-      <a href="/ca/bc/chilliwack" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Chilliwack</a>
-      <a href="/ca/bc/coquitlam" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Coquitlam</a>
-      <a href="/ca/bc/fort-st-john" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Fort St. John</a>
-      <a href="/ca/bc/kamloops" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Kamloops</a>
-      <a href="/ca/bc/kelowna" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Kelowna</a>
-      <a href="/ca/bc/langley" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Langley</a>
-      <a href="/ca/bc/maple-ridge" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Maple Ridge</a>
-      <a href="/ca/bc/nanaimo" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Nanaimo</a>
-      <a href="/ca/bc/penticton" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Penticton</a>
-      <a href="/ca/bc/prince-george" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Prince George</a>
-      <a href="/ca/bc/richmond" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Richmond</a>
-      <a href="/ca/bc/squamish" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Squamish</a>
-      <a href="/ca/bc/surrey" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Surrey</a>
-      <a href="/ca/bc/vancouver" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Vancouver</a>
-      <a href="/ca/bc/vernon" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Vernon</a>
-      <a href="/ca/bc/victoria" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Victoria</a>
+<!-- ============================== NAV (canonical, from _partials/nav-footer.html) ============================== -->
+<nav class="nav">
+  <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
+    <a href="/" class="logo">
+      <span class="logo-mark"></span>
+      <span>Home<span class="logo-power">Power</span>Rebate</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
+      <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
+      <a href="/retrofit-assessment/?city=maple-ridge" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Assessment</a>
+      <a href="/blog" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
+    </div>
+    <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
+      <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
+      <a href="/retrofit-assessment/?city=maple-ridge" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Assessment</a>
+    </div>
+    <button onclick="toggleCityDropdown()" class="nav-pick">
+      Pick your city
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div id="city-dropdown-modal" style="display:none; position:absolute; top:56px; right:20px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:49; max-width:300px; max-height:70vh; overflow-y:auto;">
+    <div style="padding:16px 16px 0;">
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
+        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
+        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">California (US)</button>
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Alberta</button>
+        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Nova Scotia</button>
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Massachusetts</button>
+        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New York</button>
       </div>
     </div>
+    <div style="padding:0 16px 16px;">
+    <div id="province-cities-on" style="display:none; gap:8px;">
+      <a href="/ca/on/toronto">Toronto</a><a href="/ca/on/ottawa">Ottawa</a><a href="/ca/on/mississauga">Mississauga</a><a href="/ca/on/brampton">Brampton</a><a href="/ca/on/hamilton">Hamilton</a><a href="/ca/on/markham">Markham</a><a href="/ca/on/vaughan">Vaughan</a><a href="/ca/on/richmond-hill">Richmond Hill</a><a href="/ca/on/barrie">Barrie</a><a href="/ca/on/london">London</a><a href="/ca/on/kitchener">Kitchener</a><a href="/ca/on/windsor">Windsor</a><a href="/ca/on/oakville">Oakville</a><a href="/ca/on/oshawa">Oshawa</a><a href="/ca/on/whitby">Whitby</a><a href="/ca/on/burlington">Burlington</a><a href="/ca/on/cambridge">Cambridge</a><a href="/ca/on/greater-sudbury">Greater Sudbury</a>
+    </div>
+    <div id="province-cities-bc" style="display:grid; gap:8px;">
+      <a href="/ca/bc/abbotsford">Abbotsford</a><a href="/ca/bc/burnaby">Burnaby</a><a href="/ca/bc/chilliwack">Chilliwack</a><a href="/ca/bc/coquitlam">Coquitlam</a><a href="/ca/bc/fort-st-john">Fort St. John</a><a href="/ca/bc/kamloops">Kamloops</a><a href="/ca/bc/kelowna">Kelowna</a><a href="/ca/bc/langley">Langley</a><a href="/ca/bc/maple-ridge" class="city-current">Maple Ridge</a><a href="/ca/bc/nanaimo">Nanaimo</a><a href="/ca/bc/penticton">Penticton</a><a href="/ca/bc/prince-george">Prince George</a><a href="/ca/bc/richmond">Richmond</a><a href="/ca/bc/squamish">Squamish</a><a href="/ca/bc/surrey">Surrey</a><a href="/ca/bc/vancouver">Vancouver</a><a href="/ca/bc/vernon">Vernon</a><a href="/ca/bc/victoria">Victoria</a>
+    </div>
+    <div id="province-cities-ab" style="display:none; gap:8px;">
+      <a href="/ca/ab/calgary">Calgary</a><a href="/ca/ab/edmonton">Edmonton</a><a href="/ca/ab/red-deer">Red Deer</a><a href="/ca/ab/lethbridge">Lethbridge</a><a href="/ca/ab/st-albert">St. Albert</a>
+    </div>
+    <div id="province-cities-ns" style="display:none; gap:8px;">
+      <a href="/ca/ns/halifax">Halifax</a>
+    </div>
+    <div id="province-cities-ma" style="display:none; gap:8px;">
+      <a href="/us/ma/boston">Boston</a><a href="/us/ma/worcester">Worcester</a><a href="/us/ma/springfield">Springfield</a><a href="/us/ma/cambridge">Cambridge</a><a href="/us/ma/lowell">Lowell</a><a href="/us/ma/brockton">Brockton</a><a href="/us/ma/new-bedford">New Bedford</a><a href="/us/ma/quincy">Quincy</a><a href="/us/ma/lynn">Lynn</a><a href="/us/ma/fall-river">Fall River</a><a href="/us/ma/newton">Newton</a><a href="/us/ma/somerville">Somerville</a>
+    </div>
+    <div id="province-cities-ca" style="display:none; gap:8px;">
+      <a href="/us/ca/los-angeles/">Los Angeles</a><a href="/us/ca/sacramento/">Sacramento</a><a href="/us/ca/bay-area/">Bay Area</a><a href="/us/ca/san-diego/">San Diego</a><a href="/us/ca/inland-empire/">Inland Empire</a>
+    </div>
+    <div id="province-cities-ny" style="display:none; gap:8px;">
+      <a href="/us/ny/con-edison/">NYC & Westchester</a><a href="/us/ny/national-grid/">Upstate (Buffalo, Rochester, Syracuse)</a>
+    </div>
+    </div>
+  </div>
 </nav>
+<script>
+function toggleCityDropdown() {
+  const modal = document.getElementById('city-dropdown-modal');
+  if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
+}
+function showProvinceCities(prov) {
+  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny'];
+  regions.forEach(function(r) {
+    const panel = document.getElementById('province-cities-' + r);
+    const tab = document.getElementById('province-tab-' + r);
+    if (!panel || !tab) return;
+    panel.style.display = (prov === r) ? 'grid' : 'none';
+    tab.style.background = (prov === r) ? 'var(--teal-deep)' : '#fff';
+    tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
+  });
+}
+document.addEventListener('DOMContentLoaded', function () { showProvinceCities('bc'); });
+</script>
+<!-- ============================ /NAV ============================== -->
 
 <section class="hero">
   <div class="wrap">
@@ -867,8 +946,8 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
     <h3>What if my income is lower &mdash; is there more help?</h3>
     <p>Considerably more. The Energy Conservation Assistance Program can install a heat pump, insulation and weatherization for free, and the federal Affordability money flows through it. A family of four earning up to ~$57,200 can qualify. Start with the assessment or ask us and we'll point you to the income-qualified stream.</p>
 
-    <h3>Can I do this if I rent or live in a strata?</h3>
-    <p>Renters can't claim the structural rebates (your landlord would), but the free energy-saving kit and smart-thermostat offers are open to you. In a strata, in-unit upgrades like a heat pump water heater or windows may qualify with strata approval; whole-building work goes through the strata council and a separate condo/apartment program.</p>
+    <h3>Can I do this if I rent or live in a condo?</h3>
+    <p>Renters can't claim the structural rebates (your landlord would), but the free energy-saving kit and smart-thermostat offers are open to you. In a condo, in-unit upgrades like a heat pump water heater or windows may qualify with your building's approval; whole-building work goes through the condo board and a separate multi-unit program.</p>
 
     <h3>When should I apply?</h3>
     <p>Get quotes now and apply as soon as you've chosen an installer &mdash; the pre-upgrade evaluation has to happen before work starts, so late applications forfeit the rebate.</p>
@@ -1082,81 +1161,111 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 </script>
 
 
-<footer class="hprf">
-<style>
-.hprf{background:var(--ink);color:rgba(250,247,242,.65);padding:56px 28px 32px;font-family:'Inter Tight',-apple-system,sans-serif;line-height:1.6;}
-.hprf a{text-decoration:none;}
-.hprf-inner{max-width:1180px;margin:0 auto;}
-.hprf-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:32px;border-bottom:1px solid rgba(250,247,242,.1);}
-.hprf-brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;color:var(--paper);letter-spacing:-.02em;margin-bottom:12px;}
-.hprf-brand span{color:var(--amber);}
-.hprf-tag{font-size:13px;color:rgba(250,247,242,.4);max-width:320px;margin:0;}
-.hprf-ct{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(250,247,242,.7);margin-bottom:14px;}
-.hprf-links{list-style:none;display:grid;gap:8px;font-size:14px;margin:0;padding:0;}
-.hprf-links a{color:rgba(250,247,242,.45);}
-.hprf-links a:hover{color:var(--amber);}
-.hprf-bottom{max-width:1180px;margin:0 auto;padding-top:24px;font-size:12px;color:rgba(250,247,242,.35);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-@media(max-width:880px){.hprf-top{grid-template-columns:1fr 1fr;gap:28px;}}
-@media(max-width:520px){.hprf-top{grid-template-columns:1fr;}}
-</style>
-  <div class="hprf-inner">
-    <div class="hprf-top">
+<!-- ============================ FOOTER (canonical, from _partials/nav-footer.html) ============================= -->
+<section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
+  <div class="wrap" style="text-align: center; color: #fff; max-width: 600px;">
+    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
+    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get my weekly email</h2>
+    <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Every Friday: what I'm learning about rebates across every province and state we cover, heat pump reality checks, solar economics, and the installers I trust. Real stuff, no marketing.</p>
+    <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
+      <input type="email" id="newsletter-email" placeholder="your@email.com" required style="padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+      <input type="hidden" id="newsletter-city" value="Maple Ridge">
+      <input type="hidden" id="newsletter-page" value="/ca/bc/maple-ridge/">
+      <button type="submit" style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'Inter Tight', sans-serif;">Subscribe</button>
+      <p style="font-size: 11px; color: rgba(250, 247, 242, 0.6); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
+    </form>
+    <div id="newsletter-response" style="display: none; margin-top: 12px; padding: 12px; background: rgba(45, 106, 79, 0.2); border-radius: 6px; border: 1px solid rgba(45, 106, 79, 0.4); font-size: 13px;"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
       <div>
-        <div class="hprf-brand">Home<span>Power</span>Rebate</div>
-        <p class="hprf-tag">Helping BC homeowners claim every rebate they qualify for. Every vetted installer, no spam.</p>
+        <div class="footer-brand">Home<span class="logo-power">Power</span>Rebate</div>
+        <p class="footer-tagline">Helping homeowners understand rebates and choose trusted installers. Real numbers. Your choice.</p>
       </div>
       <div>
-        <div class="hprf-ct">BC Cities</div>
-        <ul class="hprf-links">
-          <li><a href="/ca/bc/abbotsford">Abbotsford</a></li>
-          <li><a href="/ca/bc/burnaby">Burnaby</a></li>
-          <li><a href="/ca/bc/chilliwack">Chilliwack</a></li>
-          <li><a href="/ca/bc/fort-st-john">Fort St. John</a></li>
-          <li><a href="/ca/bc/kamloops">Kamloops</a></li>
-          <li><a href="/ca/bc/kelowna">Kelowna</a></li>
-          <li><a href="/ca/bc/nanaimo">Nanaimo</a></li>
-          <li><a href="/ca/bc/penticton">Penticton</a></li>
-          <li><a href="/ca/bc/prince-george">Prince George</a></li>
-          <li><a href="/ca/bc/squamish">Squamish</a></li>
-          <li><a href="/ca/bc/surrey">Surrey</a></li>
-          <li><a href="/ca/bc/maple-ridge">Maple Ridge</a></li>
-          <li><a href="/ca/bc/vernon">Vernon</a></li>
-          <li><a href="/ca/bc/victoria">Victoria</a></li>
+        <div class="footer-col-title">Canada</div>
+        <ul class="footer-col-links">
+          <li><a href="/ca/">All Provinces</a></li>
+          <li><a href="/ca/bc">British Columbia</a></li>
+          <li><a href="/ca/on">Ontario</a></li>
+          <li><a href="/ca/ab">Alberta</a></li>
+          <li><a href="/ca/ns">Nova Scotia</a></li>
         </ul>
       </div>
       <div>
-        <div class="hprf-ct">Guides &amp; Tools</div>
-        <ul class="hprf-links">
+        <div class="footer-col-title">United States</div>
+        <ul class="footer-col-links">
+          <li><a href="/us/">All States</a></li>
+          <li><a href="/us/ca">California</a></li>
+          <li><a href="/us/ny">New York</a></li>
+          <li><a href="/us/ma">Massachusetts</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Guides &amp; Tools</div>
+        <ul class="footer-col-links">
           <li><a href="/installers/">Find an Installer</a></li>
-          <li><a href="/retrofit-assessment">Rebate Assessment</a></li>
-          <li><a href="/ca/bc">BC Rebate Overview</a></li>
-          <li><a href="/blog/heat-pumps-explained-bc">Heat Pumps Explained</a></li>
-          <li><a href="/blog/free-heat-pump-bc-income-qualified">Free Heat Pump?</a></li>
-          <li><a href="/blog/bc-approved-home-battery-rebate">Choosing a Battery</a></li>
-          <li><a href="/eguana">Eguana Evolve Battery</a></li>
-          <li><a href="/blog/energy-saving-ideas-bc-home">Cut Your Bill Now</a></li>
-          <li><a href="/smart-thermostats">Smart Thermostats</a></li>
+          <li><a href="/retrofit-assessment/?city=maple-ridge">Retrofit Assessment</a></li>
+          <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog">Full Blog</a></li>
+          <li><a href="/questions/">Rebate Questions</a></li>
+          <li><a href="/ca/">Canada by Province</a></li>
+          <li><a href="/us/">US by State</a></li>
         </ul>
       </div>
       <div>
-        <div class="hprf-ct">Company</div>
-        <ul class="hprf-links">
-          <li><a href="/#about">About</a></li>
-          <li><a href="/ca/bc">All Cities</a></li>
-          <li><a href="/retrofit-assessment">Free Estimate</a></li>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-col-links">
+          <li><a href="/about">About</a></li>
+          <li><a href="/partners/">Partners</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>
           <li><a href="/contact">Contact</a></li>
         </ul>
       </div>
     </div>
-    <div class="hprf-bottom">
-      <div>&copy; 2026 HomePowerRebate &middot; Independent guide &amp; installer matching. Not affiliated with BC Hydro or FortisBC.</div>
-      <div>Made in Canada &#127464;&#127462;</div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about" style="color:inherit;">Sam Menard</a>. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
+      <div>Made in Canada 🇨🇦</div>
     </div>
   </div>
 </footer>
+
+<script>
+document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('newsletter-email').value;
+  const city = document.getElementById('newsletter-city').value;
+  const page = document.getElementById('newsletter-page').value;
+  const responseEl = document.getElementById('newsletter-response');
+  const button = document.querySelector('#newsletter-form button');
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Subscribing...';
+  try {
+    const response = await fetch('https://leads.homepowerrebate.com/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, city, page })
+    });
+    if (!response.ok) throw new Error('Subscription failed');
+    responseEl.textContent = "You're in! Check your inbox for a welcome email.";
+    responseEl.style.display = 'block';
+    document.getElementById('newsletter-form').style.display = 'none';
+  } catch (error) {
+    responseEl.textContent = 'Something went wrong — please try again or email us directly.';
+    responseEl.style.display = 'block';
+    responseEl.style.background = 'rgba(163, 64, 47, 0.2)';
+    responseEl.style.borderColor = 'rgba(163, 64, 47, 0.4)';
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+});
+</script>
+<!-- =========================== /FOOTER ============================= -->
 
 <script>
 (function () {

@@ -4,11 +4,911 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BC Home Retrofit Checklist 2026 | Complete Energy Upgrade Guide</title>
-<link rel="canonical" href="https://homepowerrebate.com/retrofit-assessment/">
 
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W33G4TGRHD');
+</script>
 
+<meta name="description" content="Interactive BC home retrofit checklist: solar, heat pump, battery, water heater, EV charging. See your total rebates ($4K-$35K), payback timeline, and find">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://homepowerrebate.com/retrofit-assessment/">
+
+<meta property="og:title" content="BC Home Retrofit Checklist: Calculate Your Total Rebates">
+<meta property="og:description" content="See which upgrades make sense for your home. Total rebates $4K-$35K. Income-qualified tiers, payback calculator, installer matching.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://homepowerrebate.com/retrofit-assessment/">
+<meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "BC Home Retrofit Assessment",
+  "description": "Interactive checklist for BC home energy upgrades: solar, heat pump, battery, water heater, EV charging with rebate calculator.",
+  "url": "https://homepowerrebate.com/retrofit-assessment",
+  "applicationCategory": "FinanceApplication"
+}
+</script>
+
+<style>
+:root {
+  --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
+  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
+  --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1; --error: #c85a54;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter Tight', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); padding: 16px 28px; }
+.logo { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
+.logo-power { color: var(--amber); }
+
+.wrap { max-width: 920px; margin: 0 auto; padding: 0 28px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(32px, 5vw, 48px); line-height: 1.1; letter-spacing: -0.02em; color: var(--teal-deep); margin: 32px 0 16px; }
+h2 { font-family: 'Fraunces', serif; font-size: clamp(22px, 4vw, 32px); line-height: 1.1; letter-spacing: -0.01em; color: var(--teal-deep); margin: 28px 0 14px; }
+h3 { font-family: 'Fraunces', serif; font-size: 18px; color: var(--teal-deep); margin: 18px 0 10px; font-weight: 600; }
+p { margin-bottom: 14px; font-size: 15px; color: var(--ink-soft); line-height: 1.7; }
+
+.hero { padding: 48px 28px; background: var(--teal-deep); color: var(--paper); text-align: center; }
+.hero .wrap { max-width: 760px; }
+.hero h1 { color: var(--paper); margin-top: 0; font-size: clamp(28px, 5vw, 44px); }
+.hero p { color: rgba(250,247,242,.85); font-size: 16px; }
+
+.section { padding: 40px 28px; }
+
+.form-group { margin-bottom: 24px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--ink); font-size: 14px; }
+.form-group select, .form-group input { width: 100%; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink); }
+.form-group select:focus, .form-group input:focus { outline: none; border-color: var(--teal-deep); box-shadow: 0 0 0 3px rgba(13, 79, 92, 0.1); }
+
+.checklist { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 24px; margin: 20px 0; }
+.check-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+.check-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.check-item input[type="checkbox"] { margin-top: 3px; cursor: pointer; width: 18px; height: 18px; }
+.check-label { flex: 1; }
+.check-label h4 { font-size: 15px; font-weight: 600; color: var(--ink); margin: 0 0 4px; }
+.check-label p { margin: 0; font-size: 13px; color: var(--ink-soft); }
+.check-rebate { display: inline-block; background: var(--amber); color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; margin-top: 6px; }
+
+.summary-box { background: var(--paper-warm); border: 2px solid var(--amber); border-radius: 12px; padding: 24px; margin: 28px 0; }
+.summary-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 15px; }
+.summary-row:last-child { border-bottom: none; }
+.summary-row .label { font-weight: 600; color: var(--ink); }
+.summary-row .value { font-weight: 700; color: var(--green-money); font-size: 16px; }
+.summary-row.total { background: rgba(45,106,79,0.05); padding: 14px; border-radius: 6px; margin: 12px -12px 0; font-size: 16px; }
+.summary-row.total .label { color: var(--teal-deep); }
+.summary-row.total .value { color: var(--teal-deep); font-size: 20px; }
+
+.impact-card { background: #fff; border-left: 4px solid var(--amber); border-radius: 8px; padding: 18px; margin: 16px 0; }
+.impact-card h4 { margin: 0 0 8px; font-size: 14px; font-weight: 700; color: var(--teal-deep); }
+.impact-card p { margin: 0; font-size: 13px; color: var(--ink-soft); }
+
+.btn-primary { display: inline-block; background: var(--amber); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; border: none; cursor: pointer; font-family: 'Inter Tight', sans-serif; font-size: 15px; }
+.btn-primary:hover { background: var(--amber-bright); }
+
+.cta-section { background: var(--teal-deep); color: var(--paper); border-radius: 12px; padding: 36px; text-align: center; margin: 40px 0; }
+.cta-section h2 { color: var(--paper); }
+.cta-section p { color: rgba(250,247,242,.85); }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0; }
+
+footer { padding: 40px 28px; border-top: 1px solid var(--rule); background: var(--ink); color: rgba(250,247,242,.6); text-align: center; font-size: 12px; }
+footer a { color: rgba(250,247,242,.75); text-decoration: none; }
+
+@media (max-width: 768px) {
+  h1 { font-size: 28px; }
+  .wrap { padding: 0 16px; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .summary-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .logo { font-size: 14px !important; }
+  .nav { padding: 12px 16px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>What rebates can you actually get?</h1>
+    <p>Pick the upgrades that matter to you. We'll show you exactly how much money comes back ($4,000–$35,000) and whether you qualify for the bigger amounts.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+
+    <h2>First, tell us about your home</h2>
+    <p style="margin-bottom: 16px;">This takes 30 seconds. We'll personalize everything below so the rebate amounts match what you actually qualify for.</p>
+    <div id="assess-city-banner" style="display:none; margin-bottom: 24px; padding: 12px 16px; background: rgba(45,106,79,0.1); border-left: 4px solid var(--green-money); border-radius: 6px; font-size: 14px; font-weight: 600; color: var(--teal-deep);"></div>
+
+    <div class="grid-2">
+      <div class="form-group">
+        <label for="income">Income Level (CleanBC Tier)</label>
+        <select id="income" onchange="updateChecklist()">
+          <option value="standard">Standard (no income limit)</option>
+          <option value="tier1">Tier 1 ($55K–$110K household)</option>
+          <option value="tier2">Tier 2 ($110K–$165K household)</option>
+          <option value="tier3">Tier 3 (Over $165K household)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="utility">Your Utility</label>
+        <select id="utility" onchange="updateChecklist()">
+          <option value="bchydro">BC Hydro (covers most of BC)</option>
+          <option value="fortisbc">FortisBC (interior/Kootenay)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="heating">Current Heating System</label>
+        <select id="heating" onchange="updateChecklist()">
+          <option value="furnace">Natural gas furnace</option>
+          <option value="electric">Electric (baseboard/resistance)</option>
+          <option value="heatpump">Heat pump (already installed)</option>
+          <option value="oil">Oil heating</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="water">Current Water Heating</label>
+        <select id="water" onchange="updateChecklist()">
+          <option value="gas">Natural gas water heater</option>
+          <option value="electric">Electric water heater</option>
+          <option value="heatpump">Heat pump water heater (already installed)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="homeage">Home Built (Approximate)</label>
+        <select id="homeage" onchange="updateChecklist()">
+          <option value="pre1980">Before 1980 (may need electrical upgrade)</option>
+          <option value="1980-2000">1980–2000</option>
+          <option value="2000-2010">2000–2010</option>
+          <option value="post2010">2010+ (modern wiring)</option>
+        </select>
+      </div>
+    </div>
+
+    <h2 style="margin-top: 40px;">Your retrofit roadmap</h2>
+    <p>Check the upgrades that interest you. Rebate amounts update based on your income tier.</p>
+
+    <div class="checklist">
+      <div class="check-item">
+        <input type="checkbox" id="electrical" onchange="updateChecklist()">
+        <div class="check-label">
+          <h4>⚡ Electrical Panel Upgrade</h4>
+          <p>Required if your home is pre-1980 or you want to add EV charging + heat pump simultaneously. Prerequisite unlock.</p>
+          <span class="check-rebate" id="rebate-electrical">$500</span>
+        </div>
+      </div>
+
+      <div class="check-item">
+        <input type="checkbox" id="insulation" onchange="updateChecklist()">
+        <div class="check-label">
+          <h4>🏠 Insulation & Air Sealing</h4>
+          <p>Weatherization (attic/basement/walls). CleanBC rebate covers 50%. <strong>Do this first—it reduces heat pump size needed and improves efficiency by 20–40%.</strong> <a href="/blog/why-insulation-first-energy-retrofit">Learn why insulation comes first →</a></p>
+          <span class="check-rebate" id="rebate-insulation">$500</span>
+        </div>
+      </div>
+
+      <div class="check-item">
+        <input type="checkbox" id="solar" onchange="updateChecklist()">
+        <div class="check-label">
+          <h4>☀️ Solar Panels</h4>
+          <p>8–12 kW system. BC Hydro rebate covers 50–70% of cost. 7–11 year payback.</p>
+          <span class="check-rebate" id="rebate-solar">$5,000</span>
+        </div>
+      </div>
+
+      <div class="check-item">
+        <input type="checkbox" id="battery" onchange="updateChecklist()">
+        <div class="check-label">
+          <h4>🔋 Home Battery (Eguana/LG)</h4>
+          <p>5–14 kWh. BC Hydro rebate. Enables Peak Saver optimization ($3K+ over 10 years). Critical 14-day Peak Saver enrollment window.</p>
+          <span class="check-rebate" id="rebate-battery">$5,000</span>
+        </div>
+      </div>
+
+      <div class="check-item">
+        <input type="checkbox" id="heatpump" onchange="updateChecklist()">
+        <div class="check-label">
+          <h4>🔥 Heat Pump (Space Heating)</h4>
+          <p>Replace furnace or add to existing system. CleanBC income-qualified rebate. Cold climate proven to -15°C.</p>
+          <span class="check-rebate" id="rebate-heatpump">$10,000–$16,000</span>
+        </div>
+      </div>
+
+      <div class="check-item">
+        <input type="checkbox" id="hphw" onchange="updateChecklist()">
+        <div class="check-label">
+          <h4>💧 Heat Pump Water Heater</h4>
+          <p>Replaces electric water heater. Separate from space heating heat pump. CleanBC rebate. 5–8 year payback.</p>
+          <span class="check-rebate" id="rebate-hphw">$3,500</span>
+        </div>
+      </div>
+
+      <div class="check-item">
+        <input type="checkbox" id="thermostat" onchange="updateChecklist()">
+        <div class="check-label">
+          <h4>📱 Smart Thermostat</h4>
+          <p>Google Nest, Ecobee, or Mysa. BC Hydro rebate. Native Peak Saver integration saves $50–250/year in seasonal rewards.</p>
+          <span class="check-rebate" id="rebate-thermostat">$150</span>
+        </div>
+      </div>
+
+      <div class="check-item">
+        <input type="checkbox" id="hrv" onchange="updateChecklist()">
+        <div class="check-label">
+          <h4>🌬️ Heat Recovery Ventilation (HRV)</h4>
+          <p>Improves air quality and comfort with heat pump. CleanBC rebate (only if paired with heat pump or insulation).</p>
+          <span class="check-rebate" id="rebate-hrv">$1,600</span>
+        </div>
+      </div>
+
+      <div class="check-item">
+        <input type="checkbox" id="evcharger" onchange="updateChecklist()">
+        <div class="check-label">
+          <h4>🔌 EV Charging (Level 2)</h4>
+          <p>Home charger installation. BC Hydro rebate. Power management device ($200 bonus) avoids $5K+ electrical panel upgrade.</p>
+          <span class="check-rebate" id="rebate-evcharger">$350–$500</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-row">
+        <span class="label">Total CleanBC Rebates (Selected):</span>
+        <span class="value" id="total-rebates">$0</span>
+      </div>
+      <div class="summary-row">
+        <span class="label">Estimated System Cost:</span>
+        <span class="value" id="total-cost">$0</span>
+      </div>
+      <div class="summary-row">
+        <span class="label">After CleanBC Rebates:</span>
+        <span class="value" id="net-cost">$0</span>
+      </div>
+      <div class="summary-row" style="background: rgba(45, 106, 79, 0.08); padding: 12px; border-radius: 6px; margin-top: 12px;">
+        <span class="label">⭐ Income-qualified bonus:</span>
+        <span class="value" style="color: var(--green-money);" id="greener-homes-grant">—</span>
+      </div>
+      <div class="summary-row" style="font-size: 12px; color: var(--ink-soft); padding: 8px 0; margin-top: 8px;">
+        <span style="margin: 0;">Lower-income households can get a heat pump, insulation and weatherization installed <strong>free</strong> through ECAP — the federal Affordability money now flows through it. (The old federal Greener Homes Grant/Loan both closed in 2025.) <a href="/blog/free-heat-pump-bc-income-qualified" style="color: var(--teal-deep); font-weight: 600;">See if you qualify →</a></span>
+      </div>
+      <div class="summary-row total">
+        <span class="label">10-Year Savings (All Utilities):</span>
+        <span class="value" id="ten-year-savings">$0</span>
+      </div>
+    </div>
+
+    <h2>What this means for you</h2>
+
+    <div id="impact-message"></div>
+
+    <div class="cta-box" style="margin-top: 40px;">
+      <h2 style="color: #fff; margin-bottom: 16px;">Ready to get started?</h2>
+      <p style="color: rgba(250,247,242,.85); margin-bottom: 24px;">Get matched with a vetted installer in your city who'll prepare quotes based on your exact selections.</p>
+
+      <form id="assessment-lead-form" style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; text-align: left;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label for="lead-firstname" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">First Name</label>
+            <input type="text" id="lead-firstname" placeholder="Alex" required style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+          </div>
+          <div>
+            <label for="lead-lastname" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">Last Name</label>
+            <input type="text" id="lead-lastname" placeholder="Smith" required style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+          </div>
+        </div>
+
+        <div>
+          <label for="lead-email" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">Email</label>
+          <input type="email" id="lead-email" placeholder="your@email.com" required style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label for="lead-phone" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">Phone</label>
+            <input type="tel" id="lead-phone" placeholder="(604) 123-4567" required style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+          </div>
+          <div>
+            <label for="lead-postal" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">Postal Code</label>
+            <input type="text" id="lead-postal" placeholder="V6B 4X8" required style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+          </div>
+        </div>
+
+        <div>
+          <label for="lead-notes" style="display: block; font-size: 14px; font-weight: 600; color: rgba(250,247,242,.9); margin-bottom: 6px;">Anything else the installer should know? (optional)</label>
+          <textarea id="lead-notes" rows="3" placeholder="e.g. tight crawlspace access, already have one quote, only available weekends, timeline (ASAP vs. just planning), specific brand preference, renting vs. own…" style="width: 100%; padding: 12px 14px; border: none; border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink); resize: vertical;"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; background: var(--amber); margin-top: 8px;">Get My Quote →</button>
+        <p style="font-size: 12px; color: rgba(250,247,242,.6); text-align: center; margin: 0;">One match, one installer. No spam calls.</p>
+        <div id="lead-response" style="display: none; margin-top: 12px; padding: 14px; background: rgba(45, 106, 79, 0.2); border-radius: 8px; font-size: 13px; color: rgba(250,247,242,.9);"></div>
+      </form>
+    </div>
+
+    <h2 style="margin-top: 40px;">What to do next</h2>
+    <ol style="padding-left: 24px; margin-bottom: 24px;">
+      <li><strong>Book a home audit.</strong> Any HPCN-certified installer can do this for free. They'll assess your home, confirm what rebates apply, and give you a price. The audit cost is refunded after your retrofit anyway.</li>
+      <li><strong>Double-check your income.</strong> Your household income tier determines the biggest numbers here. If you're under $110K, you might qualify for a $16K heat pump (instead of $4K). That matters.</li>
+      <li><strong>Confirm your electrical panel.</strong> If your home was built before 1980 and you want heat pump + EV charging, you might need a $3K panel upgrade. The $500 rebate helps.</li>
+      <li><strong>Get a quote from a trusted installer.</strong> We'll show you every certified installer in your city — you choose. No auctions, no spam calls. Just one person to talk to.</li>
+      <li><strong>Compare and decide.</strong> You've got the numbers. Your installer will give you a binding quote. Then it's your call.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="wrap">
+    <h2>Find installers in your region</h2>
+    <p style="margin: 12px 0 24px;">Tell us which city you're in and we'll show you all vetted installers to choose from.</p>
+    <a href="/#city-picker" class="btn-primary">See installers by city →</a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>FAQ</h2>
+
+    <h3>Do I have to do all these upgrades at once?</h3>
+    <p>No. You can do them in phases. Recommended sequence: electrical panel (if needed) → heat pump → solar → battery → EV charger. Each stands alone for rebates, but stacking them multiplies savings.</p>
+
+    <h3>What if I'm not income-qualified for the bigger rebates?</h3>
+    <p>Standard income tier rebates are still substantial ($4K heat pump, $5K solar, $5K battery). You're not locked out—you just get the base amount. Tier 1/2/3 households can get up to $16K heat pump rebates.</p>
+
+    <h3>Do I have to use Peak Saver to get the battery rebate?</h3>
+    <p>No, but you should. Peak Saver is free to enroll in and returns $3,000+ over 10 years through seasonal rewards. Miss the 14-day enrollment window after interconnection, and you lose $3,500 of value.</p>
+
+    <h3>What if my electrical panel is already upgraded?</h3>
+    <p>Great—check that box off. The $500 rebate only applies if you need upgrades.</p>
+
+    <h3>Can I mix installers?</h3>
+    <p>Yes. One installer for solar, another for heat pump—no problem. But using one HPCN-certified installer for the full retrofit usually means better coordination and warranty coverage.</p>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper-warm);">
+  <div class="wrap">
+    <h2>Help us make this better</h2>
+    <p style="margin-bottom: 24px;">This tool is new. If something's unclear or missing, we want to know. Send us your feedback in 30 seconds and help other homeowners.</p>
+
+    <form id="feedback-form" style="max-width: 500px;">
+      <div class="form-group">
+        <label for="feedback-type">What type of feedback?</label>
+        <select id="feedback-type" required>
+          <option value="">Select...</option>
+          <option value="missing">Something's missing from the calculator</option>
+          <option value="unclear">A section was confusing</option>
+          <option value="next-step">I don't know what to do next</option>
+          <option value="other">Something else</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="feedback-message">What should we add or fix?</label>
+        <textarea id="feedback-message" placeholder="E.g., 'You should mention financing options' or 'I don't understand what the Greener Homes Grant is'" style="width: 100%; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; min-height: 80px; resize: vertical;"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="feedback-email">Email (optional, so we can follow up)</label>
+        <input type="email" id="feedback-email" placeholder="your@email.com" style="width: 100%; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px;">
+      </div>
+
+      <button type="submit" class="btn-primary" style="width: 100%;">Send Feedback</button>
+    </form>
+
+    <div id="feedback-response" style="display: none; margin-top: 16px; padding: 16px; background: #fff; border-radius: 8px; border-left: 4px solid var(--green-money);"></div>
+  </div>
+</section>
+
+<section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 48px 28px;">
+  <div class="wrap" style="text-align: center; color: #fff; max-width: 500px;">
+    <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 12px;">Get smarter about rebates</div>
+    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 28px; line-height: 1.2; margin-bottom: 12px; color: #fff;">Learn the strategy, not just the numbers</h2>
+    <p style="font-size: 14px; color: rgba(250, 247, 242, 0.85); margin-bottom: 20px;">Weekly emails on Greener Homes grants, installer red flags, and the right retrofit sequence. Get it before you sign anything.</p>
+
+    <form id="assessment-newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
+      <input
+        type="email"
+        id="assessment-newsletter-email"
+        placeholder="your@email.com"
+        required
+        style="padding: 11px 13px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);"
+      >
+      <select
+        id="assessment-newsletter-city"
+        style="padding: 11px 13px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);"
+      >
+        <option value="">Which BC city are you in?</option>
+        <option value="Abbotsford">Abbotsford</option>
+        <option value="Burnaby">Burnaby</option>
+        <option value="Chilliwack">Chilliwack</option>
+        <option value="Fort St. John">Fort St. John</option>
+        <option value="Kamloops">Kamloops</option>
+        <option value="Kelowna">Kelowna</option>
+        <option value="Nanaimo">Nanaimo</option>
+        <option value="Penticton">Penticton</option>
+        <option value="Prince George">Prince George</option>
+        <option value="Squamish">Squamish</option>
+        <option value="Surrey">Surrey</option>
+        <option value="Vancouver">Vancouver</option>
+        <option value="Vernon">Vernon</option>
+        <option value="Victoria">Victoria</option>
+      </select>
+      <button
+        type="submit"
+        style="padding: 11px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'Inter Tight', sans-serif; transition: background 0.15s;"
+      >
+        Subscribe
+      </button>
+      <p style="font-size: 11px; color: rgba(250, 247, 242, 0.6);">No spam, ever.</p>
+    </form>
+
+    <div id="assessment-newsletter-response" style="display: none; margin-top: 10px; padding: 10px; background: rgba(45, 106, 79, 0.2); border-radius: 6px; font-size: 12px; color: rgba(250, 247, 242, 0.9);"></div>
+  </div>
+</section>
+
+<footer class="hprf">
+<style>
+.hprf{background:var(--ink);color:rgba(250,247,242,.65);padding:56px 28px 32px;font-family:'Inter Tight',-apple-system,sans-serif;line-height:1.6;}
+.hprf a{text-decoration:none;}
+.hprf-inner{max-width:1180px;margin:0 auto;}
+.hprf-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:32px;border-bottom:1px solid rgba(250,247,242,.1);}
+.hprf-brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;color:var(--paper);letter-spacing:-.02em;margin-bottom:12px;}
+.hprf-brand span{color:var(--amber);}
+.hprf-tag{font-size:13px;color:rgba(250,247,242,.4);max-width:320px;margin:0;}
+.hprf-ct{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(250,247,242,.7);margin-bottom:14px;}
+.hprf-links{list-style:none;display:grid;gap:8px;font-size:14px;margin:0;padding:0;}
+.hprf-links a{color:rgba(250,247,242,.45);}
+.hprf-links a:hover{color:var(--amber);}
+.hprf-bottom{max-width:1180px;margin:0 auto;padding-top:24px;font-size:12px;color:rgba(250,247,242,.35);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+@media(max-width:880px){.hprf-top{grid-template-columns:1fr 1fr;gap:28px;}}
+@media(max-width:520px){.hprf-top{grid-template-columns:1fr;}}
+</style>
+  <div class="hprf-inner">
+    <div class="hprf-top">
+      <div>
+        <div class="hprf-brand">Home<span>Power</span>Rebate</div>
+        <p class="hprf-tag">Helping BC homeowners claim every rebate they qualify for. Every vetted installer, no spam.</p>
+      </div>
+      <div>
+        <div class="hprf-ct">BC Cities</div>
+        <ul class="hprf-links">
+          <li><a href="/ca/bc/abbotsford">Abbotsford</a></li>
+          <li><a href="/ca/bc/burnaby">Burnaby</a></li>
+          <li><a href="/ca/bc/chilliwack">Chilliwack</a></li>
+          <li><a href="/ca/bc/fort-st-john">Fort St. John</a></li>
+          <li><a href="/ca/bc/kamloops">Kamloops</a></li>
+          <li><a href="/ca/bc/kelowna">Kelowna</a></li>
+          <li><a href="/ca/bc/nanaimo">Nanaimo</a></li>
+          <li><a href="/ca/bc/penticton">Penticton</a></li>
+          <li><a href="/ca/bc/prince-george">Prince George</a></li>
+          <li><a href="/ca/bc/squamish">Squamish</a></li>
+          <li><a href="/ca/bc/surrey">Surrey</a></li>
+          <li><a href="/ca/bc/vancouver">Vancouver</a></li>
+          <li><a href="/ca/bc/vernon">Vernon</a></li>
+          <li><a href="/ca/bc/victoria">Victoria</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Guides &amp; Tools</div>
+        <ul class="hprf-links">
+          <li><a href="/retrofit-assessment">Rebate Assessment</a></li>
+          <li><a href="/ca/bc">BC Rebate Overview</a></li>
+          <li><a href="/blog/heat-pumps-explained-bc">Heat Pumps Explained</a></li>
+          <li><a href="/blog/free-heat-pump-bc-income-qualified">Free Heat Pump?</a></li>
+          <li><a href="/blog/bc-approved-home-battery-rebate">Choosing a Battery</a></li>
+          <li><a href="/eguana">Eguana Evolve Battery</a></li>
+          <li><a href="/blog/energy-saving-ideas-bc-home">Cut Your Bill Now</a></li>
+          <li><a href="/smart-thermostats">Smart Thermostats</a></li>
+          <li><a href="/share-your-cost">What Did It Actually Cost?</a></li>
+          <li><a href="/blog">Full Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Company</div>
+        <ul class="hprf-links">
+          <li><a href="/about">About</a></li>
+          <li><a href="/ca/bc">All Cities</a></li>
+          <li><a href="/retrofit-assessment">Free Estimate</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hprf-bottom">
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide &amp; installer matching. Not affiliated with BC Hydro or FortisBC.</div>
+      <div>Made in Canada &#127464;&#127462;</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const rebateData = {
+  standard: {
+    electrical: 500,
+    insulation: 500,
+    solar: 5000,
+    battery: 5000,
+    heatpump: 4000,
+    hphw: 3000,
+    thermostat: 150,
+    hrv: 1600,
+    evcharger: 350
+  },
+  tier1: {
+    electrical: 500,
+    insulation: 500,
+    solar: 5000,
+    battery: 5000,
+    heatpump: 16000,
+    hphw: 3500,
+    thermostat: 150,
+    hrv: 1600,
+    evcharger: 350
+  },
+  tier2: {
+    electrical: 500,
+    insulation: 500,
+    solar: 5000,
+    battery: 5000,
+    heatpump: 12000,
+    hphw: 3500,
+    thermostat: 150,
+    hrv: 1600,
+    evcharger: 350
+  },
+  tier3: {
+    electrical: 500,
+    insulation: 500,
+    solar: 5000,
+    battery: 5000,
+    heatpump: 10500,
+    hphw: 3500,
+    thermostat: 150,
+    hrv: 1600,
+    evcharger: 350
+  }
+};
+
+const costData = {
+  electrical: 3000,
+  insulation: 8000,
+  solar: 18000,
+  battery: 20000,
+  heatpump: 11000,
+  hphw: 6000,
+  thermostat: 400,
+  hrv: 4000,
+  evcharger: 2000
+};
+
+function updateChecklist() {
+  const income = document.getElementById('income').value;
+  const rebates = rebateData[income];
+
+  let totalRebates = 0;
+  let totalCost = 0;
+  let selectedCount = 0;
+
+  ['electrical', 'insulation', 'solar', 'battery', 'heatpump', 'hphw', 'thermostat', 'hrv', 'evcharger'].forEach(item => {
+    const checkbox = document.getElementById(item);
+    const rebateEl = document.getElementById(`rebate-${item}`);
+
+    if (checkbox && checkbox.checked) {
+      selectedCount++;
+      totalRebates += rebates[item];
+      totalCost += costData[item];
+    }
+
+    if (rebateEl && rebates[item]) {
+      rebateEl.textContent = '$' + rebates[item].toLocaleString();
+    }
+  });
+
+  const netCost = totalCost - totalRebates;
+  const tenYearSavings = (netCost > 0 ? netCost * 0.15 : 0) + (selectedCount > 0 ? selectedCount * 1500 : 0);
+
+  // Income-qualified households (lower income) may get free installs via ECAP
+  const incomeQualified = (income === 'tier1');
+
+  document.getElementById('total-rebates').textContent = '$' + totalRebates.toLocaleString();
+  document.getElementById('total-cost').textContent = '$' + totalCost.toLocaleString();
+  document.getElementById('net-cost').textContent = netCost <= 0 ? 'Paid off' : '$' + netCost.toLocaleString();
+  document.getElementById('greener-homes-grant').textContent = incomeQualified ? 'Free install may apply' : '—';
+  document.getElementById('ten-year-savings').textContent = '$' + Math.round(tenYearSavings).toLocaleString();
+
+  updateImpactMessage(income, selectedCount, totalRebates, netCost, incomeQualified);
+}
+
+function updateImpactMessage(income, selectedCount, totalRebates, netCost, incomeQualified) {
+  const messageEl = document.getElementById('impact-message');
+  let html = '';
+
+  if (selectedCount === 0) {
+    html = '<div class="impact-card"><h4>No upgrades selected yet</h4><p>Check the boxes above to see your personalized retrofit roadmap.</p></div>';
+  } else if (income === 'tier1') {
+    html = `<div class="impact-card"><h4>Enhanced (lower-income) rebates 🎉</h4><p>You unlock the highest CleanBC amounts — up to $16,000 heat pump and $3,500 water heater — for $${totalRebates.toLocaleString()} in rebates on what you selected. You may also qualify to have a heat pump, insulation and weatherization installed <strong>free</strong> through ECAP.</p></div>`;
+  } else if (income === 'standard') {
+    html = `<div class="impact-card"><h4>Standard rebates</h4><p>You qualify for base CleanBC rebates totaling $${totalRebates.toLocaleString()} on what you selected. Confirm your income tier — if your household income is lower than expected, your heat pump rebate can jump to $12,000–$16,000.</p></div>`;
+  } else {
+    html = `<div class="impact-card"><h4>Enhanced rebates</h4><p>CleanBC rebates on your selection total $${totalRebates.toLocaleString()}. Your heat pump amount scales with income — the lower your household income, the larger the rebate (up to $16,000).</p></div>`;
+  }
+
+  if (incomeQualified) {
+    html += `<div class="impact-card"><h4>🚀 You may qualify for a free heat pump</h4><p>Lower-income households can get a heat pump, insulation and weatherization installed at no cost through the Energy Conservation Assistance Program (ECAP) — the federal Affordability money now flows through it. <a href="/blog/free-heat-pump-bc-income-qualified" style="color: var(--teal-deep); font-weight: 600;">See if you qualify →</a></p></div>`;
+  }
+
+  messageEl.innerHTML = html;
+}
+
+// Pre-fill from homepage hand-off (?city=&income=&heating=&utility=)
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var setSel = function (id, val) {
+    var el = document.getElementById(id);
+    if (el && val && [].some.call(el.options, function (o) { return o.value === val; })) { el.value = val; }
+  };
+  setSel('income', params.get('income'));
+  setSel('heating', params.get('heating'));
+  setSel('utility', params.get('utility'));
+  var city = params.get('city');
+  if (city) {
+    var banner = document.getElementById('assess-city-banner');
+    if (banner) {
+      banner.textContent = 'Showing estimates for ' + city + ' — adjust anything below.';
+      banner.style.display = 'block';
+    }
+  }
+  if (typeof updateChecklist === 'function') updateChecklist();
+})();
+
+// Feedback form handler
+document.getElementById('feedback-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const type = document.getElementById('feedback-type').value;
+  const message = document.getElementById('feedback-message').value;
+  const email = document.getElementById('feedback-email').value;
+
+  // Store feedback locally (in production, this would send to a backend)
+  const feedback = {
+    type,
+    message,
+    email,
+    timestamp: new Date().toISOString(),
+    url: window.location.href
+  };
+
+  // Log to console for now (you can send to a backend endpoint)
+  console.log('Feedback received:', feedback);
+
+  // Show success message
+  const responseEl = document.getElementById('feedback-response');
+  responseEl.innerHTML = '<h4 style="margin: 0 0 6px; font-size: 14px; font-weight: 700; color: var(--green-money);">✓ Thank you!</h4><p style="margin: 0; font-size: 13px; color: var(--ink-soft);">We\'ll review your feedback and improve the tool based on what homeowners need.</p>';
+  responseEl.style.display = 'block';
+
+  // Reset form
+  document.getElementById('feedback-form').reset();
+
+  // Hide message after 5 seconds
+  setTimeout(() => {
+    responseEl.style.display = 'none';
+  }, 5000);
+});
+
+// Assessment page newsletter handler — backend integration
+document.getElementById('assessment-newsletter-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('assessment-newsletter-email').value;
+  const city = document.getElementById('assessment-newsletter-city').value;
+  const responseEl = document.getElementById('assessment-newsletter-response');
+  const button = document.querySelector('#assessment-newsletter-form button');
+  const originalText = button.textContent;
+
+  button.disabled = true;
+  button.textContent = 'Subscribing...';
+
+  try {
+    const response = await fetch('https://leads.homepowerrebate.com/newsletter', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        city: city || 'Not specified',
+        page: 'assessment'
+      })
+    });
+
+    if (response.ok) {
+      responseEl.innerHTML = '<strong>✓ Great!</strong> You\'ll get weekly tips on rebates and retrofit strategy.';
+      responseEl.style.display = 'block';
+      document.getElementById('assessment-newsletter-form').reset();
+      button.textContent = originalText;
+      button.disabled = false;
+      setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+    } else {
+      const error = await response.json();
+      if (error.message && error.message.includes('already exists')) {
+        responseEl.innerHTML = '<strong>✓ Already subscribed!</strong> Check your email for updates.';
+      } else {
+        throw new Error(error.message || 'Signup failed');
+      }
+      responseEl.style.display = 'block';
+      button.textContent = originalText;
+      button.disabled = false;
+      setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+    }
+  } catch (error) {
+    responseEl.innerHTML = '<strong>⚠ Something went wrong.</strong> Try again or email samuelmenard@gmail.com';
+    responseEl.style.display = 'block';
+    button.textContent = originalText;
+    button.disabled = false;
+    console.error('Newsletter signup error:', error);
+    setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+  }
+});
+
+// Lead form submission
+document.getElementById('assessment-lead-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const firstname = document.getElementById('lead-firstname').value;
+  const lastname = document.getElementById('lead-lastname').value;
+  const email = document.getElementById('lead-email').value;
+  const phone = document.getElementById('lead-phone').value;
+  const postal = document.getElementById('lead-postal').value;
+  const notes = document.getElementById('lead-notes')?.value || '';
+  const responseEl = document.getElementById('lead-response');
+  const button = e.target.querySelector('button[type="submit"]');
+  const originalText = button.textContent;
+
+  // Get city from URL params
+  const urlParams = new URLSearchParams(window.location.search);
+  const city = urlParams.get('city') || 'Unknown';
+
+  // Get selected upgrades
+  const upgrades = [];
+  if (document.getElementById('electrical')?.checked) upgrades.push('electrical');
+  if (document.getElementById('insulation')?.checked) upgrades.push('insulation');
+  if (document.getElementById('solar')?.checked) upgrades.push('solar');
+  if (document.getElementById('battery')?.checked) upgrades.push('battery');
+  if (document.getElementById('heatpump')?.checked) upgrades.push('heatpump');
+  if (document.getElementById('hphw')?.checked) upgrades.push('hphw');
+  if (document.getElementById('thermostat')?.checked) upgrades.push('thermostat');
+  if (document.getElementById('hrv')?.checked) upgrades.push('hrv');
+  if (document.getElementById('evcharger')?.checked) upgrades.push('evcharger');
+
+  // Get form settings
+  const income = document.getElementById('income')?.value || 'standard';
+  const utility = document.getElementById('utility')?.value || 'bchydro';
+  const heating = document.getElementById('heating')?.value || 'furnace';
+  const waterheating = document.getElementById('waterheating')?.value || 'gas';
+  const yearbuilt = document.getElementById('yearbuilt')?.value || 'unknown';
+
+  // Pull the calculated dollar figures straight from the summary box so the
+  // lead record carries the actual numbers the homeowner saw, not just the
+  // categorical selections.
+  const estimatedRebates = document.getElementById('total-rebates')?.textContent || 'unknown';
+  const totalCost = document.getElementById('total-cost')?.textContent || 'unknown';
+  const netCost = document.getElementById('net-cost')?.textContent || 'unknown';
+  const tenYearSavings = document.getElementById('ten-year-savings')?.textContent || 'unknown';
+
+  const sharedFields = {
+    firstname, lastname, email, phone, postal, city, notes,
+    upgrades, income_tier: income, utility,
+    current_heating: heating, water_heating: waterheating, year_built: yearbuilt,
+    estimated_rebates: estimatedRebates, total_cost: totalCost, net_cost: netCost,
+    ten_year_savings: tenYearSavings,
+    page_url: location.href, referrer: document.referrer || 'direct'
+  };
+
+  async function submitToInstallers(selectedInstallers) {
+    const submissions = (selectedInstallers.length ? selectedInstallers : [null]).map(installer =>
+      fetch('https://leads.homepowerrebate.com/estimate-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...sharedFields,
+          installer_name: installer?.name || '',
+          installer_email: installer?.email || '',
+          installer_phone: installer?.phone || ''
+        })
+      }).then(r => r.json()).then(r => r.success).catch(() => false)
+    );
+    const results = await Promise.allSettled(submissions);
+    return results.filter(r => r.status === 'fulfilled' && r.value).length;
+  }
+
+  button.disabled = true;
+  button.textContent = 'Loading installers…';
+
+  try {
+    // Merge heat-pump and solar directories for this city — the checklist
+    // covers more than one trade, so either list may have the right match.
+    const citySlug = city.toLowerCase().replace(/\s+/g, '-');
+    const [hpList, solarList] = await Promise.all([
+      loadInstallersForCity(citySlug),
+      fetch(`/installers/json/solar/${citySlug}.json`).then(r => r.ok ? r.json() : []).catch(() => [])
+    ]);
+    const byName = new Map();
+    [...hpList, ...solarList].forEach(inst => { if (inst.email) byName.set(inst.name, inst); });
+    const installers = [...byName.values()];
+
+    button.textContent = originalText;
+    button.disabled = false;
+
+    if (installers.length === 0) {
+      // No installer directory for this city yet — still capture the lead
+      // honestly (falls back to ops-only, same as before) rather than block.
+      button.disabled = true;
+      button.textContent = 'Sending...';
+      const sent = await submitToInstallers([]);
+      responseEl.innerHTML = sent
+        ? '<strong>✓ Got it!</strong> We\'re still building our installer network in your area — we\'ll follow up personally.'
+        : '<strong>⚠ Something went wrong.</strong> Try again or email samuelmenard@gmail.com';
+      responseEl.style.display = 'block';
+      document.getElementById('assessment-lead-form').reset();
+      button.textContent = originalText;
+      button.disabled = false;
+      setTimeout(() => { responseEl.style.display = 'none'; }, 8000);
+      return;
+    }
+
+    showInstallerChooser(
+      installers,
+      async (selectedInstallers) => {
+        button.disabled = true;
+        button.textContent = `Sending to ${selectedInstallers.length} installer${selectedInstallers.length !== 1 ? 's' : ''}...`;
+        const sentCount = await submitToInstallers(selectedInstallers);
+        responseEl.innerHTML = sentCount > 0
+          ? `<strong>✓ Got it!</strong> Sent to ${sentCount} installer${sentCount !== 1 ? 's' : ''} — expect a call within 24 hours.`
+          : '<strong>⚠ Something went wrong.</strong> Try again or email samuelmenard@gmail.com';
+        responseEl.style.display = 'block';
+        document.getElementById('assessment-lead-form').reset();
+        button.textContent = originalText;
+        button.disabled = false;
+        setTimeout(() => { responseEl.style.display = 'none'; }, 8000);
+      },
+      () => {
+        button.textContent = originalText;
+        button.disabled = false;
+      }
+    );
+  } catch (error) {
+    responseEl.innerHTML = '<strong>⚠ Something went wrong.</strong> Try again or email samuelmenard@gmail.com';
+    responseEl.style.display = 'block';
+    button.textContent = originalText;
+    button.disabled = false;
+    console.error('Lead submission error:', error);
+    setTimeout(() => { responseEl.style.display = 'none'; }, 8000);
+  }
+});
+
+updateChecklist();
+</script>
 
 <script src="/form-handlers-with-installer-select.js?v=2"></script>
 </body>

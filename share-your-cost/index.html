@@ -7,6 +7,502 @@
 
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W33G4TGRHD');
+</script>
 
+<meta name="description" content="Share what you actually paid — after rebates — for your heat pump, solar, battery, or insulation. See instantly how your city compares. No booking required.">
+<link rel="canonical" href="https://homepowerrebate.com/share-your-cost/">
+<meta property="og:title" content="What Did Your Heat Pump or Solar Install Actually Cost? | HomePowerRebate">
+<meta property="og:description" content="Share what you actually paid — after rebates — and see instantly how your city compares. No booking required.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://homepowerrebate.com/share-your-cost/">
+<meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
+  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
+  --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter Tight', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); padding: 16px 28px; }
+.logo { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
+.logo-power { color: var(--amber); }
+
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(32px, 5vw, 46px); line-height: 1.1; letter-spacing: -0.02em; color: var(--teal-deep); margin: 32px 0 16px; }
+h2 { font-family: 'Fraunces', serif; font-size: 24px; line-height: 1.2; color: var(--teal-deep); margin: 32px 0 14px; }
+p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1.8; }
+
+.hero { padding: 48px 28px 40px; background: var(--teal-deep); color: var(--paper); text-align: center; }
+.hero .wrap { max-width: 700px; }
+.hero h1 { color: var(--paper); margin-top: 0; }
+.hero p { color: rgba(250,247,242,.85); font-size: 17px; }
+.hero .eyebrow { font-family: 'Fraunces', serif; font-size: 13px; color: var(--amber-bright); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+.trust { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; margin-top: 24px; font-size: 13px; color: rgba(250,247,242,.65); }
+.trust span { display: block; }
+.trust strong { display: block; font-family: 'Fraunces', serif; font-size: 20px; color: #fff; }
+
+.article { padding: 48px 28px; }
+.article .wrap { max-width: 700px; }
+
+.step-list { list-style: none; counter-reset: step; margin: 24px 0; padding: 0; }
+.step-list li { counter-increment: step; position: relative; padding-left: 44px; margin-bottom: 18px; font-size: 15px; color: var(--ink-soft); }
+.step-list li::before { content: counter(step); position: absolute; left: 0; top: -2px; width: 30px; height: 30px; background: var(--amber); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-weight: 600; font-size: 14px; }
+
+/* --- Form card --- */
+.form-card { background: #fff; border: 1px solid var(--rule); border-radius: 16px; padding: 32px; margin: 32px 0; box-shadow: 0 4px 24px rgba(10,42,46,.06); }
+.form-card h3 { font-family: 'Fraunces', serif; font-size: 20px; color: var(--teal-deep); margin-bottom: 6px; }
+.form-card .sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 22px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); }
+.field input, .field select { font-family: inherit; font-size: 15px; padding: 11px 13px; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); color: var(--ink); }
+.field input:focus, .field select:focus { outline: 2px solid var(--amber); outline-offset: 1px; }
+.field.full { grid-column: 1 / -1; }
+.hint { font-size: 12px; color: var(--sage); margin-top: -8px; margin-bottom: 14px; }
+
+.submit-btn { width: 100%; background: var(--amber); color: #fff; border: none; padding: 15px; border-radius: 999px; font-size: 16px; font-weight: 600; font-family: inherit; cursor: pointer; margin-top: 6px; }
+.submit-btn:hover { background: var(--amber-bright); }
+.submit-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+.privacy-note { font-size: 12px; color: var(--sage); margin-top: 14px; text-align: center; }
+
+/* --- Result panel (hidden until submit) --- */
+.result-panel { display: none; background: var(--teal-deep); color: var(--paper); border-radius: 16px; padding: 32px; margin: 32px 0; text-align: center; }
+.result-panel.show { display: block; }
+.result-panel .eyebrow { font-family: 'Fraunces', serif; font-size: 13px; color: var(--amber-bright); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+.result-panel .big-stat { font-family: 'Fraunces', serif; font-size: 40px; margin: 8px 0 4px; }
+.result-panel .big-stat-label { font-size: 14px; color: rgba(250,247,242,.7); margin-bottom: 24px; }
+.tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 20px; text-align: left; }
+.tier-card { background: rgba(250,247,242,.08); border-radius: 10px; padding: 16px; }
+.tier-card .scope { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: rgba(250,247,242,.55); margin-bottom: 6px; }
+.tier-card .avg { font-family: 'Fraunces', serif; font-size: 22px; }
+.tier-card .n { font-size: 12px; color: rgba(250,247,242,.5); margin-top: 2px; }
+
+.error-msg { background: #fef3e6; border: 1px solid #e8b87a; color: #7a4a0a; padding: 12px 16px; border-radius: 8px; font-size: 14px; margin-bottom: 14px; display: none; }
+.error-msg.show { display: block; }
+
+.cta-box { background: var(--teal-deep); color: #fff; border-radius: 12px; padding: 32px; margin: 40px 0; text-align: center; }
+.cta-box h2 { color: #fff; margin-top: 0; }
+.cta-box p { color: rgba(250,247,242,.85); }
+.btn-primary { display: inline-block; background: var(--amber); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; margin-top: 16px; }
+.btn-primary:hover { background: var(--amber-bright); }
+a { color: var(--teal); }
+
+.city-asks { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+.city-asks a { display: inline-block; background: var(--paper-warm); border: 1px solid var(--rule); border-radius: 999px; padding: 8px 16px; font-size: 13px; color: var(--ink-soft); text-decoration: none; }
+.city-asks a:hover { border-color: var(--amber); color: var(--teal-deep); }
+
+footer { padding: 40px 28px; border-top: 1px solid var(--rule); background: var(--ink); color: rgba(250,247,242,.6); text-align: center; font-size: 12px; }
+footer a { color: rgba(250,247,242,.75); text-decoration: none; }
+
+@media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Community cost data</div>
+    <h1>What did your install actually cost?</h1>
+    <p>Rebate math on paper is one thing. What people actually paid — after rebates, after the real quote — is another. Share yours, see instantly how it compares to your city, your province, and the country. No booking through us required. <a href="/blog/why-were-building-a-real-cost-database" style="color:var(--amber-bright);">Read why we're building this →</a></p>
+    <div class="trust">
+      <span><strong id="statTotal">—</strong>homeowners have shared</span>
+      <span><strong id="statCities">—</strong>cities represented</span>
+      <span><strong>100%</strong>anonymous — no address stored</span>
+    </div>
+  </div>
+</section>
+
+<article class="article">
+  <div class="wrap">
+
+    <h2>Why share it</h2>
+    <ol class="step-list">
+      <li><strong>See your own number in context.</strong> The moment you submit, you'll see instantly whether you paid more or less than homeowners like you.</li>
+      <li><strong>Help the next person.</strong> Rebate program pages tell you the theoretical max — real numbers from real installs are what actually help someone budget.</li>
+      <li><strong>Build a public record by city.</strong> As more people share, every city page gets real local data instead of just program rules.</li>
+    </ol>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <form class="form-card" id="outcomeForm">
+      <h3>Share what you paid</h3>
+      <p class="sub">Takes about a minute. We never store your full address — only your first 3 postal characters and city.</p>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="category">What did you install</label>
+          <select id="category" required>
+            <option value="">Select…</option>
+            <option value="heat-pump">Heat pump</option>
+            <option value="solar">Solar panels</option>
+            <option value="battery">Home battery</option>
+            <option value="insulation">Insulation</option>
+            <option value="water-heater">Water heater</option>
+            <option value="windows">Windows</option>
+            <option value="ev-charger">EV charger</option>
+            <option value="thermostat">Smart thermostat</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="install_month">Install month</label>
+          <input type="month" id="install_month" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Anything else included in this project? (optional)</label>
+        <div class="hint" style="margin-bottom:8px;">Doesn't affect your cost comparison — that's based on the primary category only. This just helps us understand combined projects.</div>
+        <div id="otherCategories" style="display:flex;flex-wrap:wrap;gap:8px 16px;">
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="heat-pump"> Heat pump</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="solar"> Solar panels</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="battery"> Home battery</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="insulation"> Insulation</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="water-heater"> Water heater</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="windows"> Windows</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="ev-charger"> EV charger</label>
+          <label style="display:flex;align-items:center;gap:6px;font-weight:400;font-size:14px;"><input type="checkbox" value="thermostat"> Smart thermostat</label>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="province">Province / state</label>
+          <select id="province" required>
+            <option value="">Select…</option>
+            <option value="BC">British Columbia</option>
+            <option value="ON">Ontario</option>
+            <option value="AB">Alberta</option>
+            <option value="NS">Nova Scotia</option>
+            <option value="MA">Massachusetts</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="city">City</label>
+          <select id="city" required disabled>
+            <option value="">Select a province first…</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="postal">Postal / zip code</label>
+          <input type="text" id="postal" placeholder="V1Y 1A1" required>
+        </div>
+        <div class="field"></div>
+      </div>
+      <div class="hint">Only the first 3 characters are stored — never the full code or address. It's what lets us eventually compare you to your specific neighbourhood, not just your whole city.</div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="total_cost">Total installed cost ($)</label>
+          <input type="number" id="total_cost" placeholder="14000" min="1" required>
+        </div>
+        <div class="field">
+          <label for="rebates_received">Rebates you received ($)</label>
+          <input type="number" id="rebates_received" placeholder="6000" min="0">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field full">
+          <label for="installer_name">Installer (optional)</label>
+          <input type="text" id="installer_name" placeholder="Company name">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field full">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+      </div>
+      <input type="text" id="website" name="website" style="position:absolute;left:-9999px;" tabindex="-1" autocomplete="off">
+
+      <button type="submit" class="submit-btn" id="submitBtn">Share my number & see how I compare</button>
+      <p class="privacy-note">We'll never spam you or sell your email. Just this comparison, and — if you opt in on a future page — a heads-up when your city hits enough data for a full report.</p>
+    </form>
+
+    <div class="result-panel" id="resultPanel">
+      <div class="eyebrow">Your comparison</div>
+      <div class="big-stat" id="bigStat">—</div>
+      <div class="big-stat-label" id="bigStatLabel"></div>
+      <div class="tier-grid" id="tierGrid"></div>
+    </div>
+
+    <h2>Don't have your numbers yet, but want to know a city?</h2>
+    <p>Every city is building up data as homeowners share. Check what's there so far, or be the first to post for your city:</p>
+    <div class="city-asks">
+      <a href="/ca/bc/kelowna">Kelowna</a>
+      <a href="/ca/bc/vancouver">Vancouver</a>
+      <a href="/ca/bc/victoria">Victoria</a>
+      <a href="/ca/bc/surrey">Surrey</a>
+      <a href="/ca/bc/kamloops">Kamloops</a>
+      <a href="/ca/bc/nanaimo">Nanaimo</a>
+      <a href="/ca">All regions</a>
+    </div>
+
+    <div class="cta-box">
+      <h2>Haven't installed yet?</h2>
+      <p>Get your own free rebate estimate first — then come back and tell us what it actually cost.</p>
+      <a href="/retrofit-assessment" class="btn-primary">Estimate my rebates →</a>
+    </div>
+
+  </div>
+</article>
+
+<footer class="hprf">
+<style>
+.hprf{background:var(--ink);color:rgba(250,247,242,.65);padding:56px 28px 32px;font-family:'Inter Tight',-apple-system,sans-serif;line-height:1.6;}
+.hprf a{text-decoration:none;}
+.hprf-inner{max-width:1180px;margin:0 auto;}
+.hprf-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:32px;border-bottom:1px solid rgba(250,247,242,.1);}
+.hprf-brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;color:var(--paper);letter-spacing:-.02em;margin-bottom:12px;}
+.hprf-brand span{color:var(--amber);}
+.hprf-tag{font-size:13px;color:rgba(250,247,242,.4);max-width:320px;margin:0;}
+.hprf-ct{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(250,247,242,.7);margin-bottom:14px;}
+.hprf-links{list-style:none;display:grid;gap:8px;font-size:14px;margin:0;padding:0;}
+.hprf-links a{color:rgba(250,247,242,.45);}
+.hprf-links a:hover{color:var(--amber);}
+.hprf-bottom{max-width:1180px;margin:0 auto;padding-top:24px;font-size:12px;color:rgba(250,247,242,.35);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+@media(max-width:880px){.hprf-top{grid-template-columns:1fr 1fr;gap:28px;}}
+@media(max-width:520px){.hprf-top{grid-template-columns:1fr;}}
+</style>
+  <div class="hprf-inner">
+    <div class="hprf-top">
+      <div>
+        <div class="hprf-brand">Home<span>Power</span>Rebate</div>
+        <p class="hprf-tag">Helping homeowners claim every rebate they qualify for. Every vetted installer, no spam.</p>
+      </div>
+      <div>
+        <div class="hprf-ct">BC Cities</div>
+        <ul class="hprf-links">
+          <li><a href="/ca/bc/abbotsford">Abbotsford</a></li>
+          <li><a href="/ca/bc/kelowna">Kelowna</a></li>
+          <li><a href="/ca/bc/vancouver">Vancouver</a></li>
+          <li><a href="/ca/bc/victoria">Victoria</a></li>
+          <li><a href="/ca/bc/surrey">Surrey</a></li>
+          <li><a href="/ca/bc">All BC cities</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Guides &amp; Tools</div>
+        <ul class="hprf-links">
+          <li><a href="/retrofit-assessment">Rebate Assessment</a></li>
+          <li><a href="/blog/heat-pumps-explained-bc">Heat Pumps Explained</a></li>
+          <li><a href="/blog/will-technology-replace-rebates">Will Tech Replace Rebates?</a></li>
+          <li><a href="/share-your-cost">Share Your Cost</a></li>
+          <li><a href="/blog">Full Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Company</div>
+        <ul class="hprf-links">
+          <li><a href="/about">About</a></li>
+          <li><a href="/ca">All Regions</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hprf-bottom">
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide &amp; installer matching. Not affiliated with any utility or government agency.</div>
+      <div>Made in Canada &#127464;&#127462;</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+
+const API = 'https://leads.homepowerrebate.com';
+
+// City lists match the site's actual city hub pages (/ca/<prov>/<slug>,
+// /us/ma/<slug>) so every submission maps to a real page — keeps the data
+// clean instead of free-text variants of the same city fragmenting an
+// average that's already gated behind a 5-submission minimum.
+const CITIES_BY_PROVINCE = {
+  BC: ['abbotsford','burnaby','chilliwack','coquitlam','fort-st-john','kamloops','kelowna','langley','maple-ridge','nanaimo','penticton','prince-george','richmond','squamish','surrey','vancouver','vernon','victoria'],
+  ON: ['barrie','brampton','burlington','cambridge','greater-sudbury','hamilton','kitchener','london','markham','mississauga','oakville','oshawa','ottawa','richmond-hill','toronto','vaughan','whitby','windsor'],
+  AB: ['calgary','edmonton','lethbridge','red-deer','st-albert'],
+  NS: ['halifax'],
+  MA: ['boston','brockton','cambridge','fall-river','lowell','lynn','new-bedford','newton','quincy','somerville','springfield','worcester']
+};
+
+function humanizeCity(slug) {
+  const special = {
+    'fort-st-john': 'Fort St. John', 'st-albert': 'St. Albert', 'greater-sudbury': 'Greater Sudbury',
+    'richmond-hill': 'Richmond Hill', 'red-deer': 'Red Deer', 'new-bedford': 'New Bedford',
+    'maple-ridge': 'Maple Ridge', 'fall-river': 'Fall River'
+  };
+  return special[slug] || slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+const provinceSelectEl = document.getElementById('province');
+const citySelectEl = document.getElementById('city');
+
+function populateCities(province, selectSlug) {
+  const slugs = CITIES_BY_PROVINCE[province] || [];
+  citySelectEl.innerHTML = '';
+  if (!slugs.length) {
+    citySelectEl.disabled = true;
+    citySelectEl.innerHTML = '<option value="">Select a province first…</option>';
+    return;
+  }
+  citySelectEl.disabled = false;
+  citySelectEl.innerHTML = '<option value="">Select…</option>' +
+    slugs.map(s => `<option value="${s}">${humanizeCity(s)}</option>`).join('');
+  if (selectSlug && slugs.includes(selectSlug)) {
+    citySelectEl.value = selectSlug;
+  }
+}
+
+provinceSelectEl.addEventListener('change', () => populateCities(provinceSelectEl.value));
+
+// Prefill city/province from a query string when arriving via a city-page CTA.
+(function prefillFromQuery(){
+  const params = new URLSearchParams(location.search);
+  const city = params.get('city');
+  const province = params.get('province');
+  if (province && [...provinceSelectEl.options].some(o => o.value === province)) {
+    provinceSelectEl.value = province;
+    populateCities(province, city);
+  }
+})();
+const form = document.getElementById('outcomeForm');
+const errorMsg = document.getElementById('errorMsg');
+const resultPanel = document.getElementById('resultPanel');
+const submitBtn = document.getElementById('submitBtn');
+
+function showError(msg) {
+  errorMsg.textContent = msg;
+  errorMsg.classList.add('show');
+}
+function hideError() {
+  errorMsg.classList.remove('show');
+}
+function fmtMoney(n) {
+  return n == null ? '—' : '$' + Math.round(n).toLocaleString();
+}
+
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  hideError();
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting…';
+
+  const primaryCategory = document.getElementById('category').value;
+  const otherCategories = [...document.querySelectorAll('#otherCategories input:checked')]
+    .map(el => el.value)
+    .filter(v => v !== primaryCategory);
+
+  const payload = {
+    category: primaryCategory,
+    other_categories: otherCategories,
+    install_month: document.getElementById('install_month').value,
+    city: document.getElementById('city').value,
+    province: document.getElementById('province').value,
+    postal: document.getElementById('postal').value,
+    total_cost: Number(document.getElementById('total_cost').value),
+    rebates_received: Number(document.getElementById('rebates_received').value || 0),
+    installer_name: document.getElementById('installer_name').value,
+    email: document.getElementById('email').value,
+    website: document.getElementById('website').value, // honeypot
+    page_url: location.href,
+    referrer: document.referrer || 'direct'
+  };
+
+  try {
+    const res = await fetch(API + '/outcomes/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      showError(data.error || 'Something went wrong — please check your entries and try again.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Share my number & see how I compare';
+      return;
+    }
+
+    if (typeof gtag === 'function') {
+      gtag('event', 'outcome_submitted', {
+        category: payload.category,
+        city: payload.city,
+        province: payload.province
+      });
+    }
+
+    renderResult(data.comparison, payload.total_cost - payload.rebates_received);
+    form.style.display = 'none';
+  } catch (err) {
+    showError('Network error — please try again in a moment.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Share my number & see how I compare';
+  }
+});
+
+function renderResult(comparison, netCost) {
+  const bigStat = document.getElementById('bigStat');
+  const bigStatLabel = document.getElementById('bigStatLabel');
+  const tierGrid = document.getElementById('tierGrid');
+
+  if (comparison.percentile) {
+    bigStat.textContent = 'Cheaper than ' + comparison.percentile.cheaper_than_pct + '%';
+    bigStatLabel.textContent = 'of homeowners in the same ' + comparison.percentile.scope + ' comparison group (net cost: ' + fmtMoney(netCost) + ')';
+  } else {
+    bigStat.textContent = fmtMoney(netCost);
+    bigStatLabel.textContent = 'Your net cost — not enough submissions yet in your area for a full comparison. Check back as more people share.';
+  }
+
+  tierGrid.innerHTML = '';
+  comparison.tiers.forEach(function(t) {
+    const card = document.createElement('div');
+    card.className = 'tier-card';
+    card.innerHTML =
+      '<div class="scope">' + t.scope + '</div>' +
+      '<div class="avg">' + (t.shown ? fmtMoney(t.avg_net_cost) : '—') + '</div>' +
+      '<div class="n">' + t.sample_size + ' submission' + (t.sample_size === 1 ? '' : 's') + (t.shown ? '' : ' (need 5+)') + '</div>';
+    tierGrid.appendChild(card);
+  });
+
+  resultPanel.classList.add('show');
+  resultPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Load overall stats for the hero trust bar.
+(async function loadStats(){
+  try {
+    const res = await fetch(API + '/outcomes/compare?category=heat-pump');
+    const data = await res.json();
+    const national = data.comparison && data.comparison.tiers.find(t => t.scope === 'national');
+    document.getElementById('statTotal').textContent = national ? national.sample_size : '0';
+    document.getElementById('statCities').textContent = '—';
+  } catch (e) { /* stats are decorative, fail silently */ }
+})();
+</script>
 </body>
 </html>

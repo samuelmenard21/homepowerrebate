@@ -2154,15 +2154,5 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 <!-- Form handlers with installer selection -->
 <script src="/form-handlers-with-installer-select.js"></script>
 
-<script>
-(function(){
-  document.querySelectorAll('.hpr-mailto[data-b64]').forEach(function(el){
-    var addr = atob(el.getAttribute('data-b64'));
-    var q = el.getAttribute('data-q');
-    el.setAttribute('href', 'mailto:' + addr + (q ? '?' + q : ''));
-    if (el.getAttribute('data-showaddr') === '1') { el.textContent = addr; }
-  });
-})();
-</script>
 </body>
 </html>

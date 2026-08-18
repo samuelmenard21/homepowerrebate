@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home Energy Rebate Blog | HomePowerRebate</title>
-<meta name="description" content="Guides on stacking heat pump, solar, and battery rebates across BC, Ontario, California, New York, and Massachusetts.">
-<link rel="canonical" href="https://homepowerrebate.com/blog/">
+<title>BC Home Energy Blog | HomePowerRebate</title>
 
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
@@ -16,94 +14,723 @@
   gtag('config', 'G-W33G4TGRHD');
 </script>
 
+<meta name="description" content="Honest, no-hype guides on BC Hydro rebates, solar, batteries, and heat pumps for BC homeowners.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://homepowerrebate.com/blog/">
+<meta name="google-site-verification" content="Yyio4MZpG_tVGKuE9hbSKTYb0Yo9LFWoNF_3_UxVkGE" />
+
+<meta property="og:title" content="BC Home Energy Blog | HomePowerRebate">
+<meta property="og:description" content="Honest, no-hype guides on BC Hydro rebates, solar, batteries, and heat pumps.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://homepowerrebate.com/blog/">
+<meta property="og:locale" content="en_CA">
+<meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://homepowerrebate.com/blog" }
+  ]
+}
+</script>
+
 <style>
 :root {
   --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
-  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --rule: #d9d0c1;
+  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
+  --sage: #6b8e7f; --green-money: #2d6a4f; --red-warning: #b04545; --rule: #d9d0c1;
+  --shadow: 0 1px 2px rgba(10,42,46,0.04), 0 8px 24px rgba(10,42,46,0.06);
+  --shadow-lg: 0 4px 12px rgba(10,42,46,0.08), 0 24px 48px rgba(10,42,46,0.12);
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter Tight', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.65; }
-.nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); padding: 14px 24px; }
-.logo { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
-.logo-power { color: var(--amber); }
-.wrap { max-width: 860px; margin: 0 auto; padding: 0 28px; }
-.hero { padding: 48px 28px; background: var(--teal-deep); color: var(--paper); text-align: center; }
-.hero h1 { font-family: 'Fraunces', serif; font-size: clamp(28px, 5vw, 42px); color: #fff; margin-bottom: 10px; }
-.hero p { color: rgba(250,247,242,.82); font-size: 16px; }
-.article { padding: 40px 28px 56px; }
-h2 { font-family: 'Fraunces', serif; font-size: 22px; color: var(--teal-deep); margin: 32px 0 14px; }
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 8px; }
-.card { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 16px 18px; }
-.card a { color: var(--teal-deep); text-decoration: none; font-weight: 600; font-size: 15px; line-height: 1.4; }
-.card a:hover { text-decoration: underline; }
-footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--ink); color: rgba(250,247,242,.6); text-align: center; font-size: 13px; }
-footer a { color: rgba(250,247,242,.75); }
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif; color:var(--ink); background:var(--paper); line-height:1.65; -webkit-font-smoothing:antialiased; }
+.wrap { max-width:760px; margin:0 auto; padding:0 24px; }
+.wrap-wide { max-width:1000px; margin:0 auto; padding:0 24px; }
+h1, h2, h3 { font-family:'Fraunces', Georgia, serif; font-weight:500; line-height:1.2; letter-spacing:-0.01em; }
+.logo { font-family:'Fraunces', Georgia, serif; font-size:22px; font-weight:600; color:var(--ink); text-decoration:none; letter-spacing:-0.01em; }
+.logo-power { color:var(--amber); font-weight:700; }
+.btn { display:inline-block; background:var(--amber); color:#fff; padding:14px 28px; border-radius:999px; text-decoration:none; font-weight:600; font-size:16px; transition:background .15s, transform .15s; border:none; cursor:pointer; }
+.btn:hover { background:var(--amber-bright); transform:translateY(-1px); }
+.btn-secondary { background:#fff; color:var(--ink); border:1.5px solid var(--rule); }
+.btn-secondary:hover { background:var(--paper-warm); }
+nav { display:flex; align-items:center; justify-content:space-between; padding:20px 24px; max-width:1000px; margin:0 auto; }
+.nav-tag { font-size:13px; color:var(--sage); font-weight:600; letter-spacing:.04em; text-transform:uppercase; }
+.post-header { background:var(--teal-deep); color:var(--paper); padding:56px 0 48px; }
+.post-header .wrap { max-width:760px; }
+.post-eyebrow { font-size:13px; color:var(--amber-bright); font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:16px; }
+.post-header h1 { font-size:clamp(28px,5vw,42px); color:#fff; margin-bottom:16px; }
+.post-meta { font-size:14px; color:rgba(250,247,242,0.65); }
+article { padding:48px 0 64px; }
+article p { font-size:17px; color:var(--ink-soft); margin-bottom:20px; }
+article h2 { font-size:26px; margin:36px 0 14px; color:var(--ink); }
+article h3 { font-size:20px; margin:28px 0 10px; color:var(--ink); }
+article ul, article ol { margin:0 0 20px 22px; }
+article li { font-size:16.5px; color:var(--ink-soft); margin-bottom:8px; }
+article strong { color:var(--ink); }
+article a { color:var(--teal-deep); font-weight:600; text-decoration:underline; text-decoration-color:var(--amber); text-underline-offset:2px; }
+.callout { background:var(--paper-warm); border:1px solid var(--rule); border-left:4px solid var(--amber); border-radius:8px; padding:20px 24px; margin:28px 0; }
+.callout p { margin-bottom:0; font-size:15.5px; }
+.callout strong { color:var(--amber); }
+.post-cta { background:var(--amber); color:#fff; border-radius:16px; padding:36px 32px; margin-top:40px; text-align:center; }
+.post-cta h3 { color:#fff; margin-bottom:10px; font-size:22px; }
+.post-cta p { color:rgba(255,255,255,0.9); margin-bottom:20px; font-size:15.5px; }
+.post-cta .btn { background:var(--ink); }
+.post-cta .btn:hover { background:var(--teal-deep); }
+.related { border-top:1px solid var(--rule); margin-top:48px; padding-top:32px; }
+.related h4 { font-size:14px; text-transform:uppercase; letter-spacing:.05em; color:var(--sage); margin-bottom:16px; }
+.related a { display:block; color:var(--ink); font-weight:600; text-decoration:none; padding:10px 0; border-bottom:1px solid var(--rule); }
+.related a:hover { color:var(--amber); }
+/* Blog hub grid */
+.hub-hero { background:var(--teal-deep); color:var(--paper); padding:64px 0 56px; }
+.hub-hero .eyebrow { font-size:14px; color:var(--amber-bright); font-weight:600; letter-spacing:.08em; text-transform:uppercase; margin-bottom:18px; }
+.hub-hero h1 { font-size:clamp(34px,6vw,52px); color:#fff; margin-bottom:18px; }
+.hub-hero .sub { font-size:clamp(16px,2.2vw,19px); color:rgba(250,247,242,.82); max-width:640px; }
+.post-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:22px; margin-top:36px; }
+.post-card { background:#fff; border:1px solid var(--rule); border-radius:16px; padding:26px; transition:all .2s; text-decoration:none; color:var(--ink); display:block; }
+.post-card:hover { border-color:var(--amber); box-shadow:var(--shadow-lg); transform:translateY(-2px); }
+.post-card .tag { font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--amber); margin-bottom:10px; display:block; }
+.post-card h3 { font-size:19px; margin-bottom:8px; line-height:1.3; }
+.post-card p { font-size:14px; color:var(--ink-soft); }
+footer { padding:40px 0 60px; border-top:1px solid var(--rule); margin-top:40px; }
+footer .wrap-wide { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+footer p { font-size:13px; color:var(--sage); }
+@media (max-width:720px) { .post-header { padding:40px 0 36px; } article { padding:36px 0 48px; } .post-grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
 
-<nav class="nav">
+<nav style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
   <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
+  <div style="display:flex; align-items:center; gap:20px;">
+    <span class="nav-tag">Blog</span>
+    <div style="position:relative;">
+      <button type="button" onclick="var m=this.nextElementSibling; m.style.display=(m.style.display==='grid'?'none':'grid');" style="display:flex; align-items:center; gap:8px; background:var(--teal-deep); color:var(--paper); padding:10px 18px; border-radius:999px; border:none; cursor:pointer; font-family:'Inter Tight',sans-serif; font-weight:600; font-size:14px;">
+        Pick your city
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div style="display:none; position:absolute; top:calc(100% + 10px); right:0; grid-template-columns:1fr 1fr; gap:8px; padding:16px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:60; width:min(340px,86vw); max-height:70vh; overflow-y:auto;">
+        <a href="/ca/bc/abbotsford" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Abbotsford</a>
+        <a href="/ca/bc/burnaby" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Burnaby</a>
+        <a href="/ca/bc/chilliwack" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Chilliwack</a>
+        <a href="/ca/bc/coquitlam" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Coquitlam</a>
+        <a href="/ca/bc/fort-st-john" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Fort St. John</a>
+        <a href="/ca/bc/kamloops" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Kamloops</a>
+        <a href="/ca/bc/kelowna" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Kelowna</a>
+        <a href="/ca/bc/langley" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Langley</a>
+        <a href="/ca/bc/maple-ridge" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Maple Ridge</a>
+        <a href="/ca/bc/nanaimo" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Nanaimo</a>
+        <a href="/ca/bc/penticton" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Penticton</a>
+        <a href="/ca/bc/prince-george" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Prince George</a>
+        <a href="/ca/bc/richmond" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Richmond</a>
+        <a href="/ca/bc/squamish" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Squamish</a>
+        <a href="/ca/bc/surrey" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Surrey</a>
+        <a href="/ca/bc/vancouver" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Vancouver</a>
+        <a href="/ca/bc/vernon" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Vernon</a>
+        <a href="/ca/bc/victoria" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;">Victoria</a>
+      </div>
+    </div>
+  </div>
 </nav>
 
-<section class="hero">
-  <div class="wrap">
-    <h1>Home Energy Rebate Blog</h1>
-    <p>Straight-talk guides on stacking heat pump, solar, and battery rebates across BC, Ontario, California, New York, and Massachusetts.</p>
+<header class="hub-hero">
+  <div class="wrap-wide">
+    <div class="eyebrow">No corporate language here</div>
+    <h1>Real talk about BC home energy rebates.</h1>
+    <p class="sub">I'm Sam. I write everything here. No sales team, no buzzwords—just what I've learned talking to hundreds of BC homeowners about heat pumps, solar, and batteries.</p>
+  </div>
+</header>
+
+<section style="padding:56px 0;">
+  <div class="wrap-wide">
+    <div class="post-grid">
+
+        <a href="/blog/ladwp-rebate-stacking-california" class="post-card">
+          <span class="tag">California: LADWP</span>
+          <h3>LADWP Rebate Stacking: How to Get $10,000+</h3>
+          <p>LADWP lists rebates on different pages. Here's how to stack three programs on one heat pump install.</p>
+        </a>
+        <a href="/blog/sce-rebate-guide" class="post-card">
+          <span class="tag">California: SCE</span>
+          <h3>SCE Heat Pump Rebate Guide (Inland Empire)</h3>
+          <p>What Riverside, San Bernardino, Ontario, and Moreno Valley homeowners can actually claim through TECH Clean CA.</p>
+        </a>
+        <a href="/blog/pge-pre-approval-guide" class="post-card">
+          <span class="tag">California: PG&amp;E</span>
+          <h3>PG&amp;E Heat Pump Pre-Approval Guide (Bay Area)</h3>
+          <p>How to get pre-approved before you buy, so you don't get rejected after the fact.</p>
+        </a>
+        <a href="/blog/pge-rebate-rejected" class="post-card">
+          <span class="tag">California: PG&amp;E</span>
+          <h3>PG&amp;E Rebate Rejected? Here's Why &amp; What to Do</h3>
+          <p>The real, common rejection reasons and a clear resubmit path.</p>
+        </a>
+        <a href="/blog/sdge-rebate-guide" class="post-card">
+          <span class="tag">California: SDG&amp;E</span>
+          <h3>SDG&amp;E Rebate Guide (San Diego)</h3>
+          <p>Your full rebate picture as an SDG&amp;E customer, heat pump through battery.</p>
+        </a>
+        <a href="/blog/why-sdge-rebate-is-lower" class="post-card">
+          <span class="tag">California: SDG&amp;E</span>
+          <h3>Why Is San Diego's Rebate Lower Than LA's?</h3>
+          <p>The honest climate-driven reason, and what to stack instead.</p>
+        </a>
+        <a href="/blog/smud-rebate-breakdown" class="post-card">
+          <span class="tag">California: SMUD</span>
+          <h3>SMUD Rebate Breakdown (Sacramento)</h3>
+          <p>Every SMUD program broken down by dollar amount &mdash; the best rebates in the CA dataset.</p>
+        </a>
+        <a href="/blog/smud-fringe-alternatives" class="post-card">
+          <span class="tag">California: Bay Area</span>
+          <h3>Outside SMUD Territory? Your Real Options</h3>
+          <p>SMUD's rebates look amazing from PG&amp;E territory. Here's what's actually available to you instead.</p>
+        </a>
+        <a href="/blog/california-rebates-outside-utilities" class="post-card">
+          <span class="tag">California: statewide</span>
+          <h3>California Rebates If You're Not on a Major Utility</h3>
+          <p>State and federal programs available regardless of which utility serves you.</p>
+        </a>
+        <a href="/blog/heat-pump-or-solar-bay-area" class="post-card">
+          <span class="tag">California: Bay Area</span>
+          <h3>Heat Pump or Solar First? Bay Area</h3>
+          <p>With PG&amp;E's rebate low and NEM 3.0 in effect, neither is a slam dunk. Here's how to decide.</p>
+        </a>
+        <a href="/blog/heat-pump-or-solar-san-diego" class="post-card">
+          <span class="tag">California: San Diego</span>
+          <h3>Heat Pump or Solar First? San Diego</h3>
+          <p>Low heating need, strong SGIP battery rebates &mdash; the math usually leans one way.</p>
+        </a>
+        <a href="/blog/heat-pump-or-solar-inland-empire" class="post-card">
+          <span class="tag">California: Inland Empire</span>
+          <h3>Heat Pump or Solar First? Inland Empire</h3>
+          <p>Hot summers and a solid SCE rebate change the calculation here.</p>
+        </a>
+        <a href="/blog/inland-empire-often-overlooked" class="post-card">
+          <span class="tag">California: Inland Empire</span>
+          <h3>Is the Inland Empire Underrated for Rebates?</h3>
+          <p>SCE's TECH Clean CA program plus DAC enhancements often beat the LA/Bay Area hype.</p>
+        </a>
+        <a href="/blog/heat-pump-winter-bc" class="post-card">
+          <span class="tag">BC: cold climate</span>
+          <h3>Cold-Climate Heat Pump Buyer's Guide for BC</h3>
+          <p>What "cold climate ASHP" certification actually means, and how to shop for it.</p>
+        </a>
+        <a href="/blog/heat-pump-winter-ontario" class="post-card">
+          <span class="tag">Ontario: cold climate</span>
+          <h3>Will a Heat Pump Keep Up With an Ontario Winter?</h3>
+          <p>Interior Ontario cold vs. the milder Windsor/Niagara corridor &mdash; what changes.</p>
+        </a>
+        <a href="/blog/rebate-rejected-ontario" class="post-card">
+          <span class="tag">Ontario: avoid this</span>
+          <h3>Ontario Heat Pump Rebate Rejected? What to Do</h3>
+          <p>Common causes and how to fix your application.</p>
+        </a>
+        <a href="/blog/heat-pump-winter-massachusetts" class="post-card">
+          <span class="tag">Massachusetts: cold climate</span>
+          <h3>Does a Heat Pump Work in a Massachusetts Winter?</h3>
+          <p>The R-410A refrigerant ban you need to know about before you buy.</p>
+        </a>
+        <a href="/blog/mass-save-rejection-guide" class="post-card">
+          <span class="tag">Massachusetts: avoid this</span>
+          <h3>Mass Save Rejected Your Application? Here's Why</h3>
+          <p>The refrigerant rule, contractor requirements, and paperwork issues that trip people up.</p>
+        </a>
+        <a href="/blog/new-york-dac-mapping-eligibility-guide" class="post-card">
+          <span class="tag">New York: eligibility</span>
+          <h3>Are You in an NY Disadvantaged Community?</h3>
+          <p>DAC designation can mean a much bigger rebate. Here's how to check your address.</p>
+        </a>
+        <a href="/blog/upstate-ny-rebate-guide-buffalo-rochester-syracuse" class="post-card">
+          <span class="tag">New York: upstate</span>
+          <h3>Upstate NY Rebate Guide: Buffalo, Rochester, Syracuse</h3>
+          <p>National Grid territory, the coldest cities in the whole dataset, and what NYSERDA actually pays.</p>
+        </a>
+
+        <a href="/blog/vermont-virtual-power-plant-battery-rebates" class="post-card">
+          <span class="tag">Industry trend</span>
+          <h3>Vermont's Home Batteries Just Became Its Biggest Power Plant</h3>
+          <p>10,000+ home batteries, 110 MW, $6 million saved in one heat wave. What it means for BC Hydro Peak Saver and battery rebates here.</p>
+        </a>
+        <a href="/blog/why-were-building-a-real-cost-database" class="post-card">
+          <span class="tag">New initiative</span>
+          <h3>Why We're Building a Public Database of Real Install Costs</h3>
+          <p>Rebate math on paper is one thing. What people actually paid is another. Here's what we're trying to build, and why we need your number.</p>
+        </a>
+        <a href="/blog/ontario-home-energy-rebates-2026-listicle" class="post-card">
+          <span class="tag">Ontario: quick list</span>
+          <h3>9 Ontario Home Energy Rebates You Can Claim in 2026</h3>
+          <p>Every HRSP category ranked by typical payout, from the $12,000 heat pump down to the $100 thermostat.</p>
+        </a>
+        <a href="/blog/bc-cities-ranked-total-rebate-stack" class="post-card">
+          <span class="tag">BC: quick list</span>
+          <h3>12 BC Cities Ranked by Total Rebate Stack</h3>
+          <p>Which cities add local top-ups or financing on top of the standard provincial rebates, and which don't.</p>
+        </a>
+        <a href="/blog/ontario-heat-pump-rebate-rejection-mistakes" class="post-card">
+          <span class="tag">Ontario: avoid this</span>
+          <h3>6 Mistakes That Get Your Ontario Heat Pump Rebate Rejected</h3>
+          <p>Real process mistakes from the program's own application steps — pre-approval, qualified products, fuel tiers, and more.</p>
+        </a>
+        <a href="/blog/ontario-smart-thermostats-100-rebate-compared" class="post-card">
+          <span class="tag">Ontario: compare</span>
+          <h3>7 Smart Thermostats Eligible for Ontario's $100 Rebate</h3>
+          <p>Every eligible brand compared by real feature differences — no fabricated ratings.</p>
+        </a>
+        <a href="/blog/ontario-home-renovation-savings-program-explained" class="post-card">
+          <span class="tag">Ontario: start here</span>
+          <h3>Ontario's Home Renovation Savings Program, Explained</h3>
+          <p>One program name covers nine rebate categories across two application tracks. How the no-assessment and assessment-required paths differ, and how to stack them.</p>
+        </a>
+        <a href="/blog/ontario-heat-pump-rebate-tiers-explained" class="post-card">
+          <span class="tag">Ontario: heat pumps</span>
+          <h3>Ontario Heat Pump Rebate Tiers: $2,000 or $12,000?</h3>
+          <p>The rebate depends on your current fuel and air-source vs. ground-source — not your income. Here's exactly how the math works.</p>
+        </a>
+        <a href="/blog/ontario-solar-rebate-vs-net-metering" class="post-card">
+          <span class="tag">Ontario: solar</span>
+          <h3>Ontario Solar: Rebate or Net Metering? Pick One.</h3>
+          <p>Unlike most rebates, this is an either/or choice that shapes how your system should be sized. How to decide which fits your home.</p>
+        </a>
+        <a href="/blog/toronto-help-loan-explained" class="post-card">
+          <span class="tag">Ontario: financing</span>
+          <h3>The Toronto HELP Loan, Explained</h3>
+          <p>$125,000 in financing repaid through your property tax bill. Rates, what it covers, and how it stacks with provincial rebates.</p>
+        </a>
+        <a href="/blog/heat-pumps-explained-bc" class="post-card">
+          <span class="tag">Start here</span>
+          <h3>Heat Pumps, Explained for BC Homeowners</h3>
+          <p>How a heat pump heats and cools with one machine, ducted vs ductless, cold-weather performance, and what to check before you buy.</p>
+        </a>
+        <a href="/blog/energy-saving-ideas-bc-home" class="post-card">
+          <span class="tag">Save today</span>
+          <h3>17 Free &amp; Cheap Ways to Cut Your BC Power Bill</h3>
+          <p>No-cost and low-cost wins — draftproofing, smart devices, Time-of-Day pricing, window coverings — with real dollar savings from BC Hydro.</p>
+        </a>
+        <a href="/blog/free-heat-pump-bc-income-qualified" class="post-card">
+          <span class="tag">Biggest opportunity</span>
+          <h3>Can You Get a Free Heat Pump in BC?</h3>
+          <p>Lower-income households can get a heat pump, insulation and energy coaching installed free through ECAP. Who qualifies in 2026 and how to apply.</p>
+        </a>
+        <a href="/blog/ev-owner-bc-charger-rebate-time-of-day" class="post-card">
+          <span class="tag">For EV owners</span>
+          <h3>BC EV Owners: $550 Back + Cheaper Overnight Charging</h3>
+          <p>Get up to $550 on a home charger, skip a costly panel upgrade, and cut charging costs with BC Hydro's Time-of-Day rate.</p>
+        </a>
+        <a href="/blog/bc-approved-home-battery-rebate" class="post-card">
+          <span class="tag">Batteries</span>
+          <h3>How to Choose a BC-Approved Home Battery (and Why the Popular One Gets $0)</h3>
+          <p>The battery rebate hinges on one list. How to pick an approved battery, why the Tesla Powerwall earns nothing, and how the $1,500–$5,000 rebate works.</p>
+        </a>
+        <a href="/blog/greener-homes-grant-explained" class="post-card">
+          <span class="tag">Set the record straight</span>
+          <h3>The Greener Homes Grant Has Closed — What Replaced It</h3>
+          <p>The $40K federal grant and loan are both gone. Here's what actually replaced them in 2026 and where the money is now — mostly bigger BC programs.</p>
+        </a>
+        <a href="/blog/will-technology-replace-rebates" class="post-card">
+          <span class="tag">5-year outlook</span>
+          <h3>Will Falling Tech Costs Replace Rebates?</h3>
+          <p>Heat pump, solar and battery prices keep dropping. Here's the honest math on whether that curve ever makes rebates unnecessary — and when.</p>
+        </a>
+        <a href="/blog/home-of-the-future-2030" class="post-card">
+          <span class="tag">5-year outlook</span>
+          <h3>The Home of 2030: What a Fully Electrified House Looks Like</h3>
+          <p>Heat pump, solar, battery, EV charger, smart thermostat — a realistic walkthrough of where the average home is headed, and how to sequence it.</p>
+        </a>
+        <a href="/blog/stack-bc-hydro-greener-homes" class="post-card">
+          <span class="tag">How stacking works</span>
+          <h3>How to Stack BC Rebates in 2026: A Real, Itemized Example</h3>
+          <p>BC Hydro and CleanBC rebates cover different upgrades, so you can combine them. A real $18,500 example — with the closed federal programs left out.</p>
+        </a>
+        <a href="/blog/what-happens-in-an-energy-audit" class="post-card">
+          <span class="tag">First step</span>
+          <h3>What Happens in a Home Energy Audit? (And Why It Matters)</h3>
+          <p>Step-by-step guide to professional energy audits. What to expect, why it's required for federal grants, and how it reveals your retrofit roadmap.</p>
+        </a>
+        <a href="/blog/why-insulation-first-energy-retrofit" class="post-card">
+          <span class="tag">Strategy guide</span>
+          <h3>Why Insulation First? The Retrofit Sequence That Saves 30–50%</h3>
+          <p>Doing upgrades in the right order cuts costs dramatically. Here's why insulation should come before heat pumps and solar.</p>
+        </a>
+
+        <a href="/blog/is-bc-hydro-solar-rebate-worth-it" class="post-card">
+          <span class="tag">Straight talk</span>
+          <h3>Is the BC Hydro Solar Rebate Actually Worth It? We Ran the Numbers</h3>
+          <p>A skeptical, honest look at solar payback periods in BC with the BC Hydro rebate factored in — including when …</p>
+        </a>
+        <a href="/blog/tesla-powerwall-mistake" class="post-card">
+          <span class="tag">Common mistake</span>
+          <h3>Why Your Neighbor's Tesla Powerwall Got Zero Rebate</h3>
+          <p>Tesla Powerwall isn't on BC Hydro's approved battery list. Here's what that actually costs you, and which batt…</p>
+        </a>
+        <a href="/blog/bc-hydro-rebate-deadlines-2026" class="post-card">
+          <span class="tag">Time-sensitive</span>
+          <h3>BC Hydro Rebate Deadlines in 2026: What Changes and When</h3>
+          <p>HPCN installer certification becomes mandatory June 1, 2026. Rate schedules change July 1, 2026. Here is what …</p>
+        </a>
+        <a href="/blog/why-solar-quotes-vary-so-much" class="post-card">
+          <span class="tag">Buyer’s guide</span>
+          <h3>I Got 3 Solar Quotes in Kelowna — Here’s Why They Were $8,000 Apart</h3>
+          <p>Solar and battery quotes for the same BC home can vary by thousands of dollars. Here is exactly what drives th…</p>
+        </a>
+        <a href="/blog/heat-pumps-cold-climate-bc-winter" class="post-card">
+          <span class="tag">Common question</span>
+          <h3>Do Heat Pumps Actually Work in a BC Winter?</h3>
+          <p>The most common heat pump objection in BC is cold-weather performance. Here is how cold-climate heat pumps (cc…</p>
+        </a>
+        <a href="/blog/bc-hydro-peak-saver-explained" class="post-card">
+          <span class="tag">Program explainer</span>
+          <h3>The BC Hydro Peak Saver Program Explained (What They Don't Advertise)</h3>
+          <p>Peak Saver sounds like BC Hydro controlling your battery. Here is exactly what it does, what it pays, and how …</p>
+        </a>
+        <a href="/blog/how-much-does-battery-save-during-outage" class="post-card">
+          <span class="tag">Real numbers</span>
+          <h3>How Much Does a Home Battery Actually Save You During a Power Outage?</h3>
+          <p>A realistic breakdown of what a home battery keeps running during a BC power outage, and how that compares to …</p>
+        </a>
+        <a href="/blog/fortisbc-vs-bc-hydro-rebates" class="post-card">
+          <span class="tag">Clear this up first</span>
+          <h3>FortisBC vs. BC Hydro: Why Your Rebate Options Are Completely Different</h3>
+          <p>Not sure which utility you have? Here is how to check, and why it completely changes which BC home energy reba…</p>
+        </a>
+        <a href="/blog/solar-heat-pump-water-heater-stacking-real-numbers" class="post-card">
+          <span class="tag">Worked example</span>
+          <h3>Stacking Solar + Heat Pump + Water Heater: The Real Numbers</h3>
+          <p>How the current CleanBC and utility rebates layer on a real retrofit — turning a big project into a much smaller net cost.</p>
+        </a>
+        <a href="/blog/red-flags-choosing-solar-installer" class="post-card">
+          <span class="tag">Buyer protection</span>
+          <h3>Red Flags When Choosing a Solar Installer in BC</h3>
+          <p>The most common complaints BC homeowners have about solar installers, and how to spot the warning signs before…</p>
+        </a>
+        <a href="/blog/bc-hydro-peak-saver-battery-rebate-5000-vs-1500.html" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>BC Hydro Peak Saver Battery Rebate: Get $5,000 Instead of $1,500 in 2026</h3>
+          <p>BC Hydro&#x27;s battery rebate drops from $5,000 to $1,500 UNLESS you enroll in Peak Saver. Here&#x27;s how to get the full $5K.</p>
+        </a>
+        <a href="/blog/bc-hydro-product-rebates-appliances" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>BC Hydro Product Rebates 2026: Fridges, Washers, Dryers &amp; More</h3>
+          <p>BC Hydro's instant in-store discount takes up to $150 off fridges, washers, and dryers. Here&#x27;s exactly what qualifies and how to claim it.</p>
+        </a>
+        <a href="/blog/bc-hydro-schedule-2289-battery-payback" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>BC Hydro Schedule 2289: What It Means for Your Battery Savings (July 2026)</h3>
+          <p>BC Hydro switched to net billing July 1, 2026. You now get paid 10¢/kWh for extra power your battery sends to the grid. Here&#x27;s exactly how it changes your payback—and why smart batteries make more money now.</p>
+        </a>
+        <a href="/blog/bc-hydro-vs-fortisbc-rebates-which-better" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>BC Hydro vs FortisBC Rebates: Which Utility Pays More for Heat Pumps &amp; Solar?</h3>
+          <p>BC Hydro vs FortisBC rebates compared: heat pump, solar, battery, and water heater incentives. Which utility pays more? Real amounts for 2026.</p>
+        </a>
+        <a href="/blog/bc-net-metering-ended-self-generation-rate-2026" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>BC Ended Net Metering: What Changed for Solar Owners (July 1, 2026)</h3>
+          <p>Net metering closed to new customers. From July 1, BC Hydro pays 10¢/kWh for exported solar. Here&#x27;s what changed and how a battery fixes it.</p>
+        </a>
+        <a href="/blog/bosch-vs-mitsubishi-heat-pump.html" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Bosch vs Mitsubishi Heat Pump: Which Qualifies for BC Rebates?</h3>
+          <p>Bosch vs Mitsubishi heat pump: Which is better for BC? Side-by-side comparison of cost, efficiency, warranty, and which qualifies for more rebates.</p>
+        </a>
+        <a href="/blog/cleanbc-income-qualified-free-heat-pump-2026.html" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>CleanBC Income Qualified Program 2026: Do You Qualify for 100% Free Heat Pump?</h3>
+          <p>CleanBC&#x27;s Income Qualified program covers 100% of heat pump installation for eligible BC homeowners. Check if you qualify and how to apply.</p>
+        </a>
+        <a href="/blog/cleanbc-rebate-changes-july-2026" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>CleanBC Rebate Changes July 6 2026 | What&#x27;s Changing &amp; How to Prepare</h3>
+          <p>CleanBC Energy Savings Program rebate changes effective July 6, 2026. Heat pump rebates dropping for some households. Here&#x27;s what we know and what to do now.</p>
+        </a>
+        <a href="/blog/heat-pump-bc-winter-actually-works" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Do Heat Pumps Work in a BC Winter? The Data at −25°C</h3>
+          <p>Cold-climate heat pumps keep working well below freezing. The real performance data for BC winters — and what to check before you buy.</p>
+        </a>
+        <a href="/blog/heat-pump-brands-comparison-mitsubishi-daikin-bosch" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Heat Pump Brands Comparison: Mitsubishi vs Daikin vs Bosch for BC | CleanBC Rebates</h3>
+          <p>Heat pump comparison for BC: Mitsubishi vs Daikin vs Bosch. Cold climate performance, efficiency ratings, $4K-$16K CleanBC rebate, payback math, and which brand wins for BC winters.</p>
+        </a>
+        <a href="/blog/heat-pump-rebate-guide-bc-2026" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Complete Guide: Heat Pump Rebates in BC 2026</h3>
+          <p>A complete guide to BC&#x27;s heat pump rebates in 2026 — CleanBC income tiers up to $16,000, utility top-ups, and how to stack them for the biggest rebate.</p>
+        </a>
+        <a href="/blog/heat-pump-rebates-income-tiers-bc-2026" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Heat Pump Rebates by Income: Exactly How Much You Qualify For</h3>
+          <p>BC heat pump rebates range from $4K to $16K depending on household size and income. See your exact tier and what it means for your payback.</p>
+        </a>
+        <a href="/blog/heat-pump-vs-air-conditioner-furnace" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Heat Pump vs Air Conditioner vs Furnace: The Real Comparison</h3>
+          <p>Heat pump vs furnace vs air conditioner: which is best for BC? Cold climate proof, hybrid systems, payback math, $4-16K rebates, installer checklist. Data not fear.</p>
+        </a>
+        <a href="/blog/hpcn-certification-what-it-means" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>HPCN Certification: What It Actually Means for BC Heat Pump Installers</h3>
+          <p>What is HPCN certification? Why it matters for heat pump rebates in BC. How to verify an installer is certified. Real requirements.</p>
+        </a>
+        <a href="/blog/insulation-rebates-bc-stack-federal-provincial.html" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>BC Insulation Rebates 2026: Stack Federal + Provincial Grants for Up to $11,350</h3>
+          <p>Get up to $11,350 in insulation rebates by stacking federal + provincial grants. Exact amounts for attic, basement, walls + apply before 2026 deadline.</p>
+        </a>
+        <a href="/blog/mitsubishi-vs-daikin-heat-pump-bc-cost" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Mitsubishi vs Daikin Heat Pump: BC Cost, Efficiency &amp; Rebate Comparison</h3>
+          <p>Mitsubishi vs Daikin heat pumps in BC: side-by-side cost, efficiency, rebates, and which installer recommends what. Real numbers for Kelowna, Vancouver, Prince George.</p>
+        </a>
+        <a href="/blog/mysa-vs-ecobee-thermostat.html" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Mysa vs Ecobee Smart Thermostat: Which Works Best with BC Heat Pumps?</h3>
+          <p>Mysa vs Ecobee thermostat: Which qualifies for BC Hydro Peak Saver rebate? Features, cost, and which works best with your heat pump system.</p>
+        </a>
+        <a href="/blog/not-all-installers-trustworthy.html" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Solar Installer Red Flags: How to Spot an Untrustworthy Company</h3>
+          <p>Not all solar installers are equal. We&#x27;ve seen bait-and-switch pricing, unnecessary batteries, and rushed paperwork costing homeowners thousands. Here&#x27;s what to watch for.</p>
+        </a>
+        <a href="/blog/peak-saver-14-day-window-3500-mistake" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>The $3,500 Peak Saver Mistake: The 14-Day Window</h3>
+          <p>Miss the Peak Saver enrollment window and your BC Hydro battery rebate can drop by thousands. How the timing works and how to avoid the $3,500 mistake.</p>
+        </a>
+        <a href="/blog/smart-thermostat-comparison-nest-ecobee-honeywell-mysa" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Smart Thermostat Comparison 2026: Nest vs Ecobee vs Honeywell vs Mysa | BC Rebates</h3>
+          <p>Smart thermostat comparison for BC homeowners: Google Nest, Ecobee Premium, Honeywell T9, Mysa Central. Features, Peak Saver integration, heat pump compatibility, $150 rebate eligibility.</p>
+        </a>
+        <a href="/blog/smart-thermostat-peak-saver-optimization" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Smart Thermostat + Peak Saver: Maximize Your Rebates</h3>
+          <p>How to pair a smart thermostat with BC Hydro&#x27;s Peak Saver program to earn the enrollment bonus and seasonal rewards — and trim your heating bill.</p>
+        </a>
+        <a href="/blog/solar-battery-stack-vs-heat-pump-only" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Solar + Battery vs Heat Pump Only: BC Rebate ROI &amp; Which Saves More</h3>
+          <p>Solar + battery stack vs heat pump retrofit: cost comparison, payback timeline, and BC rebates. Which combo saves you the most money? Real Kelowna and Vancouver numbers.</p>
+        </a>
+        <a href="/blog/solar-installer-red-flags-how-to-choose" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Solar Installer Red Flags: How to Choose One in BC</h3>
+          <p>The warning signs of a bad solar installer in BC, and how to pick a trustworthy one — pushy sales, vague quotes, and the rebate-paperwork test.</p>
+        </a>
+        <a href="/blog/solar-snow-coverage.html" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Do Solar Panels Work in Snow? BC Winter Performance Guide</h3>
+          <p>BC homeowners worry: &#x27;Won&#x27;t snow cover my panels and kill my output?&#x27; Truth: Modern solar panels shed snow quickly, and winter performance is already factored into rebate calculations.</p>
+        </a>
+        <a href="/blog/solar-too-expensive-myth.html" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Solar Costs Myth: Why BC Solar is More Affordable Than You Think</h3>
+          <p>BC homeowners think solar is unaffordable. Reality: BC Hydro rebates cover 30-50% of costs. Here&#x27;s the actual net cost after rebates, financing, and Peak Saver credits.</p>
+        </a>
+        <a href="/blog/tesla-powerwall-bc-hydro-rebate-not-qualified-alternatives.html" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Why Tesla Powerwall Doesn&#x27;t Qualify for BC Hydro&#x27;s Battery Rebate (And What Does)</h3>
+          <p>Tesla Powerwall is NOT on BC Hydro&#x27;s approved battery list—costing you up to $5,000 in rebates. Here are the batteries that DO qualify.</p>
+        </a>
+        <a href="/blog/tesla-powerwall-vs-eguana-evolve" class="post-card">
+          <span class="tag">More reading</span>
+          <h3>Tesla Powerwall vs Eguana Evolve Battery: Complete Comparison for BC</h3>
+          <p>Tesla Powerwall vs Eguana Evolve: which battery qualifies for BC Hydro rebate? Price, specs, Peak Saver integration, cold climate performance, and $5K rebate comparison.</p>
+        </a>
+
+    </div>
   </div>
 </section>
 
-<article class="article">
-  <div class="wrap">
+<!-- Newsletter signup -->
+<section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
+  <div class="wrap" style="text-align: center; color: #fff; max-width: 600px;">
+    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
+    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get my weekly email</h2>
+    <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Every Friday: what I'm learning about BC rebates, heat pump reality checks, solar economics, and the installers I trust. Real stuff, no marketing.</p>
 
-    <h2>California</h2>
-    <div class="card-grid">
-      <div class="card"><a href="/blog/ladwp-rebate-stacking-california/">LADWP Rebate Stacking: How to Get $10,000+</a></div>
-      <div class="card"><a href="/blog/sce-rebate-guide/">SCE Heat Pump Rebate Guide (Inland Empire)</a></div>
-      <div class="card"><a href="/blog/pge-pre-approval-guide/">PG&amp;E Heat Pump Pre-Approval Guide (Bay Area)</a></div>
-      <div class="card"><a href="/blog/pge-rebate-rejected/">PG&amp;E Rebate Rejected? Here's Why &amp; What to Do</a></div>
-      <div class="card"><a href="/blog/sdge-rebate-guide/">SDG&amp;E Rebate Guide (San Diego)</a></div>
-      <div class="card"><a href="/blog/why-sdge-rebate-is-lower/">Why Is San Diego's Rebate Lower Than LA's?</a></div>
-      <div class="card"><a href="/blog/smud-rebate-breakdown/">SMUD Rebate Breakdown (Sacramento)</a></div>
-      <div class="card"><a href="/blog/smud-fringe-alternatives/">Outside SMUD Territory? Your Real Options</a></div>
-      <div class="card"><a href="/blog/california-rebates-outside-utilities/">California Rebates If You're Not on a Major Utility</a></div>
-      <div class="card"><a href="/blog/heat-pump-or-solar-bay-area/">Heat Pump or Solar First? Bay Area</a></div>
-      <div class="card"><a href="/blog/heat-pump-or-solar-san-diego/">Heat Pump or Solar First? San Diego</a></div>
-      <div class="card"><a href="/blog/heat-pump-or-solar-inland-empire/">Heat Pump or Solar First? Inland Empire</a></div>
-      <div class="card"><a href="/blog/inland-empire-often-overlooked/">Is the Inland Empire Underrated for Rebates?</a></div>
-    </div>
+    <form id="blog-newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
+      <input
+        type="email"
+        id="blog-newsletter-email"
+        placeholder="your@email.com"
+        required
+        style="padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);"
+      >
+      <select
+        id="blog-newsletter-city"
+        style="padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);"
+      >
+        <option value="">Which BC city are you in?</option>
+        <option value="Abbotsford">Abbotsford</option>
+        <option value="Burnaby">Burnaby</option>
+        <option value="Chilliwack">Chilliwack</option>
+        <option value="Fort St. John">Fort St. John</option>
+        <option value="Kamloops">Kamloops</option>
+        <option value="Kelowna">Kelowna</option>
+        <option value="Nanaimo">Nanaimo</option>
+        <option value="Penticton">Penticton</option>
+        <option value="Prince George">Prince George</option>
+        <option value="Squamish">Squamish</option>
+        <option value="Surrey">Surrey</option>
+        <option value="Vancouver">Vancouver</option>
+        <option value="Vernon">Vernon</option>
+        <option value="Victoria">Victoria</option>
+      </select>
+      <button
+        type="submit"
+        style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'Inter Tight', sans-serif; transition: background 0.15s;"
+      >
+        Subscribe
+      </button>
+      <p style="font-size: 11px; color: rgba(250, 247, 242, 0.6); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
+    </form>
 
-    <h2>British Columbia &amp; Ontario</h2>
-    <div class="card-grid">
-      <div class="card"><a href="/blog/heat-pump-winter-bc/">Cold-Climate Heat Pump Buyer's Guide for BC</a></div>
-      <div class="card"><a href="/blog/heat-pump-winter-ontario/">Will a Heat Pump Keep Up With an Ontario Winter?</a></div>
-      <div class="card"><a href="/blog/rebate-rejected-ontario/">Ontario Heat Pump Rebate Rejected? What to Do</a></div>
-    </div>
-
-    <h2>Massachusetts</h2>
-    <div class="card-grid">
-      <div class="card"><a href="/blog/heat-pump-winter-massachusetts/">Does a Heat Pump Work in a Massachusetts Winter?</a></div>
-      <div class="card"><a href="/blog/mass-save-rejection-guide/">Mass Save Rejected Your Application? Here's Why</a></div>
-    </div>
-
-    <h2>New York</h2>
-    <div class="card-grid">
-      <div class="card"><a href="/blog/new-york-dac-mapping-eligibility-guide/">Are You in an NY Disadvantaged Community?</a></div>
-      <div class="card"><a href="/blog/upstate-ny-rebate-guide-buffalo-rochester-syracuse/">Upstate NY Rebate Guide: Buffalo, Rochester, Syracuse</a></div>
-    </div>
-
+    <div id="blog-newsletter-response" style="display: none; margin-top: 12px; padding: 12px; background: rgba(45, 106, 79, 0.2); border-radius: 6px; border: 1px solid rgba(45, 106, 79, 0.4); font-size: 13px;"></div>
   </div>
-</article>
+</section>
 
-<footer>
-  <div class="wrap">
-    <p>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about">Sam Menard</a>. <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a> &middot; <a href="/contact">Contact</a></p>
+<footer class="hprf">
+<style>
+.hprf{background:var(--ink);color:rgba(250,247,242,.65);padding:56px 28px 32px;font-family:'Inter Tight',-apple-system,sans-serif;line-height:1.6;}
+.hprf a{text-decoration:none;}
+.hprf-inner{max-width:1180px;margin:0 auto;}
+.hprf-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:32px;border-bottom:1px solid rgba(250,247,242,.1);}
+.hprf-brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;color:var(--paper);letter-spacing:-.02em;margin-bottom:12px;}
+.hprf-brand span{color:var(--amber);}
+.hprf-tag{font-size:13px;color:rgba(250,247,242,.4);max-width:320px;margin:0;}
+.hprf-ct{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(250,247,242,.7);margin-bottom:14px;}
+.hprf-links{list-style:none;display:grid;gap:8px;font-size:14px;margin:0;padding:0;}
+.hprf-links a{color:rgba(250,247,242,.45);}
+.hprf-links a:hover{color:var(--amber);}
+.hprf-bottom{max-width:1180px;margin:0 auto;padding-top:24px;font-size:12px;color:rgba(250,247,242,.35);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+@media(max-width:880px){.hprf-top{grid-template-columns:1fr 1fr;gap:28px;}}
+@media(max-width:520px){.hprf-top{grid-template-columns:1fr;}}
+</style>
+  <div class="hprf-inner">
+    <div class="hprf-top">
+      <div>
+        <div class="hprf-brand">Home<span>Power</span>Rebate</div>
+        <p class="hprf-tag">Helping BC homeowners claim every rebate they qualify for. Every vetted installer, no spam.</p>
+      </div>
+      <div>
+        <div class="hprf-ct">BC Cities</div>
+        <ul class="hprf-links">
+          <li><a href="/ca/bc/abbotsford">Abbotsford</a></li>
+          <li><a href="/ca/bc/burnaby">Burnaby</a></li>
+          <li><a href="/ca/bc/chilliwack">Chilliwack</a></li>
+          <li><a href="/ca/bc/fort-st-john">Fort St. John</a></li>
+          <li><a href="/ca/bc/kamloops">Kamloops</a></li>
+          <li><a href="/ca/bc/kelowna">Kelowna</a></li>
+          <li><a href="/ca/bc/nanaimo">Nanaimo</a></li>
+          <li><a href="/ca/bc/penticton">Penticton</a></li>
+          <li><a href="/ca/bc/prince-george">Prince George</a></li>
+          <li><a href="/ca/bc/squamish">Squamish</a></li>
+          <li><a href="/ca/bc/surrey">Surrey</a></li>
+          <li><a href="/ca/bc/vancouver">Vancouver</a></li>
+          <li><a href="/ca/bc/vernon">Vernon</a></li>
+          <li><a href="/ca/bc/victoria">Victoria</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Guides &amp; Tools</div>
+        <ul class="hprf-links">
+          <li><a href="/retrofit-assessment">Rebate Assessment</a></li>
+          <li><a href="/ca/bc">BC Rebate Overview</a></li>
+          <li><a href="/blog/heat-pumps-explained-bc">Heat Pumps Explained</a></li>
+          <li><a href="/blog/free-heat-pump-bc-income-qualified">Free Heat Pump?</a></li>
+          <li><a href="/blog/bc-approved-home-battery-rebate">Choosing a Battery</a></li>
+          <li><a href="/eguana">Eguana Evolve Battery</a></li>
+          <li><a href="/blog/energy-saving-ideas-bc-home">Cut Your Bill Now</a></li>
+          <li><a href="/smart-thermostats">Smart Thermostats</a></li>
+          <li><a href="/share-your-cost">What Did It Actually Cost?</a></li>
+          <li><a href="/blog">Full Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Company</div>
+        <ul class="hprf-links">
+          <li><a href="/about">About</a></li>
+          <li><a href="/ca/bc">All Cities</a></li>
+          <li><a href="/retrofit-assessment">Free Estimate</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hprf-bottom">
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide &amp; installer matching. Not affiliated with BC Hydro or FortisBC.</div>
+      <div>Made in Canada &#127464;&#127462;</div>
+    </div>
   </div>
 </footer>
+
+<script>
+// Blog newsletter signup handler — backend integration
+document.getElementById('blog-newsletter-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('blog-newsletter-email').value;
+  const city = document.getElementById('blog-newsletter-city').value;
+  const responseEl = document.getElementById('blog-newsletter-response');
+  const button = document.querySelector('#blog-newsletter-form button');
+  const originalText = button.textContent;
+
+  button.disabled = true;
+  button.textContent = 'Subscribing...';
+
+  try {
+    const response = await fetch('https://leads.homepowerrebate.com/newsletter', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        city: city || 'Not specified',
+        page: 'blog'
+      })
+    });
+
+    if (response.ok) {
+      responseEl.innerHTML = '<strong style="color: #fff;">✓ Welcome!</strong><p style="margin: 4px 0 0; color: rgba(250, 247, 242, 0.85);">Check your email for next week\'s insights.</p>';
+      responseEl.style.display = 'block';
+      document.getElementById('blog-newsletter-form').reset();
+      button.textContent = originalText;
+      button.disabled = false;
+      setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+    } else {
+      const error = await response.json();
+      if (error.message && error.message.includes('already exists')) {
+        responseEl.innerHTML = '<strong style="color: #fff;">✓ Already subscribed!</strong><p style="margin: 4px 0 0; color: rgba(250, 247, 242, 0.85);">Check your email for updates.</p>';
+      } else {
+        throw new Error(error.message || 'Signup failed');
+      }
+      responseEl.style.display = 'block';
+      button.textContent = originalText;
+      button.disabled = false;
+      setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+    }
+  } catch (error) {
+    responseEl.innerHTML = '<strong style="color: #fff;">⚠ Something went wrong.</strong><p style="margin: 4px 0 0; color: rgba(250, 247, 242, 0.85);">Try again or <a href="/contact" style="color: rgba(250, 247, 242, 0.9); text-decoration: underline;">contact us</a></p>';
+    responseEl.style.display = 'block';
+    button.textContent = originalText;
+    button.disabled = false;
+    console.error('Newsletter signup error:', error);
+    setTimeout(() => { responseEl.style.display = 'none'; }, 6000);
+  }
+});
+</script>
 
 </body>
 </html>

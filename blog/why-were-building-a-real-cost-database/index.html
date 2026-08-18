@@ -7,6 +7,195 @@
 
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W33G4TGRHD');
+</script>
+
+<meta name="description" content="Rebate program pages tell you the theoretical max. We're building something different: a crowdsourced record of what homeowners actually paid, city by city.">
+<link rel="canonical" href="https://homepowerrebate.com/blog/why-were-building-a-real-cost-database/">
+<meta property="og:title" content="Why We're Building a Public Database of Real Install Costs | HomePowerRebate">
+<meta property="og:description" content="Rebate program pages tell you the theoretical max. We're building something different: what homeowners actually paid, city by city.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://homepowerrebate.com/blog/why-were-building-a-real-cost-database/">
+<meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
+  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
+  --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter Tight', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); padding: 16px 28px; }
+.logo { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
+.logo-power { color: var(--amber); }
+
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(32px, 5vw, 48px); line-height: 1.1; letter-spacing: -0.02em; color: var(--teal-deep); margin: 32px 0 16px; }
+h2 { font-family: 'Fraunces', serif; font-size: 28px; line-height: 1.2; color: var(--teal-deep); margin: 32px 0 16px; }
+h3 { font-family: 'Fraunces', serif; font-size: 20px; color: var(--teal-deep); margin: 24px 0 12px; font-weight: 600; }
+p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1.8; }
+ul, ol { margin: 0 0 16px 22px; color: var(--ink-soft); }
+li { margin-bottom: 8px; line-height: 1.7; }
+
+.hero { padding: 48px 28px; background: var(--teal-deep); color: var(--paper); text-align: center; }
+.hero .wrap { max-width: 760px; }
+.hero h1 { color: var(--paper); margin-top: 0; }
+.hero p { color: rgba(250,247,242,.85); font-size: 16px; }
+
+.article { padding: 40px 28px; }
+.article .wrap { max-width: 760px; }
+.meta { font-size: 14px; color: var(--ink-soft); margin-bottom: 32px; }
+
+.callout { background: var(--paper-warm); border-left: 4px solid var(--amber); padding: 20px; border-radius: 8px; margin: 28px 0; }
+.callout h4 { font-size: 15px; font-weight: 700; color: var(--teal-deep); margin-bottom: 8px; }
+.callout p { margin: 0; font-size: 14px; }
+
+.table-box { overflow-x: auto; margin: 20px 0; }
+.table-box table { width: 100%; border-collapse: collapse; }
+.table-box th { background: var(--teal-deep); color: #fff; padding: 12px; text-align: left; font-weight: 600; font-size: 14px; }
+.table-box td { padding: 12px; border-bottom: 1px solid var(--rule); font-size: 14px; }
+.table-box tr:hover { background: var(--paper-warm); }
+
+.btn-primary { display: inline-block; background: var(--amber); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; margin-top: 16px; }
+.btn-primary:hover { background: var(--amber-bright); }
+a { color: var(--teal); }
+
+.cta-box { background: var(--teal-deep); color: #fff; border-radius: 12px; padding: 32px; margin: 40px 0; text-align: center; }
+.cta-box h2 { color: #fff; margin-top: 0; }
+.cta-box p { color: rgba(250,247,242,.85); }
+
+footer { padding: 40px 28px; border-top: 1px solid var(--rule); background: var(--ink); color: rgba(250,247,242,.6); text-align: center; font-size: 12px; }
+footer a { color: rgba(250,247,242,.75); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Why we're building a public database of real install costs</h1>
+    <p>Rebate program pages tell you the theoretical max. We're trying to build something different — what people actually paid, city by city.</p>
+  </div>
+</section>
+
+<article class="article">
+  <div class="wrap">
+    <p class="meta">By <a href="/about" style="color:inherit;text-decoration:underline;">Sam Menard</a> &middot; August 2026 &middot; 5 min read</p>
+
+    <p>Every rebate program page — ours included — has the same structural problem: it tells you the <em>maximum theoretical amount</em> you could get, not what actually happens once a real contractor writes a real quote for your real house. Those two numbers are often very different, and nobody publishes the gap.</p>
+
+    <h2>The number that's missing from every rebate site</h2>
+    <p>Search "heat pump cost BC" and you'll find plenty of official pages listing rebate amounts up to $16,000. What you won't find easily is: what did the average person in Kelowna actually walk away paying, after the rebate cheque cleared, after the contractor's real quote came in higher or lower than expected, after all the fine print resolved into an actual invoice?</p>
+    <p>That number exists — it's sitting in thousands of homeowners' inboxes as an invoice PDF — but nobody's ever aggregated it publicly. We think that's the single most useful piece of information a homeowner researching a retrofit could have, and it's the one thing content and calculators can't manufacture. It has to come from people who've actually done it.</p>
+
+    <div class="callout">
+      <h4>This isn't about our leads</h4>
+      <p>You don't need to have booked an installer through us to share your number. If you found your own installer, got a quote from a friend's contractor, or did it five years before we existed — we still want it. This works more like a salary-sharing site than a lead form: the value comes from volume and honesty, not from where you booked.</p>
+    </div>
+
+    <h2>What we're asking</h2>
+    <p>We built a short form — <a href="/share-your-cost">Share Your Cost</a> — that takes about a minute: what you installed, roughly when, your city, what you paid before rebates, and what you actually received back. We never ask for or store your full address, just your city and the first three characters of your postal code, which is enough to build a real comparison without being personally identifying.</p>
+    <p>In exchange, you see immediately how your number compares — to your city, your province, and the country. Not a week later in an email. Right there, on submission.</p>
+
+    <h2>Why "give to get" instead of just asking nicely</h2>
+    <p>Most attempts at this kind of crowdsourced data fail at the cold-start problem: nobody wants to be the first to fill out a form for a database with nothing in it yet. The fix — the same one salary-transparency sites and review sites use — is to make the payoff immediate and personal. You're not contributing to an abstract public good; you're finding out whether you got a good deal, right now, using your own number as the price of admission.</p>
+
+    <h2>What this becomes as it grows</h2>
+    <ul>
+      <li><strong>Real local benchmarks.</strong> Instead of "up to $16,000," a city page could eventually say "the last 40 homeowners in Kelowna paid a median of $X net" — a much more useful number.</li>
+      <li><strong>Timing data, not just cost.</strong> We're also collecting install month, which starts to reveal things static rebate pages can't — like whether costs or wait times shift seasonally, or after a program's rules change.</li>
+      <li><strong>A trust layer for installers.</strong> Down the line, installers with a track record of good, verified outcomes become visibly different from ones with none — which is a better signal than a star rating alone.</li>
+    </ul>
+
+    <h2>The honest state of it today</h2>
+    <p>It's brand new. Most cities don't have enough submissions yet to show a real average — we only display a city or province number once at least five people have shared, specifically so five people's outliers can't manufacture a fake benchmark before there's real data. Until then, you'll mostly see your own number and a "not enough data yet" note. That changes as more people share — which is the whole point of asking.</p>
+
+    <div class="cta-box">
+      <h2>Have your numbers already?</h2>
+      <p>Takes about a minute. See instantly how your city compares.</p>
+      <a href="/share-your-cost" class="btn-primary">Share your cost →</a>
+    </div>
+
+    <p style="margin-top:24px;">Haven't installed yet? Start with <a href="/retrofit-assessment">your free rebate estimate</a>, or read <a href="/blog/will-technology-replace-rebates">whether falling equipment costs will eventually make rebates unnecessary</a> and <a href="/blog/home-of-the-future-2030">what a fully electrified home looks like by 2030</a>.</p>
+  </div>
+</article>
+
+<footer class="hprf">
+<style>
+.hprf{background:var(--ink);color:rgba(250,247,242,.65);padding:56px 28px 32px;font-family:'Inter Tight',-apple-system,sans-serif;line-height:1.6;}
+.hprf a{text-decoration:none;}
+.hprf-inner{max-width:1180px;margin:0 auto;}
+.hprf-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:32px;border-bottom:1px solid rgba(250,247,242,.1);}
+.hprf-brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;color:var(--paper);letter-spacing:-.02em;margin-bottom:12px;}
+.hprf-brand span{color:var(--amber);}
+.hprf-tag{font-size:13px;color:rgba(250,247,242,.4);max-width:320px;margin:0;}
+.hprf-ct{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(250,247,242,.7);margin-bottom:14px;}
+.hprf-links{list-style:none;display:grid;gap:8px;font-size:14px;margin:0;padding:0;}
+.hprf-links a{color:rgba(250,247,242,.45);}
+.hprf-links a:hover{color:var(--amber);}
+.hprf-bottom{max-width:1180px;margin:0 auto;padding-top:24px;font-size:12px;color:rgba(250,247,242,.35);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+@media(max-width:880px){.hprf-top{grid-template-columns:1fr 1fr;gap:28px;}}
+@media(max-width:520px){.hprf-top{grid-template-columns:1fr;}}
+</style>
+  <div class="hprf-inner">
+    <div class="hprf-top">
+      <div>
+        <div class="hprf-brand">Home<span>Power</span>Rebate</div>
+        <p class="hprf-tag">Helping homeowners claim every rebate they qualify for. Every vetted installer, no spam.</p>
+      </div>
+      <div>
+        <div class="hprf-ct">BC Cities</div>
+        <ul class="hprf-links">
+          <li><a href="/ca/bc/kelowna">Kelowna</a></li>
+          <li><a href="/ca/bc/vancouver">Vancouver</a></li>
+          <li><a href="/ca/bc/victoria">Victoria</a></li>
+          <li><a href="/ca/bc/surrey">Surrey</a></li>
+          <li><a href="/ca/bc">All BC cities</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Guides &amp; Tools</div>
+        <ul class="hprf-links">
+          <li><a href="/retrofit-assessment">Rebate Assessment</a></li>
+          <li><a href="/share-your-cost">Share Your Cost</a></li>
+          <li><a href="/blog/heat-pumps-explained-bc">Heat Pumps Explained</a></li>
+          <li><a href="/blog">Full Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Company</div>
+        <ul class="hprf-links">
+          <li><a href="/about">About</a></li>
+          <li><a href="/ca">All Regions</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hprf-bottom">
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide &amp; installer matching. Not affiliated with any utility or government agency.</div>
+      <div>Made in Canada &#127464;&#127462;</div>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>

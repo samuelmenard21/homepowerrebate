@@ -7,6 +7,253 @@
 
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W33G4TGRHD');
+</script>
+
+<meta name="description" content="A skeptical, honest look at solar payback periods in BC with the BC Hydro rebate factored in — including when it does NOT make sense.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://homepowerrebate.com/blog/is-bc-hydro-solar-rebate-worth-it/">
+<meta name="google-site-verification" content="Yyio4MZpG_tVGKuE9hbSKTYb0Yo9LFWoNF_3_UxVkGE" />
+
+<meta property="og:title" content="Is the BC Hydro Solar Rebate Actually Worth It? We Ran the Numbers">
+<meta property="og:description" content="A skeptical, honest look at solar payback periods in BC with the BC Hydro rebate factored in — including when it does NOT make sense.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://homepowerrebate.com/blog/is-bc-hydro-solar-rebate-worth-it/">
+<meta property="og:locale" content="en_CA">
+<meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+<meta property="article:published_time" content="2026-06-15T09:00:00-07:00">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Is the BC Hydro Solar Rebate Actually Worth It? We Ran the Numbers",
+  "description": "A skeptical, honest look at solar payback periods in BC with the BC Hydro rebate factored in — including when it does NOT make sense.",
+  "datePublished": "2026-06-15",
+  "dateModified": "2026-06-15",
+  "author": { "@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com" },
+  "publisher": { "@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com" },
+  "mainEntityOfPage": "https://homepowerrebate.com/blog/is-bc-hydro-solar-rebate-worth-it"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://homepowerrebate.com/blog" },
+    { "@type": "ListItem", "position": 3, "name": "Is the BC Hydro Solar Rebate Actually Worth It? We Ran the Numbers", "item": "https://homepowerrebate.com/blog/is-bc-hydro-solar-rebate-worth-it" }
+  ]
+}
+</script>
+
+<style>
+:root {
+  --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
+  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
+  --sage: #6b8e7f; --green-money: #2d6a4f; --red-warning: #b04545; --rule: #d9d0c1;
+  --shadow: 0 1px 2px rgba(10,42,46,0.04), 0 8px 24px rgba(10,42,46,0.06);
+  --shadow-lg: 0 4px 12px rgba(10,42,46,0.08), 0 24px 48px rgba(10,42,46,0.12);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif; color:var(--ink); background:var(--paper); line-height:1.65; -webkit-font-smoothing:antialiased; }
+.wrap { max-width:760px; margin:0 auto; padding:0 24px; }
+.wrap-wide { max-width:1000px; margin:0 auto; padding:0 24px; }
+h1, h2, h3 { font-family:'Fraunces', Georgia, serif; font-weight:500; line-height:1.2; letter-spacing:-0.01em; }
+.logo { font-family:'Fraunces', Georgia, serif; font-size:22px; font-weight:600; color:var(--ink); text-decoration:none; letter-spacing:-0.01em; }
+.logo-power { color:var(--amber); font-weight:700; }
+.btn { display:inline-block; background:var(--amber); color:#fff; padding:14px 28px; border-radius:999px; text-decoration:none; font-weight:600; font-size:16px; transition:background .15s, transform .15s; border:none; cursor:pointer; }
+.btn:hover { background:var(--amber-bright); transform:translateY(-1px); }
+.btn-secondary { background:#fff; color:var(--ink); border:1.5px solid var(--rule); }
+.btn-secondary:hover { background:var(--paper-warm); }
+nav { display:flex; align-items:center; justify-content:space-between; padding:20px 24px; max-width:1000px; margin:0 auto; }
+.nav-tag { font-size:13px; color:var(--sage); font-weight:600; letter-spacing:.04em; text-transform:uppercase; }
+.post-header { background:var(--teal-deep); color:var(--paper); padding:56px 0 48px; }
+.post-header .wrap { max-width:760px; }
+.post-eyebrow { font-size:13px; color:var(--amber-bright); font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:16px; }
+.post-header h1 { font-size:clamp(28px,5vw,42px); color:#fff; margin-bottom:16px; }
+.post-meta { font-size:14px; color:rgba(250,247,242,0.65); }
+article { padding:48px 0 64px; }
+article p { font-size:17px; color:var(--ink-soft); margin-bottom:20px; }
+article h2 { font-size:26px; margin:36px 0 14px; color:var(--ink); }
+article h3 { font-size:20px; margin:28px 0 10px; color:var(--ink); }
+article ul, article ol { margin:0 0 20px 22px; }
+article li { font-size:16.5px; color:var(--ink-soft); margin-bottom:8px; }
+article strong { color:var(--ink); }
+article a { color:var(--teal-deep); font-weight:600; text-decoration:underline; text-decoration-color:var(--amber); text-underline-offset:2px; }
+.callout { background:var(--paper-warm); border:1px solid var(--rule); border-left:4px solid var(--amber); border-radius:8px; padding:20px 24px; margin:28px 0; }
+.callout p { margin-bottom:0; font-size:15.5px; }
+.callout strong { color:var(--amber); }
+.post-cta { background:var(--amber); color:#fff; border-radius:16px; padding:36px 32px; margin-top:40px; text-align:center; }
+.post-cta h3 { color:#fff; margin-bottom:10px; font-size:22px; }
+.post-cta p { color:rgba(255,255,255,0.9); margin-bottom:20px; font-size:15.5px; }
+.post-cta .btn { background:var(--ink); }
+.post-cta .btn:hover { background:var(--teal-deep); }
+.related { border-top:1px solid var(--rule); margin-top:48px; padding-top:32px; }
+.related h4 { font-size:14px; text-transform:uppercase; letter-spacing:.05em; color:var(--sage); margin-bottom:16px; }
+.related a { display:block; color:var(--ink); font-weight:600; text-decoration:none; padding:10px 0; border-bottom:1px solid var(--rule); }
+.related a:hover { color:var(--amber); }
+/* Blog hub grid */
+.hub-hero { background:var(--teal-deep); color:var(--paper); padding:64px 0 56px; }
+.hub-hero .eyebrow { font-size:14px; color:var(--amber-bright); font-weight:600; letter-spacing:.08em; text-transform:uppercase; margin-bottom:18px; }
+.hub-hero h1 { font-size:clamp(34px,6vw,52px); color:#fff; margin-bottom:18px; }
+.hub-hero .sub { font-size:clamp(16px,2.2vw,19px); color:rgba(250,247,242,.82); max-width:640px; }
+.post-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:22px; margin-top:36px; }
+.post-card { background:#fff; border:1px solid var(--rule); border-radius:16px; padding:26px; transition:all .2s; text-decoration:none; color:var(--ink); display:block; }
+.post-card:hover { border-color:var(--amber); box-shadow:var(--shadow-lg); transform:translateY(-2px); }
+.post-card .tag { font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--amber); margin-bottom:10px; display:block; }
+.post-card h3 { font-size:19px; margin-bottom:8px; line-height:1.3; }
+.post-card p { font-size:14px; color:var(--ink-soft); }
+footer { padding:40px 0 60px; border-top:1px solid var(--rule); margin-top:40px; }
+footer .wrap-wide { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+footer p { font-size:13px; color:var(--sage); }
+@media (max-width:720px) { .post-header { padding:40px 0 36px; } article { padding:36px 0 48px; } .post-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
+  <span class="nav-tag"><a href="/blog" style="color:inherit; text-decoration:none;">Blog</a></span>
+</nav>
+
+<header class="post-header">
+  <div class="wrap">
+    <div class="post-eyebrow">Straight talk</div>
+    <h1>Is the BC Hydro Solar Rebate Actually Worth It? We Ran the Numbers</h1>
+    <div class="post-meta">By <a href="/about" style="color:inherit;text-decoration:underline;">Sam Menard</a> &middot; Updated July 2026 &middot; 3 min read</div>
+  </div>
+</header>
+
+<article>
+  <div class="wrap">
+    
+    <p>"Solar payback is 15 years, isn't that a scam?" I hear this all the time. Usually it's from someone who got a quote that looked expensive, or read something scary on Reddit. It's a fair question. Let me actually run the math instead of just saying "trust me."</p>
+
+    <h2>The real math, city by city</h2>
+    <p>Payback time depends on three things: how much sun your city gets, what you pay per kWh, and how big your rebate is. In BC, with the <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/solar-battery.html" target="_blank" rel="noopener">Power Smart 2.0 rebate</a> factored in, typical payback runs <strong>6 to 12 years</strong> depending on where you live — not 15 to 20, which is the number you'd get <em>without</em> any rebate.</p>
+    <ul>
+      <li><strong>Kamloops, Vernon:</strong> best sun in the province, 6&ndash;9 year payback</li>
+      <li><strong>Kelowna, Prince George, Fraser Valley:</strong> 7&ndash;11 years</li>
+      <li><strong>Vancouver, Surrey, coastal cities:</strong> 9&ndash;12 years, more cloud cover, more expensive real estate driving up install cost per sq ft of roof</li>
+    </ul>
+
+    <h2>What actually makes payback longer than advertised</h2>
+    <p>When people get burned, it's usually one of these three things, not the technology itself:</p>
+    <ol>
+      <li><strong>An unapproved battery.</strong> Install a Tesla Powerwall in BC and you lose the entire $5,000 battery rebate. That alone can add 3&ndash;4 years to your payback.</li>
+      <li><strong>Skipping Peak Saver enrollment.</strong> This is a free, reversible program that adds roughly $3,000 over 10 years. Not enrolling leaves real money on the table for no reason.</li>
+      <li><strong>An oversized system.</strong> Some installers size systems bigger than your roof or usage needs to hit a bigger sale. Bigger isn't always better — it just means a bigger loan.</li>
+    </ol>
+
+    <div class="callout">
+      <p><strong>When solar does NOT make sense:</strong> if you're planning to sell your home in the next 2&ndash;3 years, if your roof needs replacement soon (do that first), or if you get heavy shade for most of the day. We'd rather tell you this now than have an installer tell you otherwise later.</p>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>With the BC Hydro rebate, Peak Saver rewards, and lower monthly bills stacked together, most BC homeowners see $18,000&ndash;$22,000 in total value over 10 years on a system that costs $25,000&ndash;$40,000 installed. That's real, it's math you can check yourself, and it's very different from a system with no rebate attached.</p>
+    
+    <div class="post-cta">
+      <h3>See your own numbers</h3>
+      <p>Answer 4 quick questions and get your city's real payback estimate — no email required.</p>
+      <a href="/ca/bc" class="btn">Check my savings &rarr;</a>
+    </div>
+    
+
+    <div class="related">
+      <h4>Keep reading</h4>
+      <a href="/blog/tesla-powerwall-mistake">Why Your Neighbor's Tesla Powerwall Got Zero Rebate &rarr;</a><a href="/blog/how-much-does-battery-save-during-outage">How Much Does a Home Battery Actually Save You During a Power Outage? &rarr;</a>
+    </div>
+  </div>
+</article>
+
+<footer class="hprf">
+<style>
+.hprf{background:var(--ink);color:rgba(250,247,242,.65);padding:56px 28px 32px;font-family:'Inter Tight',-apple-system,sans-serif;line-height:1.6;}
+.hprf a{text-decoration:none;}
+.hprf-inner{max-width:1180px;margin:0 auto;}
+.hprf-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:32px;border-bottom:1px solid rgba(250,247,242,.1);}
+.hprf-brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;color:var(--paper);letter-spacing:-.02em;margin-bottom:12px;}
+.hprf-brand span{color:var(--amber);}
+.hprf-tag{font-size:13px;color:rgba(250,247,242,.4);max-width:320px;margin:0;}
+.hprf-ct{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(250,247,242,.7);margin-bottom:14px;}
+.hprf-links{list-style:none;display:grid;gap:8px;font-size:14px;margin:0;padding:0;}
+.hprf-links a{color:rgba(250,247,242,.45);}
+.hprf-links a:hover{color:var(--amber);}
+.hprf-bottom{max-width:1180px;margin:0 auto;padding-top:24px;font-size:12px;color:rgba(250,247,242,.35);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+@media(max-width:880px){.hprf-top{grid-template-columns:1fr 1fr;gap:28px;}}
+@media(max-width:520px){.hprf-top{grid-template-columns:1fr;}}
+</style>
+  <div class="hprf-inner">
+    <div class="hprf-top">
+      <div>
+        <div class="hprf-brand">Home<span>Power</span>Rebate</div>
+        <p class="hprf-tag">Helping BC homeowners claim every rebate they qualify for. Every vetted installer, no spam.</p>
+      </div>
+      <div>
+        <div class="hprf-ct">BC Cities</div>
+        <ul class="hprf-links">
+          <li><a href="/ca/bc/abbotsford">Abbotsford</a></li>
+          <li><a href="/ca/bc/burnaby">Burnaby</a></li>
+          <li><a href="/ca/bc/chilliwack">Chilliwack</a></li>
+          <li><a href="/ca/bc/fort-st-john">Fort St. John</a></li>
+          <li><a href="/ca/bc/kamloops">Kamloops</a></li>
+          <li><a href="/ca/bc/kelowna">Kelowna</a></li>
+          <li><a href="/ca/bc/nanaimo">Nanaimo</a></li>
+          <li><a href="/ca/bc/penticton">Penticton</a></li>
+          <li><a href="/ca/bc/prince-george">Prince George</a></li>
+          <li><a href="/ca/bc/squamish">Squamish</a></li>
+          <li><a href="/ca/bc/surrey">Surrey</a></li>
+          <li><a href="/ca/bc/vancouver">Vancouver</a></li>
+          <li><a href="/ca/bc/vernon">Vernon</a></li>
+          <li><a href="/ca/bc/victoria">Victoria</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Guides &amp; Tools</div>
+        <ul class="hprf-links">
+          <li><a href="/retrofit-assessment">Rebate Assessment</a></li>
+          <li><a href="/ca/bc">BC Rebate Overview</a></li>
+          <li><a href="/blog/heat-pumps-explained-bc">Heat Pumps Explained</a></li>
+          <li><a href="/blog/free-heat-pump-bc-income-qualified">Free Heat Pump?</a></li>
+          <li><a href="/blog/bc-approved-home-battery-rebate">Choosing a Battery</a></li>
+          <li><a href="/eguana">Eguana Evolve Battery</a></li>
+          <li><a href="/blog/energy-saving-ideas-bc-home">Cut Your Bill Now</a></li>
+          <li><a href="/smart-thermostats">Smart Thermostats</a></li>
+          <li><a href="/blog">Full Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Company</div>
+        <ul class="hprf-links">
+          <li><a href="/about">About</a></li>
+          <li><a href="/ca/bc">All Cities</a></li>
+          <li><a href="/retrofit-assessment">Free Estimate</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hprf-bottom">
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide &amp; installer matching. Not affiliated with BC Hydro or FortisBC.</div>
+      <div>Made in Canada &#127464;&#127462;</div>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>

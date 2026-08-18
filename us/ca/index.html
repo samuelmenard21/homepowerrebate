@@ -132,12 +132,12 @@ footer a { color: rgba(250,247,242,0.75); text-decoration: none; }
       <a href="/us/ca/bay-area/" class="region-card">
         <h3>Bay Area</h3>
         <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">PG&E</p>
-        <div class="stat">$4,000–$7,000</div>
+        <div class="stat">$250–$500</div>
       </a>
       <a href="/us/ca/san-diego/" class="region-card">
         <h3>San Diego</h3>
         <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">SDG&E</p>
-        <div class="stat">$3,500–$5,500</div>
+        <div class="stat">$250–$500</div>
       </a>
       <a href="/us/ca/inland-empire/" class="region-card">
         <h3>Inland Empire</h3>
@@ -238,11 +238,11 @@ footer a { color: rgba(250,247,242,0.75); text-decoration: none; }
 const caRegionData = {
   la: { rebate: '$10,000+', info: 'LADWP territory. Highest rebate in California for heat pumps.', link: '/us/ca/los-angeles/' },
   sac: { rebate: '$9,750+', info: 'SMUD territory. Sacramento got a boost in Feb 2026 — now the second-most generous.', link: '/us/ca/sacramento/' },
-  bay: { rebate: '$3,000–$4,500', info: 'PG&E territory. Program exhausted Feb 2026. State + federal still available.', link: '/us/ca/bay-area/' },
-  sd: { rebate: '$500–$1,500', info: 'SDG&E territory. Lower utility rebate, but state and federal programs stack.', link: '/us/ca/san-diego/' },
+  bay: { rebate: '$250–$500', info: 'PG&E territory. Program exhausted Feb 2026. State + federal still available.', link: '/us/ca/bay-area/' },
+  sd: { rebate: '$250–$500', info: 'SDG&E territory. Lower utility rebate, but state and federal programs stack.', link: '/us/ca/san-diego/' },
   inland: { rebate: '$3,000–$4,500', info: 'Southern California Edison (SCE) territory. Competitive with PG&E.', link: '/us/ca/inland-empire/' },
-  fresno: { rebate: '$3,000–$4,500', info: 'Central Coast Energy territory. Moderate rebate with federal tax credit stacking.', link: '/us/ca/fresno/' },
-  bakersfield: { rebate: '$3,000–$4,500', info: 'SCE territory. Part of Inland Empire rebate structure.', link: '/us/ca/bakersfield/' }
+  fresno: { rebate: '$250–$500', info: 'PG&E territory, Central Valley. Modest utility rebate, same as Bay Area.', link: '/us/ca/fresno/' },
+  bakersfield: { rebate: '$3,100 (TECH)', info: 'SCE territory, Kern County. TECH Clean CA program rebate.', link: '/us/ca/bakersfield/' }
 };
 
 document.getElementById('ca-region-select').addEventListener('change', function(e) {

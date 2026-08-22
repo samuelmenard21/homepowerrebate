@@ -14,10 +14,10 @@
   gtag('config', 'G-W33G4TGRHD');
 </script>
 
-<meta name="description" content="Browse 320+ verified heat pump and solar installers across BC and Ontario, with Alberta, Nova Scotia, and Massachusetts coming soon. Pick your region, then">
+<meta name="description" content="Browse 660+ verified heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California. Pick your region, then">
 <link rel="canonical" href="https://homepowerrebate.com/installers/">
 <meta property="og:title" content="Heat Pump & Solar Installers by Region | HomePowerRebate Directory">
-<meta property="og:description" content="Browse 320+ verified heat pump and solar installers across BC and Ontario, with Alberta, Nova Scotia, and Massachusetts coming soon. Pick your region, then filter by service and city.">
+<meta property="og:description" content="Browse 660+ verified heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California. Pick your region, then filter by service and city.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://homepowerrebate.com/installers/">
 <meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
@@ -37,7 +37,7 @@
       "@type": "CollectionPage",
       "@id": "https://homepowerrebate.com/installers/#directory",
       "name": "Heat Pump & Solar Installer Directory",
-      "description": "Directory of 320+ heat pump and solar installers across BC and Ontario, all rated 4+ stars on Google, organized by region and city. Alberta, Nova Scotia, and Massachusetts coverage coming soon.",
+      "description": "Directory of 660+ heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California, all rated 4+ stars on Google, organized by region and city.",
       "url": "https://homepowerrebate.com/installers/",
       "isPartOf": { "@type": "WebSite", "name": "HomePowerRebate", "url": "https://homepowerrebate.com" },
       "about": [
@@ -170,7 +170,7 @@ footer a { color:rgba(250,247,242,.75); text-decoration:none; }
 <section class="hero">
   <div class="wrap">
     <h1>Verified Installers Across Canada &amp; the US</h1>
-    <p>320+ heat pump and solar installers, all rated 4+ stars, across 36 cities in BC &amp; Ontario — with Alberta, Nova Scotia, and Massachusetts coverage on the way.</p>
+    <p>660+ heat pump and solar installers, all rated 4+ stars, across 7 regions and 96 cities in BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California.</p>
     <p class="subnote">Pick your region, then filter by service type and location — find your local installer.</p>
   </div>
 </section>
@@ -214,7 +214,7 @@ footer a { color:rgba(250,247,242,.75); text-decoration:none; }
   <div class="wrap">
     <div class="stats-box">
       <div class="stat">
-        <div class="stat-num">320+</div>
+        <div class="stat-num">660+</div>
         <div class="stat-label">Verified Installers</div>
       </div>
       <div class="stat">
@@ -271,7 +271,7 @@ footer a { color:rgba(250,247,242,.75); text-decoration:none; }
   <div class="wrap">
     <div class="eyebrow">Full Directory</div>
     <h2>Every Installer, By City</h2>
-    <p style="font-size:14px; margin-bottom:8px;">A complete, static list of all 320+ installer profiles in our directory — 164 in BC, 158 in Ontario (the interactive filters above cover the same list).</p>
+    <p style="font-size:14px; margin-bottom:8px;">A complete, static list of all 660+ installer profiles in our directory across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California (the interactive filters above cover the same list).</p>
       <div class="directory-city">
         <h3 style="font-family:'Fraunces',serif; font-size:18px; color:var(--teal-deep); margin:20px 0 8px;"><a href="/ca/bc/abbotsford" style="color:var(--teal-deep);">Abbotsford</a></h3>
         <ul style="columns:2; column-gap:24px; list-style:none; padding:0; margin:0; font-size:14px; line-height:1.9;">
@@ -802,6 +802,19 @@ const MA_CITIES = [
   'Boston', 'Worcester', 'Springfield', 'Cambridge', 'Lowell', 'Brockton',
   'New Bedford', 'Quincy', 'Lynn', 'Fall River', 'Newton', 'Somerville'
 ];
+const NY_CITIES = [
+  'Beacon', 'Kingston', 'Newburgh', 'Poughkeepsie', 'Saugerties',
+  'New Rochelle', 'White Plains', 'Yonkers',
+  'Albany', 'Buffalo', 'Rochester', 'Syracuse',
+  'Babylon', 'Huntington', 'Islip', 'Smithtown', 'Southampton'
+];
+const CA_CITIES = [
+  'Burbank', 'Glendale', 'Long Beach', 'Los Angeles', 'Pasadena', 'Santa Monica',
+  'Berkeley', 'Fremont', 'Oakland', 'San Francisco', 'San Jose',
+  'Moreno Valley', 'Ontario', 'Riverside', 'San Bernardino',
+  'Chula Vista', 'Escondido', 'San Diego',
+  'Folsom', 'Rancho Cordova', 'Roseville', 'Sacramento'
+];
 // Kept for anything still referencing the old flat name.
 const CITIES = BC_CITIES.concat(ON_CITIES);
 
@@ -812,6 +825,8 @@ const REGIONS = [
   { code: 'AB', name: 'Alberta', cities: AB_CITIES, jsonBase: '/installers/json/ab', profileBase: '/installers/profiles/ab', ready: true },
   { code: 'NS', name: 'Nova Scotia', cities: NS_CITIES, jsonBase: '/installers/json/ns', profileBase: '/installers/profiles/ns', ready: true },
   { code: 'MA', name: 'Massachusetts', cities: MA_CITIES, jsonBase: '/installers/json/ma', profileBase: '/installers/profiles/ma', ready: true },
+  { code: 'NY', name: 'New York', cities: NY_CITIES, jsonBase: '/installers/json', profileBase: '/installers/profiles', ready: true },
+  { code: 'CA', name: 'California', cities: CA_CITIES, jsonBase: '/installers/json', profileBase: '/installers/profiles', ready: true },
 ];
 
 let allInstallers = [];

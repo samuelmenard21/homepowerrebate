@@ -150,12 +150,63 @@ MASSACHUSETTS_CITIES = {
     "Somerville": {"lat": 42.3876, "lng": -71.0995},
 }
 
+NY_CITIES = {
+    "Beacon": {"lat": 41.5048, "lng": -73.9696},
+    "Kingston": {"lat": 41.9270, "lng": -73.9974},
+    "Newburgh": {"lat": 41.5034, "lng": -74.0104},
+    "Poughkeepsie": {"lat": 41.7004, "lng": -73.9210},
+    "Saugerties": {"lat": 42.0787, "lng": -73.9526},
+    "Mount Vernon": {"lat": 40.9126, "lng": -73.8371},
+    "New Rochelle": {"lat": 40.9115, "lng": -73.7823},
+    "New York City": {"lat": 40.7128, "lng": -74.0060},
+    "White Plains": {"lat": 41.0340, "lng": -73.7629},
+    "Yonkers": {"lat": 40.9312, "lng": -73.8988},
+    "Albany": {"lat": 42.6526, "lng": -73.7562},
+    "Buffalo": {"lat": 42.8864, "lng": -78.8784},
+    "Rochester": {"lat": 43.1566, "lng": -77.6088},
+    "Syracuse": {"lat": 43.0481, "lng": -76.1474},
+    "Babylon": {"lat": 40.6987, "lng": -73.3256},
+    "Brookhaven": {"lat": 40.8720, "lng": -72.9812},
+    "Huntington": {"lat": 40.8676, "lng": -73.4257},
+    "Islip": {"lat": 40.7301, "lng": -73.2101},
+    "Oyster Bay": {"lat": 40.8757, "lng": -73.5323},
+    "Smithtown": {"lat": 40.8557, "lng": -73.2004},
+    "Southampton": {"lat": 40.8848, "lng": -72.3893},
+}
+
+CA_CITIES = {
+    "Burbank": {"lat": 34.1808, "lng": -118.3090},
+    "Glendale": {"lat": 34.1425, "lng": -118.2551},
+    "Long Beach": {"lat": 33.7701, "lng": -118.1937},
+    "Los Angeles": {"lat": 34.0522, "lng": -118.2437},
+    "Pasadena": {"lat": 34.1478, "lng": -118.1445},
+    "Santa Monica": {"lat": 34.0195, "lng": -118.4912},
+    "Berkeley": {"lat": 37.8715, "lng": -122.2730},
+    "Fremont": {"lat": 37.5485, "lng": -121.9886},
+    "Oakland": {"lat": 37.8044, "lng": -122.2712},
+    "San Francisco": {"lat": 37.7749, "lng": -122.4194},
+    "San Jose": {"lat": 37.3382, "lng": -121.8863},
+    "Moreno Valley": {"lat": 33.9425, "lng": -117.2297},
+    "Ontario": {"lat": 34.0633, "lng": -117.6509},
+    "Riverside": {"lat": 33.9806, "lng": -117.3755},
+    "San Bernardino": {"lat": 34.1083, "lng": -117.2898},
+    "Chula Vista": {"lat": 32.6401, "lng": -117.0842},
+    "Escondido": {"lat": 33.1192, "lng": -117.0864},
+    "San Diego": {"lat": 32.7157, "lng": -117.1611},
+    "Folsom": {"lat": 38.6779, "lng": -121.1761},
+    "Rancho Cordova": {"lat": 38.5891, "lng": -121.3027},
+    "Roseville": {"lat": 38.7521, "lng": -121.2880},
+    "Sacramento": {"lat": 38.5816, "lng": -121.4944},
+}
+
 PROVINCES = {
     "bc": {"cities": BC_CITIES, "abbrev": "BC", "csv_prefix": ""},
     "on": {"cities": ONTARIO_CITIES, "abbrev": "ON", "csv_prefix": "on-"},
     "ab": {"cities": ALBERTA_CITIES, "abbrev": "AB", "csv_prefix": "ab-"},
     "ns": {"cities": NOVA_SCOTIA_CITIES, "abbrev": "NS", "csv_prefix": "ns-"},
     "ma": {"cities": MASSACHUSETTS_CITIES, "abbrev": "MA", "csv_prefix": "ma-"},
+    "ny": {"cities": NY_CITIES, "abbrev": "NY", "csv_prefix": "ny-"},
+    "ca": {"cities": CA_CITIES, "abbrev": "CA", "csv_prefix": "ca-"},
 }
 
 

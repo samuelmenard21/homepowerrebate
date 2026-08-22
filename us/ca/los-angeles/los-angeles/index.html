@@ -273,6 +273,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 </head>
 <body>
@@ -439,21 +443,41 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
     </div>
 
-    <div class="installer-note">
-      <strong>Heat pump installers in Los Angeles</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://lahvaclc.com/" target="_blank" rel="noopener">LC Heating & Air Conditioning</a> <span class="stars">5.0&#9733; (229 reviews)</span> &middot; <a href="tel:3239703113">(323) 970-3113</a> &middot; <a href="mailto:support@lahvaclc.com">support@lahvaclc.com</a></li><li><a href="http://mr-heatandcooling.com/" target="_blank" rel="noopener">Mr Heat and Cooling</a> <span class="stars">5.0&#9733; (46 reviews)</span> &middot; <a href="tel:8552313997">(855) 231-3997</a> &middot; <a href="mailto:info@mr-heatandcooling.com">info@mr-heatandcooling.com</a></li><li><a href="https://www.westlakeheatingandhvac.com/" target="_blank" rel="noopener">West Lake Heating & HVAC</a> <span class="stars">5.0&#9733; (42 reviews)</span> &middot; <a href="tel:8189286887">(818) 928-6887</a> &middot; <a href="mailto:info@westlakeheatingandhvac.com">info@westlakeheatingandhvac.com</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Los Angeles options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Los Angeles</p>
+            <div class="installer-card">
+        <div><div class="name">LC Heating & Air Conditioning</div><div class="stars">&#9733; 5.0 (229 reviews)</div></div>
+        <a class="site-link" href="https://lahvaclc.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Mr Heat and Cooling</div><div class="stars">&#9733; 5.0 (46 reviews)</div></div>
+        <a class="site-link" href="http://mr-heatandcooling.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">West Lake Heating & HVAC</div><div class="stars">&#9733; 5.0 (42 reviews)</div></div>
+        <a class="site-link" href="https://www.westlakeheatingandhvac.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Los Angeles</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.powerfullsolarinc.com/" target="_blank" rel="noopener">Powerfull Solar, Inc</a> <span class="stars">5.0&#9733; (106 reviews)</span> &middot; <a href="tel:3103044623">(310) 304-4623</a> &middot; <a href="mailto:Info@powerfullsolarinc.com">Info@powerfullsolarinc.com</a></li><li><a href="https://www.sensasolarusa.com/" target="_blank" rel="noopener">Sensa Solar USA</a> <span class="stars">5.0&#9733; (17 reviews)</span> &middot; <a href="tel:8888281582">(888) 828-1582</a> &middot; <a href="mailto:user@domain.com">user@domain.com</a></li><li><a href="https://nexxtstepsolar.com/?fbclid=PAZXh0bgNhZW0CMTEAAafJZ9tbIf2Y-zmEgE-jR5RcE0PPE16fj4Mvu9s2deryu5Kkum2VrqFCkpR1OA_aem_5CTiB7jBWcuI0jkIDpEgzQ" target="_blank" rel="noopener">Next Step Solar</a> <span class="stars">5.0&#9733; (23 reviews)</span> &middot; <a href="tel:6614857118">(661) 485-7118</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Los Angeles options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Los Angeles</p>
+            <div class="installer-card">
+        <div><div class="name">Powerfull Solar, Inc</div><div class="stars">&#9733; 5.0 (106 reviews)</div></div>
+        <a class="site-link" href="https://www.powerfullsolarinc.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Sensa Solar USA</div><div class="stars">&#9733; 5.0 (17 reviews)</div></div>
+        <a class="site-link" href="https://www.sensasolarusa.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Next Step Solar</div><div class="stars">&#9733; 5.0 (23 reviews)</div></div>
+        <a class="site-link" href="https://nexxtstepsolar.com/?fbclid=PAZXh0bgNhZW0CMTEAAafJZ9tbIf2Y-zmEgE-jR5RcE0PPE16fj4Mvu9s2deryu5Kkum2VrqFCkpR1OA_aem_5CTiB7jBWcuI0jkIDpEgzQ" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Los Angeles options.</p>
+        </div>
 
     <div class="highlight-box">
       <h4>Honest math for Los Angeles</h4>

@@ -202,6 +202,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 </head>
 <body>
@@ -391,21 +395,41 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <div class="eyebrow">The largest single opportunity here</div>
     <h2 id="storage">SMUD's storage enrollment bonus &mdash; up to $10,000</h2>
     <p>Beyond the standard $5,400 battery rebate, SMUD's My Energy Optimizer program pays homeowners to enroll a qualifying battery in demand-response — letting SMUD tap a small amount of stored power during grid stress in exchange for an enrollment bonus that can reach <strong>up to $10,000</strong>. This stacks with the base rebate and with the federal residential clean energy tax credit, and it's the single largest dollar opportunity on this page for households considering both solar and storage together.</p>
-    <div class="installer-note">
-      <strong>Heat pump installers in Sacramento</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://americanenergyair.com/" target="_blank" rel="noopener">American Energy Home Pros</a> <span class="stars">5.0&#9733; (527 reviews)</span> &middot; <a href="tel:9166237591">(916) 623-7591</a></li><li><a href="https://www.ivyheatingandair.com/?utm_source=GBP" target="_blank" rel="noopener">Ivy Heating and Air, Inc.</a> <span class="stars">5.0&#9733; (123 reviews)</span> &middot; <a href="tel:9162567814">(916) 256-7814</a> &middot; <a href="mailto:ivyheatingandair@gmail.com">ivyheatingandair@gmail.com</a></li><li><a href="https://roachhvac.com/" target="_blank" rel="noopener">Roach Heating And Air Conditioning</a> <span class="stars">5.0&#9733; (53 reviews)</span> &middot; <a href="tel:9166058583">(916) 605-8583</a> &middot; <a href="mailto:roachhvac@gmail.com">roachhvac@gmail.com</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Sacramento options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Sacramento</p>
+            <div class="installer-card">
+        <div><div class="name">American Energy Home Pros</div><div class="stars">&#9733; 5.0 (527 reviews)</div></div>
+        <a class="site-link" href="https://americanenergyair.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Ivy Heating and Air, Inc.</div><div class="stars">&#9733; 5.0 (123 reviews)</div></div>
+        <a class="site-link" href="https://www.ivyheatingandair.com/?utm_source=GBP" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Roach Heating And Air Conditioning</div><div class="stars">&#9733; 5.0 (53 reviews)</div></div>
+        <a class="site-link" href="https://roachhvac.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Sacramento</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://premiumsolarcleaning.com/" target="_blank" rel="noopener">Premium Solar Cleaning</a> <span class="stars">5.0&#9733; (51 reviews)</span> &middot; <a href="tel:9169268040">(916) 926-8040</a></li><li><a href="http://panel-pros.com/" target="_blank" rel="noopener">Panel Pros - Solar Cleaning and Maintenance</a> <span class="stars">5.0&#9733; (45 reviews)</span> &middot; <a href="tel:9167528443">(916) 752-8443</a> &middot; <a href="mailto:info@panel-pros.com">info@panel-pros.com</a></li><li><a href="http://www.fivestarssolar.com/" target="_blank" rel="noopener">Five Star Solar</a> <span class="stars">4.9&#9733; (358 reviews)</span> &middot; <a href="tel:8557827765">(855) 782-7765</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Sacramento options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Sacramento</p>
+            <div class="installer-card">
+        <div><div class="name">Premium Solar Cleaning</div><div class="stars">&#9733; 5.0 (51 reviews)</div></div>
+        <a class="site-link" href="http://premiumsolarcleaning.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Panel Pros - Solar Cleaning and Maintenance</div><div class="stars">&#9733; 5.0 (45 reviews)</div></div>
+        <a class="site-link" href="http://panel-pros.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Five Star Solar</div><div class="stars">&#9733; 4.9 (358 reviews)</div></div>
+        <a class="site-link" href="http://www.fivestarssolar.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Sacramento options.</p>
+        </div>
 
     </div>
 </section>

@@ -211,6 +211,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 .installer-note .mini-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--paper-warm); border-radius: 8px; padding: 8px 12px; }
 .installer-note .mini-list a { color: var(--teal); font-weight: 600; text-decoration: none; }
 .installer-note .mini-list .stars { color: var(--amber); font-weight: 700; white-space: nowrap; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 </head>
 <body>
@@ -473,21 +477,37 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <h3>Where do I find an installer in Babylon?</h3>
     <p>
-<div class="installer-note">
-      <strong>Heat pump installers in Babylon</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://www.gallettair.com/" target="_blank" rel="noopener">GallettAir Inc. Heating & Air Conditioning</a> <span class="stars">4.9&#9733; (431 reviews)</span></li><li><a href="https://seasonsair.com/?utm_medium=organic&utm_source=google&utm_campaign=gbp" target="_blank" rel="noopener">ALL Seasons Air Conditioning</a> <span class="stars">4.8&#9733; (338 reviews)</span> &middot; <a href="tel:6315930407">(631) 593-0407</a></li><li>Climate Masters Heating & Air Conditioning <span class="stars">4.8&#9733; (92 reviews)</span> &middot; <a href="tel:6312511100">(631) 251-1100</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Babylon options.</p>
-    </div>
+<div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Babylon</p>
+            <div class="installer-card">
+        <div><div class="name">GallettAir Inc. Heating & Air Conditioning</div><div class="stars">&#9733; 4.9 (431 reviews)</div></div>
+        <a class="site-link" href="http://www.gallettair.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">ALL Seasons Air Conditioning</div><div class="stars">&#9733; 4.8 (338 reviews)</div></div>
+        <a class="site-link" href="https://seasonsair.com/?utm_medium=organic&utm_source=google&utm_campaign=gbp" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Babylon</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://renewsolarservice.com/" target="_blank" rel="noopener">Renew Solar Services</a> <span class="stars">5.0&#9733; (97 reviews)</span> &middot; <a href="tel:6315005115">(631) 500-5115</a></li><li><a href="http://www.sunshineplussolar.com/" target="_blank" rel="noopener">Sunshine Plus Solar Corp</a> <span class="stars">5.0&#9733; (27 reviews)</span> &middot; <a href="tel:6314223500">(631) 422-3500</a> &middot; <a href="mailto:info@sunshineplussolar.com">info@sunshineplussolar.com</a></li><li><a href="http://www.callmeelectric.com/" target="_blank" rel="noopener">Call Me Electric</a> <span class="stars">4.9&#9733; (47 reviews)</span> &middot; <a href="tel:6313214461">(631) 321-4461</a> &middot; <a href="mailto:info@callmeelectric.com">info@callmeelectric.com</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Babylon options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Babylon</p>
+            <div class="installer-card">
+        <div><div class="name">Renew Solar Services</div><div class="stars">&#9733; 5.0 (97 reviews)</div></div>
+        <a class="site-link" href="https://renewsolarservice.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Sunshine Plus Solar Corp</div><div class="stars">&#9733; 5.0 (27 reviews)</div></div>
+        <a class="site-link" href="http://www.sunshineplussolar.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Call Me Electric</div><div class="stars">&#9733; 4.9 (47 reviews)</div></div>
+        <a class="site-link" href="http://www.callmeelectric.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Babylon options.</p>
+        </div>
 
     </p>
   </div>

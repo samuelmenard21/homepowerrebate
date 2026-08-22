@@ -269,6 +269,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 </head>
 <body>
@@ -436,21 +440,41 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
     </div>
 
-    <div class="installer-note">
-      <strong>Heat pump installers in Pasadena</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://purifiedairinc.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp&utm_content=pasadena" target="_blank" rel="noopener">Purified Air Heating and Air Conditioning, Inc</a> <span class="stars">5.0&#9733; (294 reviews)</span> &middot; <a href="tel:6263892479">(626) 389-2479</a> &middot; <a href="mailto:info@purifiedairinc.com">info@purifiedairinc.com</a></li><li><a href="https://24hvacservices.com/" target="_blank" rel="noopener">Dr Air Conditioning And Heating</a> <span class="stars">5.0&#9733; (112 reviews)</span> &middot; <a href="tel:6265483776">(626) 548-3776</a> &middot; <a href="mailto:drairconditioningandheating@gmail.com">drairconditioningandheating@gmail.com</a></li><li><a href="https://lahvaclc.com/" target="_blank" rel="noopener">LC Heating & Air Conditioning</a> <span class="stars">5.0&#9733; (54 reviews)</span> &middot; <a href="tel:2136995333">(213) 699-5333</a> &middot; <a href="mailto:support@lahvaclc.com">support@lahvaclc.com</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Pasadena options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Pasadena</p>
+            <div class="installer-card">
+        <div><div class="name">Purified Air Heating and Air Conditioning, Inc</div><div class="stars">&#9733; 5.0 (294 reviews)</div></div>
+        <a class="site-link" href="https://purifiedairinc.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp&utm_content=pasadena" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Dr Air Conditioning And Heating</div><div class="stars">&#9733; 5.0 (112 reviews)</div></div>
+        <a class="site-link" href="https://24hvacservices.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">LC Heating & Air Conditioning</div><div class="stars">&#9733; 5.0 (54 reviews)</div></div>
+        <a class="site-link" href="https://lahvaclc.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Pasadena</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://www.altadenasolar.com/" target="_blank" rel="noopener">Altadena Energy & Solar</a> <span class="stars">5.0&#9733; (42 reviews)</span> &middot; <a href="tel:8182014206">(818) 201-4206</a></li><li><a href="https://linktr.ee/Prestigesolarcleaning" target="_blank" rel="noopener">Prestige Solar Cleaning</a> <span class="stars">5.0&#9733; (13 reviews)</span> &middot; <a href="tel:6263754450">(626) 375-4450</a></li><li><a href="http://www.themagicbuilders.com/" target="_blank" rel="noopener">Magic Builders</a> <span class="stars">4.7&#9733; (19 reviews)</span> &middot; <a href="tel:3108507223">(310) 850-7223</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Pasadena options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Pasadena</p>
+            <div class="installer-card">
+        <div><div class="name">Altadena Energy & Solar</div><div class="stars">&#9733; 5.0 (42 reviews)</div></div>
+        <a class="site-link" href="http://www.altadenasolar.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Prestige Solar Cleaning</div><div class="stars">&#9733; 5.0 (13 reviews)</div></div>
+        <a class="site-link" href="https://linktr.ee/Prestigesolarcleaning" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Magic Builders</div><div class="stars">&#9733; 4.7 (19 reviews)</div></div>
+        <a class="site-link" href="http://www.themagicbuilders.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Pasadena options.</p>
+        </div>
 
     <div class="highlight-box">
       <h4>Honest math for Pasadena</h4>

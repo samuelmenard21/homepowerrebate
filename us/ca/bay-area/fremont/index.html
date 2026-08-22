@@ -257,6 +257,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -440,21 +444,41 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   <div class="wrap">
     <div class="eyebrow">Choosing who does the work</div>
     <h2>Finding an installer in Fremont</h2>
-    <div class="installer-note">
-      <strong>Heat pump installers in Fremont</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://heatingandairexpertsllc.com/" target="_blank" rel="noopener">Heating And Air Experts</a> <span class="stars">5.0&#9733; (55 reviews)</span> &middot; <a href="tel:4156567754">(415) 656-7754</a></li><li><a href="https://shawsplumbingservices.com/fremont-ca/" target="_blank" rel="noopener">Shaw Plumbing & Heating</a> <span class="stars">5.0&#9733; (51 reviews)</span> &middot; <a href="tel:5108718186">(510) 871-8186</a> &middot; <a href="mailto:info@shawsplumbingservices.com">info@shawsplumbingservices.com</a></li><li><a href="https://chill-services.com/service-area/fremont-hvac-services" target="_blank" rel="noopener">Chill Heating and Cooling</a> <span class="stars">5.0&#9733; (42 reviews)</span> &middot; <a href="tel:9258565606">(925) 856-5606</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Fremont options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Fremont</p>
+            <div class="installer-card">
+        <div><div class="name">Heating And Air Experts</div><div class="stars">&#9733; 5.0 (55 reviews)</div></div>
+        <a class="site-link" href="https://heatingandairexpertsllc.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Shaw Plumbing & Heating</div><div class="stars">&#9733; 5.0 (51 reviews)</div></div>
+        <a class="site-link" href="https://shawsplumbingservices.com/fremont-ca/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Chill Heating and Cooling</div><div class="stars">&#9733; 5.0 (42 reviews)</div></div>
+        <a class="site-link" href="https://chill-services.com/service-area/fremont-hvac-services" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Fremont</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.adeptelectricalsolutions.com/" target="_blank" rel="noopener">Adept Electrical Solutions</a> <span class="stars">5.0&#9733; (94 reviews)</span> &middot; <a href="tel:5105160655">(510) 516-0655</a></li><li><a href="https://www.californiasolarcare.org/" target="_blank" rel="noopener">California Solar Care - Solar Panel Cleaning</a> <span class="stars">5.0&#9733; (72 reviews)</span> &middot; <a href="tel:5109059849">(510) 905-9849</a> &middot; <a href="mailto:hello@nonconformistinc.com">hello@nonconformistinc.com</a></li><li><a href="http://martinc10.com/" target="_blank" rel="noopener">Martin Electric</a> <span class="stars">5.0&#9733; (52 reviews)</span> &middot; <a href="tel:5102274319">(510) 227-4319</a> &middot; <a href="mailto:info@martinc10.com">info@martinc10.com</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Fremont options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Fremont</p>
+            <div class="installer-card">
+        <div><div class="name">Adept Electrical Solutions</div><div class="stars">&#9733; 5.0 (94 reviews)</div></div>
+        <a class="site-link" href="https://www.adeptelectricalsolutions.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">California Solar Care - Solar Panel Cleaning</div><div class="stars">&#9733; 5.0 (72 reviews)</div></div>
+        <a class="site-link" href="https://www.californiasolarcare.org/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Martin Electric</div><div class="stars">&#9733; 5.0 (52 reviews)</div></div>
+        <a class="site-link" href="http://martinc10.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Fremont options.</p>
+        </div>
 
     </div>
 </section>

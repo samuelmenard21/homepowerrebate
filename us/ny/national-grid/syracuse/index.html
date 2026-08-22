@@ -85,6 +85,10 @@ footer a { color: rgba(250,247,242,.75); }
 .installer-note .mini-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--paper-warm); border-radius: 8px; padding: 8px 12px; }
 .installer-note .mini-list a { color: var(--teal); font-weight: 600; text-decoration: none; }
 .installer-note .mini-list .stars { color: var(--amber); font-weight: 700; white-space: nowrap; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 <script type="application/ld+json">
 {
@@ -291,21 +295,37 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <!-- ============================ FOOTER (canonical, from _partials/nav-footer.html) ============================= -->
 
-<section class="section"><div class="wrap"><h2>Local Installers in Syracuse NY</h2><div class="installer-note">
-      <strong>Heat pump installers in Syracuse NY</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://syracuseenergysystems.com/" target="_blank" rel="noopener">Syracuse Energy Systems, Inc.</a> <span class="stars">5.0&#9733; (403 reviews)</span> &middot; <a href="tel:3156990902">(315) 699-0902</a></li><li><a href="http://www.hometownheatingandac.com/" target="_blank" rel="noopener">Hometown Heating & Air Conditioning</a> <span class="stars">4.8&#9733; (157 reviews)</span> &middot; <a href="tel:3154588420">(315) 458-8420</a> &middot; <a href="mailto:user@domain.com">user@domain.com</a></li><li>Syracuse Heating & Air Conditioning Corporation <span class="stars">5.0&#9733; (14 reviews)</span> &middot; <a href="tel:3152307199">(315) 230-7199</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Syracuse NY options.</p>
-    </div>
+<section class="section"><div class="wrap"><h2>Local Installers in Syracuse NY</h2><div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Syracuse NY</p>
+            <div class="installer-card">
+        <div><div class="name">Syracuse Energy Systems, Inc.</div><div class="stars">&#9733; 5.0 (403 reviews)</div></div>
+        <a class="site-link" href="https://syracuseenergysystems.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Hometown Heating & Air Conditioning</div><div class="stars">&#9733; 4.8 (157 reviews)</div></div>
+        <a class="site-link" href="http://www.hometownheatingandac.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Syracuse NY</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://syracuseenergysystems.com/" target="_blank" rel="noopener">Syracuse Energy Systems, Inc.</a> <span class="stars">5.0&#9733; (403 reviews)</span> &middot; <a href="tel:3156990902">(315) 699-0902</a></li><li><a href="https://energysaverscny.com/?utm_source=gmb&utm_medium=organic" target="_blank" rel="noopener">Energy Savers Inc.</a> <span class="stars">4.9&#9733; (336 reviews)</span> &middot; <a href="tel:3155092687">(315) 509-2687</a> &middot; <a href="mailto:energysaverinc@hotmail.com">energysaverinc@hotmail.com</a></li><li><a href="https://www.homepowersystems.net/?utm_source=google&utm_medium=organic&utm_campaign=GMBListing-Syracuse" target="_blank" rel="noopener">Home Power Systems and Commercial Power Systems</a> <span class="stars">5.0&#9733; (331 reviews)</span> &middot; <a href="tel:3152342451">(315) 234-2451</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Syracuse NY options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Syracuse NY</p>
+            <div class="installer-card">
+        <div><div class="name">Syracuse Energy Systems, Inc.</div><div class="stars">&#9733; 5.0 (403 reviews)</div></div>
+        <a class="site-link" href="https://syracuseenergysystems.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Energy Savers Inc.</div><div class="stars">&#9733; 4.9 (336 reviews)</div></div>
+        <a class="site-link" href="https://energysaverscny.com/?utm_source=gmb&utm_medium=organic" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Home Power Systems and Commercial Power Systems</div><div class="stars">&#9733; 5.0 (331 reviews)</div></div>
+        <a class="site-link" href="https://www.homepowersystems.net/?utm_source=google&utm_medium=organic&utm_campaign=GMBListing-Syracuse" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Syracuse NY options.</p>
+        </div>
 
     </div></section>
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

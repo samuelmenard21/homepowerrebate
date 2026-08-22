@@ -444,6 +444,10 @@ footer a { color: var(--color-accent-light); }
 .installer-note .mini-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--paper-warm); border-radius: 8px; padding: 8px 12px; }
 .installer-note .mini-list a { color: var(--teal); font-weight: 600; text-decoration: none; }
 .installer-note .mini-list .stars { color: var(--amber); font-weight: 700; white-space: nowrap; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -624,21 +628,33 @@ If you rent or live in a condo, most rebates apply only to the building owner or
 <section>
 <h2>Finding an Installer</h2>
 <p>
-<div class="installer-note">
-      <strong>Heat pump installers in Beacon</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://shelter-air.com/?utm_source=google&utm_medium=local&utm_campaign=listing" target="_blank" rel="noopener">Shelter Air</a> <span class="stars">4.9&#9733; (37 reviews)</span> &middot; <a href="tel:9149282313">(914) 928-2313</a> &middot; <a href="mailto:info@shelter-air.com">info@shelter-air.com</a></li><li><a href="https://needhotwater.com/" target="_blank" rel="noopener">Water Heater Express LLC</a> <span class="stars">4.7&#9733; (39 reviews)</span> &middot; <a href="tel:8453355051">(845) 335-5051</a> &middot; <a href="mailto:milenabbrandao@gmail.com">milenabbrandao@gmail.com</a></li><li><a href="https://mjsplumbinginc.com/" target="_blank" rel="noopener">MJS Plumbing & Heating Inc.</a> <span class="stars">4.7&#9733; (97 reviews)</span> &middot; <a href="tel:9146027106">(914) 602-7106</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Beacon options.</p>
-    </div>
+<div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Beacon</p>
+            <div class="installer-card">
+        <div><div class="name">Shelter Air</div><div class="stars">&#9733; 4.9 (37 reviews)</div></div>
+        <a class="site-link" href="https://shelter-air.com/?utm_source=google&utm_medium=local&utm_campaign=listing" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Water Heater Express LLC</div><div class="stars">&#9733; 4.7 (39 reviews)</div></div>
+        <a class="site-link" href="https://needhotwater.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">MJS Plumbing & Heating Inc.</div><div class="stars">&#9733; 4.7 (97 reviews)</div></div>
+        <a class="site-link" href="https://mjsplumbinginc.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Beacon</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://solarinstallationdutchesscounty.com/" target="_blank" rel="noopener">Victory solar installation</a> <span class="stars">4.9&#9733; (42 reviews)</span> &middot; <a href="tel:8453799233">(845) 379-9233</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Beacon options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Beacon</p>
+            <div class="installer-card">
+        <div><div class="name">Victory solar installation</div><div class="stars">&#9733; 4.9 (42 reviews)</div></div>
+        <a class="site-link" href="https://solarinstallationdutchesscounty.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Beacon options.</p>
+        </div>
 
     </p>
 </section>

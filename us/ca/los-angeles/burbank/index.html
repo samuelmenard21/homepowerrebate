@@ -269,6 +269,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 </head>
 <body>
@@ -436,21 +440,41 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
     </div>
 
-    <div class="installer-note">
-      <strong>Heat pump installers in Burbank</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://northairinc.com/" target="_blank" rel="noopener">North Air</a> <span class="stars">5.0&#9733; (102 reviews)</span> &middot; <a href="tel:8185670056">(818) 567-0056</a></li><li><a href="https://purifiedairinc.com/burbank-ca/?utm_source=google&utm_medium=organic&utm_campaign=gbp&utm_content=burbank" target="_blank" rel="noopener">Purified air heating and Air Conditioning Inc</a> <span class="stars">5.0&#9733; (99 reviews)</span> &middot; <a href="tel:6266212220">(626) 621-2220</a> &middot; <a href="mailto:info@purifiedairinc.com">info@purifiedairinc.com</a></li><li><a href="https://www.calclimate.com/" target="_blank" rel="noopener">Cal Climate Corp</a> <span class="stars">5.0&#9733; (47 reviews)</span> &middot; <a href="tel:8188435188">(818) 843-5188</a> &middot; <a href="mailto:info@calclimate.com">info@calclimate.com</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Burbank options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Burbank</p>
+            <div class="installer-card">
+        <div><div class="name">North Air</div><div class="stars">&#9733; 5.0 (102 reviews)</div></div>
+        <a class="site-link" href="http://northairinc.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Purified air heating and Air Conditioning Inc</div><div class="stars">&#9733; 5.0 (99 reviews)</div></div>
+        <a class="site-link" href="https://purifiedairinc.com/burbank-ca/?utm_source=google&utm_medium=organic&utm_campaign=gbp&utm_content=burbank" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Cal Climate Corp</div><div class="stars">&#9733; 5.0 (47 reviews)</div></div>
+        <a class="site-link" href="https://www.calclimate.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Burbank</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://skysolarpro.com/" target="_blank" rel="noopener">Sky Solar Pro</a> <span class="stars">5.0&#9733; (25 reviews)</span> &middot; <a href="tel:8186678828">(818) 667-8828</a></li><li><a href="https://www.annexsolar.us/" target="_blank" rel="noopener">Annex Solar</a> <span class="stars">5.0&#9733; (11 reviews)</span> &middot; <a href="tel:8182378644">(818) 237-8644</a></li><li><a href="https://voltgenenergy.com/" target="_blank" rel="noopener">VoltGen Energy</a> <span class="stars">4.9&#9733; (14 reviews)</span> &middot; <a href="tel:8448658436">(844) 865-8436</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Burbank options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Burbank</p>
+            <div class="installer-card">
+        <div><div class="name">Sky Solar Pro</div><div class="stars">&#9733; 5.0 (25 reviews)</div></div>
+        <a class="site-link" href="https://skysolarpro.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Annex Solar</div><div class="stars">&#9733; 5.0 (11 reviews)</div></div>
+        <a class="site-link" href="https://www.annexsolar.us/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">VoltGen Energy</div><div class="stars">&#9733; 4.9 (14 reviews)</div></div>
+        <a class="site-link" href="https://voltgenenergy.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Burbank options.</p>
+        </div>
 
     <div class="highlight-box">
       <h4>Honest math for Burbank</h4>

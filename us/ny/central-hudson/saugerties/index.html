@@ -444,6 +444,10 @@ footer a { color: var(--color-accent-light); }
 .installer-note .mini-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--paper-warm); border-radius: 8px; padding: 8px 12px; }
 .installer-note .mini-list a { color: var(--teal); font-weight: 600; text-decoration: none; }
 .installer-note .mini-list .stars { color: var(--amber); font-weight: 700; white-space: nowrap; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -624,13 +628,23 @@ If you rent or live in a condo, most rebates apply only to the building owner or
 <section>
 <h2>Finding an Installer</h2>
 <p>
-<div class="installer-note">
-      <strong>Heat pump installers in Saugerties</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://tarshvac.com/" target="_blank" rel="noopener">Tars HVAC Mini-Split Installation</a> <span class="stars">5.0&#9733; (19 reviews)</span> &middot; <a href="tel:8457068535">(845) 706-8535</a></li><li><a href="http://www.cbphvac.com/" target="_blank" rel="noopener">Chris Blake Plumbing & HVAC LLC</a> <span class="stars">5.0&#9733; (13 reviews)</span> &middot; <a href="tel:8457065050">(845) 706-5050</a></li><li><a href="http://www.sinnottsplumbingandheating.com/" target="_blank" rel="noopener">Sinnott's Plumbing & Heating LLC</a> <span class="stars">4.9&#9733; (601 reviews)</span> &middot; <a href="tel:8452468626">(845) 246-8626</a></li>
-      </ul>
+<div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Saugerties</p>
+            <div class="installer-card">
+        <div><div class="name">Tars HVAC Mini-Split Installation</div><div class="stars">&#9733; 5.0 (19 reviews)</div></div>
+        <a class="site-link" href="http://tarshvac.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Chris Blake Plumbing & HVAC LLC</div><div class="stars">&#9733; 5.0 (13 reviews)</div></div>
+        <a class="site-link" href="http://www.cbphvac.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Sinnott's Plumbing & Heating LLC</div><div class="stars">&#9733; 4.9 (601 reviews)</div></div>
+        <a class="site-link" href="http://www.sinnottsplumbingandheating.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Saugerties options.</p>
-    </div>
+        </div>
 
     </p>
 </section>

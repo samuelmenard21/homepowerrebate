@@ -444,6 +444,10 @@ footer a { color: var(--color-accent-light); }
 .installer-note .mini-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--paper-warm); border-radius: 8px; padding: 8px 12px; }
 .installer-note .mini-list a { color: var(--teal); font-weight: 600; text-decoration: none; }
 .installer-note .mini-list .stars { color: var(--amber); font-weight: 700; white-space: nowrap; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -624,21 +628,33 @@ If you rent or live in a condo, most rebates apply only to the building owner or
 <section>
 <h2>Finding an Installer</h2>
 <p>
-<div class="installer-note">
-      <strong>Heat pump installers in Kingston</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://kingstonhws.com/" target="_blank" rel="noopener">HWS, Inc. - Mitsubishi Heat Pumps, HVAC, Electrical, Plumbing</a> <span class="stars">5.0&#9733; (744 reviews)</span> &middot; <a href="tel:8453318948">(845) 331-8948</a></li><li>ThermalTech Heating and Cooling <span class="stars">5.0&#9733; (15 reviews)</span> &middot; <a href="tel:8452732197">(845) 273-2197</a></li><li><a href="https://drtotherescue.com/service-areas/kingston/?utm_source=gbp&utm_medium=organic" target="_blank" rel="noopener">D. Rohde Home Services</a> <span class="stars">4.9&#9733; (205 reviews)</span> &middot; <a href="tel:8453770284">(845) 377-0284</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Kingston options.</p>
-    </div>
+<div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Kingston</p>
+            <div class="installer-card">
+        <div><div class="name">HWS, Inc. - Mitsubishi Heat Pumps, HVAC, Electrical, Plumbing</div><div class="stars">&#9733; 5.0 (744 reviews)</div></div>
+        <a class="site-link" href="https://kingstonhws.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">D. Rohde Home Services</div><div class="stars">&#9733; 4.9 (205 reviews)</div></div>
+        <a class="site-link" href="https://drtotherescue.com/service-areas/kingston/?utm_source=gbp&utm_medium=organic" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Kingston</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.ateamcomfort.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp" target="_blank" rel="noopener">A-Team Comfort Systems</a> <span class="stars">4.9&#9733; (192 reviews)</span> &middot; <a href="tel:8452465454">(845) 246-5454</a></li><li><a href="https://jsphomeservices.com/?utm_source=gmb&utm_medium=organic" target="_blank" rel="noopener">JSP Home Services: Plumbing, Air Conditioning, Heating and Electrical Experts</a> <span class="stars">4.8&#9733; (7309 reviews)</span> &middot; <a href="tel:8452805199">(845) 280-5199</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Kingston options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Kingston</p>
+            <div class="installer-card">
+        <div><div class="name">A-Team Comfort Systems</div><div class="stars">&#9733; 4.9 (192 reviews)</div></div>
+        <a class="site-link" href="https://www.ateamcomfort.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">JSP Home Services: Plumbing, Air Conditioning, Heating and Electrical Experts</div><div class="stars">&#9733; 4.8 (7309 reviews)</div></div>
+        <a class="site-link" href="https://jsphomeservices.com/?utm_source=gmb&utm_medium=organic" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Kingston options.</p>
+        </div>
 
     </p>
 </section>

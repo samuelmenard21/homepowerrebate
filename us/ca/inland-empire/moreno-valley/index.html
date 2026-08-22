@@ -247,6 +247,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -419,21 +423,29 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
     </div>
 
-    <div class="installer-note">
-      <strong>Heat pump installers in Moreno Valley</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://thedependableplumber.com/" target="_blank" rel="noopener">Dependable Plumber Inc</a> <span class="stars">5.0&#9733; (220 reviews)</span> &middot; <a href="tel:9515638378">(951) 563-8378</a></li><li><a href="https://itsnosweat.net/" target="_blank" rel="noopener">It's No Sweat Heat & Air</a> <span class="stars">5.0&#9733; (93 reviews)</span> &middot; <a href="tel:9513313310">(951) 331-3310</a> &middot; <a href="mailto:support@itsnosweat.net">support@itsnosweat.net</a></li><li>Faisal Heating and Air Conditioning <span class="stars">5.0&#9733; (66 reviews)</span> &middot; <a href="tel:9517774071">(951) 777-4071</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Moreno Valley options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Moreno Valley</p>
+            <div class="installer-card">
+        <div><div class="name">Dependable Plumber Inc</div><div class="stars">&#9733; 5.0 (220 reviews)</div></div>
+        <a class="site-link" href="http://thedependableplumber.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">It's No Sweat Heat & Air</div><div class="stars">&#9733; 5.0 (93 reviews)</div></div>
+        <a class="site-link" href="https://itsnosweat.net/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Moreno Valley</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.movalspc.com/" target="_blank" rel="noopener">Moval Solar Panel Cleaning</a> <span class="stars">5.0&#9733; (15 reviews)</span> &middot; <a href="tel:9514211123">(951) 421-1123</a> &middot; <a href="mailto:movalspc@gmail.com">movalspc@gmail.com</a></li><li>BriteLite Solar <span class="stars">4.8&#9733; (50 reviews)</span> &middot; <a href="tel:9512244899">(951) 224-4899</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Moreno Valley options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Moreno Valley</p>
+            <div class="installer-card">
+        <div><div class="name">Moval Solar Panel Cleaning</div><div class="stars">&#9733; 5.0 (15 reviews)</div></div>
+        <a class="site-link" href="https://www.movalspc.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Moreno Valley options.</p>
+        </div>
 
     <div class="highlight-box">
       <h4>Honest math for Moreno Valley</h4>

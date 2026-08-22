@@ -269,6 +269,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 </head>
 <body>
@@ -436,21 +440,41 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
     </div>
 
-    <div class="installer-note">
-      <strong>Heat pump installers in Santa Monica</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://servicegenius.com/santa-monica/?utm_source=google&utm_medium=organic&utm_campaign=gbp-santa-monica" target="_blank" rel="noopener">Service Genius Air Conditioning and Heating</a> <span class="stars">5.0&#9733; (328 reviews)</span> &middot; <a href="tel:8182132875">(818) 213-2875</a></li><li><a href="https://www.rchvacservices.com/" target="_blank" rel="noopener">R&C Heating and Cooling Service</a> <span class="stars">5.0&#9733; (116 reviews)</span> &middot; <a href="tel:3108931871">(310) 893-1871</a></li><li><a href="http://www.socalairsystems.com/" target="_blank" rel="noopener">SoCal Air Systems</a> <span class="stars">5.0&#9733; (43 reviews)</span> &middot; <a href="tel:3109740122">(310) 974-0122</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Santa Monica options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Santa Monica</p>
+            <div class="installer-card">
+        <div><div class="name">Service Genius Air Conditioning and Heating</div><div class="stars">&#9733; 5.0 (328 reviews)</div></div>
+        <a class="site-link" href="https://servicegenius.com/santa-monica/?utm_source=google&utm_medium=organic&utm_campaign=gbp-santa-monica" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">R&C Heating and Cooling Service</div><div class="stars">&#9733; 5.0 (116 reviews)</div></div>
+        <a class="site-link" href="https://www.rchvacservices.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">SoCal Air Systems</div><div class="stars">&#9733; 5.0 (43 reviews)</div></div>
+        <a class="site-link" href="http://www.socalairsystems.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Santa Monica</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://hammerheadenergy.co/" target="_blank" rel="noopener">Hammerhead Energy Consulting</a> <span class="stars">5.0&#9733; (13 reviews)</span> &middot; <a href="tel:3106194464">(310) 619-4464</a> &middot; <a href="mailto:user@domain.com">user@domain.com</a></li><li><a href="https://heliosenergyglobal.com/" target="_blank" rel="noopener">Helios Energy Global</a> <span class="stars">4.9&#9733; (192 reviews)</span> &middot; <a href="tel:3105648817">(310) 564-8817</a> &middot; <a href="mailto:info@heliosenergyglobal.com">info@heliosenergyglobal.com</a></li><li><a href="https://sunkosolar.com/" target="_blank" rel="noopener">Sunko Solar</a> <span class="stars">4.8&#9733; (19 reviews)</span> &middot; <a href="tel:8889978656">(888) 997-8656</a> &middot; <a href="mailto:gosolar@sunkosolar.com">gosolar@sunkosolar.com</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Santa Monica options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Santa Monica</p>
+            <div class="installer-card">
+        <div><div class="name">Hammerhead Energy Consulting</div><div class="stars">&#9733; 5.0 (13 reviews)</div></div>
+        <a class="site-link" href="http://hammerheadenergy.co/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Helios Energy Global</div><div class="stars">&#9733; 4.9 (192 reviews)</div></div>
+        <a class="site-link" href="https://heliosenergyglobal.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Sunko Solar</div><div class="stars">&#9733; 4.8 (19 reviews)</div></div>
+        <a class="site-link" href="https://sunkosolar.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Santa Monica options.</p>
+        </div>
 
     <div class="highlight-box">
       <h4>Honest math for Santa Monica</h4>

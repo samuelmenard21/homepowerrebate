@@ -247,6 +247,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -419,21 +423,41 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
     </div>
 
-    <div class="installer-note">
-      <strong>Heat pump installers in Chula Vista</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://allaireone.com/" target="_blank" rel="noopener">All Aire Heating & Cooling</a> <span class="stars">5.0&#9733; (187 reviews)</span> &middot; <a href="tel:6197308566">(619) 730-8566</a> &middot; <a href="mailto:allaireofsd@yahoo.com">allaireofsd@yahoo.com</a></li><li><a href="https://agapeplumbingservice.com/" target="_blank" rel="noopener">Agape Plumbing Service</a> <span class="stars">5.0&#9733; (122 reviews)</span> &middot; <a href="tel:6195136149">(619) 513-6149</a> &middot; <a href="mailto:services@agapeplumbingservice.com">services@agapeplumbingservice.com</a></li><li><a href="http://properhvacsd.com/" target="_blank" rel="noopener">PROPER HVAC INC</a> <span class="stars">5.0&#9733; (44 reviews)</span> &middot; <a href="tel:6197752742">(619) 775-2742</a> &middot; <a href="mailto:bruner@properhvacsd.com">bruner@properhvacsd.com</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Chula Vista options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Chula Vista</p>
+            <div class="installer-card">
+        <div><div class="name">All Aire Heating & Cooling</div><div class="stars">&#9733; 5.0 (187 reviews)</div></div>
+        <a class="site-link" href="http://allaireone.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Agape Plumbing Service</div><div class="stars">&#9733; 5.0 (122 reviews)</div></div>
+        <a class="site-link" href="https://agapeplumbingservice.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">PROPER HVAC INC</div><div class="stars">&#9733; 5.0 (44 reviews)</div></div>
+        <a class="site-link" href="http://properhvacsd.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Chula Vista</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://www.saturnsolarcleaning.com/" target="_blank" rel="noopener">Saturn Solar Cleaning</a> <span class="stars">5.0&#9733; (162 reviews)</span> &middot; <a href="tel:6196638067">(619) 663-8067</a> &middot; <a href="mailto:support@saturnsolarcleaning.com">support@saturnsolarcleaning.com</a></li><li><a href="https://onpointsolarcleaning.com/solar-panel-cleaning-chula-vista/" target="_blank" rel="noopener">OnPoint Solar Panel Cleaning Chula Vista</a> <span class="stars">5.0&#9733; (60 reviews)</span> &middot; <a href="tel:6199276176">(619) 927-6176</a></li><li><a href="https://puenteselectric.com/" target="_blank" rel="noopener">Puentes Electric</a> <span class="stars">5.0&#9733; (14 reviews)</span> &middot; <a href="tel:6192059341">(619) 205-9341</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Chula Vista options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Chula Vista</p>
+            <div class="installer-card">
+        <div><div class="name">Saturn Solar Cleaning</div><div class="stars">&#9733; 5.0 (162 reviews)</div></div>
+        <a class="site-link" href="http://www.saturnsolarcleaning.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">OnPoint Solar Panel Cleaning Chula Vista</div><div class="stars">&#9733; 5.0 (60 reviews)</div></div>
+        <a class="site-link" href="https://onpointsolarcleaning.com/solar-panel-cleaning-chula-vista/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Puentes Electric</div><div class="stars">&#9733; 5.0 (14 reviews)</div></div>
+        <a class="site-link" href="https://puenteselectric.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Chula Vista options.</p>
+        </div>
 
     <div class="highlight-box">
       <h4>Honest math for Chula Vista</h4>

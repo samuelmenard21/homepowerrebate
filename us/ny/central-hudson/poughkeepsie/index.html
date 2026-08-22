@@ -95,6 +95,10 @@ footer a { color: rgba(250,247,242,.75); }
 .installer-note .mini-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--paper-warm); border-radius: 8px; padding: 8px 12px; }
 .installer-note .mini-list a { color: var(--teal); font-weight: 600; text-decoration: none; }
 .installer-note .mini-list .stars { color: var(--amber); font-weight: 700; white-space: nowrap; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 <!-- JSON-LD Schemas -->
@@ -421,21 +425,41 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
     </div>
 
-    <div class="installer-note-wrap" style="margin:24px 0;"><div class="installer-note">
-      <strong>Heat pump installers in Poughkeepsie NY</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://hfigueroahvac.com/" target="_blank" rel="noopener">H. Figueroa HVAC LLC</a> <span class="stars">5.0&#9733; (21 reviews)</span> &middot; <a href="tel:8456569752">(845) 656-9752</a> &middot; <a href="mailto:info@hfigueroahvac.com">info@hfigueroahvac.com</a></li><li><a href="https://www.foxaircorp.com/" target="_blank" rel="noopener">Fox Air Corporation</a> <span class="stars">4.9&#9733; (659 reviews)</span> &middot; <a href="tel:8454738900">(845) 473-8900</a></li><li><a href="https://www.jpvheatingncoolingllc.com/" target="_blank" rel="noopener">JPV heating and cooling LLC</a> <span class="stars">4.9&#9733; (37 reviews)</span> &middot; <a href="tel:8453294326">(845) 329-4326</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Poughkeepsie NY options.</p>
-    </div>
+    <div class="installer-note-wrap" style="margin:24px 0;"><div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Poughkeepsie NY</p>
+            <div class="installer-card">
+        <div><div class="name">H. Figueroa HVAC LLC</div><div class="stars">&#9733; 5.0 (21 reviews)</div></div>
+        <a class="site-link" href="http://hfigueroahvac.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Fox Air Corporation</div><div class="stars">&#9733; 4.9 (659 reviews)</div></div>
+        <a class="site-link" href="https://www.foxaircorp.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">JPV heating and cooling LLC</div><div class="stars">&#9733; 4.9 (37 reviews)</div></div>
+        <a class="site-link" href="https://www.jpvheatingncoolingllc.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Poughkeepsie NY</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://www.ohmselectricalconstruction.com/" target="_blank" rel="noopener">Ohms Electrical Construction</a> <span class="stars">4.9&#9733; (124 reviews)</span> &middot; <a href="tel:8453450797">(845) 345-0797</a></li><li><a href="https://www.evoenergyus.com/" target="_blank" rel="noopener">Evo Energy Inc.</a> <span class="stars">4.9&#9733; (60 reviews)</span> &middot; <a href="tel:8458132220">(845) 813-2220</a> &middot; <a href="mailto:evolutionenergyny@gmail.com">evolutionenergyny@gmail.com</a></li><li><a href="http://www.geo-us.com/" target="_blank" rel="noopener">Geothermal Energy Options LLC</a> <span class="stars">4.9&#9733; (34 reviews)</span> &middot; <a href="tel:8452401827">(845) 240-1827</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Poughkeepsie NY options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Poughkeepsie NY</p>
+            <div class="installer-card">
+        <div><div class="name">Ohms Electrical Construction</div><div class="stars">&#9733; 4.9 (124 reviews)</div></div>
+        <a class="site-link" href="http://www.ohmselectricalconstruction.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Evo Energy Inc.</div><div class="stars">&#9733; 4.9 (60 reviews)</div></div>
+        <a class="site-link" href="https://www.evoenergyus.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Geothermal Energy Options LLC</div><div class="stars">&#9733; 4.9 (34 reviews)</div></div>
+        <a class="site-link" href="http://www.geo-us.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Poughkeepsie NY options.</p>
+        </div>
 
     </div>
 

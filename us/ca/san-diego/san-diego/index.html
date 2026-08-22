@@ -247,6 +247,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -419,21 +423,41 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
     </div>
 
-    <div class="installer-note">
-      <strong>Heat pump installers in San Diego</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.ezbreezyac.com/" target="_blank" rel="noopener">EZ Breezy Heating & Air</a> <span class="stars">5.0&#9733; (547 reviews)</span> &middot; <a href="tel:8582152995">(858) 215-2995</a> &middot; <a href="mailto:info@ezbreezyac.com">info@ezbreezyac.com</a></li><li><a href="https://www.comfortacandheating.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp" target="_blank" rel="noopener">Comfort Air Conditioning & Heating</a> <span class="stars">5.0&#9733; (173 reviews)</span> &middot; <a href="tel:8585198003">(858) 519-8003</a> &middot; <a href="mailto:comforthvacsd@gmail.com">comforthvacsd@gmail.com</a></li><li><a href="https://smithandsonsheatandair.com/" target="_blank" rel="noopener">Smith & Sons Heating and Air Inc.</a> <span class="stars">5.0&#9733; (310 reviews)</span> &middot; <a href="tel:6192519285">(619) 251-9285</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more San Diego options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in San Diego</p>
+            <div class="installer-card">
+        <div><div class="name">EZ Breezy Heating & Air</div><div class="stars">&#9733; 5.0 (547 reviews)</div></div>
+        <a class="site-link" href="https://www.ezbreezyac.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Comfort Air Conditioning & Heating</div><div class="stars">&#9733; 5.0 (173 reviews)</div></div>
+        <a class="site-link" href="https://www.comfortacandheating.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Smith & Sons Heating and Air Inc.</div><div class="stars">&#9733; 5.0 (310 reviews)</div></div>
+        <a class="site-link" href="https://smithandsonsheatandair.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in San Diego</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.solarshinesd.com/?utm_source=google&utm_medium=wix_google_business_profile&utm_campaign=13910375095889983783" target="_blank" rel="noopener">Solar Shine San Diego</a> <span class="stars">5.0&#9733; (53 reviews)</span> &middot; <a href="tel:6195356263">(619) 535-6263</a></li><li><a href="http://incentivesolar.com/" target="_blank" rel="noopener">Incentive Solar</a> <span class="stars">5.0&#9733; (40 reviews)</span> &middot; <a href="tel:6192445911">(619) 244-5911</a> &middot; <a href="mailto:info@incentivesolar.com">info@incentivesolar.com</a></li><li><a href="https://rvandmarinesolar.com/" target="_blank" rel="noopener">RV and Marine Solar</a> <span class="stars">5.0&#9733; (34 reviews)</span> &middot; <a href="tel:6198047180">(619) 804-7180</a> &middot; <a href="mailto:user@domain.com">user@domain.com</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more San Diego options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in San Diego</p>
+            <div class="installer-card">
+        <div><div class="name">Solar Shine San Diego</div><div class="stars">&#9733; 5.0 (53 reviews)</div></div>
+        <a class="site-link" href="https://www.solarshinesd.com/?utm_source=google&utm_medium=wix_google_business_profile&utm_campaign=13910375095889983783" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Incentive Solar</div><div class="stars">&#9733; 5.0 (40 reviews)</div></div>
+        <a class="site-link" href="http://incentivesolar.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">RV and Marine Solar</div><div class="stars">&#9733; 5.0 (34 reviews)</div></div>
+        <a class="site-link" href="https://rvandmarinesolar.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more San Diego options.</p>
+        </div>
 
     <div class="highlight-box">
       <h4>Honest math for San Diego</h4>

@@ -444,6 +444,10 @@ footer a { color: var(--color-accent-light); }
 .installer-note .mini-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--paper-warm); border-radius: 8px; padding: 8px 12px; }
 .installer-note .mini-list a { color: var(--teal); font-weight: 600; text-decoration: none; }
 .installer-note .mini-list .stars { color: var(--amber); font-weight: 700; white-space: nowrap; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -623,21 +627,41 @@ If you rent or live in a condo, most of these rebates apply only to the building
 <section>
 <h2>Finding an Installer</h2>
 <p>
-<div class="installer-note">
-      <strong>Heat pump installers in Southampton</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://rezysave.com/new-york/" target="_blank" rel="noopener">Aire Serv of Long Island-East End</a> <span class="stars">4.8&#9733; (22 reviews)</span> &middot; <a href="tel:6312405009">(631) 240-5009</a> &middot; <a href="mailto:Info@Rezysave.com">Info@Rezysave.com</a></li><li><a href="https://okeyplumbing.com/" target="_blank" rel="noopener">Okey Plumbing & Heating, Inc.</a> <span class="stars">4.6&#9733; (37 reviews)</span> &middot; <a href="tel:6317252985">(631) 725-2985</a> &middot; <a href="mailto:info@okeyplumbing.com">info@okeyplumbing.com</a></li><li><a href="https://rezysave.com/" target="_blank" rel="noopener">RezySave Heating & Air</a> <span class="stars">4.6&#9733; (33 reviews)</span> &middot; <a href="tel:6315949998">(631) 594-9998</a> &middot; <a href="mailto:Info@Rezysave.com">Info@Rezysave.com</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Southampton options.</p>
-    </div>
+<div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Southampton</p>
+            <div class="installer-card">
+        <div><div class="name">Aire Serv of Long Island-East End</div><div class="stars">&#9733; 4.8 (22 reviews)</div></div>
+        <a class="site-link" href="https://rezysave.com/new-york/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Okey Plumbing & Heating, Inc.</div><div class="stars">&#9733; 4.6 (37 reviews)</div></div>
+        <a class="site-link" href="https://okeyplumbing.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">RezySave Heating & Air</div><div class="stars">&#9733; 4.6 (33 reviews)</div></div>
+        <a class="site-link" href="https://rezysave.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Southampton</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.greenlogic.com/" target="_blank" rel="noopener">GreenLogic Energy</a> <span class="stars">4.8&#9733; (123 reviews)</span> &middot; <a href="tel:6317715152">(631) 771-5152</a></li><li><a href="http://www.oceanelectric.net/" target="_blank" rel="noopener">Ocean Electric Corp.</a> <span class="stars">4.8&#9733; (48 reviews)</span> &middot; <a href="tel:6312876060">(631) 287-6060</a> &middot; <a href="mailto:wkarolczyk@gmail.com">wkarolczyk@gmail.com</a></li><li><a href="http://www.leoselectric.com/" target="_blank" rel="noopener">Leo's Electric Corporation</a> <span class="stars">4.5&#9733; (31 reviews)</span> &middot; <a href="tel:6312872200">(631) 287-2200</a> &middot; <a href="mailto:office@leoselectric.com">office@leoselectric.com</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Southampton options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Southampton</p>
+            <div class="installer-card">
+        <div><div class="name">GreenLogic Energy</div><div class="stars">&#9733; 4.8 (123 reviews)</div></div>
+        <a class="site-link" href="https://www.greenlogic.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Ocean Electric Corp.</div><div class="stars">&#9733; 4.8 (48 reviews)</div></div>
+        <a class="site-link" href="http://www.oceanelectric.net/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Leo's Electric Corporation</div><div class="stars">&#9733; 4.5 (31 reviews)</div></div>
+        <a class="site-link" href="http://www.leoselectric.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Southampton options.</p>
+        </div>
 
     </p>
 </section>

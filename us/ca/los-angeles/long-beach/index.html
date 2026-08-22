@@ -269,6 +269,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 </head>
 <body>
@@ -436,21 +440,41 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
     </div>
 
-    <div class="installer-note">
-      <strong>Heat pump installers in Long Beach</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.internationalhvacla.com/" target="_blank" rel="noopener">International HVAC Long Beach</a> <span class="stars">5.0&#9733; (40 reviews)</span> &middot; <a href="tel:4249010349">(424) 901-0349</a> &middot; <a href="mailto:info@internationalhvacla.com">info@internationalhvacla.com</a></li><li><a href="https://beachcoasthvac.jobbersites.com/" target="_blank" rel="noopener">Beach Coast Hvac LLC</a> <span class="stars">5.0&#9733; (23 reviews)</span> &middot; <a href="tel:5622459858">(562) 245-9858</a> &middot; <a href="mailto:luis@beachcoasthvac.com">luis@beachcoasthvac.com</a></li><li><a href="https://long-beach-air-conditioning-contractors.ueniweb.com/?utm_campaign=gmb" target="_blank" rel="noopener">Long Beach Air Conditioning Contractors</a> <span class="stars">5.0&#9733; (16 reviews)</span> &middot; <a href="tel:5628004521">(562) 800-4521</a> &middot; <a href="mailto:leehebertm68009@gmail.com">leehebertm68009@gmail.com</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Long Beach options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Long Beach</p>
+            <div class="installer-card">
+        <div><div class="name">International HVAC Long Beach</div><div class="stars">&#9733; 5.0 (40 reviews)</div></div>
+        <a class="site-link" href="https://www.internationalhvacla.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Beach Coast Hvac LLC</div><div class="stars">&#9733; 5.0 (23 reviews)</div></div>
+        <a class="site-link" href="https://beachcoasthvac.jobbersites.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Long Beach Air Conditioning Contractors</div><div class="stars">&#9733; 5.0 (16 reviews)</div></div>
+        <a class="site-link" href="https://long-beach-air-conditioning-contractors.ueniweb.com/?utm_campaign=gmb" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Long Beach</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.gurusolarcleaning.net/" target="_blank" rel="noopener">Guru Solar Cleaning</a> <span class="stars">5.0&#9733; (160 reviews)</span> &middot; <a href="tel:5622250105">(562) 225-0105</a> &middot; <a href="mailto:user@domain.com">user@domain.com</a></li><li><a href="https://scsolarshine.com/" target="_blank" rel="noopener">So Cal Solar Shine LLC</a> <span class="stars">5.0&#9733; (10 reviews)</span> &middot; <a href="tel:5622343677">(562) 234-3677</a> &middot; <a href="mailto:info@scsolarshine.com">info@scsolarshine.com</a></li><li><a href="https://solarsourceinc.com/" target="_blank" rel="noopener">Solar Source</a> <span class="stars">5.0&#9733; (112 reviews)</span> &middot; <a href="tel:5628525626">(562) 852-5626</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Long Beach options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Long Beach</p>
+            <div class="installer-card">
+        <div><div class="name">Guru Solar Cleaning</div><div class="stars">&#9733; 5.0 (160 reviews)</div></div>
+        <a class="site-link" href="https://www.gurusolarcleaning.net/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">So Cal Solar Shine LLC</div><div class="stars">&#9733; 5.0 (10 reviews)</div></div>
+        <a class="site-link" href="https://scsolarshine.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Solar Source</div><div class="stars">&#9733; 5.0 (112 reviews)</div></div>
+        <a class="site-link" href="https://solarsourceinc.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Long Beach options.</p>
+        </div>
 
     <div class="highlight-box">
       <h4>Honest math for Long Beach</h4>

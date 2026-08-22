@@ -257,6 +257,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -440,21 +444,41 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   <div class="wrap">
     <div class="eyebrow">Choosing who does the work</div>
     <h2>Finding an installer in San Jose</h2>
-    <div class="installer-note">
-      <strong>Heat pump installers in San Jose</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.pheating.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp" target="_blank" rel="noopener">Precision Heating & Cooling</a> <span class="stars">5.0&#9733; (249 reviews)</span> &middot; <a href="tel:4086428674">(408) 642-8674</a> &middot; <a href="mailto:info@pheating.com">info@pheating.com</a></li><li><a href="https://freonhvac.com/" target="_blank" rel="noopener">Freon Service</a> <span class="stars">5.0&#9733; (234 reviews)</span> &middot; <a href="tel:4088775557">(408) 877-5557</a> &middot; <a href="mailto:install@freonhvac.com">install@freonhvac.com</a></li><li><a href="https://goldencomfortairhvac.com/hvac-san-jose-california" target="_blank" rel="noopener">Golden Comfort AC & Heating Repair</a> <span class="stars">5.0&#9733; (115 reviews)</span> &middot; <a href="tel:4085394103">(408) 539-4103</a> &middot; <a href="mailto:info@goldencomfortairhvac.com">info@goldencomfortairhvac.com</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more San Jose options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in San Jose</p>
+            <div class="installer-card">
+        <div><div class="name">Precision Heating & Cooling</div><div class="stars">&#9733; 5.0 (249 reviews)</div></div>
+        <a class="site-link" href="https://www.pheating.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Freon Service</div><div class="stars">&#9733; 5.0 (234 reviews)</div></div>
+        <a class="site-link" href="https://freonhvac.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Golden Comfort AC & Heating Repair</div><div class="stars">&#9733; 5.0 (115 reviews)</div></div>
+        <a class="site-link" href="https://goldencomfortairhvac.com/hvac-san-jose-california" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in San Jose</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://cedgreentechsj.portalced.com/" target="_blank" rel="noopener">Greentech Renewables San Jose</a> <span class="stars">5.0&#9733; (20 reviews)</span> &middot; <a href="tel:4084365355">(408) 436-5355</a></li><li><a href="https://sunlightconcept.com/?utm_source=Google&utm_medium=Maps" target="_blank" rel="noopener">Sunlight Concepts | Natural Daylighting and Ventilation System - Solatube Dealer</a> <span class="stars">4.9&#9733; (261 reviews)</span> &middot; <a href="tel:4088440081">(408) 844-0081</a> &middot; <a href="mailto:sales@sunlightconcepts.com">sales@sunlightconcepts.com</a></li><li><a href="https://smartsolarcleaning.com/solar-panel-cleaning-san-jose-california/" target="_blank" rel="noopener">Smart Solar Panel Cleaning San Jose</a> <span class="stars">4.9&#9733; (146 reviews)</span> &middot; <a href="tel:4086386311">(408) 638-6311</a> &middot; <a href="mailto:smartsolarcleaning@gmail.com">smartsolarcleaning@gmail.com</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more San Jose options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in San Jose</p>
+            <div class="installer-card">
+        <div><div class="name">Greentech Renewables San Jose</div><div class="stars">&#9733; 5.0 (20 reviews)</div></div>
+        <a class="site-link" href="https://cedgreentechsj.portalced.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Sunlight Concepts | Natural Daylighting and Ventilation System - Solatube Dealer</div><div class="stars">&#9733; 4.9 (261 reviews)</div></div>
+        <a class="site-link" href="https://sunlightconcept.com/?utm_source=Google&utm_medium=Maps" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Smart Solar Panel Cleaning San Jose</div><div class="stars">&#9733; 4.9 (146 reviews)</div></div>
+        <a class="site-link" href="https://smartsolarcleaning.com/solar-panel-cleaning-san-jose-california/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more San Jose options.</p>
+        </div>
 
     </div>
 </section>

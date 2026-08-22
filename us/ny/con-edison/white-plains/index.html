@@ -470,6 +470,10 @@ footer a { color: var(--color-accent-light); }
 .installer-note .mini-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--paper-warm); border-radius: 8px; padding: 8px 12px; }
 .installer-note .mini-list a { color: var(--teal); font-weight: 600; text-decoration: none; }
 .installer-note .mini-list .stars { color: var(--amber); font-weight: 700; white-space: nowrap; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -702,21 +706,41 @@ If you rent or live in a condo, most rebates apply only to the building owner or
 <section>
 <h2>Finding an Installer</h2>
 <p>
-<div class="installer-note">
-      <strong>Heat pump installers in White Plains</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://youandushvac.com/" target="_blank" rel="noopener">You and Us Heating & Air Conditioning</a> <span class="stars">5.0&#9733; (160 reviews)</span> &middot; <a href="tel:3473265403">(347) 326-5403</a> &middot; <a href="mailto:support@youandushvac.com">support@youandushvac.com</a></li><li><a href="https://nyct.sila.com/?utm_source=google&utm_medium=organic&utm_campaign=GBP&utm_content=WhitePlains" target="_blank" rel="noopener">Sila Heating, Air Conditioning, Plumbing & Electrical</a> <span class="stars">4.8&#9733; (1947 reviews)</span> &middot; <a href="tel:9143621649">(914) 362-1649</a> &middot; <a href="mailto:webresponse-ny@sila.com">webresponse-ny@sila.com</a></li><li><a href="http://www.daherhvac.com/" target="_blank" rel="noopener">J. Daher Air Conditioning & Heating</a> <span class="stars">4.8&#9733; (17 reviews)</span> &middot; <a href="tel:9149496500">(914) 949-6500</a> &middot; <a href="mailto:John@DaherHVAC.com">John@DaherHVAC.com</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more White Plains options.</p>
-    </div>
+<div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in White Plains</p>
+            <div class="installer-card">
+        <div><div class="name">You and Us Heating & Air Conditioning</div><div class="stars">&#9733; 5.0 (160 reviews)</div></div>
+        <a class="site-link" href="https://youandushvac.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Sila Heating, Air Conditioning, Plumbing & Electrical</div><div class="stars">&#9733; 4.8 (1947 reviews)</div></div>
+        <a class="site-link" href="https://nyct.sila.com/?utm_source=google&utm_medium=organic&utm_campaign=GBP&utm_content=WhitePlains" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">J. Daher Air Conditioning & Heating</div><div class="stars">&#9733; 4.8 (17 reviews)</div></div>
+        <a class="site-link" href="http://www.daherhvac.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in White Plains</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://precisionsolar.com/" target="_blank" rel="noopener">Precision Solar</a> <span class="stars">5.0&#9733; (169 reviews)</span> &middot; <a href="tel:9142205877">(914) 220-5877</a></li><li><a href="https://jetsonhome.com/us/ny/white-plains-central-heat-pump?utm_source=google&utm_medium=organic&utm_campaign=google-business-profile&utm_content=whiteplains-booking" target="_blank" rel="noopener">Jetson Home - White Plains</a> <span class="stars">5.0&#9733; (30 reviews)</span> &middot; <a href="tel:8889965876">(888) 996-5876</a></li><li><a href="https://www.newyorkpowersolutions.com/" target="_blank" rel="noopener">New York Power Solutions - Smarter Solar</a> <span class="stars">4.9&#9733; (260 reviews)</span> &middot; <a href="tel:9145152150">(914) 515-2150</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more White Plains options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in White Plains</p>
+            <div class="installer-card">
+        <div><div class="name">Precision Solar</div><div class="stars">&#9733; 5.0 (169 reviews)</div></div>
+        <a class="site-link" href="https://precisionsolar.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Jetson Home - White Plains</div><div class="stars">&#9733; 5.0 (30 reviews)</div></div>
+        <a class="site-link" href="https://jetsonhome.com/us/ny/white-plains-central-heat-pump?utm_source=google&utm_medium=organic&utm_campaign=google-business-profile&utm_content=whiteplains-booking" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">New York Power Solutions - Smarter Solar</div><div class="stars">&#9733; 4.9 (260 reviews)</div></div>
+        <a class="site-link" href="https://www.newyorkpowersolutions.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more White Plains options.</p>
+        </div>
 
     </p>
 </section>

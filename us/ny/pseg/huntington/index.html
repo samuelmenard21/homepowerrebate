@@ -444,6 +444,10 @@ footer a { color: var(--color-accent-light); }
 .installer-note .mini-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--paper-warm); border-radius: 8px; padding: 8px 12px; }
 .installer-note .mini-list a { color: var(--teal); font-weight: 600; text-decoration: none; }
 .installer-note .mini-list .stars { color: var(--amber); font-weight: 700; white-space: nowrap; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -623,21 +627,41 @@ If you rent or live in a condo, most of these rebates apply only to the building
 <section>
 <h2>Finding an Installer</h2>
 <p>
-<div class="installer-note">
-      <strong>Heat pump installers in Huntington</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://gerkenplumbingandheating.com/" target="_blank" rel="noopener">Gerken Plumbing and Heating</a> <span class="stars">5.0&#9733; (160 reviews)</span> &middot; <a href="tel:6317676565">(631) 767-6565</a></li><li><a href="http://www.vskyelectrichvac.com/" target="_blank" rel="noopener">V-SKY Electric & HVAC</a> <span class="stars">5.0&#9733; (15 reviews)</span> &middot; <a href="tel:6316242191">(631) 624-2191</a> &middot; <a href="mailto:info@vskyelectrichvac.com">info@vskyelectrichvac.com</a></li><li><a href="http://www.imperialplumbingandheating.com/" target="_blank" rel="noopener">Imperial Plumbing & Heating</a> <span class="stars">4.9&#9733; (93 reviews)</span> &middot; <a href="tel:6319421320">(631) 942-1320</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Huntington options.</p>
-    </div>
+<div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Huntington</p>
+            <div class="installer-card">
+        <div><div class="name">Gerken Plumbing and Heating</div><div class="stars">&#9733; 5.0 (160 reviews)</div></div>
+        <a class="site-link" href="https://gerkenplumbingandheating.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">V-SKY Electric & HVAC</div><div class="stars">&#9733; 5.0 (15 reviews)</div></div>
+        <a class="site-link" href="http://www.vskyelectrichvac.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Imperial Plumbing & Heating</div><div class="stars">&#9733; 4.9 (93 reviews)</div></div>
+        <a class="site-link" href="http://www.imperialplumbingandheating.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Huntington</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://www.theenergyhaus.com/" target="_blank" rel="noopener">The Energy Haus Inc.</a> <span class="stars">5.0&#9733; (23 reviews)</span> &middot; <a href="tel:6314708318">(631) 470-8318</a></li><li><a href="http://www.home-energysolutions.com/" target="_blank" rel="noopener">Home Energy Solutions</a> <span class="stars">4.4&#9733; (14 reviews)</span> &middot; <a href="tel:6316730664">(631) 673-0664</a> &middot; <a href="mailto:gdlamay3@gmail.com">gdlamay3@gmail.com</a></li><li><a href="https://www.greenchoiceenergy.com/" target="_blank" rel="noopener">Green Choice Energy</a> <span class="stars">4.2&#9733; (101 reviews)</span> &middot; <a href="tel:8006850960">(800) 685-0960</a> &middot; <a href="mailto:info@GreenChoiceEnergy.com">info@GreenChoiceEnergy.com</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Huntington options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Huntington</p>
+            <div class="installer-card">
+        <div><div class="name">The Energy Haus Inc.</div><div class="stars">&#9733; 5.0 (23 reviews)</div></div>
+        <a class="site-link" href="http://www.theenergyhaus.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Home Energy Solutions</div><div class="stars">&#9733; 4.4 (14 reviews)</div></div>
+        <a class="site-link" href="http://www.home-energysolutions.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Green Choice Energy</div><div class="stars">&#9733; 4.2 (101 reviews)</div></div>
+        <a class="site-link" href="https://www.greenchoiceenergy.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Huntington options.</p>
+        </div>
 
     </p>
 </section>

@@ -247,6 +247,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -419,21 +423,37 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
     </div>
 
-    <div class="installer-note">
-      <strong>Heat pump installers in Escondido</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.thacc.net/area/escondido-ca-ac-repair/?utm_source=google&utm_medium=organic&utm_campaign=gbp_escondido" target="_blank" rel="noopener">Thompson Plumbing Heating and Air Conditioning</a> <span class="stars">5.0&#9733; (246 reviews)</span> &middot; <a href="tel:7609389404">(760) 938-9404</a></li><li><a href="https://www.aelott.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp" target="_blank" rel="noopener">Aelott AC. Heating. Plumbing</a> <span class="stars">5.0&#9733; (237 reviews)</span> &middot; <a href="tel:7607461333">(760) 746-1333</a> &middot; <a href="mailto:richard.johnson@aelott.com">richard.johnson@aelott.com</a></li><li><a href="https://www.maxairsocal.com/" target="_blank" rel="noopener">Max Air HVAC</a> <span class="stars">5.0&#9733; (149 reviews)</span> &middot; <a href="tel:7603093364">(760) 309-3364</a> &middot; <a href="mailto:info@maxairsocal.com">info@maxairsocal.com</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Escondido options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Escondido</p>
+            <div class="installer-card">
+        <div><div class="name">Thompson Plumbing Heating and Air Conditioning</div><div class="stars">&#9733; 5.0 (246 reviews)</div></div>
+        <a class="site-link" href="https://www.thacc.net/area/escondido-ca-ac-repair/?utm_source=google&utm_medium=organic&utm_campaign=gbp_escondido" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Aelott AC. Heating. Plumbing</div><div class="stars">&#9733; 5.0 (237 reviews)</div></div>
+        <a class="site-link" href="https://www.aelott.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Max Air HVAC</div><div class="stars">&#9733; 5.0 (149 reviews)</div></div>
+        <a class="site-link" href="https://www.maxairsocal.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Escondido</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="http://www.sunvantagesolar.com/" target="_blank" rel="noopener">SunVantage Solar</a> <span class="stars">5.0&#9733; (75 reviews)</span> &middot; <a href="tel:7604450054">(760) 445-0054</a></li><li><a href="https://optiononesolar.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp_escondido&utm_content=website_button" target="_blank" rel="noopener">Option One Solar</a> <span class="stars">5.0&#9733; (41 reviews)</span> &middot; <a href="tel:8555026363">(855) 502-6363</a> &middot; <a href="mailto:info@optiononesolar.com">info@optiononesolar.com</a></li><li>Tier Drop Solar <span class="stars">5.0&#9733; (11 reviews)</span> &middot; <a href="tel:8445698437">(844) 569-8437</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Escondido options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Escondido</p>
+            <div class="installer-card">
+        <div><div class="name">SunVantage Solar</div><div class="stars">&#9733; 5.0 (75 reviews)</div></div>
+        <a class="site-link" href="http://www.sunvantagesolar.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Option One Solar</div><div class="stars">&#9733; 5.0 (41 reviews)</div></div>
+        <a class="site-link" href="https://optiononesolar.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp_escondido&utm_content=website_button" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Escondido options.</p>
+        </div>
 
     <div class="highlight-box">
       <h4>Honest math for Escondido</h4>

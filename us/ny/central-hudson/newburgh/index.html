@@ -444,6 +444,10 @@ footer a { color: var(--color-accent-light); }
 .installer-note .mini-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--paper-warm); border-radius: 8px; padding: 8px 12px; }
 .installer-note .mini-list a { color: var(--teal); font-weight: 600; text-decoration: none; }
 .installer-note .mini-list .stars { color: var(--amber); font-weight: 700; white-space: nowrap; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 
 </head>
@@ -624,21 +628,33 @@ If you rent or live in a condo, most rebates apply only to the building owner or
 <section>
 <h2>Finding an Installer</h2>
 <p>
-<div class="installer-note">
-      <strong>Heat pump installers in Newburgh</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.parker-contracting.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp-listing" target="_blank" rel="noopener">Parker Plumbing Heating Cooling</a> <span class="stars">5.0&#9733; (84 reviews)</span> &middot; <a href="tel:8452440159">(845) 244-0159</a> &middot; <a href="mailto:nate@parker-contracting.com">nate@parker-contracting.com</a></li><li><a href="https://uppercutplumbing.com/" target="_blank" rel="noopener">Uppercut Plumbing</a> <span class="stars">4.9&#9733; (151 reviews)</span> &middot; <a href="tel:8456743616">(845) 674-3616</a> &middot; <a href="mailto:trevor@uppercutplumbing.com">trevor@uppercutplumbing.com</a></li><li><a href="https://drtotherescue.com/service-areas/newburgh/?utm_source=gbp&utm_medium=organic" target="_blank" rel="noopener">D. Rohde Home Services</a> <span class="stars">5.0&#9733; (30 reviews)</span></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Newburgh options.</p>
-    </div>
+<div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Newburgh</p>
+            <div class="installer-card">
+        <div><div class="name">Parker Plumbing Heating Cooling</div><div class="stars">&#9733; 5.0 (84 reviews)</div></div>
+        <a class="site-link" href="https://www.parker-contracting.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp-listing" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Uppercut Plumbing</div><div class="stars">&#9733; 4.9 (151 reviews)</div></div>
+        <a class="site-link" href="https://uppercutplumbing.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">D. Rohde Home Services</div><div class="stars">&#9733; 5.0 (30 reviews)</div></div>
+        <a class="site-link" href="https://drtotherescue.com/service-areas/newburgh/?utm_source=gbp&utm_medium=organic" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Newburgh</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://empiresolarny.com/" target="_blank" rel="noopener">Empire Solar Solutions</a> <span class="stars">4.7&#9733; (639 reviews)</span> &middot; <a href="tel:8455613403">(845) 561-3403</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Newburgh options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Newburgh</p>
+            <div class="installer-card">
+        <div><div class="name">Empire Solar Solutions</div><div class="stars">&#9733; 4.7 (639 reviews)</div></div>
+        <a class="site-link" href="https://empiresolarny.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Newburgh options.</p>
+        </div>
 
     </p>
 </section>

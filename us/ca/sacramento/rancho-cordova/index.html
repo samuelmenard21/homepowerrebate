@@ -202,6 +202,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
+.installer-card .stars { color: var(--amber); font-size: 13px; }
+.installer-card .site-link { font-size: 13px; }
 </style>
 </head>
 <body>
@@ -391,21 +395,41 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <div class="eyebrow">The largest single opportunity here</div>
     <h2 id="storage">SMUD's storage enrollment bonus &mdash; up to $10,000</h2>
     <p>Beyond the standard $5,400 battery rebate, SMUD's My Energy Optimizer program pays homeowners to enroll a qualifying battery in demand-response — letting SMUD tap a small amount of stored power during grid stress in exchange for an enrollment bonus that can reach <strong>up to $10,000</strong>. This stacks with the base rebate and with the federal residential clean energy tax credit, and it's the single largest dollar opportunity on this page for households considering both solar and storage together.</p>
-    <div class="installer-note">
-      <strong>Heat pump installers in Rancho Cordova</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://foxfamilyhvac.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp" target="_blank" rel="noopener">Fox Family Heating and Air Conditioning</a> <span class="stars">5.0&#9733; (3221 reviews)</span> &middot; <a href="tel:9168771577">(916) 877-1577</a> &middot; <a href="mailto:customerservice@foxfamilyhvac.com">customerservice@foxfamilyhvac.com</a></li><li><a href="https://www.rayocook.com/" target="_blank" rel="noopener">Ray O. Cook Heating & Air</a> <span class="stars">5.0&#9733; (370 reviews)</span> &middot; <a href="tel:9167846525">(916) 784-6525</a> &middot; <a href="mailto:service@rayocook.com">service@rayocook.com</a></li><li><a href="https://a-classhvac.com/" target="_blank" rel="noopener">A-Class Heating And Air</a> <span class="stars">5.0&#9733; (49 reviews)</span> &middot; <a href="tel:9163429108">(916) 342-9108</a> &middot; <a href="mailto:service@a-classhvac.com">service@a-classhvac.com</a></li>
-      </ul>
-      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Rancho Cordova options.</p>
-    </div>
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Heat pump installers in Rancho Cordova</p>
+            <div class="installer-card">
+        <div><div class="name">Fox Family Heating and Air Conditioning</div><div class="stars">&#9733; 5.0 (3221 reviews)</div></div>
+        <a class="site-link" href="https://foxfamilyhvac.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Ray O. Cook Heating & Air</div><div class="stars">&#9733; 5.0 (370 reviews)</div></div>
+        <a class="site-link" href="https://www.rayocook.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">A-Class Heating And Air</div><div class="stars">&#9733; 5.0 (49 reviews)</div></div>
+        <a class="site-link" href="https://a-classhvac.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
 
-    <div class="installer-note">
-      <strong>Solar installers in Rancho Cordova</strong> &mdash; real, Google-verified local pros (ratings and reviews are genuine, not sample data):
-      <ul class="mini-list">
-        <li><a href="https://www.superiorsolarinc.com/" target="_blank" rel="noopener">SUPERIOR SOLAR, INC</a> <span class="stars">5.0&#9733; (79 reviews)</span> &middot; <a href="tel:8665895626">(866) 589-5626</a></li><li><a href="https://www.luxdeielectric.org/?utm_source=omg-gbp&utm_medium=webclick" target="_blank" rel="noopener">Lux Dei Electric</a> <span class="stars">5.0&#9733; (58 reviews)</span> &middot; <a href="tel:9169572752">(916) 957-2752</a></li><li><a href="https://solarlinkenergy.com/" target="_blank" rel="noopener">SolarLink Energy Construction</a> <span class="stars">4.8&#9733; (42 reviews)</span> &middot; <a href="tel:2135614999">(213) 561-4999</a></li>
-      </ul>
       <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Rancho Cordova options.</p>
-    </div>
+        </div>
+
+    <div class="installer-note-cards">
+      <p style="font-weight:700; color:var(--teal-deep); margin-bottom:10px;">Solar installers in Rancho Cordova</p>
+            <div class="installer-card">
+        <div><div class="name">SUPERIOR SOLAR, INC</div><div class="stars">&#9733; 5.0 (79 reviews)</div></div>
+        <a class="site-link" href="https://www.superiorsolarinc.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">Lux Dei Electric</div><div class="stars">&#9733; 5.0 (58 reviews)</div></div>
+        <a class="site-link" href="https://www.luxdeielectric.org/?utm_source=omg-gbp&utm_medium=webclick" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+      <div class="installer-card">
+        <div><div class="name">SolarLink Energy Construction</div><div class="stars">&#9733; 4.8 (42 reviews)</div></div>
+        <a class="site-link" href="https://solarlinkenergy.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+      </div>
+
+      <p style="margin:10px 0 0;">Browse the <a href="/installers/">full installer directory &rarr;</a> for more Rancho Cordova options.</p>
+        </div>
 
     </div>
 </section>

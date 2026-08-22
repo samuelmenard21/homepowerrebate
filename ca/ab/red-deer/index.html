@@ -132,6 +132,14 @@ strong { color: var(--ink); }
 .nav-desktop-only { display: flex !important; }
 .nav-mobile-only { display: none !important; }
 @media (max-width: 768px) { .nav-desktop-only { display: none !important; } .nav-mobile-only { display: flex !important; } }
+@media (max-width: 640px) {
+  .nav-inner { flex-wrap: nowrap; gap: 6px; padding: 12px 14px; }
+  .logo { font-size: 15px !important; }
+  .logo-mark { width: 22px !important; height: 22px !important; }
+  .nav-mobile-only a { font-size: 12px !important; }
+  .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
+}
+
 .footer { background: var(--ink); color: rgba(250, 247, 242, 0.65); padding: 56px 28px 32px; }
 .footer-inner { max-width: 1180px; margin: 0 auto; }
 .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 32px; border-bottom: 1px solid rgba(250, 247, 242, 0.1); }
@@ -349,9 +357,9 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <button class="unified-carousel-type-btn" data-type="recommended" style="background: #f5efe5; color: #0a2a2e; border: 1px solid #d9d0c1; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;">HomePowerRebate Recommended</button>
   </div>
   <div class="unified-carousel-wrapper" style="display: flex; flex-direction: column;">
-    <div style="position: relative;">
-      <div class="unified-carousel-container" style="background: #fff; border: 2px solid #d9d0c1; border-radius: 12px; padding: 40px 28px; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between;">
-        <img class="unified-carousel-installer-image" src="" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; background: #f0f0f0;" alt="Installer photo" />
+    <div class="unified-carousel-flex-row" style="display: flex; align-items: center; gap: 10px;">
+      <div class="unified-carousel-container" style="order: 1; flex: 1; min-width: 0; background: #fff; border: 2px solid #d9d0c1; border-radius: 12px; padding: 40px 28px; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between;">
+        <img class="unified-carousel-installer-image" src="" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; background: #f0f0f0;" alt="Installer photo" onerror="this.style.display='none';" onload="this.style.display='block';" />
         <div style="display: flex; align-items: start; justify-content: space-between; margin-bottom: 20px;">
           <div>
             <h3 class="unified-carousel-installer-name" style="font-size: 24px; font-weight: 700; color: #0a2a2e; margin-bottom: 4px;">Loading...</h3>
@@ -369,8 +377,8 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
           <a class="unified-carousel-installer-website" href="#" target="_blank" style="flex: 1; text-align: center; background: #d4751c; color: white; padding: 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">&#127760; Website</a>
         </div>
       </div>
-      <button class="unified-carousel-prev" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;">&lsaquo;</button>
-      <button class="unified-carousel-next" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;">&rsaquo;</button>
+      <button class="unified-carousel-prev" style="flex-shrink: 0; background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;">&lsaquo;</button>
+      <button class="unified-carousel-next" style="flex-shrink: 0; order: 2; background: #d4751c; color: white; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;">&rsaquo;</button>
     </div>
     <div class="unified-carousel-mobile-nav" style="display: none; justify-content: center; align-items: center; gap: 12px; margin-top: 16px;">
       <button class="unified-carousel-prev-mobile" style="background: #d4751c; color: white; border: none; width: 44px; height: 44px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;">&lsaquo;</button>
@@ -380,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   </div>
   <div class="unified-carousel-dots" style="display: flex; gap: 6px; align-items: center; justify-content: center; margin-top: 28px;"></div>
   <style>
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       .unified-carousel-prev, .unified-carousel-next { display: none !important; }
       .unified-carousel-mobile-nav { display: flex !important; }
     }

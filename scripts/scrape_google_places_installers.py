@@ -74,10 +74,30 @@ HEATPUMP_GOOD_WORDS = (
 SOLAR_GOOD_TYPES = {"solar_energy_contractor", "electrician", "general_contractor"}
 SOLAR_GOOD_WORDS = ("solar", "photovoltaic", "pv ", "renewable", "energy")
 
-# Always reject these — they're adjacent trades, not installers.
+INSULATION_GOOD_TYPES = {"insulation_contractor", "general_contractor"}
+INSULATION_GOOD_WORDS = (
+    "insulation", "spray foam", "attic", "weatherization", "air sealing",
+    "batt", "blown-in", "blown in",
+)
+
+WINDOWS_GOOD_TYPES = {"general_contractor", "window_installation_service", "door_shop"}
+WINDOWS_GOOD_WORDS = (
+    "window", "door", "glazing", "glass", "fenestration",
+)
+
+EV_CHARGER_GOOD_TYPES = {"electrician", "general_contractor"}
+EV_CHARGER_GOOD_WORDS = (
+    "electric", "electrical", "ev charg", "charging station", "wiring",
+)
+
+# Reject these for every trade — they're never installers, just adjacent
+# noise (duct cleaning shops, supply houses, real estate, etc.). Trade-specific
+# words that used to sit in this generic list (insulation, window) now live
+# in each trade's own GOOD_WORDS instead, since those are exactly what we
+# want to find when searching for insulation/window installers.
 BAD_WORDS = (
     "duct cleaning", "restoration", "supply", "supplies", "handyman",
-    "appliance repair", "roofing", "chimney", "insulation", "window",
+    "appliance repair", "roofing", "chimney",
     "real estate", "property manage",
 )
 
@@ -274,10 +294,13 @@ def is_relevant_installer(name, primary_type, installer_type):
         if bad in name_l:
             return False
 
-    if installer_type == "solar":
-        good_types, good_words = SOLAR_GOOD_TYPES, SOLAR_GOOD_WORDS
-    else:
-        good_types, good_words = HEATPUMP_GOOD_TYPES, HEATPUMP_GOOD_WORDS
+    type_map = {
+        "solar": (SOLAR_GOOD_TYPES, SOLAR_GOOD_WORDS),
+        "insulation": (INSULATION_GOOD_TYPES, INSULATION_GOOD_WORDS),
+        "windows-doors": (WINDOWS_GOOD_TYPES, WINDOWS_GOOD_WORDS),
+        "ev-charger": (EV_CHARGER_GOOD_TYPES, EV_CHARGER_GOOD_WORDS),
+    }
+    good_types, good_words = type_map.get(installer_type, (HEATPUMP_GOOD_TYPES, HEATPUMP_GOOD_WORDS))
 
     if primary_type in good_types:
         return True
@@ -325,6 +348,12 @@ def scrape_installers(api_key, installer_type, province="bc", debug=False):
         queries = ["HVAC contractor", "heating contractor", "furnace repair"]
     elif "solar" in installer_type:
         queries = ["solar installer", "solar panel installation", "solar energy company"]
+    elif installer_type == "insulation":
+        queries = ["insulation contractor", "attic insulation company", "spray foam insulation"]
+    elif installer_type == "windows-doors":
+        queries = ["window installation company", "window and door company", "replacement windows"]
+    elif installer_type == "ev-charger":
+        queries = ["electrician", "ev charger installation", "electrical contractor"]
     else:
         print(f"Unknown type: {installer_type}")
         return []

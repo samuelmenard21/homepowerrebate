@@ -45,17 +45,25 @@ function toggleCityDropdown() {
     modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
   }
 }
-function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny'];
-  regions.forEach(function(r) {
-    const panel = document.getElementById('province-cities-' + r);
-    const tab = document.getElementById('province-tab-' + r);
+function showCountry(country) {
+  const countries = ['ca', 'us'];
+  countries.forEach(function(c) {
+    const panel = document.getElementById('country-regions-' + c);
+    const tab = document.getElementById('country-tab-' + c);
     if (!panel || !tab) return;
-    panel.style.display = (prov === r) ? 'grid' : 'none';
-    tab.style.background = (prov === r) ? 'var(--teal-deep)' : '#fff';
-    tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
+    panel.style.display = (country === c) ? 'grid' : 'none';
+    tab.style.background = (country === c) ? 'var(--teal-deep)' : '#fff';
+    tab.style.color = (country === c) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('click', function(e) {
+  const modal = document.getElementById('city-dropdown-modal');
+  const btn = document.getElementById('city-picker-btn');
+  if (!modal || modal.style.display === 'none') return;
+  if (!modal.contains(e.target) && !btn.contains(e.target)) {
+    modal.style.display = 'none';
+  }
+});
 </script>
 
 <!-- Organization schema -->
@@ -886,106 +894,54 @@ h1, h2, h3, h4, h5, h6 {
       <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
       <a href="/retrofit-assessment/?city=vancouver" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Assessment</a>
     </div>
-    <!-- Pick city button - visible on both -->
-    <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
-      Pick your city
+    <!-- Pick region button - visible on both -->
+    <button onclick="toggleCityDropdown()" id="city-picker-btn" class="nav-pick" style="border:none; cursor:pointer;">
+      Find your region
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
     </button>
   </div>
 
-  <!-- Cities Dropdown Modal (mobile) -->
-  <div id="city-dropdown-modal" style="display:none; position:absolute; top:56px; right:20px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:49; max-width:300px; max-height:70vh; overflow-y:auto;">
+  <!-- Region Dropdown Modal -->
+  <div id="city-dropdown-modal" style="display:none; position:absolute; top:56px; right:20px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:49; width:300px; max-height:75vh; overflow-y:auto;">
     <div style="padding:16px 16px 0;">
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
-        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
-        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">California (US)</button>
-      </div>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Alberta</button>
-        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Nova Scotia</button>
-      </div>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Massachusetts</button>
-        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New York</button>
+      <div style="display:flex; gap:6px; margin-bottom:14px;">
+        <button type="button" onclick="showCountry('ca')" id="country-tab-ca" style="flex:1; padding:10px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">🇨🇦 Canada</button>
+        <button type="button" onclick="showCountry('us')" id="country-tab-us" style="flex:1; padding:10px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">🇺🇸 United States</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
-    <div id="province-cities-on" style="display:grid; gap:8px;">
-      <a href="/ca/on/toronto" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Toronto</a>
-      <a href="/ca/on/ottawa" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Ottawa</a>
-      <a href="/ca/on/mississauga" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Mississauga</a>
-      <a href="/ca/on/brampton" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Brampton</a>
-      <a href="/ca/on/hamilton" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Hamilton</a>
-      <a href="/ca/on/markham" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Markham</a>
-      <a href="/ca/on/vaughan" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Vaughan</a>
-      <a href="/ca/on/richmond-hill" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Richmond Hill</a>
-      <a href="/ca/on/barrie" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Barrie</a>
-      <a href="/ca/on/london" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">London</a>
-      <a href="/ca/on/kitchener" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Kitchener</a>
-      <a href="/ca/on/windsor" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Windsor</a>
-      <a href="/ca/on/oakville" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Oakville</a>
-      <a href="/ca/on/oshawa" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Oshawa</a>
-      <a href="/ca/on/whitby" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Whitby</a>
-      <a href="/ca/on/burlington" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Burlington</a>
-      <a href="/ca/on/cambridge" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Cambridge</a>
-      <a href="/ca/on/greater-sudbury" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Greater Sudbury</a>
-    </div>
-    <div id="province-cities-bc" style="display:none; gap:8px;">
-      <a href="/ca/bc/abbotsford" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Abbotsford</a>
-      <a href="/ca/bc/burnaby" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Burnaby</a>
-      <a href="/ca/bc/chilliwack" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Chilliwack</a>
-      <a href="/ca/bc/coquitlam" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Coquitlam</a>
-      <a href="/ca/bc/fort-st-john" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Fort St. John</a>
-      <a href="/ca/bc/kamloops" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Kamloops</a>
-      <a href="/ca/bc/kelowna" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Kelowna</a>
-      <a href="/ca/bc/langley" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Langley</a>
-      <a href="/ca/bc/maple-ridge" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Maple Ridge</a>
-      <a href="/ca/bc/nanaimo" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Nanaimo</a>
-      <a href="/ca/bc/penticton" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Penticton</a>
-      <a href="/ca/bc/prince-george" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Prince George</a>
-      <a href="/ca/bc/richmond" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Richmond</a>
-      <a href="/ca/bc/squamish" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Squamish</a>
-      <a href="/ca/bc/surrey" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Surrey</a>
-      <a href="/ca/bc/vancouver" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Vancouver</a>
-      <a href="/ca/bc/vernon" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Vernon</a>
-      <a href="/ca/bc/victoria" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Victoria</a>
-    </div>
-    <div id="province-cities-ab" style="display:none; gap:8px;">
-      <a href="/ca/ab/calgary" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Calgary</a>
-      <a href="/ca/ab/edmonton" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Edmonton</a>
-      <a href="/ca/ab/red-deer" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Red Deer</a>
-      <a href="/ca/ab/lethbridge" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Lethbridge</a>
-      <a href="/ca/ab/st-albert" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">St. Albert</a>
-    </div>
-    <div id="province-cities-ns" style="display:none; gap:8px;">
-      <a href="/ca/ns/halifax" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Halifax</a>
-    </div>
-    <div id="province-cities-ma" style="display:none; gap:8px;">
-      <a href="/us/ma/boston" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Boston</a>
-      <a href="/us/ma/worcester" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Worcester</a>
-      <a href="/us/ma/springfield" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Springfield</a>
-      <a href="/us/ma/cambridge" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Cambridge</a>
-      <a href="/us/ma/lowell" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Lowell</a>
-      <a href="/us/ma/brockton" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Brockton</a>
-      <a href="/us/ma/new-bedford" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">New Bedford</a>
-      <a href="/us/ma/quincy" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Quincy</a>
-      <a href="/us/ma/lynn" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Lynn</a>
-      <a href="/us/ma/fall-river" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Fall River</a>
-      <a href="/us/ma/newton" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Newton</a>
-      <a href="/us/ma/somerville" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Somerville</a>
-    </div>
-    <div id="province-cities-ca" style="display:none; gap:8px;">
-      <a href="/us/ca/los-angeles/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Los Angeles</a>
-      <a href="/us/ca/sacramento/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Sacramento</a>
-      <a href="/us/ca/bay-area/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Bay Area</a>
-      <a href="/us/ca/san-diego/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">San Diego</a>
-      <a href="/us/ca/inland-empire/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Inland Empire</a>
-    </div>
-    <div id="province-cities-ny" style="display:none; gap:8px;">
-      <a href="/us/ny/con-edison/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">NYC & Westchester</a>
-      <a href="/us/ny/national-grid/" style="padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center; transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">Upstate (Buffalo, Rochester, Syracuse)</a>
-    </div>
+      <div id="country-regions-ca" style="display:grid; gap:8px;">
+        <a href="/ca/bc/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule); transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">
+          <span style="font-weight:600; font-size:14px;">British Columbia</span>
+          <span style="font-size:12px; color:var(--ink-soft);">18 cities</span>
+        </a>
+        <a href="/ca/on/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule); transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">
+          <span style="font-weight:600; font-size:14px;">Ontario</span>
+          <span style="font-size:12px; color:var(--ink-soft);">18 cities</span>
+        </a>
+        <a href="/ca/ab/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule); transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">
+          <span style="font-weight:600; font-size:14px;">Alberta</span>
+          <span style="font-size:12px; color:var(--ink-soft);">5 cities</span>
+        </a>
+        <a href="/ca/ns/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule); transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">
+          <span style="font-weight:600; font-size:14px;">Nova Scotia</span>
+          <span style="font-size:12px; color:var(--ink-soft);">Halifax</span>
+        </a>
+      </div>
+      <div id="country-regions-us" style="display:none; gap:8px;">
+        <a href="/us/ny/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule); transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">
+          <span style="font-weight:600; font-size:14px;">New York</span>
+          <span style="font-size:12px; color:var(--ink-soft);">15 cities</span>
+        </a>
+        <a href="/us/ca/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule); transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">
+          <span style="font-weight:600; font-size:14px;">California</span>
+          <span style="font-size:12px; color:var(--ink-soft);">5 regions</span>
+        </a>
+        <a href="/us/ma/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule); transition:all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">
+          <span style="font-weight:600; font-size:14px;">Massachusetts</span>
+          <span style="font-size:12px; color:var(--ink-soft);">12 cities</span>
+        </a>
+      </div>
     </div>
   </div>
 </nav>
@@ -1177,10 +1133,64 @@ h1, h2, h3, h4, h5, h6 {
   </div>
 </section>
 
+<!-- CHOOSE YOUR REGION -->
+<div id="city-picker" style="max-width: 1180px; margin: 72px auto 0; padding: 0 28px;">
+  <div class="section-header center" style="margin-bottom:40px;">
+    <div class="section-eyebrow">7 regions, growing every month</div>
+    <h2 class="section-h2">Choose your region</h2>
+    <p class="section-lede">Every province, state, and utility territory has its own rebate stack. Pick yours to see real numbers, not averages.</p>
+  </div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px;">
+
+    <a href="/ca/bc/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">Canada &middot; 18 cities</div>
+      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">British Columbia</h3>
+      <p style="font-size:14px; color:var(--ink-soft);">Income-tiered rebates &mdash; up to $16K on a heat pump alone.</p>
+    </a>
+
+    <a href="/ca/on/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">Canada &middot; 18 cities</div>
+      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Ontario</h3>
+      <p style="font-size:14px; color:var(--ink-soft);">Fuel-tiered rebates, no income test required.</p>
+    </a>
+
+    <a href="/ca/ab/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">Canada &middot; 5 cities</div>
+      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Alberta</h3>
+      <p style="font-size:14px; color:var(--ink-soft);">Fragmented by utility &mdash; we show you what's actually real.</p>
+    </a>
+
+    <a href="/ca/ns/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">Canada &middot; Halifax</div>
+      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Nova Scotia</h3>
+      <p style="font-size:14px; color:var(--ink-soft);">Heat pump program still live in 2026, scaled back from 2025.</p>
+    </a>
+
+    <a href="/us/ny/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 15 cities</div>
+      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">New York</h3>
+      <p style="font-size:14px; color:var(--ink-soft);">Con Edison stacking with state &amp; federal reaches $28K.</p>
+    </a>
+
+    <a href="/us/ca/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 5 regions</div>
+      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">California</h3>
+      <p style="font-size:14px; color:var(--ink-soft);">Federal ITC expired &mdash; state &amp; utility rebates still stack.</p>
+    </a>
+
+    <a href="/us/ma/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 12 cities</div>
+      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Massachusetts</h3>
+      <p style="font-size:14px; color:var(--ink-soft);">Mass Save &mdash; identical statewide rebate stack in every city.</p>
+    </a>
+
+  </div>
+</div>
+
 <!-- REBATE BREAKDOWN: WHAT YOU CAN GET -->
 <div style="max-width: 1100px; margin: 60px auto 40px; padding: 0 28px;">
-  <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Here's what BC is offering right now</h2>
-  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">You don't have to qualify for everything, but you probably qualify for more than you think. Income matters for some. Heat pump alone? Most people get $9K–$16K. Add solar or insulation? You can stack them.</p>
+  <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">What you can typically get, across every region</h2>
+  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">You don't have to qualify for everything, but you probably qualify for more than you think. Exact numbers depend on your region and household income &mdash; pick your region above for precise figures. Heat pump alone? Most homeowners get $4K&ndash;$16K depending on region. Add solar or insulation? You can stack them.</p>
 
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; contain: layout;">
 
@@ -1235,8 +1245,8 @@ h1, h2, h3, h4, h5, h6 {
 
 <!-- QUICK WINS: FREE OFFERINGS -->
 <div style="max-width: 1100px; margin: 60px auto 40px; padding: 0 28px;">
-  <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 24px; color: #111;">Don't want to wait for a big project? Get free money now</h2>
-  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">Some programs don't require you to qualify by income or install anything major. These are immediate wins—free devices and upgrades you can claim today:</p>
+  <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">BC example: don't want to wait for a big project? Get free money now</h2>
+  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">This is what's live in British Columbia right now &mdash; every region has its own version. <a href="#city-picker" style="color:#0d4f5c; font-weight:600;">See your region's quick wins →</a> Some programs don't require you to qualify by income or install anything major. These are immediate wins—free devices and upgrades you can claim today:</p>
 
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; contain: layout;">
 
@@ -1268,8 +1278,8 @@ h1, h2, h3, h4, h5, h6 {
 
 <!-- CASE STUDIES -->
 <div style="max-width: 1100px; margin: 60px auto 40px; padding: 0 28px;">
-  <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Real BC homeowners. Real money.</h2>
-  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">These aren't hypotheticals. Here's what actual homeowners claimed and what their bills look like now:</p>
+  <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Real homeowners. Real money.</h2>
+  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">These aren't hypotheticals. Here's what actual BC homeowners claimed and what their bills look like now &mdash; <a href="#city-picker" style="color:#0d4f5c; font-weight:600;">find examples for your region</a>:</p>
 
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; contain: layout;">
 

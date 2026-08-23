@@ -330,6 +330,7 @@ table.score-table { width: 100%; border-collapse: collapse; font-size: 14px; min
           <h3 id="result-title">&mdash;</h3>
           <p id="result-desc">&mdash;</p>
           <a class="cta" id="result-cta" href="#">See the full rebate guide &rarr;</a>
+          <button type="button" id="share-card-btn" onclick="downloadShareCard()" style="display:block; margin-top:14px; background:var(--teal-deep); color:#fff; border:none; padding:10px 20px; border-radius:999px; font-weight:700; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">&#128247; Download my city's card</button>
         </div>
       </div>
     </div>
@@ -2610,6 +2611,105 @@ function lookupCity() {
     document.querySelectorAll('.score-table tbody tr').forEach(tr => tr.style.background = '');
     row.style.background = 'var(--paper-warm)';
   }
+}
+
+let lastLookupKey = null;
+const _origLookup = lookupCity;
+lookupCity = function() {
+  const sel = document.getElementById('city-select');
+  lastLookupKey = sel.value;
+  _origLookup();
+};
+
+function bandColor(score) {
+  if (score >= 75) return '#2d6a4f';
+  if (score >= 50) return '#d4751c';
+  if (score >= 25) return '#c2410c';
+  return '#a3402f';
+}
+
+function downloadShareCard() {
+  if (!lastLookupKey) return;
+  const item = POWERSCORE_ROWS.find(r => r.key === lastLookupKey);
+  if (!item) return;
+  const regionTotal = POWERSCORE_ROWS.filter(r => r.region === item.region).length;
+  const regionRank = POWERSCORE_ROWS.filter(r => r.region === item.region).sort((a,b)=>b.overall-a.overall).findIndex(r => r.key === lastLookupKey) + 1;
+  const score = Math.round(item.overall);
+  const accent = bandColor(item.overall);
+
+  const W = 1200, H = 630;
+  const canvas = document.createElement('canvas');
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  // background
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#08363f');
+  bg.addColorStop(1, '#0d4f5c');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // brand
+  ctx.font = '600 30px Georgia, serif';
+  ctx.fillStyle = '#faf7f2';
+  ctx.fillText('Home', 64, 76);
+  const homeW = ctx.measureText('Home').width;
+  ctx.fillStyle = '#d4751c';
+  ctx.fillText('Power', 64 + homeW, 76);
+  const powerW = ctx.measureText('Power').width;
+  ctx.fillStyle = '#faf7f2';
+  ctx.fillText('Rebate', 64 + homeW + powerW, 76);
+
+  ctx.font = '700 13px Arial';
+  ctx.fillStyle = 'rgba(250,247,242,.55)';
+  ctx.textAlign = 'left';
+  ctx.fillText('POWERSCORE', 64, 118);
+
+  // gauge circle
+  const cx = 220, cy = 340, r = 130;
+  ctx.lineWidth = 22;
+  ctx.strokeStyle = 'rgba(255,255,255,.12)';
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+  ctx.strokeStyle = accent;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + (item.overall / 100) * Math.PI * 2);
+  ctx.stroke();
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#faf7f2';
+  ctx.font = '700 76px Georgia, serif';
+  ctx.fillText(String(score), cx, cy + 26);
+  ctx.font = '700 15px Arial';
+  ctx.fillStyle = 'rgba(250,247,242,.6)';
+  ctx.fillText('/ 100', cx, cy + 54);
+
+  // right side text
+  ctx.textAlign = 'left';
+  ctx.font = '600 52px Georgia, serif';
+  ctx.fillStyle = '#faf7f2';
+  ctx.fillText(item.label, 420, 260);
+
+  ctx.font = '400 22px Arial';
+  ctx.fillStyle = 'rgba(250,247,242,.7)';
+  ctx.fillText(item.region, 420, 296);
+
+  ctx.font = '700 26px Georgia, serif';
+  ctx.fillStyle = '#d4751c';
+  ctx.fillText('#' + regionRank + ' of ' + regionTotal + ' in ' + item.region, 420, 350);
+
+  ctx.font = '400 19px Arial';
+  ctx.fillStyle = 'rgba(250,247,242,.65)';
+  ctx.fillText('#' + item.rank + ' of ' + POWERSCORE_TOTAL + ' cities nationwide', 420, 384);
+
+  ctx.font = '600 17px Arial';
+  ctx.fillStyle = 'rgba(250,247,242,.85)';
+  ctx.fillText('homepowerrebate.com/powerscore', 420, 440);
+
+  const link = document.createElement('a');
+  link.download = item.label.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-powerscore.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
 }
 
 function showCategory(cat) {

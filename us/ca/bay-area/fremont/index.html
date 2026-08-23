@@ -261,6 +261,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 .installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
 .installer-card .stars { color: var(--amber); font-size: 13px; }
 .installer-card .site-link { font-size: 13px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 
 </head>
@@ -382,6 +386,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128293; Heat Pump</h4>
         <div class="amount">$250&ndash;$500</div>
         <p>PG&amp;E rebate for a qualifying air-source heat pump (3&ndash;4 ton). Typical installed cost is $13,000&ndash;$22,000; expect roughly $1,100/yr in savings versus gas heat and a 13&ndash;15 year payback on the equipment itself.</p>
@@ -390,18 +395,21 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/bay-area/fremont/heat-pump/" style="font-weight:600; font-size:13px;">Full heat pump guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#9728;&#65039; Solar Panels (6kW)</h4>
         <div class="amount">$0 utility rebate</div>
         <p>NEM 3.0 (California's current net-metering rule) cut the value of exported solar power, so PG&amp;E no longer pays a separate cash rebate. A 6kW system runs $15,000&ndash;$18,000 and still saves about $1,400/yr, a ~10-year payback, mostly by offsetting your own daytime usage rather than selling power back.</p>
         <p class="src">Source: CPUC NEM 3.0 / PG&amp;E</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128267; Home Battery (13.5kWh)</h4>
         <div class="amount">$0 utility rebate</div>
         <p>No PG&amp;E cash rebate as of 2026. A typical 13.5kWh battery costs about $12,000 installed; its value is mainly resilience (keeping essentials on during outages) and shifting self-consumption under NEM 3.0, not a fast payback.</p>
         <p class="src">Source: PG&amp;E</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Insulation</h4>
         <div class="amount">$1,600</div>
         <p>Attic, wall, or crawlspace insulation upgrade. Usually the best first dollar spent &mdash; it shrinks how large (and expensive) a heat pump you actually need.</p>
@@ -410,6 +418,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/bay-area/fremont/insulation/" style="font-weight:600; font-size:13px;">Full insulation guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128167; Heat Pump Water Heater</h4>
         <div class="amount">$500</div>
         <p>Replaces a gas or standard electric tank. Income-qualified households may access more through PG&amp;E's Climate Equity Hub (see below).</p>
@@ -418,12 +427,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/bay-area/fremont/water-heater/" style="font-weight:600; font-size:13px;">Full heat pump water heater guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#129003; Windows &amp; Doors</h4>
         <div class="amount">$0</div>
         <p>PG&amp;E does not currently offer a residential windows/doors cash rebate in this territory. Check for state or federal programs before assuming this is a $0 upgrade everywhere.</p>
         <p class="src">Source: PG&amp;E</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128663; EV Charger</h4>
         <div class="amount">$75</div>
         <p>Toward a qualifying Level 2 home charger and installation.</p>
@@ -432,6 +443,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/bay-area/fremont/ev-charger/" style="font-weight:600; font-size:13px;">Full ev charger guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Smart Thermostat</h4>
         <div class="amount">$50</div>
         <p>For an ENERGY STAR certified smart thermostat, typically applied as an instant discount or mail-in rebate.</p>

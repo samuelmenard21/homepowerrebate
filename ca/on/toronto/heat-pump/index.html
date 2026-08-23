@@ -122,6 +122,10 @@ footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--i
 footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 .faq-item { border-bottom: 1px solid var(--rule); padding: 16px 0; }
 .faq-item h3 { margin: 0 0 8px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -223,10 +227,14 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 
     <h2>The breakdown</h2>
     <div class="rebate-grid">
-      <div class="rebate-card"><h4>Enbridge Gas customers (switching from gas)</h4><div class="amount">up to $2,000</div><p>Cold-climate air-source: $500/ton, up to $2,000.</p></div>
-      <div class="rebate-card"><h4>Enbridge Gas customers, ground-source</h4><div class="amount">$3,000</div><p>Flat rebate for ground-source systems.</p></div>
-      <div class="rebate-card"><h4>Electric, oil, propane, or wood heat</h4><div class="amount">up to $7,500</div><p>Cold-climate air-source: $1,250/ton, up to $7,500.</p></div>
-      <div class="rebate-card"><h4>Electric, oil, propane, or wood, ground-source</h4><div class="amount">up to $12,000</div><p>$2,000/ton, up to $12,000 — the largest single HRSP rebate.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Enbridge Gas customers (switching from gas)</h4><div class="amount">up to $2,000</div><p>Cold-climate air-source: $500/ton, up to $2,000.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Enbridge Gas customers, ground-source</h4><div class="amount">$3,000</div><p>Flat rebate for ground-source systems.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Electric, oil, propane, or wood heat</h4><div class="amount">up to $7,500</div><p>Cold-climate air-source: $1,250/ton, up to $7,500.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Electric, oil, propane, or wood, ground-source</h4><div class="amount">up to $12,000</div><p>$2,000/ton, up to $12,000 — the largest single HRSP rebate.</p></div>
     </div>
     <p style="margin-top:16px;">Heat pump <strong>rentals</strong> are also eligible for all fuel types, at the same rate as the Enbridge Gas tier (up to $2,000 air-source, $3,000 ground-source).</p>
     <p>The unit must be on Natural Resources Canada's qualified products list for cold-climate air-source or ground-source heat pumps — no specific brands are pre-approved beyond that list.</p>

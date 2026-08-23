@@ -438,6 +438,10 @@ footer a { color: var(--color-accent-light); }
 .footer-bottom { padding-top: 24px; font-size: 12px; color: rgba(250, 247, 242, 0.35); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 
 </head>
@@ -528,6 +532,7 @@ This guide uses verified 2026 rebate amounts from Con Edison and New York State 
 <div class="rebate-grid">
 
 <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
 <h3>Heat Pump (Single Program)</h3>
 <div class="rebate-amount">$2,000–$10,000</div>
 <div class="rebate-detail">Con Edison utility rebate alone</div>
@@ -535,6 +540,7 @@ This guide uses verified 2026 rebate amounts from Con Edison and New York State 
 </div>
 
 <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
 <h3>Heat Pump (Stacked Total)</h3>
 <div class="rebate-amount">$14,000–$28,000</div>
 <div class="rebate-detail">Con Edison + NYS Clean Heat + Federal HEAR + DAC</div>
@@ -543,6 +549,7 @@ This guide uses verified 2026 rebate amounts from Con Edison and New York State 
 </div>
 
 <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
 <h3>Heat Pump Water Heater</h3>
 <div class="rebate-amount">$1,200–$1,700</div>
 <div class="rebate-detail">Con Edison $1,200 + NYS Clean Heat $500</div>
@@ -550,6 +557,7 @@ This guide uses verified 2026 rebate amounts from Con Edison and New York State 
 </div>
 
 <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
 <h3>Solar Rebate</h3>
 <div class="rebate-amount">$4,200–$10,800</div>
 <div class="rebate-detail">$0.70–$2.00 per watt depending on income</div>
@@ -557,6 +565,7 @@ This guide uses verified 2026 rebate amounts from Con Edison and New York State 
 </div>
 
 <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
 <h3>Battery Storage</h3>
 <div class="rebate-amount">$2,000–$5,000</div>
 <div class="rebate-detail">Per system; varies by size and model</div>
@@ -564,6 +573,7 @@ This guide uses verified 2026 rebate amounts from Con Edison and New York State 
 </div>
 
 <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
 <h3>EV Charger</h3>
 <div class="rebate-amount">$500–$2,000</div>
 <div class="rebate-detail">Con Edison and NYSERDA Level 2 programs</div>
@@ -571,6 +581,7 @@ This guide uses verified 2026 rebate amounts from Con Edison and New York State 
 </div>
 
 <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
 <h3>Smart Thermostat</h3>
 <div class="rebate-amount">$50–$100</div>
 <div class="rebate-detail">Con Edison rebate on WiFi-connected devices</div>
@@ -578,6 +589,7 @@ This guide uses verified 2026 rebate amounts from Con Edison and New York State 
 </div>
 
 <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
 <h3>Insulation & Windows</h3>
 <div class="rebate-amount">Flagged incomplete</div>
 <div class="rebate-detail">We're still researching these categories</div>

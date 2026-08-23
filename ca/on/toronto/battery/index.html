@@ -122,6 +122,10 @@ footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--i
 footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 .faq-item { border-bottom: 1px solid var(--rule); padding: 16px 0; }
 .faq-item h3 { margin: 0 0 8px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -216,8 +220,10 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 
     <h2>The breakdown</h2>
     <div class="rebate-grid">
-      <div class="rebate-card"><h4>Battery alone</h4><div class="amount">up to $5,000</div><p>$300/kWh, capped at 50% of total system cost.</p></div>
-      <div class="rebate-card"><h4>Battery + solar, combined</h4><div class="amount">up to $10,000</div><p>Both rebates stack on the same behind-the-meter project.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Battery alone</h4><div class="amount">up to $5,000</div><p>$300/kWh, capped at 50% of total system cost.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Battery + solar, combined</h4><div class="amount">up to $10,000</div><p>Both rebates stack on the same behind-the-meter project.</p></div>
     </div>
     <p style="margin-top:16px;">Like solar, this rebate is for load-displacement systems only — it's a separate track from net metering.</p>
 

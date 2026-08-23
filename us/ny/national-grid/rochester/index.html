@@ -89,6 +89,10 @@ footer a { color: rgba(250,247,242,.75); }
 .installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
 .installer-card .stars { color: var(--amber); font-size: 13px; }
 .installer-card .site-link { font-size: 13px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 <script type="application/ld+json">
 {
@@ -224,31 +228,37 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>National Grid Rebate</h4>
         <div class="amount">$1,500–$4,000</div>
         <p>Utility-level rebate. Equipment type affects amount.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>NYS Clean Heat</h4>
         <div class="amount">$6,000–$10,000</div>
         <p>State rebate. Income-qualified. Same statewide.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Federal HEAR</h4>
         <div class="amount">$4,000–$8,000</div>
         <p>Federal program authorized through 2030, though funding can change — confirm current status before applying. Income-qualified.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Typical Total</h4>
         <div class="amount">$11,500–$22,000</div>
         <p>Combined rebates from all three programs.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Energy Savings</h4>
         <div class="amount">$1,000–$1,400/year</div>
         <p>Rochester cold climate maximizes heat pump value.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Payback Period</h4>
         <div class="amount">2–5 years</div>
         <p>After rebates applied, system pays for itself quickly.</p>

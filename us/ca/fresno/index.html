@@ -197,6 +197,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -315,6 +319,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128293; Heat Pump</h4>
         <div class="amount">$250&ndash;$500</div>
         <p>A 3-4 ton system typically costs $13,000&ndash;$22,000 installed. Saves roughly $1,000/year, paying back in about 15 years.</p>
@@ -323,18 +328,21 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/fresno/heat-pump/" style="font-weight:600; font-size:13px;">Full heat pump guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#9728;&#65039; Solar (6kW)</h4>
         <div class="amount">$0 utility rebate</div>
         <p>No dedicated PG&amp;E solar rebate. A 6kW system runs $15,000&ndash;$18,000, saving about $1,200/year &mdash; roughly a 13-year payback, faster than the heat pump.</p>
         <p class="src">Source: PG&amp;E program list</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128267; Home Battery (13.5kWh)</h4>
         <div class="amount">$0 utility rebate</div>
         <p>A 13.5kWh battery costs about $12,000 installed, with no dedicated PG&amp;E rebate at this time.</p>
         <p class="src">Source: PG&amp;E program list</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128167; Heat Pump Water Heater</h4>
         <div class="amount">$500</div>
         <p>Replaces a gas or electric tank water heater.</p>
@@ -343,6 +351,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/fresno/water-heater/" style="font-weight:600; font-size:13px;">Full heat pump water heater guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Insulation</h4>
         <div class="amount">$1,600</div>
         <p>Attic, wall or crawlspace insulation. Makes your heat pump smaller and cheaper to run.</p>
@@ -351,12 +360,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/fresno/insulation/" style="font-weight:600; font-size:13px;">Full insulation guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#129003; Windows</h4>
         <div class="amount">$0 utility rebate</div>
         <p>No dedicated PG&amp;E windows rebate at this time. The federal energy-efficiency tax credit may still apply.</p>
         <p class="src">Source: PG&amp;E program list</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128663; EV Charger</h4>
         <div class="amount">$500</div>
         <p>Toward a Level 2 home charger.</p>
@@ -365,6 +376,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/fresno/ev-charger/" style="font-weight:600; font-size:13px;">Full ev charger guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Smart Thermostat</h4>
         <div class="amount">$50</div>
         <p>For a qualifying connected thermostat.</p>

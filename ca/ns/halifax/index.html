@@ -144,6 +144,10 @@ strong { color: var(--ink); }
 .installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
 .installer-card .stars { color: var(--amber); font-size: 13px; }
 .installer-card .site-link { font-size: 13px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -252,6 +256,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128293; Heat Pump</h4>
         <div class="amount">Up to $5,000 (all) / $15,000 (moderate income)</div>
         <p>The big stackable Home Heating System Rebates Program closed Dec 31, 2025, but <a href="https://www.efficiencyns.ca/tools-and-resources/energy-efficient-products/heat-pump-rebates" target="_blank" rel="noopener">Efficiency Nova Scotia still offers up to $5,000</a> to any homeowner, up to $15,000 for moderate-income households, and free installation for income-qualified homes through <a href="https://www.efficiencyns.ca/programs-rebates/homewarming" target="_blank" rel="noopener">HomeWarming</a>.</p>
@@ -259,11 +264,13 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/ca/ns/halifax/heat-pump" style="font-weight:600; font-size:13px;">Full heat pump guide &rarr;</a></p>
       </div>
       <div class="rebate-card free">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Insulation & Air Sealing</h4>
         <div class="amount">Free</div>
         <p>Still active as a no-cost upgrade for eligible Halifax households through <a href="https://www.efficiencyns.ca/programs-rebates/homewarming" target="_blank" rel="noopener">HomeWarming</a>.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#9728;&#65039; Solar</h4>
         <div class="amount">$0.60/watt + Solar City</div>
         <p>The <a href="https://www.efficiencyns.ca/tools-and-resources/energy-efficient-products/solar-rebates" target="_blank" rel="noopener">provincial $0.60/watt rebate</a> nets roughly $6,000 on a 10kW system. Halifax also runs its own <a href="https://www.halifax.ca/home-property/solar-projects/about-solar-city" target="_blank" rel="noopener"><strong>Solar City program</strong></a> &mdash; property-assessed financing at 4.75% fixed over 10 years, no upfront cost, repaid through your property tax bill via a Local Improvement Charge. It's financing, not a rebate, but it removes the cash-flow barrier that stops a lot of homeowners from going solar.</p>
@@ -271,6 +278,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/ca/ns/halifax/solar" style="font-weight:600; font-size:13px;">Full solar guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128167; Water Heater</h4>
         <div class="amount">Up to $2,500</div>
         <p>Still active for efficient home water heating systems. <a href="https://www.efficiencyns.ca/tools-and-resources/energy-efficient-products/water-heating-rebates" target="_blank" rel="noopener">Water heating rebates &rarr;</a></p>
@@ -278,6 +286,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/ca/ns/halifax/water-heater" style="font-weight:600; font-size:13px;">Full water heater guide &rarr;</a></p>
       </div>
       <div class="rebate-card free">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Smart Thermostat</h4>
         <div class="amount">Free</div>
         <p>Free product and installation still offered via <a href="https://www.efficiencyns.ca/programs-rebates/free-product-installation" target="_blank" rel="noopener">Efficiency Nova Scotia</a>.</p>

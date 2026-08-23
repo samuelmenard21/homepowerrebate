@@ -147,6 +147,10 @@ strong { color: var(--ink); }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -261,11 +265,13 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <h2>What you can actually claim</h2>
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h3>🔥 Heat Pump</h3>
         <div class="amount">$500–$2,000/unit</div>
         <p>Through <a href="https://www.enmax.com/electricity-and-natural-gas" target="_blank" rel="noopener">ENMAX</a> or <a href="https://energy.atco.com/en-ca" target="_blank" rel="noopener">ATCO Gas</a> for ENERGY STAR cold-climate models. Availability changes through the year.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h3>☀️ Solar</h3>
         <div class="amount">$0–$2,000</div>
         <p>No single province-wide solar rebate like BC or Ontario. Utility-specific programs (ENMAX, EPCOR) offer roughly $0–$2,000 depending on your provider and current availability — Alberta's deregulated electricity market means this varies by city. Net metering is your other main mechanism.</p>
@@ -276,11 +282,13 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p>No dedicated battery incentive currently exists.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h3>🧱 Insulation</h3>
         <div class="amount">$1,000–$5,000</div>
         <p>Via CEIP (up to 10% incentive) plus utility rebates. <a href="https://www.cmhc-schl.gc.ca/consumers/home-buying/mortgage-loan-insurance-for-consumers/cmhc-eco-products" target="_blank" rel="noopener">CMHC's separate 25% mortgage insurance refund</a> may also apply.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h3>💧 Water Heater</h3>
         <div class="amount">Financing only</div>
         <p>No flat rebate — available through CEIP financing or utility-specific offers.</p>

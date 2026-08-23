@@ -122,6 +122,10 @@ footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--i
 footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 .faq-item { border-bottom: 1px solid var(--rule); padding: 16px 0; }
 .faq-item h3 { margin: 0 0 8px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -216,12 +220,18 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 
     <h2>The breakdown</h2>
     <div class="rebate-grid">
-      <div class="rebate-card"><h4>Heat pump clothes dryer</h4><div class="amount">$200</div></div>
-      <div class="rebate-card"><h4>Induction cooktop / range</h4><div class="amount">$150</div></div>
-      <div class="rebate-card"><h4>Washing machine</h4><div class="amount">$75</div></div>
-      <div class="rebate-card"><h4>Fridge</h4><div class="amount">$50</div></div>
-      <div class="rebate-card"><h4>Freezer</h4><div class="amount">$50</div></div>
-      <div class="rebate-card"><h4>Dishwasher</h4><div class="amount">$25</div></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Heat pump clothes dryer</h4><div class="amount">$200</div></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Induction cooktop / range</h4><div class="amount">$150</div></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Washing machine</h4><div class="amount">$75</div></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Fridge</h4><div class="amount">$50</div></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Freezer</h4><div class="amount">$50</div></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Dishwasher</h4><div class="amount">$25</div></div>
     </div>
     <p style="margin-top:16px;">You must be replacing an existing electric appliance with a new (not used or refurbished) unit, and be a residential customer connected to Ontario's electricity grid. Check the qualified products list for your specific category before buying.</p>
 

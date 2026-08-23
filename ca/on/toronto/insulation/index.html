@@ -122,6 +122,10 @@ footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--i
 footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 .faq-item { border-bottom: 1px solid var(--rule); padding: 16px 0; }
 .faq-item h3 { margin: 0 0 8px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -224,20 +228,31 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     <h2>The breakdown</h2>
     <h3>No assessment needed — attic &amp; cathedral ceiling</h3>
     <div class="rebate-grid">
-      <div class="rebate-card"><h4>Attic, from ≤R-12</h4><div class="amount">up to $1,250</div><p>Must reach R-50 minimum across 100% of the roof assembly.</p></div>
-      <div class="rebate-card"><h4>Attic, from R-12&ndash;25</h4><div class="amount">up to $1,000</div><p>Same R-50 minimum target.</p></div>
-      <div class="rebate-card"><h4>Attic, from R-25&ndash;35</h4><div class="amount">up to $800</div><p>Smaller gap, smaller rebate.</p></div>
-      <div class="rebate-card"><h4>Cathedral ceiling / flat roof</h4><div class="amount">up to $750</div><p>From ≤R-25 to R-28 minimum, or up to $650 from ≤R-12 to R-20 minimum.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Attic, from ≤R-12</h4><div class="amount">up to $1,250</div><p>Must reach R-50 minimum across 100% of the roof assembly.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Attic, from R-12&ndash;25</h4><div class="amount">up to $1,000</div><p>Same R-50 minimum target.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Attic, from R-25&ndash;35</h4><div class="amount">up to $800</div><p>Smaller gap, smaller rebate.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Cathedral ceiling / flat roof</h4><div class="amount">up to $750</div><p>From ≤R-25 to R-28 minimum, or up to $650 from ≤R-12 to R-20 minimum.</p></div>
     </div>
     <h3 style="margin-top:24px;">Assessment required — walls, foundation, crawlspace</h3>
     <div class="rebate-grid">
-      <div class="rebate-card"><h4>Exterior wall</h4><div class="amount">up to $3,600</div><p>To at least R-20 across 100% of exterior wall area.</p></div>
-      <div class="rebate-card"><h4>Foundation / basement wall</h4><div class="amount">up to $1,500</div></div>
-      <div class="rebate-card"><h4>Basement slab</h4><div class="amount">up to $500</div><p>Insulate 50%+ with minimum R-3.5 addition.</p></div>
-      <div class="rebate-card"><h4>Foundation header</h4><div class="amount">up to $300</div><p>Insulate 80%+ with minimum R-20 addition.</p></div>
-      <div class="rebate-card"><h4>Crawlspace wall</h4><div class="amount">up to $1,200</div></div>
-      <div class="rebate-card"><h4>Crawlspace ceiling</h4><div class="amount">up to $1,200</div><p>A separate measure from the crawlspace wall — both can be claimed.</p></div>
-      <div class="rebate-card"><h4>Exposed floor</h4><div class="amount">$300</div></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Exterior wall</h4><div class="amount">up to $3,600</div><p>To at least R-20 across 100% of exterior wall area.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Foundation / basement wall</h4><div class="amount">up to $1,500</div></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Basement slab</h4><div class="amount">up to $500</div><p>Insulate 50%+ with minimum R-3.5 addition.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Foundation header</h4><div class="amount">up to $300</div><p>Insulate 80%+ with minimum R-20 addition.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Crawlspace wall</h4><div class="amount">up to $1,200</div></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Crawlspace ceiling</h4><div class="amount">up to $1,200</div><p>A separate measure from the crawlspace wall — both can be claimed.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Exposed floor</h4><div class="amount">$300</div></div>
     </div>
     <div class="highlight-box">
       <h4>The attic pays more here than on the no-assessment path</h4>

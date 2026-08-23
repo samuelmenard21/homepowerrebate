@@ -215,6 +215,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 .installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
 .installer-card .stars { color: var(--amber); font-size: 13px; }
 .installer-card .site-link { font-size: 13px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -323,36 +327,42 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128293; Heat Pump</h4>
         <div class="amount">$4,000–$7,500</div>
         <p>Income-tiered. Most Babylon households qualify for the full $7,500. Installed cost usually $13,000–$22,000, with roughly $800/year savings and ~18-year payback on unrebated portion.</p>
         <p class="src">Source: PSEG Long Island 2026 heat pump rebate</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128267; Home Battery (13.5 kWh)</h4>
         <div class="amount">$2,700</div>
         <p>$200/kWh through NYSERDA. Typical 13.5 kWh system costs ~$12,000. Also provides backup during outages.</p>
         <p class="src">Source: PSEG Long Island + NYSERDA</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128167; Heat Pump Water Heater</h4>
         <div class="amount">$1,200</div>
         <p>Replaces gas or electric tank with a unit that uses a fraction of the energy.</p>
         <p class="src">Source: PSEG Long Island 2026 program</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#9728;&#65039; Solar Panels</h4>
         <div class="amount">$0 utility rebate</div>
         <p>PSEG Long Island does not currently offer a utility solar rebate. Federal solar tax credit expired December 31, 2025. Solar is now a savings-only decision.</p>
         <p class="src">Source: PSEG Long Island program listing</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128663; EV Charger (Level 2)</h4>
         <div class="amount">$100–$400</div>
         <p>Toward home charger installation through PSEG programs.</p>
         <p class="src">Source: PSEG Long Island 2026 EV program</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Smart Thermostat</h4>
         <div class="amount">$85–$100</div>
         <p>Rebate on a qualifying smart thermostat.</p>

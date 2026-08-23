@@ -154,6 +154,10 @@ footer a { color: rgba(250,247,242,.75); }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -264,31 +268,37 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Con Edison Rebate</h4>
         <div class="amount">$2,000–$10,000</div>
         <p>Utility-level rebate. Exact amount depends on equipment type and home size. Pre-approval required.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>NYS Clean Heat</h4>
         <div class="amount">$6,000–$10,000</div>
         <p>State rebate for low-income households. Income-qualified. Fastest to process.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Federal HEAR</h4>
         <div class="amount">$4,000–$8,000</div>
         <p>IRA rebate, authorized through 2030 — funding and rules can change, so confirm current status before applying. Income-qualified ($75K–$100K+ thresholds).</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>DAC Bonus</h4>
         <div class="amount">+$1,000–$2,000</div>
         <p>Disadvantaged census tract bonus. Check NYC DAC mapping tool to qualify.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>EmPower+ (Income-Qualified)</h4>
         <div class="amount">Up to $14,000</div>
         <p>100% coverage under 60% AMI. Free heat pump installation. No out-of-pocket cost.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Con Edison Pre-Approval</h4>
         <div class="amount">2–4 weeks</div>
         <p>Required timeline before work starts. Apply on Con Edison's website with home details.</p>

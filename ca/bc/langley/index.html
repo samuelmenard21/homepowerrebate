@@ -304,6 +304,10 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 <script>
 // A/B Test: CTA Variant Assignment
@@ -661,36 +665,43 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128293; Heat Pump</h4>
         <div class="amount">$4,000&ndash;$13,000</div>
         <p>Replaces a gas furnace or electric baseboards. Income-qualified reaches up to $13,000 &mdash; an electrical panel upgrade can push this higher (ask your installer for the current combined ceiling) &mdash; and Langley adds up to $2,000 more (below).</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#9728;&#65039; Solar Panels (8&ndash;12 kW)</h4>
         <div class="amount">$5,000</div>
         <p>BC Hydro rebate. Roughly 11&ndash;14 year payback in Langley after the rebate, faster as rates rise.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128267; Home Battery</h4>
         <div class="amount">$1,500&ndash;$5,000</div>
         <p>Up to $1,500 paired with solar, or up to $5,000 when enrolled in BC Hydro's Peak Saver program &mdash; and it keeps the lights on during outages. A standalone battery with neither solar nor Peak Saver enrollment isn't eligible for a rebate at all, so enroll in Peak Saver within 14 days of install.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Insulation</h4>
         <div class="amount">up to $5,500</div>
         <p>Attic, walls, crawlspace. Usually the best first dollar you spend &mdash; it makes the heat pump smaller and cheaper.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128167; Heat Pump Water Heater</h4>
         <div class="amount">$1,000&ndash;$3,000</div>
         <p>Replaces a gas or electric tank. Amount depends on your utility and income.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#129003; Windows &amp; Doors</h4>
         <div class="amount">up to $2,000</div>
         <p>ENERGY STAR windows and exterior doors that replace older, draftier units.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128663; EV Charger</h4>
         <div class="amount">up to $550</div>
         <p>$350 for a home Level 2 charger, plus $200 for a power-management device that avoids a panel upgrade.</p>
@@ -715,11 +726,13 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
     <p>Storm-season outages are the real driver here. A home battery keeps your essentials &mdash; fridge, lights, internet, a heat-pump circuit &mdash; running when the grid drops, and BC Hydro pays up to $5,000 toward an approved one through Peak Saver. Solar's job in Langley is mainly to recharge that battery through the day.</p>
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128267; Battery &mdash; the main event here</h4>
         <div class="amount">$1,500&ndash;$5,000</div>
         <p>Backup through outages, plus the rebate. It must be on BC Hydro's approved list or you get $0 &mdash; the Tesla Powerwall doesn't qualify. <a href="/eguana" style="color:var(--teal);font-weight:600;">Which batteries qualify &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#9728;&#65039; Solar &mdash; the recharger</h4>
         <div class="amount">$5,000</div>
         <p>At ~~3.5 sun hours, think of solar here as what tops up your battery through the day, not a fast-payback play on its own.</p>
@@ -867,18 +880,21 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
     <p>The heat pump rebate isn't one number &mdash; it scales with household income. These are the general CleanBC tiers; your exact amount is confirmed by the EnerGuide evaluation. The <a href="/retrofit-assessment?city=Langley" style="color:var(--teal);font-weight:600;">assessment tool</a> estimates your tier in a minute.</p>
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Lower income</h4>
         <p><strong>Highest support</strong></p>
         <div class="amount">up to $13,000</div>
         <p>Plus possible free-install (ECAP) and federal Affordability top-ups.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Middle income</h4>
         <p><strong>Enhanced support</strong></p>
         <div class="amount">up to $12,000</div>
         <p>Sliding scale between the standard and lower-income amounts.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Standard</h4>
         <p><strong>No income test</strong></p>
         <div class="amount">$4,000</div>
@@ -971,31 +987,37 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127788;&#65039; Draftproof for pocket change</h4>
         <div class="amount">~$1&ndash;$9</div>
         <p>Door sweeps (~$9) and foam outlet gaskets (~$1 each) stop the leaks that make your heating work overtime. <a href="https://www.bchydro.com/powersmart/residential/tips-technologies/draftproofing.html" target="_blank" rel="noopener">How-to &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Smart baseboard controls</h4>
         <div class="amount">~$150/yr</div>
         <p>Turning heat off in empty rooms automatically can save about $150 a year. A smart thermostat that drops to 16&deg;C when you're out saves ~$55/yr. <a href="https://www.bchydro.com/powersmart/residential/tips-technologies/smart-home-devices.html" target="_blank" rel="noopener">Smart devices &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128347; Time-of-Day rate</h4>
         <div class="amount">optional, free</div>
         <p>Shift EV charging, laundry and the dishwasher to 11 p.m.&ndash;7 a.m. and avoid the 4&ndash;9 p.m. peak. Best for EV owners. <a href="https://www.bchydro.com/powersmart/residential/tips-technologies/time-of-day.html" target="_blank" rel="noopener">See the rate &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#129003; Work your window coverings</h4>
         <div class="amount">$0</div>
         <p>Open south-facing blinds on winter days for free heat; close them at night to keep it in. Reverse in summer. <a href="https://www.bchydro.com/powersmart/residential/tips-technologies/windows-coverings.html" target="_blank" rel="noopener">Seasonal tips &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128167; Water &amp; laundry</h4>
         <div class="amount">$0</div>
         <p>Wash in cold water, run full loads only, and insulate exposed hot-water pipes. Small habits, steady savings.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128295; Keep your heat pump sharp</h4>
         <div class="amount">&mdash;</div>
         <p>Replace filters yearly, hold a steady temperature, and use "heat"/"cool" not "auto." New to heat pumps? <a href="/blog/heat-pumps-explained-bc" style="color:var(--teal);font-weight:600;">Read our explainer &rarr;</a></p>

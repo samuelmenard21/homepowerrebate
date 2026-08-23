@@ -251,6 +251,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 .installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
 .installer-card .stars { color: var(--amber); font-size: 13px; }
 .installer-card .site-link { font-size: 13px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 
 </head>
@@ -374,6 +378,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128293; Heat Pump</h4>
         <div class="amount">$3,100</div>
         <p>A TECH Clean California incentive for installing a heat pump, paid through SCE's territory &mdash; a meaningfully bigger rebate than San Diego's SDG&E offers, especially with DAC/hard-to-reach enhancements for qualifying households.</p>
@@ -382,24 +387,28 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/inland-empire/san-bernardino/heat-pump/" style="font-weight:600; font-size:13px;">Full heat pump guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#9728;&#65039; Solar Panels (~6&nbsp;kW)</h4>
         <div class="amount">$0 utility rebate</div>
         <p>SCE doesn't run a cash solar rebate program &mdash; the return comes from the federal tax credit and net billing, not a utility check.</p>
         <p class="src">Source: SCE net billing / federal ITC</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128267; Home Battery</h4>
         <div class="amount">$0 utility rebate</div>
         <p>SCE itself doesn't pay a battery rebate, but California's statewide Self-Generation Incentive Program (SGIP) is still available in SCE territory for households that qualify, especially equity and resiliency tiers.</p>
         <p class="src">Source: California SGIP</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Insulation</h4>
         <div class="amount">$0</div>
         <p>We haven't confirmed a dedicated SCE cash rebate for insulation in San Bernardino. Federal tax credits (25C) may still apply &mdash; check with your tax preparer.</p>
         <p class="src">Source: SCE program list (verified Aug 2026)</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128167; Water Heater</h4>
         <div class="amount">$500</div>
         <p>Rebate toward a qualifying heat pump water heater, replacing a gas or electric tank.</p>
@@ -408,12 +417,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/inland-empire/san-bernardino/water-heater/" style="font-weight:600; font-size:13px;">Full heat pump water heater guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#129003; Windows</h4>
         <div class="amount">$0</div>
         <p>We haven't confirmed a dedicated SCE cash rebate for windows in San Bernardino. Federal tax credits (25C) may still apply.</p>
         <p class="src">Source: SCE program list (verified Aug 2026)</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128663; EV Charger</h4>
         <div class="amount">$500</div>
         <p>A flat rebate toward a Level 2 home EV charger.</p>
@@ -422,6 +433,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/inland-empire/san-bernardino/ev-charger/" style="font-weight:600; font-size:13px;">Full ev charger guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Smart Thermostat</h4>
         <div class="amount">$50</div>
         <p>A modest rebate on qualifying smart thermostats.</p>

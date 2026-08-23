@@ -251,6 +251,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 .installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
 .installer-card .stars { color: var(--amber); font-size: 13px; }
 .installer-card .site-link { font-size: 13px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 
 </head>
@@ -374,6 +378,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128293; Heat Pump</h4>
         <div class="amount">$250&ndash;$500</div>
         <p>SDG&E's standard heat pump rebate &mdash; the lowest base rebate of the California utilities we cover, but a 3&ndash;4 ton system still saves real money on your bill every month.</p>
@@ -382,12 +387,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/san-diego/chula-vista/heat-pump/" style="font-weight:600; font-size:13px;">Full heat pump guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#9728;&#65039; Solar Panels (~6&nbsp;kW)</h4>
         <div class="amount">$0 utility rebate</div>
         <p>SDG&E doesn't run a cash solar rebate program &mdash; the return comes from the federal tax credit and net billing, not a utility check.</p>
         <p class="src">Source: SDG&E net billing / federal ITC</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128267; Home Battery</h4>
         <div class="amount">$1,000+ (SGIP)</div>
         <p>California's Self-Generation Incentive Program (SGIP) pays toward home batteries statewide, including SDG&E territory &mdash; equity and resiliency tiers can pay significantly more.</p>
@@ -396,12 +403,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/san-diego/chula-vista/battery/" style="font-weight:600; font-size:13px;">Full home battery guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Insulation</h4>
         <div class="amount">$0</div>
         <p>We haven't confirmed a dedicated SDG&E cash rebate for insulation in Chula Vista. Federal tax credits (25C) may still apply &mdash; check with your tax preparer.</p>
         <p class="src">Source: SDG&E program list (verified Aug 2026)</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128167; Water Heater</h4>
         <div class="amount">$250</div>
         <p>Rebate toward a qualifying heat pump water heater, replacing a gas or electric tank.</p>
@@ -410,12 +419,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/san-diego/chula-vista/water-heater/" style="font-weight:600; font-size:13px;">Full heat pump water heater guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#129003; Windows</h4>
         <div class="amount">$0</div>
         <p>We haven't confirmed a dedicated SDG&E cash rebate for windows in Chula Vista. Federal tax credits (25C) may still apply.</p>
         <p class="src">Source: SDG&E program list (verified Aug 2026)</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128663; EV Charger</h4>
         <div class="amount">$500</div>
         <p>A flat rebate toward a Level 2 home EV charger.</p>
@@ -424,6 +435,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/san-diego/chula-vista/ev-charger/" style="font-weight:600; font-size:13px;">Full ev charger guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Smart Thermostat</h4>
         <div class="amount">$50</div>
         <p>A modest rebate on qualifying smart thermostats.</p>

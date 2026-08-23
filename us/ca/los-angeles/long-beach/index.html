@@ -273,6 +273,10 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 .installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
 .installer-card .stars { color: var(--amber); font-size: 13px; }
 .installer-card .site-link { font-size: 13px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -391,6 +395,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128293; Heat Pump</h4>
         <div class="amount">$2,500/ton</div>
         <p>3&ndash;4 ton systems typically qualify for $7,500&ndash;$10,000+. Installed cost usually runs $13,000&ndash;$22,000, with roughly $800/year in heating savings and an ~18-year simple payback on the unrebated portion.</p>
@@ -399,12 +404,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/los-angeles/long-beach/heat-pump/" style="font-weight:600; font-size:13px;">Full heat pump guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#9728;&#65039; Solar Panels (6 kW)</h4>
         <div class="amount">$0 utility rebate</div>
         <p>A 6 kW system typically costs $15,000&ndash;$18,000 and saves about $1,200/year, paying back in roughly 13 years &mdash; on savings alone, since LADWP does not currently offer a solar installation rebate.</p>
         <p class="src">Source: LADWP program listing; no residential solar rebate currently offered</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128267; Home Battery (13.5 kWh)</h4>
         <div class="amount">$5,400</div>
         <p>Against a typical installed cost around $12,000. Keeps essential circuits running during an outage, on top of the electricity-bill savings.</p>
@@ -413,12 +420,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/los-angeles/long-beach/battery/" style="font-weight:600; font-size:13px;">Full home battery guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Insulation</h4>
         <div class="amount">$0</div>
         <p>No dedicated LADWP rebate currently offered for insulation. Still worth doing first &mdash; it shrinks the heat pump you need and cuts bills year-round.</p>
         <p class="src">Source: LADWP program listing</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128167; Heat Pump Water Heater</h4>
         <div class="amount">$2,500</div>
         <p>Replaces a gas or electric tank with a unit that uses a fraction of the energy.</p>
@@ -427,12 +436,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/los-angeles/long-beach/water-heater/" style="font-weight:600; font-size:13px;">Full heat pump water heater guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#129003; Windows &amp; Doors</h4>
         <div class="amount">$0</div>
         <p>No dedicated LADWP rebate currently offered for windows or doors.</p>
         <p class="src">Source: LADWP program listing</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128663; EV Charger</h4>
         <div class="amount">$1,000</div>
         <p>Toward a Level 2 home charger installation.</p>
@@ -441,6 +452,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ca/los-angeles/long-beach/ev-charger/" style="font-weight:600; font-size:13px;">Full ev charger guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Smart Thermostat</h4>
         <div class="amount">$75</div>
         <p>A straightforward rebate on a qualifying smart thermostat.</p>

@@ -148,6 +148,10 @@ footer a { color: rgba(250,247,242,.75); }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -260,41 +264,49 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Heat Pump (whole-home)</h4>
         <div class="amount">$2,650/ton, up to $8,500</div>
         <p>Requires R-32 or R-454B refrigerant. R-410A systems no longer qualify as of January 1, 2026.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Heat Pump (partial-home)</h4>
         <div class="amount">$1,125/ton</div>
         <p>For a heat pump that covers part of the home instead of a full system.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Heat Pump (basic)</h4>
         <div class="amount">$250/ton</div>
         <p>R-32 or R-454B refrigerant only.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Heat Pump Water Heater</h4>
         <div class="amount">$750</div>
         <p>ENERGY STAR certified equipment required.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Insulation</h4>
         <div class="amount">75&ndash;100% off</div>
         <p>75% covered for all Salem homeowners; 100% for income-qualified households.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Solar (SMART)</h4>
         <div class="amount">Waitlist</div>
         <p>SMART program capacity is currently on a waitlist in parts of the state — confirm current status with Mass Save before assuming a payment rate.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Battery Storage</h4>
         <div class="amount">$2,500</div>
         <p>Toward a qualifying home battery.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Smart Thermostat</h4>
         <div class="amount">$100</div>
         <p>Often installed free during your home energy assessment.</p>

@@ -190,6 +190,10 @@ footer a { color: rgba(250,247,242,0.75); }
 .installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
 .installer-card .stars { color: var(--amber); font-size: 13px; }
 .installer-card .site-link { font-size: 13px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -294,48 +298,56 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Heat Pump</h4>
         <div class="amount">$4,000–$7,500</div>
         <p>PSEG rebate tiered by income. Market-rate: $4,000. Moderate-income (under 80% AMI): $5,000. Income-qualified (under 60% state median): $7,500.</p>
         <p class="src">Source: PSEG Long Island, 2026 programs</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Heat Pump Water Heater</h4>
         <div class="amount">$1,200</div>
         <p>Direct PSEG rebate for qualifying ENERGY STAR heat pump water heaters. One rebate per account every 5 years.</p>
         <p class="src">Source: PSEG Long Island rebate programs</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Smart Thermostat</h4>
         <div class="amount">$85–$100</div>
         <p>Rebate for qualifying smart thermostat. Limit 2 per account per calendar year (connected or learning models).</p>
         <p class="src">Source: PSEG Long Island rebate programs</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>EV Charger (Level 2)</h4>
         <div class="amount">$100–$400</div>
         <p>Standard rebate $100. Additional $300 available if in Disadvantaged Community or on Household Assistance Program, total $400.</p>
         <p class="src">Source: PSEG Long Island EV rebate program, 2026</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Insulation &amp; Air Sealing</h4>
         <div class="amount">$2,500–$3,000</div>
         <p>Through New York State NYSERDA programs. Weatherization packages including sealing, air leaks, and insulation upgrades.</p>
         <p class="src">Source: NYSERDA energy efficiency programs</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Windows &amp; Doors</h4>
         <div class="amount">$2,000</div>
         <p>Add-on to insulation package through NYSERDA. Covers replacement of qualifying ENERGY STAR windows and doors.</p>
         <p class="src">Source: NYSERDA energy efficiency add-ons</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Home Battery Storage</h4>
         <div class="amount">$200/kWh (NYSERDA)</div>
         <p>New York state battery rebate approximately $200 per kWh of usable capacity, plus PSEG demand-response incentives. Typical 13.5 kWh system qualifies for $2,700+.</p>
         <p class="src">Source: NYSERDA battery storage program</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>Solar (Residential)</h4>
         <div class="amount">$0 (PSEG)</div>
         <p>PSEG does not offer residential solar rebates. Limited availability through NY-Sun Affordable Solar (~$0.40/watt for low-income). Most Islip homeowners face savings-only solar economics with no utility rebate.</p>

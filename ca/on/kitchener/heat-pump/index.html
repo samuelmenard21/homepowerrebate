@@ -121,6 +121,10 @@ strong { color: var(--ink); }
 .faq-item { border-bottom: 1px solid var(--rule); padding: 16px 0; }
 .faq-item h3 { margin: 0 0 8px; }
 footer.site-footer { padding: 40px 0; text-align: center; font-size: 13px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -216,10 +220,14 @@ footer.site-footer { padding: 40px 0; text-align: center; font-size: 13px; }
     <h2>How much you actually get</h2>
     <p>The rebate isn't one flat number — it changes based on your current heat source. Here's the real breakdown:</p>
     <div class="rebate-grid">
-      <div class="rebate-card"><h4>On Enbridge gas, switching to air-source</h4><div class="amount">up to $2,000</div><p>Works out to $500 per ton, capped at $2,000.</p></div>
-      <div class="rebate-card"><h4>On Enbridge gas, switching to ground-source</h4><div class="amount">$3,000</div><p>Flat amount, no tonnage math.</p></div>
-      <div class="rebate-card"><h4>Electric, oil, propane, or wood heat, air-source</h4><div class="amount">up to $7,500</div><p>$1,250 per ton, capped at $7,500.</p></div>
-      <div class="rebate-card"><h4>Electric, oil, propane, or wood heat, ground-source</h4><div class="amount">up to $12,000</div><p>$2,000 per ton, capped at $12,000.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>On Enbridge gas, switching to air-source</h4><div class="amount">up to $2,000</div><p>Works out to $500 per ton, capped at $2,000.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>On Enbridge gas, switching to ground-source</h4><div class="amount">$3,000</div><p>Flat amount, no tonnage math.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Electric, oil, propane, or wood heat, air-source</h4><div class="amount">up to $7,500</div><p>$1,250 per ton, capped at $7,500.</p></div>
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span><h4>Electric, oil, propane, or wood heat, ground-source</h4><div class="amount">up to $12,000</div><p>$2,000 per ton, capped at $12,000.</p></div>
     </div>
     <p>The unit has to be on Natural Resources Canada's list of qualified cold-climate air-source or ground-source heat pumps. If your installer quotes you something not on that list, ask why — it won't qualify.</p>
 

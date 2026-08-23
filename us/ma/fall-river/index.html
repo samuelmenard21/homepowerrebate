@@ -172,6 +172,10 @@ footer a { color: rgba(250,247,242,.75); }
 .installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
 .installer-card .stars { color: var(--amber); font-size: 13px; }
 .installer-card .site-link { font-size: 13px; }
+.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
 </style>
 </head>
 <body>
@@ -284,6 +288,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <div class="rebate-grid">
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128293; Heat Pump</h4>
         <div class="amount">$8,500&ndash;$9,500</div>
         <p>$2,650/ton, capped at $8,500, plus sizing and weatherization bonuses. Income-qualified: up to $16,000 (air-source) or $25,000 (ground-source). Only R-32 or R-454B refrigerant systems qualify &mdash; R-410A heat pumps are no longer eligible as of January 1, 2026.</p>
@@ -291,6 +296,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ma/fall-river/heat-pump" style="font-weight:600; font-size:13px;">Full heat pump guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#129003; Insulation &amp; Air Sealing</h4>
         <div class="amount">75&ndash;100% off</div>
         <p>75% covered for all Fall River homeowners. Income-eligible households (under 60% AMI) pay $0.</p>
@@ -298,6 +304,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ma/fall-river/insulation" style="font-weight:600; font-size:13px;">Full insulation guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#9728;&#65039; Solar (SMART 3.0)</h4>
         <div class="amount">Per-kWh incentive</div>
         <p>Locked-in production payment for 10&ndash;20 years once enrolled.</p>
@@ -305,6 +312,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ma/fall-river/solar" style="font-weight:600; font-size:13px;">Full solar guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128268; Battery Storage</h4>
         <div class="amount">$100/kWh + ongoing</div>
         <p>Capacity rebate plus SMART storage adder and annual ConnectedSolutions payments.</p>
@@ -312,6 +320,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ma/fall-river/battery" style="font-weight:600; font-size:13px;">Full battery guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128167; Water Heater</h4>
         <div class="amount">$750</div>
         <p><a href="https://www.masssave.com/residential/rebates-offers-services/water-heating/heat-pump-water-heaters" target="_blank" rel="noopener">Heat pump water heater rebate</a>. ENERGY STAR certified equipment required.</p>
@@ -319,6 +328,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ma/fall-river/water-heater" style="font-weight:600; font-size:13px;">Full water heater guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#129001; Windows &amp; Doors</h4>
         <div class="amount">$75/window</div>
         <p>Replace single-pane windows with ENERGY STAR Most Efficient certified windows. <a href="https://www.masssave.com/residential/rebates-offers-services/insulation-and-windows" target="_blank" rel="noopener">Windows & insulation &rarr;</a></p>
@@ -326,6 +336,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ma/fall-river/windows-doors" style="font-weight:600; font-size:13px;">Full windows & doors guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128664; EV Charger</h4>
         <div class="amount">$250</div>
         <p>Toward purchase and installation of a qualifying Level 2 home EV charger. <a href="https://www.masssave.com/residential/rebates-offers-services/battery-storage-and-evs" target="_blank" rel="noopener">EV charger rebates &rarr;</a></p>
@@ -333,6 +344,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ma/fall-river/ev-charger" style="font-weight:600; font-size:13px;">Full EV charger guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Smart Thermostat</h4>
         <div class="amount">$100</div>
         <p>Often installed free during your <a href="https://www.masssave.com/residential/rebates-offers-services" target="_blank" rel="noopener">home energy assessment</a>.</p>
@@ -340,11 +352,13 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p style="margin-top:8px;"><a href="/us/ma/fall-river/smart-thermostats" style="font-weight:600; font-size:13px;">Full smart thermostat guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128176; HEAT Loan</h4>
         <div class="amount">0% interest</div>
         <p><a href="https://www.masssave.com/residential/rebates-offers-services/financing" target="_blank" rel="noopener">Up to $25,000, 0% interest, 0% fees, 7-year term</a>.</p>
       </div>
       <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128203; Home Energy Assessment</h4>
         <div class="amount">Free</div>
         <p>Required first step to confirm what you qualify for.</p>

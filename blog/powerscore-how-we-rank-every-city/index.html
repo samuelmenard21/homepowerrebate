@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerScore: How We Rank Every City's Rebates (0-100)</title>
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W33G4TGRHD');
+</script>
+
+<meta name="description" content="We scored all 99 cities we cover, 0-100, on how much home energy rebate money is actually available. Here's exactly how PowerScore works and how to find your city's score.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://homepowerrebate.com/blog/powerscore-how-we-rank-every-city/">
+
+<meta property="og:title" content="PowerScore: How We Rank Every City's Rebates">
+<meta property="og:description" content="We scored 99 cities across 7 regions, 0-100, on rebate dollar value, program status, and stackability. Here's exactly how it works.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://homepowerrebate.com/blog/powerscore-how-we-rank-every-city/">
+<meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "PowerScore: How We Rank Every City's Home Energy Rebates",
+  "description": "How HomePowerRebate calculates a 0-100 PowerScore for every city it covers — dollar value, program status, and how many rebates stack.",
+  "datePublished": "2026-08-23",
+  "dateModified": "2026-08-23",
+  "author": { "@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about" },
+  "publisher": { "@type": "Organization", "name": "HomePowerRebate" }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is PowerScore?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PowerScore is a 0-100 score HomePowerRebate calculates for every city it covers, measuring how much home energy rebate money is actually available there. It's based on three things: the real dollar value of programs, whether they're currently open or closed, and how many programs stack together."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is PowerScore calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PowerScore weighs three factors per category (heat pump, insulation, solar, battery, water heater, smart thermostat, EV charger, windows/doors): 60% is the dollar value available, compared against the strongest program in that city's own region. 25% is program status — open programs score full marks, closed programs score zero. 15% is stackability — how many separate rebates you can combine on one upgrade. The 8 category scores are averaged into one overall PowerScore per city."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which city has the highest PowerScore?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "As of August 2026, Vancouver, British Columbia has the highest overall PowerScore at 89.7 out of 100, driven by strong CleanBC and BC Hydro programs across nearly every category."
+      }
+    }
+  ]
+}
+</script>
+
+<style>
+:root {
+  --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
+  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
+  --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter Tight', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); padding: 16px 28px; }
+.logo { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
+.logo-power { color: var(--amber); }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(36px, 6vw, 52px); line-height: 1.1; letter-spacing: -0.02em; color: var(--teal-deep); margin: 32px 0 18px; }
+h2 { font-family: 'Fraunces', serif; font-size: clamp(24px, 4vw, 36px); line-height: 1.1; letter-spacing: -0.01em; color: var(--teal-deep); margin: 36px 0 16px; }
+h3 { font-family: 'Fraunces', serif; font-size: 20px; color: var(--teal-deep); margin: 24px 0 12px; }
+p { margin-bottom: 16px; font-size: 16px; color: var(--ink-soft); line-height: 1.7; }
+a { color: var(--teal-deep); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--amber); }
+a:hover { color: var(--amber); }
+
+.hero { padding: 48px 28px; background: var(--teal-deep); color: var(--paper); text-align: center; }
+.hero .wrap { max-width: 760px; }
+.hero h1 { color: var(--paper); margin-top: 0; }
+.hero-sub { font-size: 18px; color: rgba(250,247,242,.8); margin: 12px 0 0; }
+.meta { font-size: 13px; color: rgba(250,247,242,.6); margin-top: 12px; }
+
+.section { padding: 48px 28px; }
+
+.formula-card { border: 2px solid var(--amber); border-radius: 12px; padding: 24px; margin: 20px 0; background: #fff; }
+.formula-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.formula-row:last-child { border-bottom: none; }
+.formula-pct { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: var(--amber); width: 70px; flex-shrink: 0; }
+.formula-label { font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+.formula-desc { font-size: 14px; color: var(--ink-soft); margin: 0; }
+
+.example-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; margin: 24px 0; font-size: 14px; }
+.example-table th { background: var(--paper-warm); padding: 12px 14px; text-align: left; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); border-bottom: 1px solid var(--rule); }
+.example-table td { padding: 12px 14px; border-bottom: 1px solid var(--rule); }
+.example-table tr:last-child td { border-bottom: none; }
+.example-table td.rank { font-family: 'Fraunces', serif; font-weight: 700; color: var(--amber); }
+
+.callout { background: var(--paper-warm); border-left: 4px solid var(--amber); border-radius: 0 8px 8px 0; padding: 18px 22px; margin: 24px 0; }
+.callout strong { color: var(--ink); }
+
+.cta-box { background: var(--teal-deep); color: var(--paper); border-radius: 12px; padding: 36px; text-align: center; margin: 48px 0; }
+.cta-box h3 { color: var(--paper); }
+.cta-box p { color: rgba(250,247,242,.8); }
+.btn { display: inline-block; background: var(--amber); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; margin-top: 12px; }
+.btn:hover { background: var(--amber-bright); }
+
+footer { padding: 40px 28px; border-top: 1px solid var(--rule); background: var(--ink); color: rgba(250,247,242,.6); text-align: center; font-size: 12px; }
+footer a { color: rgba(250,247,242,.75); border-bottom: 1px solid rgba(250,247,242,.3); }
+
+@media (max-width: 768px) {
+  h1 { margin: 24px 0 14px; }
+  .example-table { font-size: 12px; }
+  .example-table th, .example-table td { padding: 8px 10px; }
+  .formula-card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
+</nav>
+
+<div style="padding: 12px 28px; background: #fff; border-bottom: 1px solid var(--rule); font-size: 12px;">
+  <div style="max-width: 760px; margin: 0 auto; display: flex; align-items: center; gap: 8px; color: var(--ink-soft);">
+    <a href="/" style="color: var(--teal-deep); text-decoration: none; font-weight: 500;">Home</a>
+    <span>/</span>
+    <a href="/blog" style="color: var(--teal-deep); text-decoration: none; font-weight: 500;">Blog</a>
+    <span>/</span>
+    <span style="color: var(--ink);">PowerScore Explained</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>PowerScore: How We Rank Every City's Rebates</h1>
+    <p class="hero-sub">
+      We scored all 99 cities we cover, 0&ndash;100, on how much home energy rebate money is actually available. Here's exactly how it works &mdash; no black box.
+    </p>
+    <p class="meta">By <a href="/about" style="color:inherit;text-decoration:underline;">Sam Menard</a> &middot; August 2026 &middot; 5 min read</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+
+    <h2>Why we built this</h2>
+    <p>
+      Every city page on this site lists what's available &mdash; heat pump rebates, solar incentives, insulation top-ups. But "what's available" doesn't tell you how your city actually compares to the next one over, or to a city in a different province or state entirely.
+    </p>
+    <p>
+      So we built <a href="/powerscore/">PowerScore</a>: a single 0&ndash;100 number for every city, calculated the same way everywhere, so you can see at a glance whether your city is punching above its weight on rebates &mdash; or leaving money on the table compared to its neighbors.
+    </p>
+
+    <div class="callout">
+      <p><strong>Want to skip straight to your number?</strong> <a href="/powerscore/">Look up your city's PowerScore →</a></p>
+    </div>
+
+    <h2>The formula</h2>
+    <p>
+      Every city gets a score in each of our 8 rebate categories &mdash; heat pump, insulation, solar, battery storage, water heater, smart thermostat, EV charger, and windows/doors &mdash; built from three weighted factors. The overall PowerScore is just the average of those 8 category scores.
+    </p>
+
+    <div class="formula-card">
+      <div class="formula-row">
+        <div class="formula-pct">60%</div>
+        <div>
+          <div class="formula-label">Dollar Value</div>
+          <p class="formula-desc">The real rebate amount published for that category, compared against the strongest program in that city's own region &mdash; a BC city is measured against BC's best, not against Massachusetts. Program structures are too different to compare fairly across borders.</p>
+        </div>
+      </div>
+      <div class="formula-row">
+        <div class="formula-pct">25%</div>
+        <div>
+          <div class="formula-label">Program Status</div>
+          <p class="formula-desc">Is the program actually open right now? A closed or fully-subscribed program (like Edmonton's former solar rebate) scores zero here, even if the dollar amount on paper looks good. A program with unclear status gets partial credit rather than a guess in either direction.</p>
+        </div>
+      </div>
+      <div class="formula-row">
+        <div class="formula-pct">15%</div>
+        <div>
+          <div class="formula-label">Stackability</div>
+          <p class="formula-desc">How many separate programs can you combine on one upgrade? A city where you can stack a federal credit, a provincial grant, and a utility rebate on the same heat pump scores higher than a city with just one program, even if that one program's headline number is similar.</p>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      We calculate every score straight from the same rebate data already published on our city and category pages &mdash; nothing is estimated or guessed. If a number on a city page changes, that city's PowerScore updates too.
+    </p>
+
+    <h2>Top city, region by region</h2>
+    <p>
+      Because most provincial and state programs apply evenly across their own cities, PowerScore tends to cluster cities within the same region close together, with the real spread showing up between regions. Here's the current leader in each:
+    </p>
+
+    <table class="example-table">
+      <thead>
+        <tr>
+          <th>Region</th>
+          <th>Top City</th>
+          <th>PowerScore</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>British Columbia</td><td>Vancouver</td><td class="rank">89.7</td></tr>
+        <tr><td>Ontario</td><td>Barrie <em>(tied with 17 other ON cities)</em></td><td class="rank">81.0</td></tr>
+        <tr><td>California</td><td>Folsom</td><td class="rank">75.8</td></tr>
+        <tr><td>New York</td><td>Brookhaven</td><td class="rank">74.4</td></tr>
+        <tr><td>Massachusetts</td><td>Boston <em>(tied sitewide, statewide programs)</em></td><td class="rank">66.6</td></tr>
+        <tr><td>Alberta</td><td>Red Deer</td><td class="rank">44.4</td></tr>
+        <tr><td>Nova Scotia</td><td>Halifax</td><td class="rank">31.1</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      Ontario's Greener Homes and Enbridge programs apply province-wide, so most Ontario cities land on the exact same score &mdash; that's not a bug, it's an honest reflection of how those programs actually work. Where a city breaks from its region's pack, it's almost always because of a genuine local top-up we found and verified, like <a href="/ca/on/toronto/">Toronto's BetterHomesTO financing</a> or <a href="/ca/ab/lethbridge/">Lethbridge's city-run CEIP rate</a>.
+    </p>
+
+    <h2>What a low score actually means</h2>
+    <p>
+      A low PowerScore isn't a judgment on your city &mdash; it usually just means fewer or smaller programs are currently published for that area, or that a program that used to exist has closed. We update every city's page (and its PowerScore) as programs open, close, or change, and we mark program status honestly rather than leaving stale numbers up.
+    </p>
+    <p>
+      If your city scores low, it's still worth checking your <a href="/powerscore/">category breakdown</a> &mdash; a city can score low overall but still have one strong category worth claiming (for example, a city with no local heat pump program might still have a solid EV charger rebate).
+    </p>
+
+    <h2>Try it yourself</h2>
+    <p>
+      Head to the <a href="/powerscore/">full PowerScore leaderboard</a>, pick your city from the dropdown, and see your overall score, your rank within your region, and how you compare nationally. You can also download a shareable card with your city's score to send to a neighbor who's on the fence about upgrading.
+    </p>
+
+    <!-- RELATED POSTS -->
+    <div style="margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--rule);">
+      <h3>Related guides</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 20px;">
+        <a href="/powerscore/" style="padding: 16px; border: 1px solid var(--rule); border-radius: 10px; transition: all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">
+          <strong style="color: var(--teal-deep); font-size: 14px; display: block; margin-bottom: 6px;">The Full PowerScore Leaderboard</strong>
+          <p style="font-size: 12px; color: var(--ink-soft); margin: 0;">See every city's score, ranked overall and by category.</p>
+        </a>
+        <a href="/ca/on/toronto/" style="padding: 16px; border: 1px solid var(--rule); border-radius: 10px; transition: all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">
+          <strong style="color: var(--teal-deep); font-size: 14px; display: block; margin-bottom: 6px;">Toronto Rebate Guide</strong>
+          <p style="font-size: 12px; color: var(--ink-soft); margin: 0;">PowerScore 81/100 — see what's driving Ontario's top score.</p>
+        </a>
+        <a href="/ca/bc/vancouver/" style="padding: 16px; border: 1px solid var(--rule); border-radius: 10px; transition: all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">
+          <strong style="color: var(--teal-deep); font-size: 14px; display: block; margin-bottom: 6px;">Vancouver Rebate Guide</strong>
+          <p style="font-size: 12px; color: var(--ink-soft); margin: 0;">Our #1 nationally-ranked city — see the full program stack.</p>
+        </a>
+        <a href="/installers/" style="padding: 16px; border: 1px solid var(--rule); border-radius: 10px; transition: all .2s;" onmouseover="this.style.background='var(--paper-warm)'" onmouseout="this.style.background='#fff'">
+          <strong style="color: var(--teal-deep); font-size: 14px; display: block; margin-bottom: 6px;">Browse Installers</strong>
+          <p style="font-size: 12px; color: var(--ink-soft); margin: 0;">Once you know your rebates, find a vetted installer near you.</p>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="cta-box">
+  <h3>See your city's PowerScore</h3>
+  <p>Look up your city, see your rank, and find out where you can claim more.</p>
+  <a href="/powerscore/" class="btn">Check your PowerScore →</a>
+</div>
+
+<footer class="hprf">
+<style>
+.hprf{background:var(--ink);color:rgba(250,247,242,.65);padding:56px 28px 32px;font-family:'Inter Tight',-apple-system,sans-serif;line-height:1.6;}
+.hprf a{text-decoration:none;}
+.hprf-inner{max-width:1180px;margin:0 auto;}
+.hprf-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:32px;border-bottom:1px solid rgba(250,247,242,.1);}
+.hprf-brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;color:var(--paper);letter-spacing:-.02em;margin-bottom:12px;}
+.hprf-brand span{color:var(--amber);}
+.hprf-tag{font-size:13px;color:rgba(250,247,242,.4);max-width:320px;margin:0;}
+.hprf-ct{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(250,247,242,.7);margin-bottom:14px;}
+.hprf-links{list-style:none;display:grid;gap:8px;font-size:14px;margin:0;padding:0;}
+.hprf-links a{color:rgba(250,247,242,.45);}
+.hprf-links a:hover{color:var(--amber);}
+.hprf-bottom{max-width:1180px;margin:0 auto;padding-top:24px;font-size:12px;color:rgba(250,247,242,.35);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+@media(max-width:880px){.hprf-top{grid-template-columns:1fr 1fr;gap:28px;}}
+@media(max-width:520px){.hprf-top{grid-template-columns:1fr;}}
+</style>
+  <div class="hprf-inner">
+    <div class="hprf-top">
+      <div>
+        <div class="hprf-brand">Home<span>Power</span>Rebate</div>
+        <p class="hprf-tag">Helping homeowners claim every rebate they qualify for, across every region we cover.</p>
+      </div>
+      <div>
+        <div class="hprf-ct">Tools</div>
+        <ul class="hprf-links">
+          <li><a href="/powerscore/">PowerScore Leaderboard</a></li>
+          <li><a href="/calculator/">Rebate Calculator</a></li>
+          <li><a href="/retrofit-assessment">Rebate Assessment</a></li>
+          <li><a href="/installers/">Find an Installer</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Regions</div>
+        <ul class="hprf-links">
+          <li><a href="/ca/bc">British Columbia</a></li>
+          <li><a href="/ca/on">Ontario</a></li>
+          <li><a href="/ca/ab">Alberta</a></li>
+          <li><a href="/ca/ns">Nova Scotia</a></li>
+          <li><a href="/us/ma">Massachusetts</a></li>
+          <li><a href="/us/ny">New York</a></li>
+          <li><a href="/us/ca">California</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hprf-ct">Company</div>
+        <ul class="hprf-links">
+          <li><a href="/about">About</a></li>
+          <li><a href="/blog">Full Blog</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hprf-bottom">
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide &amp; installer matching.</div>
+      <div>Made in Canada &#127464;&#127462;</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

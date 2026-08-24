@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About HomePowerRebate — Who's Behind It & Why It's Independent</title>
-<meta name="description" content="HomePowerRebate is an independent guide to BC home-energy rebates, built by Sam Menard. Not an installer, not a utility. Here's who's behind it, how it stays independent, and how it makes money.">
+<meta name="description" content="HomePowerRebate is an independent guide to home-energy rebates across Canada and the US, built by Sam Menard. Not an installer, not a utility. Here's who's behind it, how it stays independent, and how it makes money.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://homepowerrebate.com/about">
 
 <meta property="og:title" content="About HomePowerRebate — Who's Behind It & Why It's Independent">
-<meta property="og:description" content="An independent guide to BC home-energy rebates, built by Sam Menard. Not an installer, not a utility.">
+<meta property="og:description" content="An independent guide to home-energy rebates across Canada and the US, built by Sam Menard. Not an installer, not a utility.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://homepowerrebate.com/about">
 <meta property="og:locale" content="en_CA">
@@ -22,6 +22,34 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<script>
+function toggleCityDropdown() {
+  const modal = document.getElementById('city-dropdown-modal');
+  if (modal) {
+    modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
+  }
+}
+function showCountry(country) {
+  const countries = ['ca', 'us'];
+  countries.forEach(function(c) {
+    const panel = document.getElementById('country-regions-' + c);
+    const tab = document.getElementById('country-tab-' + c);
+    if (!panel || !tab) return;
+    panel.style.display = (country === c) ? 'grid' : 'none';
+    tab.style.background = (country === c) ? 'var(--teal-deep)' : '#fff';
+    tab.style.color = (country === c) ? '#fff' : 'var(--ink)';
+  });
+}
+document.addEventListener('click', function(e) {
+  const modal = document.getElementById('city-dropdown-modal');
+  const btn = document.getElementById('city-picker-btn');
+  if (!modal || modal.style.display === 'none') return;
+  if (!modal.contains(e.target) && !btn.contains(e.target)) {
+    modal.style.display = 'none';
+  }
+});
+</script>
+
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -31,9 +59,18 @@
    "@id": "https://homepowerrebate.com/#org",
    "name": "HomePowerRebate",
    "url": "https://homepowerrebate.com/",
-   "description": "Independent guide to British Columbia home-energy rebates and free installer matching. Not affiliated with BC Hydro or FortisBC.",
+   "description": "Independent guide to home-energy rebates across Canada and the US, and free installer matching.",
    "founder": { "@id": "https://homepowerrebate.com/#sam" },
-   "areaServed": { "@type": "AdministrativeArea", "name": "British Columbia, Canada" }
+   "foundingLocation": "Ontario, Canada",
+   "areaServed": [
+    { "@type": "AdministrativeArea", "name": "Ontario, Canada" },
+    { "@type": "AdministrativeArea", "name": "British Columbia, Canada" },
+    { "@type": "AdministrativeArea", "name": "Alberta, Canada" },
+    { "@type": "AdministrativeArea", "name": "Nova Scotia, Canada" },
+    { "@type": "AdministrativeArea", "name": "Massachusetts, USA" },
+    { "@type": "AdministrativeArea", "name": "New York, USA" },
+    { "@type": "AdministrativeArea", "name": "California, USA" }
+   ]
   },
   {
    "@type": "Person",
@@ -42,8 +79,8 @@
    "jobTitle": "Founder",
    "worksFor": { "@id": "https://homepowerrebate.com/#org" },
    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Wilfrid Laurier University" },
-   "knowsAbout": ["BC home-energy rebates", "CleanBC programs", "heat pump rebates", "residential solar and battery rebates", "BC Hydro and FortisBC programs"],
-   "description": "Sam Menard is a business and analytics professional who built HomePowerRebate as an independent, plain-English guide to British Columbia's home-energy rebate programs.",
+   "knowsAbout": ["home-energy rebates", "heat pump rebates", "residential solar and battery rebates", "utility incentive programs"],
+   "description": "Sam Menard is a business and analytics professional who built HomePowerRebate as an independent, plain-English guide to home-energy rebate programs across Canada and the US.",
    "sameAs": ["https://ca.linkedin.com/in/sammenard"]
   },
   {
@@ -65,9 +102,30 @@
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Inter Tight', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; }
-.nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); padding: 16px 28px; }
-.logo { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
-.logo-power { color: var(--amber); }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
+.nav-inner { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.logo-mark { width: 30px; height: 30px; background: var(--amber); border-radius: 50%; position: relative; box-shadow: 0 2px 8px rgba(212, 117, 28, 0.3); }
+.logo-mark::after { content: ''; position: absolute; inset: 8px; background: var(--paper); border-radius: 50%; }
+.logo-power { color: var(--amber); font-weight: 700; }
+.nav-pick { display: flex; align-items: center; gap: 8px; background: var(--teal-deep); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; transition: all 0.2s; border: none; cursor: pointer; }
+.nav-pick:hover { background: var(--amber); transform: translateY(-1px); }
+.nav-desktop-only { display: flex !important; }
+.nav-mobile-only { display: none !important; }
+@media (max-width: 768px) {
+  .nav-desktop-only { display: none !important; }
+  .nav-mobile-only { display: flex !important; flex-wrap: wrap; }
+  .nav-inner { padding: 14px 20px; flex-wrap: wrap; row-gap: 8px; gap: 8px; }
+  .logo { font-size: 16px !important; }
+  .logo-mark { width: 22px !important; height: 22px !important; }
+  .nav-mobile-only a { font-size: 13px !important; }
+  .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
+}
+@media (max-width: 400px) {
+  .nav-inner { justify-content: center !important; }
+  .logo { flex: 1 0 100%; justify-content: center; }
+  .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
+}
 .wrap { max-width: 720px; margin: 0 auto; padding: 0 28px; }
 .hero { padding: 48px 28px 32px; background: var(--teal-deep); color: var(--paper); }
 .hero .wrap { max-width: 720px; }
@@ -94,23 +152,88 @@ strong { color: var(--ink); }
 <body>
 
 <nav class="nav">
-  <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark"></span>
+      <span>Home<span class="logo-power">Power</span>Rebate</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
+      <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
+      <a href="/retrofit-assessment/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Assessment</a>
+      <a href="/blog" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
+    </div>
+    <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
+      <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
+      <a href="/retrofit-assessment/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Assessment</a>
+    </div>
+    <button onclick="toggleCityDropdown()" id="city-picker-btn" class="nav-pick">
+      Pick your city
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div id="city-dropdown-modal" style="display:none; position:absolute; top:56px; right:20px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:49; width:300px; max-height:75vh; overflow-y:auto;">
+    <div style="padding:16px 16px 0;">
+      <a href="/powerscore/" style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; margin-bottom:14px; border-radius:8px; background:linear-gradient(135deg, var(--teal-deep), #08363f); color:#fff; text-decoration:none; font-weight:700; font-size:13px; font-family:'Inter Tight',sans-serif;">
+        <span>&#9889; See your city's PowerScore</span>
+        <span style="opacity:.7;">&rarr;</span>
+      </a>
+      <div style="display:flex; gap:6px; margin-bottom:14px;">
+        <button type="button" onclick="showCountry('ca')" id="country-tab-ca" style="flex:1; padding:10px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">🇨🇦 Canada</button>
+        <button type="button" onclick="showCountry('us')" id="country-tab-us" style="flex:1; padding:10px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">🇺🇸 United States</button>
+      </div>
+    </div>
+    <div style="padding:0 16px 16px;">
+      <div id="country-regions-ca" style="display:grid; gap:8px;">
+        <a href="/ca/bc/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule);">
+          <span style="font-weight:600; font-size:14px;">British Columbia</span>
+          <span style="font-size:12px; color:var(--ink-soft);">18 cities</span>
+        </a>
+        <a href="/ca/on/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule);">
+          <span style="font-weight:600; font-size:14px;">Ontario</span>
+          <span style="font-size:12px; color:var(--ink-soft);">18 cities</span>
+        </a>
+        <a href="/ca/ab/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule);">
+          <span style="font-weight:600; font-size:14px;">Alberta</span>
+          <span style="font-size:12px; color:var(--ink-soft);">5 cities</span>
+        </a>
+        <a href="/ca/ns/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule);">
+          <span style="font-weight:600; font-size:14px;">Nova Scotia</span>
+          <span style="font-size:12px; color:var(--ink-soft);">Halifax</span>
+        </a>
+      </div>
+      <div id="country-regions-us" style="display:none; gap:8px;">
+        <a href="/us/ny/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule);">
+          <span style="font-weight:600; font-size:14px;">New York</span>
+          <span style="font-size:12px; color:var(--ink-soft);">15 cities</span>
+        </a>
+        <a href="/us/ca/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule);">
+          <span style="font-weight:600; font-size:14px;">California</span>
+          <span style="font-size:12px; color:var(--ink-soft);">5 regions</span>
+        </a>
+        <a href="/us/ma/" style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:8px; text-decoration:none; color:var(--ink); border:1px solid var(--rule);">
+          <span style="font-weight:600; font-size:14px;">Massachusetts</span>
+          <span style="font-size:12px; color:var(--ink-soft);">12 cities</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </nav>
 
 <section class="hero">
   <div class="wrap">
     <div class="eyebrow">About</div>
     <h1>Who's behind this — and why it's independent</h1>
-    <p>HomePowerRebate is a plain-English guide to Canada's home-energy rebates — built province by province, starting with British Columbia. It isn't run by an installer, a manufacturer, or a utility. Here's the honest version of who built it and how it makes money.</p>
+    <p>HomePowerRebate is a plain-English guide to home-energy rebates across Canada and the US, built region by region. It isn't run by an installer, a manufacturer, or a utility. Here's the honest version of who built it and how it makes money.</p>
   </div>
 </section>
 
 <article class="article">
   <div class="wrap">
 
-    <p>HomePowerRebate was built because BC homeowners told us the same story: they wanted to claim BC Hydro's solar + battery rebate, but every comparison site they tried sold their info to a dozen installers. They got buried in calls. The big rebate cheque felt out of reach because the process was hostile.</p>
-    <p>We took the opposite approach. Vetted installers in each city, picked for HPCN certification and customer reviews. You choose who to contact. No auctions, no bundles, no data sales. Independent of BC Hydro, but transparent about every official source we cite.</p>
-    <p>Today we serve 18 BC cities. In 2026 we'll be in more. In 2027 we'll expand to other provinces and states. Same model the whole way.</p>
+    <p>HomePowerRebate was built because homeowners told us the same story again and again: they wanted to claim a heat pump, solar, or battery rebate, but every comparison site they tried sold their info to a dozen installers. They got buried in calls. The rebate cheque felt out of reach because the process was hostile.</p>
+    <p>We took the opposite approach. Vetted installers in each city, picked for certification and customer reviews. You choose who to contact. No auctions, no bundles, no data sales. Independent of any utility, but transparent about every official source we cite.</p>
+    <p>Today we cover 99 cities across British Columbia, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California — with more added regularly, based on real homeowner demand. Same model the whole way.</p>
 
     <h2>About Sam Menard</h2>
     <p>My name is Sam Menard. I'm a business and technology leader who enjoys building things from the ground up—especially when there's an opportunity to take a great idea and turn it into something people actually use.</p>
@@ -136,7 +259,7 @@ strong { color: var(--ink); }
 
     <h2>What "independent" actually means</h2>
     <ul>
-      <li><strong>Not a utility.</strong> HomePowerRebate is not affiliated with, endorsed by, or operated by BC Hydro or FortisBC. We just explain their programs and link to them.</li>
+      <li><strong>Not a utility.</strong> HomePowerRebate is not affiliated with, endorsed by, or operated by any utility, province, or state agency. We just explain their programs and link to them.</li>
       <li><strong>Not an installer or manufacturer.</strong> We don't sell heat pumps, solar panels, or batteries, so we have no reason to steer you toward one product over another.</li>
       <li><strong>You choose who to contact.</strong> We show you all vetted installers in your city, and you pick who you want to connect with — no high-pressure sales.</li>
     </ul>
@@ -172,76 +295,74 @@ strong { color: var(--ink); }
   </div>
 </article>
 
-<footer class="hprf">
+<footer class="footer">
 <style>
-.hprf{background:var(--ink);color:rgba(250,247,242,.65);padding:56px 28px 32px;font-family:'Inter Tight',-apple-system,sans-serif;line-height:1.6;}
-.hprf a{text-decoration:none;}
-.hprf-inner{max-width:1180px;margin:0 auto;}
-.hprf-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:32px;border-bottom:1px solid rgba(250,247,242,.1);}
-.hprf-brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;color:var(--paper);letter-spacing:-.02em;margin-bottom:12px;}
-.hprf-brand span{color:var(--amber);}
-.hprf-tag{font-size:13px;color:rgba(250,247,242,.4);max-width:320px;margin:0;}
-.hprf-ct{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(250,247,242,.7);margin-bottom:14px;}
-.hprf-links{list-style:none;display:grid;gap:8px;font-size:14px;margin:0;padding:0;}
-.hprf-links a{color:rgba(250,247,242,.45);}
-.hprf-links a:hover{color:var(--amber);}
-.hprf-bottom{max-width:1180px;margin:0 auto;padding-top:24px;font-size:12px;color:rgba(250,247,242,.35);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-@media(max-width:880px){.hprf-top{grid-template-columns:1fr 1fr;gap:28px;}}
-@media(max-width:520px){.hprf-top{grid-template-columns:1fr;}}
+.footer{background:var(--ink);color:rgba(250,247,242,.65);padding:56px 28px 32px;font-family:'Inter Tight',-apple-system,sans-serif;line-height:1.6;}
+.footer a{text-decoration:none;}
+.footer-inner{max-width:1180px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:36px;padding-bottom:32px;border-bottom:1px solid rgba(250,247,242,.1);}
+.footer-brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;color:var(--paper);letter-spacing:-.02em;margin-bottom:12px;}
+.footer-brand span{color:var(--amber);}
+.footer-tagline{font-size:13px;color:rgba(250,247,242,.4);max-width:320px;margin:0;}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(250,247,242,.7);margin-bottom:14px;}
+.footer-col-links{list-style:none;display:grid;gap:8px;font-size:14px;margin:0;padding:0;}
+.footer-col-links a{color:rgba(250,247,242,.45);}
+.footer-col-links a:hover{color:var(--amber);}
+.footer-bottom{max-width:1180px;margin:0 auto;padding-top:24px;font-size:12px;color:rgba(250,247,242,.35);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+@media(max-width:880px){.footer-top{grid-template-columns:1fr 1fr;gap:28px;}}
+@media(max-width:520px){.footer-top{grid-template-columns:1fr;}}
 </style>
-  <div class="hprf-inner">
-    <div class="hprf-top">
+  <div class="footer-inner">
+    <div class="footer-top">
       <div>
-        <div class="hprf-brand">Home<span>Power</span>Rebate</div>
-        <p class="hprf-tag">Helping BC homeowners claim every rebate they qualify for. Every vetted installer, no spam.</p>
+        <div class="footer-brand">Home<span>Power</span>Rebate</div>
+        <p class="footer-tagline">Helping homeowners understand rebates and choose trusted installers. Real numbers. Your choice.</p>
       </div>
       <div>
-        <div class="hprf-ct">BC Cities</div>
-        <ul class="hprf-links">
-          <li><a href="/ca/bc/abbotsford">Abbotsford</a></li>
-          <li><a href="/ca/bc/burnaby">Burnaby</a></li>
-          <li><a href="/ca/bc/chilliwack">Chilliwack</a></li>
-          <li><a href="/ca/bc/fort-st-john">Fort St. John</a></li>
-          <li><a href="/ca/bc/kamloops">Kamloops</a></li>
-          <li><a href="/ca/bc/kelowna">Kelowna</a></li>
-          <li><a href="/ca/bc/nanaimo">Nanaimo</a></li>
-          <li><a href="/ca/bc/penticton">Penticton</a></li>
-          <li><a href="/ca/bc/prince-george">Prince George</a></li>
-          <li><a href="/ca/bc/squamish">Squamish</a></li>
-          <li><a href="/ca/bc/surrey">Surrey</a></li>
-          <li><a href="/ca/bc/vancouver">Vancouver</a></li>
-          <li><a href="/ca/bc/vernon">Vernon</a></li>
-          <li><a href="/ca/bc/victoria">Victoria</a></li>
+        <div class="footer-col-title">Canada</div>
+        <ul class="footer-col-links">
+          <li><a href="/ca/">All Provinces</a></li>
+          <li><a href="/ca/bc">British Columbia</a></li>
+          <li><a href="/ca/on">Ontario</a></li>
+          <li><a href="/ca/ab">Alberta</a></li>
+          <li><a href="/ca/ns">Nova Scotia</a></li>
         </ul>
       </div>
       <div>
-        <div class="hprf-ct">Guides &amp; Tools</div>
-        <ul class="hprf-links">
-          <li><a href="/retrofit-assessment">Rebate Assessment</a></li>
-          <li><a href="/ca/bc">BC Rebate Overview</a></li>
-          <li><a href="/blog/heat-pumps-explained-bc">Heat Pumps Explained</a></li>
-          <li><a href="/blog/free-heat-pump-bc-income-qualified">Free Heat Pump?</a></li>
-          <li><a href="/blog/bc-approved-home-battery-rebate">Choosing a Battery</a></li>
+        <div class="footer-col-title">United States</div>
+        <ul class="footer-col-links">
+          <li><a href="/us/">All States</a></li>
+          <li><a href="/us/ca">California</a></li>
+          <li><a href="/us/ny">New York</a></li>
+          <li><a href="/us/ma">Massachusetts</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Guides &amp; Tools</div>
+        <ul class="footer-col-links">
+          <li><a href="/powerscore/">PowerScore Rankings</a></li>
+          <li><a href="/installers/">Find an Installer</a></li>
+          <li><a href="/retrofit-assessment/">Retrofit Assessment</a></li>
+          <li><a href="/smart-thermostats">Smart Thermostat Comparison</a></li>
           <li><a href="/eguana">Eguana Evolve Battery</a></li>
-          <li><a href="/blog/energy-saving-ideas-bc-home">Cut Your Bill Now</a></li>
-          <li><a href="/smart-thermostats">Smart Thermostats</a></li>
           <li><a href="/blog">Full Blog</a></li>
+          <li><a href="/guides/">Rebate Guides</a></li>
+          <li><a href="/questions/">Rebate Questions</a></li>
         </ul>
       </div>
       <div>
-        <div class="hprf-ct">Company</div>
-        <ul class="hprf-links">
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-col-links">
           <li><a href="/about">About</a></li>
-          <li><a href="/ca/bc">All Cities</a></li>
-          <li><a href="/retrofit-assessment">Free Estimate</a></li>
+          <li><a href="/partners/">Partners</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>
           <li><a href="/contact">Contact</a></li>
         </ul>
       </div>
     </div>
-    <div class="hprf-bottom">
-      <div>&copy; 2026 HomePowerRebate &middot; Independent guide &amp; installer matching. Not affiliated with BC Hydro or FortisBC.</div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 HomePowerRebate &middot; Independent installer matching service. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
       <div>Made in Canada &#127464;&#127462;</div>
     </div>
   </div>

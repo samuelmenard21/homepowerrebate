@@ -263,6 +263,9 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
         <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
         <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">BC</button>
       </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Pennsylvania</button>
+      </div>
       <div style="padding:0 16px 16px;">
         <div id="province-cities-ny" style="display:grid; gap:8px;">
           <a href="/us/ny/con-edison/">Con Edison (NYC & Westchester)</a>
@@ -276,6 +279,9 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
           <a href="/us/ny/national-grid/buffalo">Buffalo</a>
           <a href="/us/ny/national-grid/rochester">Rochester</a>
         </div>
+    <div id="province-cities-pa" style="display:none; gap:8px;">
+      <a href="/us/pa/philadelphia">Philadelphia</a><a href="/us/pa/pittsburgh">Pittsburgh</a><a href="/us/pa/allentown">Allentown</a><a href="/us/pa/erie">Erie</a>
+    </div>
         <div id="province-cities-ca" style="display:none; gap:8px;">
           <a href="/us/ca/">California</a>
           <a href="/us/ca/los-angeles/">LA Metro</a>
@@ -299,7 +305,7 @@ function toggleCityDropdown() {
   if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['ny', 'ca', 'on', 'bc'];
+  const regions = ['ny', 'pa', 'ca', 'on', 'bc'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

@@ -255,6 +255,9 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
         <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Massachusetts</button>
         <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New York</button>
       </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Pennsylvania</button>
+      </div>
     </div>
     <div style="padding:0 16px 16px;">
     <div id="province-cities-on" style="display:none; gap:8px;">
@@ -278,6 +281,9 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
     <div id="province-cities-ny" style="display:none; gap:8px;">
       <a href="/us/ny/con-edison/">NYC & Westchester</a><a href="/us/ny/national-grid/">Upstate (Buffalo, Rochester, Syracuse)</a>
     </div>
+    <div id="province-cities-pa" style="display:none; gap:8px;">
+      <a href="/us/pa/philadelphia">Philadelphia</a><a href="/us/pa/pittsburgh">Pittsburgh</a><a href="/us/pa/allentown">Allentown</a><a href="/us/pa/erie">Erie</a>
+    </div>
     </div>
   </div>
 </nav>
@@ -287,7 +293,7 @@ function toggleCityDropdown() {
   if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny'];
+  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny', 'pa'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

@@ -188,6 +188,9 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Massachusetts</button>
         <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New York</button>
       </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Pennsylvania</button>
+      </div>
     </div>
     <div style="padding:0 16px 16px;">
     <div id="province-cities-on" style="display:none; gap:8px;">
@@ -210,6 +213,9 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     </div>
     <div id="province-cities-ny" style="display:none; gap:8px;">
       <a href="/us/ny/con-edison/new-york-city/">New York City</a><a href="/us/ny/con-edison/yonkers/">Yonkers</a><a href="/us/ny/con-edison/mount-vernon/">Mount Vernon</a><a href="/us/ny/con-edison/new-rochelle/">New Rochelle</a><a href="/us/ny/con-edison/white-plains/">White Plains</a><a href="/us/ny/pseg/brookhaven/">Brookhaven</a><a href="/us/ny/pseg/islip/">Islip</a><a href="/us/ny/pseg/babylon/">Babylon</a><a href="/us/ny/pseg/huntington/">Huntington</a><a href="/us/ny/pseg/smithtown/">Smithtown</a><a href="/us/ny/pseg/oyster-bay/">Oyster Bay</a><a href="/us/ny/pseg/southampton/">Southampton</a><a href="/us/ny/central-hudson/poughkeepsie/">Poughkeepsie</a><a href="/us/ny/central-hudson/newburgh/">Newburgh</a><a href="/us/ny/central-hudson/kingston/">Kingston</a><a href="/us/ny/central-hudson/beacon/">Beacon</a><a href="/us/ny/central-hudson/saugerties/">Saugerties</a><a href="/us/ny/national-grid/albany/">Albany</a><a href="/us/ny/national-grid/buffalo/">Buffalo</a><a href="/us/ny/national-grid/rochester/">Rochester</a><a href="/us/ny/national-grid/syracuse/">Syracuse</a><a href="/us/ny/national-grid/yonkers/">Yonkers (National Grid)</a>
+    </div>
+    <div id="province-cities-pa" style="display:none; gap:8px;">
+      <a href="/us/pa/philadelphia">Philadelphia</a><a href="/us/pa/pittsburgh">Pittsburgh</a><a href="/us/pa/allentown">Allentown</a><a href="/us/pa/erie">Erie</a>
     </div>
     </div>
   </div>
@@ -396,7 +402,7 @@ function toggleCityDropdown() {
   if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny'];
+  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny', 'pa'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

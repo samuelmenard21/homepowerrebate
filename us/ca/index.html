@@ -107,6 +107,21 @@ body { font-family: 'Inter Tight', -apple-system, sans-serif; background: var(--
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {"@type": "Question", "name": "Which region am I in?", "acceptedAnswer": {"@type": "Answer", "text": "Enter your zip code on this page or call your electric company. They'll tell you which utility serves you. Each utility runs different rebate programs. The 7 regions above cover the biggest California utilities."}},
+  {"@type": "Question", "name": "How do I know my utility?", "acceptedAnswer": {"@type": "Answer", "text": "Look at your electric bill. It says your utility name at the top. Los Angeles = LADWP. Sacramento = SMUD. San Francisco Bay Area = PG&E. San Diego = SDG&E. Southern California = Southern California Edison (SCE)."}},
+  {"@type": "Question", "name": "Can I combine programs?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Your utility's rebate plus state and federal rebates stack. In LA, LADWP rebates stack with SoCalGas and federal IRA credits. In Sacramento, SMUD covers multiple upgrades on the same system."}},
+  {"@type": "Question", "name": "Will a heat pump work in California?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. California winters rarely drop below freezing. Heat pumps are rated for -20°C and work well in California's mild climate. They save more heating dollars than in cold states."}},
+  {"@type": "Question", "name": "How long until I get my rebate?", "acceptedAnswer": {"@type": "Answer", "text": "Typically 8–12 weeks total. Application approval takes 2–4 weeks. Work gets done in 1–5 days. Rebate payment arrives in 4–8 weeks after completion."}},
+  {"@type": "Question", "name": "Is solar still worth it in California under NEM 3.0?", "acceptedAnswer": {"@type": "Answer", "text": "It's a worse deal than it used to be, but for most homes it's still worth it, especially paired with a battery. Under NEM 3.0, the credit for extra solar power sent to the grid dropped from close to retail price to roughly 5-8 cents per kWh, stretching solar-only payback to around 9-13 years. Adding a home battery lets you use your extra power yourself instead of selling it cheap, typically bringing payback down to around 7-9 years. California's Self-Generation Incentive Program (SGIP) offers additional battery rebates on top of the 30% federal credit, further shortening payback."}},
+  {"@type": "Question", "name": "Is my contractor's rebate quote a scam?", "acceptedAnswer": {"@type": "Answer", "text": "It can be, if the promised rebate is doing most of the work to make an inflated price look reasonable. Check the real program's rebate cap on the official utility or program site before signing a contract that leans heavily on a promised rebate."}}
+ ]
+}
+</script>
 </head>
 <body>
 
@@ -346,6 +361,16 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <div class="faq-item">
       <div class="faq-q">How long until I get my rebate?</div>
       <div class="faq-a">Typically 8–12 weeks total. Application approval takes 2–4 weeks. Work gets done in 1–5 days. Rebate payment arrives in 4–8 weeks after completion.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is solar still worth it in California under NEM 3.0?</div>
+      <div class="faq-a">It's a worse deal than it used to be, but for most homes it's still worth it &mdash; especially paired with a battery. Under NEM 3.0 (California's current net billing rules), the credit you get for extra solar power you send to the grid dropped a lot, from close to the retail price down to roughly 5&ndash;8 cents per kWh in most cases. That stretches payback for solar-only systems out to around 9&ndash;13 years. Adding a home battery changes the math: instead of selling your extra daytime power for a few cents, you store it and use it yourself in the evening when electricity is expensive. That typically brings payback down to around 7&ndash;9 years. California's Self-Generation Incentive Program (SGIP) offers additional battery rebates on top of the 30% federal credit, which further shortens payback when a battery is part of the system. Bottom line: solar-only pencils out more slowly than it did a few years ago, but solar-plus-battery still makes financial sense for most California homeowners &mdash; get quotes that include a battery before deciding solar isn't worth it. <span class="src">Sources: <a href="https://www.cpuc.ca.gov/nem/" target="_blank" rel="noopener">California Public Utilities Commission &mdash; NEM/net billing</a>, <a href="https://www.selfgenca.com/" target="_blank" rel="noopener">Self-Generation Incentive Program (SGIP)</a></span></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is my contractor's rebate quote a scam?</div>
+      <div class="faq-a">It can be, if the promised rebate is doing most of the work to make an inflated price look reasonable. <a href="/blog/is-my-contractors-rebate-quote-a-scam/">Check the real rebate cap before you sign &rarr;</a></div>
     </div>
   </div>
 </section>

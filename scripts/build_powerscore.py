@@ -53,6 +53,7 @@ REGIONS = {
     "us/ca": ("United States", "California"),
     "us/pa": ("United States", "Pennsylvania"),
     "us/co": ("United States", "Colorado"),
+    "us/vt": ("United States", "Vermont"),
 }
 
 STATUS_KEYWORDS_CLOSED = ["program closed", "no longer accepting", "fully subscribed", "rebate-card none", "class=\"amount none\""]

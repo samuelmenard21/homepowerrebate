@@ -34,6 +34,49 @@ def esc(s):
     return html.escape(str(s), quote=True)
 
 
+# ---------- Est. Annual Energy Cost (display-only, does NOT affect scoring) ----------
+# Region/utility-level combined electricity + heating-fuel cost estimate for a
+# 2,500 sq ft home. Sourced from BC Hydro, FortisBC, Enbridge Gas, ATCO Gas,
+# Nova Scotia Power, PG&E/SCE/SDG&E/SMUD, Con Edison/PSEG/National Grid,
+# Eversource/National Grid MA, PECO/UGI/Peoples Gas, Xcel Energy, Colorado
+# Springs Utilities, Green Mountain Power, Burlington Electric Department,
+# plus EIA and Statistics Canada usage data. Region-level, not a per-city bill.
+# Keyed by (region_key, slug_prefix) where slug_prefix is the first path
+# segment of the city slug (used for CA utility territory / NY utility
+# territory sub-splits); "" matches when the slug has no sub-prefix.
+ENERGY_COST = {
+    ("ca/bc", ""): {"display": "$2,150", "range": False},
+    ("ca/on", ""): {"display": "$2,750", "range": False},
+    ("ca/ab", ""): {"display": "$3,700", "range": False},
+    ("ca/ns", ""): {"display": "$3,350&ndash;$5,500", "range": True},
+    ("us/ca", "bay-area"): {"display": "$2,875", "range": False},
+    ("us/ca", "los-angeles"): {"display": "$2,875", "range": False},
+    ("us/ca", "inland-empire"): {"display": "$2,875*", "range": False},
+    ("us/ca", "san-diego"): {"display": "$3,400+", "range": False},
+    ("us/ca", "sacramento"): {"display": "$2,300", "range": False},
+    ("us/ca", ""): {"display": "$2,875*", "range": False},
+    ("us/ny", "con-edison"): {"display": "$4,250", "range": False},
+    ("us/ny", "pseg"): {"display": "$3,000", "range": False},
+    ("us/ny", "national-grid"): {"display": "$3,050", "range": False},
+    ("us/ny", "central-hudson"): {"display": "$3,050*", "range": False},
+    ("us/ma", ""): {"display": "$3,600&ndash;$5,000", "range": True},
+    ("us/pa", ""): {"display": "$3,000", "range": False},
+    ("us/co", ""): {"display": "$2,050", "range": False},
+    ("us/vt", ""): {"display": "$4,900", "range": False},
+}
+
+
+def energy_cost_for(r):
+    prefix = r["slug"].split("/")[0] if "/" in r["slug"] else ""
+    key = (r["region"], prefix)
+    if key not in ENERGY_COST:
+        key = (r["region"], "")
+    info = ENERGY_COST.get(key)
+    if not info:
+        return "&mdash;"
+    return info["display"]
+
+
 def score_band(score):
     if score >= 75:
         return "band-great"
@@ -63,6 +106,7 @@ def render_overall_rows():
   <td class="city-cell"><a href="{esc(r["url"])}">{esc(r["label"])}</a><span class="region-tag">{esc(r["region_label"])}</span></td>
   <td class="overall-cell"><span class="overall-badge {score_band(r["overall"])}">{r["overall"]:.0f}</span></td>
   <td class="pills-cell">{pills}</td>
+  <td class="energy-cell">{energy_cost_for(r)}</td>
 </tr>''')
     return "\n".join(out)
 
@@ -81,6 +125,7 @@ def render_category_section(cat):
   <td><span class="overall-badge small {score_band(r["score"])}">{r["score"]:.0f}</span></td>
   <td>{dollar}</td>
   <td><span class="status-pill {status_class}">{status_label}</span></td>
+  <td class="energy-cell">{energy_cost_for(r)}</td>
 </tr>''')
     return "\n".join(items)
 
@@ -95,7 +140,7 @@ def render_category_tabs():
   <h3>Best cities for {esc(CAT_LABELS[cat])} rebates</h3>
   <div class="table-wrap">
   <table class="score-table">
-    <thead><tr><th>Rank</th><th>City</th><th>Score</th><th>Top $ Available</th><th>Status</th></tr></thead>
+    <thead><tr><th>Rank</th><th>City</th><th>Score</th><th>Top $ Available</th><th>Status</th><th>Est. Energy Cost</th></tr></thead>
     <tbody>
 {render_category_section(cat)}
     </tbody>
@@ -402,7 +447,7 @@ table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; mi
     <p class="section-sub">Ranked by overall PowerScore &mdash; the average of all 8 category scores. Hover any pill to see the category. &#128293; heat pump &middot; &#9728;&#65039; solar &middot; &#128267; battery &middot; &#127777;&#65039; insulation &middot; &#128167; water heater &middot; thermostat &middot; &#128663; EV charger &middot; &#129003; windows/doors.</p>
     <div class="table-wrap">
       <table class="score-table" id="leaderboard-table">
-        <thead><tr><th>Rank</th><th>City</th><th>PowerScore</th><th>Category breakdown</th></tr></thead>
+        <thead><tr><th>Rank</th><th>City</th><th>PowerScore</th><th>Category breakdown</th><th>Est. Energy Cost</th></tr></thead>
         <tbody>
 {overall_rows_html}
         </tbody>
@@ -433,6 +478,7 @@ table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; mi
         <li><strong>15% Stackability</strong> &mdash; how many distinct funding layers apply (federal, provincial/state, utility, municipal) &mdash; more layers that stack together score higher.</li>
       </ul>
       <p>A city's <strong>overall PowerScore</strong> is the plain average of its 8 category scores. We recalculate this whenever the underlying city pages are updated with new rebate figures.</p>
+      <p><strong>Est. Energy Cost</strong> is estimated average annual electricity + heating fuel cost for a 2,500 sq ft home, based on utility rate schedules and typical regional usage &mdash; not a quoted bill, and it plays no role in the PowerScore calculation above. Nova Scotia and Massachusetts show a range instead of a single figure because both regions have a significant share of oil-heated homes, which run meaningfully higher than gas or electric heat, alongside their other heating types. Figures marked with an asterisk (*) are approximated from a neighboring utility territory where a precise regional rate wasn't available.</p>
     </div>
   </div>
 </section>

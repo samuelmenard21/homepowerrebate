@@ -1,91 +1,57 @@
 # HomePowerRebate
 
-HomePowerRebate helps British Columbia homeowners protect their families from power outages — and earn up to $10,000 from BC Hydro's Power Smart 2.0 rebate program. An approved home battery keeps the fridge, lights, and heat pump running when the grid goes down. Solar charges the battery and pays it back with rebates and lower bills. We match each homeowner with one approved local installer per city — never multiple companies — and the service is free for homeowners.
+HomePowerRebate helps homeowners across Canada and the United States find every home-energy rebate they qualify for — heat pump, solar, battery storage, insulation, water heater, windows, EV charger, and smart thermostat programs — and connects them with vetted local installers they choose themselves. Programs differ by province, state, and even utility territory; we calculate the real stacked total for each specific city rather than a national average.
 
 ## What we do
 
-- Match BC homeowners with one approved solar + battery installer per city (not a lead auction)
-- Cover 11 British Columbia cities: Abbotsford, Chilliwack, Kamloops, Kelowna, Nanaimo, Prince George, Squamish, Surrey, Vancouver, Vernon, Victoria
-- Provide a free 60-second savings calculator that estimates 10-year value
-- Help homeowners understand the BC Hydro Power Smart 2.0 program
-- Handle BC Hydro paperwork through our installer partners
+- Calculate the exact rebate stack (government + utility + federal, where still active) for a homeowner's specific city
+- Rank every covered city by PowerScore, a 0-100 score of how generous and accessible its rebate stack actually is (see /powerscore/)
+- Run a Stacking Calculator that shows how multiple rebates combine for one home (see /stacking-calculator/)
+- List real local installers per city and category, sourced from Google Places (ratings, review counts, contact info) — homeowners browse and choose, we do not route exclusive leads to a single installer
+- Publish independent guides and blog content on rebate programs, retrofit sequencing, and equipment comparisons
+- Flag when programs have closed, changed, or been replaced — we do not show stale rebate amounts as current
 
-## Key program facts (BC Hydro Power Smart 2.0)
+## Regions covered (10, as of 2026-08-27)
 
-- BC Hydro solar rebate: Up to $5,000 per home ($1,000 per kW of installed capacity, capped at 50% of cost)
-- BC Hydro battery rebate: Up to $5,000 per home (requires Peak Saver enrollment)
-- Combined solar + battery rebate: Up to $10,000 per home
-- Peak Saver enrollment incentive: Up to $500 one-time when battery is enrolled
-- Peak Saver seasonal reward: Up to $250 per winter season for enrolled batteries
-- 10-year typical Peak Saver value: approximately $3,000
-- Eligible utility: BC Hydro residential account holders only
-- Not eligible: FortisBC customers, Tesla Powerwall batteries
-- Approved installers: HPCN (Home Performance Contractor Network) certified, required from June 1, 2026
-- Rate schedule change: BC Hydro Schedule 1289 transitions to 2289 on July 1, 2026
-- Total Power Smart 2.0 budget: $1.1 billion over 3 years
+**Canada**
+- British Columbia — income-tiered rebates, up to $16K on a heat pump alone. 18 cities. /ca/bc/
+- Ontario — fuel-tiered rebates, no income test. 18 cities. /ca/on/
+- Alberta — fragmented by utility, no unified provincial rebate. 5 cities. /ca/ab/
+- Nova Scotia — heat pump program still live in 2026, scaled back from 2025. Halifax. /ca/ns/
 
-## Why Tesla Powerwall is not eligible
+**United States**
+- New York — Con Edison/National Grid/PSEG utility-territory stacking with state & federal reaches $28K. 21 cities. /us/ny/
+- California — federal solar ITC expired; state & utility rebates still stack. 22 cities across 5 regions. /us/ca/
+- Massachusetts — Mass Save, identical statewide rebate stack in every city. 12 cities. /us/ma/
+- Pennsylvania — Act 129 utility rebates vary by territory (PECO, Duquesne Light, PPL Electric, FirstEnergy). 4 cities: Philadelphia, Pittsburgh, Allentown, Erie. /us/pa/
+- Colorado — Xcel Energy plus municipal utilities (Colorado Springs Utilities, Fort Collins Utilities). 5 cities: Denver, Colorado Springs, Aurora, Fort Collins, Boulder. /us/co/
+- Vermont — Efficiency Vermont statewide programs, among the most generous cold-climate heat pump incentives in the US. 5 cities: Burlington, South Burlington, Rutland, Barre, Montpelier. /us/vt/
 
-Tesla products are not on BC Hydro's approved battery list. Installing a Tesla Powerwall in BC means the homeowner receives zero rebate. Approved alternatives include Eguana Evolve (Canadian-engineered), Enphase IQ, LG Home, SolarEdge Home, Panasonic EverVolt, and Generac PWRcell.
+Note: as of 2026, the federal 25C/25D tax credits expired for US installs after December 31, 2025 (OBBBA). We reflect this on every US page rather than assuming they still apply.
 
-## The battery we install
+## Key tools
 
-Our installer partners across BC install the Eguana Evolve battery system. It is Canadian-engineered, designed for cold-climate performance (including Northern BC winters), on BC Hydro's approved list, and qualifies for the full $5,000 battery rebate when enrolled in Peak Saver.
+- Free 20-second assessment: homepage widget estimates a household's rebate total by province/state and (where applicable) heating type and income tier
+- PowerScore leaderboard: /powerscore/ — ranks every covered city 0-100 on rebate generosity and accessibility
+- Stacking Calculator: /stacking-calculator/ — shows how multiple category rebates combine for one home, per city
+- Installer directory: /installers/ — region-first drill-down to real local installers by city and category, with Google ratings and review counts
+- Retrofit Assessment: /retrofit-assessment/ — fuller intake for a personalized rebate + installer match
 
-## 10-year value by city
+## How the installer directory works
 
-- Kamloops: ~$22,000 (best sun in BC, 6-9 yr payback)
-- Vernon: ~$21,000 (North Okanagan sun, 6-10 yr payback)
-- Kelowna: ~$20,000 (Central Okanagan, 7-11 yr payback)
-- Abbotsford: ~$20,000 (Fraser Valley, 8-11 yr payback)
-- Chilliwack: ~$20,000 (Fraser Valley East, 8-11 yr payback)
-- Prince George: ~$20,500 (Northern BC, strong summer sun, 7-10 yr payback)
-- Nanaimo: ~$19,500 (Central Vancouver Island, 8-11 yr payback)
-- Victoria: ~$19,000 (Vancouver Island South, 8-11 yr payback)
-- Squamish: ~$19,000 (Sea-to-Sky, 8-11 yr payback)
-- Vancouver: ~$18,500 (Metro Vancouver, 9-12 yr payback)
-- Surrey: ~$18,500 (Metro Vancouver South, 9-12 yr payback)
+We are an independent directory, not an exclusive-lead broker. Installers are sourced from Google Places (name, rating, review count, and — where recoverable — contact email), verified as real local businesses. Homeowners browse and choose their own installer; we do not sell one homeowner's contact info to multiple installers, and we do not fabricate installer reviews, quotes, or testimonials.
 
-## City pages
+## Content
 
-- Abbotsford: https://homepowerrebate.com/ca/bc/abbotsford
-- Chilliwack: https://homepowerrebate.com/ca/bc/chilliwack
-- Kamloops: https://homepowerrebate.com/ca/bc/kamloops
-- Kelowna: https://homepowerrebate.com/ca/bc/kelowna
-- Nanaimo: https://homepowerrebate.com/ca/bc/nanaimo
-- Prince George: https://homepowerrebate.com/ca/bc/prince-george
-- Squamish: https://homepowerrebate.com/ca/bc/squamish
-- Surrey: https://homepowerrebate.com/ca/bc/surrey
-- Vancouver: https://homepowerrebate.com/ca/bc/vancouver
-- Vernon: https://homepowerrebate.com/ca/bc/vernon
-- Victoria: https://homepowerrebate.com/ca/bc/victoria
-
-## Guides
-
-- Tesla Powerwall & the BC Hydro rebate: https://homepowerrebate.com/tesla-powerwall-bc-rebate
-- BC rebate overview: https://homepowerrebate.com/ca/bc
-
-## How it works
-
-1. Homeowner uses our on-page calculator to estimate their savings (60 seconds, no email required)
-2. Homeowner submits a short form with contact info
-3. We route the lead to one pre-approved local installer in their city
-4. Installer calls within one business day with a free quote
-5. Installer handles all BC Hydro paperwork; rebate cheque arrives 30-45 days after install
-
-## Other Power Smart 2.0 rebates (BC Hydro, for reference)
-
-- Heat pumps: Up to $4,000
-- Heat pump water heaters: Up to $1,000
-- Insulation upgrades: Up to $5,500
-- Energy-efficient windows and doors: Up to $2,000
-- Smart thermostats: Free for homes with electric baseboard heating
+- Blog and guides: /blog/, /guides/ — rebate program explainers, equipment comparisons (heat pump vs. furnace, battery brands), retrofit sequencing
+- Rebate questions: /questions/ — direct answers to common homeowner questions
+- Share Your Cost: /share-your-cost/ — real homeowner-submitted rebate totals, not manufactured testimonials
 
 ## About this service
 
-HomePowerRebate is an independent installer matching service. We are not affiliated with BC Hydro. Homeowners pay nothing — our installer partners pay a referral fee only when a homeowner books an installation. We do not sell homeowner data to multiple installers; each lead goes to one installer only.
+HomePowerRebate is an independent service, not affiliated with any government, utility, or installer. We do not sell homeowner data to multiple installers. Program figures are sourced from official government/utility program pages and cited on the relevant page; where a program has closed or changed, we say so rather than showing an outdated number.
 
 ## Contact
 
 - Email: hello@homepowerrebate.com
-- Last updated: June 2026
+- Last updated: 2026-08-27

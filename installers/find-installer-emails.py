@@ -68,7 +68,9 @@ def clean(email):
     if "@" not in email:
         return None
     local, _, domain = email.partition("@")
-    if domain in JUNK_DOMAINS or domain.endswith(BAD_TLDS):
+    if domain in JUNK_DOMAINS or any(domain.endswith("." + d) for d in JUNK_DOMAINS):
+        return None
+    if domain.endswith(BAD_TLDS):
         return None
     if local.startswith(JUNK_PREFIXES):
         return None

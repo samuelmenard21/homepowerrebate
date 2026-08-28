@@ -65,7 +65,12 @@ ENERGY_COST = {
     ("us/pa", "allentown"): {"display": "$3,400", "range": False},
     ("us/pa", "erie"): {"display": "$3,200*", "range": False},
     ("us/pa", ""): {"display": "$3,450*", "range": False},
-    ("us/co", ""): {"display": "$2,050", "range": False},
+    ("us/co", "denver"): {"display": "$2,200*", "range": False},
+    ("us/co", "aurora"): {"display": "$2,200*", "range": False},
+    ("us/co", "boulder"): {"display": "$2,200*", "range": False},
+    ("us/co", "fort-collins"): {"display": "$1,950*", "range": False},
+    ("us/co", "colorado-springs"): {"display": "$2,000*", "range": False},
+    ("us/co", ""): {"display": "$2,050*", "range": False},
     ("us/vt", ""): {"display": "$4,900", "range": False},
 }
 

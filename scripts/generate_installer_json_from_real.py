@@ -84,6 +84,45 @@ JOBS = [
         "specialty": "Solar Installation",
         "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
     },
+    # Pennsylvania
+    {
+        "csv": os.path.join(ROOT, "installers/pa-heat-pump-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/pa"),
+        "specialty": "Heat Pump & HVAC Installation",
+        "description_tpl": "Local heating & cooling pro serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    {
+        "csv": os.path.join(ROOT, "installers/pa-solar-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/pa/solar"),
+        "specialty": "Solar Installation",
+        "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    # Colorado
+    {
+        "csv": os.path.join(ROOT, "installers/co-heat-pump-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/co"),
+        "specialty": "Heat Pump & HVAC Installation",
+        "description_tpl": "Local heating & cooling pro serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    {
+        "csv": os.path.join(ROOT, "installers/co-solar-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/co/solar"),
+        "specialty": "Solar Installation",
+        "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    # Vermont
+    {
+        "csv": os.path.join(ROOT, "installers/vt-heat-pump-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/vt"),
+        "specialty": "Heat Pump & HVAC Installation",
+        "description_tpl": "Local heating & cooling pro serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    {
+        "csv": os.path.join(ROOT, "installers/vt-solar-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/vt/solar"),
+        "specialty": "Solar Installation",
+        "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
 ]
 
 

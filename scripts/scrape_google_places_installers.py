@@ -219,8 +219,34 @@ CA_CITIES = {
     "Sacramento": {"lat": 38.5816, "lng": -121.4944},
 }
 
+PENNSYLVANIA_CITIES = {
+    "Philadelphia": {"lat": 39.9526, "lng": -75.1652},
+    "Pittsburgh": {"lat": 40.4406, "lng": -79.9959},
+    "Allentown": {"lat": 40.6084, "lng": -75.4902},
+    "Erie": {"lat": 42.1292, "lng": -80.0851},
+}
+
+COLORADO_CITIES = {
+    "Denver": {"lat": 39.7392, "lng": -104.9903},
+    "Colorado Springs": {"lat": 38.8339, "lng": -104.8214},
+    "Aurora": {"lat": 39.7294, "lng": -104.8319},
+    "Fort Collins": {"lat": 40.5853, "lng": -105.0844},
+    "Boulder": {"lat": 40.0150, "lng": -105.2705},
+}
+
+VERMONT_CITIES = {
+    "Burlington": {"lat": 44.4759, "lng": -73.2121},
+    "South Burlington": {"lat": 44.4670, "lng": -73.1709},
+    "Rutland": {"lat": 43.6106, "lng": -72.9726},
+    "Barre": {"lat": 44.1970, "lng": -72.5020},
+    "Montpelier": {"lat": 44.2601, "lng": -72.5754},
+}
+
 PROVINCES = {
     "bc": {"cities": BC_CITIES, "abbrev": "BC", "csv_prefix": ""},
+    "pa": {"cities": PENNSYLVANIA_CITIES, "abbrev": "PA", "csv_prefix": "pa-"},
+    "co": {"cities": COLORADO_CITIES, "abbrev": "CO", "csv_prefix": "co-"},
+    "vt": {"cities": VERMONT_CITIES, "abbrev": "VT", "csv_prefix": "vt-"},
     "on": {"cities": ONTARIO_CITIES, "abbrev": "ON", "csv_prefix": "on-"},
     "ab": {"cities": ALBERTA_CITIES, "abbrev": "AB", "csv_prefix": "ab-"},
     "ns": {"cities": NOVA_SCOTIA_CITIES, "abbrev": "NS", "csv_prefix": "ns-"},

@@ -60,15 +60,24 @@ ENERGY_COST = {
     ("us/ny", "national-grid"): {"display": "$3,050", "range": False},
     ("us/ny", "central-hudson"): {"display": "$3,050*", "range": False},
     ("us/ma", ""): {"display": "$3,600&ndash;$5,000", "range": True},
-    ("us/pa", ""): {"display": "$3,000", "range": False},
+    ("us/pa", "philadelphia"): {"display": "$3,300", "range": False},
+    ("us/pa", "pittsburgh"): {"display": "$3,900", "range": False},
+    ("us/pa", "allentown"): {"display": "$3,400", "range": False},
+    ("us/pa", "erie"): {"display": "$3,200*", "range": False},
+    ("us/pa", ""): {"display": "$3,450*", "range": False},
     ("us/co", ""): {"display": "$2,050", "range": False},
     ("us/vt", ""): {"display": "$4,900", "range": False},
 }
 
 
 def energy_cost_for(r):
+    # slug is either "city" (flat, e.g. PA) or "utility-prefix/city" (CA, NY).
+    # Try the full slug (flat-city override, e.g. PA per-city rates), then
+    # the utility prefix (CA/NY sub-territory), then the region-wide default.
     prefix = r["slug"].split("/")[0] if "/" in r["slug"] else ""
-    key = (r["region"], prefix)
+    key = (r["region"], r["slug"])
+    if key not in ENERGY_COST:
+        key = (r["region"], prefix)
     if key not in ENERGY_COST:
         key = (r["region"], "")
     info = ENERGY_COST.get(key)

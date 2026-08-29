@@ -42,7 +42,7 @@ def pill_html(cost_display, url_fragment):
         f'font-size:13px; font-weight:600; color:var(--teal-deep); text-decoration:none; '
         f'box-shadow:0 1px 3px rgba(10,42,46,0.08);">'
         f'<span aria-hidden="true">&#128268;</span>'
-        f'<span>Est. Annual Energy Cost: {cost_display}</span></a></div>'
+        f'<span>Estimated Annual Energy Cost: {cost_display}</span></a></div>'
     )
 
 
@@ -53,7 +53,7 @@ def pill_html_alt(cost_display, url_fragment):
         f'background:var(--color-bg); border:1px solid var(--color-border); border-radius:999px; '
         f'padding:8px 18px; font-size:13px; font-weight:600; color:var(--color-fg); text-decoration:none;">'
         f'<span aria-hidden="true">&#128268;</span>'
-        f'<span>Est. Annual Energy Cost: {cost_display}</span></a></div>'
+        f'<span>Estimated Annual Energy Cost: {cost_display}</span></a></div>'
     )
 
 

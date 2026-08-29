@@ -41,6 +41,8 @@ def top_categories(r, n=3):
 
 
 def fmt(value):
+    if value < 10:
+        return f"${value:,.2f}/watt"
     return f"${value:,.0f}"
 
 

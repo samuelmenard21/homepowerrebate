@@ -33,6 +33,11 @@ SOURCES = [
     "ab-heat-pump-installers-real.csv", "ab-solar-installers-real.csv",
     "ns-heat-pump-installers-real.csv", "ns-solar-installers-real.csv",
     "ma-heat-pump-installers-real.csv", "ma-solar-installers-real.csv",
+    "pa-heat-pump-installers-real.csv", "pa-solar-installers-real.csv",
+    "co-heat-pump-installers-real.csv", "co-solar-installers-real.csv",
+    "vt-heat-pump-installers-real.csv", "vt-solar-installers-real.csv",
+    "ca-heat-pump-installers-real.csv", "ca-solar-installers-real.csv",
+    "ny-heat-pump-installers-real.csv", "ny-solar-installers-real.csv",
 ]
 OUT = HERE / "installer-emails.csv"
 

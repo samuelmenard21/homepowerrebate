@@ -123,6 +123,32 @@ JOBS = [
         "specialty": "Solar Installation",
         "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
     },
+    # California
+    {
+        "csv": os.path.join(ROOT, "installers/ca-heat-pump-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/ca"),
+        "specialty": "Heat Pump & HVAC Installation",
+        "description_tpl": "Local heating & cooling pro serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    {
+        "csv": os.path.join(ROOT, "installers/ca-solar-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/ca/solar"),
+        "specialty": "Solar Installation",
+        "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    # New York
+    {
+        "csv": os.path.join(ROOT, "installers/ny-heat-pump-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/ny"),
+        "specialty": "Heat Pump & HVAC Installation",
+        "description_tpl": "Local heating & cooling pro serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
+    {
+        "csv": os.path.join(ROOT, "installers/ny-solar-installers-real.csv"),
+        "out_dir": os.path.join(ROOT, "installers/json/ny/solar"),
+        "specialty": "Solar Installation",
+        "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
+    },
 ]
 
 

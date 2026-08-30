@@ -295,6 +295,19 @@ def display_name_text(place):
     return str(dn or "")
 
 
+# Some city-dict keys don't appear verbatim in Google's formattedAddress —
+# e.g. Manhattan/NYC addresses say "...New York, NY 10001...", never the
+# literal phrase "New York City", so the plain substring match below always
+# failed and silently dropped every real NYC result (found 2026-08-30, after
+# an actual scrape run returned 0 qualified installers for the single
+# largest city in the whole NY_CITIES list — a hard giveaway that the match
+# was broken, not that no businesses exist). Add an alias entry here whenever
+# a city's real address text doesn't match its dict key.
+CITY_ADDRESS_ALIASES = {
+    "New York City": ["new york,", "new york, ny", "manhattan,", "brooklyn,", "queens,", "bronx,", "staten island,"],
+}
+
+
 def city_from_address(address, cities):
     """
     Return the cities-dict key that appears in this address, or None.
@@ -302,7 +315,8 @@ def city_from_address(address, cities):
     """
     norm = address.lower().replace(".", "")
     for city in cities:
-        if city.lower().replace(".", "") in norm:
+        aliases = CITY_ADDRESS_ALIASES.get(city, [city])
+        if any(alias.lower().replace(".", "") in norm for alias in aliases):
             return city
     return None
 

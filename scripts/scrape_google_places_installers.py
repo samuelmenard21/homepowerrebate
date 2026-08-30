@@ -305,6 +305,22 @@ def display_name_text(place):
 # a city's real address text doesn't match its dict key.
 CITY_ADDRESS_ALIASES = {
     "New York City": ["new york,", "new york, ny", "manhattan,", "brooklyn,", "queens,", "bronx,", "staten island,"],
+    # Long Island "towns" are governmental units, not places people's addresses
+    # use — real addresses say the hamlet/village name instead. Same root
+    # cause as the NYC bug: without these, every business here reads as
+    # off-list even though it's really inside the town. Hamlet lists sourced
+    # via WebSearch, 2026-08-30 (Wikipedia / Long Island municipality guides).
+    "Islip": ["islip,", "bay shore,", "bohemia,", "brentwood,", "central islip,", "east islip,",
+              "hauppauge,", "holbrook,", "holtsville,", "ronkonkoma,", "sayville,", "west sayville,",
+              "west islip,", "oakdale,", "great river,", "bayport,", "islandia,", "brightwaters,"],
+    "Brookhaven": ["brookhaven,", "patchogue,", "port jefferson,", "centereach,", "coram,",
+                   "farmingville,", "mastic,", "medford,", "middle island,", "miller place,",
+                   "moriches,", "mount sinai,", "bellport,", "shirley,", "shoreham,", "manorville,",
+                   "calverton,", "blue point,", "east setauket,", "selden,", "yaphank,"],
+    "Oyster Bay": ["oyster bay,", "bethpage,", "east massapequa,", "east norwich,", "glen head,",
+                   "hicksville,", "jericho,", "locust valley,", "massapequa,", "north massapequa,",
+                   "old bethpage,", "plainedge,", "plainview,", "south farmingdale,", "syosset,",
+                   "woodbury,"],
 }
 
 
@@ -408,9 +424,12 @@ def scrape_installers(api_key, installer_type, province="bc", debug=False):
     n_rejected_type = 0
     n_rejected_offlist = 0
 
+    cities_with_alias_warning = []
+
     for city_name, coords in cities.items():
         print(f"  searching near {city_name}...", end=" ", flush=True)
         new_here = 0
+        offlist_here = 0  # results found while searching FOR this city that didn't match ANY known city
 
         for query in queries:
             full_query = f"{query} in {city_name} {prov_abbrev}"
@@ -443,6 +462,7 @@ def scrape_installers(api_key, installer_type, province="bc", debug=False):
                 if actual_city is None:
                     # Business is outside our target cities — skip it.
                     n_rejected_offlist += 1
+                    offlist_here += 1
                     if debug:
                         print(f"\n      ✗ off-list city: {name[:40]} ({address[:40]})", end="")
                     continue
@@ -468,6 +488,21 @@ def scrape_installers(api_key, installer_type, province="bc", debug=False):
                 new_here += 1
 
         print(f"{new_here} new")
+        # If a city's own search turned up real Google results but every
+        # single one got rejected as off-list, that's the exact signature of
+        # a broken/missing address alias (the NYC bug, 2026-08-30) — not
+        # genuine business absence. Flag it loudly instead of a silent zero.
+        if new_here == 0 and offlist_here >= 3:
+            cities_with_alias_warning.append((city_name, offlist_here))
+
+    if cities_with_alias_warning:
+        print(f"\n⚠️  {len(cities_with_alias_warning)} cities may need a CITY_ADDRESS_ALIASES entry")
+        print(f"   (found real Google results but every one was rejected as off-list —")
+        print(f"    check whether this city's real address text differs from its dict key,")
+        print(f"    e.g. a multi-word city name, a town made up of hamlets/boroughs, etc.):")
+        for city_name, n in cities_with_alias_warning:
+            print(f"     - {city_name}: {n} off-list rejection(s), 0 qualified")
+        print(f"   Re-run with --debug to see the actual rejected addresses and confirm.\n")
 
     # Phase 2 — group by actual city, take the top N per city.
     by_city = {}

@@ -196,6 +196,22 @@ p { margin-bottom:16px; font-size:15px; color:var(--ink-soft); }
 .filter-band { background:var(--paper-warm); padding:28px; border-radius:12px; margin:24px 0; }
 .filters { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
 .filter-label { font-size:14px; font-weight:600; color:var(--teal-deep); }
+
+.finder-tool { background:var(--paper-warm); border-radius:16px; margin:0 auto; max-width:960px; }
+.step-block { padding:8px 0 28px; }
+.step-block + .step-block { border-top:1px solid var(--rule); padding-top:24px; }
+.step-head { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.step-num { flex:none; width:32px; height:32px; border-radius:50%; background:var(--teal-deep); color:#fff; font-family:'Fraunces',serif; font-weight:700; font-size:15px; display:flex; align-items:center; justify-content:center; }
+.search-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.search-input { flex:1; min-width:220px; max-width:420px; background:#fff; border:1.5px solid var(--rule); border-radius:8px; padding:11px 14px; font-size:14px; font-family:inherit; color:var(--ink); }
+.search-input:focus { outline:2px solid var(--amber); outline-offset:1px; border-color:var(--amber); }
+.search-count { font-size:13px; color:var(--ink-soft); }
+
+.directory-search-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin:16px 0 20px; }
+.directory-jump { font-size:13px; color:var(--ink-soft); }
+.directory-jump select { font-family:inherit; font-size:13px; border:1.5px solid var(--rule); border-radius:6px; padding:6px 10px; background:#fff; color:var(--ink); }
+.directory-city.is-hidden { display:none; }
+mark { background:#fbe2b8; color:inherit; border-radius:2px; padding:0 1px; }
 .filter-btn { background:#fff; color:var(--ink); border:1.5px solid var(--rule); padding:10px 16px; border-radius:999px; font-weight:600; font-size:14px; cursor:pointer; transition:all 0.2s; }
 .filter-btn:hover { border-color:var(--amber); color:var(--amber); }
 .filter-btn.active { background:var(--amber); color:#fff; border-color:var(--amber); }
@@ -256,30 +272,54 @@ footer a { color:rgba(250,247,242,.75); text-decoration:none; }
 
 <section class="hero">
   <div class="wrap">
-    <h1>Verified Installers Across Canada &amp; the US</h1>
+    <h1>Find a Verified Installer Near You</h1>
     <p>660+ heat pump and solar installers, all rated 4+ stars, across 7 regions and 96 cities in BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California.</p>
-    <p class="subnote">Pick your region, then filter by service type and location — find your local installer.</p>
+    <p class="subnote">Three steps: pick your region, narrow by service, then browse or search by name.</p>
   </div>
 </section>
 
-<section class="section">
+<section class="section finder-tool">
   <div class="wrap">
-    <div class="eyebrow">Filter by Type</div>
-    <div class="filters">
-      <span class="filter-label">Show:</span>
-      <button class="filter-btn active" data-filter="all">All Services</button>
-      <button class="filter-btn" data-filter="heat-pump">Heat Pumps</button>
-      <button class="filter-btn" data-filter="solar">Solar</button>
-      <button class="filter-btn" data-filter="batteries">Batteries</button>
+    <div class="step-block">
+      <div class="step-head">
+        <span class="step-num">1</span>
+        <div>
+          <div class="eyebrow" style="margin-bottom:2px;">Select Your Region</div>
+          <h2 style="font-size:20px; margin:0;">Where are you looking for an installer?</h2>
+        </div>
+      </div>
+      <div class="region-grid" id="region-grid-container"></div>
     </div>
-  </div>
-</section>
 
-<section class="section">
-  <div class="wrap">
-    <div class="eyebrow">Step 1 &middot; Select Your Region</div>
-    <h2 style="font-size:20px;">Where are you looking for an installer?</h2>
-    <div class="region-grid" id="region-grid-container"></div>
+    <div class="step-block">
+      <div class="step-head">
+        <span class="step-num">2</span>
+        <div>
+          <div class="eyebrow" style="margin-bottom:2px;">Filter by Type</div>
+          <h2 style="font-size:20px; margin:0;">What service do you need?</h2>
+        </div>
+      </div>
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">All Services</button>
+        <button class="filter-btn" data-filter="heat-pump">Heat Pumps</button>
+        <button class="filter-btn" data-filter="solar">Solar</button>
+        <button class="filter-btn" data-filter="batteries">Batteries</button>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-head">
+        <span class="step-num">3</span>
+        <div>
+          <div class="eyebrow" style="margin-bottom:2px;">Search by Name</div>
+          <h2 style="font-size:20px; margin:0;">Looking for a specific company?</h2>
+        </div>
+      </div>
+      <div class="search-row">
+        <input type="text" id="installer-search" class="search-input" placeholder="Search installer name…" autocomplete="off" aria-label="Search installer name">
+        <span id="search-count" class="search-count"></span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1774,6 +1814,15 @@ footer a { color:rgba(250,247,242,.75); text-decoration:none; }
 </footer>
 
 <script>
+// IMPORTANT: adding a city to any of the *_CITIES arrays below only adds it
+// to the installer directory. It does NOT give it rebate data for the
+// lead-router's homeowner emails (the "Every rebate available in {city}"
+// breakdown) — that's a separate lookup at scripts/all-rebates-consolidated.csv
+// / city-rebate-lookup.json, keyed by lowercased "{region}|{city}". Add a row
+// there too (and regenerate city-rebate-lookup.json) whenever a new city goes
+// live here, or its emails will silently show "not specified" instead of real
+// numbers. See lead-router.js's cityRebateLookup()/PROVINCE_CONTEXT for how
+// this is consumed, and add a PROVINCE_CONTEXT entry too for any new state/province.
 const BC_CITIES = [
   'Abbotsford', 'Burnaby', 'Chilliwack', 'Coquitlam', 'Fort St. John',
   'Kamloops', 'Kelowna', 'Langley', 'Maple Ridge', 'Nanaimo',

@@ -23,6 +23,12 @@
  *   ENVIRONMENT = "production"
  */
 
+// Generated from scripts/all-rebates-consolidated.csv — every homeowner
+// city page and installer-directory city (installers/index.html's *_CITIES
+// arrays) needs a matching row here, or homeowner emails for that city fall
+// back to "not specified" instead of real rebate figures. When a new
+// city/state/province goes live, add a CSV row, regenerate this JSON, and
+// add a PROVINCE_CONTEXT entry below for any new region.
 import CITY_REBATE_LOOKUP from './city-rebate-lookup.json';
 
 // ===========================================================================

@@ -337,6 +337,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <h4>&#128268; Battery Storage</h4>
         <div class="amount none">No rebate</div>
         <p>No dedicated battery storage incentive currently exists in Alberta.</p>
+        <p style="margin-top:8px;"><a href="/ca/ab/calgary/battery" style="font-weight:600; font-size:13px;">Full battery storage guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
@@ -358,16 +359,19 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <h4>&#129001; Windows &amp; Doors</h4>
         <div class="amount none">No dedicated rebate</div>
         <p>May qualify for CEIP financing as part of a broader envelope upgrade, but no standalone rebate.</p>
+        <p style="margin-top:8px;"><a href="/ca/ab/calgary/windows" style="font-weight:600; font-size:13px;">Full windows guide &rarr;</a></p>
       </div>
       <div class="rebate-card none">
         <h4>&#128664; EV Charger</h4>
         <div class="amount none">No rebate found</div>
         <p>No confirmed residential EV charger rebate in Alberta as of 2026.</p>
+        <p style="margin-top:8px;"><a href="/ca/ab/calgary/ev-charger" style="font-weight:600; font-size:13px;">Full ev charger guide &rarr;</a></p>
       </div>
       <div class="rebate-card none">
         <h4>&#127777;&#65039; Smart Thermostat</h4>
         <div class="amount none">No direct rebate</div>
         <p>No standalone grant, though CEIP-financed HVAC upgrades sometimes include one.</p>
+        <p style="margin-top:8px;"><a href="/ca/ab/calgary/smart-thermostats" style="font-weight:600; font-size:13px;">Full smart thermostat guide &rarr;</a></p>
       </div>
     </div>
 
@@ -380,6 +384,10 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
       <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
       <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery storage</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows">Windows</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+      <button type="button" class="finder-filter-btn" data-filter="smart-thermostats">Smart thermostat</button>
     </div>
 
     <div class="finder-grid" id="finder-grid">
@@ -411,8 +419,36 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p>No flat water heater rebate in Calgary or anywhere in Alberta. Available through CEIP financing or utility-specific offers from ATCO, EPCOR, or ENMAX.</p>
         <div class="finder-source">Source: /ca/ab/calgary &middot; CEIP / utility offers</div>
       </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery storage</div>
+        <h4>No flat rebate &mdash; CEIP financing only</h4>
+        <div class="finder-amount financing">Financing only</div>
+        <p>No cash rebate or grant for home battery storage in Alberta. CEIP will finance an eligible battery system (usually paired with solar) for up to $50,000, repaid through your property tax bill.</p>
+        <div class="finder-source">Source: /ca/ab/calgary/battery &middot; CEIP / utility programs</div>
+      </div>
+      <div class="finder-card" data-cat="windows">
+        <div class="finder-cat">Windows</div>
+        <h4>No flat rebate &mdash; CEIP financing only</h4>
+        <div class="finder-amount financing">Financing only</div>
+        <p>No cash rebate for window replacement in Alberta. CEIP will finance ENERGY STAR-certified windows as part of an eligible efficiency package, up to $50,000 through property-tax repayment.</p>
+        <div class="finder-source">Source: /ca/ab/calgary/windows &middot; CEIP / utility programs</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>No confirmed EV charger rebate</h4>
+        <div class="finder-amount financing">No rebate found</div>
+        <p>No provincial or utility rebate for home EV chargers in Alberta. Alberta EVCP and federal ZEVIP funding only reaches businesses, condos, and municipalities &mdash; not single-family homeowners.</p>
+        <div class="finder-source">Source: /ca/ab/calgary/ev-charger &middot; CEIP / utility programs</div>
+      </div>
+      <div class="finder-card" data-cat="smart-thermostats">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>No standalone smart thermostat rebate</h4>
+        <div class="finder-amount financing">No direct rebate</div>
+        <p>No standalone grant for smart thermostats. CEIP will only finance one as part of a larger eligible HVAC upgrade package, not on its own.</p>
+        <div class="finder-source">Source: /ca/ab/calgary/smart-thermostats &middot; CEIP / utility programs</div>
+      </div>
     </div>
-    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">Battery storage, windows &amp; doors, EV chargers, and smart thermostats have no confirmed dedicated rebate in Calgary as of 2026. Also check the City of Calgary's Home Upgrades Program below &mdash; free upgrades for income-qualified households, currently waitlisted.</p>
+    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">Full category guides are linked above for every program we track in Calgary &mdash; several show real financing paths (CEIP) rather than flat rebates. Also check the City of Calgary's Home Upgrades Program below &mdash; free upgrades for income-qualified households, currently waitlisted.</p>
 
     <h2>Calgary-specific: the Home Upgrades Program</h2>
     <p>Beyond the provincial patchwork, the <a href="https://www.homeupgradesprogram.ca/calgary" target="_blank" rel="noopener"><strong>City of Calgary's Home Upgrades Program</strong></a> offers free energy-efficiency upgrades to income-qualified Calgary residents, delivered at no cost by Kambo Energy Group on the city's behalf. As of 2026 the program is waitlisting new applications rather than accepting them immediately &mdash; worth getting on the list even if the wait is long, since it's genuinely free for eligible households rather than a rebate you pay into first.</p>

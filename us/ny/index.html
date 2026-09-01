@@ -61,6 +61,25 @@ footer a { color: rgba(250,247,242,0.75); text-decoration: none; }
 .highlight-box { background: #dbeafe; border-left: 4px solid var(--teal); padding: 20px; margin: 24px 0; border-radius: 8px; }
 .highlight-box strong { color: var(--teal-deep); }
 
+/* Rebate Finder */
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-utility-group { margin-top: 36px; }
+.finder-utility-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--rule); }
+.finder-utility-header h3 { font-family: 'Fraunces', serif; font-size: 22px; color: var(--teal-deep); }
+.finder-utility-header span { font-size: 13px; color: var(--ink-soft); }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 8px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
+.finder-utility-group.hidden-group { display: none; }
+
 /* ===== Canonical sitewide nav/footer CSS (from _partials/nav-footer.html) ===== */
 .nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
 .nav-inner { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
@@ -280,6 +299,256 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     </div>
   </div>
 </section>
+
+<section id="rebate-finder" class="section" style="background: var(--paper-warm);">
+  <div class="wrap" style="max-width:1000px;">
+    <h2>New York rebate finder, by utility.</h2>
+    <p>New York rebates are genuinely different depending which utility serves your address — there's no single statewide number. Con Edison, PSEG Long Island, National Grid, and Central Hudson each run their own program with their own dollar amounts. Filter by category, or scroll to your utility's group below. Figures shown are the utility-only rebate; add NYS Clean Heat and federal HEAR on top where eligible (see the stacking box above).</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows">Windows</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+    </div>
+
+    <div class="finder-utility-group">
+      <div class="finder-utility-header"><h3>Con Edison</h3><span>NYC &amp; Westchester &middot; 5 cities</span></div>
+      <div class="finder-grid" data-group="coned">
+        <div class="finder-card" data-cat="heat-pump">
+          <div class="finder-cat">Heat pump</div>
+          <h4>Con Edison heat pump rebate</h4>
+          <div class="finder-amount">$2,000&ndash;$10,000</div>
+          <p>Income-tiered utility rebate. EmPower+ covers 100% of cost (up to $14,000) for qualifying low-income NYC households.</p>
+          <div class="finder-source">Source: /us/ny/con-edison/new-york-city/ &middot; Con Edison</div>
+        </div>
+        <div class="finder-card" data-cat="solar">
+          <div class="finder-cat">Solar</div>
+          <h4>Con Edison-territory solar incentive</h4>
+          <div class="finder-amount">Up to $5,600</div>
+          <p>Combined with NY-Sun and federal solar tax credit; varies by system size.</p>
+          <div class="finder-source">Source: /us/ny/con-edison/new-york-city/solar/ &middot; NY-Sun / Con Edison</div>
+        </div>
+        <div class="finder-card" data-cat="battery">
+          <div class="finder-cat">Battery</div>
+          <h4>Con Edison battery incentive</h4>
+          <div class="finder-amount">Up to $250</div>
+          <p>Small utility-side incentive; most battery savings come from time-of-use bill management, not a rebate check.</p>
+          <div class="finder-source">Source: /us/ny/con-edison/new-york-city/battery/ &middot; Con Edison</div>
+        </div>
+        <div class="finder-card" data-cat="water-heater">
+          <div class="finder-cat">Water heater</div>
+          <h4>Heat-pump water heater rebate</h4>
+          <div class="finder-amount">$1,300</div>
+          <p>The highest heat-pump water heater rebate of the four NY utilities we track.</p>
+          <div class="finder-source">Source: /us/ny/con-edison/new-york-city/water-heater/ &middot; Con Edison</div>
+        </div>
+        <div class="finder-card" data-cat="insulation">
+          <div class="finder-cat">Insulation</div>
+          <h4>Insulation &amp; air sealing rebate</h4>
+          <div class="finder-amount">Up to $4,000</div>
+          <p>Attic, wall, and air-sealing work through Con Edison's efficiency program.</p>
+          <div class="finder-source">Source: /us/ny/con-edison/new-york-city/insulation/ &middot; Con Edison</div>
+        </div>
+        <div class="finder-card" data-cat="windows">
+          <div class="finder-cat">Windows &amp; doors</div>
+          <h4>Windows &amp; doors rebate</h4>
+          <div class="finder-amount">Up to $4,000</div>
+          <p>Bundled with the insulation / building-envelope tier above.</p>
+          <div class="finder-source">Source: /us/ny/con-edison/new-york-city/windows-doors/ &middot; Con Edison</div>
+        </div>
+        <div class="finder-card" data-cat="ev-charger">
+          <div class="finder-cat">EV charger</div>
+          <h4>Home EV charger rebate</h4>
+          <div class="finder-amount">Up to $400</div>
+          <p>Level 2 home charger incentive; some installs qualify for $0 if panel capacity requires no upgrade credit.</p>
+          <div class="finder-source">Source: /us/ny/con-edison/new-york-city/ev-charger/ &middot; Con Edison</div>
+        </div>
+        <div class="finder-card" data-cat="thermostat">
+          <div class="finder-cat">Smart thermostat</div>
+          <h4>Smart thermostat rebate</h4>
+          <div class="finder-amount">$85</div>
+          <p>In-store or mail-in rebate on a qualifying smart thermostat.</p>
+          <div class="finder-source">Source: /us/ny/con-edison/new-york-city/smart-thermostats/ &middot; Con Edison</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="finder-utility-group">
+      <div class="finder-utility-header"><h3>PSEG Long Island</h3><span>Suffolk &amp; Nassau &middot; 7 cities</span></div>
+      <div class="finder-grid" data-group="pseg">
+        <div class="finder-card" data-cat="heat-pump">
+          <div class="finder-cat">Heat pump</div>
+          <h4>PSEG Long Island heat pump rebate</h4>
+          <div class="finder-amount">$4,000&ndash;$7,500</div>
+          <p>Income-tiered; most Long Island households qualify for the full $7,500.</p>
+          <div class="finder-source">Source: /us/ny/pseg/babylon/ &middot; PSEG Long Island</div>
+        </div>
+        <div class="finder-card" data-cat="battery">
+          <div class="finder-cat">Battery</div>
+          <h4>PSEG Long Island battery rebate</h4>
+          <div class="finder-amount">Up to $2,700</div>
+          <p>The largest battery-specific rebate of the four utilities we track here.</p>
+          <div class="finder-source">Source: /us/ny/pseg/babylon/ &middot; PSEG Long Island</div>
+        </div>
+        <div class="finder-card" data-cat="water-heater">
+          <div class="finder-cat">Water heater</div>
+          <h4>Heat-pump water heater rebate</h4>
+          <div class="finder-amount">$1,200</div>
+          <p>Part of a combined efficiency tier that can reach $1,000&ndash;$6,250 with insulation stacked in.</p>
+          <div class="finder-source">Source: /us/ny/pseg/babylon/water-heater/ &middot; PSEG Long Island</div>
+        </div>
+        <div class="finder-card" data-cat="insulation">
+          <div class="finder-cat">Insulation</div>
+          <h4>Insulation &amp; air sealing rebate</h4>
+          <div class="finder-amount">$1,000&ndash;$6,250</div>
+          <p>Wide range depending on home size and how much of the envelope is upgraded.</p>
+          <div class="finder-source">Source: /us/ny/pseg/babylon/insulation/ &middot; PSEG Long Island</div>
+        </div>
+        <div class="finder-card" data-cat="ev-charger">
+          <div class="finder-cat">EV charger</div>
+          <h4>Home EV charger rebate</h4>
+          <div class="finder-amount">$100&ndash;$400</div>
+          <p>Varies by charger type and whether a panel upgrade is required.</p>
+          <div class="finder-source">Source: /us/ny/pseg/babylon/ev-charger/ &middot; PSEG Long Island</div>
+        </div>
+        <div class="finder-card" data-cat="solar">
+          <div class="finder-cat">Solar</div>
+          <h4>Rooftop solar</h4>
+          <div class="finder-amount">$0 utility rebate</div>
+          <p>PSEG does not currently rebate rooftop solar directly &mdash; NY-Sun incentives and the federal tax credit still apply, so it's a savings play rather than a rebate one here.</p>
+          <div class="finder-source">Source: /us/ny/pseg/babylon/solar/ &middot; PSEG Long Island</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="finder-utility-group">
+      <div class="finder-utility-header"><h3>National Grid</h3><span>Upstate NY &middot; 4 cities</span></div>
+      <div class="finder-grid" data-group="ng">
+        <div class="finder-card" data-cat="heat-pump">
+          <div class="finder-cat">Heat pump</div>
+          <h4>National Grid heat pump rebate</h4>
+          <div class="finder-amount">$1,500&ndash;$6,000</div>
+          <p>Tiered by coverage and income; a partial heat pump can qualify at the lower end.</p>
+          <div class="finder-source">Source: /us/ny/national-grid/buffalo/ &middot; National Grid</div>
+        </div>
+        <div class="finder-card" data-cat="solar">
+          <div class="finder-cat">Solar</div>
+          <h4>National Grid-territory solar incentive</h4>
+          <div class="finder-amount">Up to $5,000</div>
+          <p>Stacks with NY-Sun and the federal solar tax credit.</p>
+          <div class="finder-source">Source: /us/ny/national-grid/buffalo/solar/ &middot; NY-Sun / National Grid</div>
+        </div>
+        <div class="finder-card" data-cat="battery">
+          <div class="finder-cat">Battery</div>
+          <h4>National Grid battery incentive</h4>
+          <div class="finder-amount">Up to $200</div>
+          <p>Small utility-side incentive; comparable to Central Hudson's.</p>
+          <div class="finder-source">Source: /us/ny/national-grid/buffalo/battery/ &middot; National Grid</div>
+        </div>
+        <div class="finder-card" data-cat="water-heater">
+          <div class="finder-cat">Water heater</div>
+          <h4>Heat-pump water heater rebate</h4>
+          <div class="finder-amount">$1,250</div>
+          <p>Part of a combined efficiency tier that can reach $750&ndash;$4,000 with insulation stacked in.</p>
+          <div class="finder-source">Source: /us/ny/national-grid/buffalo/water-heater/ &middot; National Grid</div>
+        </div>
+        <div class="finder-card" data-cat="insulation">
+          <div class="finder-cat">Insulation</div>
+          <h4>Insulation &amp; air sealing rebate</h4>
+          <div class="finder-amount">$750&ndash;$4,000</div>
+          <p>Range depends on home size and how much of the envelope is upgraded.</p>
+          <div class="finder-source">Source: /us/ny/national-grid/buffalo/insulation/ &middot; National Grid</div>
+        </div>
+        <div class="finder-card" data-cat="thermostat">
+          <div class="finder-cat">Smart thermostat</div>
+          <h4>Smart thermostat rebate</h4>
+          <div class="finder-amount">$85</div>
+          <p>In-store or mail-in rebate on a qualifying smart thermostat.</p>
+          <div class="finder-source">Source: /us/ny/national-grid/buffalo/smart-thermostats/ &middot; National Grid</div>
+        </div>
+        <div class="finder-card" data-cat="ev-charger">
+          <div class="finder-cat">EV charger</div>
+          <h4>Home EV charger rebate</h4>
+          <div class="finder-amount">$0&ndash;small credit</div>
+          <p>National Grid's EV charger incentive is the thinnest of the four utilities &mdash; most Buffalo/Rochester/Syracuse homeowners see little to no rebate here.</p>
+          <div class="finder-source">Source: /us/ny/national-grid/buffalo/ev-charger/ &middot; National Grid</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="finder-utility-group">
+      <div class="finder-utility-header"><h3>Central Hudson</h3><span>Hudson Valley &middot; 5 cities</span></div>
+      <div class="finder-grid" data-group="ch">
+        <div class="finder-card" data-cat="heat-pump">
+          <div class="finder-cat">Heat pump</div>
+          <h4>Central Hudson heat pump rebate</h4>
+          <div class="finder-amount">Up to $8,000</div>
+          <p>The largest heat-pump-only utility rebate of the four, before Clean Heat and HEAR are stacked on top.</p>
+          <div class="finder-source">Source: /us/ny/central-hudson/poughkeepsie/ &middot; Central Hudson</div>
+        </div>
+        <div class="finder-card" data-cat="battery">
+          <div class="finder-cat">Battery</div>
+          <h4>Central Hudson battery incentive</h4>
+          <div class="finder-amount">Up to $200</div>
+          <p>Small utility-side incentive, comparable to National Grid's.</p>
+          <div class="finder-source">Source: /us/ny/central-hudson/poughkeepsie/battery/ &middot; Central Hudson</div>
+        </div>
+        <div class="finder-card" data-cat="water-heater">
+          <div class="finder-cat">Water heater</div>
+          <h4>Heat-pump water heater rebate</h4>
+          <div class="finder-amount">$1,000&ndash;$1,250</div>
+          <p>Together with the heat pump rebate, the two largest utility rebates in Central Hudson territory ($8,000 + $1,250 = $9,250 combined).</p>
+          <div class="finder-source">Source: /us/ny/central-hudson/poughkeepsie/water-heater/ &middot; Central Hudson</div>
+        </div>
+        <div class="finder-card" data-cat="insulation">
+          <div class="finder-cat">Insulation</div>
+          <h4>Insulation &amp; air sealing rebate</h4>
+          <div class="finder-amount">$1,000&ndash;$4,000</div>
+          <p>Range depends on home size and how much of the envelope is upgraded.</p>
+          <div class="finder-source">Source: /us/ny/central-hudson/poughkeepsie/insulation/ &middot; Central Hudson</div>
+        </div>
+        <div class="finder-card" data-cat="thermostat">
+          <div class="finder-cat">Smart thermostat</div>
+          <h4>Smart thermostat rebate</h4>
+          <div class="finder-amount">$50</div>
+          <p>In-store or mail-in rebate on a qualifying smart thermostat &mdash; the smallest of the four utilities.</p>
+          <div class="finder-source">Source: /us/ny/central-hudson/poughkeepsie/smart-thermostats/ &middot; Central Hudson</div>
+        </div>
+        <div class="finder-card" data-cat="ev-charger">
+          <div class="finder-cat">EV charger</div>
+          <h4>Home EV charger rebate</h4>
+          <div class="finder-amount">Up to $25</div>
+          <p>Minimal utility incentive; treat EV charging in Central Hudson territory mainly as a time-of-use rate play.</p>
+          <div class="finder-source">Source: /us/ny/central-hudson/poughkeepsie/ev-charger/ &middot; Central Hudson</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:28px; font-size:13px; color:var(--ink-soft);">These are utility-only figures pulled from our city pages. Every one of the 21 cities we cover has its own page with the full stack (utility + NYS Clean Heat + federal HEAR) worked out for that address. <a href="#cities" style="color:var(--teal); font-weight:600;">Jump to your utility territory ↑</a></p>
+  </div>
+</section>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('#rebate-finder .finder-filter-btn');
+  var cards = document.querySelectorAll('#rebate-finder .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
 
 <section class="section">
   <div class="wrap">

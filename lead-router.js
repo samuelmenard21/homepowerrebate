@@ -23,6 +23,8 @@
  *   ENVIRONMENT = "production"
  */
 
+import CITY_REBATE_LOOKUP from './city-rebate-lookup.json';
+
 // ===========================================================================
 // INSTALLER ROUTING TABLE
 // ---------------------------------------------------------------------------
@@ -624,6 +626,19 @@ function provinceContext(sub) {
   return PROVINCE_CONTEXT[String(sub.province || 'BC').toUpperCase()] || PROVINCE_CONTEXT.BC;
 }
 
+// Looks up the city's published heat-pump rebate range so the recap email can
+// show a real number even when the triggering form (e.g. the homepage
+// quick-capture widget) never collected sub.estimate. Keyed on the same
+// province/city pairing used across the site's city pages.
+function normalizeCityKey(s) {
+  return String(s || '').toLowerCase().replace(/[.,]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+function cityRebateLookup(sub) {
+  const key = `${normalizeCityKey(sub.province || 'BC')}|${normalizeCityKey(sub.city)}`;
+  return CITY_REBATE_LOOKUP[key] || null;
+}
+
 function learnMoreBlock(sub) {
   const ctx = provinceContext(sub);
   const links = [...ctx.links, { href: 'https://homepowerrebate.com/blog/canada-provinces-ranked-home-energy-rebates/', label: 'How Every Province Compares' }];
@@ -642,6 +657,20 @@ async function sendResultsRecapEmail(sub, env) {
   if (!env.RESEND_API_KEY) return Promise.resolve();
   const ctx = provinceContext(sub);
 
+  // The quick-capture widget only submits city + email, so sub.estimate is
+  // often blank/'unknown'. Fall back to the city's real published heat-pump
+  // rebate range rather than showing a placeholder.
+  const cityData = cityRebateLookup(sub);
+  const rawEstimate = String(sub.estimate || '').trim();
+  const estimate = (rawEstimate && rawEstimate.toLowerCase() !== 'unknown')
+    ? rawEstimate
+    : (cityData ? cityData.heat_pump_rebate : '');
+
+  const rawHeating = String(sub.heating || '').trim();
+  const heatingRow = (rawHeating && rawHeating.toLowerCase() !== 'unknown')
+    ? `<tr><td style="padding:8px 0;color:#1a3d42;">Current heating:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(capitalize(rawHeating))}</td></tr>`
+    : '';
+
   const html = `
     <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:560px;margin:0 auto;padding:20px;color:#0a2a2e;">
       <div style="background:#08363f;color:#faf7f2;padding:28px 24px;border-radius:14px 14px 0 0;">
@@ -651,9 +680,9 @@ async function sendResultsRecapEmail(sub, env) {
       <div style="background:#faf7f2;padding:28px 24px;border-radius:0 0 14px 14px;border:1px solid #d9d0c1;border-top:none;">
         <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;margin-bottom:16px;">
           <table style="width:100%;border-collapse:collapse;font-size:14px;">
-            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:50%;">Estimated ${escapeHtml(ctx.programName)} rebates:</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${escapeHtml(sub.estimate || 'see your assessment')}</td></tr>
+            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:50%;">Estimated ${escapeHtml(ctx.programName)} rebates:</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${escapeHtml(estimate || 'see your assessment')}</td></tr>
             <tr><td style="padding:8px 0;color:#1a3d42;">City:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(capitalize(sub.city || ''))}</td></tr>
-            <tr><td style="padding:8px 0;color:#1a3d42;">Current heating:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(capitalize(String(sub.heating || 'unknown')))}</td></tr>
+            ${heatingRow}
           </table>
         </div>
         <p style="font-size:15px;line-height:1.6;margin:0 0 12px;">Keep this for reference — in a couple days we'll send you what homeowners near you actually paid, so you can sanity-check any quote against real numbers, not just estimates.</p>

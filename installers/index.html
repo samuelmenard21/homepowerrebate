@@ -332,7 +332,7 @@ footer a { color:rgba(250,247,242,.75); text-decoration:none; }
 
 <section class="section" id="city-select-section" style="display:none;">
   <div class="wrap">
-    <div class="eyebrow">Step 2 &middot; Select Your City</div>
+    <div class="eyebrow">Narrow by City</div>
     <div class="city-tabs" id="city-tabs-container"></div>
   </div>
 </section>
@@ -399,6 +399,13 @@ footer a { color:rgba(250,247,242,.75); text-decoration:none; }
     <div class="eyebrow">Full Directory</div>
     <h2>Every Installer, By City</h2>
     <p style="font-size:14px; margin-bottom:8px;">A complete, static list of all 765+ installer profiles in our directory across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California (the interactive filters above cover the same list).</p>
+    <div class="directory-search-row">
+      <input type="text" id="directory-search" class="search-input" placeholder="Search this directory by name or city…" autocomplete="off" aria-label="Search the full installer directory">
+      <span id="directory-search-count" class="search-count"></span>
+      <span class="directory-jump">Jump to city:
+        <select id="directory-jump-select"><option value="">Choose a city…</option></select>
+      </span>
+    </div>
       <div class="directory-city" id="bc-abbotsford">
         <h3 style="font-family:'Fraunces',serif; font-size:18px; color:var(--teal-deep); margin:20px 0 8px;"><a href="/ca/bc/abbotsford" style="color:var(--teal-deep);">Abbotsford</a></h3>
         <ul style="columns:2; column-gap:24px; list-style:none; padding:0; margin:0; font-size:14px; line-height:1.9;">
@@ -2025,13 +2032,22 @@ function render() {
     });
   }
 
+  if (currentSearch) {
+    filtered = filtered.filter(i => (i.name || '').toLowerCase().includes(currentSearch));
+  }
+
+  const searchCountEl = document.getElementById('search-count');
+  if (searchCountEl) {
+    searchCountEl.textContent = currentSearch && currentRegion ? `${filtered.length} match${filtered.length === 1 ? '' : 'es'}` : '';
+  }
+
   const container = document.getElementById('installers-container');
   const emptyState = document.getElementById('empty-state');
 
   if (filtered.length === 0) {
     container.innerHTML = '';
     emptyState.querySelector('p').textContent = currentRegion
-      ? 'No installers match your filters. Try adjusting your selection.'
+      ? (currentSearch ? `No installers named "${currentSearch}" match your filters.` : 'No installers match your filters. Try adjusting your selection.')
       : 'Select a region above to see verified installers near you.';
     emptyState.style.display = 'block';
     return;
@@ -2067,7 +2083,80 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 // Program-filter buttons are rendered dynamically per-region by
 // renderProgramFilters(), which attaches its own click handlers.
 
+let currentSearch = '';
+const searchInput = document.getElementById('installer-search');
+if (searchInput) {
+  searchInput.addEventListener('input', () => {
+    currentSearch = searchInput.value.trim().toLowerCase();
+    render();
+  });
+}
+
 loadInstallers();
+
+// --- Progressive enhancement for the static, server-rendered directory ---
+// This never removes the underlying <a> links from the DOM (crawlers and
+// no-JS visitors always see the full list) — it only toggles a class that
+// hides non-matching rows for JS-enabled visitors, and builds a jump menu
+// from the headings that are already in the markup.
+(function enhanceStaticDirectory() {
+  const cityBlocks = Array.from(document.querySelectorAll('#full-directory .directory-city'));
+  if (!cityBlocks.length) return;
+
+  const jumpSelect = document.getElementById('directory-jump-select');
+  if (jumpSelect) {
+    cityBlocks.forEach(block => {
+      const heading = block.querySelector('h3');
+      if (!heading) return;
+      const opt = document.createElement('option');
+      opt.value = block.id;
+      opt.textContent = heading.textContent.trim();
+      jumpSelect.appendChild(opt);
+    });
+    jumpSelect.addEventListener('change', () => {
+      if (!jumpSelect.value) return;
+      const target = document.getElementById(jumpSelect.value);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  const dirSearch = document.getElementById('directory-search');
+  const dirCount = document.getElementById('directory-search-count');
+  if (!dirSearch) return;
+
+  const rows = cityBlocks.map(block => ({
+    block,
+    cityName: (block.querySelector('h3')?.textContent || '').toLowerCase(),
+    items: Array.from(block.querySelectorAll('li'))
+  }));
+
+  dirSearch.addEventListener('input', () => {
+    const q = dirSearch.value.trim().toLowerCase();
+    let visibleInstallers = 0;
+    let visibleCities = 0;
+
+    rows.forEach(({ block, cityName, items }) => {
+      if (!q) {
+        block.classList.remove('is-hidden');
+        items.forEach(li => { li.classList.remove('is-hidden'); });
+        return;
+      }
+      const cityMatches = cityName.includes(q);
+      let anyItemMatch = false;
+      items.forEach(li => {
+        const match = cityMatches || (li.textContent || '').toLowerCase().includes(q);
+        li.classList.toggle('is-hidden', !match);
+        if (match) anyItemMatch = true;
+      });
+      block.classList.toggle('is-hidden', !anyItemMatch);
+      if (anyItemMatch) { visibleCities++; visibleInstallers += items.filter(li => !li.classList.contains('is-hidden')).length; }
+    });
+
+    if (dirCount) {
+      dirCount.textContent = q ? `${visibleInstallers} match${visibleInstallers === 1 ? '' : 'es'} in ${visibleCities} cit${visibleCities === 1 ? 'y' : 'ies'}` : '';
+    }
+  });
+})();
 </script>
 
 </body>

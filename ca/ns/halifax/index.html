@@ -313,8 +313,9 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       <div class="rebate-card free">
         <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Insulation & Air Sealing</h4>
-        <div class="amount">Free</div>
-        <p>Still active as a no-cost upgrade for eligible Halifax households through <a href="https://www.efficiencyns.ca/programs-rebates/homewarming" target="_blank" rel="noopener">HomeWarming</a>.</p>
+        <div class="amount">Free (income-qualified) or up to $5,000&ndash;$15,000</div>
+        <p>Still active as a no-cost upgrade for eligible Halifax households through <a href="https://www.efficiencyns.ca/programs-rebates/homewarming" target="_blank" rel="noopener">HomeWarming</a>, or up to $5,000&ndash;$15,000 via the standard Home Energy Assessment pathway for everyone else.</p>
+        <p style="margin-top:8px;"><a href="/ca/ns/halifax/insulation" style="font-weight:600; font-size:13px;">Full insulation guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
@@ -335,23 +336,29 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       <div class="rebate-card free">
         <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Smart Thermostat</h4>
-        <div class="amount">Free</div>
-        <p>Free product and installation still offered via <a href="https://www.efficiencyns.ca/programs-rebates/free-product-installation" target="_blank" rel="noopener">Efficiency Nova Scotia</a>.</p>
+        <div class="amount">Free, or $45 instant rebate (Eco Shift)</div>
+        <p>Free product and installation still offered via <a href="https://www.efficiencyns.ca/programs-rebates/free-product-installation" target="_blank" rel="noopener">Efficiency Nova Scotia</a>, plus a separate $45 instant rebate through the Eco Shift demand-response program.</p>
+        <p style="margin-top:8px;"><a href="/ca/ns/halifax/smart-thermostats" style="font-weight:600; font-size:13px;">Full smart thermostat guide &rarr;</a></p>
       </div>
-      <div class="rebate-card none">
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#128268; Battery Storage</h4>
-        <div class="amount none">Not confirmed</div>
-        <p>No dedicated battery storage rebate found as of 2026.</p>
+        <div class="amount">Up to $300/kWh or 40% of costs, capped at $2,500</div>
+        <p>Efficiency Nova Scotia's Home Battery Storage Rebate, typically claimed alongside a solar installation.</p>
+        <p style="margin-top:8px;"><a href="/ca/ns/halifax/battery" style="font-weight:600; font-size:13px;">Full battery storage guide &rarr;</a></p>
       </div>
-      <div class="rebate-card none">
+      <div class="rebate-card">
+        <span class="program-status status-open">Open</span>
         <h4>&#129001; Windows & Doors</h4>
-        <div class="amount none">Not confirmed</div>
-        <p>No standalone rebate found — may be covered under broader insulation programs.</p>
+        <div class="amount">No standalone rebate — covered under HEA pathway, up to $5,000+</div>
+        <p>No flat per-window rebate, but ENERGY STAR windows and doors are funded through the whole-home Home Energy Assessment pathway.</p>
+        <p style="margin-top:8px;"><a href="/ca/ns/halifax/windows" style="font-weight:600; font-size:13px;">Full windows &amp; doors guide &rarr;</a></p>
       </div>
       <div class="rebate-card none">
         <h4>&#128664; EV Charger</h4>
-        <div class="amount none">Not confirmed</div>
-        <p>No dedicated residential EV charger rebate found as of 2026.</p>
+        <div class="amount none">Not confirmed for single-family homes</div>
+        <p>No confirmed dedicated residential EV charger rebate as of 2026; the multi-unit program closed Dec 31, 2025.</p>
+        <p style="margin-top:8px;"><a href="/ca/ns/halifax/ev-charger" style="font-weight:600; font-size:13px;">Full EV charger guide &rarr;</a></p>
       </div>
     </div>
 
@@ -375,6 +382,9 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
       <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
       <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery storage</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows">Windows &amp; doors</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
     </div>
 
     <div class="finder-grid" id="finder-grid">
@@ -413,8 +423,29 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p>Free smart thermostat and installation still offered directly by Efficiency Nova Scotia.</p>
         <div class="finder-source">Source: /ca/ns/halifax &middot; Efficiency Nova Scotia</div>
       </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery storage</div>
+        <h4>Home Battery Storage Rebate</h4>
+        <div class="finder-amount">Up to $300/kWh or 40%, capped at $2,500</div>
+        <p>Typically claimed alongside a solar installation rather than as a stand-alone backup-power purchase. Confirm eligibility for a battery-only install directly.</p>
+        <div class="finder-source">Source: /ca/ns/halifax/battery &middot; Efficiency Nova Scotia</div>
+      </div>
+      <div class="finder-card" data-cat="windows">
+        <div class="finder-cat">Windows &amp; doors</div>
+        <h4>ENERGY STAR windows &amp; doors via HEA pathway</h4>
+        <div class="finder-amount">Up to $5,000 (up to $15,000 moderate-income)</div>
+        <p>No flat per-window rebate exists on its own &mdash; funded as part of the whole-home Home Energy Assessment pathway, paid per rough opening.</p>
+        <div class="finder-source">Source: /ca/ns/halifax/windows &middot; Efficiency Nova Scotia</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>Not confirmed for single-family homes</h4>
+        <div class="finder-amount none" style="color:var(--red-flag);">Not confirmed</div>
+        <p>No confirmed dedicated single-family rebate as of 2026. The multi-unit residential EV charger program closed to new applications December 31, 2025.</p>
+        <div class="finder-source">Source: /ca/ns/halifax/ev-charger &middot; Efficiency Nova Scotia</div>
+      </div>
     </div>
-    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">Battery storage, windows &amp; doors, and EV chargers have no confirmed dedicated rebate in Halifax as of 2026.</p>
+    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">EV chargers have no confirmed dedicated single-family rebate in Halifax as of 2026 &mdash; see the full guide for what to check instead.</p>
 
     <script>
     (function() {

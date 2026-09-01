@@ -15,6 +15,7 @@
 </script>
 
 <meta name="description" content="Every Con Edison rebate a Mount Vernon homeowner can get in 2026: heat pump, battery, water heater and EV charger amounts, plus NYS Clean Heat and federal HEAR stacking.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://homepowerrebate.com/us/ny/con-edison/mount-vernon/">
 <meta property="og:title" content="Mount Vernon Heat Pump & Battery Rebates 2026 | HomePowerRebate">
 <meta property="og:description" content="Every Con Edison rebate a Mount Vernon homeowner can get in 2026: heat pump up to $28,000, battery, water heater and EV charger with stacking.">
@@ -950,7 +951,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     const response = await fetch('https://leads.homepowerrebate.com/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, city, page })
+      body: JSON.stringify({ email, city, page, province: (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1]?.toUpperCase() || 'BC' })
     });
     if (!response.ok) throw new Error('Subscription failed');
     responseEl.textContent = "You're in! Check your inbox for a welcome email.";

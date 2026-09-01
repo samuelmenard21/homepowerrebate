@@ -836,7 +836,7 @@ async function sendResultsRecapEmail(sub, env) {
   return resendEmail(env.RESEND_API_KEY, {
     from: 'HomePowerRebate <hello@homepowerrebate.com>',
     to: sub.email,
-    subject: `Your ${sub.city ? capitalize(sub.city) + ' ' : ''}rebate breakdown`,
+    subject: `Your ${sub.city ? capitalize(sub.city) + ' ' : ''}home rebate breakdown`,
     html
   });
 }

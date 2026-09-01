@@ -15,6 +15,7 @@
 </script>
 
 <meta name="description" content="Every rebate a Sacramento homeowner can get in 2026 through SMUD — heat pump, solar, battery, water heater and more — clearly explained, with how each one works.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://homepowerrebate.com/us/ca/sacramento/sacramento/">
 <meta property="og:title" content="Sacramento Heat Pump & Solar Rebates 2026 | SMUD Guide">
 <meta property="og:description" content="Every rebate a Sacramento homeowner can get in 2026 through SMUD — heat pump, solar, battery, water heater and more — clearly explained, with how each one works.">
@@ -878,7 +879,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     const response = await fetch('https://leads.homepowerrebate.com/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, city, page })
+      body: JSON.stringify({ email, city, page, province: (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1]?.toUpperCase() || 'BC' })
     });
     if (!response.ok) throw new Error('Subscription failed');
     responseEl.textContent = "You're in! Check your inbox for a welcome email.";

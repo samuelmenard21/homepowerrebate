@@ -15,6 +15,7 @@
 </script>
 
 <meta name="description" content="Every PSEG Long Island rebate a Babylon homeowner can get in 2026: heat pump, battery, water heater and EV charger amounts, plus interactive calculators.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://homepowerrebate.com/us/ny/pseg/babylon/">
 <meta property="og:title" content="Babylon Heat Pump & Battery Rebates 2026 | HomePowerRebate">
 <meta property="og:description" content="Every PSEG Long Island rebate a Babylon homeowner can get in 2026: heat pump, battery, water heater and EV charger amounts.">
@@ -593,13 +594,13 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <h3 id="reading" style="margin-top:28px;">Learn more about NY energy</h3>
     <p>A few guides for when you want more depth:</p>
     <div class="related-reading">
-      <a href="/blog/7-new-york-heat-pump-rebates-you-can-stack.html">
+      <a href="/blog/6-new-york-heat-pump-programs-stack-together.html">
         <span class="rr-eyebrow">Guide · Heat Pumps</span>
-        <span class="rr-title">7 New York Heat Pump Rebates You Can Stack</span>
+        <span class="rr-title">6 New York Heat Pump Programs You Can Stack</span>
       </a>
-      <a href="/blog/heat-pump-or-solar-northeast.html">
-        <span class="rr-eyebrow">Guide · Northeast Energy</span>
-        <span class="rr-title">Heat Pump or Solar First in the Northeast?</span>
+      <a href="/blog/heat-pump-or-solar-new-york.html">
+        <span class="rr-eyebrow">Guide · New York Energy</span>
+        <span class="rr-title">Heat Pump or Solar First in New York?</span>
       </a>
       <a href="/blog">
         <span class="rr-eyebrow">All Articles</span>
@@ -817,7 +818,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     await fetch('https://leads.homepowerrebate.com/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, city, page })
+      body: JSON.stringify({ email, city, page, province: (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1]?.toUpperCase() || 'BC' })
     });
   } catch (e) {}
 });

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Islip NY Heat Pump Rebates 2026 | PSEG Long Island Stacking</title>
 <meta name="description" content="Islip (Suffolk County) heat pump, battery, and energy rebates 2026 through PSEG Long Island: $4,000–$7,500 for heat pumps, state programs for batteries, insulation, windows.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://homepowerrebate.com/us/ny/pseg/islip/">
 
 <!-- Google Analytics 4 -->
@@ -565,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   <div class="wrap">
     <h2>Read More</h2>
     <div class="blog-links">
-      <a href="/blog/heat-pump-or-solar-new-york/" class="blog-card">
+      <a href="/blog/heat-pump-or-solar-new-york.html" class="blog-card">
         <h3>Heat Pump or Solar?</h3>
         <p>Long Island comparison: Heat pump 3–5 year payback wins. Solar is a long-term savings play without utility rebates.</p>
       </a>
@@ -816,7 +817,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     const response = await fetch('https://leads.homepowerrebate.com/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, city, page })
+      body: JSON.stringify({ email, city, page, province: (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1]?.toUpperCase() || 'BC' })
     });
     if (!response.ok) throw new Error('Subscription failed');
     responseEl.textContent = "You're in! Check your inbox for a welcome email.";

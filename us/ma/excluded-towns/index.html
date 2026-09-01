@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   <div style="font-size:14px; line-height:2.2;">
       <span style="margin-right:14px;"><a href="/">&larr; Home</a></span>
       <span style="margin-right:14px;"><a href="/us/ma">Massachusetts Overview</a></span>
-      <span style="margin-right:14px;"><a href="/blog/41-towns-locked-out-mass-save/">Full Story: 41 Towns Locked Out</a></span>
+      <span style="margin-right:14px;"><a href="/blog/41-towns-locked-out-mass-save.html">Full Story: 41 Towns Locked Out</a></span>
       <span style="margin-right:14px;"><a href="/contact">Contact Us</a></span>
   </div>
 </section>
@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
     <div class="callout">
       <strong>Read the full story:</strong> For the complete breakdown, including real-world cost comparisons between MLP towns and Mass Save towns, read our deep dive.
-      <a href="/blog/41-towns-locked-out-mass-save/" class="cta" style="display:inline-block;">Read the full story &rarr;</a>
+      <a href="/blog/41-towns-locked-out-mass-save.html" class="cta" style="display:inline-block;">Read the full story &rarr;</a>
     </div>
 
     <h2>FAQ</h2>
@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <p>Yes. Federal incentives like the HEEHRA rebate and federal energy tax credits aren't tied to Mass Save eligibility, so MLP-town homeowners can still use them. Many MLPs also run their own smaller rebate programs — check your town's municipal utility website directly.</p>
 
     <h2>Next steps</h2>
-    <p><a href="/us/ma">View all Massachusetts rebate programs &rarr;</a>, <a href="/blog/41-towns-locked-out-mass-save/">read the full 41-towns story &rarr;</a>, or <a href="/contact">contact us for questions &rarr;</a></p>
+    <p><a href="/us/ma">View all Massachusetts rebate programs &rarr;</a>, <a href="/blog/41-towns-locked-out-mass-save.html">read the full 41-towns story &rarr;</a>, or <a href="/contact">contact us for questions &rarr;</a></p>
 
   </div>
 </article>
@@ -461,7 +461,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     const response = await fetch('https://leads.homepowerrebate.com/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, city, page })
+      body: JSON.stringify({ email, city, page, province: (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1]?.toUpperCase() || 'BC' })
     });
     if (!response.ok) throw new Error('Subscription failed');
     responseEl.textContent = "You're in! Check your inbox for a welcome email.";

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Massachusetts Home Energy Rebates by City 2026 | HomePowerRebate</title>
 <meta name="description" content="Massachusetts heat pump and solar rebates through Mass Save, by city. Timelines, eligibility, and real alternatives for the 41 excluded towns.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://homepowerrebate.com/us/ma/">
 
 <!-- Google Analytics 4 -->
@@ -276,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <p><strong>Solar Path:</strong></p>
     <p>You pay $15,000–$22,000 after rebates. You save $1,500 per year. It's paid for in about 13 years. After that, free electricity for 20+ years.</p>
 
-    <p><a href="/blog/heat-pump-or-solar-massachusetts/" style="color: var(--teal); font-weight: 600; text-decoration: underline;">Read the full breakdown →</a></p>
+    <p><a href="/blog/heat-pump-or-solar-massachusetts.html" style="color: var(--teal); font-weight: 600; text-decoration: underline;">Read the full breakdown →</a></p>
   </div>
 </section>
 
@@ -419,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   <div class="wrap">
     <h2>Read More</h2>
     <div class="blog-links">
-      <a href="/blog/heat-pump-or-solar-massachusetts/" class="blog-card">
+      <a href="/blog/heat-pump-or-solar-massachusetts.html" class="blog-card">
         <h3>Heat Pump or Solar First?</h3>
         <p>Compare costs and payback times for Massachusetts homeowners.</p>
       </a>
@@ -427,7 +428,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <h3>12 Ways to Cut Your Energy Bill</h3>
         <p>The Mass Save budget cut's real impact, and what still works regardless.</p>
       </a>
-      <a href="/blog/41-towns-locked-out-mass-save/" class="blog-card">
+      <a href="/blog/41-towns-locked-out-mass-save.html" class="blog-card">
         <h3>41 Towns Locked Out of Mass Save</h3>
         <p>Why these towns are excluded and what to do instead.</p>
       </a>
@@ -527,7 +528,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     const response = await fetch('https://leads.homepowerrebate.com/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, city, page })
+      body: JSON.stringify({ email, city, page, province: (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1]?.toUpperCase() || 'BC' })
     });
     if (!response.ok) throw new Error('Subscription failed');
     responseEl.textContent = "You're in! Check your inbox for a welcome email.";

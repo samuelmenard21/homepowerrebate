@@ -182,6 +182,20 @@ strong { color: var(--ink); }
 .status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
 .status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
 .status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
+
+/* Rebate Finder */
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--teal-deep); }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -441,6 +455,105 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
   </div>
 </article>
+
+
+
+<section id="rebate-finder" style="background:var(--paper-warm); padding: 48px 28px;">
+  <div class="wrap" style="max-width:1100px;">
+    <h2>Rebate finder: every Mass Save program in Boston, by category.</h2>
+    <p>These are the real, current Mass Save amounts shown on our Boston category pages &mdash; the same statewide program, not a Boston-only deal. The 2026 heat pump ceiling was cut from $10,000 to $8,500 after a $500M program budget reduction, and Mass Save has documented processing delays, so treat these as caps to plan around, not guaranteed instant payouts. Filter by category below.</p>
+    
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows">Windows</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>Mass Save heat pump rebate</h4>
+        <div class="finder-amount">$8,500&ndash;$9,500</div>
+        <p>$2,650 per ton, capped at $8,500 for most households (reduced from $10,000 after a $500M program budget cut). Income-qualified households can reach $16,000 for air-source or $25,000 for ground-source. Only R-32 or R-454B refrigerant systems qualify as of January 1, 2026 &mdash; older R-410A units are no longer eligible. Same statewide, not just Boston.</p>
+        <div class="finder-source">Source: /us/ma/boston/heat-pump &middot; Mass Save</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>SMART 3.0 solar incentive</h4>
+        <div class="finder-amount">Per-kWh incentive</div>
+        <p>Not a flat rebate &mdash; SMART 3.0 locks in a per-kWh production payment for 10 to 20 years once you're enrolled, on top of your own electricity savings. Same program statewide.</p>
+        <div class="finder-source">Source: /us/ma/boston/solar &middot; Mass Save</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery</div>
+        <h4>Battery storage rebate</h4>
+        <div class="finder-amount">$100/kWh + ongoing</div>
+        <p>A capacity rebate around $100/kWh, plus the SMART storage adder if paired with solar, and ongoing annual ConnectedSolutions payments for letting the utility tap your battery during peak demand.</p>
+        <div class="finder-source">Source: /us/ma/boston/battery &middot; Mass Save</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Insulation &amp; air sealing</h4>
+        <div class="finder-amount">75&ndash;100% off</div>
+        <p>Mass Save covers 75% of the cost for every Massachusetts homeowner, including Boston. If your household is under 60% of area median income, it's covered at 100% &mdash; free.</p>
+        <div class="finder-source">Source: /us/ma/boston/insulation &middot; Mass Save</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Heat-pump water heater rebate</h4>
+        <div class="finder-amount">$750</div>
+        <p>A flat $750 for a heat pump water heater. The unit needs to be ENERGY STAR certified to qualify. Same flat amount statewide.</p>
+        <div class="finder-source">Source: /us/ma/boston/water-heater &middot; Mass Save</div>
+      </div>
+      <div class="finder-card" data-cat="windows">
+        <div class="finder-cat">Windows &amp; doors</div>
+        <h4>ENERGY STAR windows &amp; doors</h4>
+        <div class="finder-amount">$75/window</div>
+        <p>Mass Save pays $75 per window when you replace single-pane windows with ENERGY STAR Most Efficient certified windows.</p>
+        <div class="finder-source">Source: /us/ma/boston/windows-doors &middot; Mass Save</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>Home EV charger rebate</h4>
+        <div class="finder-amount">$250</div>
+        <p>$250 toward the purchase and installation of a qualifying Level 2 home EV charger.</p>
+        <div class="finder-source">Source: /us/ma/boston/ev-charger &middot; Mass Save</div>
+      </div>
+      <div class="finder-card" data-cat="thermostat">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>Smart thermostat rebate</h4>
+        <div class="finder-amount">$100</div>
+        <p>Often installed for free during your Mass Save home energy assessment &mdash; the $100 rebate covers the rest if you buy your own.</p>
+        <div class="finder-source">Source: /us/ma/boston/smart-thermostats &middot; Mass Save</div>
+      </div>
+
+    </div>
+    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">Amounts are Mass Save program-wide figures and apply the same whether you're an Eversource or National Grid customer &mdash; we checked a sample of Boston and other Massachusetts city pages and found no utility-level variance in these headline caps. Processing can take 5&ndash;7 months end to end; see your <a href="/us/ma/boston/heat-pump" style="color:var(--teal); font-weight:600;">Boston heat pump page</a> for the full application timeline.</p>
+  </div>
+</section>
+
+<script>
+(function() {
+  var buttons = document.querySelectorAll('#rebate-finder .finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
 
 
 <section class="section" style="margin: 60px 0; padding: 40px 28px; max-width: 1100px; margin-left: auto; margin-right: auto; border-top: 1px solid var(--rule);"><div class="wrap">

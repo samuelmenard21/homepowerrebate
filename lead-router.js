@@ -314,23 +314,29 @@ async function handleLeadSubmit(request, env) {
     // The retrofit-assessment checklist sends flat fields, not a calc_result
     // object — that mismatch previously meant every field below silently
     // fell back to 'unknown' no matter what the homeowner selected.
-    utility: cleanString(payload.utility || 'unknown'),
-    current_heat: cleanString(payload.current_heating || 'unknown'),
-    water_heating: cleanString(payload.water_heating || 'unknown'),
-    year_built: cleanString(payload.year_built || 'unknown'),
-    income_tier: cleanString(payload.income_tier || 'unknown'),
+    utility: cleanString(payload.utility || 'not specified'),
+    current_heat: cleanString(payload.current_heating || 'not specified'),
+    water_heating: cleanString(payload.water_heating || 'not specified'),
+    year_built: cleanString(payload.year_built || 'not specified'),
+    income_tier: cleanString(payload.income_tier || 'not specified'),
     // The single most important field: what the homeowner actually wants.
     // Previously captured by the frontend and then silently dropped.
     upgrades: Array.isArray(payload.upgrades) ? payload.upgrades.join(', ') : cleanString(payload.upgrades || ''),
     notes: cleanString(payload.notes || ''),
-    estimated_value: cleanString(payload.estimated_rebates || 'unknown'),
-    total_cost: cleanString(payload.total_cost || 'unknown'),
-    net_cost: cleanString(payload.net_cost || 'unknown'),
-    ten_year_savings: cleanString(payload.ten_year_savings || 'unknown'),
+    estimated_value: cleanString(payload.estimated_rebates || ''),
+    total_cost: cleanString(payload.total_cost || 'not specified'),
+    net_cost: cleanString(payload.net_cost || 'not specified'),
+    ten_year_savings: cleanString(payload.ten_year_savings || 'not specified'),
     page_url: cleanString(payload.page_url || payload.page || ''),
     referrer: cleanString(payload.referrer || 'direct'),
     status: 'new'
   };
+
+  // If the triggering form never collected a calculated rebate estimate
+  // (or a stale client sent the literal string 'unknown'), fall back to the
+  // city's real published heat-pump rebate range instead of showing a
+  // placeholder to the homeowner, the installer, or ops.
+  applyCityRebateFallback(lead, payload.province || 'BC', city);
 
   // ---- Fan out to email, sheet, and ops inbox in parallel ----
   // If there's no installer configured yet, skip sendInstallerEmail entirely
@@ -639,6 +645,26 @@ function cityRebateLookup(sub) {
   return CITY_REBATE_LOOKUP[key] || null;
 }
 
+// Shared by every route that builds a lead/subscriber record (full
+// assessment, get-quotes tool, quick-capture widget): if nothing gave us a
+// homeowner-specific calculated estimate, use the city's real published
+// heat-pump rebate range instead of a placeholder. Sets
+// record.estimate_is_city_range so email copy can be honest about which
+// kind of number it's showing — a personalized calculation vs. a published
+// range — since that matters both to the homeowner and to the installer
+// deciding how to open the call.
+function applyCityRebateFallback(record, province, city) {
+  const raw = String(record.estimated_value || '').trim();
+  if (raw && raw.toLowerCase() !== 'unknown') {
+    record.estimated_value = raw;
+    record.estimate_is_city_range = false;
+    return;
+  }
+  const cityData = cityRebateLookup({ province, city });
+  record.estimated_value = cityData ? cityData.heat_pump_rebate : 'not specified';
+  record.estimate_is_city_range = !!cityData;
+}
+
 function learnMoreBlock(sub) {
   const ctx = provinceContext(sub);
   const links = [...ctx.links, { href: 'https://homepowerrebate.com/blog/canada-provinces-ranked-home-energy-rebates/', label: 'How Every Province Compares' }];
@@ -660,14 +686,15 @@ async function sendResultsRecapEmail(sub, env) {
   // The quick-capture widget only submits city + email, so sub.estimate is
   // often blank/'unknown'. Fall back to the city's real published heat-pump
   // rebate range rather than showing a placeholder.
-  const cityData = cityRebateLookup(sub);
-  const rawEstimate = String(sub.estimate || '').trim();
-  const estimate = (rawEstimate && rawEstimate.toLowerCase() !== 'unknown')
-    ? rawEstimate
-    : (cityData ? cityData.heat_pump_rebate : '');
+  const estimateRecord = { estimated_value: sub.estimate };
+  applyCityRebateFallback(estimateRecord, sub.province, sub.city);
+  const estimate = estimateRecord.estimate_is_city_range ? estimateRecord.estimated_value : (sub.estimate || '');
+  const estimateLabel = estimateRecord.estimate_is_city_range
+    ? `Typical ${escapeHtml(ctx.programName)} rebate range in ${escapeHtml(capitalize(sub.city || 'your city'))}:`
+    : `Estimated ${escapeHtml(ctx.programName)} rebates:`;
 
   const rawHeating = String(sub.heating || '').trim();
-  const heatingRow = (rawHeating && rawHeating.toLowerCase() !== 'unknown')
+  const heatingRow = (rawHeating && rawHeating.toLowerCase() !== 'unknown' && rawHeating.toLowerCase() !== 'not specified')
     ? `<tr><td style="padding:8px 0;color:#1a3d42;">Current heating:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(capitalize(rawHeating))}</td></tr>`
     : '';
 
@@ -680,7 +707,7 @@ async function sendResultsRecapEmail(sub, env) {
       <div style="background:#faf7f2;padding:28px 24px;border-radius:0 0 14px 14px;border:1px solid #d9d0c1;border-top:none;">
         <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;margin-bottom:16px;">
           <table style="width:100%;border-collapse:collapse;font-size:14px;">
-            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:50%;">Estimated ${escapeHtml(ctx.programName)} rebates:</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${escapeHtml(estimate || 'see your assessment')}</td></tr>
+            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:50%;">${estimateLabel}</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${escapeHtml(estimate || 'see your assessment')}</td></tr>
             <tr><td style="padding:8px 0;color:#1a3d42;">City:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(capitalize(sub.city || ''))}</td></tr>
             ${heatingRow}
           </table>
@@ -832,22 +859,26 @@ async function handleEstimateLead(request, env) {
     email: cleanString(p.email),
     phone: cleanString(p.phone),
     postal: cleanString(p.postal || ''),
-    current_heat: cleanString(p.heating || p.current_heating || 'unknown'),
-    income_band: cleanString(p.income || p.income_tier || 'unknown'),
-    income_tier: cleanString(p.income_tier || p.income || 'unknown'),
-    utility: cleanString(p.utility || 'unknown'),
-    water_heating: cleanString(p.water_heating || 'unknown'),
-    year_built: cleanString(p.year_built || 'unknown'),
+    current_heat: cleanString(p.heating || p.current_heating || 'not specified'),
+    income_band: cleanString(p.income || p.income_tier || 'not specified'),
+    income_tier: cleanString(p.income_tier || p.income || 'not specified'),
+    utility: cleanString(p.utility || 'not specified'),
+    water_heating: cleanString(p.water_heating || 'not specified'),
+    year_built: cleanString(p.year_built || 'not specified'),
     upgrades: Array.isArray(p.upgrades) ? p.upgrades.join(', ') : cleanString(p.upgrades || ''),
     notes: cleanString(p.notes || ''),
-    estimated_value: cleanString(String(p.estimate || p.estimated_rebates || 'unknown')),
-    total_cost: cleanString(p.total_cost || 'unknown'),
-    net_cost: cleanString(p.net_cost || 'unknown'),
-    ten_year_savings: cleanString(p.ten_year_savings || 'unknown'),
+    estimated_value: cleanString(String(p.estimate || p.estimated_rebates || '')),
+    total_cost: cleanString(p.total_cost || 'not specified'),
+    net_cost: cleanString(p.net_cost || 'not specified'),
+    ten_year_savings: cleanString(p.ten_year_savings || 'not specified'),
     page_url: cleanString(p.page_url || p.source || p.page || ''),
     referrer: cleanString(p.referrer || 'estimate-widget'),
     status: 'new'
   };
+
+  // Same city-rebate fallback as the full-assessment lead route — the
+  // get-quotes tool can also arrive without a calculated estimate.
+  applyCityRebateFallback(lead, lead.province, city);
 
   const tasks = [
     sendOpsEstimateLead(lead, env),
@@ -1155,9 +1186,9 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
               <tr><td style="padding:6px 0;color:#6b7d80;">Phone</td><td style="padding:6px 0;font-weight:600;"><a href="tel:${ph}" style="color:#08363f;">${ph}</a></td></tr>
               <tr><td style="padding:6px 0;color:#6b7d80;">Email</td><td style="padding:6px 0;font-weight:600;"><a href="mailto:${em}" style="color:#08363f;">${em}</a></td></tr>
               <tr><td style="padding:6px 0;color:#6b7d80;">City</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${ct}, BC</td></tr>
-              <tr><td style="padding:6px 0;color:#6b7d80;">Current heating</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${ch}</td></tr>
+              ${lead.current_heat && lead.current_heat.toLowerCase() !== 'not specified' ? `<tr><td style="padding:6px 0;color:#6b7d80;">Current heating</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${ch}</td></tr>` : ''}
               <tr><td style="padding:6px 0;color:#6b7d80;">Interested in</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${escapeHtml(lead.upgrades || 'not specified')}</td></tr>
-              <tr><td style="padding:6px 0;color:#6b7d80;">Rebate estimate shown</td><td style="padding:6px 0;font-weight:700;color:#2d6a4f;">up to ${ev}</td></tr>
+              <tr><td style="padding:6px 0;color:#6b7d80;">${lead.estimate_is_city_range ? `Typical rebate range for ${ct}` : 'Rebate estimate shown'}</td><td style="padding:6px 0;font-weight:700;color:#2d6a4f;">${lead.estimate_is_city_range ? ev : `up to ${ev}`}</td></tr>
             </table>
           </div>
 
@@ -1260,21 +1291,21 @@ async function sendInstallerEmail(lead, installer, env) {
 
         <h2 style="margin:24px 0 12px;font-size:18px;color:#08363f;">What they want</h2>
         <table style="width:100%;border-collapse:collapse;">
-          <tr><td style="padding:6px 0;color:#1a3d42;width:140px;">Upgrades selected</td><td style="padding:6px 0;font-weight:600;">${lead.upgrades || 'none specified'}</td></tr>
-          <tr><td style="padding:6px 0;color:#1a3d42;">Power company</td><td style="padding:6px 0;font-weight:600;">${formatUtility(lead.utility)}</td></tr>
-          <tr><td style="padding:6px 0;color:#1a3d42;">Current heating</td><td style="padding:6px 0;font-weight:600;">${lead.current_heat}</td></tr>
-          <tr><td style="padding:6px 0;color:#1a3d42;">Current water heating</td><td style="padding:6px 0;font-weight:600;">${lead.water_heating}</td></tr>
-          <tr><td style="padding:6px 0;color:#1a3d42;">Home built</td><td style="padding:6px 0;font-weight:600;">${lead.year_built}</td></tr>
-          <tr><td style="padding:6px 0;color:#1a3d42;">Income tier</td><td style="padding:6px 0;font-weight:600;">${lead.income_tier}</td></tr>
+          <tr><td style="padding:6px 0;color:#1a3d42;width:140px;">Upgrades selected</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(lead.upgrades || 'none specified')}</td></tr>
+          ${notSpecifiedRow('Power company', formatUtility(lead.utility))}
+          ${notSpecifiedRow('Current heating', lead.current_heat)}
+          ${notSpecifiedRow('Current water heating', lead.water_heating)}
+          ${notSpecifiedRow('Home built', lead.year_built)}
+          ${notSpecifiedRow('Income tier', lead.income_tier)}
         </table>
 
         ${lead.notes ? `<div style="background:#fef9e6;border-left:4px solid #d4751c;padding:14px 16px;border-radius:6px;margin-top:16px;"><strong style="color:#08363f;">In their own words:</strong><br>${escapeHtml(lead.notes)}</div>` : ''}
 
-        <h2 style="margin:24px 0 12px;font-size:18px;color:#08363f;">Estimate shown to homeowner</h2>
+        <h2 style="margin:24px 0 12px;font-size:18px;color:#08363f;">${lead.estimate_is_city_range ? `Published rebate range for ${escapeHtml(capitalize(lead.city))}` : 'Estimate shown to homeowner'}</h2>
         <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;">
-          <div style="font-size:14px;color:#1a3d42;">CleanBC rebates on selection:</div>
-          <div style="font-size:28px;color:#2d6a4f;font-weight:600;margin:4px 0;">${lead.estimated_value}</div>
-          <div style="font-size:14px;color:#1a3d42;">System cost: <strong>${lead.total_cost}</strong> &middot; After rebates: <strong>${lead.net_cost}</strong> &middot; 10-year savings: <strong>${lead.ten_year_savings}</strong></div>
+          <div style="font-size:14px;color:#1a3d42;">${lead.estimate_is_city_range ? `Typical ${escapeHtml(capitalize(lead.city))} rebate range (not this homeowner's calculated number):` : 'CleanBC rebates on selection:'}</div>
+          <div style="font-size:28px;color:#2d6a4f;font-weight:600;margin:4px 0;">${escapeHtml(lead.estimated_value)}</div>
+          ${lead.estimate_is_city_range ? '' : `<div style="font-size:14px;color:#1a3d42;">System cost: <strong>${escapeHtml(lead.total_cost)}</strong> &middot; After rebates: <strong>${escapeHtml(lead.net_cost)}</strong> &middot; 10-year savings: <strong>${escapeHtml(lead.ten_year_savings)}</strong></div>`}
         </div>
 
         <div style="background:#0a2a2e;color:#faf7f2;padding:20px;border-radius:10px;margin-top:24px;text-align:center;">
@@ -1434,11 +1465,11 @@ async function sendLeadConfirmation(lead, installer, env) {
         <h2 style="font-size:18px;color:#08363f;margin:24px 0 12px;"><strong>Your assessment summary</strong></h2>
         <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;margin-bottom:16px;">
           <table style="width:100%;border-collapse:collapse;font-size:14px;">
-            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:45%;">CleanBC rebates on selection:</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${lead.estimated_value}</td></tr>
-            <tr><td style="padding:8px 0;color:#1a3d42;">System cost / after rebates:</td><td style="padding:8px 0;font-weight:600;">${lead.total_cost} / ${lead.net_cost}</td></tr>
-            <tr><td style="padding:8px 0;color:#1a3d42;">Upgrades selected:</td><td style="padding:8px 0;font-weight:600;">${lead.upgrades || 'none specified'}</td></tr>
-            <tr><td style="padding:8px 0;color:#1a3d42;">Current heating:</td><td style="padding:8px 0;font-weight:600;">${capitalize(String(lead.current_heat || 'unknown'))}</td></tr>
-            <tr><td style="padding:8px 0;color:#1a3d42;">Utility:</td><td style="padding:8px 0;font-weight:600;">${formatUtility(lead.utility)}</td></tr>
+            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:45%;">${lead.estimate_is_city_range ? `Typical rebate range in ${escapeHtml(capitalize(lead.city))}` : 'CleanBC rebates on selection'}:</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${escapeHtml(lead.estimated_value)}</td></tr>
+            ${lead.estimate_is_city_range ? '' : `<tr><td style="padding:8px 0;color:#1a3d42;">System cost / after rebates:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(lead.total_cost)} / ${escapeHtml(lead.net_cost)}</td></tr>`}
+            <tr><td style="padding:8px 0;color:#1a3d42;">Upgrades selected:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(lead.upgrades || 'none specified')}</td></tr>
+            ${lead.current_heat && lead.current_heat.toLowerCase() !== 'not specified' ? `<tr><td style="padding:8px 0;color:#1a3d42;">Current heating:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(capitalize(String(lead.current_heat)))}</td></tr>` : ''}
+            ${lead.utility && lead.utility.toLowerCase() !== 'not specified' ? `<tr><td style="padding:8px 0;color:#1a3d42;">Utility:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(formatUtility(lead.utility))}</td></tr>` : ''}
           </table>
         </div>
 
@@ -1581,6 +1612,13 @@ function escapeHtml(s) {
 
 function capitalize(s) {
   return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+// Skips a details-table row entirely instead of printing "Not specified" —
+// less noise for the installer than a row that carries no information.
+function notSpecifiedRow(label, value) {
+  if (!value || String(value).toLowerCase() === 'not specified') return '';
+  return `<tr><td style="padding:6px 0;color:#1a3d42;width:140px;">${escapeHtml(label)}</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(String(value))}</td></tr>`;
 }
 
 function formatUtility(u) {

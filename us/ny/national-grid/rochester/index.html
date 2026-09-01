@@ -106,6 +106,23 @@ footer a { color: rgba(250,247,242,.75); }
 .status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
 .status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
 .status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
+
+/* Rebate Finder */
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
+.eyebrow-dark { font-size: 13px; color: var(--amber); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; }
+h2.big { font-size: clamp(28px, 4.5vw, 40px); margin-bottom: 16px; }
+.lede { font-size: 18px; color: var(--ink-soft); max-width: 680px; }
 </style>
 <script type="application/ld+json">
 {
@@ -402,6 +419,78 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <li><a href="/us/ny/national-grid/rochester/smart-thermostats/">Learn more about Smart Thermostats in Rochester &rarr;</a></li>
 </ul>
 </section>
+<!-- Rebate Finder -->
+<section id="rebate-finder" style="background:var(--paper-warm);">
+  <div class="wrap">
+    <div class="eyebrow-dark">Rebate finder</div>
+    <h2 class="big">Every Rochester rebate program, by category.</h2>
+    <p class="lede">Real, sourced rebate amounts from our Rochester category pages, filterable below. Figures reflect National Grid and state/federal programs as researched for Rochester.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>National Grid + state + federal stack</h4>
+        <div class="finder-amount">$11,500&ndash;$22,000</div>
+        <p>National Grid utility rebate ($1,500&ndash;$4,000) + NYS Clean Heat ($6,000&ndash;$10,000, income-qualified) + federal HEAR ($4,000&ndash;$8,000, income-qualified). Better than NYSEG areas, which ended standalone rebates in June 2025.</p>
+        <div class="finder-source">Source: /us/ny/national-grid/rochester &middot; National Grid / NYS Clean Heat / Federal HEAR</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery</div>
+        <h4>NYSERDA Inclusive Storage Incentives</h4>
+        <div class="finder-amount">~$200/kWh</div>
+        <p>Pays around $200/kWh of installed battery capacity for National Grid upstate electric customers, up to 25 kWh, first-come-first-served while funds last.</p>
+        <div class="finder-source">Source: /us/ny/national-grid/rochester/battery &middot; NYSERDA ISI</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Total Home Comfort air sealing & insulation</h4>
+        <div class="finder-amount">$750&ndash;$2,000</div>
+        <p>National Grid's Total Home Comfort program pays toward professionally installed air sealing and insulation, with a parallel NYSERDA Comfort Home tier available.</p>
+        <div class="finder-source">Source: /us/ny/national-grid/rochester/insulation &middot; National Grid Total Home Comfort</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Heat pump water heater instant rebate</h4>
+        <div class="finder-amount">Up to $1,250</div>
+        <p>Instant savings on a heat pump water heater, redeemed via a coupon code at checkout through participating Lowe's and Home Depot locations. Additional NYS Clean Heat incentives may stack.</p>
+        <div class="finder-source">Source: /us/ny/national-grid/rochester/water-heater &middot; National Grid</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>Charge Smart NY + off-peak credit</h4>
+        <div class="finder-amount">~$25 + usage credit</div>
+        <p>One source references a small "Charge Smart NY"-labeled charger rebate as low as $25, plus a per-kWh off-peak charging credit (roughly $0.03&ndash;$0.05/kWh) for enrolled customers. Wiring-upgrade rebates reportedly apply after January 1, 2026.</p>
+        <div class="finder-source">Source: /us/ny/national-grid/rochester/ev-charger &middot; National Grid (low-confidence figure)</div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('#rebate-finder .finder-filter-btn');
+  var cards = document.querySelectorAll('#rebate-finder #finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
+
 </div></section>
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div class="wrap" style="text-align: center; color: #fff; max-width: 600px;">

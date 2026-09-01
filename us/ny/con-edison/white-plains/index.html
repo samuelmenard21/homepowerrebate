@@ -491,6 +491,20 @@ footer a { color: var(--color-accent-light); }
 .status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
 .status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
 .status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
+
+/* Rebate Finder */
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 
 </head>
@@ -861,6 +875,94 @@ This guide covers Con Edison and New York State rebates as of August 2026. Progr
 </ul>
 </section>
 </div>
+
+<!-- Rebate Finder -->
+<section id="rebate-finder" style="background:var(--paper-warm);">
+  <div class="wrap">
+    <div class="eyebrow-dark">Rebate finder</div>
+    <h2 class="big">Every White Plains rebate program, by category.</h2>
+    <p class="lede">These are the real, published rebate amounts from our White Plains category pages (Con Edison territory). Filter by category below.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+            <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows-doors">Windows</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+      <button type="button" class="finder-filter-btn" data-filter="smart-thermostats">Smart thermostat</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>NY-Sun Affordable Solar (income-eligible)</h4>
+        <div class="finder-amount">~$0.80/watt (~$5,600 on 7kW)</div>
+        <p>Households at or below ~80% area median income can apply. Market-rate homeowners get net metering + the 25% NY State solar tax credit, but no direct cash rebate right now.</p>
+        <div class="finder-source">Source: /us/ny/con-edison/white-plains/solar/ &middot; Con Edison</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery</div>
+        <h4>NYSERDA Residential Energy Storage Incentive</h4>
+        <div class="finder-amount">~$250/kWh</div>
+        <p>Pays around $250 per kWh of usable battery capacity for Con Edison territory (NYC/Westchester/Rockland).</p>
+        <div class="finder-source">Source: /us/ny/con-edison/white-plains/battery/ &middot; Con Edison</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Con Edison “Make Your Home Weather Ready”</h4>
+        <div class="finder-amount">Up to $4,000</div>
+        <p>Covers professionally installed insulation and air sealing. A White Plains-specific source cites a lower $2,000 ceiling depending on scope, so confirm your exact cap.</p>
+        <div class="finder-source">Source: /us/ny/con-edison/white-plains/insulation/ &middot; Con Edison</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Con Edison heat pump water heater rebate</h4>
+        <div class="finder-amount">Up to $1,300</div>
+        <p>Instant rebate on ENERGY STAR-certified heat pump water heaters up to 120 gallons, redeemed at Lowe's, Home Depot, or through a participating contractor.</p>
+        <div class="finder-source">Source: /us/ny/con-edison/white-plains/water-heater/ &middot; Con Edison</div>
+      </div>
+      <div class="finder-card" data-cat="windows-doors">
+        <div class="finder-cat">Windows</div>
+        <h4>Windows & doors</h4>
+        <div class="finder-amount">No dedicated program found</div>
+        <p>No standalone Con Edison windows/doors rebate was found in this research pass — an honest “not confirmed” rather than a guess.</p>
+        <div class="finder-source">Source: /us/ny/con-edison/white-plains/windows-doors/ &middot; Con Edison</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>Con Edison SmartCharge New York</h4>
+        <div class="finder-amount">No hardware rebate; ~$400/yr usage reward</div>
+        <p>No direct purchase rebate for a home Level 2 charger. SmartCharge pays up to ~$400/year for off-peak charging, plus a $0.10/kWh off-peak credit.</p>
+        <div class="finder-source">Source: /us/ny/con-edison/white-plains/ev-charger/ &middot; Con Edison</div>
+      </div>
+      <div class="finder-card" data-cat="smart-thermostats">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>Con Edison smart thermostat rebate</h4>
+        <div class="finder-amount">$85</div>
+        <p>Cash rebate for enrolling an eligible smart thermostat model — “Save $85 With Your Smart Thermostat.”</p>
+        <div class="finder-source">Source: /us/ny/con-edison/white-plains/smart-thermostats/ &middot; Con Edison</div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('#rebate-finder .finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
 
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">

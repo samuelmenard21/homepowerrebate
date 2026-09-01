@@ -465,6 +465,20 @@ footer a { color: var(--color-accent-light); }
 .status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
 .status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
 .status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
+
+/* Rebate Finder */
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 
 </head>
@@ -772,6 +786,94 @@ This guide covers PSEG Long Island rebates as of August 2026. Utility programs c
 </ul>
 </section>
 </div>
+
+<!-- Rebate Finder -->
+<section id="rebate-finder" style="background:var(--paper-warm);">
+  <div class="wrap">
+    <div class="eyebrow-dark">Rebate finder</div>
+    <h2 class="big">Every Southampton rebate program, by category.</h2>
+    <p class="lede">These are the real, published rebate amounts from our Southampton category pages (PSEG Long Island territory). Filter by category below.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+            <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows-doors">Windows</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+      <button type="button" class="finder-filter-btn" data-filter="smart-thermostats">Smart thermostat</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>NY-Sun Affordable Solar (income-eligible)</h4>
+        <div class="finder-amount">No PSEG rebate; ~$0.40/watt (state)</div>
+        <p>Confirmed negative finding: PSEG Long Island offers no solar hardware rebate. The only option is NY-Sun's Affordable Solar program (~$0.40/watt) for households at or below ~80% area median income; market-rate homeowners get net metering + the 25% state tax credit only.</p>
+        <div class="finder-source">Source: /us/ny/pseg/southampton/solar/ &middot; PSEG Long Island</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery</div>
+        <h4>PSEG Long Island battery storage program</h4>
+        <div class="finder-amount">Program exists, amount unverified</div>
+        <p>Long Island is excluded from NYSERDA's statewide storage block — PSEG runs its own separate incentive, but no current $/kWh figure was confirmed in this research pass.</p>
+        <div class="finder-source">Source: /us/ny/pseg/southampton/battery/ &middot; PSEG Long Island</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>PSEG Long Island home weatherization rebate</h4>
+        <div class="finder-amount">$1,000–$6,250</div>
+        <p>Up to $1,000 for market-rate customers; income-eligible households can access an enhanced tier up to $6,250.</p>
+        <div class="finder-source">Source: /us/ny/pseg/southampton/insulation/ &middot; PSEG Long Island</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>PSEG Long Island heat pump water heater rebate</h4>
+        <div class="finder-amount">Up to $1,200</div>
+        <p>Pays up to $1,200 for an ENERGY STAR-certified electric heat pump water heater, limited to one per account every 5 years.</p>
+        <div class="finder-source">Source: /us/ny/pseg/southampton/water-heater/ &middot; PSEG Long Island</div>
+      </div>
+      <div class="finder-card" data-cat="windows-doors">
+        <div class="finder-cat">Windows</div>
+        <h4>Windows & doors</h4>
+        <div class="finder-amount">Bundled, no standalone figure</div>
+        <p>No standalone PSEG windows/doors rebate was found — treat as bundled under weatherization rather than a separate program.</p>
+        <div class="finder-source">Source: /us/ny/pseg/southampton/windows-doors/ &middot; PSEG Long Island</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>PSEG Long Island Residential Charger Rebate</h4>
+        <div class="finder-amount">$100–$400</div>
+        <p>$100 base rebate for a qualified Level 2 home charger (EPRI Vetted Product List), plus $300 more for Disadvantaged Community / Household Assistance Program households. Budget-limited, expected to run through Dec 31, 2026 or until funds run out.</p>
+        <div class="finder-source">Source: /us/ny/pseg/southampton/ev-charger/ &middot; PSEG Long Island</div>
+      </div>
+      <div class="finder-card" data-cat="smart-thermostats">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>PSEG Long Island smart thermostat program</h4>
+        <div class="finder-amount">Program likely exists, amount unverified</div>
+        <p>The catalog page was referenced but its content wasn't independently confirmed — flagged as unverified until checked directly on psegliny.com.</p>
+        <div class="finder-source">Source: /us/ny/pseg/southampton/smart-thermostats/ &middot; PSEG Long Island</div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('#rebate-finder .finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
 
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">

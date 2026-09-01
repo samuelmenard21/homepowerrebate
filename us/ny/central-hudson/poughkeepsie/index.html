@@ -116,6 +116,23 @@ footer a { color: rgba(250,247,242,.75); }
 .status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
 .status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
 .status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
+
+/* Rebate Finder */
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
+.eyebrow-dark { font-size: 13px; color: var(--amber); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; }
+h2.big { font-size: clamp(28px, 4.5vw, 40px); margin-bottom: 16px; }
+.lede { font-size: 18px; color: var(--ink-soft); max-width: 680px; }
 </style>
 
 <!-- JSON-LD Schemas -->
@@ -545,6 +562,86 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <li><a href="/us/ny/central-hudson/poughkeepsie/water-heater/">Learn more about Water Heater in Poughkeepsie &rarr;</a></li>
 </ul>
 </section>
+<!-- Rebate Finder -->
+<section id="rebate-finder" style="background:var(--paper-warm);">
+  <div class="wrap">
+    <div class="eyebrow-dark">Rebate finder</div>
+    <h2 class="big">Every Poughkeepsie rebate program, by category.</h2>
+    <p class="lede">Real, sourced rebate amounts from our Poughkeepsie category pages, filterable below. Figures reflect Central Hudson and state/federal programs as researched for Poughkeepsie.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>Central Hudson heat pump rebate</h4>
+        <div class="finder-amount">Up to $8,000</div>
+        <p>$8,000 if your heat pump fully replaces fossil-fuel heating (no backup), $5,000 if you keep a backup system, or $3,000 when adding to an existing forced-air system. Installed cost typically runs $13,000&ndash;$22,000.</p>
+        <div class="finder-source">Source: /us/ny/central-hudson/poughkeepsie &middot; Central Hudson</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery</div>
+        <h4>NYSERDA Inclusive Storage Incentives</h4>
+        <div class="finder-amount">~$200/kWh</div>
+        <p>NYSERDA's ISI explicitly lists Central Hudson &mdash; alongside National Grid, O&amp;R, and NYSEG &mdash; as eligible for around $200/kWh of installed battery capacity, up to 25 kWh, first-come-first-served.</p>
+        <div class="finder-source">Source: /us/ny/central-hudson/poughkeepsie/battery &middot; NYSERDA ISI</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Comfort Home seal &amp; insulate package</h4>
+        <div class="finder-amount">$1,000&ndash;$4,000</div>
+        <p>NYSERDA's Comfort Home "seal and insulate" packages run $1,000&ndash;$4,000 depending on scope. Income-eligible households can layer EmPower+, which can cover up to 100% of the cost.</p>
+        <div class="finder-source">Source: /us/ny/central-hudson/poughkeepsie/insulation &middot; NYSERDA Comfort Home</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Heat pump water heater rebate</h4>
+        <div class="finder-amount">$1,000&ndash;$1,250</div>
+        <p>Central Hudson's own site lists a $1,000 rebate for an energy-efficient heat pump water heater, while separate NYS Clean Heat Program materials cite $1,250 for the same equipment category. Confirm the current figure before you buy.</p>
+        <div class="finder-source">Source: /us/ny/central-hudson/poughkeepsie/water-heater &middot; Central Hudson / NYS Clean Heat</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>EV ChargeSmart enrollment + usage credit</h4>
+        <div class="finder-amount">$25 + usage credit</div>
+        <p>EV ChargeSmart pays a $25 incentive after three months of enrollment, plus a small quarterly off-peak usage credit (around $0.04/kWh as of February 2026). These are usage-based programs, not charger-purchase rebates.</p>
+        <div class="finder-source">Source: /us/ny/central-hudson/poughkeepsie/ev-charger &middot; Central Hudson EV ChargeSmart</div>
+      </div>
+      <div class="finder-card" data-cat="thermostat">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>ENERGY STAR smart thermostat rebate</h4>
+        <div class="finder-amount">$50</div>
+        <p>$50 rebate on qualifying ENERGY STAR-certified smart thermostats &mdash; claimable instantly at Lowe's or Home Depot with a coupon code from CentralHudsonRebates.com, or via mail-in form. Limit two thermostats per application.</p>
+        <div class="finder-source">Source: /us/ny/central-hudson/poughkeepsie/smart-thermostats &middot; Central Hudson</div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('#rebate-finder .finder-filter-btn');
+  var cards = document.querySelectorAll('#rebate-finder #finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
+
 
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div class="wrap" style="text-align: center; color: #fff; max-width: 600px;">

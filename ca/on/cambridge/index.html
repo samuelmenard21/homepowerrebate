@@ -213,6 +213,20 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 .status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
 .status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
 .status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
+
+/* Rebate Finder */
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -529,6 +543,109 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     </div>
   </div>
 </section>
+
+<!-- Rebate Finder -->
+<section id="rebate-finder" style="background:var(--paper-warm);">
+  <div class="wrap">
+    <div class="eyebrow-dark">Rebate finder</div>
+    <h2 class="big">Every Cambridge rebate program, by category.</h2>
+    <p class="lede">These are the real, published rebate amounts from this page, organized by category so you can jump straight to what you're planning. Filter below.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows">Windows</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>HRSP heat pump rebate</h4>
+        <div class="finder-amount">$2,000&ndash;$12,000</div>
+        <p>Depends what fuel you're switching from: gas customers get up to $2,000 (air-source) or $3,000 (ground-source); switching from electric, oil, propane, or wood gets up to $7,500 (air-source) or $12,000 (ground-source). Province-wide, same in every Ontario city.</p>
+        <div class="finder-source">Source: /ca/on/cambridge &middot; Home Renovation Savings Program</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>HRSP solar rebate</h4>
+        <div class="finder-amount">Up to $5,000</div>
+        <p>$1,000/kW, capped at 50% of cost. Combined with battery, a typical Cambridge household can net up to $10,000 for solar + battery together. You choose this or net metering, not both.</p>
+        <div class="finder-source">Source: /ca/on/cambridge &middot; Home Renovation Savings Program</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery</div>
+        <h4>HRSP battery storage rebate</h4>
+        <div class="finder-amount">Up to $5,000</div>
+        <p>$300/kWh, capped at 50% of cost. Stacks with the solar rebate above.</p>
+        <div class="finder-source">Source: /ca/on/cambridge &middot; Home Renovation Savings Program</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Attic insulation (no-assessment path)</h4>
+        <div class="finder-amount">Up to $1,250</div>
+        <p>Scales with starting R-value: up to $1,250 from &le;R-12, $1,000 from R-12&ndash;25, $800 from R-25&ndash;35. Cathedral ceiling/flat roof up to $750.</p>
+        <div class="finder-source">Source: /ca/on/cambridge &middot; Home Renovation Savings Program</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Exterior wall / foundation / crawlspace (assessment-required)</h4>
+        <div class="finder-amount">Up to $3,600</div>
+        <p>Exterior wall to at least R-20, up to $3,600. Plus foundation/basement wall up to $1,500, crawlspace up to $2,400, and exposed floor $300 as separate measures &mdash; needs a before/after energy assessment ($600, refunded as a rebate) plus 2+ qualifying upgrades.</p>
+        <div class="finder-source">Source: /ca/on/cambridge &middot; Home Renovation Savings Program</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Heat pump water heater rebate</h4>
+        <div class="finder-amount">$500</div>
+        <p>Replaces a gas, electric, or oil tank. Part of the assessment-required tier.</p>
+        <div class="finder-source">Source: /ca/on/cambridge &middot; Home Renovation Savings Program</div>
+      </div>
+      <div class="finder-card" data-cat="windows">
+        <div class="finder-cat">Windows &amp; doors</div>
+        <h4>Windows &amp; doors rebate</h4>
+        <div class="finder-amount">$100/opening</div>
+        <p>Per rough opening replaced with an eligible ENERGY STAR window or door. Part of the assessment-required tier.</p>
+        <div class="finder-source">Source: /ca/on/cambridge &middot; Home Renovation Savings Program</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>No direct HRSP rebate for EV chargers</h4>
+        <div class="finder-amount">Not covered</div>
+        <p>The province's Home Renovation Savings Program doesn't include a cash rebate for home EV charger installs in Cambridge. Check with your electric utility for a separate off-peak charging incentive.</p>
+        <div class="finder-source">Source: /ca/on/cambridge &middot; Home Renovation Savings Program</div>
+      </div>
+      <div class="finder-card" data-cat="thermostat">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>Smart thermostat rebate</h4>
+        <div class="finder-amount">$100</div>
+        <p>Instant or mail-in. Eligible brands include ecobee, Nest, Honeywell, Mysa, and Sinop&eacute;.</p>
+        <div class="finder-source">Source: /ca/on/cambridge &middot; Home Renovation Savings Program</div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('#rebate-finder .finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
 
 <section class="section">
   <div class="wrap">

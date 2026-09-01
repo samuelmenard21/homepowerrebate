@@ -174,6 +174,19 @@ strong { color: var(--ink); }
 .status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
 .status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
 .status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card .finder-amount.financing { color: var(--amber); font-size: 17px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -357,6 +370,66 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <p>No standalone grant, though CEIP-financed HVAC upgrades sometimes include one.</p>
       </div>
     </div>
+
+    <h2 id="rebate-finder">Rebate finder, by category</h2>
+    <p>Filter St. Albert's real programs by category. Most of what's below is a utility-specific incentive or a financing tool, not a flat provincial rebate &mdash; cards are labeled financing where that applies.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>ENMAX / ATCO Gas heat pump rebate</h4>
+        <div class="finder-amount">$500&ndash;$2,000/unit</div>
+        <p>For ENERGY STAR cold-climate models, through ENMAX or ATCO Gas. Availability changes through the year &mdash; confirm before you buy.</p>
+        <div class="finder-source">Source: /ca/ab/st-albert &middot; ENMAX / ATCO Gas</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>EPCOR solar incentive</h4>
+        <div class="finder-amount">$0&ndash;$2,000</div>
+        <p>No province-wide solar rebate, but EPCOR has offered utility-specific incentives worth roughly $0&ndash;$2,000 depending on availability. Net metering is your other main financial mechanism.</p>
+        <div class="finder-source">Source: /ca/ab/st-albert &middot; EPCOR</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>CEIP-financed insulation + St. Albert's $1,400 top-up</h4>
+        <div class="finder-amount financing">$1,000&ndash;$5,000 + $1,400</div>
+        <p>Financing, not a check: CEIP lets you pay through your property tax bill, often with a 5&ndash;10% incentive on top. St. Albert adds its own $1,400 cash incentive on top of the CEIP tax bill, one per project while city funding lasts &mdash; a local top-up other Alberta cities don't offer.</p>
+        <div class="finder-source">Source: /ca/ab/st-albert &middot; CEIP / City of St. Albert</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>No flat rebate &mdash; CEIP financing only</h4>
+        <div class="finder-amount financing">Financing only</div>
+        <p>No flat water heater rebate in St. Albert or anywhere in Alberta. Available through CEIP financing or utility-specific offers from ATCO, EPCOR, or ENMAX.</p>
+        <div class="finder-source">Source: /ca/ab/st-albert &middot; CEIP / utility offers</div>
+      </div>
+    </div>
+    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">Battery storage, windows &amp; doors, EV chargers, and smart thermostats have no confirmed dedicated rebate in St. Albert as of 2026.</p>
+
+    <script>
+    (function() {
+      var buttons = document.querySelectorAll('.finder-filter-btn');
+      var cards = document.querySelectorAll('#finder-grid .finder-card');
+      buttons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          buttons.forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          var filter = btn.getAttribute('data-filter');
+          cards.forEach(function(card) {
+            card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+          });
+        });
+      });
+    })();
+    </script>
 
     <h2>CEIP: financing, not a rebate</h2>
     <p>The Clean Energy Improvement Program lets you finance eligible upgrades &mdash; solar, insulation, heat pumps &mdash; through your property tax bill at competitive interest rates, often with a 5&ndash;10% incentive off the total project cost. It's a genuinely useful tool for spreading cost over time, but don't confuse it with free money: you're still paying for the full upgrade, just at a lower rate than a typical loan. <a href="https://ceip.abmunis.ca/" target="_blank" rel="noopener">Official CEIP program details &rarr;</a></p>

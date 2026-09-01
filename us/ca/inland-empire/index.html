@@ -93,6 +93,19 @@ body { font-family: 'Inter Tight', -apple-system, sans-serif; background: var(--
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 <script type="application/ld+json">
 {
@@ -230,6 +243,102 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     </div>
   </div>
 </section>
+
+<section id="rebate-finder" style="background:var(--paper-warm);">
+  <div class="wrap">
+    <div class="eyebrow-dark">Rebate finder</div>
+    <h2 class="big">Every Inland Empire rebate program, by category.</h2>
+    <p class="lede">These are the real, published Southern California Edison rebate amounts on our Inland Empire city pages (Riverside, San Bernardino, Ontario, Moreno Valley). Filter by category below.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows">Windows</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>Heat Pump</h4>
+        <div class="finder-amount">$3,100</div>
+        <p>TECH Clean California rebate delivered through SCE for a qualifying 3&ndash;4 ton system.</p>
+        <div class="finder-source">Source: /us/ca/inland-empire</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>Solar Panels (~6kW)</h4>
+        <div class="finder-amount">$0 utility rebate</div>
+        <p>No SCE cash rebate; net billing and the federal ITC are the main financial levers.</p>
+        <div class="finder-source">Source: /us/ca/inland-empire</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery</div>
+        <h4>Home Battery</h4>
+        <div class="finder-amount">$0 utility rebate</div>
+        <p>No dedicated SCE battery storage rebate confirmed at this time.</p>
+        <div class="finder-source">Source: /us/ca/inland-empire</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Insulation</h4>
+        <div class="finder-amount">$0</div>
+        <p>No dedicated SCE insulation cash rebate confirmed. The federal energy-efficiency tax credit may still apply.</p>
+        <div class="finder-source">Source: /us/ca/inland-empire</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Heat Pump Water Heater</h4>
+        <div class="finder-amount">$500</div>
+        <p>SCE's rebate for replacing a gas or standard electric tank water heater.</p>
+        <div class="finder-source">Source: /us/ca/inland-empire</div>
+      </div>
+      <div class="finder-card" data-cat="windows">
+        <div class="finder-cat">Windows</div>
+        <h4>Windows</h4>
+        <div class="finder-amount">$0</div>
+        <p>No dedicated SCE windows rebate at this time.</p>
+        <div class="finder-source">Source: /us/ca/inland-empire</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>EV Charger</h4>
+        <div class="finder-amount">$500</div>
+        <p>Toward a qualifying Level 2 home charger and installation.</p>
+        <div class="finder-source">Source: /us/ca/inland-empire</div>
+      </div>
+      <div class="finder-card" data-cat="thermostat">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>Smart Thermostat</h4>
+        <div class="finder-amount">$50</div>
+        <p>For a qualifying ENERGY STAR connected thermostat.</p>
+        <div class="finder-source">Source: /us/ca/inland-empire</div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('#rebate-finder .finder-filter-btn');
+  var cards = document.querySelectorAll('#rebate-finder .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
+
 
 <section class="section">
   <div class="wrap">

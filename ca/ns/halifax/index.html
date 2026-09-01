@@ -161,6 +161,19 @@ strong { color: var(--ink); }
 .status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
 .status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
 .status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card .finder-amount.free { color: var(--green-money); }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -351,6 +364,74 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       <a href="/retrofit-assessment" class="cta" style="display:inline-block;">Run your free assessment →</a>
     </div>
 
+
+    <h2 id="rebate-finder">Rebate finder, by category</h2>
+    <p>Filter what's actually still open in Halifax by category. The federal Oil to Heat Pump Affordability Program closed to new applicants on July 2, 2026, and the core provincial heat pump program closed December 31, 2025 &mdash; both dates are reflected below, not the older, more generous numbers still floating around online.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>Efficiency Nova Scotia heat pump rebate</h4>
+        <div class="finder-amount">Up to $5,000</div>
+        <p>The $10,000-federal + $5,000-provincial Oil to Heat Pump Affordability Program closed to new applicants July 2, 2026 (funding fully allocated). What's still open: Efficiency Nova Scotia's Home Energy Assessment pathway offers up to $5,000 to any homeowner, and HomeWarming still offers free installation for income-qualified homes.</p>
+        <div class="finder-source">Source: /ca/ns/halifax &middot; Efficiency Nova Scotia</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation &amp; air sealing</div>
+        <h4>HomeWarming free upgrade</h4>
+        <div class="finder-amount free">Free</div>
+        <p>Still active as a no-cost upgrade for income-eligible Halifax households through HomeWarming &mdash; a direct install, not a rebate you claim after paying.</p>
+        <div class="finder-source">Source: /ca/ns/halifax &middot; HomeWarming</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>Provincial solar rebate + Halifax Solar City</h4>
+        <div class="finder-amount">$0.60/watt</div>
+        <p>Roughly $6,000 on a typical 10kW system. Halifax also runs its own Solar City financing &mdash; 4.75% fixed, repaid through the property tax bill via a Local Improvement Charge &mdash; to cover the rest with no upfront cash.</p>
+        <div class="finder-source">Source: /ca/ns/halifax &middot; Efficiency Nova Scotia / City of Halifax</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Water heating rebate</h4>
+        <div class="finder-amount">Up to $2,500</div>
+        <p>Still active for efficient home water heating systems, unaffected by the heat pump program closures.</p>
+        <div class="finder-source">Source: /ca/ns/halifax &middot; Efficiency Nova Scotia</div>
+      </div>
+      <div class="finder-card" data-cat="thermostat">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>Free product + install</h4>
+        <div class="finder-amount free">Free</div>
+        <p>Free smart thermostat and installation still offered directly by Efficiency Nova Scotia.</p>
+        <div class="finder-source">Source: /ca/ns/halifax &middot; Efficiency Nova Scotia</div>
+      </div>
+    </div>
+    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">Battery storage, windows &amp; doors, and EV chargers have no confirmed dedicated rebate in Halifax as of 2026.</p>
+
+    <script>
+    (function() {
+      var buttons = document.querySelectorAll('.finder-filter-btn');
+      var cards = document.querySelectorAll('#finder-grid .finder-card');
+      buttons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          buttons.forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          var filter = btn.getAttribute('data-filter');
+          cards.forEach(function(card) {
+            card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+          });
+        });
+      });
+    })();
+    </script>
 
     <h2 id="renters">Renting or living in a condo?</h2>
     <div class="callout">

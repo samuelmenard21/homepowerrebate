@@ -398,6 +398,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <nav class="toc" aria-label="On this page">
   <span class="toc-lbl">On this page:</span>
   <a href="#rebates">Rebates</a>
+  <a href="#rebate-finder">Rebate finder</a>
   <a href="#solar-battery">Solar &amp; battery</a>
   <a href="#programs">All programs</a>
   <a href="#local">Local context</a>
@@ -522,6 +523,118 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     </div>
   </div>
 </section>
+
+<style>
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
+</style>
+
+<section id="rebate-finder" style="background:var(--paper-warm);">
+  <div class="wrap">
+    <div class="eyebrow-dark">Rebate finder</div>
+    <h2 class="big">Every Chula Vista rebate program, by category.</h2>
+    <p class="lede">These are the real, published rebate amounts on our Chula Vista page, sourced from San Diego Gas &amp; Electric (SDG&E). Filter by category below.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows">Windows</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>Heat Pump</h4>
+        <div class="finder-amount">$250&ndash;$500</div>
+        <p>SDG&E's standard heat pump rebate &mdash; the lowest base rebate of the California utilities we cover, but a 3&ndash;4 ton system still saves real money on your bill every month.</p>
+        <div class="finder-source">Source: /us/ca/san-diego/chula-vista &middot; SDG&E</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>Solar Panels (~6kW)</h4>
+        <div class="finder-amount">$0 utility rebate</div>
+        <p>SDG&E doesn't run a cash solar rebate program &mdash; the return comes from the federal tax credit and net billing, not a utility check.</p>
+        <div class="finder-source">Source: /us/ca/san-diego/chula-vista &middot; SDG&E net billing / federal ITC</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery</div>
+        <h4>Home Battery</h4>
+        <div class="finder-amount">$1,000+ (SGIP)</div>
+        <p>California's Self-Generation Incentive Program (SGIP) pays toward home batteries statewide, including SDG&E territory &mdash; equity and resiliency tiers can pay significantly more.</p>
+        <div class="finder-source">Source: /us/ca/san-diego/chula-vista &middot; California SGIP</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Insulation</h4>
+        <div class="finder-amount">$0</div>
+        <p>We haven't confirmed a dedicated SDG&E cash rebate for insulation in Chula Vista. Federal tax credits (25C) may still apply &mdash; check with your tax preparer.</p>
+        <div class="finder-source">Source: /us/ca/san-diego/chula-vista &middot; SDG&E program list (verified Aug 2026)</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Water Heater</h4>
+        <div class="finder-amount">$250</div>
+        <p>Rebate toward a qualifying heat pump water heater, replacing a gas or electric tank.</p>
+        <div class="finder-source">Source: /us/ca/san-diego/chula-vista &middot; SDG&E</div>
+      </div>
+      <div class="finder-card" data-cat="windows">
+        <div class="finder-cat">Windows</div>
+        <h4>Windows</h4>
+        <div class="finder-amount">$0</div>
+        <p>We haven't confirmed a dedicated SDG&E cash rebate for windows in Chula Vista. Federal tax credits (25C) may still apply.</p>
+        <div class="finder-source">Source: /us/ca/san-diego/chula-vista &middot; SDG&E program list (verified Aug 2026)</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>EV Charger</h4>
+        <div class="finder-amount">$500</div>
+        <p>A flat rebate toward a Level 2 home EV charger.</p>
+        <div class="finder-source">Source: /us/ca/san-diego/chula-vista &middot; SDG&E</div>
+      </div>
+      <div class="finder-card" data-cat="thermostat">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>Smart Thermostat</h4>
+        <div class="finder-amount">$50</div>
+        <p>A modest rebate on qualifying smart thermostats.</p>
+        <div class="finder-source">Source: /us/ca/san-diego/chula-vista &middot; SDG&E</div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('#rebate-finder .finder-filter-btn');
+  var cards = document.querySelectorAll('#rebate-finder .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
+
+
 
 <section class="section">
   <div class="wrap">

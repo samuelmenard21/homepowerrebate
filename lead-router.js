@@ -303,6 +303,7 @@ async function handleLeadSubmit(request, env) {
     lead_id: leadId,
     timestamp,
     city,
+    province: cleanString(payload.province || 'BC').toUpperCase(),
     service,
     installer_assigned: hasInstaller ? installer.name : 'UNASSIGNED — needs manual follow-up',
     installer_email: hasInstaller ? installer.email : '',
@@ -347,7 +348,7 @@ async function handleLeadSubmit(request, env) {
     sendOpsEmail(lead, env),
     logToSheet(lead, env),
     startResultsDrip({
-      email: lead.email, city: lead.city, province: 'BC',
+      email: lead.email, city: lead.city, province: lead.province,
       heating: lead.current_heat, income: lead.income_tier,
       estimate: lead.estimated_value, source: 'retrofit-assessment'
     }, env)
@@ -687,6 +688,18 @@ function citySlug(s) {
   return String(s || '').toLowerCase().replace(/[.]/g, '').trim().replace(/\s+/g, '-');
 }
 
+// Provinces use /ca/{province}/{city}; US states use /us/{state}/{city}.
+const CA_PROVINCES = new Set(['BC', 'ON', 'AB', 'NS']);
+
+function stackingCalculatorUrl(sub) {
+  const province = String(sub.province || 'BC').toUpperCase();
+  const country = CA_PROVINCES.has(province) ? 'ca' : 'us';
+  const city = citySlug(sub.city);
+  return city
+    ? `https://homepowerrebate.com/stacking-calculator/${country}/${citySlug(province)}/${city}/`
+    : 'https://homepowerrebate.com/stacking-calculator/';
+}
+
 function installersUrl(sub) {
   const region = citySlug(sub.province || 'BC');
   const city = citySlug(sub.city);
@@ -764,9 +777,10 @@ async function sendResultsRecapEmail(sub, env) {
           </table>
         </div>
         ${rebateBreakdown}
-        <p style="font-size:15px;line-height:1.6;margin:0 0 12px;">Keep this for reference — in a couple days we'll send you what homeowners near you actually paid, so you can sanity-check any quote against real numbers, not just estimates.</p>
+        <p style="font-size:15px;line-height:1.6;margin:0 0 12px;">Keep this for reference when you're comparing quotes.</p>
         <p style="font-size:15px;line-height:1.6;margin:0 0 10px;"><a href="${getQuotesUrl(sub)}" style="display:inline-block;padding:12px 20px;background:#d4751c;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Get matched with an installer →</a></p>
-        <p style="font-size:14px;line-height:1.6;margin:0;"><a href="${installersUrl(sub)}" style="color:#08363f;text-decoration:underline;">Or browse ${escapeHtml(capitalize(sub.city || 'local'))} installers yourself →</a></p>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 6px;"><a href="${installersUrl(sub)}" style="color:#08363f;text-decoration:underline;">Or browse ${escapeHtml(capitalize(sub.city || 'local'))} installers yourself →</a></p>
+        <p style="font-size:14px;line-height:1.6;margin:0;"><a href="${stackingCalculatorUrl(sub)}" style="color:#08363f;text-decoration:underline;">See how these rebates stack with other upgrades →</a></p>
         ${learnMoreBlock(sub)}
         ${dripEmailFooter(sub)}
       </div>
@@ -1526,6 +1540,8 @@ async function sendLeadConfirmation(lead, installer, env) {
           </table>
         </div>
 
+        ${fullRebateBreakdownHtml(cityRebateLookup(lead))}
+
         <div style="background:white;border-left:4px solid #2d6a4f;padding:16px;margin:24px 0;border-radius:6px;">
           <p style="margin:0;font-size:15px;color:#08363f;"><strong>What happens next:</strong></p>
           <ol style="margin:8px 0 0;padding-left:20px;font-size:15px;color:#1a3d42;">
@@ -1535,12 +1551,10 @@ async function sendLeadConfirmation(lead, installer, env) {
           </ol>
         </div>
 
-        <h2 style="font-size:16px;color:#08363f;margin:24px 0 12px;"><strong>Learn more before they call</strong></h2>
-        <p style="font-size:15px;line-height:1.6;margin:0 0 12px;">
-          <a href="https://homepowerrebate.com/blog/heat-pumps-explained-bc" style="display:inline-block;margin-bottom:8px;padding:10px 16px;background:#d4751c;color:#fff;border-radius:6px;text-decoration:none;font-weight:600;">Heat Pumps Explained →</a><br>
-          <a href="https://homepowerrebate.com/blog/bc-approved-home-battery-rebate" style="display:inline-block;margin-bottom:8px;padding:10px 16px;background:#d4751c;color:#fff;border-radius:6px;text-decoration:none;font-weight:600;">Choosing a Battery →</a><br>
-          <a href="https://homepowerrebate.com/blog" style="display:inline-block;margin-bottom:8px;padding:10px 16px;background:#d4751c;color:#fff;border-radius:6px;text-decoration:none;font-weight:600;">All Guides & Articles →</a>
-        </p>
+        <p style="font-size:15px;line-height:1.6;margin:0 0 10px;"><a href="${installersUrl(lead)}" style="display:inline-block;padding:12px 20px;background:#08363f;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Browse ${escapeHtml(capitalize(lead.city))} installers yourself →</a></p>
+        <p style="font-size:15px;line-height:1.6;margin:0 0 12px;"><a href="${stackingCalculatorUrl(lead)}" style="color:#08363f;text-decoration:underline;">Or see how these rebates stack with other upgrades →</a></p>
+
+        ${learnMoreBlock(lead)}
 
         <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:16px;margin-top:20px;">
           <p style="margin:0 0 8px;font-size:14px;color:#166534;">
@@ -1553,7 +1567,7 @@ async function sendLeadConfirmation(lead, installer, env) {
 
         <p style="margin:24px 0 0;font-size:12px;color:#6b7d80;text-align:center;">
           HomePowerRebate &middot; Independent installer matching service<br>
-          Not affiliated with BC Hydro &middot; <a href="https://homepowerrebate.com" style="color:#6b7d80;">homepowerrebate.com</a>
+          <a href="https://homepowerrebate.com" style="color:#6b7d80;">homepowerrebate.com</a>
         </p>
       </div>
     </div>

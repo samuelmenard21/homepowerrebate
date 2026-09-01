@@ -679,6 +679,52 @@ function getQuotesUrl(sub) {
   return `https://homepowerrebate.com/get-quotes/?city=${encodeURIComponent(sub.city || '')}&province=${encodeURIComponent(String(sub.province || 'BC').toUpperCase())}`;
 }
 
+// Matches the id="{region}-{city-slug}" anchors on /installers/ (see
+// installers/index.html's directory-city sections) so the recap email can
+// deep-link straight to this homeowner's city instead of the top of a
+// 765+-installer page.
+function citySlug(s) {
+  return String(s || '').toLowerCase().replace(/[.]/g, '').trim().replace(/\s+/g, '-');
+}
+
+function installersUrl(sub) {
+  const region = citySlug(sub.province || 'BC');
+  const city = citySlug(sub.city);
+  return city ? `https://homepowerrebate.com/installers/#${region}-${city}` : 'https://homepowerrebate.com/installers/';
+}
+
+// Every published rebate category for this city (see the HPR 8-category
+// standard), used to give the recap email a full breakdown instead of just
+// the one program that happened to trigger the fallback.
+const REBATE_CATEGORY_LABELS = {
+  heat_pump: 'Heat pump',
+  solar: 'Solar panels',
+  battery: 'Battery storage',
+  water_heater: 'Heat pump water heater',
+  insulation: 'Insulation',
+  windows: 'Windows & doors',
+  ev_charger: 'EV charger',
+  thermostat: 'Smart thermostat'
+};
+
+function fullRebateBreakdownHtml(cityData) {
+  if (!cityData || !cityData.categories) return '';
+  const rows = Object.entries(REBATE_CATEGORY_LABELS)
+    .map(([key, label]) => {
+      const value = cityData.categories[key];
+      if (!value) return '';
+      return `<tr><td style="padding:7px 0;color:#1a3d42;border-top:1px solid #ece4d6;">${escapeHtml(label)}</td><td style="padding:7px 0;font-weight:600;color:#2d6a4f;text-align:right;border-top:1px solid #ece4d6;">${escapeHtml(value)}</td></tr>`;
+    })
+    .join('');
+  if (!rows) return '';
+  return `
+    <h2 style="font-size:16px;color:#08363f;margin:24px 0 10px;">Every rebate available in ${escapeHtml(capitalize(cityData.city))}</h2>
+    <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;margin-bottom:16px;">
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">${rows}</table>
+      <p style="margin:10px 0 0;font-size:12px;color:#6b7d80;">Ranges depend on your household income and which upgrades you combine — most homeowners qualify for several of these at once.</p>
+    </div>`;
+}
+
 async function sendResultsRecapEmail(sub, env) {
   if (!env.RESEND_API_KEY) return Promise.resolve();
   const ctx = provinceContext(sub);
@@ -698,6 +744,11 @@ async function sendResultsRecapEmail(sub, env) {
     ? `<tr><td style="padding:8px 0;color:#1a3d42;">Current heating:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(capitalize(rawHeating))}</td></tr>`
     : '';
 
+  // Show every published rebate category for this city, not just the one
+  // program that happened to trigger the estimate above — the point of this
+  // email is to be a genuinely useful reference, not a single number.
+  const rebateBreakdown = fullRebateBreakdownHtml(cityRebateLookup(sub));
+
   const html = `
     <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:560px;margin:0 auto;padding:20px;color:#0a2a2e;">
       <div style="background:#08363f;color:#faf7f2;padding:28px 24px;border-radius:14px 14px 0 0;">
@@ -712,8 +763,10 @@ async function sendResultsRecapEmail(sub, env) {
             ${heatingRow}
           </table>
         </div>
+        ${rebateBreakdown}
         <p style="font-size:15px;line-height:1.6;margin:0 0 12px;">Keep this for reference — in a couple days we'll send you what homeowners near you actually paid, so you can sanity-check any quote against real numbers, not just estimates.</p>
-        <p style="font-size:15px;line-height:1.6;margin:0;"><a href="${getQuotesUrl(sub)}" style="display:inline-block;padding:12px 20px;background:#d4751c;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Get matched with an installer →</a></p>
+        <p style="font-size:15px;line-height:1.6;margin:0 0 10px;"><a href="${getQuotesUrl(sub)}" style="display:inline-block;padding:12px 20px;background:#d4751c;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Get matched with an installer →</a></p>
+        <p style="font-size:14px;line-height:1.6;margin:0;"><a href="${installersUrl(sub)}" style="color:#08363f;text-decoration:underline;">Or browse ${escapeHtml(capitalize(sub.city || 'local'))} installers yourself →</a></p>
         ${learnMoreBlock(sub)}
         ${dripEmailFooter(sub)}
       </div>

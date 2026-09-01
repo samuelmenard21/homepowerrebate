@@ -320,6 +320,20 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 .status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
 .status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
 .status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
+
+/* Rebate Finder */
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 <script>
 // A/B Test: CTA Variant Assignment
@@ -989,6 +1003,102 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 
   </div>
 </section>
+
+<!-- Rebate Finder -->
+<section id="rebate-finder" class="section" style="background:var(--paper-warm);">
+  <div class="wrap">
+    <div class="eyebrow">Rebate finder</div>
+    <h2>Every Penticton rebate program, by category.</h2>
+    <p>These are the real, published rebate amounts from our Penticton category pages. Filter by category below.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows">Windows</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>BC Hydro whole-home heat pump</h4>
+        <div class="finder-amount">$4,000&ndash;$13,000</div>
+        <p>Depends on income and project scope; income-qualified households can reach up to $16,000 through CleanBC.</p>
+        <div class="finder-source">Source: /ca/bc/penticton/heat-pump &middot; BC Hydro / CleanBC</div>
+      </div>
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>FortisBC gas customer heat pump</h4>
+        <div class="finder-amount">Up to $12,000</div>
+        <p>Income-qualified customers can also get up to $3,000 on a gas ENERGY STAR water heater and up to $2,000 on insulation.</p>
+        <div class="finder-source">Source: /ca/bc/penticton/heat-pump &middot; FortisBC</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>BC Hydro self-generation solar rebate</h4>
+        <div class="finder-amount">Up to $5,000</div>
+        <p>Plus a 7% PST exemption on solar equipment, and 10&#162;/kWh for excess power exported to the grid.</p>
+        <div class="finder-source">Source: /ca/bc/penticton/solar &middot; BC Hydro</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery</div>
+        <h4>BC Hydro home battery rebate</h4>
+        <div class="finder-amount">$1,500&ndash;$5,000</div>
+        <p>Full $5,000 unlocks when you enroll in Peak Saver. Only BC Hydro-approved batteries qualify &mdash; Tesla Powerwall is not on the approved list and gets $0.</p>
+        <div class="finder-source">Source: /ca/bc/penticton/battery &middot; BC Hydro / Peak Saver</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Insulation rebate (attic, walls, crawlspace)</h4>
+        <div class="finder-amount">$1,000&ndash;$3,000</div>
+        <p>The "building envelope" tier, separate from the windows &amp; doors rebate.</p>
+        <div class="finder-source">Source: /ca/bc/penticton/insulation &middot; BetterHomes BC</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Heat-pump water heater rebate</h4>
+        <div class="finder-amount">$1,000&ndash;$3,000</div>
+        <p>Varies by unit size and whether you're on BC Hydro or FortisBC.</p>
+        <div class="finder-source">Source: /ca/bc/penticton/water-heater &middot; BetterHomes BC</div>
+      </div>
+      <div class="finder-card" data-cat="windows">
+        <div class="finder-cat">Windows &amp; doors</div>
+        <h4>ENERGY STAR windows &amp; exterior doors</h4>
+        <div class="finder-amount">Up to $2,000</div>
+        <p>Bundled with the insulation "building envelope" tier above.</p>
+        <div class="finder-source">Source: /ca/bc/penticton/windows &middot; BetterHomes BC</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>Home EV charger rebate</h4>
+        <div class="finder-amount">Up to $550</div>
+        <p>$350 for a home Level 2 charger, plus $200 for a power-management device that can avoid a panel upgrade.</p>
+        <div class="finder-source">Source: /ca/bc/penticton/ev-charger &middot; BC Hydro</div>
+      </div>
+    </div>
+    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">Because Penticton owns its electric utility, it also offers the Home Energy Loan Program (HELP) &mdash; low-cost financing repaid on your City utility bill, on top of these rebates.</p>
+  </div>
+</section>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('#rebate-finder .finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
 
 <section class="section">
   <div class="wrap">

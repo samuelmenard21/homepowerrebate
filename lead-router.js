@@ -274,8 +274,14 @@ async function handleLeadSubmit(request, env) {
     return jsonResponse({ error: 'Invalid email' }, 400);
   }
 
-  // Postal code format (Canadian)
-  if (!/^[A-Za-z][0-9][A-Za-z][ -]?[0-9][A-Za-z][0-9]$/.test(payload.postal)) {
+  // Postal code format — Canadian FSA pattern for CA provinces, US ZIP for
+  // US states now served by the site.
+  const US_STATES = new Set(['MA', 'NY', 'CA', 'PA', 'CO', 'VT']);
+  const isUsState = US_STATES.has(cleanString(payload.province || '').toUpperCase());
+  const postalValid = isUsState
+    ? /^\d{5}(-\d{4})?$/.test(payload.postal)
+    : /^[A-Za-z][0-9][A-Za-z][ -]?[0-9][A-Za-z][0-9]$/.test(payload.postal);
+  if (!postalValid) {
     return jsonResponse({ error: 'Invalid postal code' }, 400);
   }
 
@@ -489,6 +495,7 @@ async function handleNewsletter(request, env) {
     timestamp: new Date().toISOString(),
     email: cleanString(p.email),
     city: cleanString(p.city || ''),
+    province: cleanString(p.province || 'BC').toUpperCase(),
     heating: cleanString(p.heating || ''),
     income: cleanString(p.income || ''),
     estimate: cleanString(String(p.estimate || '')),

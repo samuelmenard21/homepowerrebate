@@ -170,6 +170,20 @@ h2.big { font-size: clamp(28px, 4.5vw, 40px); margin-bottom: 16px; }
 .faq-item h4 { font-family: 'Inter Tight', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 8px; }
 .faq-item p { color: var(--ink-soft); font-size: 15.5px; }
 
+/* Rebate Finder */
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
+
 @media (max-width: 720px) {
   .cities-grid { grid-template-columns: 1fr; }
   .hero { padding: 48px 0 40px; }
@@ -346,6 +360,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   <span class="toc-lbl">On this page:</span>
   <a href="#cities">18 BC cities</a>
   <a href="#programs">Power Smart 2.0</a>
+  <a href="#rebate-finder">Rebate finder</a>
   <a href="#faq">FAQ</a>
   <a href="#blog">From the blog</a>
 </nav>
@@ -514,6 +529,117 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     </div>
   </div>
 </section>
+
+<!-- Rebate Finder -->
+<section id="rebate-finder" style="background:var(--paper-warm);">
+  <div class="wrap">
+    <div class="eyebrow-dark">Rebate finder</div>
+    <h2 class="big">Every BC rebate program, by category.</h2>
+    <p class="lede">These are the real, published rebate amounts already shown on our city pages — sampled from Vancouver, whose figures apply province-wide unless a card says otherwise. Filter by category below.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows">Windows</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>BC Hydro whole-home heat pump</h4>
+        <div class="finder-amount">Up to $4,000</div>
+        <p>Whole-home (80%+ coverage); up to $1,500 for partial (50&ndash;79%). Income-qualified households can reach up to $13,000 through CleanBC. Same province-wide in all 18 cities.</p>
+        <div class="finder-source">Source: /ca/bc/vancouver &middot; BC Hydro</div>
+      </div>
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>FortisBC gas customer heat pump</h4>
+        <div class="finder-amount">Up to $12,000</div>
+        <p>Income-qualified customers can also get up to $3,000 on a gas ENERGY STAR water heater and up to $2,000 on insulation.</p>
+        <div class="finder-source">Source: /ca/bc/vancouver &middot; FortisBC</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>BC Hydro self-generation solar rebate</h4>
+        <div class="finder-amount">Up to $5,000</div>
+        <p>$1,000/kW, capped at 50% of system cost. Province-wide, same in every BC city.</p>
+        <div class="finder-source">Source: /ca/bc/vancouver &middot; BC Hydro</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery</div>
+        <h4>BC Hydro home battery rebate</h4>
+        <div class="finder-amount">Up to $5,000</div>
+        <p>Requires Peak Saver enrollment. Only BC Hydro-approved batteries qualify &mdash; Tesla Powerwall is not on the approved list and gets $0.</p>
+        <div class="finder-source">Source: /ca/bc/vancouver &middot; BC Hydro / Peak Saver</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery</div>
+        <h4>Peak Saver rewards (10-year)</h4>
+        <div class="finder-amount">~$3,000</div>
+        <p>Enrollment bonus plus seasonal incentives for letting BC Hydro trim usage at peak times &mdash; you keep control and can opt out.</p>
+        <div class="finder-source">Source: /ca/bc/ (province hub) &middot; BC Hydro / Peak Saver</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Insulation rebate (attic, walls, crawlspace)</h4>
+        <div class="finder-amount">Up to $5,500</div>
+        <p>Plus up to $2,000 for ENERGY STAR windows and exterior doors as a separate measure. The "building envelope" tier.</p>
+        <div class="finder-source">Source: /ca/bc/vancouver &middot; BetterHomes BC</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Heat-pump water heater rebate</h4>
+        <div class="finder-amount">$1,000&ndash;$3,000</div>
+        <p>Varies by unit size and whether you're on BC Hydro or FortisBC. Same range across BC cities.</p>
+        <div class="finder-source">Source: /ca/bc/vancouver &middot; BetterHomes BC</div>
+      </div>
+      <div class="finder-card" data-cat="windows">
+        <div class="finder-cat">Windows &amp; doors</div>
+        <h4>ENERGY STAR windows &amp; exterior doors</h4>
+        <div class="finder-amount">Up to $2,000</div>
+        <p>Bundled with the insulation "building envelope" tier above.</p>
+        <div class="finder-source">Source: /ca/bc/vancouver &middot; BetterHomes BC</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>Home EV charger rebate</h4>
+        <div class="finder-amount">Up to $550</div>
+        <p>$350 for a home Level 2 charger, plus $200 for a power-management device that can avoid a panel upgrade.</p>
+        <div class="finder-source">Source: /ca/bc/vancouver &middot; BC Hydro</div>
+      </div>
+      <div class="finder-card" data-cat="thermostat">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>Smart thermostat rebate</h4>
+        <div class="finder-amount">Free&ndash;$200</div>
+        <p>Free for electric-baseboard homes starting fall 2026 (a ~$350 value), or $10&ndash;$200 in-store rebates elsewhere. Peak Saver enrollment adds $100 + $50/season.</p>
+        <div class="finder-source">Source: /ca/bc/vancouver &middot; BC Hydro</div>
+      </div>
+    </div>
+    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">A handful of cities layer a local top-up on top of this stack &mdash; Vancouver, Coquitlam, Langley, Maple Ridge, and Richmond each add their own heat pump top-up; Nanaimo and Penticton have their own financing programs. See your <a href="#cities" style="color:var(--teal); font-weight:600;">city page</a> for the exact local breakdown.</p>
+  </div>
+</section>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('#rebate-finder .finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
 
 <!-- FAQ -->
 <section>

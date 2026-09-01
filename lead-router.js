@@ -599,7 +599,9 @@ const PROVINCE_CONTEXT = {
     programName: 'CleanBC',
     links: [
       { href: 'https://homepowerrebate.com/blog/heat-pump-rebate-guide-bc-2026/', label: 'Full BC Heat Pump Rebate Guide' },
-      { href: 'https://homepowerrebate.com/blog/heat-pumps-explained-bc/', label: 'Heat Pumps Explained' }
+      { href: 'https://homepowerrebate.com/blog/heat-pumps-explained-bc/', label: 'Heat Pumps Explained' },
+      { href: 'https://homepowerrebate.com/blog/water-heater-buying-guide-bc/', label: 'BC Water Heater Buying Guide' },
+      { href: 'https://homepowerrebate.com/blog/energy-saving-ideas-bc-home/', label: 'Energy Saving Ideas for Your BC Home' }
     ]
   },
   ON: {
@@ -612,19 +614,39 @@ const PROVINCE_CONTEXT = {
   AB: {
     programName: 'Alberta',
     links: [
-      { href: 'https://homepowerrebate.com/blog/alberta-16-applications-one-grant/', label: 'Alberta Rebate Programs Explained' }
+      { href: 'https://homepowerrebate.com/blog/alberta-16-applications-one-grant/', label: 'Alberta Rebate Programs Explained' },
+      { href: 'https://homepowerrebate.com/blog/water-heater-buying-guide-ab/', label: 'Alberta Water Heater Buying Guide' },
+      { href: 'https://homepowerrebate.com/blog/energy-saving-ideas-ab-home/', label: 'Energy Saving Ideas for Your Alberta Home' }
     ]
   },
   NS: {
     programName: 'Nova Scotia',
     links: [
-      { href: 'https://homepowerrebate.com/blog/nova-scotia-heat-pump-rebate-disappeared/', label: 'Nova Scotia Heat Pump Rebate Guide' }
+      { href: 'https://homepowerrebate.com/blog/nova-scotia-heat-pump-rebate-disappeared/', label: 'Nova Scotia Heat Pump Rebate Guide' },
+      { href: 'https://homepowerrebate.com/blog/water-heater-buying-guide-ns/', label: 'Nova Scotia Water Heater Buying Guide' },
+      { href: 'https://homepowerrebate.com/blog/energy-saving-ideas-ns-home/', label: 'Energy Saving Ideas for Your Nova Scotia Home' }
     ]
   },
   MA: {
     programName: 'Mass Save',
     links: [
-      { href: 'https://homepowerrebate.com/blog/mass-save-home-energy-assessment-explained/', label: 'Mass Save Home Energy Assessment Guide' }
+      { href: 'https://homepowerrebate.com/blog/mass-save-home-energy-assessment-explained/', label: 'Mass Save Home Energy Assessment Guide' },
+      { href: 'https://homepowerrebate.com/blog/water-heater-buying-guide-ma/', label: 'Massachusetts Water Heater Buying Guide' },
+      { href: 'https://homepowerrebate.com/blog/energy-saving-ideas-ma-home/', label: 'Energy Saving Ideas for Your Massachusetts Home' }
+    ]
+  },
+  CA: {
+    programName: 'California',
+    links: [
+      { href: 'https://homepowerrebate.com/blog/energy-saving-ideas-ca-home/', label: 'Energy Saving Ideas for Your California Home' },
+      { href: 'https://homepowerrebate.com/blog/water-heater-buying-guide-ca/', label: 'California Water Heater Buying Guide' }
+    ]
+  },
+  NY: {
+    programName: 'New York',
+    links: [
+      { href: 'https://homepowerrebate.com/blog/energy-saving-ideas-ny-home/', label: 'Energy Saving Ideas for Your New York Home' },
+      { href: 'https://homepowerrebate.com/blog/new-york-empower-plus-guide.html', label: 'New York EmPower+ Guide' }
     ]
   }
 };
@@ -1370,7 +1392,7 @@ async function sendInstallerEmail(lead, installer, env) {
 
         <h2 style="margin:24px 0 12px;font-size:18px;color:#08363f;">${lead.estimate_is_city_range ? `Published rebate range for ${escapeHtml(capitalize(lead.city))}` : 'Estimate shown to homeowner'}</h2>
         <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;">
-          <div style="font-size:14px;color:#1a3d42;">${lead.estimate_is_city_range ? `Typical ${escapeHtml(capitalize(lead.city))} rebate range (not this homeowner's calculated number):` : 'CleanBC rebates on selection:'}</div>
+          <div style="font-size:14px;color:#1a3d42;">${lead.estimate_is_city_range ? `Typical ${escapeHtml(capitalize(lead.city))} rebate range (not this homeowner's calculated number):` : `${escapeHtml(provinceContext(lead).programName)} rebates on selection:`}</div>
           <div style="font-size:28px;color:#2d6a4f;font-weight:600;margin:4px 0;">${escapeHtml(lead.estimated_value)}</div>
           ${lead.estimate_is_city_range ? '' : `<div style="font-size:14px;color:#1a3d42;">System cost: <strong>${escapeHtml(lead.total_cost)}</strong> &middot; After rebates: <strong>${escapeHtml(lead.net_cost)}</strong> &middot; 10-year savings: <strong>${escapeHtml(lead.ten_year_savings)}</strong></div>`}
         </div>
@@ -1513,7 +1535,15 @@ async function sendLeadConfirmation(lead, installer, env) {
 
   const installerLine = installer
     ? `<p style="font-size:16px;line-height:1.6;margin:0 0 16px;">We've matched you with <strong>${installer.name}</strong>, and they'll reach out within 1 business day at <strong>${lead.phone}</strong> or <strong>${lead.email}</strong>.</p>`
-    : `<p style="font-size:16px;line-height:1.6;margin:0 0 16px;background:#fef3e6;padding:16px;border-radius:8px;border-left:4px solid #e8b87a;"><strong>Note:</strong> We're still building our installer network in ${lead.city}. Your information is safe with us, and we'll route you to a qualified installer as soon as we expand to your area.</p>`;
+    : '';
+
+  const nextSteps = installer
+    ? `<li>Installer reviews your assessment (today)</li>
+       <li>Calls or emails you with personalized quotes (within 1 business day)</li>
+       <li>You compare and decide (no pressure — we don't get paid if you don't)</li>`
+    : `<li>Browse verified ${escapeHtml(capitalize(lead.city))} installers below</li>
+       <li>Reach out directly for quotes — no waiting on a match</li>
+       <li>Compare and decide (no pressure — we don't get paid if you don't)</li>`;
 
   const html = `
     <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:560px;margin:0 auto;padding:20px;color:#0a2a2e;">
@@ -1532,7 +1562,7 @@ async function sendLeadConfirmation(lead, installer, env) {
         <h2 style="font-size:18px;color:#08363f;margin:24px 0 12px;"><strong>Your assessment summary</strong></h2>
         <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;margin-bottom:16px;">
           <table style="width:100%;border-collapse:collapse;font-size:14px;">
-            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:45%;">${lead.estimate_is_city_range ? `Typical rebate range in ${escapeHtml(capitalize(lead.city))}` : 'CleanBC rebates on selection'}:</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${escapeHtml(lead.estimated_value)}</td></tr>
+            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:45%;">${lead.estimate_is_city_range ? `Typical rebate range in ${escapeHtml(capitalize(lead.city))}` : `${escapeHtml(provinceContext(lead).programName)} rebates on selection`}:</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${escapeHtml(lead.estimated_value)}</td></tr>
             ${lead.estimate_is_city_range ? '' : `<tr><td style="padding:8px 0;color:#1a3d42;">System cost / after rebates:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(lead.total_cost)} / ${escapeHtml(lead.net_cost)}</td></tr>`}
             <tr><td style="padding:8px 0;color:#1a3d42;">Upgrades selected:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(lead.upgrades || 'none specified')}</td></tr>
             ${lead.current_heat && lead.current_heat.toLowerCase() !== 'not specified' ? `<tr><td style="padding:8px 0;color:#1a3d42;">Current heating:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(capitalize(String(lead.current_heat)))}</td></tr>` : ''}
@@ -1545,9 +1575,7 @@ async function sendLeadConfirmation(lead, installer, env) {
         <div style="background:white;border-left:4px solid #2d6a4f;padding:16px;margin:24px 0;border-radius:6px;">
           <p style="margin:0;font-size:15px;color:#08363f;"><strong>What happens next:</strong></p>
           <ol style="margin:8px 0 0;padding-left:20px;font-size:15px;color:#1a3d42;">
-            <li>Installer reviews your assessment (today)</li>
-            <li>Calls or emails you with personalized quotes (within 1 business day)</li>
-            <li>You compare and decide (no pressure — we don't get paid if you don't)</li>
+            ${nextSteps}
           </ol>
         </div>
 
@@ -1558,11 +1586,11 @@ async function sendLeadConfirmation(lead, installer, env) {
 
         <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:16px;margin-top:20px;">
           <p style="margin:0 0 8px;font-size:14px;color:#166534;">
-            <strong>Questions before they call?</strong> Just reply to this email. We read everything.
+            <strong>Questions${installer ? ' before they call' : ''}?</strong> Just reply to this email. We read everything.
           </p>
-          <p style="margin:0;font-size:14px;color:#166534;">
-            <strong>Watch your email and phone</strong> for contact from <strong>${installer ? installer.name : 'your matched installer'}</strong>. Add leads@homepowerrebate.com to your contacts so we don't land in spam.
-          </p>
+          ${installer
+            ? `<p style="margin:0;font-size:14px;color:#166534;"><strong>Watch your email and phone</strong> for contact from <strong>${installer.name}</strong>. Add leads@homepowerrebate.com to your contacts so we don't land in spam.</p>`
+            : ''}
         </div>
 
         <p style="margin:24px 0 0;font-size:12px;color:#6b7d80;text-align:center;">
@@ -1576,7 +1604,9 @@ async function sendLeadConfirmation(lead, installer, env) {
   return resendEmail(env.RESEND_API_KEY, {
     from: 'HomePowerRebate Leads <leads@homepowerrebate.com>',
     to: lead.email,
-    subject: `Your HomePowerRebate assessment is submitted — ${capitalize(lead.city)} installer standing by`,
+    subject: installer
+      ? `Your HomePowerRebate assessment is submitted — ${capitalize(lead.city)} installer standing by`
+      : `Your HomePowerRebate assessment is submitted — ${capitalize(lead.city)} rebates inside`,
     html
   });
 }

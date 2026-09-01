@@ -126,6 +126,19 @@ strong { color: var(--ink); }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 .src { font-size: 12px; color: var(--sage); }
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card .finder-amount.financing { color: var(--amber); font-size: 17px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -225,6 +238,57 @@ strong { color: var(--ink); }
       </div>
     </div>
 
+    <h2 id="rebate-finder">Rebate finder, by category</h2>
+    <p>Filter Colorado's real programs by category. Most utility-specific amounts below are Xcel Energy's, the state's dominant utility &mdash; Colorado Springs Utilities and Fort Collins Utilities run their own separate rebate menus, so check your city page for the exact local number.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery storage</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>Xcel Energy heat pump rebate + state tax credit</h4>
+        <div class="finder-amount">Up to $9,000</div>
+        <p>Xcel Energy pays $2,250 per ton of heating capacity for a qualifying cold-climate heat pump (up to $9,000 on a 4-ton system), plus Colorado's separate $1,000 state heat pump tax credit. Front Range homeowners can also stack DRCOG's Power Ahead Colorado rebate (up to $1,500).</p>
+        <div class="finder-source">Source: /us/co/denver &middot; Xcel Energy / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>Xcel Energy Solar Rewards</h4>
+        <div class="finder-amount">$300/kW, up to $1,500</div>
+        <p>Xcel Energy's Solar Rewards program pays $300 per kW of installed solar capacity, capped at $1,500 per home. The federal 30% residential solar tax credit expired for installations after December 31, 2025.</p>
+        <div class="finder-source">Source: /us/co/denver &middot; Xcel Energy</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery storage</div>
+        <h4>Xcel Renewable Battery Connect + state credit</h4>
+        <div class="finder-amount">Up to $5,000 + 10% state credit</div>
+        <p>Xcel Energy pays $250 per kW (up to $5,000) plus $100 per year, in exchange for letting Xcel dispatch up to 60% of your stored energy during peak demand. Colorado's 10% Innovative Energy Storage state tax credit stacks on top statewide, regardless of utility.</p>
+        <div class="finder-source">Source: /us/co/denver &middot; Xcel Energy / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Xcel Energy heat pump water heater rebate</h4>
+        <div class="finder-amount">$2,250 flat</div>
+        <p>Xcel Energy pays a flat $2,250 rebate for a qualifying heat pump water heater, with no income qualification required for the standard rebate.</p>
+        <div class="finder-source">Source: /us/co/denver &middot; Xcel Energy</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Xcel Energy insulation + multi-measure bonus</h4>
+        <div class="finder-amount">Up to $600 + 25% bonus</div>
+        <p>Xcel Energy pays up to $600 for qualifying attic and wall insulation, plus a 25% bonus across all standard efficiency rebates when you install three or more qualifying measures within two years of enrolling.</p>
+        <div class="finder-source">Source: /us/co/denver &middot; Xcel Energy</div>
+      </div>
+    </div>
+    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">Windows &amp; doors has no confirmed dedicated Colorado rebate as of 2026, and the federal 25C credit that used to cover it expired for installs after December 31, 2025. Amounts shown are Xcel Energy's &mdash; Colorado Springs Utilities and Fort Collins Utilities run separate programs at different rates.</p>
+
     <div class="callout">
       <strong>Get an exact number:</strong> Fill out our free assessment tool to see your Colorado-specific rebate estimate.
       <a href="/retrofit-assessment/" class="cta" style="display:inline-block;">Run your free assessment &rarr;</a>
@@ -261,6 +325,22 @@ strong { color: var(--ink); }
 
   </div>
 </article>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('.finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
 
 <section style="padding:0 28px;">
   <div class="wrap" style="max-width:1000px;margin:0 auto;">

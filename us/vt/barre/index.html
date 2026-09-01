@@ -136,6 +136,20 @@ strong { color: var(--ink); }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 .src { font-size: 12px; color: var(--sage); }
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card .finder-amount.financing { color: var(--amber); font-size: 17px; }
+.finder-card .finder-amount.free { color: var(--green-money); }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -239,6 +253,74 @@ strong { color: var(--ink); }
       </div>
     </div>
 
+    <h2 id="rebate-finder">Rebate finder, by category</h2>
+    <p>Filter the real programs above by category &mdash; the numbers here are pulled directly from the breakdown on this page.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery storage</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>at Pump</h4>
+        <div class="finder-amount">Up to $2,200</div>
+        <p><a href="/us/vt/barre/heat-pump/">View Heat Pump rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/vt/barre &middot; Efficiency Vermont</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>lar</h4>
+        <div class="finder-amount">No flat cash rebate — net metering + tax breaks</div>
+        <p><a href="/us/vt/barre/solar/">View Solar rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/vt/barre &middot; Efficiency Vermont</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery storage</div>
+        <h4>ttery Storage</h4>
+        <div class="finder-amount">$850–$950 per kW</div>
+        <p><a href="/us/vt/barre/battery/">View Battery Storage rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/vt/barre &middot; Efficiency Vermont</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>sulation</h4>
+        <div class="finder-amount">Up to $7,000 (income-qualified) / up to $3,000 (general)</div>
+        <p><a href="/us/vt/barre/insulation/">View Insulation rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/vt/barre &middot; Efficiency Vermont</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>ter Heater</h4>
+        <div class="finder-amount">Up to $1,000</div>
+        <p><a href="/us/vt/barre/water-heater/">View Water Heater rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/vt/barre &middot; Efficiency Vermont</div>
+      </div>
+      <div class="finder-card" data-cat="thermostat">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>art Thermostat</h4>
+        <div class="finder-amount">Up to $100</div>
+        <p><a href="/us/vt/barre/smart-thermostats/">View Smart Thermostat rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/vt/barre &middot; Efficiency Vermont</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>Charger</h4>
+        <div class="finder-amount">Up to $500 + free charger option</div>
+        <p><a href="/us/vt/barre/ev-charger/">View EV Charger rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/vt/barre &middot; Efficiency Vermont</div>
+      </div>
+    </div>
+    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">ndows & Doors have no confirmed dedicated rebate as of 2026 and are not shown in the finder above.</p>
+
+
     <div class="callout">
       <strong>Get an exact number:</strong> Fill out our free assessment tool to see your Barre-specific rebate estimate.
       <a href="/retrofit-assessment/?city=barre" class="cta" style="display:inline-block;">Run your free assessment &rarr;</a>
@@ -266,6 +348,23 @@ strong { color: var(--ink); }
 
   </div>
 </article>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('.finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
+
 
 <section class="section installers-injected-section" style="margin: 60px 0; padding: 40px 28px; max-width: 1100px; margin-left: auto; margin-right: auto; border-top: 1px solid var(--rule);"><div class="wrap">
   <h2>Heat pump installers in Barre</h2>

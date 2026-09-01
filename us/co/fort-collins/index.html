@@ -138,6 +138,20 @@ strong { color: var(--ink); }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 .src { font-size: 12px; color: var(--sage); }
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card .finder-amount.financing { color: var(--amber); font-size: 17px; }
+.finder-card .finder-amount.free { color: var(--green-money); }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -242,6 +256,81 @@ strong { color: var(--ink); }
       </div>
     </div>
 
+    <h2 id="rebate-finder">Rebate finder, by category</h2>
+    <p>Filter the real programs above by category &mdash; the numbers here are pulled directly from the breakdown on this page.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery storage</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows">Windows & doors</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>Heat Pump</h4>
+        <div class="finder-amount">Retrofit rebate + $2,000 bonus</div>
+        <p>Fort Collins Utilities' Efficiency Works Retrofit Rebate program pays for qualifying heat pumps and, when a heat pump and an insulation/envelope upgrade are both completed within six months of each other, adds a $2,000 bundling bonus (heat pump water heaters excluded from the bonus). Combined with Colorado's $1,000 state heat pump tax credit. <a href="https://efficiencyworks.org/for-your-home-rebates-and-incentives/" target="_blank" rel="noopener">Efficiency Works &mdash; Fort Collins Utilities rebates &rarr;</a> <a href="https://tax.colorado.gov/DR1322" target="_blank" rel="noopener">Colorado Dept. of Revenue &mdash; DR 1322 Heat Pump Tax Credit &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/fort-collins &middot; Fort Collins Utilities / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Insulation &amp; Air Sealing</h4>
+        <div class="finder-amount">Retrofit rebate + $2,000 bonus</div>
+        <p>Efficiency Works' Retrofit Rebate program covers building insulation, air/duct sealing, windows, and doors. Pair it with a qualifying heat pump within six months for the $2,000 bundling bonus. Rental properties served by Fort Collins Utilities get a doubled rebate on any qualifying measure. <a href="https://efficiencyworks.org/for-your-home-rebates-and-incentives/" target="_blank" rel="noopener">Efficiency Works &mdash; Fort Collins Utilities rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/fort-collins &middot; Fort Collins Utilities / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>Solar</h4>
+        <div class="finder-amount">Confirm status</div>
+        <p>Fort Collins Utilities runs its own net-metering and interconnection rules rather than Xcel's Solar Rewards program. Ask about a current solar rebate or net-metering credit directly &mdash; the federal 30% solar tax credit (Section 25D) expired for installations after December 31, 2025, under the One Big Beautiful Bill Act, so no federal credit applies to new 2026 installs. <a href="https://www.energystar.gov/about/federal-tax-credits" target="_blank" rel="noopener">ENERGY STAR &mdash; federal tax credit status &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/fort-collins &middot; Fort Collins Utilities / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery storage</div>
+        <h4>Battery Storage</h4>
+        <div class="finder-amount">State credit only</div>
+        <p>No confirmed municipal-utility battery rebate as of this writing. Colorado's Innovative Energy Storage Tax Credit still applies statewide: a 10% state income tax credit on qualifying battery storage systems, regardless of utility. <a href="https://tax.colorado.gov/DR1322" target="_blank" rel="noopener">Colorado Dept. of Revenue &mdash; DR 1322 Heat Pump Tax Credit &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/fort-collins &middot; Fort Collins Utilities / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Water Heater</h4>
+        <div class="finder-amount">Confirm status</div>
+        <p>Efficiency Works' Retrofit Rebate program includes water heaters (the $2,000 bundling bonus does not apply to heat pump water heaters specifically). Confirm the current per-unit amount at efficiencyworks.org. <a href="https://efficiencyworks.org/for-your-home-rebates-and-incentives/" target="_blank" rel="noopener">Efficiency Works &mdash; Fort Collins Utilities rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/fort-collins &middot; Fort Collins Utilities / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="thermostat">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>Smart Thermostat</h4>
+        <div class="finder-amount">Confirm status</div>
+        <p>Fort Collins Utilities does not publish a standalone smart thermostat rebate as clearly as Xcel Energy's front-range program. Ask about smart thermostat offers when you enroll in a home energy assessment. <a href="https://efficiencyworks.org/for-your-home-rebates-and-incentives/" target="_blank" rel="noopener">Efficiency Works &mdash; Fort Collins Utilities rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/fort-collins &middot; Fort Collins Utilities / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>EV Charger</h4>
+        <div class="finder-amount">Confirm status</div>
+        <p>No confirmed Fort Collins Utilities home EV charger rebate as of this writing. Check with your utility directly, and ask your electrician about any current state or federal incentives for charger hardware and installation.</p>
+        <div class="finder-source">Source: /us/co/fort-collins &middot; Fort Collins Utilities / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="windows">
+        <div class="finder-cat">Windows & doors</div>
+        <h4>Windows &amp; Doors</h4>
+        <div class="finder-amount">Retrofit rebate</div>
+        <p>Efficiency Works' Retrofit Rebate program is the one Colorado city program in our coverage area that pays for windows and doors directly, alongside insulation and HVAC. The federal 25C tax credit for windows/doors expired after December 31, 2025 and does not apply to 2026 installs. <a href="https://efficiencyworks.org/for-your-home-rebates-and-incentives/" target="_blank" rel="noopener">Efficiency Works &mdash; Fort Collins Utilities rebates &rarr;</a> <a href="https://www.energystar.gov/about/federal-tax-credits" target="_blank" rel="noopener">ENERGY STAR &mdash; federal tax credit status &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/fort-collins &middot; Fort Collins Utilities / Colorado Energy Office</div>
+      </div>
+    </div>
+
+
     <h2>How to claim it</h2>
     <ol>
       <li>Confirm the current Fort Collins Utilities rebate amount and that funding is still open</li>
@@ -284,6 +373,23 @@ strong { color: var(--ink); }
 
   </div>
 </article>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('.finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
+
 
 <section class="section installers-injected-section" style="margin: 60px 0; padding: 40px 28px; max-width: 1100px; margin-left: auto; margin-right: auto; border-top: 1px solid var(--rule);"><div class="wrap">
   <h2>Heat pump installers in Fort Collins</h2>

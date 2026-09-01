@@ -135,6 +135,20 @@ strong { color: var(--ink); }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 .src { font-size: 12px; color: var(--sage); }
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card .finder-amount.financing { color: var(--amber); font-size: 17px; }
+.finder-card .finder-amount.free { color: var(--green-money); }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -239,6 +253,73 @@ strong { color: var(--ink); }
       </div>
     </div>
 
+    <h2 id="rebate-finder">Rebate finder, by category</h2>
+    <p>Filter the real programs above by category &mdash; the numbers here are pulled directly from the breakdown on this page.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery storage</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="windows">Windows & doors</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>Heat Pump</h4>
+        <div class="finder-amount">$200 (Phase IV, closed)</div>
+        <p>Duquesne Light's Phase IV heat pump rebate closed May 31, 2026. Phase V amounts not yet published — <a href="https://www.dlcwattchoices.com/residentialrebates/" target="_blank" rel="noopener">check Watt Choices for updates &rarr;</a></p>
+        <div class="finder-source">Source: /us/pa/pittsburgh &middot; Duquesne Light / PA utility programs</div>
+      </div>
+      <div class="finder-card" data-cat="thermostat">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>Smart Thermostat</h4>
+        <div class="finder-amount">Confirm status</div>
+        <p>Duquesne Light's smart thermostat rebate is being refreshed for Phase V — contact Duquesne Light or check Watt Choices before assuming availability.</p>
+        <div class="finder-source">Source: /us/pa/pittsburgh &middot; Duquesne Light / PA utility programs</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>Solar (PA Sunshine)</h4>
+        <div class="finder-amount">Up to 35% / $17,500</div>
+        <p>Statewide PA Sunshine Solar Program rebate, first-come first-served, stacks with the 30% federal solar tax credit. <a href="https://files.dep.state.pa.us/energy/energy%20independence/lib/energindependent/solar/7000-bk-dep4245_guidelines.pdf" target="_blank" rel="noopener">PA DEP guidelines &rarr;</a></p>
+        <div class="finder-source">Source: /us/pa/pittsburgh &middot; Duquesne Light / PA utility programs</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery storage</div>
+        <h4>Battery Storage</h4>
+        <div class="finder-amount">Federal credit only</div>
+        <p>No Duquesne Light-specific battery rebate confirmed as of this writing; the 30% federal Section 25D credit applies to home batteries.</p>
+        <div class="finder-source">Source: /us/pa/pittsburgh &middot; Duquesne Light / PA utility programs</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Water Heater</h4>
+        <div class="finder-amount">Confirm status</div>
+        <p>Heat pump water heaters may be covered once Phase V rebate amounts are published — confirm with Duquesne Light.</p>
+        <div class="finder-source">Source: /us/pa/pittsburgh &middot; Duquesne Light / PA utility programs</div>
+      </div>
+      <div class="finder-card" data-cat="windows">
+        <div class="finder-cat">Windows & doors</div>
+        <h4>Windows &amp; Doors</h4>
+        <div class="finder-amount">Federal credit only</div>
+        <p>No confirmed Duquesne Light window/door rebate; federal 25C credit covers up to $1,200/year.</p>
+        <div class="finder-source">Source: /us/pa/pittsburgh &middot; Duquesne Light / PA utility programs</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>EV Charger</h4>
+        <div class="finder-amount">Confirm status</div>
+        <p>Check Duquesne Light's current EV charger program status directly.</p>
+        <div class="finder-source">Source: /us/pa/pittsburgh &middot; Duquesne Light / PA utility programs</div>
+      </div>
+    </div>
+
+
     <h2>How to claim it</h2>
     <ol>
       <li>Confirm your Duquesne Light Act 129 Phase V rebate is open (call or check their site — Phase IV closed May 31, 2026)</li>
@@ -283,6 +364,23 @@ strong { color: var(--ink); }
 
   </div>
 </article>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('.finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
+
 
 <section class="section installers-injected-section" style="margin: 60px 0; padding: 40px 28px; max-width: 1100px; margin-left: auto; margin-right: auto; border-top: 1px solid var(--rule);"><div class="wrap">
   <h2>Heat pump installers in Pittsburgh</h2>

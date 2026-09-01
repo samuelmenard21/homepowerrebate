@@ -96,6 +96,19 @@ footer a { color: rgba(250,247,242,0.75); text-decoration: none; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 #city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--teal); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card .finder-amount.financing { color: var(--amber); font-size: 17px; }
+.finder-card p { font-size: 13.5px; margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 <script type="application/ld+json">
 {
@@ -214,6 +227,69 @@ footer a { color: rgba(250,247,242,0.75); text-decoration: none; }
     <p><strong>Federal 25C / 25D tax credits</strong> &mdash; 30% of cost up to $2,000/year for heat pumps and heat pump water heaters, up to $1,200/year for insulation/windows/doors, and 30% uncapped for solar and battery storage (Section 25D), claimed on your federal tax return. Confirm current eligibility windows before purchasing, as federal tax credit rules have changed multiple times in recent years. <span class="src"><a href="https://www.energystar.gov/about/federal-tax-credits" target="_blank" rel="noopener">ENERGY STAR federal tax credits &rarr;</a></span></p>
   </div>
 </section>
+
+<section class="section">
+  <div class="wrap">
+    <h2 id="rebate-finder">Rebate finder, by category</h2>
+    <p>Pennsylvania rebates run through your electric utility's Act 129 program, so the actual dollar amount depends on where you live. Filter by category below &mdash; each card shows a real confirmed figure from one of our covered PA cities as an example of what's live.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation financing</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>PECO Act 129 heat pump rebate</h4>
+        <div class="finder-amount">Up to $1,950</div>
+        <p>PECO's Act 129 rebate for Philadelphia, the highest confirmed PA utility amount we've found &mdash; the higher figure requires stacking with income-qualified (EAP) offers. PPL Electric (Allentown) pays up to $450, and Penelec (Erie) up to $500. Confirm your own utility's current Phase V number before assuming it matches.</p>
+        <div class="finder-source">Source: /us/pa/philadelphia &middot; PECO Act 129</div>
+      </div>
+      <div class="finder-card" data-cat="thermostat">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>PPL Electric smart thermostat rebate</h4>
+        <div class="finder-amount">$50&ndash;$100</div>
+        <p>PPL Electric (Allentown) pays $50 for a self-installed ENERGY STAR smart thermostat, $100 if professionally installed. PECO (Philadelphia) and Penelec (Erie) both offer a flat $50 instant rebate at participating retailers, no application required.</p>
+        <div class="finder-source">Source: /us/pa/allentown &middot; PPL Electric Act 129</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>PPL Electric heat pump water heater rebate</h4>
+        <div class="finder-amount">Up to $400</div>
+        <p>PPL Electric's Act 129 rebate for a qualifying heat pump water heater. PECO and Duquesne Light (Pittsburgh) also cover water heaters under their broader Act 129 programs, but haven't published a confirmed Phase V dollar figure as of this writing &mdash; call ahead.</p>
+        <div class="finder-source">Source: /us/pa/allentown &middot; PPL Electric Act 129</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Keystone HELP Home Energy Loans</h4>
+        <div class="finder-amount financing">Low fixed-rate financing</div>
+        <p>Financing, not a rebate: PHFA-affiliated lenders offer low fixed-rate loans through Keystone HELP to cover insulation, heat pumps, and other efficiency upgrades after your utility rebate. Statewide, not tied to any one utility.</p>
+        <div class="finder-source">Source: /us/pa &middot; PA DEP / Keystone HELP</div>
+      </div>
+    </div>
+    <p style="margin-top:24px; font-size:13px; color:var(--sage);">Solar has no active statewide PA rebate as of 2026 &mdash; PA Sunshine stopped accepting new applications years ago and hasn't reopened. Battery storage relies on the federal 30% Section 25D credit only; no PA utility has a confirmed battery-specific rebate.</p>
+  </div>
+</section>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('.finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
 
 <section class="faq-section">
   <div class="wrap">

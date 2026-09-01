@@ -123,6 +123,19 @@ strong { color: var(--ink); }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 .src { font-size: 12px; color: var(--sage); }
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card .finder-amount.financing { color: var(--amber); font-size: 17px; }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -222,6 +235,41 @@ strong { color: var(--ink); }
       </div>
     </div>
 
+    <h2 id="rebate-finder">Rebate finder, by category</h2>
+    <p>Filter Vermont's statewide programs by category. Almost everything below runs through Efficiency Vermont regardless of which city you're in &mdash; Burlington is the exception, with its own municipal program through BED.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>Efficiency Vermont heat pump rebate</h4>
+        <div class="finder-amount">Up to $2,200</div>
+        <p>Efficiency Vermont pays up to $2,200 for a ducted cold-climate heat pump ($475 ductless), plus a $200&ndash;$2,200 income-eligible bonus. Burlington runs its own separate program through BED instead &mdash; check the Burlington page for that amount.</p>
+        <div class="finder-source">Source: /us/vt &middot; Efficiency Vermont</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Heat pump water heater rebate</h4>
+        <div class="finder-amount">Up to $1,000</div>
+        <p>Efficiency Vermont pays $600 standard, up to $1,000 for income-eligible households, statewide including Burlington.</p>
+        <div class="finder-source">Source: /us/vt &middot; Efficiency Vermont</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Home Performance with ENERGY STAR</h4>
+        <div class="finder-amount">Up to $7,000 (income-qualified)</div>
+        <p>Pays 75% of cost up to $3,000 for general households; income-qualified households get up to 90% back, moving to a $7,000 flat cap July 1, 2026. Very-low-income households may qualify for a fully free retrofit through the state Weatherization Assistance Program.</p>
+        <div class="finder-source">Source: /us/vt &middot; Efficiency Vermont</div>
+      </div>
+    </div>
+    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">Solar and EV charger amounts vary by utility &mdash; Green Mountain Power runs its own separate battery and EV programs outside Burlington. See your city page for the exact local number. The federal 25C/25D tax credits expired for installs after December 31, 2025.</p>
+
     <div class="callout">
       <strong>Get an exact number:</strong> Fill out our free assessment tool to see your Vermont-specific rebate estimate.
       <a href="/retrofit-assessment/" class="cta" style="display:inline-block;">Run your free assessment &rarr;</a>
@@ -255,6 +303,22 @@ strong { color: var(--ink); }
 
   </div>
 </article>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('.finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
 
 <section style="padding:0 28px;">
   <div class="wrap" style="max-width:1000px;margin:0 auto;">

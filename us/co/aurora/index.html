@@ -138,6 +138,20 @@ strong { color: var(--ink); }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 .src { font-size: 12px; color: var(--sage); }
+.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.finder-card h4 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.finder-card .finder-amount { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
+.finder-card .finder-amount.financing { color: var(--amber); font-size: 17px; }
+.finder-card .finder-amount.free { color: var(--green-money); }
+.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.finder-card.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -243,6 +257,73 @@ strong { color: var(--ink); }
       </div>
     </div>
 
+    <h2 id="rebate-finder">Rebate finder, by category</h2>
+    <p>Filter the real programs above by category &mdash; the numbers here are pulled directly from the breakdown on this page.</p>
+
+    <div class="finder-filters" role="group" aria-label="Filter rebates by category">
+      <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
+      <button type="button" class="finder-filter-btn" data-filter="heat-pump">Heat pump</button>
+      <button type="button" class="finder-filter-btn" data-filter="insulation">Insulation</button>
+      <button type="button" class="finder-filter-btn" data-filter="solar">Solar</button>
+      <button type="button" class="finder-filter-btn" data-filter="battery">Battery storage</button>
+      <button type="button" class="finder-filter-btn" data-filter="water-heater">Water heater</button>
+      <button type="button" class="finder-filter-btn" data-filter="thermostat">Smart thermostat</button>
+      <button type="button" class="finder-filter-btn" data-filter="ev-charger">EV charger</button>
+    </div>
+
+    <div class="finder-grid" id="finder-grid">
+      <div class="finder-card" data-cat="heat-pump">
+        <div class="finder-cat">Heat pump</div>
+        <h4>Heat Pump</h4>
+        <div class="finder-amount">Up to $9,000</div>
+        <p>Xcel Energy pays $2,250 per ton of heating capacity for a qualifying cold-climate heat pump (a 3-ton system nets $6,750; a 4-ton system nets $9,000), or $900 per ton for a standard-efficiency heat pump. No income qualification is required. Add Colorado's $1,000 state heat pump tax credit (claimed by your contractor, once per address). Front Range homeowners can also stack DRCOG's Power Ahead Colorado rebate (up to $1,500, no income limit, launched June 29, 2026). <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a> <a href="https://tax.colorado.gov/DR1322" target="_blank" rel="noopener">Colorado Dept. of Revenue &mdash; DR 1322 Heat Pump Tax Credit &rarr;</a> <a href="https://unicolorado.com/rebates/hear-rebates/" target="_blank" rel="noopener">UniColorado &mdash; DRCOG Power Ahead Colorado heat pump rebate &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/aurora &middot; Xcel Energy / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="insulation">
+        <div class="finder-cat">Insulation</div>
+        <h4>Insulation &amp; Air Sealing</h4>
+        <div class="finder-amount">Up to $600 + 25% bonus</div>
+        <p>Xcel Energy pays up to $600 for qualifying attic and wall insulation, plus a 25% bonus across all standard efficiency rebates when you install three or more qualifying measures within two years of enrolling. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/aurora &middot; Xcel Energy / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="solar">
+        <div class="finder-cat">Solar</div>
+        <h4>Solar</h4>
+        <div class="finder-amount">$300/kW, up to $1,500</div>
+        <p>Xcel Energy's Solar Rewards program pays $300 per kW of installed solar capacity, capped at $1,500 per home. Note: the federal 30% residential solar tax credit (Section 25D) expired for installations after December 31, 2025 under the One Big Beautiful Bill Act &mdash; it no longer applies to systems installed in 2026. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a> <a href="https://www.energystar.gov/about/federal-tax-credits" target="_blank" rel="noopener">ENERGY STAR &mdash; federal tax credit status &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/aurora &middot; Xcel Energy / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="battery">
+        <div class="finder-cat">Battery storage</div>
+        <h4>Battery Storage</h4>
+        <div class="finder-amount">Up to $5,000 + 10% state credit</div>
+        <p>Xcel Energy's Renewable Battery Connect program pays an upfront incentive of $250 per kW (up to $5,000 per application) plus $100 per year, in exchange for letting Xcel dispatch up to 60% of your stored battery energy up to 60 times a year during peak demand. Eligible equipment includes Tesla Powerwall and Enphase battery/inverter combos. Funding is limited and has historically filled quickly. Colorado's 10% Innovative Energy Storage state tax credit stacks on top. <a href="https://www.namastesolar.com/blog/xcel-battery-rebate/" target="_blank" rel="noopener">Namasté Solar &mdash; Xcel Renewable Battery Connect guide &rarr;</a> <a href="https://tax.colorado.gov/DR1322" target="_blank" rel="noopener">Colorado Dept. of Revenue &mdash; DR 1322 Heat Pump Tax Credit &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/aurora &middot; Xcel Energy / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="water-heater">
+        <div class="finder-cat">Water heater</div>
+        <h4>Water Heater</h4>
+        <div class="finder-amount">$2,250 flat</div>
+        <p>Xcel Energy pays a flat $2,250 rebate for a qualifying heat pump water heater, with no income qualification required for the standard rebate. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/aurora &middot; Xcel Energy / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="thermostat">
+        <div class="finder-cat">Smart thermostat</div>
+        <h4>Smart Thermostat</h4>
+        <div class="finder-amount">$50 instant</div>
+        <p>Xcel Energy offers up to $50 for a qualifying ENERGY STAR smart thermostat, one rebate per account holder, at participating retailers or by mail-in application. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/aurora &middot; Xcel Energy / Colorado Energy Office</div>
+      </div>
+      <div class="finder-card" data-cat="ev-charger">
+        <div class="finder-cat">EV charger</div>
+        <h4>EV Charger</h4>
+        <div class="finder-amount">Up to $1,300</div>
+        <p>Xcel Energy covers up to $1,300 of home wiring costs for a Level 2 EV charger, rising to $2,300 for income-qualified customers or homes in a designated Disproportionately Impacted Community. Enrollment in a Time-of-Use rate plan or Xcel's smart-charging program is required to qualify. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a></p>
+        <div class="finder-source">Source: /us/co/aurora &middot; Xcel Energy / Colorado Energy Office</div>
+      </div>
+    </div>
+
+
     <h2>How to claim it</h2>
     <ol>
       <li>Confirm the current Xcel Energy rebate amount and that funding is still open</li>
@@ -287,6 +368,23 @@ strong { color: var(--ink); }
 
   </div>
 </article>
+<script>
+(function() {
+  var buttons = document.querySelectorAll('.finder-filter-btn');
+  var cards = document.querySelectorAll('#finder-grid .finder-card');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card) {
+        card.classList.toggle('hidden', filter !== 'all' && card.getAttribute('data-cat') !== filter);
+      });
+    });
+  });
+})();
+</script>
+
 
 <section class="section installers-injected-section" style="margin: 60px 0; padding: 40px 28px; max-width: 1100px; margin-left: auto; margin-right: auto; border-top: 1px solid var(--rule);"><div class="wrap">
   <h2>Heat pump installers in Aurora</h2>

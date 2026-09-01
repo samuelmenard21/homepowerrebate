@@ -654,6 +654,18 @@ const PROVINCE_CONTEXT = {
       { href: 'https://homepowerrebate.com/blog/energy-saving-ideas-ny-home/', label: 'Energy Saving Ideas for Your New York Home' },
       { href: 'https://homepowerrebate.com/blog/new-york-empower-plus-guide.html', label: 'New York EmPower+ Guide' }
     ]
+  },
+  PA: {
+    programName: 'Pennsylvania utility rebates (Act 129) & Penn Energy Savers',
+    links: []
+  },
+  CO: {
+    programName: 'Colorado utility rebates & state heat pump tax credit',
+    links: []
+  },
+  VT: {
+    programName: 'Efficiency Vermont',
+    links: []
   }
 };
 

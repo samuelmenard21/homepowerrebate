@@ -1422,5 +1422,565 @@
       "thermostat": "$100"
     },
     "heat_pump_rebate": "$2,650/ton ($8,500 cap)"
+  },
+  "pa|philadelphia": {
+    "city": "Philadelphia",
+    "region": "PA",
+    "utility": "PECO",
+    "categories": {
+      "heat_pump": "$500-$1,950 (PECO EAP tiers: $500/$1,000/$1,400 + $250 hybrid adder, stackable)",
+      "solar": "$0.20/W (Philadelphia Solar Rebate, currently waitlisted)",
+      "battery": "Not currently available",
+      "water_heater": "Not currently available",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "$500-$1,950 (PECO EAP tiers: $500/$1,000/$1,400 + $250 hybrid adder, stackable)"
+  },
+  "pa|pittsburgh": {
+    "city": "Pittsburgh",
+    "region": "PA",
+    "utility": "Duquesne Light",
+    "categories": {
+      "heat_pump": "Not currently available (Act 129 Phase IV $200 rebate closed 5/31/26; Phase V, running through May 2031, amounts not yet published)",
+      "solar": "$0 (no statewide rebate; SRECs + net metering only)",
+      "battery": "Not currently available",
+      "water_heater": "Not currently available",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Not currently available (Act 129 Phase IV $200 rebate closed 5/31/26; Phase V, running through May 2031, amounts not yet published)"
+  },
+  "pa|allentown": {
+    "city": "Allentown",
+    "region": "PA",
+    "utility": "PPL Electric",
+    "categories": {
+      "heat_pump": "$350-$450 (PPL Act 129 central heat pump, tiered by efficiency); ~$400 (mini-split); ~$400 (heat pump water heater)",
+      "solar": "$0 (no statewide rebate; SRECs + net metering only)",
+      "battery": "Not currently available",
+      "water_heater": "~$400 (PPL heat pump water heater rebate)",
+      "insulation": "Up to $575 (PPL insulation/air sealing, Act 129)",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "$350-$450 (PPL Act 129 central heat pump, tiered by efficiency); ~$400 (mini-split); ~$400 (heat pump water heater)"
+  },
+  "pa|erie": {
+    "city": "Erie",
+    "region": "PA",
+    "utility": "Penelec (FirstEnergy)",
+    "categories": {
+      "heat_pump": "Up to $500 (Penelec Act 129 central heat pump, matched-set condenser+coil required)",
+      "solar": "$0 (no statewide rebate; SRECs + net metering only)",
+      "battery": "Not currently available",
+      "water_heater": "Not currently available",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Up to $500 (Penelec Act 129 central heat pump, matched-set condenser+coil required)"
+  },
+  "co|denver": {
+    "city": "Denver",
+    "region": "CO",
+    "utility": "Xcel Energy",
+    "categories": {
+      "heat_pump": "$2,250/ton cold-climate heat pump through 10/1/26, then drops ~33% to ~$1,500/ton, + $1,000 CO state tax credit",
+      "solar": "$1/W, income-qualified only (Xcel Solar*Rewards, ~$5,000 for a 5kW system); no rebate for standard-income households",
+      "battery": "$0 (Xcel Renewable Battery Connect, up to $5,000, paused since 2/20/26, possible mid-2026 reopening) + 10% CO battery storage tax credit (expires 12/31/26)",
+      "water_heater": "Not currently available",
+      "insulation": "Not currently available (income-qualified Weatherization Assistance Program only; no standard-income flat rebate found)",
+      "windows": "Not currently available (federal 25C credit up to $1,200/yr only; no CO-specific windows rebate found)",
+      "ev_charger": "$500-$1,300 (Xcel Energy Level 2 charger/home-wiring rebate, amount varies by income tier)",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "$2,250/ton cold-climate heat pump through 10/1/26, then drops ~33% to ~$1,500/ton, + $1,000 CO state tax credit"
+  },
+  "co|colorado springs": {
+    "city": "Colorado Springs",
+    "region": "CO",
+    "utility": "Colorado Springs Utilities",
+    "categories": {
+      "heat_pump": "$1,500 electric bill credit (heat pumps under 3 tons, effective 1/1/26) + $1,000 CO state tax credit",
+      "solar": "Not currently available (municipal utility; check csu.org solar program directly)",
+      "battery": "Not currently available (no confirmed CSU battery-specific rebate) + 10% CO battery tax credit (expires 12/31/26)",
+      "water_heater": "Not currently available (CSU offers a heat pump water heater rebate; 2026 dollar figure not confirmed via public sources)",
+      "insulation": "Not currently available (CSU weatherization program, income-qualified)",
+      "windows": "Not currently available (federal 25C credit up to $1,200/yr only; no CO-specific windows rebate found)",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "$1,500 electric bill credit (heat pumps under 3 tons, effective 1/1/26) + $1,000 CO state tax credit"
+  },
+  "co|aurora": {
+    "city": "Aurora",
+    "region": "CO",
+    "utility": "Xcel Energy",
+    "categories": {
+      "heat_pump": "$2,250/ton cold-climate heat pump through 10/1/26, then drops ~33% to ~$1,500/ton, + $1,000 CO state tax credit",
+      "solar": "$1/W, income-qualified only (Xcel Solar*Rewards, ~$5,000 for a 5kW system); no rebate for standard-income households",
+      "battery": "$0 (Xcel Renewable Battery Connect, up to $5,000, paused since 2/20/26, possible mid-2026 reopening) + 10% CO battery storage tax credit (expires 12/31/26)",
+      "water_heater": "Not currently available",
+      "insulation": "Not currently available (income-qualified Weatherization Assistance Program only; no standard-income flat rebate found)",
+      "windows": "Not currently available (federal 25C credit up to $1,200/yr only; no CO-specific windows rebate found)",
+      "ev_charger": "$500-$1,300 (Xcel Energy Level 2 charger/home-wiring rebate, amount varies by income tier)",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "$2,250/ton cold-climate heat pump through 10/1/26, then drops ~33% to ~$1,500/ton, + $1,000 CO state tax credit"
+  },
+  "co|fort collins": {
+    "city": "Fort Collins",
+    "region": "CO",
+    "utility": "Fort Collins Utilities / Platte River Power Authority",
+    "categories": {
+      "heat_pump": "Efficiency Works Homes heat pump rebate (program active; 2026 dollar amount not published in public sources at research time) + $1,000 CO state tax credit",
+      "solar": "Not currently available (check fortcollins.gov/utilities solar program directly)",
+      "battery": "Not currently available + 10% CO battery tax credit (expires 12/31/26)",
+      "water_heater": "Not currently available (Efficiency Works covers water heaters; amount not published)",
+      "insulation": "Efficiency Works insulation/air-sealing rebate (amount not published)",
+      "windows": "Efficiency Works windows rebate (amount not published)",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Efficiency Works Homes heat pump rebate (program active; 2026 dollar amount not published in public sources at research time) + $1,000 CO state tax credit"
+  },
+  "co|boulder": {
+    "city": "Boulder",
+    "region": "CO",
+    "utility": "Xcel Energy",
+    "categories": {
+      "heat_pump": "$2,250/ton cold-climate heat pump through 10/1/26, then drops ~33% to ~$1,500/ton, + $1,000 CO state tax credit + up to $2,000/year (EnergySmart Boulder, income-qualified <=100% AMI)",
+      "solar": "$1/W, income-qualified only (Xcel Solar*Rewards, ~$5,000 for a 5kW system); no rebate for standard-income households",
+      "battery": "$0 (Xcel Renewable Battery Connect, up to $5,000, paused since 2/20/26, possible mid-2026 reopening) + 10% CO battery storage tax credit (expires 12/31/26)",
+      "water_heater": "Not currently available",
+      "insulation": "Not currently available (income-qualified Weatherization Assistance Program only; no standard-income flat rebate found)",
+      "windows": "Not currently available (federal 25C credit up to $1,200/yr only; no CO-specific windows rebate found)",
+      "ev_charger": "$500-$1,300 (Xcel Energy Level 2 charger/home-wiring rebate, amount varies by income tier)",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "$2,250/ton cold-climate heat pump through 10/1/26, then drops ~33% to ~$1,500/ton, + $1,000 CO state tax credit + up to $2,000/year (EnergySmart Boulder, income-qualified <=100% AMI)"
+  },
+  "vt|burlington": {
+    "city": "Burlington",
+    "region": "VT",
+    "utility": "Burlington Electric Department",
+    "categories": {
+      "heat_pump": "Up to $475 (ductless mini-split) or up to $2,200 (ducted heat pump), via Efficiency Vermont + utility; +$200-$2,200 low/moderate-income bonus",
+      "solar": "$0 direct rebate; 1:1 net metering at blended retail rate (~$0.1839-$0.1999/kWh); state sales tax exemption on systems up to 500kW",
+      "battery": "Not currently available (Burlington Electric Department is a separate municipal utility from Green Mountain Power; GMP's Bring Your Own Device battery program does not apply here \u2014 confirm any BED-specific incentive directly)",
+      "water_heater": "$600-$1,000 (Efficiency Vermont heat pump water heater)",
+      "insulation": "Up to 90% cash back (Efficiency Vermont weatherization/air sealing, while funding lasts through end of 2026)",
+      "windows": "Not currently available (federal 25C credit up to $1,200/yr applies; no confirmed VT-specific windows rebate)",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Up to $475 (ductless mini-split) or up to $2,200 (ducted heat pump), via Efficiency Vermont + utility; +$200-$2,200 low/moderate-income bonus"
+  },
+  "vt|south burlington": {
+    "city": "South Burlington",
+    "region": "VT",
+    "utility": "Green Mountain Power",
+    "categories": {
+      "heat_pump": "Up to $475 (ductless mini-split) or up to $2,200 (ducted heat pump), via Efficiency Vermont + utility; +$200-$2,200 low/moderate-income bonus",
+      "solar": "$0 direct rebate; 1:1 net metering at blended retail rate (~$0.1839-$0.1999/kWh); state sales tax exemption on systems up to 500kW",
+      "battery": "$850/kW (3hr daily discharge) or $950/kW (4hr), via Green Mountain Power Bring Your Own Device, capped at $10,500 per system",
+      "water_heater": "$600-$1,000 (Efficiency Vermont heat pump water heater)",
+      "insulation": "Up to 90% cash back (Efficiency Vermont weatherization/air sealing, while funding lasts through end of 2026)",
+      "windows": "Not currently available (federal 25C credit up to $1,200/yr applies; no confirmed VT-specific windows rebate)",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Up to $475 (ductless mini-split) or up to $2,200 (ducted heat pump), via Efficiency Vermont + utility; +$200-$2,200 low/moderate-income bonus"
+  },
+  "vt|rutland": {
+    "city": "Rutland",
+    "region": "VT",
+    "utility": "Green Mountain Power",
+    "categories": {
+      "heat_pump": "Up to $475 (ductless mini-split) or up to $2,200 (ducted heat pump), via Efficiency Vermont + utility; +$200-$2,200 low/moderate-income bonus",
+      "solar": "$0 direct rebate; 1:1 net metering at blended retail rate (~$0.1839-$0.1999/kWh); state sales tax exemption on systems up to 500kW",
+      "battery": "$850/kW (3hr daily discharge) or $950/kW (4hr), via Green Mountain Power Bring Your Own Device, capped at $10,500 per system",
+      "water_heater": "$600-$1,000 (Efficiency Vermont heat pump water heater)",
+      "insulation": "Up to 90% cash back (Efficiency Vermont weatherization/air sealing, while funding lasts through end of 2026)",
+      "windows": "Not currently available (federal 25C credit up to $1,200/yr applies; no confirmed VT-specific windows rebate)",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Up to $475 (ductless mini-split) or up to $2,200 (ducted heat pump), via Efficiency Vermont + utility; +$200-$2,200 low/moderate-income bonus"
+  },
+  "vt|barre": {
+    "city": "Barre",
+    "region": "VT",
+    "utility": "Green Mountain Power",
+    "categories": {
+      "heat_pump": "Up to $475 (ductless mini-split) or up to $2,200 (ducted heat pump), via Efficiency Vermont + utility; +$200-$2,200 low/moderate-income bonus",
+      "solar": "$0 direct rebate; 1:1 net metering at blended retail rate (~$0.1839-$0.1999/kWh); state sales tax exemption on systems up to 500kW",
+      "battery": "$850/kW (3hr daily discharge) or $950/kW (4hr), via Green Mountain Power Bring Your Own Device, capped at $10,500 per system",
+      "water_heater": "$600-$1,000 (Efficiency Vermont heat pump water heater)",
+      "insulation": "Up to 90% cash back (Efficiency Vermont weatherization/air sealing, while funding lasts through end of 2026)",
+      "windows": "Not currently available (federal 25C credit up to $1,200/yr applies; no confirmed VT-specific windows rebate)",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Up to $475 (ductless mini-split) or up to $2,200 (ducted heat pump), via Efficiency Vermont + utility; +$200-$2,200 low/moderate-income bonus"
+  },
+  "vt|montpelier": {
+    "city": "Montpelier",
+    "region": "VT",
+    "utility": "Green Mountain Power",
+    "categories": {
+      "heat_pump": "Up to $475 (ductless mini-split) or up to $2,200 (ducted heat pump), via Efficiency Vermont + utility; +$200-$2,200 low/moderate-income bonus",
+      "solar": "$0 direct rebate; 1:1 net metering at blended retail rate (~$0.1839-$0.1999/kWh); state sales tax exemption on systems up to 500kW",
+      "battery": "$850/kW (3hr daily discharge) or $950/kW (4hr), via Green Mountain Power Bring Your Own Device, capped at $10,500 per system",
+      "water_heater": "$600-$1,000 (Efficiency Vermont heat pump water heater)",
+      "insulation": "Up to 90% cash back (Efficiency Vermont weatherization/air sealing, while funding lasts through end of 2026)",
+      "windows": "Not currently available (federal 25C credit up to $1,200/yr applies; no confirmed VT-specific windows rebate)",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Up to $475 (ductless mini-split) or up to $2,200 (ducted heat pump), via Efficiency Vermont + utility; +$200-$2,200 low/moderate-income bonus"
+  },
+  "ny|beacon": {
+    "city": "Beacon",
+    "region": "NY",
+    "utility": "Central Hudson",
+    "categories": {
+      "heat_pump": "$500-$1,000 per 10,000 Btuh (Central Hudson NYS Clean Heat, tiered by fossil-fuel removal/backup use); up to $18,000 (ground-source, single-family retrofit)",
+      "solar": "$0 (VDER compensation, no direct utility rebate); federal solar ITC expired 12/31/25",
+      "battery": "Not currently available (no confirmed Central Hudson battery storage rebate found)",
+      "water_heater": "$1,250 (Central Hudson ENERGY STAR heat pump water heater)",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available (no confirmed Central Hudson EV charger rebate found)",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "$500-$1,000 per 10,000 Btuh (Central Hudson NYS Clean Heat, tiered by fossil-fuel removal/backup use); up to $18,000 (ground-source, single-family retrofit)"
+  },
+  "ny|kingston": {
+    "city": "Kingston",
+    "region": "NY",
+    "utility": "Central Hudson",
+    "categories": {
+      "heat_pump": "$500-$1,000 per 10,000 Btuh (Central Hudson NYS Clean Heat, tiered by fossil-fuel removal/backup use); up to $18,000 (ground-source, single-family retrofit)",
+      "solar": "$0 (VDER compensation, no direct utility rebate); federal solar ITC expired 12/31/25",
+      "battery": "Not currently available (no confirmed Central Hudson battery storage rebate found)",
+      "water_heater": "$1,250 (Central Hudson ENERGY STAR heat pump water heater)",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available (no confirmed Central Hudson EV charger rebate found)",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "$500-$1,000 per 10,000 Btuh (Central Hudson NYS Clean Heat, tiered by fossil-fuel removal/backup use); up to $18,000 (ground-source, single-family retrofit)"
+  },
+  "ny|newburgh": {
+    "city": "Newburgh",
+    "region": "NY",
+    "utility": "Central Hudson",
+    "categories": {
+      "heat_pump": "$500-$1,000 per 10,000 Btuh (Central Hudson NYS Clean Heat, tiered by fossil-fuel removal/backup use); up to $18,000 (ground-source, single-family retrofit)",
+      "solar": "$0 (VDER compensation, no direct utility rebate); federal solar ITC expired 12/31/25",
+      "battery": "Not currently available (no confirmed Central Hudson battery storage rebate found)",
+      "water_heater": "$1,250 (Central Hudson ENERGY STAR heat pump water heater)",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available (no confirmed Central Hudson EV charger rebate found)",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "$500-$1,000 per 10,000 Btuh (Central Hudson NYS Clean Heat, tiered by fossil-fuel removal/backup use); up to $18,000 (ground-source, single-family retrofit)"
+  },
+  "ny|poughkeepsie": {
+    "city": "Poughkeepsie",
+    "region": "NY",
+    "utility": "Central Hudson",
+    "categories": {
+      "heat_pump": "$500-$1,000 per 10,000 Btuh (Central Hudson NYS Clean Heat, tiered by fossil-fuel removal/backup use); up to $18,000 (ground-source, single-family retrofit)",
+      "solar": "$0 (VDER compensation, no direct utility rebate); federal solar ITC expired 12/31/25",
+      "battery": "Not currently available (no confirmed Central Hudson battery storage rebate found)",
+      "water_heater": "$1,250 (Central Hudson ENERGY STAR heat pump water heater)",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available (no confirmed Central Hudson EV charger rebate found)",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "$500-$1,000 per 10,000 Btuh (Central Hudson NYS Clean Heat, tiered by fossil-fuel removal/backup use); up to $18,000 (ground-source, single-family retrofit)"
+  },
+  "ny|saugerties": {
+    "city": "Saugerties",
+    "region": "NY",
+    "utility": "Central Hudson",
+    "categories": {
+      "heat_pump": "$500-$1,000 per 10,000 Btuh (Central Hudson NYS Clean Heat, tiered by fossil-fuel removal/backup use); up to $18,000 (ground-source, single-family retrofit)",
+      "solar": "$0 (VDER compensation, no direct utility rebate); federal solar ITC expired 12/31/25",
+      "battery": "Not currently available (no confirmed Central Hudson battery storage rebate found)",
+      "water_heater": "$1,250 (Central Hudson ENERGY STAR heat pump water heater)",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available (no confirmed Central Hudson EV charger rebate found)",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "$500-$1,000 per 10,000 Btuh (Central Hudson NYS Clean Heat, tiered by fossil-fuel removal/backup use); up to $18,000 (ground-source, single-family retrofit)"
+  },
+  "ny|new rochelle": {
+    "city": "New Rochelle",
+    "region": "NY",
+    "utility": "Con Edison",
+    "categories": {
+      "heat_pump": "$10,000 (Clean Heat)",
+      "solar": "$0 (VDER)",
+      "battery": "$0",
+      "water_heater": "$1,300",
+      "insulation": "$0",
+      "windows": "$0",
+      "ev_charger": "$400 (SmartCharge)",
+      "thermostat": "$0"
+    },
+    "heat_pump_rebate": "$10,000 (Clean Heat)"
+  },
+  "ny|white plains": {
+    "city": "White Plains",
+    "region": "NY",
+    "utility": "Con Edison",
+    "categories": {
+      "heat_pump": "$10,000 (Clean Heat)",
+      "solar": "$0 (VDER)",
+      "battery": "$0",
+      "water_heater": "$1,300",
+      "insulation": "$0",
+      "windows": "$0",
+      "ev_charger": "$400 (SmartCharge)",
+      "thermostat": "$0"
+    },
+    "heat_pump_rebate": "$10,000 (Clean Heat)"
+  },
+  "ny|babylon": {
+    "city": "Babylon",
+    "region": "NY",
+    "utility": "PSEG Long Island",
+    "categories": {
+      "heat_pump": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton",
+      "solar": "Not currently available (no confirmed 2026 PSEG LI solar rebate figure found; VDER compensation applies)",
+      "battery": "Not currently available (no confirmed 2026 PSEG LI battery storage rebate figure found)",
+      "water_heater": "Not currently available (PSEG LI ENERGY STAR appliance rebate program exists; 2026 heat pump water heater dollar figure not confirmed)",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton"
+  },
+  "ny|brookhaven": {
+    "city": "Brookhaven",
+    "region": "NY",
+    "utility": "PSEG Long Island",
+    "categories": {
+      "heat_pump": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton",
+      "solar": "Not currently available (no confirmed 2026 PSEG LI solar rebate figure found; VDER compensation applies)",
+      "battery": "Not currently available (no confirmed 2026 PSEG LI battery storage rebate figure found)",
+      "water_heater": "Not currently available (PSEG LI ENERGY STAR appliance rebate program exists; 2026 heat pump water heater dollar figure not confirmed)",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton"
+  },
+  "ny|huntington": {
+    "city": "Huntington",
+    "region": "NY",
+    "utility": "PSEG Long Island",
+    "categories": {
+      "heat_pump": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton",
+      "solar": "Not currently available (no confirmed 2026 PSEG LI solar rebate figure found; VDER compensation applies)",
+      "battery": "Not currently available (no confirmed 2026 PSEG LI battery storage rebate figure found)",
+      "water_heater": "Not currently available (PSEG LI ENERGY STAR appliance rebate program exists; 2026 heat pump water heater dollar figure not confirmed)",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton"
+  },
+  "ny|islip": {
+    "city": "Islip",
+    "region": "NY",
+    "utility": "PSEG Long Island",
+    "categories": {
+      "heat_pump": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton",
+      "solar": "Not currently available (no confirmed 2026 PSEG LI solar rebate figure found; VDER compensation applies)",
+      "battery": "Not currently available (no confirmed 2026 PSEG LI battery storage rebate figure found)",
+      "water_heater": "Not currently available (PSEG LI ENERGY STAR appliance rebate program exists; 2026 heat pump water heater dollar figure not confirmed)",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton"
+  },
+  "ny|oyster bay": {
+    "city": "Oyster Bay",
+    "region": "NY",
+    "utility": "PSEG Long Island",
+    "categories": {
+      "heat_pump": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton",
+      "solar": "Not currently available (no confirmed 2026 PSEG LI solar rebate figure found; VDER compensation applies)",
+      "battery": "Not currently available (no confirmed 2026 PSEG LI battery storage rebate figure found)",
+      "water_heater": "Not currently available (PSEG LI ENERGY STAR appliance rebate program exists; 2026 heat pump water heater dollar figure not confirmed)",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton"
+  },
+  "ny|smithtown": {
+    "city": "Smithtown",
+    "region": "NY",
+    "utility": "PSEG Long Island",
+    "categories": {
+      "heat_pump": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton",
+      "solar": "Not currently available (no confirmed 2026 PSEG LI solar rebate figure found; VDER compensation applies)",
+      "battery": "Not currently available (no confirmed 2026 PSEG LI battery storage rebate figure found)",
+      "water_heater": "Not currently available (PSEG LI ENERGY STAR appliance rebate program exists; 2026 heat pump water heater dollar figure not confirmed)",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton"
+  },
+  "ny|southampton": {
+    "city": "Southampton",
+    "region": "NY",
+    "utility": "PSEG Long Island",
+    "categories": {
+      "heat_pump": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton",
+      "solar": "Not currently available (no confirmed 2026 PSEG LI solar rebate figure found; VDER compensation applies)",
+      "battery": "Not currently available (no confirmed 2026 PSEG LI battery storage rebate figure found)",
+      "water_heater": "Not currently available (PSEG LI ENERGY STAR appliance rebate program exists; 2026 heat pump water heater dollar figure not confirmed)",
+      "insulation": "Not currently available",
+      "windows": "Not currently available",
+      "ev_charger": "Not currently available",
+      "thermostat": "Not currently available"
+    },
+    "heat_pump_rebate": "Rebate tiers updated 1/1/26 (exact standard-tier $ not published at research time); income-qualified Home Comfort Plus covers 100% of project cost up to $11,000; geothermal $1,000-$2,000/ton"
+  },
+  "on|richmond hill": {
+    "city": "Richmond Hill",
+    "region": "ON",
+    "utility": "Alectra Utilities",
+    "categories": {
+      "heat_pump": "$5,000-$12,000",
+      "solar": "$5,000",
+      "battery": "$5,000",
+      "water_heater": "$500",
+      "insulation": "$1,250-$7,700",
+      "windows": "$100-$2,000",
+      "ev_charger": "$0",
+      "thermostat": "$100"
+    },
+    "heat_pump_rebate": "$5,000-$12,000"
+  },
+  "on|kitchener": {
+    "city": "Kitchener",
+    "region": "ON",
+    "utility": "Kitchener-Wilmot Hydro",
+    "categories": {
+      "heat_pump": "$5,000-$12,000",
+      "solar": "$5,000",
+      "battery": "$5,000",
+      "water_heater": "$500",
+      "insulation": "$1,250-$7,700",
+      "windows": "$100-$2,000",
+      "ev_charger": "$0",
+      "thermostat": "$100"
+    },
+    "heat_pump_rebate": "$5,000-$12,000"
+  },
+  "on|oakville": {
+    "city": "Oakville",
+    "region": "ON",
+    "utility": "Oakville Hydro",
+    "categories": {
+      "heat_pump": "$5,000-$12,000",
+      "solar": "$5,000",
+      "battery": "$5,000",
+      "water_heater": "$500",
+      "insulation": "$1,250-$7,700",
+      "windows": "$100-$2,000",
+      "ev_charger": "$0",
+      "thermostat": "$100"
+    },
+    "heat_pump_rebate": "$5,000-$12,000"
+  },
+  "on|oshawa": {
+    "city": "Oshawa",
+    "region": "ON",
+    "utility": "Elexicon Energy",
+    "categories": {
+      "heat_pump": "$5,000-$12,000",
+      "solar": "$5,000",
+      "battery": "$5,000",
+      "water_heater": "$500",
+      "insulation": "$1,250-$7,700",
+      "windows": "$100-$2,000",
+      "ev_charger": "$0",
+      "thermostat": "$100"
+    },
+    "heat_pump_rebate": "$5,000-$12,000"
+  },
+  "on|whitby": {
+    "city": "Whitby",
+    "region": "ON",
+    "utility": "Elexicon Energy",
+    "categories": {
+      "heat_pump": "$5,000-$12,000",
+      "solar": "$5,000",
+      "battery": "$5,000",
+      "water_heater": "$500",
+      "insulation": "$1,250-$7,700",
+      "windows": "$100-$2,000",
+      "ev_charger": "$0",
+      "thermostat": "$100"
+    },
+    "heat_pump_rebate": "$5,000-$12,000"
+  },
+  "on|burlington": {
+    "city": "Burlington",
+    "region": "ON",
+    "utility": "Burlington Hydro",
+    "categories": {
+      "heat_pump": "$5,000-$12,000",
+      "solar": "$5,000",
+      "battery": "$5,000",
+      "water_heater": "$500",
+      "insulation": "$1,250-$7,700",
+      "windows": "$100-$2,000",
+      "ev_charger": "$0",
+      "thermostat": "$100"
+    },
+    "heat_pump_rebate": "$5,000-$12,000"
+  },
+  "on|greater sudbury": {
+    "city": "Greater Sudbury",
+    "region": "ON",
+    "utility": "Greater Sudbury Hydro",
+    "categories": {
+      "heat_pump": "$5,000-$12,000",
+      "solar": "$5,000",
+      "battery": "$5,000",
+      "water_heater": "$500",
+      "insulation": "$1,250-$7,700",
+      "windows": "$100-$2,000",
+      "ev_charger": "$0",
+      "thermostat": "$100"
+    },
+    "heat_pump_rebate": "$5,000-$12,000"
   }
 }

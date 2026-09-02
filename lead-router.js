@@ -734,6 +734,12 @@ const LOCALIZED_BLOG_TOPICS = [
     cities: BC_18_CITIES,
     titleFor: cityName => `Can You Get a Free Heat Pump in ${cityName}?`,
     urlFor: citySlug => `https://homepowerrebate.com/blog/free-heat-pump-bc-income-qualified-${citySlug}/`
+  },
+  {
+    region: 'BC',
+    cities: BC_18_CITIES,
+    titleFor: cityName => `Window & Door Rebates in ${cityName} (2026)`,
+    urlFor: citySlug => `https://homepowerrebate.com/blog/window-doors-replacement-rebates-bc-guide-${citySlug}/`
   }
 ];
 

@@ -713,9 +713,47 @@ function applyCityRebateFallback(record, province, city) {
   record.estimate_is_city_range = !!cityData;
 }
 
+// City-localized blog posts, added here as each batch of the BC (and later
+// other-region) blog-localization pilot ships — see
+// /Users/sammenard/.claude/plans/groovy-forging-peacock.md. Each entry is a
+// {region, cities, titleFor, urlFor} covering every city in `cities` for one
+// topic; only add an entry once that topic's posts are live for ALL the
+// cities listed, since these links go straight into homeowner emails and a
+// 404 there is worse than not linking at all.
+const BC_18_CITIES = ['abbotsford', 'burnaby', 'chilliwack', 'coquitlam', 'fort st john', 'kamloops', 'kelowna', 'langley', 'maple ridge', 'nanaimo', 'penticton', 'prince george', 'richmond', 'squamish', 'surrey', 'vancouver', 'vernon', 'victoria'];
+
+const LOCALIZED_BLOG_TOPICS = [
+  {
+    region: 'BC',
+    cities: BC_18_CITIES,
+    titleFor: cityName => `Heat Pump Rebates in ${cityName} (2026)`,
+    urlFor: citySlug => `https://homepowerrebate.com/blog/heat-pump-rebate-guide-${citySlug}-2026/`
+  },
+  {
+    region: 'BC',
+    cities: BC_18_CITIES,
+    titleFor: cityName => `Can You Get a Free Heat Pump in ${cityName}?`,
+    urlFor: citySlug => `https://homepowerrebate.com/blog/free-heat-pump-bc-income-qualified-${citySlug}/`
+  }
+];
+
+// Returns this homeowner's city-specific posts (if any topic covers their
+// exact city yet), falling back to nothing rather than guessing a URL.
+function localizedBlogLinksFor(sub) {
+  const province = String(sub.province || 'BC').toUpperCase();
+  const cityKey = normalizeCityKey(sub.city);
+  if (!cityKey) return [];
+  const cityName = capitalize(sub.city);
+  const slug = citySlug(sub.city);
+  return LOCALIZED_BLOG_TOPICS
+    .filter(t => t.region === province && t.cities.includes(cityKey))
+    .map(t => ({ href: t.urlFor(slug), label: t.titleFor(cityName) }));
+}
+
 function learnMoreBlock(sub) {
   const ctx = provinceContext(sub);
-  const links = [...ctx.links, { href: 'https://homepowerrebate.com/blog/canada-provinces-ranked-home-energy-rebates/', label: 'How Every Province Compares' }];
+  const localLinks = localizedBlogLinksFor(sub);
+  const links = [...localLinks, ...ctx.links, { href: 'https://homepowerrebate.com/blog/canada-provinces-ranked-home-energy-rebates/', label: 'How Every Province Compares' }];
   return `
     <div style="margin:20px 0 0;padding-top:16px;border-top:1px solid #d9d0c1;">
       <p style="margin:0 0 8px;font-size:12px;color:#6b7d80;text-transform:uppercase;letter-spacing:0.04em;">Worth reading next</p>

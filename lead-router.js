@@ -740,6 +740,12 @@ const LOCALIZED_BLOG_TOPICS = [
     cities: BC_18_CITIES,
     titleFor: cityName => `Window & Door Rebates in ${cityName} (2026)`,
     urlFor: citySlug => `https://homepowerrebate.com/blog/window-doors-replacement-rebates-bc-guide-${citySlug}/`
+  },
+  {
+    region: 'BC',
+    cities: BC_18_CITIES,
+    titleFor: cityName => `Energy-Saving Ideas for Your ${cityName} Home`,
+    urlFor: citySlug => `https://homepowerrebate.com/blog/energy-saving-ideas-bc-home-${citySlug}/`
   }
 ];
 

@@ -996,7 +996,7 @@ if (__nlform) {
     fetch('https://leads.homepowerrebate.com/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, city: city, page: page })
+      body: JSON.stringify({ email: email, city: city, page: page, province: (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1] ? (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1].toUpperCase() : 'BC' })
     }).then(function(response) {
       if (!response.ok) throw new Error('Subscription failed');
       responseEl.textContent = "You're in! Check your inbox for a welcome email.";

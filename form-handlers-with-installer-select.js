@@ -11,7 +11,7 @@ const INSTALLERS_JSON_BASE = '/installers/json';
 // BC's installer JSON lives directly under /installers/json — every other
 // region lives under its own subpath (mirrors installers/json/{on,ab,ns,ma}
 // on disk, from generate_installer_json_from_real.py's per-region out_dir).
-const REGION_PATH_PREFIX = { BC: '', ON: 'on', AB: 'ab', NS: 'ns', MA: 'ma' };
+const REGION_PATH_PREFIX = { BC: '', ON: 'on', AB: 'ab', NS: 'ns', MA: 'ma', CA: 'ca', NY: 'ny', PA: 'pa', CO: 'co', VT: 'vt' };
 
 /**
  * Load installers for a city, merging heat-pump + solar directories so a

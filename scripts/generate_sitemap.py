@@ -36,7 +36,20 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_URL = "https://homepowerrebate.com"
 TODAY = datetime.date.today().isoformat()
 
-EXCLUDE_DIRS = {".git", "node_modules", "scripts", ".claude", "installers/photos"}
+EXCLUDE_DIRS = {".git", "node_modules", "scripts", ".claude", "installers/photos", "_partials"}
+
+# Dev/template/utility files that live at the repo root or scattered around it
+# and are real .html files but were never meant to be crawled — found 2026-09-01
+# when an SEO audit's crawl picked these up as if they were live pages and they
+# were sitting in a prior sitemap.xml regen. Match by exact filename, not path,
+# since these can appear in a few different spots.
+EXCLUDE_FILENAMES = {
+    "404.html",
+    "og-image.html",
+    "CITY_PAGE_TEMPLATE_OPTIMIZED.html",
+    "ONTARIO_CITY_PAGE_TEMPLATE.html",
+    "nav-footer.html",
+}
 
 
 def url_for(path):
@@ -99,7 +112,7 @@ def find_pages():
         if "index.html" in files:
             pages.append(os.path.join(root, "index.html"))
         for f in files:
-            if f.endswith(".html") and f != "index.html":
+            if f.endswith(".html") and f != "index.html" and f not in EXCLUDE_FILENAMES:
                 pages.append(os.path.join(root, f))
     return sorted(set(pages))
 

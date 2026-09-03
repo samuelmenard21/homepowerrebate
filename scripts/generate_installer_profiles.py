@@ -50,6 +50,11 @@ REGIONS = {
             "chula-vista": "san-diego", "escondido": "san-diego", "san-diego": "san-diego",
             "moreno-valley": "inland-empire", "ontario": "inland-empire",
             "riverside": "inland-empire", "san-bernardino": "inland-empire",
+            # Standalone cities — no metro-group subfolder, page lives directly
+            # at /us/ca/<city>/ like PA/CO/VT. None here is a real sentinel,
+            # not a missing mapping — city_hub_url falls back to the flat
+            # path when it sees one.
+            "fresno": None, "bakersfield": None,
         },
         "breadcrumb_region_name": "California",
         "vetting_note": "Confirm current licensing, insurance, and program eligibility directly with any installer before signing a contract",
@@ -57,6 +62,7 @@ REGIONS = {
             ("https://www.cslb.ca.gov/OnlineServices/CheckLicenseII/CheckLicense.aspx",
              "Verify this installer's CA Contractors State License Board registration"),
         ],
+        "program_name": "Local rebate programs",
     },
     "ny": {
         "json_dir": os.path.join(ROOT, "installers/json/ny"),
@@ -81,6 +87,20 @@ REGIONS = {
         "verify_links": [
             ("https://www.nyc.gov/site/buildings/index.page", "NYC: verify a license via the DOB (New York City installers only)"),
         ],
+        "program_name": "NYS Clean Heat & utility rebates",
+    },
+    "vt": {
+        "json_dir": os.path.join(ROOT, "installers/json/vt"),
+        "profiles_dir": os.path.join(ROOT, "installers/profiles/vt"),
+        "state": "VT",
+        "hub_style": "flat-index",  # /us/vt/<city>/ — no utility or metro-group segment
+        "breadcrumb_region_name": "Vermont",
+        # Vermont has no statewide general contractor license (one of the few
+        # states without one) — same honest framing as NY above rather than
+        # implying a lookup tool that doesn't exist.
+        "vetting_note": "Vermont has no statewide general contractor license &mdash; confirm current insurance and program eligibility directly with any installer before signing a contract",
+        "verify_links": [],
+        "program_name": "Efficiency Vermont rebates",
     },
 }
 
@@ -147,6 +167,14 @@ def city_hub_url(region_key, city_slug, category):
     cfg = REGIONS[region_key]
     if cfg["hub_style"] == "category-subpage":
         group = cfg["city_to_group"][city_slug]
+        if group is None:
+            # Standalone city — no metro-group subfolder (e.g. Fresno,
+            # Bakersfield), page lives directly at /us/<region>/<city>/.
+            local_dir = os.path.join(ROOT, "us", region_key, city_slug, category)
+            if not os.path.isdir(local_dir):
+                missing_category_pages.add(f"us/{region_key}/{city_slug}/{category}/")
+                return f"https://homepowerrebate.com/us/{region_key}/{city_slug}/"
+            return f"https://homepowerrebate.com/us/{region_key}/{city_slug}/{category}/"
         local_dir = os.path.join(ROOT, "us", region_key, group, city_slug, category)
         if not os.path.isdir(local_dir):
             # Site doesn't have this category built for this city yet (a real,
@@ -155,9 +183,11 @@ def city_hub_url(region_key, city_slug, category):
             missing_category_pages.add(f"us/{region_key}/{group}/{city_slug}/{category}/")
             return f"https://homepowerrebate.com/us/{region_key}/{group}/{city_slug}/"
         return f"https://homepowerrebate.com/us/{region_key}/{group}/{city_slug}/{category}/"
-    else:  # combined-index
+    elif cfg["hub_style"] == "combined-index":
         utility = cfg["city_to_utility"][city_slug]
         return f"https://homepowerrebate.com/us/{region_key}/{utility}/{city_slug}/"
+    else:  # flat-index — city page lives directly at /us/<region>/<city>/
+        return f"https://homepowerrebate.com/us/{region_key}/{city_slug}/"
 
 
 def city_display_name(city_slug):
@@ -197,7 +227,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
         label = "Heat Pump & HVAC" if category == "heat-pump" else "Solar"
         rank_lines.append(f"Ranked <strong>#{rank} of {total}</strong> {label.lower()} installers in {city_name} by Google rating")
         program_href = city_hub_url(region_key, city_slug, category)
-        program_name = "Local rebate programs" if region_key == "ca" else "NYS Clean Heat & utility rebates"
+        program_name = cfg["program_name"]
         program_detail = f"See {city_name}'s current {('heat pump' if category == 'heat-pump' else 'solar')} rebate breakdown for exact numbers"
         program_cards.append(f'''    <a href="{program_href}" class="ip-program">
       <div class="ip-program-name">{program_name} ({label})</div>

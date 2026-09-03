@@ -216,6 +216,8 @@ CA_CITIES = {
     "Folsom": {"lat": 38.6779, "lng": -121.1761},
     "Rancho Cordova": {"lat": 38.5891, "lng": -121.3027},
     "Roseville": {"lat": 38.7521, "lng": -121.2880},
+    "Fresno": {"lat": 36.7378, "lng": -119.7871},
+    "Bakersfield": {"lat": 35.3733, "lng": -119.0187},
     "Sacramento": {"lat": 38.5816, "lng": -121.4944},
 }
 
@@ -321,6 +323,21 @@ CITY_ADDRESS_ALIASES = {
                    "hicksville,", "jericho,", "locust valley,", "massapequa,", "north massapequa,",
                    "old bethpage,", "plainedge,", "plainview,", "south farmingdale,", "syosset,",
                    "woodbury,"],
+    # Same root cause: real HVAC/solar contractors serving Burlington are
+    # mostly headquartered in the surrounding Chittenden County towns, not
+    # inside city limits — confirmed via --debug 2026-09-02 (every "in
+    # Burlington VT" result addressed to Williston, Winooski, Essex Junction,
+    # Colchester, Jericho, or St. Albans, i.e. real off-list rejections, not
+    # genuine business absence). Do not add "South Burlington" here — it's
+    # tracked as its own separate city and must stay excluded.
+    "Burlington": ["burlington,", "williston,", "winooski,", "essex junction,", "essex,",
+                   "colchester,", "jericho,", "st albans,", "saint albans,"],
+    # Google's own formattedAddress abbreviates this to "Mt Vernon" — the
+    # default single-alias match on the literal dict key ("Mount Vernon")
+    # never fires, so every real result reads as off-list (confirmed via
+    # --debug 2026-09-02: 6+ genuine Mt Vernon, NY HVAC businesses rejected
+    # this way per query).
+    "Mount Vernon": ["mount vernon,", "mt vernon,"],
 }
 
 
@@ -328,9 +345,16 @@ def city_from_address(address, cities):
     """
     Return the cities-dict key that appears in this address, or None.
     Normalizes periods so 'Fort St John' matches 'Fort St. John'.
+
+    Checks longest city names first — otherwise a shorter name that's a
+    substring of a longer one (e.g. "Burlington" inside "South Burlington")
+    wins the match regardless of dict order, silently misfiling every South
+    Burlington installer under Burlington (confirmed 2026-09-02: all 3
+    "Burlington" results from a real scrape were actually South Burlington
+    addresses).
     """
     norm = address.lower().replace(".", "")
-    for city in cities:
+    for city in sorted(cities, key=len, reverse=True):
         aliases = CITY_ADDRESS_ALIASES.get(city, [city])
         if any(alias.lower().replace(".", "") in norm for alias in aliases):
             return city

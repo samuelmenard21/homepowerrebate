@@ -57,6 +57,11 @@ JUNK_DOMAINS = {
     "example.com", "sentry.io", "wix.com", "wixpress.com", "squarespace.com",
     "godaddy.com", "shopify.com", "googlemail.com", "schema.org", "w3.org",
     "sentry.wixpress.com", "domain.com", "email.com", "yourdomain.com",
+    # "example@mysite.com" is a template-builder placeholder left in page
+    # markup (found live on 5 real installer pages, 2026-09-02) — same
+    # class of false positive as example.com/domain.com above, just a
+    # different platform's default.
+    "mysite.com",
 }
 JUNK_PREFIXES = ("noreply", "no-reply", "donotreply", "postmaster", "abuse", "sentry")
 # Image filenames regularly parse as addresses (logo@2x.png).

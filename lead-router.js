@@ -1155,12 +1155,20 @@ async function handleOutcomeSubmit(request, env) {
       ? p.other_categories.map(c => String(c).toLowerCase().trim()).filter(c => OUTCOME_CATEGORIES.includes(c) && c !== category)
       : [];
 
+    // Quote/testimonial is opt-in and only stored when the homeowner checked
+    // the "you can quote me publicly" box — share_consent gates whether this
+    // row is ever eligible to be pulled into on-site testimonial content.
+    const quoteText = cleanString(p.quote_text || '').slice(0, 600);
+    const shareConsent = p.share_consent === true ? 1 : 0;
+    const displayName = shareConsent ? cleanString(p.display_name || '').slice(0, 80) : '';
+
     await env.OUTCOMES_DB.prepare(
       `INSERT INTO outcomes
         (id, created_at, category, postal_fsa, city, province, install_month,
          total_cost, rebates_received, net_cost, monthly_bill_before, monthly_bill_after,
-         installer_name, other_categories, verified, email, status)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 'new')`
+         installer_name, other_categories, verified, email, status,
+         quote_text, share_consent, display_name)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 'new', ?, ?, ?)`
     ).bind(
       id, createdAt, category, postalFsa, city, province, String(p.install_month),
       totalCost, rebatesReceived, netCost,
@@ -1168,7 +1176,8 @@ async function handleOutcomeSubmit(request, env) {
       Number.isFinite(billAfter) ? billAfter : null,
       cleanString(p.installer_name || ''),
       otherCategories.join(','),
-      email
+      email,
+      quoteText, shareConsent, displayName
     ).run();
   } catch (e) {
     console.error('Outcome insert failed:', e);

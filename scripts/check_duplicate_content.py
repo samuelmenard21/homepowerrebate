@@ -2,21 +2,36 @@
 """
 Doorway/near-duplicate content checker.
 
-Walks every category subpage under ca/ and us/, strips city-identifying
-tokens (city name variants, slug, postal/utility hints) from the page body,
-hashes what's left, and groups pages whose hash matches within the same
-category. A match means two "different" city pages are the same content
-with only the city name swapped — a doorway-page problem that has hurt
-this site's SEO more than once (see reports/seo-audit-fixes-2026-09-03.md §3).
+Walks every category subpage AND every city hub page under ca/ and us/,
+strips city-identifying tokens (city name variants, slug) from the page
+body, hashes what's left, and groups pages whose hash matches within the
+same cluster. A match means two "different" city pages are the same
+content with only the city name swapped — a doorway-page problem that has
+hurt this site's SEO more than once (see reports/seo-audit-fixes-2026-09-03.md
+§3 and the Sep 2026 AB/BC/ON/CO/MA/VT cleanup).
+
+Two page types are checked:
+  - Category subpages ({city}/{category}/index.html) — hashed whole,
+    after stripping nav/footer.
+  - City hub pages ({city}/index.html, detected as any index.html whose
+    directory contains at least one category subdirectory) — hashed
+    whole, after stripping nav/footer AND the rebate-grid block. The
+    rebate-grid (the dollar-amount cards) is legitimately identical
+    across cities on the same utility with the same published program —
+    that's real data, not templating, so it's excluded to avoid false
+    positives. Everything else on a hub page (intro prose, local-programs
+    section, condo/rental notes, FAQ, installer sections) should still be
+    genuinely city-specific.
 
 Run this:
-  - before shipping ANY new city page or new page cluster
+  - before shipping ANY new city page, hub page, or new page cluster
   - as part of CI / pre-push if you wire that up
   - periodically as a standing audit (monthly is reasonable)
 
 Usage:
     python3 scripts/check_duplicate_content.py
     python3 scripts/check_duplicate_content.py --category water-heater
+    python3 scripts/check_duplicate_content.py --hubs-only
     python3 scripts/check_duplicate_content.py --fail-on-duplicates   # exit 1 if any found, for CI
 
 Exit code 0 = clean. Exit code 1 = duplicates found (only with --fail-on-duplicates).
@@ -41,17 +56,20 @@ CATEGORY_DIRS = {
 STRIP_BLOCK_RE = re.compile(
     r"<(nav|footer|header)\b.*?</\1>", re.IGNORECASE | re.DOTALL
 )
+# Hub-page-only: the rebate-amount card grid is legitimately identical
+# across cities sharing one utility/program — real shared data, not a
+# templating shortcut. Strip it before hashing hub pages.
+STRIP_REBATE_GRID_RE = re.compile(
+    r'<div class="rebate-grid">.*?</div>\s*(?=<h2)', re.IGNORECASE | re.DOTALL
+)
 TAG_RE = re.compile(r"<[^>]+>")
 WHITESPACE_RE = re.compile(r"\s+")
 
 
-def city_name_from_path(p: Path) -> str:
-    # category dir's parent is the city dir
-    return p.parent.name
-
-
-def normalize(html: str, city_dir_name: str) -> str:
+def normalize(html: str, city_dir_name: str, strip_rebate_grid: bool = False) -> str:
     html = STRIP_BLOCK_RE.sub("", html)
+    if strip_rebate_grid:
+        html = STRIP_REBATE_GRID_RE.sub("", html)
     # Build a set of plausible city-name surface forms from the slug
     words = city_dir_name.replace("-", " ").split()
     for w in words:
@@ -64,13 +82,22 @@ def normalize(html: str, city_dir_name: str) -> str:
     return text
 
 
+def is_city_dir(d: Path) -> bool:
+    """A city directory is one that has at least one category subdirectory."""
+    try:
+        return any(child.is_dir() and child.name in CATEGORY_DIRS for child in d.iterdir())
+    except OSError:
+        return False
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--category", help="only check this category dir name")
+    ap.add_argument("--category", help="only check this category dir name (category subpages only)")
+    ap.add_argument("--hubs-only", action="store_true", help="only check city hub pages, not category subpages")
     ap.add_argument("--fail-on-duplicates", action="store_true")
     args = ap.parse_args()
 
-    groups = defaultdict(list)  # (region_cluster, category, hash) -> [paths]
+    groups = defaultdict(list)  # (region_cluster, page_type, hash) -> [paths]
 
     for region_root in ("ca", "us"):
         base = ROOT / region_root
@@ -78,16 +105,28 @@ def main():
             continue
         for index_file in base.rglob("index.html"):
             cat_dir = index_file.parent.name
-            if cat_dir not in CATEGORY_DIRS:
-                continue
-            if args.category and cat_dir != args.category:
-                continue
-            city_dir = index_file.parent.parent
-            cluster = str(city_dir.parent.relative_to(ROOT))  # groups siblings under the same metro/region dir
-            html = index_file.read_text(errors="ignore")
-            norm = normalize(html, city_dir.name)
-            h = hashlib.md5(norm.encode()).hexdigest()
-            groups[(cluster, cat_dir, h)].append(index_file.relative_to(ROOT))
+
+            if cat_dir in CATEGORY_DIRS:
+                # Category subpage
+                if args.hubs_only:
+                    continue
+                if args.category and cat_dir != args.category:
+                    continue
+                city_dir = index_file.parent.parent
+                cluster = str(city_dir.parent.relative_to(ROOT))
+                html = index_file.read_text(errors="ignore")
+                norm = normalize(html, city_dir.name, strip_rebate_grid=False)
+                h = hashlib.md5(norm.encode()).hexdigest()
+                groups[(cluster, cat_dir, h)].append(index_file.relative_to(ROOT))
+
+            elif args.category is None and is_city_dir(index_file.parent):
+                # City hub page (city_dir/index.html)
+                city_dir = index_file.parent
+                cluster = str(city_dir.parent.relative_to(ROOT))
+                html = index_file.read_text(errors="ignore")
+                norm = normalize(html, city_dir.name, strip_rebate_grid=True)
+                h = hashlib.md5(norm.encode()).hexdigest()
+                groups[(cluster, "HUB PAGE", h)].append(index_file.relative_to(ROOT))
 
     dupes = {k: v for k, v in groups.items() if len(v) > 1}
 

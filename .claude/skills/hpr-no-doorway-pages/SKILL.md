@@ -23,7 +23,7 @@ A shared intro paragraph or shared boilerplate (nav, footer, generic "how rebate
 
 ## Before publishing any new city page or category subpage batch
 
-- [ ] Run `python3 scripts/check_duplicate_content.py --category <the-category-you're-adding>` (or with no `--category` flag to check everything) **before** committing.
+- [ ] Run `python3 scripts/check_duplicate_content.py --category <the-category-you're-adding>` (or with no `--category` flag to check everything, including city hub pages) **before** committing. `--hubs-only` checks just hub pages. Note: the checker excludes each hub page's rebate-dollar-amount card grid before comparing, since identical dollar figures across cities on the same utility/program are real shared data, not templating — a hub-page duplicate hit means the *prose* (intro, local-programs section, FAQ, condo/rental notes) matched, not the numbers.
 - [ ] If it reports a new duplicate group involving pages you just added, fix it before pushing — don't ship it and plan to fix later. Every prior instance of this bug was shipped, then caught in a later audit, then required a separate cleanup pass. Catching it pre-publish is strictly cheaper.
 - [ ] If you're generating a batch across many cities (agent-driven or scripted), do not let the generation pull from one shared paragraph bank with find-replace as the only variation. Pull real numbers from `city-rebate-lookup.json` per city and write the local-specific note per city, not once for the cluster.
 - [ ] Apply the `no-ai-slop` skill standard to any new prose — this project bans invented "local flavor" filler as much as it bans templated duplication; the fix is real specifics, not padded language that merely looks distinct.

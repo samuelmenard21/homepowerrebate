@@ -49,6 +49,14 @@ EXCLUDE_FILENAMES = {
     "CITY_PAGE_TEMPLATE_OPTIMIZED.html",
     "ONTARIO_CITY_PAGE_TEMPLATE.html",
     "nav-footer.html",
+    # Legacy root-level files kept on disk only so their _redirects rule
+    # (each 301s to a different, unrelated slug) still has something to match —
+    # the extensionless form of the filename is not their real canonical URL.
+    "blog-bc-hydro-vs-fortisbc-rebates.html",
+    "blog-furnace-vs-heat-pump-which-qualifies-rebate.html",
+    "blog-heat-pump-vs-ac-cost-rebates.html",
+    "blog-island-vs-mainland-bc-heat-pump.html",
+    "blog-kelowna-vs-kamloops-solar.html",
 }
 
 
@@ -56,7 +64,13 @@ def url_for(path):
     rel = os.path.relpath(path, ROOT)
     if rel == "index.html":
         return "/"
-    rel = rel[: -len("index.html")] if rel.endswith("index.html") else rel
+    if rel.endswith("index.html"):
+        rel = rel[: -len("index.html")]
+    elif rel.endswith(".html"):
+        # Cloudflare Pages serves these at the extensionless path and
+        # redirects the .html request there — list the canonical URL
+        # so the sitemap doesn't send Google to a page that just redirects.
+        rel = rel[: -len(".html")]
     if not rel.startswith("/"):
         rel = "/" + rel
     return rel

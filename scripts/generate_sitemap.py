@@ -57,6 +57,16 @@ EXCLUDE_FILENAMES = {
     "blog-heat-pump-vs-ac-cost-rebates.html",
     "blog-island-vs-mainland-bc-heat-pump.html",
     "blog-kelowna-vs-kamloops-solar.html",
+    # Internal component/dev-preview pages — real files kept for reference but
+    # never meant to be public or crawled, found 2026-09-06 by a Search
+    # Console audit that was picking them up as if they were live content.
+    "city-page-template-with-carousel.html",
+    "installer-carousel-component.html",
+    "installer-carousel.html",
+    "solar-carousel.html",
+    "unified-carousel.html",
+    "pinterest-pin-templates.html",
+    "preview.html",
 }
 
 

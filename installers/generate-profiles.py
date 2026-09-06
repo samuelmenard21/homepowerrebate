@@ -62,15 +62,20 @@ ON_CITY_SLUGS = {
     "oakville": "oakville", "oshawa": "oshawa", "whitby": "whitby",
     "burlington": "burlington", "cambridge": "cambridge",
     "greater sudbury": "greater-sudbury",
+    "guelph": "guelph", "kingston": "kingston", "niagara falls": "niagara-falls",
+    "peterborough": "peterborough", "sault ste marie": "sault-ste-marie",
+    "thunder bay": "thunder-bay", "timmins": "timmins",
 }
 
 AB_CITY_SLUGS = {
     "calgary": "calgary", "edmonton": "edmonton", "red deer": "red-deer",
     "lethbridge": "lethbridge", "st albert": "st-albert",
+    "fort mcmurray": "fort-mcmurray",
 }
 
 NS_CITY_SLUGS = {
     "halifax": "halifax",
+    "cape breton": "cape-breton",
 }
 
 MA_CITY_SLUGS = {
@@ -78,6 +83,7 @@ MA_CITY_SLUGS = {
     "cambridge": "cambridge", "lowell": "lowell", "brockton": "brockton",
     "new bedford": "new-bedford", "quincy": "quincy", "lynn": "lynn",
     "fall river": "fall-river", "newton": "newton", "somerville": "somerville",
+    "lawrence": "lawrence",
 }
 
 # What each service type actually unlocks. This is the part a Maps listing

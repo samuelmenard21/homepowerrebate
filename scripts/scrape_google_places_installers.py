@@ -141,6 +141,13 @@ ONTARIO_CITIES = {
     "Burlington": {"lat": 43.3255, "lng": -79.7990},
     "Cambridge": {"lat": 43.3616, "lng": -80.3144},
     "Greater Sudbury": {"lat": 46.4917, "lng": -80.9930},
+    "Guelph": {"lat": 43.5448, "lng": -80.2482},
+    "Kingston": {"lat": 44.2312, "lng": -76.4860},
+    "Niagara Falls": {"lat": 43.0896, "lng": -79.0849},
+    "Peterborough": {"lat": 44.3091, "lng": -78.3197},
+    "Sault Ste. Marie": {"lat": 46.5136, "lng": -84.3358},
+    "Thunder Bay": {"lat": 48.3809, "lng": -89.2477},
+    "Timmins": {"lat": 48.4758, "lng": -81.3305},
 }
 
 ALBERTA_CITIES = {
@@ -149,10 +156,12 @@ ALBERTA_CITIES = {
     "Red Deer": {"lat": 52.2681, "lng": -113.8112},
     "Lethbridge": {"lat": 49.6956, "lng": -112.8451},
     "St. Albert": {"lat": 53.6303, "lng": -113.6256},
+    "Fort McMurray": {"lat": 56.7267, "lng": -111.3790},
 }
 
 NOVA_SCOTIA_CITIES = {
     "Halifax": {"lat": 44.6488, "lng": -63.5752},
+    "Cape Breton": {"lat": 46.1368, "lng": -60.1942},
 }
 
 MASSACHUSETTS_CITIES = {
@@ -168,6 +177,7 @@ MASSACHUSETTS_CITIES = {
     "Fall River": {"lat": 41.7015, "lng": -71.1550},
     "Newton": {"lat": 42.3370, "lng": -71.2092},
     "Somerville": {"lat": 42.3876, "lng": -71.0995},
+    "Lawrence": {"lat": 42.7070, "lng": -71.1631},
 }
 
 NY_CITIES = {
@@ -338,6 +348,12 @@ CITY_ADDRESS_ALIASES = {
     # --debug 2026-09-02: 6+ genuine Mt Vernon, NY HVAC businesses rejected
     # this way per query).
     "Mount Vernon": ["mount vernon,", "mt vernon,"],
+    # Cape Breton Regional Municipality is an amalgamated municipality — real
+    # business addresses use the constituent town/community name (Sydney,
+    # Glace Bay, etc.), never the literal string "Cape Breton". Same failure
+    # mode as the NYC/Islip/Brookhaven cases above.
+    "Cape Breton": ["sydney,", "glace bay,", "north sydney,", "sydney mines,",
+                     "new waterford,", "dominion,", "louisbourg,", "membertou,"],
 }
 
 

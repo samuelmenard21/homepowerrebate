@@ -565,10 +565,27 @@ async function runDripQueue(env) {
     `SELECT * FROM subscribers WHERE unsubscribed = 0 AND step IN (1, 2) AND next_send_at IS NOT NULL AND next_send_at <= ? LIMIT 200`
   ).bind(nowIso).all();
 
+  // Step 1's email only has content once real homeowner-submitted cost data
+  // exists (see sendLocalComparisonEmail) — otherwise it's just an empty
+  // "we're still building this, help us out" ask. We're not actively
+  // collecting that data right now, so skip the send (but still advance the
+  // subscriber) until outcomes has real rows.
+  let hasOutcomeData = false;
+  if (env.OUTCOMES_DB) {
+    try {
+      const row = await env.OUTCOMES_DB.prepare('SELECT COUNT(*) as total FROM outcomes').first();
+      hasOutcomeData = (row?.total || 0) > 0;
+    } catch (err) {
+      console.error('Outcome-data check failed:', err.message || err);
+    }
+  }
+
   for (const sub of due.results || []) {
     try {
       if (sub.step === 1) {
-        await sendLocalComparisonEmail(sub, env);
+        if (hasOutcomeData) {
+          await sendLocalComparisonEmail(sub, env);
+        }
         const nextSendAt = new Date(Date.now() + 3 * DRIP_DAY_MS).toISOString();
         await env.OUTCOMES_DB.prepare('UPDATE subscribers SET step = 2, next_send_at = ? WHERE id = ?').bind(nextSendAt, sub.id).run();
       } else if (sub.step === 2) {

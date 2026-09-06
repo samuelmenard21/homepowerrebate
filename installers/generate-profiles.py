@@ -745,47 +745,21 @@ def run_province(prov_key, args, emails):
             "Last Updated": inst.get("Last Updated", ""),
         })
 
-    # BC's installers/json/*.json files are enriched by a separate process
-    # (bhbc_programs, bhbc_badge, recovered email — fields this script doesn't
-    # know about) that this script must never clobber. Learned the hard way:
-    # running this unconditionally for BC silently stripped that enrichment
-    # back to the plain fields below. Only write the internal JSON for
-    # provinces without a richer external source — Ontario, Alberta, Nova
-    # Scotia, and Massachusetts all use this script as their only JSON source.
-    if not args.dry_run and url_rows and prov_key in ("on", "ab", "ns", "ma"):
-        # Generate per-city JSON files for the carousel to consume. Each city
-        # gets its own file with all installers in that city, sorted by rating.
-        json_dir = INSTALLERS_DIR / cfg["json_dir"]
-        json_dir.mkdir(parents=True, exist_ok=True)
-
-        by_city = defaultdict(list)
-        for inst in installers:
-            city_slug = city_slugs.get(normalize_city(inst["City"]))
-            if not city_slug:
-                continue
-            slug = slugify(inst["Business Name"])
-            inst_email = emails.get((inst["Business Name"].strip().lower(), inst["City"].strip().lower()), "")
-            by_city[city_slug].append({
-                "name": inst["Business Name"].strip(),
-                "rating": float(inst.get("Google Rating") or 0),
-                "reviews": int(inst.get("Review Count") or 0),
-                "location": inst["City"].strip(),
-                "phone": inst.get("Phone", ""),
-                "email": inst_email,
-                "website": inst.get("Website", ""),
-                "image_url": inst.get("Image URL", ""),
-                "specialty": " & ".join(cfg["rebate_context"][k]["label"] for k in sorted(inst["_kinds"])),
-                "description": (f"HPCN-certified. {int(inst.get('Review Count') or 0)} reviews on Google."
-                                 if cfg["region_abbrev"] == "BC" else
-                                 f"{int(inst.get('Review Count') or 0)} reviews on Google."),
-                "profileUrl": f"{SITE_URL}{cfg['profile_prefix']}/{city_slug}/{slug}/",
-                "recommended": False
-            })
-
-        for city_slug, installers_in_city in by_city.items():
-            installers_in_city.sort(key=lambda x: (x["rating"], x["reviews"]), reverse=True)
-            json_file = json_dir / f"{city_slug}.json"
-            json_file.write_text(json.dumps(installers_in_city, indent=2))
+    # THIS SCRIPT MUST NEVER WRITE installers/json/**. It used to, gated by
+    # `prov_key in ("on", "ab", "ns", "ma")` on the theory that those regions
+    # had no richer external source — that theory was wrong. Confirmed
+    # 2026-09-06: every one of those regions' real JSON (gmaps_url, rehosted
+    # photo enrichment) is actually produced by the scraper pipeline
+    # (scripts/build_new_city_installer_json.py / generate_installer_json_
+    # from_real.py), matching what the site's carousel actually fetches
+    # (installers/json/{region}/{city}.json + solar/{city}.json — see
+    # ca/on/burlington/index.html's unified-carousel fetch). Running this
+    # script with --province=all silently downgraded Toronto/Burlington/
+    # Calgary/Boston/etc.'s real JSON to a plainer schema and dropped
+    # gmaps_url + photo enrichment — caught before commit, reverted, but
+    # don't reintroduce this. If per-city profile-page JSON is ever needed
+    # again, write it to a clearly separate path, never installers/json/.
+    pass
 
     print(f"[{prov_key}] {written} profile page(s) {'would be ' if args.dry_run else ''}written to {out_dir.relative_to(ROOT)}/")
     if skipped:

@@ -1029,21 +1029,8 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 <!-- CANONICAL-FOOTER-END -->
 
 <script>
-function toggleCityDropdown() {
-  var modal = document.getElementById('city-dropdown-modal');
-  if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
-}
-function showProvinceCities(prov) {
-  var regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny', 'co', 'vt'];
-  regions.forEach(function(r) {
-    var panel = document.getElementById('province-cities-' + r);
-    var tab = document.getElementById('province-tab-' + r);
-    if (!panel || !tab) return;
-    panel.style.display = (prov === r) ? 'grid' : 'none';
-    tab.style.background = (prov === r) ? 'var(--teal-deep)' : '#fff';
-    tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
-  });
-}
+
+
 var __nlform = document.getElementById('newsletter-form');
 if (__nlform) {
   __nlform.addEventListener('submit', function(e) {
@@ -1108,7 +1095,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     const response = await fetch('https://leads.homepowerrebate.com/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, city, page })
+      body: JSON.stringify({ email, city, page, province: (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1]?.toUpperCase() || '' })
     });
     if (!response.ok) throw new Error('Subscription failed');
     responseEl.textContent = "You're in! Check your inbox for a welcome email.";

@@ -310,6 +310,18 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<style>
+/* CANONICAL-BREADCRUMB-CSS-START */
+.hpr-breadcrumb { max-width: 1180px; margin: 0 auto; padding: 14px 28px; font-size: 13px; color: var(--ink-soft); }
+.hpr-breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0; margin: 0; padding: 0; }
+.hpr-breadcrumb li { display: flex; align-items: center; }
+.hpr-breadcrumb li:not(:last-child)::after { content: '/'; margin: 0 8px; color: var(--rule); }
+.hpr-breadcrumb a { color: var(--ink-soft); text-decoration: none; }
+.hpr-breadcrumb a:hover { color: var(--teal-deep); text-decoration: underline; }
+.hpr-breadcrumb li[aria-current="page"] { color: var(--ink); font-weight: 600; }
+@media (max-width: 600px) { .hpr-breadcrumb { padding: 10px 20px; font-size: 12px; } }
+/* CANONICAL-BREADCRUMB-CSS-END */
+</style>
 </head>
 <body>
 
@@ -400,6 +412,9 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
      so the dropdown opens to the right tab, and add a highlighted/active style to the
      current city's <a> for ontario — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
+<!-- CANONICAL-BREADCRUMB-START -->
+<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ca">California</a></li><li aria-current="page">Ontario</li></ol></nav>
+<!-- CANONICAL-BREADCRUMB-END -->
 
 <script>
 

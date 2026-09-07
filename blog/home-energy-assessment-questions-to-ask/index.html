@@ -153,6 +153,18 @@ footer a { color: rgba(250,247,242,.75); }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<style>
+/* CANONICAL-BREADCRUMB-CSS-START */
+.hpr-breadcrumb { max-width: 1180px; margin: 0 auto; padding: 14px 28px; font-size: 13px; color: var(--ink-soft); }
+.hpr-breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0; margin: 0; padding: 0; }
+.hpr-breadcrumb li { display: flex; align-items: center; }
+.hpr-breadcrumb li:not(:last-child)::after { content: '/'; margin: 0 8px; color: var(--rule); }
+.hpr-breadcrumb a { color: var(--ink-soft); text-decoration: none; }
+.hpr-breadcrumb a:hover { color: var(--teal-deep); text-decoration: underline; }
+.hpr-breadcrumb li[aria-current="page"] { color: var(--ink); font-weight: 600; }
+@media (max-width: 600px) { .hpr-breadcrumb { padding: 10px 20px; font-size: 12px; } }
+/* CANONICAL-BREADCRUMB-CSS-END */
+</style>
 </head>
 <body>
 
@@ -242,6 +254,9 @@ footer a { color: rgba(250,247,242,.75); }
      so the dropdown opens to the right tab, and add a highlighted/active style to the
      current city's <a> for  — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
+<!-- CANONICAL-BREADCRUMB-START -->
+<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">Home Energy Assessment: Questions to Ask &amp; What to Expect</li></ol></nav>
+<!-- CANONICAL-BREADCRUMB-END -->
 
 <div style="padding: 12px 28px; background: #fff; border-bottom: 1px solid var(--rule); font-size: 12px;">
   <div style="max-width: 760px; margin: 0 auto; display: flex; align-items: center; gap: 8px; color: var(--ink-soft);">

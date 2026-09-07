@@ -124,30 +124,35 @@ def get_breadcrumb_context(rel_path: Path):
     return code, city_leaf, category
 
 
-def render_breadcrumb(code, city_leaf, category):
-    items = [('<a href="/">Home</a>', False)]
+def region_city_category_items(code, city_leaf, category):
+    """Build the (label, url_or_None) trail for a ca/<region>/... or
+    us/<region>/... page — url_or_None is None for the current page."""
+    items = []
     region_label = REGION_LABELS.get(code, code.upper())
     region_url = "/" + REGION_KEY_BY_CODE[code]
-    at_region_page = city_leaf is None
-    if at_region_page:
-        items.append((html.escape(region_label), True))
+    if city_leaf is None:
+        items.append((region_label, None))
     else:
-        items.append((f'<a href="{region_url}">{html.escape(region_label)}</a>', False))
+        items.append((region_label, region_url))
         city_label = CITY_LABELS.get(code, {}).get(city_leaf, city_leaf.replace("-", " ").title())
         city_url = CITY_URLS.get(code, {}).get(city_leaf, f"{region_url}/{city_leaf}/")
         if category is None:
-            items.append((html.escape(city_label), True))
+            items.append((city_label, None))
         else:
-            items.append((f'<a href="{city_url}">{html.escape(city_label)}</a>', False))
+            items.append((city_label, city_url))
             cat_label = CATEGORY_LABELS.get(category, category.replace("-", " ").title())
-            items.append((html.escape(cat_label), True))
+            items.append((cat_label, None))
+    return items
 
-    lis = []
-    for text, is_current in items:
-        if is_current:
-            lis.append(f'<li aria-current="page">{text}</li>')
+
+def render_breadcrumb(items):
+    """items: list of (label, url_or_None); url None marks the current page."""
+    lis = [f'<li><a href="/">Home</a></li>']
+    for label, url in items:
+        if url:
+            lis.append(f'<li><a href="{url}">{html.escape(label)}</a></li>')
         else:
-            lis.append(f"<li>{text}</li>")
+            lis.append(f'<li aria-current="page">{html.escape(label)}</li>')
     inner = "".join(lis)
     return (
         f'{BC_MARKER_START}\n'
@@ -164,17 +169,106 @@ def ensure_css(content: str) -> str:
     return content
 
 
+# Top-level sections that get a simple "Home > Section" (or deeper) trail.
+# label=None means: derive it from the page's own <h1> (falling back to a
+# title-cased slug) — used for individual posts/guides/questions.
+SECTION_LABELS = {
+    "blog": "Blog",
+    "guides": "Guides",
+    "installers": "Find an Installer",
+    "questions": "Rebate Questions",
+    "partners": "Partners",
+    "contact": "Contact",
+    "about": "About",
+    "privacy": "Privacy Policy",
+    "terms": "Terms",
+    "calculator": "Heat Pump Savings Calculator",
+    "share-your-cost": "Share Your Cost",
+    "retrofit-assessment": "Retrofit Assessment",
+    "powerscore": "PowerScore",
+    "stacking-calculator": "Rebate Stacking Calculator",
+}
+
+H1_RE = re.compile(r"<h1[^>]*>(.*?)</h1>", re.DOTALL | re.IGNORECASE)
+TAG_RE = re.compile(r"<[^>]+>")
+
+
+def derive_title(content: str, slug: str) -> str:
+    m = H1_RE.search(content)
+    if m:
+        text = TAG_RE.sub("", m.group(1))
+        text = re.sub(r"\s+", " ", text).strip()
+        if text and len(text) <= 70:
+            return text
+    return slug.replace("-", " ").title()
+
+
+def get_other_section_items(rel_path: Path, content: str):
+    """Breadcrumb items for everything outside ca/us: blog, guides,
+    installers, questions, powerscore, stacking-calculator, static pages."""
+    parts = list(rel_path.parts)
+    if parts and parts[-1] == "index.html":
+        parts = parts[:-1]
+    elif parts and parts[-1].endswith(".html"):
+        parts[-1] = parts[-1][: -len(".html")]
+    if not parts:
+        return None
+
+    top = parts[0]
+    if top not in SECTION_LABELS:
+        return None
+    if top == "installers" and len(parts) >= 2 and parts[1] == "profiles":
+        return None  # already has its own ip-breadcrumb
+
+    section_label = SECTION_LABELS[top]
+
+    # stacking-calculator/<ca|us>/<region>/[<city>/] — reuse the region/city
+    # trail, prefixed with the calculator section.
+    if top == "stacking-calculator" and len(parts) >= 3 and parts[1] in ("ca", "us"):
+        code = REGION_PREFIX_TO_CODE.get((parts[1], parts[2]))
+        if code:
+            # no region-level index page exists under stacking-calculator/,
+            # only /stacking-calculator/<region>/<city>/ — so the region
+            # itself isn't a clickable crumb, just Section > City.
+            calc_url = "/stacking-calculator/"
+            items = [(section_label, calc_url)]
+            city_leaf = parts[3] if len(parts) >= 4 else None
+            region_label = REGION_LABELS.get(code, code.upper())
+            if city_leaf is None:
+                items.append((region_label, None))
+            else:
+                city_label = CITY_LABELS.get(code, {}).get(city_leaf, city_leaf.replace("-", " ").title())
+                items.append((f"{region_label} — {city_label}", None))
+            return items
+
+    if len(parts) == 1:
+        # the section's own index page (blog/, guides/, powerscore/, ...)
+        return [(section_label, None)]
+
+    # a leaf page one level under a section (blog/<slug>, guides/<slug>,
+    # questions/<slug>) — Home > Section > <derived title>
+    leaf_slug = parts[-1]
+    section_url = "/" + top + "/" if top != "installers" else "/installers"
+    title = derive_title(content, leaf_slug)
+    return [(section_label, section_url), (title, None)]
+
+
 def process_file(path: Path, dry_run: bool):
     rel = path.relative_to(ROOT)
-    ctx = get_breadcrumb_context(rel)
-    if ctx is None:
-        return None
-    code, city_leaf, category = ctx
     content = path.read_text(errors="ignore")
     if "<html" not in content.lower():
         return None
 
-    breadcrumb_html = render_breadcrumb(code, city_leaf, category)
+    ctx = get_breadcrumb_context(rel)
+    if ctx is not None:
+        code, city_leaf, category = ctx
+        items = region_city_category_items(code, city_leaf, category)
+    else:
+        items = get_other_section_items(rel, content)
+        if items is None:
+            return None
+
+    breadcrumb_html = render_breadcrumb(items)
     original = content
 
     if OLD_BC_RE.search(content):
@@ -197,13 +291,21 @@ def process_file(path: Path, dry_run: bool):
     return {"path": str(rel), "action": action, "changed": content != original}
 
 
+TARGET_TOP_DIRS = {"ca", "us"} | set(SECTION_LABELS)
+
+
 def find_pages():
     pages = []
     for p in ROOT.rglob("*.html"):
         rel = p.relative_to(ROOT)
         if rel.parts[0] in EXCLUDE_DIRS or any(part in EXCLUDE_DIRS for part in rel.parts):
             continue
-        if rel.parts[0] not in ("ca", "us"):
+        if len(rel.parts) == 1:
+            # root-level flat files like about.html, privacy.html, terms.html
+            if rel.stem in SECTION_LABELS:
+                pages.append(p)
+            continue
+        if rel.parts[0] not in TARGET_TOP_DIRS:
             continue
         pages.append(p)
     return sorted(pages)

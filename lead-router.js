@@ -334,7 +334,7 @@ async function handleLeadSubmit(request, env) {
     income_tier: cleanString(payload.income_tier || 'not specified'),
     // The single most important field: what the homeowner actually wants.
     // Previously captured by the frontend and then silently dropped.
-    upgrades: Array.isArray(payload.upgrades) ? payload.upgrades.join(', ') : cleanString(payload.upgrades || ''),
+    upgrades: formatUpgrades(payload.upgrades),
     notes: cleanString(payload.notes || ''),
     estimated_value: cleanString(payload.estimated_rebates || ''),
     total_cost: cleanString(payload.total_cost || 'not specified'),
@@ -1046,7 +1046,7 @@ async function handleEstimateLead(request, env) {
     utility: cleanString(p.utility || 'not specified'),
     water_heating: cleanString(p.water_heating || 'not specified'),
     year_built: cleanString(p.year_built || 'not specified'),
-    upgrades: Array.isArray(p.upgrades) ? p.upgrades.join(', ') : cleanString(p.upgrades || ''),
+    upgrades: formatUpgrades(p.upgrades),
     notes: cleanString(p.notes || ''),
     estimated_value: cleanString(String(p.estimate || p.estimated_rebates || '')),
     total_cost: cleanString(p.total_cost || 'not specified'),
@@ -1813,6 +1813,28 @@ function jsonResponse(data, status = 200) {
 
 function cleanString(s) {
   return String(s || '').trim().replace(/[\r\n\t]/g, ' ').slice(0, 500);
+}
+
+// Retrofit-assessment checkbox IDs -> plain-language labels for anything
+// shown to a homeowner, installer, or in ops email. No acronyms — spell
+// everything out (e.g. "Heat Recovery Ventilator", not "HRV").
+const UPGRADE_LABELS = {
+  electrical: 'Electrical Panel Upgrade',
+  insulation: 'Insulation and Air Sealing',
+  solar: 'Solar Panels',
+  battery: 'Home Battery',
+  heatpump: 'Heat Pump (Space Heating)',
+  hphw: 'Heat Pump Water Heater',
+  thermostat: 'Smart Thermostat',
+  hrv: 'Heat Recovery Ventilator',
+  evcharger: 'Electric Vehicle Charger'
+};
+
+function formatUpgrades(raw) {
+  const items = Array.isArray(raw)
+    ? raw
+    : String(raw || '').split(',').map(s => s.trim()).filter(Boolean);
+  return items.map(id => UPGRADE_LABELS[id.toLowerCase()] || cleanString(id)).join(', ');
 }
 
 // Escape user-supplied values before putting them in notification email HTML.

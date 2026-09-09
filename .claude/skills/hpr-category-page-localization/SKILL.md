@@ -50,6 +50,56 @@ Before doing any new research, for every category page:
 This step requires no web research and can be scripted across every
 category page in every region immediately.
 
+## Templating was tried and rejected — write bespoke prose instead
+
+**Update 2026-09-09:** A first pass built two scripted sections (utility
+name, climate data) and applied them mechanically sitewide using one fixed
+sentence template per section, with only the numbers/names substituted.
+Measured result: Burlington vs Vaughan heat-pump only moved from 90% to
+95% city-normalized text similarity with the climate section added —
+barely anything — because ~95% of the actual *words* were still identical
+across every city, just with different numbers dropped in. That is a
+different flavor of the same "Data Void" problem this playbook exists to
+fix, not a real solution to it.
+
+**Decision: every page must be written with genuinely distinct prose —
+different sentence structure, different opening, different local color —
+not one template with variables swapped in.** The real, verified data
+(utility name, climate figures, solar figures) is the grounding *fact
+set* a page draws from, not literal copy to paste into a fixed sentence.
+This is agent-written content, not human-written — the constraint is
+variety and genuine local framing, not who authors it.
+
+Three worked examples exist as the quality bar (Kitchener achieved 96%→45%
+similarity, the target every page should aim for; Burlington and Vaughan
+follow the same bar with real per-city color — Burlington's lake-effect
+framing, Vaughan's Alectra-merger context):
+- `ca/on/kitchener/heat-pump/index.html`
+- `ca/on/burlington/heat-pump/index.html`
+- `ca/on/vaughan/heat-pump/index.html`
+
+Notice what varies between them: the opening sentence, which fact leads,
+how the utility section is framed (panel capacity vs. process speed vs.
+merger history), how the climate section is framed (lake-effect moderation
+vs. straightforward 10-year average vs. distance-from-Toronto framing).
+The underlying facts (real utility name, real 10-year climate data) are
+non-negotiable; the sentence construction around them should never repeat
+the same skeleton twice.
+
+**Verification bar**: after writing a batch, run
+`python3 scripts/check_duplicate_content.py --category <cat> --near-duplicate-threshold 0.90`
+against the region/category you just wrote. A page that still shows up
+paired with a sibling means the prose wasn't varied enough — rewrite it,
+don't just add another sentence. Aim for each page landing meaningfully
+below the pairs it used to match at 90%+ — Kitchener's 45% is the proof
+point, not a hard ceiling to hit exactly.
+
+**What NOT to do**: don't build a second/third/fourth Python string
+template and rotate between them. That's the same failure mode with more
+steps — a fixed sentence structure repeated across N pages instead of 1.
+If you're writing a Python f-string with the prose baked in, stop and
+write the prose directly in the page instead.
+
 ## Category-specific real-data layer (do this after the baseline fix)
 
 The baseline fix (utility name) applies uniformly. Beyond that, each

@@ -18,11 +18,11 @@ INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_d
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('bc_victoria', 'bc', 'Victoria', 'CA', 'BC Hydro', 3200);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_barrie', 'on', 'Barrie', 'CA', 'Barrie Hydro', 5200);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_brampton', 'on', 'Brampton', 'CA', 'Alectra Utilities', 4500);
-INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_cambridge', 'on', 'Cambridge', 'CA', 'Kitchener-Wilmot Hydro', 5100);
+INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_cambridge', 'on', 'Cambridge', 'CA', 'GrandBridge Energy', 5100);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_guelph', 'on', 'Guelph', 'CA', 'Guelph Hydro', 5000);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_hamilton', 'on', 'Hamilton', 'CA', 'Alectra Utilities', 4700);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_kingston', 'on', 'Kingston', 'CA', 'Utilities Kingston', 4900);
-INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_kitchener_waterloo', 'on', 'Kitchener Waterloo', 'CA', 'Kitchener-Wilmot Hydro', 5100);
+INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_kitchener_waterloo', 'on', 'Kitchener Waterloo', 'CA', 'Enova Power', 5100);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_london', 'on', 'London', 'CA', 'London Hydro', 5000);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_markham', 'on', 'Markham', 'CA', 'Alectra Utilities', 4600);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_mississauga', 'on', 'Mississauga', 'CA', 'Alectra Utilities', 4500);

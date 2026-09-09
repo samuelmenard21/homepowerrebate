@@ -206,6 +206,7 @@ export default {
   },
   async scheduled(event, env, ctx) {
     ctx.waitUntil(runDripQueue(env));
+    ctx.waitUntil(runLeadFollowupQueue(env));
   }
 };
 
@@ -227,6 +228,11 @@ async function handleFetch(request, env, ctx) {
     if (path === '/unsubscribe') {
       return request.method === 'GET'
         ? handleUnsubscribe(request, env)
+        : jsonResponse({ error: 'Method not allowed' }, 405);
+    }
+    if (path === '/lead-followup') {
+      return request.method === 'GET'
+        ? handleLeadFollowupResponse(request, env)
         : jsonResponse({ error: 'Method not allowed' }, 405);
     }
 
@@ -367,11 +373,12 @@ async function handleLeadSubmit(request, env) {
   ];
   if (hasInstaller) {
     tasks.unshift(sendInstallerEmail(lead, installer, env));
+    tasks.push(trackLeadForFollowup(lead, installer, env));
   }
 
   const results = await Promise.allSettled(tasks);
   const taskNames = hasInstaller
-    ? ['installer', 'confirmation', 'ops', 'sheet', 'drip']
+    ? ['installer', 'confirmation', 'ops', 'sheet', 'drip', 'followup-tracking']
     : ['confirmation', 'ops', 'sheet', 'drip'];
 
   const failures = results
@@ -610,6 +617,216 @@ async function handleUnsubscribe(request, env) {
        <p>No more emails from this sequence. If that was a mistake, just resubmit the calculator on <a href="https://homepowerrebate.com">homepowerrebate.com</a>.</p>
      </body></html>`,
     { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8', ...CORS_HEADERS } }
+  );
+}
+
+// ===========================================================================
+// LEAD FOLLOW-UP — installer reminder at +24h, homeowner check-in at +2
+// business days (sent once, never repeated)
+// ===========================================================================
+// Table: leads (OUTCOMES_DB, see schema-leads.sql). Only tracked when the
+// lead actually routed to a real installer — an unassigned lead has nothing
+// to follow up on.
+
+function addBusinessDays(date, days) {
+  const d = new Date(date.getTime());
+  let added = 0;
+  while (added < days) {
+    d.setDate(d.getDate() + 1);
+    const day = d.getDay(); // 0 = Sun, 6 = Sat
+    if (day !== 0 && day !== 6) added++;
+  }
+  return d;
+}
+
+async function trackLeadForFollowup(lead, installer, env) {
+  if (!env.OUTCOMES_DB) return;
+  const now = new Date();
+  const reminderAt = new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString();
+  const followupAt = addBusinessDays(now, 2).toISOString();
+
+  await env.OUTCOMES_DB.prepare(
+    `INSERT INTO leads
+      (id, email, firstname, phone, city, province, service, installer_name, installer_email, installer_phone,
+       created_at, installer_reminder_send_at, followup_send_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  ).bind(
+    lead.lead_id, lead.email, lead.firstname, lead.phone || '', lead.city, lead.province || 'BC', lead.service || 'heat-pump',
+    installer.name, installer.email, installer.phone || '',
+    now.toISOString(), reminderAt, followupAt
+  ).run();
+}
+
+// Called by the daily cron alongside runDripQueue. Sends whichever of the
+// two one-time touches (installer reminder, homeowner follow-up) is due.
+async function runLeadFollowupQueue(env) {
+  if (!env.OUTCOMES_DB || !env.RESEND_API_KEY) return;
+  const nowIso = new Date().toISOString();
+
+  const dueReminders = await env.OUTCOMES_DB.prepare(
+    `SELECT * FROM leads WHERE installer_reminder_sent_at IS NULL
+       AND installer_reminder_send_at IS NOT NULL AND installer_reminder_send_at <= ? LIMIT 200`
+  ).bind(nowIso).all();
+
+  for (const row of dueReminders.results || []) {
+    try {
+      await sendInstallerReminderEmail(row, env);
+      await env.OUTCOMES_DB.prepare('UPDATE leads SET installer_reminder_sent_at = ? WHERE id = ?')
+        .bind(new Date().toISOString(), row.id).run();
+    } catch (err) {
+      console.error(`Installer reminder failed for lead ${row.id}:`, err.message || err);
+    }
+  }
+
+  const dueFollowups = await env.OUTCOMES_DB.prepare(
+    `SELECT * FROM leads WHERE followup_sent_at IS NULL
+       AND followup_send_at IS NOT NULL AND followup_send_at <= ? LIMIT 200`
+  ).bind(nowIso).all();
+
+  for (const row of dueFollowups.results || []) {
+    try {
+      await sendHomeownerFollowupEmail(row, env);
+      await env.OUTCOMES_DB.prepare('UPDATE leads SET followup_sent_at = ? WHERE id = ?')
+        .bind(new Date().toISOString(), row.id).run();
+    } catch (err) {
+      console.error(`Homeowner follow-up failed for lead ${row.id}:`, err.message || err);
+    }
+  }
+}
+
+async function sendInstallerReminderEmail(lead, env) {
+  if (!lead.installer_email || /example\.com$/i.test(lead.installer_email)) return;
+  const fn = escapeHtml(lead.firstname), ct = escapeHtml(capitalize(lead.city));
+  return resendEmail(env.RESEND_API_KEY, {
+    from: 'HomePowerRebate <leads@homepowerrebate.com>',
+    to: lead.installer_email,
+    bcc: env.OPS_EMAIL || undefined,
+    reply_to: lead.email,
+    subject: `Reminder: ${fn} in ${ct} is still waiting to hear from you`,
+    html: `
+      <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:560px;margin:0 auto;color:#0a2a2e;">
+        <div style="background:#faf7f2;padding:24px;border-radius:14px;border:1px solid #d9d0c1;">
+          <p style="font-size:15px;line-height:1.6;color:#1a3d42;margin:0 0 16px;">
+            Quick nudge — <strong>${fn}</strong> in <strong>${ct}</strong> requested a quote from you via HomePowerRebate.com about 24 hours ago. If you haven't reached out yet, now's a good time.
+          </p>
+          <div style="text-align:center;margin:20px 0;">
+            <a href="tel:${escapeHtml(lead.phone || '')}" style="display:inline-block;background:#d4751c;color:#fff;padding:12px 26px;border-radius:999px;text-decoration:none;font-weight:600;">Call ${escapeHtml(lead.phone || 'them')}</a>
+          </div>
+          <p style="font-size:13px;color:#6b7d80;margin:0;">Already contacted them? No action needed — this is a one-time reminder, not a repeating nag.</p>
+        </div>
+      </div>`
+  });
+}
+
+async function sendHomeownerFollowupEmail(lead, env) {
+  const fn = escapeHtml(lead.firstname || 'there'), inst = escapeHtml(lead.installer_name || 'the installer');
+  const base = `https://leads.homepowerrebate.com/lead-followup?id=${lead.id}`;
+  return resendEmail(env.RESEND_API_KEY, {
+    from: 'HomePowerRebate <hello@homepowerrebate.com>',
+    to: lead.email,
+    subject: `${fn}, did ${lead.installer_name || 'the installer'} reach out?`,
+    html: `
+      <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:560px;margin:0 auto;color:#0a2a2e;">
+        <div style="background:#faf7f2;padding:28px;border-radius:14px;border:1px solid #d9d0c1;">
+          <p style="font-size:15px;line-height:1.6;color:#1a3d42;margin:0 0 20px;">
+            Hi ${fn} — a couple of days ago we sent your rebate details to <strong>${inst}</strong>. Just checking in: did they contact you?
+          </p>
+          <div style="display:flex;gap:12px;justify-content:center;margin:24px 0;">
+            <a href="${base}&response=yes" style="flex:1;max-width:200px;text-align:center;display:inline-block;background:#2d6a4f;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:600;">Yes, they contacted me</a>
+            <a href="${base}&response=no" style="flex:1;max-width:200px;text-align:center;display:inline-block;background:#0a2a2e;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:600;">No, I haven't heard anything</a>
+          </div>
+          <p style="font-size:13px;color:#6b7d80;text-align:center;margin:0;">This is the only check-in email we'll send about this lead.</p>
+        </div>
+      </div>`
+  });
+}
+
+// GET /lead-followup?id=...&response=yes|no — public, no auth (link is the
+// token). Idempotent: revisiting an already-answered link just re-shows the
+// same result rather than erroring or double-recording.
+async function handleLeadFollowupResponse(request, env) {
+  const url = new URL(request.url);
+  const id = url.searchParams.get('id');
+  const response = url.searchParams.get('response');
+
+  if (!id || !['yes', 'no'].includes(response) || !env.OUTCOMES_DB) {
+    return htmlResponse('That link looks broken — sorry about that.', 400);
+  }
+
+  const lead = await env.OUTCOMES_DB.prepare('SELECT * FROM leads WHERE id = ?').bind(id).first();
+  if (!lead) {
+    return htmlResponse("We couldn't find that lead — this link may have expired.", 404);
+  }
+
+  const mapped = response === 'yes' ? 'heard_back' : 'no_response';
+  if (!lead.response) {
+    await env.OUTCOMES_DB.prepare('UPDATE leads SET response = ?, responded_at = ? WHERE id = ?')
+      .bind(mapped, new Date().toISOString(), id).run();
+  }
+
+  if (response === 'yes') {
+    return htmlResponse(`
+      <h1 style="font-size:22px;margin:0 0 12px;">Great to hear!</h1>
+      <p style="color:#1a3d42;">Glad ${escapeHtml(lead.installer_name || 'the installer')} got in touch. Good luck with your project.</p>
+    `, 200);
+  }
+
+  // "No" — surface every installer we have for this city/service so the
+  // homeowner has an immediate alternative, no waiting on us.
+  const alternates = await loadInstallersForCityServer(lead.city, lead.province, env);
+  const others = alternates.filter(a => a.name !== lead.installer_name);
+
+  const cardsHtml = others.length
+    ? others.map(inst => `
+        <div style="background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px;margin-bottom:14px;">
+          <div style="font-weight:700;color:#08363f;font-size:16px;margin-bottom:4px;">${escapeHtml(inst.name)}</div>
+          ${inst.rating ? `<div style="font-size:13px;color:#6b7d80;margin-bottom:8px;">${inst.rating}★ (${inst.reviews || 0} Google reviews)${inst.gmaps_url ? ` &middot; <a href="${escapeHtml(inst.gmaps_url)}" style="color:#6b7d80;">See reviews</a>` : ''}</div>` : ''}
+          ${inst.phone ? `<div style="font-size:14px;margin-bottom:4px;">📞 <a href="tel:${escapeHtml(inst.phone)}" style="color:#08363f;font-weight:600;">${escapeHtml(inst.phone)}</a></div>` : ''}
+          ${inst.email ? `<div style="font-size:14px;">✉️ <a href="mailto:${escapeHtml(inst.email)}" style="color:#08363f;font-weight:600;">${escapeHtml(inst.email)}</a></div>` : ''}
+        </div>`).join('')
+    : `<p style="color:#6b7d80;">We don't have another installer listed for ${escapeHtml(capitalize(lead.city))} yet — reply to this page's confirmation email and we'll help you find one.</p>`;
+
+  return htmlResponse(`
+    <h1 style="font-size:22px;margin:0 0 8px;">Sorry to hear that.</h1>
+    <p style="color:#1a3d42;margin:0 0 20px;">Here are other local installers in ${escapeHtml(capitalize(lead.city))} you can reach out to directly:</p>
+    ${cardsHtml}
+  `, 200);
+}
+
+// Worker-side mirror of the frontend's loadInstallersForCity — fetches the
+// static installer JSON from the Pages site (heat-pump + solar merged).
+async function loadInstallersForCityServer(city, province, env) {
+  const REGION_PATH_PREFIX = { BC: '', ON: 'on', AB: 'ab', NS: 'ns', MA: 'ma', CA: 'ca', NY: 'ny', PA: 'pa', CO: 'co', VT: 'vt' };
+  const prefix = REGION_PATH_PREFIX[(province || 'BC').toUpperCase()] ?? '';
+  const base = prefix ? `https://homepowerrebate.com/installers/json/${prefix}` : `https://homepowerrebate.com/installers/json`;
+  const slug = String(city || '').toLowerCase().replace(/\s+/g, '-');
+
+  const safeFetch = async (url) => {
+    try {
+      const r = await fetch(url);
+      return r.ok ? await r.json() : [];
+    } catch (e) {
+      return [];
+    }
+  };
+
+  const [hp, solar] = await Promise.all([
+    safeFetch(`${base}/${slug}.json`),
+    safeFetch(`${base}/solar/${slug}.json`)
+  ]);
+  const byName = new Map();
+  [...hp, ...solar].forEach(inst => { if (inst && inst.name) byName.set(inst.name, inst); });
+  return [...byName.values()];
+}
+
+function htmlResponse(bodyHtml, status) {
+  return new Response(
+    `<!doctype html><html><head><title>HomePowerRebate</title><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+     <body style="font-family:-apple-system,sans-serif;max-width:520px;margin:60px auto;color:#08363f;padding:0 20px;">
+       ${bodyHtml}
+       <p style="margin-top:32px;font-size:12px;color:#6b7d80;text-align:center;"><a href="https://homepowerrebate.com" style="color:#6b7d80;">homepowerrebate.com</a></p>
+     </body></html>`,
+    { status, headers: { 'Content-Type': 'text/html; charset=utf-8', ...CORS_HEADERS } }
   );
 }
 
@@ -1073,7 +1290,10 @@ async function handleEstimateLead(request, env) {
   ];
   // Only add to the newsletter audience if they didn't opt out (CASL).
   if (p.newsletter !== false) tasks.push(addToResendAudience(lead.email, env));
-  if (isReal) tasks.unshift(sendEstimateInstallerEmail(lead, installer, env));
+  if (isReal) {
+    tasks.unshift(sendEstimateInstallerEmail(lead, installer, env));
+    tasks.push(trackLeadForFollowup(lead, installer, env));
+  }
 
   const results = await Promise.allSettled(tasks);
   const failures = results.filter(r => r.status === 'rejected');

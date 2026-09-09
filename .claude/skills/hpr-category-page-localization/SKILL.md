@@ -110,6 +110,22 @@ steps — a fixed sentence structure repeated across N pages instead of 1.
 If you're writing a Python f-string with the prose baked in, stop and
 write the prose directly in the page instead.
 
+**FAQ answers are in scope by default now, confirmed 2026-09-09**: the
+first real near-duplicate pair found after a full rewrite pass (ON
+insulation's Toronto/Ottawa, and BC insulation's Vernon/Squamish and
+Vernon/Surrey) turned out to be caused by word-for-word identical FAQ
+answers, not the shared rebate-table boilerplate the skill's caveat is
+meant to excuse. Don't wait for the duplicate checker to catch this —
+as a standard part of every batch, read each page's FAQ items
+(`<div class="faq-item">` and the matching JSON-LD `FAQPage` entries,
+which must stay in sync) and vary any answer that's identical or
+near-identical to a sibling's, the same way the utility/climate
+sections are varied. Keep the real facts (rebate amounts, program
+rules) intact — vary the phrasing and, where possible, tie in a detail
+already established elsewhere on that page (housing stock era, a real
+local program, the city's own climate number) rather than just
+rewording for its own sake.
+
 ## Category-specific real-data layer (do this after the baseline fix)
 
 The baseline fix (utility name) applies uniformly. Beyond that, each

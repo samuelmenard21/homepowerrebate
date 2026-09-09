@@ -37,6 +37,7 @@ Usage:
 Exit code 0 = clean. Exit code 1 = duplicates found (only with --fail-on-duplicates).
 """
 import argparse
+import difflib
 import hashlib
 import re
 import sys
@@ -95,9 +96,19 @@ def main():
     ap.add_argument("--category", help="only check this category dir name (category subpages only)")
     ap.add_argument("--hubs-only", action="store_true", help="only check city hub pages, not category subpages")
     ap.add_argument("--fail-on-duplicates", action="store_true")
+    ap.add_argument(
+        "--near-duplicate-threshold", type=float, default=None,
+        help="Also flag sibling pages within a cluster/category whose "
+             "city-normalized text similarity (difflib ratio, 0-1) meets or "
+             "exceeds this value, even if not byte-identical. Catches "
+             "templated 'data void' pages that differ only in installer "
+             "names/numbers — a thin-content risk, not a hard doorway-page "
+             "violation. Reasonable starting point: 0.90."
+    )
     args = ap.parse_args()
 
     groups = defaultdict(list)  # (region_cluster, page_type, hash) -> [paths]
+    texts = defaultdict(list)   # (region_cluster, page_type) -> [(path, norm_text)]
 
     for region_root in ("ca", "us"):
         base = ROOT / region_root
@@ -117,7 +128,9 @@ def main():
                 html = index_file.read_text(errors="ignore")
                 norm = normalize(html, city_dir.name, strip_rebate_grid=False)
                 h = hashlib.md5(norm.encode()).hexdigest()
-                groups[(cluster, cat_dir, h)].append(index_file.relative_to(ROOT))
+                rel = index_file.relative_to(ROOT)
+                groups[(cluster, cat_dir, h)].append(rel)
+                texts[(cluster, cat_dir)].append((rel, norm))
 
             elif args.category is None and is_city_dir(index_file.parent):
                 # City hub page (city_dir/index.html)
@@ -126,24 +139,46 @@ def main():
                 html = index_file.read_text(errors="ignore")
                 norm = normalize(html, city_dir.name, strip_rebate_grid=True)
                 h = hashlib.md5(norm.encode()).hexdigest()
-                groups[(cluster, "HUB PAGE", h)].append(index_file.relative_to(ROOT))
+                rel = index_file.relative_to(ROOT)
+                groups[(cluster, "HUB PAGE", h)].append(rel)
+                texts[(cluster, "HUB PAGE")].append((rel, norm))
 
     dupes = {k: v for k, v in groups.items() if len(v) > 1}
+    exit_code = 0
 
     if not dupes:
         print("Clean — no byte-identical (city-name-normalized) sibling pages found.")
-        return 0
+    else:
+        print(f"Found {len(dupes)} duplicate group(s):\n")
+        for (cluster, cat, h), paths in sorted(dupes.items()):
+            print(f"  [{cluster} / {cat}]  {len(paths)} identical pages:")
+            for p in paths:
+                print(f"    - {p}")
+            print()
+        if args.fail_on_duplicates:
+            exit_code = 1
 
-    print(f"Found {len(dupes)} duplicate group(s):\n")
-    for (cluster, cat, h), paths in sorted(dupes.items()):
-        print(f"  [{cluster} / {cat}]  {len(paths)} identical pages:")
-        for p in paths:
-            print(f"    - {p}")
-        print()
+    if args.near_duplicate_threshold is not None:
+        print(f"\n--- Near-duplicate scan (threshold {args.near_duplicate_threshold:.2f}) ---\n")
+        found_any = False
+        for (cluster, cat), items in sorted(texts.items()):
+            for i in range(len(items)):
+                for j in range(i + 1, len(items)):
+                    path_a, text_a = items[i]
+                    path_b, text_b = items[j]
+                    ratio = difflib.SequenceMatcher(None, text_a, text_b).ratio()
+                    if ratio >= args.near_duplicate_threshold:
+                        found_any = True
+                        print(f"  [{cluster} / {cat}]  {ratio:.3f} similar (after stripping city name):")
+                        print(f"    - {path_a}")
+                        print(f"    - {path_b}")
+                        print()
+        if not found_any:
+            print("  None found at this threshold.")
+        elif args.fail_on_duplicates:
+            exit_code = 1
 
-    if args.fail_on_duplicates:
-        return 1
-    return 0
+    return exit_code
 
 
 if __name__ == "__main__":

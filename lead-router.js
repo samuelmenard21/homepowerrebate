@@ -589,15 +589,25 @@ async function runDripQueue(env) {
 
   for (const sub of due.results || []) {
     try {
+      // Claim the row FIRST with a WHERE guard on its still-due state, before
+      // sending anything. If two overlapping cron runs race on the same row,
+      // only the invocation whose UPDATE actually matched a row (changes===1)
+      // proceeds to send — the loser sees 0 rows changed and skips it. This
+      // trades "never double-send" for a theoretical missed send if the
+      // email itself then fails, which is the safer direction for email.
       if (sub.step === 1) {
-        if (hasOutcomeData) {
-          await sendLocalComparisonEmail(sub, env);
-        }
         const nextSendAt = new Date(Date.now() + 3 * DRIP_DAY_MS).toISOString();
-        await env.OUTCOMES_DB.prepare('UPDATE subscribers SET step = 2, next_send_at = ? WHERE id = ?').bind(nextSendAt, sub.id).run();
+        const claim = await env.OUTCOMES_DB.prepare(
+          'UPDATE subscribers SET step = 2, next_send_at = ? WHERE id = ? AND step = 1'
+        ).bind(nextSendAt, sub.id).run();
+        if (!claim.meta?.changes) continue;
+        if (hasOutcomeData) await sendLocalComparisonEmail(sub, env);
       } else if (sub.step === 2) {
+        const claim = await env.OUTCOMES_DB.prepare(
+          'UPDATE subscribers SET step = 3, next_send_at = NULL WHERE id = ? AND step = 2'
+        ).bind(sub.id).run();
+        if (!claim.meta?.changes) continue;
         await sendLockInEmail(sub, env);
-        await env.OUTCOMES_DB.prepare('UPDATE subscribers SET step = 3, next_send_at = NULL WHERE id = ?').bind(sub.id).run();
       }
     } catch (err) {
       console.error(`Drip send failed for subscriber ${sub.id} (step ${sub.step}):`, err.message || err);
@@ -670,9 +680,13 @@ async function runLeadFollowupQueue(env) {
 
   for (const row of dueReminders.results || []) {
     try {
+      // Claim before sending (WHERE guard on still-unsent) so two overlapping
+      // cron runs can't both send the same reminder — see runDripQueue.
+      const claim = await env.OUTCOMES_DB.prepare(
+        'UPDATE leads SET installer_reminder_sent_at = ? WHERE id = ? AND installer_reminder_sent_at IS NULL'
+      ).bind(new Date().toISOString(), row.id).run();
+      if (!claim.meta?.changes) continue;
       await sendInstallerReminderEmail(row, env);
-      await env.OUTCOMES_DB.prepare('UPDATE leads SET installer_reminder_sent_at = ? WHERE id = ?')
-        .bind(new Date().toISOString(), row.id).run();
     } catch (err) {
       console.error(`Installer reminder failed for lead ${row.id}:`, err.message || err);
     }
@@ -685,9 +699,11 @@ async function runLeadFollowupQueue(env) {
 
   for (const row of dueFollowups.results || []) {
     try {
+      const claim = await env.OUTCOMES_DB.prepare(
+        'UPDATE leads SET followup_sent_at = ? WHERE id = ? AND followup_sent_at IS NULL'
+      ).bind(new Date().toISOString(), row.id).run();
+      if (!claim.meta?.changes) continue;
       await sendHomeownerFollowupEmail(row, env);
-      await env.OUTCOMES_DB.prepare('UPDATE leads SET followup_sent_at = ? WHERE id = ?')
-        .bind(new Date().toISOString(), row.id).run();
     } catch (err) {
       console.error(`Homeowner follow-up failed for lead ${row.id}:`, err.message || err);
     }

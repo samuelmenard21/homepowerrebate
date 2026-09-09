@@ -1351,6 +1351,12 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
       </div>`
     : '';
 
+  const detailRow = (label, value) => {
+    const v = String(value || '').trim();
+    if (!v || v.toLowerCase() === 'not specified') return '';
+    return `<tr><td style="padding:6px 0;color:#6b7d80;width:130px;vertical-align:top;">${label}</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${escapeHtml(v)}</td></tr>`;
+  };
+
   return resendEmail(env.RESEND_API_KEY, {
     from: 'HomePowerRebate <leads@homepowerrebate.com>',
     to: installer.email,
@@ -1367,7 +1373,7 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
 
         <div style="background:#faf7f2;padding:28px;border-radius:0 0 14px 14px;border:1px solid #d9d0c1;border-top:none;">
           <p style="font-size:15px;line-height:1.6;color:#1a3d42;margin:0 0 20px;">
-            ${fn} used HomePowerRebate's free rebate assessment tool, saw what they qualify for, and chose <strong>${escapeHtml(installer.name)}</strong> as one of the installers they'd like a quote from. Here's what they're looking for:
+            This is a referral from <strong>HomePowerRebate.com</strong>, a free rebate-matching site — not a lead you paid for or requested directly. ${fn} used our rebate assessment tool, saw what they qualify for, and chose <strong>${escapeHtml(installer.name)}</strong> as one of the installers they'd like a quote from. Please reach out to them directly using the contact info below — everything they've told us is included so you don't have to ask twice.
           </p>
 
           <div style="background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:20px;margin-bottom:20px;">
@@ -1375,10 +1381,18 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
               <tr><td style="padding:6px 0;color:#6b7d80;width:130px;">Name</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${fn} ${ln}</td></tr>
               <tr><td style="padding:6px 0;color:#6b7d80;">Phone</td><td style="padding:6px 0;font-weight:600;"><a href="tel:${ph}" style="color:#08363f;">${ph}</a></td></tr>
               <tr><td style="padding:6px 0;color:#6b7d80;">Email</td><td style="padding:6px 0;font-weight:600;"><a href="mailto:${em}" style="color:#08363f;">${em}</a></td></tr>
-              <tr><td style="padding:6px 0;color:#6b7d80;">City</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${ct}, BC</td></tr>
+              <tr><td style="padding:6px 0;color:#6b7d80;">City</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${ct}, ${escapeHtml(lead.province || 'BC')}</td></tr>
+              ${detailRow('Postal code', lead.postal)}
               ${lead.current_heat && lead.current_heat.toLowerCase() !== 'not specified' ? `<tr><td style="padding:6px 0;color:#6b7d80;">Current heating</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${ch}</td></tr>` : ''}
+              ${detailRow('Water heating', lead.water_heating)}
+              ${detailRow('Utility', lead.utility)}
+              ${detailRow('Year built', lead.year_built)}
+              ${detailRow('Income tier', lead.income_tier)}
               <tr><td style="padding:6px 0;color:#6b7d80;">Interested in</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${escapeHtml(lead.upgrades || 'not specified')}</td></tr>
               <tr><td style="padding:6px 0;color:#6b7d80;">${lead.estimate_is_city_range ? `Typical rebate range for ${ct}` : 'Rebate estimate shown'}</td><td style="padding:6px 0;font-weight:700;color:#2d6a4f;">${lead.estimate_is_city_range ? ev : `up to ${ev}`}</td></tr>
+              ${detailRow('Est. total project cost', lead.total_cost)}
+              ${detailRow('Est. net cost after rebates', lead.net_cost)}
+              ${detailRow('Est. 10-year savings', lead.ten_year_savings)}
             </table>
           </div>
 

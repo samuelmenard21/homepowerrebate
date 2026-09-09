@@ -7,7 +7,9 @@ description: Inject real, verified, city-distinguishing data into HomePowerRebat
 
 ## Writing standards — confirmed 2026-09-09, apply to every batch
 
-**Run the `no-ai-slop` skill's rules on everything written**, not just this
+**Apply the `no-ai-slop` skill's rules to 100% of writing, every page, no
+exceptions** — confirmed as an absolute standing requirement, not a
+best-effort guideline. Not just this
 playbook's specific requirements. This was not done for the first several
 hundred pages in this rollout, and a spot-check found real, systemic
 violations — most seriously **em dash overuse** (one audited page had 15;

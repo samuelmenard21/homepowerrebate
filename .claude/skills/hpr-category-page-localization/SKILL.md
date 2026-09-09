@@ -5,6 +5,29 @@ description: Inject real, verified, city-distinguishing data into HomePowerRebat
 
 # Category Page Localization
 
+## Writing standards — confirmed 2026-09-09, apply to every batch
+
+**Run the `no-ai-slop` skill's rules on everything written**, not just this
+playbook's specific requirements. This was not done for the first several
+hundred pages in this rollout, and a spot-check found real, systemic
+violations — most seriously **em dash overuse** (one audited page had 15;
+the skill's own rule is 1-2 max in a long draft, none in short copy, no
+clusters). Before writing a batch: avoid em dashes as a rhythm crutch, cut
+the banned/often-empty words and phrases list, avoid binary-contrast and
+colon-reveal constructions, and keep sentences concrete and specific
+rather than reaching for a polished-AI cadence. A cleanup pass is
+tracked separately for the pages already shipped before this was caught.
+
+**Ground new content in real, recent homeowner discourse using the
+`last30days` skill** before writing a category's content — pull what
+homeowners are actually asking or complaining about for that topic
+(e.g. real Reddit/forum questions about heat pumps, insulation, EV
+chargers) and let genuine pain points shape the FAQ and framing,
+instead of guessing what's relevant or reusing the same FAQ angles
+page after page. This is a further way to make pages genuinely
+distinct, on top of the real utility/climate/program data already
+required below.
+
 ## Why this exists
 
 A 2026-09-09 Search Console investigation found impressions collapsing on

@@ -1418,7 +1418,7 @@ async function sendOpsEstimateLead(lead, env) {
   return resendEmail(env.RESEND_API_KEY, {
     from: 'HomePowerRebate <ops@homepowerrebate.com>',
     to: env.OPS_EMAIL,
-    subject: `[Referral] ${capitalize(lead.city)} — ${lead.firstname} (${lead.estimated_value})`,
+    subject: `[Referral] ${capitalize(lead.city)} — ${lead.firstname} → ${lead.installer_assigned} (${lead.estimated_value})`,
     html: `${warn}
       <p>New estimate referral (routed to <strong>${assigned}</strong>).</p>
       <ul>

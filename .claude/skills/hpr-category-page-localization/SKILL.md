@@ -153,10 +153,33 @@ text), so use judgment on what's actually flagged, not just the score.
 ## Rollout sequencing
 
 Piloted first on the exact cluster the GSC investigation flagged:
-Kitchener, Vaughan, Toronto, Ottawa × heat-pump (2026-09-09). Once that
-pilot is validated, this playbook is meant to be applied sitewide — every
-category, every city, every region with more than one distinct utility.
-That is a large batch content operation (dozens of cities × up to 10
-categories × several regions); treat it as a fan-out job scoped by
-category or region cluster, the same way a full-site audit-and-fix run is
-scoped in the `seo` skill, rather than one continuous pass.
+Kitchener, Vaughan, Toronto, Ottawa × heat-pump (2026-09-09). This
+playbook is meant to be applied sitewide — **every category, every city,
+every region** — not just the pilot cluster. That is the explicit,
+standing instruction, confirmed by the project owner on 2026-09-09: the
+pilot proves the method, it is not the finish line.
+
+Full scope, once the FAQ/claim-steps extension (see above) is verified:
+
+- **All 4 content blocks** (utility, climate/solar, FAQ rewrite,
+  claim-steps distinguishing note where real) applied together — not just
+  the 2-block version shipped in the first wave.
+- **Every region**: BC, ON, AB, NS (Canada), CA, NY, MA, PA, CO, VT (US) —
+  not just BC/ON.
+- **Every category**: heat-pump, solar, battery, water-heater, insulation,
+  windows/windows-doors, ev-charger, smart-thermostats, hrv, appliances —
+  not just heat-pump. Categories without a climate/solar data layer still
+  get the utility section + bespoke FAQ/claim-steps treatment.
+- **As of 2026-09-09**: heat-pump is done (utility+climate bespoke prose)
+  for all 29 ON and 18 BC cities; FAQ+claim-steps extension in progress
+  on that same 47-page set. Every other region×category combination still
+  has either the templated (Layer 1/2 script) version or nothing at all —
+  do not treat the ON/BC heat-pump work as representative of sitewide
+  status; check each region/category's actual state before assuming.
+
+Treat the remaining rollout as a fan-out job scoped by category and region
+cluster (the same way a full-site audit-and-fix run is scoped in the `seo`
+skill), with agents kept to ~10-20 pages per batch so quality and the
+duplicate-checker verification stay meaningful per batch — not one
+continuous pass, and not left incomplete once a promising pilot batch
+looks good.

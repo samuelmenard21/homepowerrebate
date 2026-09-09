@@ -86,13 +86,23 @@ The underlying facts (real utility name, real 10-year climate data) are
 non-negotiable; the sentence construction around them should never repeat
 the same skeleton twice.
 
-**Verification bar**: after writing a batch, run
+**Verification bar — hard minimum, confirmed 2026-09-09**: every page must
+land at **90% or below** whole-page similarity against every sibling it's
+compared to (i.e. at least 10% of the page is genuinely unique, not
+shared boilerplate). This is a pass/fail floor, not a nice-to-have. After
+writing a batch, run
 `python3 scripts/check_duplicate_content.py --category <cat> --near-duplicate-threshold 0.90`
-against the region/category you just wrote. A page that still shows up
-paired with a sibling means the prose wasn't varied enough — rewrite it,
-don't just add another sentence. Aim for each page landing meaningfully
-below the pairs it used to match at 90%+ — Kitchener's 45% is the proof
-point, not a hard ceiling to hit exactly.
+against the region/category you just wrote. Any pair still flagged at or
+above 0.90 means that page has not cleared the floor — go back and vary
+it further (a different local fact to cite, a different section
+structure) rather than shipping it as-is. Reasonable exceptions only
+where the skill's own documented caveat applies (the checker doesn't
+exclude legitimately-identical real shared-data blocks like a rebate
+table) — use judgment on what's flagged, but don't use that caveat as a
+blanket excuse to skip the floor. Aim higher than the bare minimum where
+real material supports it — Kitchener's 45% is the proof point of what's
+achievable with genuine local-program research, not a hard ceiling to
+hit exactly, but 90% is not optional.
 
 **What NOT to do**: don't build a second/third/fourth Python string
 template and rotate between them. That's the same failure mode with more

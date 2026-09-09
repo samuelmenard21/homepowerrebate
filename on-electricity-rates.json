@@ -1,0 +1,13 @@
+{
+  "source": "Ontario Energy Board, Regulated Price Plan Price Report, November 1, 2025 to October 31, 2026",
+  "source_url": "https://oeb.ca/sites/default/files/rpp-price-report-20251017.pdf",
+  "retrieved": "2026-09-09",
+  "note": "Province-wide regulated rate set by the OEB, same for every Ontario city regardless of which LDC delivers the electricity (LDCs distribute, they don't set the commodity price) -- this is real, legitimately shared data across all 26 ON cities, not a duplication bug.",
+  "tou_cents_per_kwh": { "off_peak": 9.8, "mid_peak": 15.7, "on_peak": 20.3, "average_rpa": 12.8 },
+  "ulo_cents_per_kwh": { "overnight": 3.9, "weekend_off_peak": 9.8, "mid_peak": 15.7, "on_peak": 39.1, "average_rpa": 12.8 },
+  "tiered_cents_per_kwh": { "tier_1": 12.0, "tier_2": 14.2, "average_rpa": 12.8 },
+  "gas": {
+    "note": "Enbridge Gas Ontario rates are genuinely complex and change quarterly, and differ by delivery zone (EGD, Union North East, Union North West, Union South) -- there is no single honest number to quote, same situation as ATCO's gas rate on the Alberta pages. Link to the live rate page instead of asserting a figure.",
+    "source_url": "https://www.enbridgegas.com/ontario/my-account/rates"
+  }
+}

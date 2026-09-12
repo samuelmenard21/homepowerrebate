@@ -20,15 +20,29 @@ colon-reveal constructions, and keep sentences concrete and specific
 rather than reaching for a polished-AI cadence. A cleanup pass is
 tracked separately for the pages already shipped before this was caught.
 
-**Ground new content in real, recent homeowner discourse using the
-`last30days` skill** before writing a category's content — pull what
-homeowners are actually asking or complaining about for that topic
-(e.g. real Reddit/forum questions about heat pumps, insulation, EV
-chargers) and let genuine pain points shape the FAQ and framing,
-instead of guessing what's relevant or reusing the same FAQ angles
-page after page. This is a further way to make pages genuinely
-distinct, on top of the real utility/climate/program data already
-required below.
+**Ground new content in real, recent homeowner discourse** before writing
+a category's content — pull what homeowners are actually asking or
+complaining about for that topic (e.g. real Reddit/forum questions about
+heat pumps, insulation, EV chargers) and let genuine pain points shape the
+FAQ and framing, instead of guessing what's relevant or reusing the same
+FAQ angles page after page. **Confirmed 2026-09-09: use targeted WebSearch
+calls for this, not the full `last30days` engine** — that skill is a
+heavyweight, branded research-report tool (setup wizards, X/TikTok/Reddit
+handle resolution, its own output-format contract) built for a different
+job; a handful of scoped WebSearch queries per city/category (e.g. "heat
+pump complaints Ontario reddit", "solar installer reviews Kelowna") gets
+the same real-discourse grounding without that overhead.
+
+**Minimum 3 real local references per page, confirmed 2026-09-09** — in
+addition to the discourse grounding above, every page must cite at least
+3 real, verifiable local sources tied to that specific city (not the
+region generally): e.g. a municipal energy/climate-action page, the
+city's actual local utility or energy provider, a regional program or
+association specific to that area. These should be worked into the page
+as real citations (linked where appropriate), not just named in passing —
+they are part of what makes the page's local-grounding claim genuine
+rather than asserted. This is a floor, not a cap; more real local
+references only strengthens the page.
 
 ## Why this exists
 

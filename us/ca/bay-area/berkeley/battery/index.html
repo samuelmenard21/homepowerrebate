@@ -93,10 +93,18 @@
  "mainEntity": [
   {
    "@type": "Question",
-   "name": "How much is the home battery rebate in Berkeley?",
+   "name": "Does my Berkeley address qualify for the big SGIP battery incentive?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "There's no flat rebate \u2014 California's SGIP pays a per-kWh incentive that varies by income and fire-threat zone, from a base general-market rate up to $2,700-$13,500 for a typical 13.5kWh battery at the highest equity tiers. The federal 30% tax credit for batteries ended for systems placed in service in 2026 or later."
+    "text": "Only if you're in a CAL FIRE-designated high fire-threat district, which in Berkeley mostly means the hills along the eastern edge of the city. Most of flat Berkeley doesn't qualify for Equity Resiliency, and the general-market SGIP budget has been sitting exhausted with no new funds for years. Check your specific address against CAL FIRE's map before an installer quotes you a rebate figure."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "If there's no rebate, why would I still get a battery in Berkeley?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Because PG&E's NEM 3.0 export rate pays roughly $0.04-$0.08/kWh for solar you send back to the grid, a fraction of what you pay to buy power back at night. A battery stores your own daytime solar for evening use instead, which is where the real savings now live regardless of whether SGIP pays anything."
    }
   },
   {
@@ -286,9 +294,9 @@ strong { color: var(--ink); }
 
 <section class="hero">
   <div class="wrap">
-    <div class="amount-badge">No flat rebate — SGIP pays $2,700–$13,500 based on income & fire risk</div>
+    <div class="amount-badge">No flat rebate — SGIP's richest tier is reserved for fire-zone households</div>
     <h1>Home Battery in Berkeley: What Actually Saves You Money</h1>
-    <p>PG&E doesn't offer a flat home battery rebate &mdash; here's what actually determines your real savings in Berkeley, plus local installers to call.</p>
+    <p>Berkeley isn't a high fire-threat district, so the biggest SGIP checks aren't on the table here &mdash; but NEM 3.0's gutted export rate makes storing your own solar the real math now. Here's what that means for a Berkeley roof.</p>
   </div>
 </section>
 
@@ -310,20 +318,17 @@ strong { color: var(--ink); }
   <div class="wrap">
 
     <h2>How much you get</h2>
-    <p>There's no flat dollar figure for a home battery in Berkeley the way a heat pump rebate works &mdash; instead, California's <strong>Self-Generation Incentive Program (SGIP)</strong> pays a per-kWh incentive that varies by your household income and whether you're in a high fire-threat zone. For a typical 13.5kWh battery (about $12,000&ndash;$15,000 installed):</p>
+    <p>Skip the flat-rebate framing entirely here &mdash; the honest starting point for a Berkeley homeowner is that California's <strong>Self-Generation Incentive Program (SGIP)</strong> now pays almost nothing to a typical Berkeley household. As of 2026, SGIP's general-market residential budget has been exhausted for years running with no new funds reopened; the money left is reserved for the Equity and Equity Resiliency tiers, and Equity Resiliency specifically targets homes in CAL FIRE's high fire-threat districts. Most of flat, fog-belt Berkeley doesn't sit in one of those zones &mdash; the Oakland/Berkeley hills along the eastern edge of town are the exception, sitting in Tier 2 wildland-urban interface terrain that traces back to the 1991 Tunnel Fire. If your address is up in the hills, check the <a href="https://osfm.fire.ca.gov/what-we-do/community-wildfire-preparedness-and-mitigation/fire-hazard-severity-zones" target="_blank" rel="noopener">CAL FIRE fire hazard severity zone map</a> before assuming you're locked out.</p>
     <ul>
-      <li><strong>General market:</strong> a base SGIP incentive applies to any PG&E residential customer, no income requirement.</li>
-      <li><strong>Equity tier (lower income):</strong> a meaningfully higher per-kWh rate.</li>
-      <li><strong>Equity Resiliency (high fire-threat zone or medical baseline):</strong> the highest tier, sometimes covering most or all of the battery cost &mdash; this is where the $2,700&ndash;$13,500 range comes from.</li>
+      <li><strong>Hills addresses in a high fire-threat district:</strong> Equity Resiliency can cover a large share of a 13.5kWh battery's cost, especially paired with income qualification or a documented PSPS outage history.</li>
+      <li><strong>Everyone else in Berkeley:</strong> general-market SGIP is effectively unavailable right now &mdash; budget for the battery on its own economics, not a rebate that may not materialize.</li>
     </ul>
-    <p>Note: the federal 30% tax credit for standalone home batteries (Section 25D) also ended for anything placed in service in 2026 or later &mdash; don't expect an installer's quote to include it.</p>
-    <p>Why pair a battery with solar at all in Berkeley? Because PG&E's NEM 3.0 net billing only pays you $0.04&ndash;$0.08/kWh for power you export &mdash; a fraction of retail. A battery lets you store your own solar and use it yourself at night instead of selling it cheap and buying it back expensive.</p>
-    <p class="src" style="font-size:11px; color:var(--sage); font-weight:600; text-transform:uppercase; letter-spacing:.04em;">Source: CPUC Self-Generation Incentive Program, PG&E</p>
+    <p>The federal 30% credit for standalone batteries (Section 25D) also ended for systems placed in service in 2026 or later, so that line shouldn't appear on a quote either. What's actually changed the math for flat-land Berkeley is NEM 3.0: PG&E's export rate averages $0.04&ndash;$0.08/kWh, a cut Bay Area solar forums describe as losing roughly three-quarters of what NEM 2.0 paid for the same exported kWh. A battery lets a Berkeley household use its own afternoon solar at night instead of selling it for pennies and buying it back at retail &mdash; that's the real savings case now, rebate or not.</p>
+    <p class="src" style="font-size:11px; color:var(--sage); font-weight:600; text-transform:uppercase; letter-spacing:.04em;">Source: CPUC Self-Generation Incentive Program, CAL FIRE Fire Hazard Severity Zones, PG&E NEM 3.0/Net Billing Tariff</p>
 
-    
     <div class="callout" style="border-left-color: var(--sage);">
-      <h3 style="margin-top:0;">Permitting in Berkeley</h3>
-      <p style="margin-bottom:0;">Berkeley's building &amp; safety division processes residential electrification permits directly; simple heat pump or single-category swaps are usually same-week, panel upgrades take longer. The city doesn't add its own cash rebate on top of PG&amp;E's &mdash; Berkeley's role here is permitting speed and outreach through its Office of Energy &amp; Sustainable Development, not extra dollars.</p>
+      <h3 style="margin-top:0;">Permitting and outage risk in Berkeley</h3>
+      <p style="margin-bottom:0;">Berkeley's building &amp; safety division processes battery permits directly, usually the same week for a straightforward install. The city's <a href="https://www.berkeleyca.gov/community-recreation/office-of-energy-sustainable-development" target="_blank" rel="noopener">Office of Energy &amp; Sustainable Development</a> runs outreach but doesn't add cash on top of SGIP. Worth knowing before you budget: PG&E does run PSPS shutoffs in Alameda County's higher-terrain areas during red-flag wind events, which is exactly the scenario a battery is built for even without an incentive check attached.</p>
     </div>
 
     <h2>Home Battery installers in Berkeley</h2>
@@ -337,15 +342,19 @@ strong { color: var(--ink); }
 
     <h2>Common questions</h2>
     <div class="faq-item">
-      <h3>How much is the home battery rebate in Berkeley?</h3>
-      <p>There's no flat rebate — California's SGIP pays a per-kWh incentive that varies by income and fire-threat zone, from a base general-market rate up to $2,700-$13,500 for a typical 13.5kWh battery at the highest equity tiers. The federal 30% tax credit for batteries ended for systems placed in service in 2026 or later.</p>
+      <h3>Does my Berkeley address qualify for the big SGIP battery incentive?</h3>
+      <p>Only if you're in a CAL FIRE-designated high fire-threat district, which in Berkeley mostly means the hills along the eastern edge of the city. Most of flat Berkeley doesn't qualify for Equity Resiliency, and the general-market SGIP budget has been sitting exhausted with no new funds for years. Check your specific address against CAL FIRE's map before an installer quotes you a rebate figure.</p>
+    </div>
+    <div class="faq-item">
+      <h3>If there's no rebate, why would I still get a battery in Berkeley?</h3>
+      <p>Because PG&E's NEM 3.0 export rate pays roughly $0.04-$0.08/kWh for solar you send back to the grid — a fraction of what you pay to buy power back at night. A battery stores your own daytime solar for evening use instead, which is where the real savings now live regardless of whether SGIP pays anything.</p>
     </div>
     <div class="faq-item">
       <h3>Where do I find home battery installers in Berkeley?</h3>
       <p>Browse real, currently-reviewed installers near Berkeley on our installer directory, or run our free assessment for a shortlist matched to your project.</p>
     </div>
     <h2>Your utility: PG&E</h2>
-    <p>PG&E is the local electric utility for Berkeley. The battery storage rebate above is a state-wide program, so which utility bills you doesn't change what you qualify for — but PG&E is who to ask about backup-power or peak-demand programs a battery might make you eligible for, and who handles interconnection paperwork if your battery is paired with solar.</p>
+    <p>PG&E delivers power and sets the NEM 3.0 export rate that makes a battery worth pairing with solar here, but generation pricing on an East Bay bill actually comes from Ava Community Energy, the region's community choice provider — a detail that trips up the savings math on more than one installer quote. PG&E still runs interconnection paperwork for anything tied to the grid.</p>
 
 
     <h2>Next steps</h2>

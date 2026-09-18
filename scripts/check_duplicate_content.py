@@ -55,7 +55,7 @@ CATEGORY_DIRS = {
 # boilerplate ways (nav, footer) — strip these entirely before hashing so
 # real shared chrome doesn't produce false positives.
 STRIP_BLOCK_RE = re.compile(
-    r"<(nav|footer|header)\b.*?</\1>", re.IGNORECASE | re.DOTALL
+    r"<(nav|footer|header|style|script)\b.*?</\1>", re.IGNORECASE | re.DOTALL
 )
 # Hub-page-only: the rebate-amount card grid is legitimately identical
 # across cities sharing one utility/program — real shared data, not a

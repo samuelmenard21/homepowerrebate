@@ -111,6 +111,18 @@ strong { color: var(--ink); }
 .highlight-box { background: var(--paper-warm); border-left: 4px solid var(--amber); padding: 18px 22px; border-radius: 8px; margin: 20px 0; }
 .highlight-box p { margin: 4px 0; font-size: 14px; }
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.thermo-compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 18px 0 22px; }
+.thermo-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; }
+.thermo-card-head { display: flex; flex-direction: column; margin-bottom: 8px; }
+.thermo-brand { font-weight: 700; color: var(--teal-deep); font-size: 15px; }
+.thermo-model { font-size: 13px; color: var(--ink-soft); }
+.thermo-price { margin: 8px 0; }
+.thermo-retail { font-size: 13px; color: var(--ink-soft); text-decoration: line-through; margin-right: 6px; }
+.thermo-after-rebate { font-size: 16px; font-weight: 700; color: var(--amber); }
+.thermo-features { margin: 8px 0 12px 18px; font-size: 13px; }
+.thermo-features li { margin-bottom: 4px; }
+.thermo-buy { margin-top: auto; align-self: flex-start; background: var(--teal-deep); color: #fff; padding: 9px 16px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 13px; }
+.thermo-buy:hover { background: var(--amber); }
 .chip { font-size: 13px; background: #fff; border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; color: var(--ink-soft); }
 footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--ink); color: rgba(250,247,242,.6); text-align: center; font-size: 13px; }
 footer a { color: rgba(250,247,242,.75); text-decoration: none; }
@@ -342,6 +354,103 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <p>We checked the City of Niagara Falls directly and found no municipal thermostat program stacked on top of this. Your electricity utility, Niagara Peninsula Energy Inc. (NPEI), runs a general "Save on Energy" programs hub with other conservation incentives, but we could not independently confirm a separate thermostat-specific dollar figure from it, so we're not listing one here.</p>
     </div>
 
+    
+    <h2>Compare smart thermostats you can buy</h2>
+    <p>A good share of Niagara Falls' housing is older tourist-era construction near the falls itself, where a thermostat with its own room sensor helps correct for drafty single-pane windows.</p>
+    <div class="thermo-compare-grid">
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">ecobee</span>
+      <span class="thermo-model">Smart Thermostat Premium</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$319</span>
+      <span class="thermo-after-rebate">$219 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Ships with a remote SmartSensor to catch cold or hot rooms</li>
+      <li>Pairs with central air, gas furnaces, and most heat pumps</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.ecobee.com/en-us/smart-thermostats/" target="_blank" rel="noopener sponsored">View on ecobee &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Google Nest</span>
+      <span class="thermo-model">Learning Thermostat (4th gen)</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$329</span>
+      <span class="thermo-after-rebate">$229 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Learns your schedule after about a week</li>
+      <li>Farsight display shows time, weather, and temperature from across the room</li>
+    </ul>
+    <a class="thermo-buy" href="https://store.google.com/category/connected_home?category=thermostats" target="_blank" rel="noopener sponsored">See Nest models &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Honeywell Home</span>
+      <span class="thermo-model">T9</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$229</span>
+      <span class="thermo-after-rebate">$129 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Comes with a Smart Room Sensor to balance uneven rooms</li>
+      <li>Uses your phone location to know when to ease off</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.resideo.com/us/en/products/smart-thermostats/" target="_blank" rel="noopener sponsored">See the T9 on Resideo &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Copeland Sensi</span>
+      <span class="thermo-model">Touch 2</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$199</span>
+      <span class="thermo-after-rebate">$99 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>App stays out of your way with a clean, basic layout</li>
+      <li>Installs without an added C-wire in most homes</li>
+    </ul>
+    <a class="thermo-buy" href="https://sensi.copeland.com/en-us/products/thermostat" target="_blank" rel="noopener sponsored">See Sensi Touch 2 &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Mysa</span>
+      <span class="thermo-model">Smart Thermostat</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$179</span>
+      <span class="thermo-after-rebate">$79 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Built for electric baseboard and in-floor heat, not just forced air</li>
+      <li>Canadian company, Matter-compatible</li>
+    </ul>
+    <a class="thermo-buy" href="https://getmysa.com/" target="_blank" rel="noopener sponsored">See Mysa models &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Sinopé</span>
+      <span class="thermo-model">Smart Thermostat Pro</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$150</span>
+      <span class="thermo-after-rebate">$50 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Handles electric baseboard and in-floor radiant heat well</li>
+      <li>Wi-Fi direct, skips the extra hub other ecosystems need</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.sinopetech.com/en/thermostats/" target="_blank" rel="noopener sponsored">See Sinopé Pro &rarr;</a>
+  </div>
+    </div>
+    <p style="font-size:13px; color:var(--ink-soft);">Prices are approximate manufacturer list prices and change &mdash; check the brand's site for current pricing.</p>
+
     <h2>How to claim it</h2>
     <ol>
       <li>Buy an eligible thermostat (ecobee, Nest, Honeywell Home, Copeland Sensi, Mysa, or Sinop&eacute;)</li>
@@ -371,8 +480,8 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <h3>Does Niagara Falls have its own thermostat incentive on top of the provincial one?</h3>
       <p>No confirmed one. We checked the City of Niagara Falls directly and found no municipal thermostat program. NPEI, the local electricity utility, has a general Save on Energy programs hub, but we couldn't confirm a specific thermostat dollar figure from it.</p>
     </div>
-    <h2>Your utility: Alectra Utilities</h2>
-    <p>Alectra Utilities is the local electric utility for Niagara Falls. The smart thermostat rebate above comes from a province-wide program, so which utility bills you doesn't change what you qualify for. Where it can matter: Alectra Utilities is who to contact about your home's electrical service capacity if your installer flags an upgrade, and who bills the electricity your new equipment uses once it's running. Some utilities layer their own incentive on top of the province rebate — worth a quick call to Alectra Utilities to ask directly.</p>
+    <h2>Your utility: Niagara Peninsula Energy Inc. (NPEI)</h2>
+    <p>Niagara Falls' electricity distributor is Niagara Peninsula Energy Inc. (NPEI), not Alectra Utilities — NPEI is a separate LDC covering Niagara Falls, Lincoln, Pelham, and West Lincoln. NPEI runs a general Save on Energy conservation hub, but we could not confirm a dedicated smart thermostat demand-response dollar figure on its site, so don't count on utility money beyond the $100 provincial rebate below. For more, see the <a href="https://niagarafalls.ca/living/environment/default.aspx" target="_blank" rel="noopener">City of Niagara Falls Environmental Sustainability</a>. <a href="https://www.npei.ca" target="_blank" rel="noopener">Niagara Peninsula Energy Inc.</a>.</p>
 
 
     <h2>Next steps</h2>

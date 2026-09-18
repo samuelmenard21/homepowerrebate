@@ -111,6 +111,18 @@ strong { color: var(--ink); }
 .highlight-box { background: var(--paper-warm); border-left: 4px solid var(--amber); padding: 18px 22px; border-radius: 8px; margin: 20px 0; }
 .highlight-box p { margin: 4px 0; font-size: 14px; }
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.thermo-compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 18px 0 22px; }
+.thermo-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; }
+.thermo-card-head { display: flex; flex-direction: column; margin-bottom: 8px; }
+.thermo-brand { font-weight: 700; color: var(--teal-deep); font-size: 15px; }
+.thermo-model { font-size: 13px; color: var(--ink-soft); }
+.thermo-price { margin: 8px 0; }
+.thermo-retail { font-size: 13px; color: var(--ink-soft); text-decoration: line-through; margin-right: 6px; }
+.thermo-after-rebate { font-size: 16px; font-weight: 700; color: var(--amber); }
+.thermo-features { margin: 8px 0 12px 18px; font-size: 13px; }
+.thermo-features li { margin-bottom: 4px; }
+.thermo-buy { margin-top: auto; align-self: flex-start; background: var(--teal-deep); color: #fff; padding: 9px 16px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 13px; }
+.thermo-buy:hover { background: var(--amber); }
 .chip { font-size: 13px; background: #fff; border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; color: var(--ink-soft); }
 footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--ink); color: rgba(250,247,242,.6); text-align: center; font-size: 13px; }
 footer a { color: rgba(250,247,242,.75); text-decoration: none; }
@@ -305,6 +317,103 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <span class="chip">Sinop&eacute;</span>
     </div>
 
+    
+    <h2>Compare smart thermostats you can buy</h2>
+    <p>Thunder Bay's older housing stock closer to the lakehead tends to run oil or electric baseboard heat almost as often as forced air, which is exactly where Mysa and Sinopé have an edge over the ecobee/Nest pair below.</p>
+    <div class="thermo-compare-grid">
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">ecobee</span>
+      <span class="thermo-model">Smart Thermostat Premium</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$319</span>
+      <span class="thermo-after-rebate">$219 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Built-in room sensor and air quality monitor</li>
+      <li>Works with most central air, furnaces, and many heat pumps</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.ecobee.com/en-us/smart-thermostats/" target="_blank" rel="noopener sponsored">View on ecobee &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Google Nest</span>
+      <span class="thermo-model">Learning Thermostat (4th gen)</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$329</span>
+      <span class="thermo-after-rebate">$229 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Auto-schedule adjusts itself within the first week of use</li>
+      <li>Shows local weather alongside the current temperature</li>
+    </ul>
+    <a class="thermo-buy" href="https://store.google.com/category/connected_home?category=thermostats" target="_blank" rel="noopener sponsored">See Nest models &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Honeywell Home</span>
+      <span class="thermo-model">T9</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$229</span>
+      <span class="thermo-after-rebate">$129 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Smart Room Sensor included to even out hot/cold rooms</li>
+      <li>Geofencing pauses savings mode when you are home</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.resideo.com/us/en/products/smart-thermostats/" target="_blank" rel="noopener sponsored">See the T9 on Resideo &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Copeland Sensi</span>
+      <span class="thermo-model">Touch 2</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$199</span>
+      <span class="thermo-after-rebate">$99 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Straightforward touchscreen interface, minimal setup fuss</li>
+      <li>Skips the C-wire most other smart stats need</li>
+    </ul>
+    <a class="thermo-buy" href="https://sensi.copeland.com/en-us/products/thermostat" target="_blank" rel="noopener sponsored">See Sensi Touch 2 &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Mysa</span>
+      <span class="thermo-model">Smart Thermostat</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$179</span>
+      <span class="thermo-after-rebate">$79 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>One of the few options that actually handles electric baseboard heat</li>
+      <li>Matter-compatible, built by a Canadian company</li>
+    </ul>
+    <a class="thermo-buy" href="https://getmysa.com/" target="_blank" rel="noopener sponsored">See Mysa models &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Sinopé</span>
+      <span class="thermo-model">Smart Thermostat Pro</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$150</span>
+      <span class="thermo-after-rebate">$50 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Designed and built in Quebec for baseboard and radiant setups</li>
+      <li>Connects straight to Wi-Fi, no separate hub</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.sinopetech.com/en/thermostats/" target="_blank" rel="noopener sponsored">See Sinopé Pro &rarr;</a>
+  </div>
+    </div>
+    <p style="font-size:13px; color:var(--ink-soft);">Prices are approximate manufacturer list prices and change &mdash; check the brand's site for current pricing.</p>
+
     <h2>How to claim it</h2>
     <ol>
       <li>Buy an eligible smart thermostat from a participating retailer for the instant rebate, or</li>
@@ -327,7 +436,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <p>No, it's on the no-assessment path along with heat pump, solar, battery, and attic insulation.</p>
     </div>
     <h2>Your utility: Thunder Bay Hydro</h2>
-    <p>Thunder Bay Hydro is the local electric utility for Thunder Bay. The smart thermostat rebate above comes from a province-wide program, so which utility bills you doesn't change what you qualify for. Where it can matter: Thunder Bay Hydro is who to contact about your home's electrical service capacity if your installer flags an upgrade, and who bills the electricity your new equipment uses once it's running. Some utilities layer their own incentive on top of the province rebate — worth a quick call to Thunder Bay Hydro to ask directly.</p>
+    <p>Thunder Bay Hydro does not currently advertise a smart thermostat demand-response incentive. As with the Sault, Thunder Bay's long heating season means the real value of any of these thermostats comes from winter scheduling rather than a summer peak-shaving bonus that isn't on offer here. For more, see the <a href="https://www.thunderbay.ca/en/city-hall/earthcare.aspx" target="_blank" rel="noopener">City of Thunder Bay EarthCare Sustainability Plan</a>. <a href="https://www.tbhydro.on.ca" target="_blank" rel="noopener">Thunder Bay Hydro</a>.</p>
 
 
     <h2>Next steps</h2>

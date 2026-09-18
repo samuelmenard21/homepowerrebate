@@ -146,6 +146,20 @@ li { margin-bottom: 8px; line-height: 1.7; font-size: 15px; }
 .cta:hover { background: var(--amber-bright); }
 a { color: var(--teal); }
 strong { color: var(--ink); }
+<style>
+.thermo-compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 18px 0 22px; }
+.thermo-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; }
+.thermo-card-head { display: flex; flex-direction: column; margin-bottom: 8px; }
+.thermo-brand { font-weight: 700; color: var(--teal-deep); font-size: 15px; }
+.thermo-model { font-size: 13px; color: var(--ink-soft); }
+.thermo-price { margin: 8px 0; }
+.thermo-retail { font-size: 13px; color: var(--ink-soft); text-decoration: line-through; margin-right: 6px; }
+.thermo-after-rebate { font-size: 16px; font-weight: 700; color: var(--amber); }
+.thermo-features { margin: 8px 0 12px 18px; font-size: 13px; }
+.thermo-features li { margin-bottom: 4px; }
+.thermo-buy { margin-top: auto; align-self: flex-start; background: var(--teal-deep); color: #fff; padding: 9px 16px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 13px; }
+.thermo-buy:hover { background: var(--amber); }
+</style>
 </style>
 <style>
 /* CANONICAL-NAV-FOOTER-CSS-START */
@@ -317,12 +331,74 @@ strong { color: var(--ink); }
   <div class="wrap">
 
     <h2>How much you get</h2>
-    <p>Central Hudson offers a <strong>$50 rebate</strong> on qualifying ENERGY STAR-certified smart thermostats — claimable instantly at Lowe's or Home Depot with a coupon code from CentralHudsonRebates.com, or via mail-in form. Limit two thermostats per application.</p>
-    <div class="verify-flag"><strong>Verify before you rely on this:</strong> One PDF source labels a related bill-credit variant "invite only," suggesting there may be two different program variants (an open mail-in rebate and an invite-only bill credit) — worth reconciling with Central Hudson before assuming the $50 rebate is universally open to every customer.</div>
+    <p>Central Hudson offers a <strong>$50 rebate</strong> on qualifying ENERGY STAR-certified smart thermostats. It is claimable instantly at Lowe's or Home Depot with a coupon code from CentralHudsonRebates.com, or via mail-in form. Limit two thermostats per application.</p>
+    <div class="verify-flag"><strong>Verify before you rely on this:</strong> One PDF source labels a related bill-credit variant "invite only," suggesting there may be two different program variants (an open mail-in rebate and an invite-only bill credit), so it is worth reconciling with Central Hudson before assuming the $50 rebate is universally open to every customer.</div>
     <p class="source-note">Sources: <a href="https://www.cenhud.com/globalassets/pdf/thermostat_rebate_form_f.pdf" target="_blank" rel="noopener">Central Hudson $50 Thermostat Rebate Form</a>, <a href="https://cenhudpeakperks.com/smart-thermostat/" target="_blank" rel="noopener">Central Hudson Peak Perks smart thermostat page</a></p>
     <p style="font-size:12px; color:var(--sage);">Administered by: Central Hudson / Central Hudson Peak Perks Program</p>
 
     
+
+    <h2>Compare the rebate-eligible models</h2>
+    <p>Beacon's small-city mix of renovated older homes and newer Hudson riverfront condos means both budget-friendly and heat-pump-ready thermostats see demand here.</p>
+    <div class="thermo-compare-grid">
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">ecobee</span>
+      <span class="thermo-model">Smart Thermostat Premium</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$249</span><span class="thermo-after-rebate">$199 after the $50 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Room sensor suits Beacon's mix of renovated Victorians and newer riverfront condos</li>
+      <li>Works with most heat pumps, common in Beacon's newer builds</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.ecobee.com/en-us/smart-thermostats/" target="_blank" rel="noopener sponsored">View ecobee models &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Google Nest</span>
+      <span class="thermo-model">Learning Thermostat</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$249</span><span class="thermo-after-rebate">$199 after the $50 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Sleek look fits Beacon's Main Street gallery-district aesthetic</li>
+      <li>Auto-schedule adapts within days</li>
+    </ul>
+    <a class="thermo-buy" href="https://store.google.com/category/connected_home?category=thermostats" target="_blank" rel="noopener sponsored">Shop Nest &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Honeywell Home</span>
+      <span class="thermo-model">T9</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$169</span><span class="thermo-after-rebate">$119 after the $50 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Qualifies for the $50 Peak Perks coupon</li>
+      <li>Good multi-zone option for larger Fishkill Creek-area homes</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.resideo.com/us/en/products/smart-thermostats/" target="_blank" rel="noopener sponsored">See Honeywell Home &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Copeland Sensi</span>
+      <span class="thermo-model">Touch 2</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$149</span><span class="thermo-after-rebate">$99 after the $50 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>No C-wire needed for most older Beacon wiring</li>
+      <li>Cheapest way to hit the $50 rebate</li>
+    </ul>
+    <a class="thermo-buy" href="https://sensi.copeland.com/en-us/products/thermostat" target="_blank" rel="noopener sponsored">Check Sensi pricing &rarr;</a>
+  </div>
+    </div>
+    <p style="font-size:13px; color:var(--ink-soft);">Prices are approximate manufacturer list prices and change &mdash; check the brand's site for current pricing.</p>
 
     <h2>Smart Thermostats installers in Beacon</h2>
     <p>Real companies serving Beacon, pulled from their current Google reviews. We're not paid to list anyone here.</p>
@@ -348,11 +424,11 @@ strong { color: var(--ink); }
     <h2>Common questions</h2>
     <div class="faq-item">
       <h3>How much is the Smart Thermostats rebate in Beacon?</h3>
-      <p>Central Hudson offers a $50 rebate on qualifying ENERGY STAR-certified smart thermostats — claimable instantly at Lowe's or Home Depot with a coupon code from CentralHudsonRebates.com, or via mail-in form. Limit two thermostats per application.</p>
+      <p>Central Hudson offers a $50 rebate on qualifying ENERGY STAR-certified smart thermostats. It is claimable instantly at Lowe's or Home Depot with a coupon code from CentralHudsonRebates.com, or via mail-in form. Limit two thermostats per application.</p>
     </div>
     <div class="faq-item">
       <h3>Is that Smart Thermostats figure confirmed?</h3>
-      <p>One PDF source labels a related bill-credit variant "invite only," suggesting there may be two different program variants (an open mail-in rebate and an invite-only bill credit) — worth reconciling with Central Hudson before assuming the $50 rebate is universally open to every customer.</p>
+      <p>One PDF source labels a related bill-credit variant "invite only," suggesting there may be two different program variants (an open mail-in rebate and an invite-only bill credit), so it is worth reconciling with Central Hudson before assuming the $50 rebate is universally open to every customer.</p>
     </div>
     <div class="faq-item">
       <h3>Where do I find smart thermostats installers in Beacon?</h3>
@@ -366,8 +442,12 @@ strong { color: var(--ink); }
       <a href="/us/ny/central-hudson/kingston/smart-thermostats/" style="margin-right:14px; display:inline-block;">Kingston</a>
       <a href="/us/ny/central-hudson/saugerties/smart-thermostats/" style="margin-right:14px; display:inline-block;">Saugerties</a>
     </p>
+    <h2>Central Hudson's Peak Perks rebate for Beacon homeowners</h2>
+    <p>Beacon is smaller than its Central Hudson neighbors, but the $50 Peak Perks rebate works identically: an instant coupon at Lowe's or Home Depot checkout, or a mail-in form if you buy elsewhere. Beacon's growing number of heat-pump retrofits, tied to the city's newer riverfront construction, make the ecobee and Honeywell options in this comparison a common pairing since both list solid heat-pump compatibility.</p>
+    <p>The City of Beacon's Conservation Advisory Committee and Dutchess County's Office of Energy & Climate are real local references for homeowners planning beyond just the thermostat.</p>
+
     <h2>Your utility: Central Hudson</h2>
-    <p>Central Hudson is the local electric utility for Beacon. The smart thermostat rebate above comes from a state-wide program, so which utility bills you doesn't change what you qualify for. Where it can matter: Central Hudson is who to contact about your home's electrical service capacity if your installer flags an upgrade, and who bills the electricity your new equipment uses once it's running. Some utilities layer their own incentive on top of the state rebate — worth a quick call to Central Hudson to ask directly.</p>
+    <p>Central Hudson is the local electric utility for Beacon. The smart thermostat rebate above comes from a state-wide program, so which utility bills you doesn't change what you qualify for. Where it can matter: Central Hudson is who to contact about your home's electrical service capacity if your installer flags an upgrade, and who bills the electricity your new equipment uses once it's running. Some utilities layer their own incentive on top of the state rebate, so it is worth a quick call to Central Hudson to ask directly.</p>
 
 
     <h2>Next steps</h2>

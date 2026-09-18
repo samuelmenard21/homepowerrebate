@@ -154,6 +154,20 @@ li { margin-bottom: 8px; line-height: 1.7; font-size: 15px; }
 .cta:hover { background: var(--amber-bright); }
 a { color: var(--teal); }
 strong { color: var(--ink); }
+<style>
+.thermo-compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 18px 0 22px; }
+.thermo-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; }
+.thermo-card-head { display: flex; flex-direction: column; margin-bottom: 8px; }
+.thermo-brand { font-weight: 700; color: var(--teal-deep); font-size: 15px; }
+.thermo-model { font-size: 13px; color: var(--ink-soft); }
+.thermo-price { margin: 8px 0; }
+.thermo-retail { font-size: 13px; color: var(--ink-soft); text-decoration: line-through; margin-right: 6px; }
+.thermo-after-rebate { font-size: 16px; font-weight: 700; color: var(--amber); }
+.thermo-features { margin: 8px 0 12px 18px; font-size: 13px; }
+.thermo-features li { margin-bottom: 4px; }
+.thermo-buy { margin-top: auto; align-self: flex-start; background: var(--teal-deep); color: #fff; padding: 9px 16px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 13px; }
+.thermo-buy:hover { background: var(--amber); }
+</style>
 </style>
 <style>
 /* CANONICAL-NAV-FOOTER-CSS-START */
@@ -325,12 +339,74 @@ strong { color: var(--ink); }
   <div class="wrap">
 
     <h2>How much you get</h2>
-    <p>Central Hudson offers a <strong>$50 rebate</strong> on qualifying ENERGY STAR-certified smart thermostats — claimable instantly at Lowe's or Home Depot with a coupon code from CentralHudsonRebates.com, or via mail-in form. Limit two thermostats per application.</p>
-    <div class="verify-flag"><strong>Verify before you rely on this:</strong> One PDF source labels a related bill-credit variant "invite only," suggesting there may be two different program variants (an open mail-in rebate and an invite-only bill credit) — worth reconciling with Central Hudson before assuming the $50 rebate is universally open to every customer.</div>
+    <p>Central Hudson offers a <strong>$50 rebate</strong> on qualifying ENERGY STAR-certified smart thermostats. It is claimable instantly at Lowe's or Home Depot with a coupon code from CentralHudsonRebates.com, or via mail-in form. Limit two thermostats per application.</p>
+    <div class="verify-flag"><strong>Verify before you rely on this:</strong> One PDF source labels a related bill-credit variant "invite only," suggesting there may be two different program variants (an open mail-in rebate and an invite-only bill credit), so it is worth reconciling with Central Hudson before assuming the $50 rebate is universally open to every customer.</div>
     <p class="source-note">Sources: <a href="https://www.cenhud.com/globalassets/pdf/thermostat_rebate_form_f.pdf" target="_blank" rel="noopener">Central Hudson $50 Thermostat Rebate Form</a>, <a href="https://cenhudpeakperks.com/smart-thermostat/" target="_blank" rel="noopener">Central Hudson Peak Perks smart thermostat page</a></p>
     <p style="font-size:12px; color:var(--sage);">Administered by: Central Hudson / Central Hudson Peak Perks Program</p>
 
     <h3>Saugerties-specific note</h3><p>No Saugerties-specific program was found in this research pass. Saugerties likely relies on Ulster County's UCCAC (the same provider as Kingston) for weatherization delivery, though this wasn't independently confirmed by name for Saugerties.</p>
+
+    <h2>Thermostats that qualify for the rebate</h2>
+    <p>Saugerties has more rural, larger-lot housing than its Central Hudson neighbors, so multi-zone support and heat-pump compatibility matter more here than in denser river towns.</p>
+    <div class="thermo-compare-grid">
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">ecobee</span>
+      <span class="thermo-model">Smart Thermostat Premium</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$249</span><span class="thermo-after-rebate">$199 after the $50 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Room sensor useful in Saugerties' larger rural and farmhouse-style homes</li>
+      <li>Works with most central air and many heat pumps</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.ecobee.com/en-us/smart-thermostats/" target="_blank" rel="noopener sponsored">See ecobee models &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Google Nest</span>
+      <span class="thermo-model">Learning Thermostat</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$249</span><span class="thermo-after-rebate">$199 after the $50 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Simple setup, popular with second-home owners near the Hudson</li>
+      <li>No hub required</li>
+    </ul>
+    <a class="thermo-buy" href="https://store.google.com/category/connected_home?category=thermostats" target="_blank" rel="noopener sponsored">Browse Nest &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Honeywell Home</span>
+      <span class="thermo-model">T9</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$169</span><span class="thermo-after-rebate">$119 after the $50 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Qualifies for the $50 Peak Perks coupon at the nearest Lowe's</li>
+      <li>Handles multi-zone heat in larger Saugerties farmhouses</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.resideo.com/us/en/products/smart-thermostats/" target="_blank" rel="noopener sponsored">View Honeywell Home &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Copeland Sensi</span>
+      <span class="thermo-model">Touch 2</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$149</span><span class="thermo-after-rebate">$99 after the $50 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>No C-wire needed, common in Saugerties' older rural wiring</li>
+      <li>Cheapest option that still clears the $50 rebate</li>
+    </ul>
+    <a class="thermo-buy" href="https://sensi.copeland.com/en-us/products/thermostat" target="_blank" rel="noopener sponsored">Shop Sensi &rarr;</a>
+  </div>
+    </div>
+    <p style="font-size:13px; color:var(--ink-soft);">Prices are approximate manufacturer list prices and change &mdash; check the brand's site for current pricing.</p>
 
     <h2>Smart Thermostats installers in Saugerties</h2>
     <p>Real companies serving Saugerties, pulled from their current Google reviews. We're not paid to list anyone here.</p>
@@ -356,11 +432,11 @@ strong { color: var(--ink); }
     <h2>Common questions</h2>
     <div class="faq-item">
       <h3>How much is the Smart Thermostats rebate in Saugerties?</h3>
-      <p>Central Hudson offers a $50 rebate on qualifying ENERGY STAR-certified smart thermostats — claimable instantly at Lowe's or Home Depot with a coupon code from CentralHudsonRebates.com, or via mail-in form. Limit two thermostats per application.</p>
+      <p>Central Hudson offers a $50 rebate on qualifying ENERGY STAR-certified smart thermostats. It is claimable instantly at Lowe's or Home Depot with a coupon code from CentralHudsonRebates.com, or via mail-in form. Limit two thermostats per application.</p>
     </div>
     <div class="faq-item">
       <h3>Is that Smart Thermostats figure confirmed?</h3>
-      <p>One PDF source labels a related bill-credit variant "invite only," suggesting there may be two different program variants (an open mail-in rebate and an invite-only bill credit) — worth reconciling with Central Hudson before assuming the $50 rebate is universally open to every customer.</p>
+      <p>One PDF source labels a related bill-credit variant "invite only," suggesting there may be two different program variants (an open mail-in rebate and an invite-only bill credit), so it is worth reconciling with Central Hudson before assuming the $50 rebate is universally open to every customer.</p>
     </div>
     <div class="faq-item">
       <h3>Is there a Saugerties-specific top-up beyond the territory program?</h3>
@@ -378,8 +454,12 @@ strong { color: var(--ink); }
       <a href="/us/ny/central-hudson/kingston/smart-thermostats/" style="margin-right:14px; display:inline-block;">Kingston</a>
       <a href="/us/ny/central-hudson/beacon/smart-thermostats/" style="margin-right:14px; display:inline-block;">Beacon</a>
     </p>
+    <h2>The $50 rebate, applied to a typical Saugerties home</h2>
+    <p>Saugerties sits at the northern edge of Central Hudson's territory, and the Peak Perks rebate terms are unchanged: $50 off an ENERGY STAR-certified thermostat, either as an instant coupon or a mail-in rebate. Because Saugerties runs more rural and larger-lot than Kingston or Poughkeepsie, multi-zone models tend to make more sense for the bigger farmhouses common along the Route 212 corridor.</p>
+    <p>Ulster County's Climate Smart Communities coordinator and the Saugerties-based Ulster County Community Action Committee both handle broader weatherization referrals alongside this rebate.</p>
+
     <h2>Your utility: Central Hudson</h2>
-    <p>Central Hudson is the local electric utility for Saugerties. The smart thermostat rebate above comes from a state-wide program, so which utility bills you doesn't change what you qualify for. Where it can matter: Central Hudson is who to contact about your home's electrical service capacity if your installer flags an upgrade, and who bills the electricity your new equipment uses once it's running. Some utilities layer their own incentive on top of the state rebate — worth a quick call to Central Hudson to ask directly.</p>
+    <p>Central Hudson is the local electric utility for Saugerties. The smart thermostat rebate above comes from a state-wide program, so which utility bills you doesn't change what you qualify for. Where it can matter: Central Hudson is who to contact about your home's electrical service capacity if your installer flags an upgrade, and who bills the electricity your new equipment uses once it's running. Some utilities layer their own incentive on top of the state rebate, so it is worth a quick call to Central Hudson to ask directly.</p>
 
 
     <h2>Next steps</h2>

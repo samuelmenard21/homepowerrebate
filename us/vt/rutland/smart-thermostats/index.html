@@ -195,6 +195,18 @@ strong { color: var(--ink); }
 .hpr-breadcrumb li[aria-current="page"] { color: var(--ink); font-weight: 600; }
 @media (max-width: 600px) { .hpr-breadcrumb { padding: 10px 20px; font-size: 12px; } }
 /* CANONICAL-BREADCRUMB-CSS-END */
+.thermo-compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 18px 0 22px; }
+.thermo-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; }
+.thermo-card-head { display: flex; flex-direction: column; margin-bottom: 8px; }
+.thermo-brand { font-weight: 700; color: var(--teal-deep); font-size: 15px; }
+.thermo-model { font-size: 13px; color: var(--ink-soft); }
+.thermo-price { margin: 8px 0; }
+.thermo-retail { font-size: 13px; color: var(--ink-soft); text-decoration: line-through; margin-right: 6px; }
+.thermo-after-rebate { font-size: 16px; font-weight: 700; color: var(--amber); }
+.thermo-features { margin: 8px 0 12px 18px; font-size: 13px; }
+.thermo-features li { margin-bottom: 4px; }
+.thermo-buy { margin-top: auto; align-self: flex-start; background: var(--teal-deep); color: #fff; padding: 9px 16px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 13px; }
+.thermo-buy:hover { background: var(--amber); }
 </style>
 </head>
 <body>
@@ -207,12 +219,12 @@ strong { color: var(--ink); }
       <span>Home<span class="logo-power">Power</span>Rebate</span>
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
-      <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
+      <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
       <a href="/retrofit-assessment/?city=rutland" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Assessment</a>
-      <a href="/blog" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
+      <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
-      <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
+      <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
       <a href="/retrofit-assessment/?city=rutland" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Assessment</a>
     </div>
     <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
@@ -248,19 +260,19 @@ strong { color: var(--ink); }
     </div>
     <div style="padding:0 16px 16px;">
     <div id="province-cities-on" style="display:none; gap:8px;">
-      <a href="/ca/on/toronto">Toronto</a><a href="/ca/on/ottawa">Ottawa</a><a href="/ca/on/mississauga">Mississauga</a><a href="/ca/on/brampton">Brampton</a><a href="/ca/on/hamilton">Hamilton</a><a href="/ca/on/markham">Markham</a><a href="/ca/on/vaughan">Vaughan</a><a href="/ca/on/richmond-hill">Richmond Hill</a><a href="/ca/on/barrie">Barrie</a><a href="/ca/on/london">London</a><a href="/ca/on/kitchener">Kitchener</a><a href="/ca/on/windsor">Windsor</a><a href="/ca/on/oakville">Oakville</a><a href="/ca/on/oshawa">Oshawa</a><a href="/ca/on/whitby">Whitby</a><a href="/ca/on/burlington">Burlington</a><a href="/ca/on/cambridge">Cambridge</a><a href="/ca/on/greater-sudbury">Greater Sudbury</a>
+      <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
     </div>
     <div id="province-cities-bc" style="display:none; gap:8px;">
-      <a href="/ca/bc/abbotsford">Abbotsford</a><a href="/ca/bc/burnaby">Burnaby</a><a href="/ca/bc/chilliwack">Chilliwack</a><a href="/ca/bc/coquitlam">Coquitlam</a><a href="/ca/bc/fort-st-john">Fort St. John</a><a href="/ca/bc/kamloops">Kamloops</a><a href="/ca/bc/kelowna">Kelowna</a><a href="/ca/bc/langley">Langley</a><a href="/ca/bc/maple-ridge">Maple Ridge</a><a href="/ca/bc/nanaimo">Nanaimo</a><a href="/ca/bc/penticton">Penticton</a><a href="/ca/bc/prince-george">Prince George</a><a href="/ca/bc/richmond">Richmond</a><a href="/ca/bc/squamish">Squamish</a><a href="/ca/bc/surrey">Surrey</a><a href="/ca/bc/vancouver">Vancouver</a><a href="/ca/bc/vernon">Vernon</a><a href="/ca/bc/victoria">Victoria</a>
+      <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
     </div>
     <div id="province-cities-ab" style="display:none; gap:8px;">
-      <a href="/ca/ab/calgary">Calgary</a><a href="/ca/ab/edmonton">Edmonton</a><a href="/ca/ab/red-deer">Red Deer</a><a href="/ca/ab/lethbridge">Lethbridge</a><a href="/ca/ab/st-albert">St. Albert</a>
+      <a href="/ca/ab/calgary/">Calgary</a><a href="/ca/ab/edmonton/">Edmonton</a><a href="/ca/ab/red-deer/">Red Deer</a><a href="/ca/ab/lethbridge/">Lethbridge</a><a href="/ca/ab/st-albert/">St. Albert</a>
     </div>
     <div id="province-cities-ns" style="display:none; gap:8px;">
-      <a href="/ca/ns/halifax">Halifax</a>
+      <a href="/ca/ns/halifax/">Halifax</a>
     </div>
     <div id="province-cities-ma" style="display:none; gap:8px;">
-      <a href="/us/ma/boston">Boston</a><a href="/us/ma/worcester">Worcester</a><a href="/us/ma/springfield">Springfield</a><a href="/us/ma/cambridge">Cambridge</a><a href="/us/ma/lowell">Lowell</a><a href="/us/ma/brockton">Brockton</a><a href="/us/ma/new-bedford">New Bedford</a><a href="/us/ma/quincy">Quincy</a><a href="/us/ma/lynn">Lynn</a><a href="/us/ma/fall-river">Fall River</a><a href="/us/ma/newton">Newton</a><a href="/us/ma/somerville">Somerville</a>
+      <a href="/us/ma/boston/">Boston</a><a href="/us/ma/worcester/">Worcester</a><a href="/us/ma/springfield/">Springfield</a><a href="/us/ma/cambridge/">Cambridge</a><a href="/us/ma/lowell/">Lowell</a><a href="/us/ma/brockton/">Brockton</a><a href="/us/ma/new-bedford/">New Bedford</a><a href="/us/ma/quincy/">Quincy</a><a href="/us/ma/lynn/">Lynn</a><a href="/us/ma/fall-river/">Fall River</a><a href="/us/ma/newton/">Newton</a><a href="/us/ma/somerville/">Somerville</a>
     </div>
     <div id="province-cities-ca" style="display:none; gap:8px;">
       <a href="/us/ca/los-angeles/">Los Angeles</a><a href="/us/ca/sacramento/">Sacramento</a><a href="/us/ca/bay-area/">Bay Area</a><a href="/us/ca/san-diego/">San Diego</a><a href="/us/ca/inland-empire/">Inland Empire</a>
@@ -269,13 +281,13 @@ strong { color: var(--ink); }
       <a href="/us/ny/con-edison/new-york-city/">New York City</a><a href="/us/ny/con-edison/yonkers/">Yonkers</a><a href="/us/ny/con-edison/mount-vernon/">Mount Vernon</a><a href="/us/ny/con-edison/new-rochelle/">New Rochelle</a><a href="/us/ny/con-edison/white-plains/">White Plains</a><a href="/us/ny/pseg/brookhaven/">Brookhaven</a><a href="/us/ny/pseg/islip/">Islip</a><a href="/us/ny/pseg/babylon/">Babylon</a><a href="/us/ny/pseg/huntington/">Huntington</a><a href="/us/ny/pseg/smithtown/">Smithtown</a><a href="/us/ny/pseg/oyster-bay/">Oyster Bay</a><a href="/us/ny/pseg/southampton/">Southampton</a><a href="/us/ny/central-hudson/poughkeepsie/">Poughkeepsie</a><a href="/us/ny/central-hudson/newburgh/">Newburgh</a><a href="/us/ny/central-hudson/kingston/">Kingston</a><a href="/us/ny/central-hudson/beacon/">Beacon</a><a href="/us/ny/central-hudson/saugerties/">Saugerties</a><a href="/us/ny/national-grid/albany/">Albany</a><a href="/us/ny/national-grid/buffalo/">Buffalo</a><a href="/us/ny/national-grid/rochester/">Rochester</a><a href="/us/ny/national-grid/syracuse/">Syracuse</a>
     </div>
     <div id="province-cities-pa" style="display:none; gap:8px;">
-      <a href="/us/pa/philadelphia">Philadelphia</a><a href="/us/pa/pittsburgh">Pittsburgh</a><a href="/us/pa/allentown">Allentown</a><a href="/us/pa/erie">Erie</a>
+      <a href="/us/pa/philadelphia/">Philadelphia</a><a href="/us/pa/pittsburgh/">Pittsburgh</a><a href="/us/pa/allentown/">Allentown</a><a href="/us/pa/erie/">Erie</a>
     </div>
     <div id="province-cities-co" style="display:none; gap:8px;">
-      <a href="/us/co/denver">Denver</a><a href="/us/co/colorado-springs">Colorado Springs</a><a href="/us/co/aurora">Aurora</a><a href="/us/co/fort-collins">Fort Collins</a><a href="/us/co/boulder">Boulder</a>
+      <a href="/us/co/denver/">Denver</a><a href="/us/co/colorado-springs/">Colorado Springs</a><a href="/us/co/aurora/">Aurora</a><a href="/us/co/fort-collins/">Fort Collins</a><a href="/us/co/boulder/">Boulder</a>
     </div>
     <div id="province-cities-vt" style="display:grid; gap:8px;">
-      <a href="/us/vt/burlington">Burlington</a><a href="/us/vt/south-burlington">South Burlington</a><a href="/us/vt/rutland">Rutland</a><a href="/us/vt/barre">Barre</a><a href="/us/vt/montpelier">Montpelier</a>
+      <a href="/us/vt/burlington/">Burlington</a><a href="/us/vt/south-burlington/">South Burlington</a><a href="/us/vt/rutland/">Rutland</a><a href="/us/vt/barre/">Barre</a><a href="/us/vt/montpelier/">Montpelier</a>
     </div>
     </div>
   </div>
@@ -286,7 +298,7 @@ strong { color: var(--ink); }
      current city's <a> for rutland — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
 <!-- CANONICAL-BREADCRUMB-START -->
-<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/vt">Vermont</a></li><li><a href="/us/vt/rutland/">Rutland</a></li><li aria-current="page">Smart Thermostat</li></ol></nav>
+<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/vt/">Vermont</a></li><li><a href="/us/vt/rutland/">Rutland</a></li><li aria-current="page">Smart Thermostat</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
 
 <section class="hero">
@@ -299,7 +311,7 @@ strong { color: var(--ink); }
 
 <section class="wrap" style="padding:24px 28px 0;">
   <div style="font-size:14px; line-height:2.2;">
-      <span style="margin-right:14px;"><a href="/us/vt/rutland">&larr; Back to Rutland rebate hub</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/heat-pump">Heat Pump Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/solar">Solar Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/battery">Battery Storage Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/insulation">Insulation Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/water-heater">Water Heater Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/ev-charger">EV Charger Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/windows-doors">Windows & Doors Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/hrv">HRV & ERV Rebates in Rutland</a></span>
+      <span style="margin-right:14px;"><a href="/us/vt/rutland/">&larr; Back to Rutland rebate hub</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/heat-pump/">Heat Pump Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/solar/">Solar Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/battery/">Battery Storage Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/insulation/">Insulation Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/water-heater/">Water Heater Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/ev-charger/">EV Charger Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/windows-doors/">Windows & Doors Rebates in Rutland</a></span><span style="margin-right:14px;"><a href="/us/vt/rutland/hrv/">HRV & ERV Rebates in Rutland</a></span>
   </div>
 </section>
 
@@ -317,6 +329,68 @@ strong { color: var(--ink); }
       <strong>Want your exact number?</strong> Run our free assessment to see what you'd actually get.
       <a href="/retrofit-assessment/?city=rutland" class="cta" style="display:inline-block;">Run your free assessment &rarr;</a>
     </div>
+
+    <h2>What's left to pay after the $100 Efficiency Vermont rebate</h2>
+    <p>Efficiency Vermont's $100 rebate applies statewide regardless of whether Green Mountain Power bills your electricity, so the prices below already have that $100 subtracted from each qualifying model.</p>
+    <div class="thermo-compare-grid">
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">ecobee</span>
+      <span class="thermo-model">Smart Thermostat Premium</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$249</span><span class="thermo-after-rebate">$149 after Efficiency Vermont's $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Room sensor bundle helps in Rutland's older Victorian-era housing stock</li>
+      <li>Qualifies for the rebate</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.ecobee.com/en-us/smart-thermostats/" target="_blank" rel="noopener sponsored">See ecobee models &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Honeywell Home</span>
+      <span class="thermo-model">T9</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$169</span><span class="thermo-after-rebate">$69 after Efficiency Vermont's $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Smart Response accounts for slow-recovery older boilers common around Rutland</li>
+      <li>Qualifies for the rebate</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.resideo.com/us/en/products/smart-thermostats/" target="_blank" rel="noopener sponsored">View Honeywell Home T9 &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Google Nest</span>
+      <span class="thermo-model">Thermostat</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$129</span><span class="thermo-after-rebate">$29 after Efficiency Vermont's $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Simple DIY install</li>
+      <li>Qualifies for the rebate</li>
+    </ul>
+    <a class="thermo-buy" href="https://store.google.com/category/connected_home?category=thermostats" target="_blank" rel="noopener sponsored">Shop Nest thermostats &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Copeland Sensi</span>
+      <span class="thermo-model">Touch 2</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$149</span><span class="thermo-after-rebate">$49 after Efficiency Vermont's $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Works without a C-wire on most systems</li>
+      <li>Qualifies for the rebate</li>
+    </ul>
+    <a class="thermo-buy" href="https://sensi.copeland.com/en-us/products/thermostat" target="_blank" rel="noopener sponsored">Shop Copeland Sensi &rarr;</a>
+  </div>
+    </div>
+    <p style="font-size:13px; color:var(--ink-soft);">Prices are approximate manufacturer list prices in USD before Efficiency Vermont's rebate is applied — check the brand's site for current pricing.</p>
 <h2>Rutland’s older housing stock</h2>
 <p>Rutland County has some of the oldest housing in Vermont — more than a quarter of the county’s homes were built before 1939, according to the Vermont Housing Needs Assessment, well ahead of the statewide median build year of 1974. If your heating system predates central forced air, which is common in housing this old, check compatibility before you buy: not every smart thermostat works with a steam or hot-water radiator system.</p>
 
@@ -340,7 +414,7 @@ strong { color: var(--ink); }
 
 
     <h2>Next steps</h2>
-    <p><a href="/us/vt/rutland">View all Rutland rebate programs &rarr;</a> or <a href="/us/vt">see all Vermont coverage &rarr;</a></p>
+    <p><a href="/us/vt/rutland/">View all Rutland rebate programs &rarr;</a> or <a href="/us/vt/">see all Vermont coverage &rarr;</a></p>
 
   </div>
 </article>
@@ -374,22 +448,22 @@ strong { color: var(--ink); }
         <div class="footer-col-title">Canada</div>
         <ul class="footer-col-links">
           <li><a href="/ca/">All Provinces</a></li>
-          <li><a href="/ca/bc">British Columbia</a></li>
-          <li><a href="/ca/on">Ontario</a></li>
-          <li><a href="/ca/ab">Alberta</a></li>
-          <li><a href="/ca/ns">Nova Scotia</a></li>
+          <li><a href="/ca/bc/">British Columbia</a></li>
+          <li><a href="/ca/on/">Ontario</a></li>
+          <li><a href="/ca/ab/">Alberta</a></li>
+          <li><a href="/ca/ns/">Nova Scotia</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-col-title">United States</div>
         <ul class="footer-col-links">
           <li><a href="/us/">All States</a></li>
-          <li><a href="/us/ca">California</a></li>
-          <li><a href="/us/ny">New York</a></li>
-          <li><a href="/us/ma">Massachusetts</a></li>
-          <li><a href="/us/pa">Pennsylvania</a></li>
-          <li><a href="/us/co">Colorado</a></li>
-          <li><a href="/us/vt">Vermont</a></li>
+          <li><a href="/us/ca/">California</a></li>
+          <li><a href="/us/ny/">New York</a></li>
+          <li><a href="/us/ma/">Massachusetts</a></li>
+          <li><a href="/us/pa/">Pennsylvania</a></li>
+          <li><a href="/us/co/">Colorado</a></li>
+          <li><a href="/us/vt/">Vermont</a></li>
         </ul>
       </div>
       <div>
@@ -399,7 +473,7 @@ strong { color: var(--ink); }
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/retrofit-assessment/?city=rutland">Retrofit Assessment</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
-          <li><a href="/blog">Full Blog</a></li>
+          <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
           <li><a href="/ca/">Canada by Province</a></li>
           <li><a href="/us/">US by State</a></li>
@@ -408,16 +482,16 @@ strong { color: var(--ink); }
       <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-col-links">
-          <li><a href="/about">About</a></li>
+          <li><a href="/about/">About</a></li>
           <li><a href="/partners/">Partners</a></li>
-          <li><a href="/privacy">Privacy</a></li>
-          <li><a href="/terms">Terms</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/contact/">Contact</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <div>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about" style="color:inherit;">Sam Menard</a>. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about/" style="color:inherit;">Sam Menard</a>. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
       <div>Made in Canada 🇨🇦</div>
     </div>
   </div>

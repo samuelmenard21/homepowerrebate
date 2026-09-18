@@ -132,6 +132,18 @@ li { margin-bottom: 8px; line-height: 1.7; font-size: 15px; }
 .cta:hover { background: var(--amber-bright); }
 a { color: var(--teal); }
 strong { color: var(--ink); }
+.thermo-compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 18px 0 22px; }
+.thermo-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; }
+.thermo-card-head { display: flex; flex-direction: column; margin-bottom: 8px; }
+.thermo-brand { font-weight: 700; color: var(--teal-deep); font-size: 15px; }
+.thermo-model { font-size: 13px; color: var(--ink-soft); }
+.thermo-price { margin: 8px 0; }
+.thermo-retail { font-size: 13px; color: var(--ink-soft); text-decoration: line-through; margin-right: 6px; }
+.thermo-after-rebate { font-size: 16px; font-weight: 700; color: var(--amber); }
+.thermo-features { margin: 8px 0 12px 18px; font-size: 13px; }
+.thermo-features li { margin-bottom: 4px; }
+.thermo-buy { margin-top: auto; align-self: flex-start; background: var(--teal-deep); color: #fff; padding: 9px 16px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 13px; }
+.thermo-buy:hover { background: var(--amber); }
 </style>
 <style>
 /* CANONICAL-NAV-FOOTER-CSS-START */
@@ -196,12 +208,12 @@ strong { color: var(--ink); }
       <span>Home<span class="logo-power">Power</span>Rebate</span>
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
-      <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
+      <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
       <a href="/retrofit-assessment/?city=fall-river" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Assessment</a>
-      <a href="/blog" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
+      <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
-      <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
+      <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
       <a href="/retrofit-assessment/?city=fall-river" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Assessment</a>
     </div>
     <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
@@ -237,19 +249,19 @@ strong { color: var(--ink); }
     </div>
     <div style="padding:0 16px 16px;">
     <div id="province-cities-on" style="display:none; gap:8px;">
-      <a href="/ca/on/toronto">Toronto</a><a href="/ca/on/ottawa">Ottawa</a><a href="/ca/on/mississauga">Mississauga</a><a href="/ca/on/brampton">Brampton</a><a href="/ca/on/hamilton">Hamilton</a><a href="/ca/on/markham">Markham</a><a href="/ca/on/vaughan">Vaughan</a><a href="/ca/on/richmond-hill">Richmond Hill</a><a href="/ca/on/barrie">Barrie</a><a href="/ca/on/london">London</a><a href="/ca/on/kitchener">Kitchener</a><a href="/ca/on/windsor">Windsor</a><a href="/ca/on/oakville">Oakville</a><a href="/ca/on/oshawa">Oshawa</a><a href="/ca/on/whitby">Whitby</a><a href="/ca/on/burlington">Burlington</a><a href="/ca/on/cambridge">Cambridge</a><a href="/ca/on/greater-sudbury">Greater Sudbury</a>
+      <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
     </div>
     <div id="province-cities-bc" style="display:none; gap:8px;">
-      <a href="/ca/bc/abbotsford">Abbotsford</a><a href="/ca/bc/burnaby">Burnaby</a><a href="/ca/bc/chilliwack">Chilliwack</a><a href="/ca/bc/coquitlam">Coquitlam</a><a href="/ca/bc/fort-st-john">Fort St. John</a><a href="/ca/bc/kamloops">Kamloops</a><a href="/ca/bc/kelowna">Kelowna</a><a href="/ca/bc/langley">Langley</a><a href="/ca/bc/maple-ridge">Maple Ridge</a><a href="/ca/bc/nanaimo">Nanaimo</a><a href="/ca/bc/penticton">Penticton</a><a href="/ca/bc/prince-george">Prince George</a><a href="/ca/bc/richmond">Richmond</a><a href="/ca/bc/squamish">Squamish</a><a href="/ca/bc/surrey">Surrey</a><a href="/ca/bc/vancouver">Vancouver</a><a href="/ca/bc/vernon">Vernon</a><a href="/ca/bc/victoria">Victoria</a>
+      <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
     </div>
     <div id="province-cities-ab" style="display:none; gap:8px;">
-      <a href="/ca/ab/calgary">Calgary</a><a href="/ca/ab/edmonton">Edmonton</a><a href="/ca/ab/red-deer">Red Deer</a><a href="/ca/ab/lethbridge">Lethbridge</a><a href="/ca/ab/st-albert">St. Albert</a>
+      <a href="/ca/ab/calgary/">Calgary</a><a href="/ca/ab/edmonton/">Edmonton</a><a href="/ca/ab/red-deer/">Red Deer</a><a href="/ca/ab/lethbridge/">Lethbridge</a><a href="/ca/ab/st-albert/">St. Albert</a>
     </div>
     <div id="province-cities-ns" style="display:none; gap:8px;">
-      <a href="/ca/ns/halifax">Halifax</a>
+      <a href="/ca/ns/halifax/">Halifax</a>
     </div>
     <div id="province-cities-ma" style="display:grid; gap:8px;">
-      <a href="/us/ma/boston">Boston</a><a href="/us/ma/worcester">Worcester</a><a href="/us/ma/springfield">Springfield</a><a href="/us/ma/cambridge">Cambridge</a><a href="/us/ma/lowell">Lowell</a><a href="/us/ma/brockton">Brockton</a><a href="/us/ma/new-bedford">New Bedford</a><a href="/us/ma/quincy">Quincy</a><a href="/us/ma/lynn">Lynn</a><a href="/us/ma/fall-river">Fall River</a><a href="/us/ma/newton">Newton</a><a href="/us/ma/somerville">Somerville</a>
+      <a href="/us/ma/boston/">Boston</a><a href="/us/ma/worcester/">Worcester</a><a href="/us/ma/springfield/">Springfield</a><a href="/us/ma/cambridge/">Cambridge</a><a href="/us/ma/lowell/">Lowell</a><a href="/us/ma/brockton/">Brockton</a><a href="/us/ma/new-bedford/">New Bedford</a><a href="/us/ma/quincy/">Quincy</a><a href="/us/ma/lynn/">Lynn</a><a href="/us/ma/fall-river/">Fall River</a><a href="/us/ma/newton/">Newton</a><a href="/us/ma/somerville/">Somerville</a>
     </div>
     <div id="province-cities-ca" style="display:none; gap:8px;">
       <a href="/us/ca/los-angeles/">Los Angeles</a><a href="/us/ca/sacramento/">Sacramento</a><a href="/us/ca/bay-area/">Bay Area</a><a href="/us/ca/san-diego/">San Diego</a><a href="/us/ca/inland-empire/">Inland Empire</a>
@@ -258,13 +270,13 @@ strong { color: var(--ink); }
       <a href="/us/ny/con-edison/new-york-city/">New York City</a><a href="/us/ny/con-edison/yonkers/">Yonkers</a><a href="/us/ny/con-edison/mount-vernon/">Mount Vernon</a><a href="/us/ny/con-edison/new-rochelle/">New Rochelle</a><a href="/us/ny/con-edison/white-plains/">White Plains</a><a href="/us/ny/pseg/brookhaven/">Brookhaven</a><a href="/us/ny/pseg/islip/">Islip</a><a href="/us/ny/pseg/babylon/">Babylon</a><a href="/us/ny/pseg/huntington/">Huntington</a><a href="/us/ny/pseg/smithtown/">Smithtown</a><a href="/us/ny/pseg/oyster-bay/">Oyster Bay</a><a href="/us/ny/pseg/southampton/">Southampton</a><a href="/us/ny/central-hudson/poughkeepsie/">Poughkeepsie</a><a href="/us/ny/central-hudson/newburgh/">Newburgh</a><a href="/us/ny/central-hudson/kingston/">Kingston</a><a href="/us/ny/central-hudson/beacon/">Beacon</a><a href="/us/ny/central-hudson/saugerties/">Saugerties</a><a href="/us/ny/national-grid/albany/">Albany</a><a href="/us/ny/national-grid/buffalo/">Buffalo</a><a href="/us/ny/national-grid/rochester/">Rochester</a><a href="/us/ny/national-grid/syracuse/">Syracuse</a>
     </div>
     <div id="province-cities-pa" style="display:none; gap:8px;">
-      <a href="/us/pa/philadelphia">Philadelphia</a><a href="/us/pa/pittsburgh">Pittsburgh</a><a href="/us/pa/allentown">Allentown</a><a href="/us/pa/erie">Erie</a>
+      <a href="/us/pa/philadelphia/">Philadelphia</a><a href="/us/pa/pittsburgh/">Pittsburgh</a><a href="/us/pa/allentown/">Allentown</a><a href="/us/pa/erie/">Erie</a>
     </div>
     <div id="province-cities-co" style="display:none; gap:8px;">
-      <a href="/us/co/denver">Denver</a><a href="/us/co/colorado-springs">Colorado Springs</a><a href="/us/co/aurora">Aurora</a><a href="/us/co/fort-collins">Fort Collins</a><a href="/us/co/boulder">Boulder</a>
+      <a href="/us/co/denver/">Denver</a><a href="/us/co/colorado-springs/">Colorado Springs</a><a href="/us/co/aurora/">Aurora</a><a href="/us/co/fort-collins/">Fort Collins</a><a href="/us/co/boulder/">Boulder</a>
     </div>
     <div id="province-cities-vt" style="display:none; gap:8px;">
-      <a href="/us/vt/burlington">Burlington</a><a href="/us/vt/south-burlington">South Burlington</a><a href="/us/vt/rutland">Rutland</a><a href="/us/vt/barre">Barre</a><a href="/us/vt/montpelier">Montpelier</a>
+      <a href="/us/vt/burlington/">Burlington</a><a href="/us/vt/south-burlington/">South Burlington</a><a href="/us/vt/rutland/">Rutland</a><a href="/us/vt/barre/">Barre</a><a href="/us/vt/montpelier/">Montpelier</a>
     </div>
     </div>
   </div>
@@ -275,27 +287,27 @@ strong { color: var(--ink); }
      current city's <a> for fall-river — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
 <!-- CANONICAL-BREADCRUMB-START -->
-<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ma">Massachusetts</a></li><li><a href="/us/ma/fall-river/">Fall River</a></li><li aria-current="page">Smart Thermostat</li></ol></nav>
+<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ma/">Massachusetts</a></li><li><a href="/us/ma/fall-river/">Fall River</a></li><li aria-current="page">Smart Thermostat</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
 
 <section class="hero">
   <div class="wrap">
     <div class="amount-badge">$100</div>
     <h1>Smart Thermostat Rebates in Fall River</h1>
-    <p>Mass Save funds this program uniformly across Massachusetts, including Fall River. Here's exactly how it works, plus local installers to call.</p>
+    <p>Mass Save funds this program uniformly across Massachusetts, including Fall River. Fall River's granite mill-city housing stock runs old — a lot of pre-1950 two- and three-family homes on steam or hot-water heat — so a smart thermostat here is often the first electrified upgrade a homeowner makes before anything bigger.</p>
   </div>
 </section>
 
 <section class="wrap" style="padding:24px 28px 0;">
   <div style="font-size:14px; line-height:2.2;">
-      <span style="margin-right:14px;"><a href="/us/ma/fall-river">&larr; Back to Fall River rebate hub</a></span>
-      <span style="margin-right:14px;"><a href="/us/ma/fall-river/heat-pump">Heat Pump Rebates in Fall River</a></span>
-      <span style="margin-right:14px;"><a href="/us/ma/fall-river/insulation">Insulation & Air Sealing Rebates in Fall River</a></span>
-      <span style="margin-right:14px;"><a href="/us/ma/fall-river/solar">Solar (SMART 3.0) Rebates in Fall River</a></span>
-      <span style="margin-right:14px;"><a href="/us/ma/fall-river/battery">Battery Storage Rebates in Fall River</a></span>
-      <span style="margin-right:14px;"><a href="/us/ma/fall-river/water-heater">Water Heater Rebates in Fall River</a></span>
-      <span style="margin-right:14px;"><a href="/us/ma/fall-river/windows-doors">Windows & Doors Rebates in Fall River</a></span>
-      <span style="margin-right:14px;"><a href="/us/ma/fall-river/ev-charger">EV Charger Rebates in Fall River</a></span>
+      <span style="margin-right:14px;"><a href="/us/ma/fall-river/">&larr; Back to Fall River rebate hub</a></span>
+      <span style="margin-right:14px;"><a href="/us/ma/fall-river/heat-pump/">Heat Pump Rebates in Fall River</a></span>
+      <span style="margin-right:14px;"><a href="/us/ma/fall-river/insulation/">Insulation & Air Sealing Rebates in Fall River</a></span>
+      <span style="margin-right:14px;"><a href="/us/ma/fall-river/solar/">Solar (SMART 3.0) Rebates in Fall River</a></span>
+      <span style="margin-right:14px;"><a href="/us/ma/fall-river/battery/">Battery Storage Rebates in Fall River</a></span>
+      <span style="margin-right:14px;"><a href="/us/ma/fall-river/water-heater/">Water Heater Rebates in Fall River</a></span>
+      <span style="margin-right:14px;"><a href="/us/ma/fall-river/windows-doors/">Windows & Doors Rebates in Fall River</a></span>
+      <span style="margin-right:14px;"><a href="/us/ma/fall-river/ev-charger/">EV Charger Rebates in Fall River</a></span>
   </div>
 </section>
 
@@ -303,7 +315,93 @@ strong { color: var(--ink); }
   <div class="wrap">
 
     <h2>How much you get</h2>
-    <p><strong>$100</strong> — Often installed for free during your Mass Save home energy assessment — the $100 rebate covers the rest if you buy your own.</p>
+    <p>Fall River homeowners qualify for a $100 Mass Save rebate on an eligible smart thermostat, and National Grid frequently installs one at no charge during the home energy assessment. If you've already bought your own, you can still file for the $100 rebate afterward through Mass Save's standard process.</p>
+
+    <h2>Comparing smart thermostat options for Fall River homes</h2>
+    <p>Fall River's mill-era two- and three-families often run steam heat with no C-wire, which is exactly what Sensi and Mysa are built to handle without extra wiring work.</p>
+    <div class="thermo-compare-grid">
+      <div class="thermo-card">
+        <div class="thermo-card-head">
+          <span class="thermo-brand">ecobee</span>
+          <span class="thermo-model">Smart Thermostat Premium</span>
+        </div>
+        <div class="thermo-price">
+          <span class="thermo-retail">$249</span>
+          <span class="thermo-after-rebate">$149 after the $100 Mass Save rebate</span>
+        </div>
+        <ul class="thermo-features">
+          <li>Built-in room sensor and air quality monitor</li>
+          <li>Works with most central air, boilers, and many heat pumps</li>
+          <li>ENERGY STAR certified, eligible for the Mass Save rebate</li>
+        </ul>
+        <a class="thermo-buy" href="https://www.ecobee.com/en-us/smart-thermostats/" target="_blank" rel="noopener sponsored">See ecobee.com &rarr;</a>
+      </div>
+      <div class="thermo-card">
+        <div class="thermo-card-head">
+          <span class="thermo-brand">Google Nest</span>
+          <span class="thermo-model">Learning Thermostat</span>
+        </div>
+        <div class="thermo-price">
+          <span class="thermo-retail">$249</span>
+          <span class="thermo-after-rebate">$149 after the $100 Mass Save rebate</span>
+        </div>
+        <ul class="thermo-features">
+          <li>Learns your schedule instead of needing much setup</li>
+          <li>Auto-Schedule adjusts for an empty house</li>
+          <li>ENERGY STAR certified, eligible for the Mass Save rebate</li>
+        </ul>
+        <a class="thermo-buy" href="https://store.google.com/category/connected_home?category=thermostats" target="_blank" rel="noopener sponsored">Shop Nest models &rarr;</a>
+      </div>
+      <div class="thermo-card">
+        <div class="thermo-card-head">
+          <span class="thermo-brand">Honeywell Home</span>
+          <span class="thermo-model">T9</span>
+        </div>
+        <div class="thermo-price">
+          <span class="thermo-retail">$169</span>
+          <span class="thermo-after-rebate">$69 after the $100 Mass Save rebate</span>
+        </div>
+        <ul class="thermo-features">
+          <li>Smart room sensors help even out multi-room temperature swings</li>
+          <li>Simple app, good for a first smart thermostat</li>
+          <li>ENERGY STAR certified, eligible for the Mass Save rebate</li>
+        </ul>
+        <a class="thermo-buy" href="https://www.resideo.com/us/en/products/smart-thermostats/" target="_blank" rel="noopener sponsored">View Honeywell T9 &rarr;</a>
+      </div>
+      <div class="thermo-card">
+        <div class="thermo-card-head">
+          <span class="thermo-brand">Copeland Sensi</span>
+          <span class="thermo-model">Sensi Touch 2</span>
+        </div>
+        <div class="thermo-price">
+          <span class="thermo-retail">$149</span>
+          <span class="thermo-after-rebate">$49 after the $100 Mass Save rebate</span>
+        </div>
+        <ul class="thermo-features">
+          <li>No C-wire needed for most older homes' wiring</li>
+          <li>Works with most steam and hot-water zone systems</li>
+          <li>ENERGY STAR certified, eligible for the Mass Save rebate</li>
+        </ul>
+        <a class="thermo-buy" href="https://sensi.copeland.com/en-us/products/thermostat" target="_blank" rel="noopener sponsored">Shop Sensi Touch 2 &rarr;</a>
+      </div>
+      <div class="thermo-card">
+        <div class="thermo-card-head">
+          <span class="thermo-brand">Mysa</span>
+          <span class="thermo-model">Smart Thermostat</span>
+        </div>
+        <div class="thermo-price">
+          <span class="thermo-retail">$139</span>
+          <span class="thermo-after-rebate">$39 after the $100 Mass Save rebate</span>
+        </div>
+        <ul class="thermo-features">
+          <li>Built for electric baseboard and line-voltage heat</li>
+          <li>Good fit for older multifamily units without central systems</li>
+          <li>ENERGY STAR certified, eligible for the Mass Save rebate</li>
+        </ul>
+        <a class="thermo-buy" href="https://getmysa.com/" target="_blank" rel="noopener sponsored">See getmysa.com &rarr;</a>
+      </div>
+    </div>
+    <p style="font-size:13px; color:var(--ink-soft);">Prices are approximate manufacturer list prices and change — check the brand's site for current pricing.</p>
 
     <h2>Installers</h2>
 
@@ -335,18 +433,22 @@ strong { color: var(--ink); }
     <h2>Common questions</h2>
     <div class="faq-item">
       <h3>How do I get a free smart thermostat in Fall River?</h3>
-      <p>Mass Save often installs one for free right during your home energy assessment — worth asking about when you book it.</p>
+      <p>Mass Save often installs one free during your home energy assessment in Fall River — ask your assessor to confirm it's on the visit before you book.</p>
     </div>
     <div class="faq-item">
       <h3>What if I already bought my own thermostat in Fall River?</h3>
-      <p>You can still get the $100 rebate for a qualifying smart thermostat even if Mass Save didn't install it.</p>
+      <p>Yes. Fall River homeowners can submit receipts for a qualifying ENERGY STAR smart thermostat through the standard Mass Save rebate process even if it wasn't installed during the assessment.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is Fall River in Eversource or National Grid territory?</h3>
+      <p>National Grid. Fall River is outside Eversource's coverage area, so panel questions, billing, and the ConnectedSolutions thermostat bonus all go through National Grid, not Eversource.</p>
     </div>
     <h2>Your utility: National Grid</h2>
-    <p>National Grid is the local electric utility for Fall River. The smart thermostat rebate above comes from a state-wide program, so which utility bills you doesn't change what you qualify for. Where it can matter: National Grid is who to contact about your home's electrical service capacity if your installer flags an upgrade, and who bills the electricity your new equipment uses once it's running. Some utilities layer their own incentive on top of the state rebate — worth a quick call to National Grid to ask directly.</p>
+    <p>National Grid serves Fall River's electric accounts, distinct from the Eversource territory that covers much of the rest of southeastern Massachusetts closer to New Bedford. The $100 thermostat rebate itself comes from the statewide Mass Save fund both utilities pay into, so it's the same number regardless. Where National Grid matters locally is ConnectedSolutions — a $50 enrollment bonus and roughly $20 a year for letting a smart thermostat trim a few degrees on hot summer afternoons, plus who to call if your assessor flags an older electrical panel common in Fall River's mill-era housing. More on <a href="https://www.fallriverma.gov/" target="_blank" rel="noopener">Fall River's city government site</a> or directly through <a href="https://www.nationalgridus.com/masselectric-savings/connectedsolutions" target="_blank" rel="noopener">National Grid's ConnectedSolutions program</a>.</p>
 
 
     <h2>Next steps</h2>
-    <p><a href="/us/ma/fall-river">View all Fall River rebate programs &rarr;</a> or check the official <a href="https://www.masssave.com" target="_blank" rel="noopener">Mass Save site &rarr;</a> for the current source of truth.</p>
+    <p><a href="/us/ma/fall-river/">View all Fall River rebate programs &rarr;</a> or check the official <a href="https://www.masssave.com" target="_blank" rel="noopener">Mass Save site &rarr;</a> for the current source of truth.</p>
 
   </div>
 </article>
@@ -380,22 +482,22 @@ strong { color: var(--ink); }
         <div class="footer-col-title">Canada</div>
         <ul class="footer-col-links">
           <li><a href="/ca/">All Provinces</a></li>
-          <li><a href="/ca/bc">British Columbia</a></li>
-          <li><a href="/ca/on">Ontario</a></li>
-          <li><a href="/ca/ab">Alberta</a></li>
-          <li><a href="/ca/ns">Nova Scotia</a></li>
+          <li><a href="/ca/bc/">British Columbia</a></li>
+          <li><a href="/ca/on/">Ontario</a></li>
+          <li><a href="/ca/ab/">Alberta</a></li>
+          <li><a href="/ca/ns/">Nova Scotia</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-col-title">United States</div>
         <ul class="footer-col-links">
           <li><a href="/us/">All States</a></li>
-          <li><a href="/us/ca">California</a></li>
-          <li><a href="/us/ny">New York</a></li>
-          <li><a href="/us/ma">Massachusetts</a></li>
-          <li><a href="/us/pa">Pennsylvania</a></li>
-          <li><a href="/us/co">Colorado</a></li>
-          <li><a href="/us/vt">Vermont</a></li>
+          <li><a href="/us/ca/">California</a></li>
+          <li><a href="/us/ny/">New York</a></li>
+          <li><a href="/us/ma/">Massachusetts</a></li>
+          <li><a href="/us/pa/">Pennsylvania</a></li>
+          <li><a href="/us/co/">Colorado</a></li>
+          <li><a href="/us/vt/">Vermont</a></li>
         </ul>
       </div>
       <div>
@@ -405,7 +507,7 @@ strong { color: var(--ink); }
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/retrofit-assessment/?city=fall-river">Retrofit Assessment</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
-          <li><a href="/blog">Full Blog</a></li>
+          <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
           <li><a href="/ca/">Canada by Province</a></li>
           <li><a href="/us/">US by State</a></li>
@@ -414,16 +516,16 @@ strong { color: var(--ink); }
       <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-col-links">
-          <li><a href="/about">About</a></li>
+          <li><a href="/about/">About</a></li>
           <li><a href="/partners/">Partners</a></li>
-          <li><a href="/privacy">Privacy</a></li>
-          <li><a href="/terms">Terms</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/contact/">Contact</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <div>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about" style="color:inherit;">Sam Menard</a>. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about/" style="color:inherit;">Sam Menard</a>. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
       <div>Made in Canada 🇨🇦</div>
     </div>
   </div>

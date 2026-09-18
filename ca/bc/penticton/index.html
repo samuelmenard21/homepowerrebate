@@ -350,10 +350,6 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   }
   window.hpr_ab_cta = getCtaVariant();
   
-  // Log variant view
-  const cityName = document.querySelector('[data-city]')?.getAttribute('data-city') || 'unknown';
-  const img = new Image();
-  img.src = '/api/ab-log?event=view&variant=' + window.hpr_ab_cta + '&city=' + cityName;
 })();
 </script>
 <style>
@@ -419,12 +415,12 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <span>Home<span class="logo-power">Power</span>Rebate</span>
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
-      <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
+      <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
       <a href="/retrofit-assessment/?city=penticton" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Assessment</a>
-      <a href="/blog" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
+      <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
-      <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
+      <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
       <a href="/retrofit-assessment/?city=penticton" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Assessment</a>
     </div>
     <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
@@ -460,19 +456,19 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     </div>
     <div style="padding:0 16px 16px;">
     <div id="province-cities-on" style="display:none; gap:8px;">
-      <a href="/ca/on/toronto">Toronto</a><a href="/ca/on/ottawa">Ottawa</a><a href="/ca/on/mississauga">Mississauga</a><a href="/ca/on/brampton">Brampton</a><a href="/ca/on/hamilton">Hamilton</a><a href="/ca/on/markham">Markham</a><a href="/ca/on/vaughan">Vaughan</a><a href="/ca/on/richmond-hill">Richmond Hill</a><a href="/ca/on/barrie">Barrie</a><a href="/ca/on/london">London</a><a href="/ca/on/kitchener">Kitchener</a><a href="/ca/on/windsor">Windsor</a><a href="/ca/on/oakville">Oakville</a><a href="/ca/on/oshawa">Oshawa</a><a href="/ca/on/whitby">Whitby</a><a href="/ca/on/burlington">Burlington</a><a href="/ca/on/cambridge">Cambridge</a><a href="/ca/on/greater-sudbury">Greater Sudbury</a>
+      <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
     </div>
     <div id="province-cities-bc" style="display:grid; gap:8px;">
-      <a href="/ca/bc/abbotsford">Abbotsford</a><a href="/ca/bc/burnaby">Burnaby</a><a href="/ca/bc/chilliwack">Chilliwack</a><a href="/ca/bc/coquitlam">Coquitlam</a><a href="/ca/bc/fort-st-john">Fort St. John</a><a href="/ca/bc/kamloops">Kamloops</a><a href="/ca/bc/kelowna">Kelowna</a><a href="/ca/bc/langley">Langley</a><a href="/ca/bc/maple-ridge">Maple Ridge</a><a href="/ca/bc/nanaimo">Nanaimo</a><a href="/ca/bc/penticton">Penticton</a><a href="/ca/bc/prince-george">Prince George</a><a href="/ca/bc/richmond">Richmond</a><a href="/ca/bc/squamish">Squamish</a><a href="/ca/bc/surrey">Surrey</a><a href="/ca/bc/vancouver">Vancouver</a><a href="/ca/bc/vernon">Vernon</a><a href="/ca/bc/victoria">Victoria</a>
+      <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
     </div>
     <div id="province-cities-ab" style="display:none; gap:8px;">
-      <a href="/ca/ab/calgary">Calgary</a><a href="/ca/ab/edmonton">Edmonton</a><a href="/ca/ab/red-deer">Red Deer</a><a href="/ca/ab/lethbridge">Lethbridge</a><a href="/ca/ab/st-albert">St. Albert</a>
+      <a href="/ca/ab/calgary/">Calgary</a><a href="/ca/ab/edmonton/">Edmonton</a><a href="/ca/ab/red-deer/">Red Deer</a><a href="/ca/ab/lethbridge/">Lethbridge</a><a href="/ca/ab/st-albert/">St. Albert</a>
     </div>
     <div id="province-cities-ns" style="display:none; gap:8px;">
-      <a href="/ca/ns/halifax">Halifax</a>
+      <a href="/ca/ns/halifax/">Halifax</a>
     </div>
     <div id="province-cities-ma" style="display:none; gap:8px;">
-      <a href="/us/ma/boston">Boston</a><a href="/us/ma/worcester">Worcester</a><a href="/us/ma/springfield">Springfield</a><a href="/us/ma/cambridge">Cambridge</a><a href="/us/ma/lowell">Lowell</a><a href="/us/ma/brockton">Brockton</a><a href="/us/ma/new-bedford">New Bedford</a><a href="/us/ma/quincy">Quincy</a><a href="/us/ma/lynn">Lynn</a><a href="/us/ma/fall-river">Fall River</a><a href="/us/ma/newton">Newton</a><a href="/us/ma/somerville">Somerville</a>
+      <a href="/us/ma/boston/">Boston</a><a href="/us/ma/worcester/">Worcester</a><a href="/us/ma/springfield/">Springfield</a><a href="/us/ma/cambridge/">Cambridge</a><a href="/us/ma/lowell/">Lowell</a><a href="/us/ma/brockton/">Brockton</a><a href="/us/ma/new-bedford/">New Bedford</a><a href="/us/ma/quincy/">Quincy</a><a href="/us/ma/lynn/">Lynn</a><a href="/us/ma/fall-river/">Fall River</a><a href="/us/ma/newton/">Newton</a><a href="/us/ma/somerville/">Somerville</a>
     </div>
     <div id="province-cities-ca" style="display:none; gap:8px;">
       <a href="/us/ca/los-angeles/">Los Angeles</a><a href="/us/ca/sacramento/">Sacramento</a><a href="/us/ca/bay-area/">Bay Area</a><a href="/us/ca/san-diego/">San Diego</a><a href="/us/ca/inland-empire/">Inland Empire</a>
@@ -481,13 +477,13 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <a href="/us/ny/con-edison/new-york-city/">New York City</a><a href="/us/ny/con-edison/yonkers/">Yonkers</a><a href="/us/ny/con-edison/mount-vernon/">Mount Vernon</a><a href="/us/ny/con-edison/new-rochelle/">New Rochelle</a><a href="/us/ny/con-edison/white-plains/">White Plains</a><a href="/us/ny/pseg/brookhaven/">Brookhaven</a><a href="/us/ny/pseg/islip/">Islip</a><a href="/us/ny/pseg/babylon/">Babylon</a><a href="/us/ny/pseg/huntington/">Huntington</a><a href="/us/ny/pseg/smithtown/">Smithtown</a><a href="/us/ny/pseg/oyster-bay/">Oyster Bay</a><a href="/us/ny/pseg/southampton/">Southampton</a><a href="/us/ny/central-hudson/poughkeepsie/">Poughkeepsie</a><a href="/us/ny/central-hudson/newburgh/">Newburgh</a><a href="/us/ny/central-hudson/kingston/">Kingston</a><a href="/us/ny/central-hudson/beacon/">Beacon</a><a href="/us/ny/central-hudson/saugerties/">Saugerties</a><a href="/us/ny/national-grid/albany/">Albany</a><a href="/us/ny/national-grid/buffalo/">Buffalo</a><a href="/us/ny/national-grid/rochester/">Rochester</a><a href="/us/ny/national-grid/syracuse/">Syracuse</a>
     </div>
     <div id="province-cities-pa" style="display:none; gap:8px;">
-      <a href="/us/pa/philadelphia">Philadelphia</a><a href="/us/pa/pittsburgh">Pittsburgh</a><a href="/us/pa/allentown">Allentown</a><a href="/us/pa/erie">Erie</a>
+      <a href="/us/pa/philadelphia/">Philadelphia</a><a href="/us/pa/pittsburgh/">Pittsburgh</a><a href="/us/pa/allentown/">Allentown</a><a href="/us/pa/erie/">Erie</a>
     </div>
     <div id="province-cities-co" style="display:none; gap:8px;">
-      <a href="/us/co/denver">Denver</a><a href="/us/co/colorado-springs">Colorado Springs</a><a href="/us/co/aurora">Aurora</a><a href="/us/co/fort-collins">Fort Collins</a><a href="/us/co/boulder">Boulder</a>
+      <a href="/us/co/denver/">Denver</a><a href="/us/co/colorado-springs/">Colorado Springs</a><a href="/us/co/aurora/">Aurora</a><a href="/us/co/fort-collins/">Fort Collins</a><a href="/us/co/boulder/">Boulder</a>
     </div>
     <div id="province-cities-vt" style="display:none; gap:8px;">
-      <a href="/us/vt/burlington">Burlington</a><a href="/us/vt/south-burlington">South Burlington</a><a href="/us/vt/rutland">Rutland</a><a href="/us/vt/barre">Barre</a><a href="/us/vt/montpelier">Montpelier</a>
+      <a href="/us/vt/burlington/">Burlington</a><a href="/us/vt/south-burlington/">South Burlington</a><a href="/us/vt/rutland/">Rutland</a><a href="/us/vt/barre/">Barre</a><a href="/us/vt/montpelier/">Montpelier</a>
     </div>
     </div>
   </div>
@@ -498,7 +494,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
      current city's <a> for penticton — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
 <!-- CANONICAL-BREADCRUMB-START -->
-<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/bc">British Columbia</a></li><li aria-current="page">Penticton</li></ol></nav>
+<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/bc/">British Columbia</a></li><li aria-current="page">Penticton</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
 <script>
 
@@ -528,15 +524,15 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <section class="wrap" style="padding:32px 28px 8px;">
   <h2 style="margin-bottom:16px;">Rebate categories in Penticton</h2>
   <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:12px;">
-      <a href="/ca/bc/penticton/battery" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Battery Storage Rebates in Penticton</a>
-      <a href="/ca/bc/penticton/ev-charger" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">EV Charger Rebates in Penticton</a>
-      <a href="/ca/bc/penticton/heat-pump" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Heat Pump Rebates in Penticton</a>
-      <a href="/ca/bc/penticton/insulation" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Insulation Rebates in Penticton</a>
-      <a href="/ca/bc/penticton/solar" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Solar Rebates in Penticton</a>
-      <a href="/ca/bc/penticton/smart-thermostats" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Smart Thermostat Rebates in Penticton</a>
-      <a href="/ca/bc/penticton/hrv" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">HRV &amp; Ventilation Rebates in Penticton</a>
-      <a href="/ca/bc/penticton/water-heater" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Water Heater Rebates in Penticton</a>
-      <a href="/ca/bc/penticton/windows" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Windows & Doors Rebates in Penticton</a>
+      <a href="/ca/bc/penticton/battery/" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Battery Storage Rebates in Penticton</a>
+      <a href="/ca/bc/penticton/ev-charger/" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">EV Charger Rebates in Penticton</a>
+      <a href="/ca/bc/penticton/heat-pump/" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Heat Pump Rebates in Penticton</a>
+      <a href="/ca/bc/penticton/insulation/" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Insulation Rebates in Penticton</a>
+      <a href="/ca/bc/penticton/solar/" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Solar Rebates in Penticton</a>
+      <a href="/ca/bc/penticton/smart-thermostats/" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Smart Thermostat Rebates in Penticton</a>
+      <a href="/ca/bc/penticton/hrv/" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">HRV &amp; Ventilation Rebates in Penticton</a>
+      <a href="/ca/bc/penticton/water-heater/" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Water Heater Rebates in Penticton</a>
+      <a href="/ca/bc/penticton/windows/" style="padding:16px; border-radius:8px; text-decoration:none; color:var(--ink); font-weight:500; font-size:15px; border:1px solid var(--rule); text-align:center; background:#fff;">Windows & Doors Rebates in Penticton</a>
   </div>
 </section>
 
@@ -838,7 +834,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
         <span class="program-status status-open">Open</span>
         <h4>&#128267; Battery &mdash; optional add-on</h4>
         <div class="amount">$1,500&ndash;$5,000</div>
-        <p>Add it for backup power and to store your solar. It must be on BC Hydro's approved list to earn the rebate. <a href="/eguana" style="color:var(--teal);font-weight:600;">Which batteries qualify &rarr;</a></p>
+        <p>Add it for backup power and to store your solar. It must be on BC Hydro's approved list to earn the rebate. <a href="/eguana/" style="color:var(--teal);font-weight:600;">Which batteries qualify &rarr;</a></p>
       </div>
     </div>
   </div>
@@ -869,7 +865,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
         <h4>Insulation, windows &amp; doors rebates</h4>
         <span class="program-amount">up to $5,500 + $2,000</span>
       </div>
-      <p>Up to $5,500 for insulation (attic, walls, crawlspace) and up to $2,000 for ENERGY STAR windows and exterior doors. This is the "building envelope" &mdash; sealing the house before you size heating. See our <a href="/blog/insulation-rebates-bc-stack-federal-provincial">full insulation rebates breakdown &rarr;</a></p>
+      <p>Up to $5,500 for insulation (attic, walls, crawlspace) and up to $2,000 for ENERGY STAR windows and exterior doors. This is the "building envelope" &mdash; sealing the house before you size heating. See our <a href="/blog/insulation-rebates-bc-stack-federal-provincial/">full insulation rebates breakdown &rarr;</a></p>
       <div class="how"><strong>How it works:</strong> Same BetterHomes BC application as the heat pump. Do these <em>first</em> or at the same time &mdash; a tighter house lets you install a smaller, cheaper heat pump and cuts bills year-round.</div>
     </div>
 
@@ -982,7 +978,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 
     <div class="eyebrow">How the income tiers work</div>
     <h2 id="income">Why heat pump rebates vary so much</h2>
-    <p>The heat pump rebate isn't one number &mdash; it scales with household income. These are the general CleanBC tiers; your exact amount is confirmed by the EnerGuide evaluation. The <a href="/retrofit-assessment?city=Penticton" style="color:var(--teal);font-weight:600;">assessment tool</a> estimates your tier in a minute.</p>
+    <p>The heat pump rebate isn't one number &mdash; it scales with household income. These are the general CleanBC tiers; your exact amount is confirmed by the EnerGuide evaluation. The <a href="/retrofit-assessment/?city=Penticton" style="color:var(--teal);font-weight:600;">assessment tool</a> estimates your tier in a minute.</p>
     <div class="rebate-grid">
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
@@ -1184,7 +1180,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
   <div class="wrap">
     <div class="eyebrow">While you plan the big upgrades</div>
     <h2 id="tips">Free &amp; low-cost ways to cut your bill now</h2>
-    <p>Rebates take a few weeks to line up. These cost little or nothing and start saving immediately &mdash; the dollar figures are BC Hydro's own estimates. <a href="/blog/energy-saving-ideas-bc-home" style="color:var(--teal);font-weight:600;">See all of them in our full guide &rarr;</a></p>
+    <p>Rebates take a few weeks to line up. These cost little or nothing and start saving immediately &mdash; the dollar figures are BC Hydro's own estimates. <a href="/blog/energy-saving-ideas-bc-home/" style="color:var(--teal);font-weight:600;">See all of them in our full guide &rarr;</a></p>
 
     <div class="rebate-grid">
       <div class="rebate-card">
@@ -1221,7 +1217,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
         <span class="program-status status-open">Open</span>
         <h4>&#128295; Keep your heat pump sharp</h4>
         <div class="amount">&mdash;</div>
-        <p>Replace filters yearly, hold a steady temperature, and use "heat"/"cool" not "auto." New to heat pumps? <a href="/blog/heat-pumps-explained-bc" style="color:var(--teal);font-weight:600;">Read our explainer &rarr;</a></p>
+        <p>Replace filters yearly, hold a steady temperature, and use "heat"/"cool" not "auto." New to heat pumps? <a href="/blog/heat-pumps-explained-bc/" style="color:var(--teal);font-weight:600;">Read our explainer &rarr;</a></p>
       </div>
     </div>
   </div>
@@ -1272,7 +1268,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
     <div class="cta-box">
       <h2>See your Penticton number first</h2>
       <p>Before you talk to anyone, get a free, no-spam estimate of exactly what you qualify for.</p>
-      <a href="/retrofit-assessment?city=Penticton" class="btn-primary">Estimate my rebates &rarr;</a>
+      <a href="/retrofit-assessment/?city=Penticton" class="btn-primary">Estimate my rebates &rarr;</a>
     </div>
   </div>
 </section>
@@ -1285,48 +1281,48 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
       <!-- Guides -->
-      <a href="/blog/heat-pump-rebate-guide-bc-2026" style="display: block; border: 1px solid #e5d4c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; background: #fef9f3;">
+      <a href="/blog/heat-pump-rebate-guide-bc-2026/" style="display: block; border: 1px solid #e5d4c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; background: #fef9f3;">
         <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #b8860b; margin-bottom: 6px;">Guide • Heat Pumps</p>
         <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">Heat Pump Rebate Guide 2026</h3>
         <p style="font-size: 13px; color: #666; margin: 0;">Complete walkthrough of BC rebates, eligibility, installation, and what to expect post-install.</p>
       </a>
 
-      <a href="/blog/heat-pump-rebate-guide-penticton-2026" style="display: block; border: 1px solid #e5d4c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; background: #fef9f3;">
+      <a href="/blog/heat-pump-rebate-guide-penticton-2026/" style="display: block; border: 1px solid #e5d4c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; background: #fef9f3;">
         <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #b8860b; margin-bottom: 6px;">Guide • Heat Pumps</p>
         <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">Heat Pump Rebates in Penticton (2026)</h3>
         <p style="font-size: 13px; color: #666; margin: 0;">Penticton-specific numbers, your utility, and the local angle — not the province-wide averages.</p>
       </a>
 
 
-      <a href="/blog/free-heat-pump-bc-income-qualified-penticton" style="display: block; border: 1px solid #e5d4c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; background: #fef9f3;">
+      <a href="/blog/free-heat-pump-bc-income-qualified-penticton/" style="display: block; border: 1px solid #e5d4c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; background: #fef9f3;">
         <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #b8860b; margin-bottom: 6px;">Guide &bull; Income-Qualified</p>
         <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">Free Heat Pump in Penticton? (2026)</h3>
         <p style="font-size: 13px; color: #666; margin: 0;">Who qualifies for a free heat pump through ECAP in Penticton, and what to do if you don't.</p>
       </a>
-      <a href="/blog/window-doors-replacement-rebates-bc-guide-penticton" style="display: block; border: 1px solid #e5d4c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; background: #fef9f3;">
+      <a href="/blog/window-doors-replacement-rebates-bc-guide-penticton/" style="display: block; border: 1px solid #e5d4c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; background: #fef9f3;">
         <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #b8860b; margin-bottom: 6px;">Guide &bull; Windows &amp; Doors</p>
         <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">Window &amp; Door Rebates in Penticton (2026)</h3>
         <p style="font-size: 13px; color: #666; margin: 0;">Penticton-specific window and door rebate numbers, your utility, and the local angle.</p>
       </a>
-      <a href="/blog/energy-saving-ideas-bc-home-penticton" style="display: block; border: 1px solid #e5d4c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; background: #fef9f3;">
+      <a href="/blog/energy-saving-ideas-bc-home-penticton/" style="display: block; border: 1px solid #e5d4c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; background: #fef9f3;">
         <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #b8860b; margin-bottom: 6px;">Guide &bull; Energy Saving</p>
         <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">17 Ways to Cut Your Penticton Power Bill (2026)</h3>
         <p style="font-size: 13px; color: #666; margin: 0;">Free and low-cost ways to lower your bill in Penticton today, with real local rebate numbers.</p>
       </a>
-      <a href="/blog/is-bc-hydro-solar-rebate-worth-it" style="display: block; border: 1px solid #e5d4c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; background: #fef9f3;">
+      <a href="/blog/is-bc-hydro-solar-rebate-worth-it/" style="display: block; border: 1px solid #e5d4c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; background: #fef9f3;">
         <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #b8860b; margin-bottom: 6px;">Guide • Solar ROI</p>
         <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">Is BC Hydro's Solar Rebate Worth It?</h3>
         <p style="font-size: 13px; color: #666; margin: 0;">Full breakdown of solar payback, 10-year savings, and ROI calculation.</p>
       </a>
 
       <!-- Articles -->
-      <a href="/blog/solar-too-expensive-myth" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
+      <a href="/blog/solar-too-expensive-myth/" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
         <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #d4751c; margin-bottom: 6px;">Article • Cost</p>
         <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">"Solar is Too Expensive"</h3>
         <p style="font-size: 13px; color: #666; margin: 0;">BC rebates cover 30-50% of costs. Here's the actual net cost after financing and savings.</p>
       </a>
 
-      <a href="/blog/bosch-vs-mitsubishi-heat-pump" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
+      <a href="/blog/bosch-vs-mitsubishi-heat-pump/" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
         <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #d4751c; margin-bottom: 6px;">Article • Comparison</p>
         <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">Bosch vs. Mitsubishi Heat Pumps</h3>
         <p style="font-size: 13px; color: #666; margin: 0;">Both qualify for the same rebates. Here's what differs.</p>
@@ -1334,7 +1330,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
     </div>
 
     <p style="text-align: center; margin-top: 32px;">
-      <a href="/blog" style="color: #d4751c; text-decoration: none; font-weight: 600; font-size: 14px;">View all guides and articles →</a>
+      <a href="/blog/" style="color: #d4751c; text-decoration: none; font-weight: 600; font-size: 14px;">View all guides and articles →</a>
     </p>
   </div>
 
@@ -1367,7 +1363,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
       </div>
       <div style="border-top:1px solid var(--rule);padding-top:20px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
         <p style="margin:0;font-size:14px;color:var(--ink-soft);max-width:420px;">Already installed in Penticton? Share what you paid — no booking through us required — and help build a real picture for your neighbours.</p>
-        <a href="/share-your-cost?city=penticton&amp;province=BC" onclick="gtag('event','share_cost_cta_click',{'city':'penticton','province':'BC','placement':'city_page_results'});" style="flex-shrink:0;display:inline-block;background:var(--amber);color:#fff;padding:14px 28px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;white-space:nowrap;">Share your cost &rarr;</a>
+        <a href="/share-your-cost/?city=penticton&amp;province=BC" onclick="gtag('event','share_cost_cta_click',{'city':'penticton','province':'BC','placement':'city_page_results'});" style="flex-shrink:0;display:inline-block;background:var(--amber);color:#fff;padding:14px 28px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;white-space:nowrap;">Share your cost &rarr;</a>
       </div>
     </div>
   </div>
@@ -1445,22 +1441,22 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
         <div class="footer-col-title">Canada</div>
         <ul class="footer-col-links">
           <li><a href="/ca/">All Provinces</a></li>
-          <li><a href="/ca/bc">British Columbia</a></li>
-          <li><a href="/ca/on">Ontario</a></li>
-          <li><a href="/ca/ab">Alberta</a></li>
-          <li><a href="/ca/ns">Nova Scotia</a></li>
+          <li><a href="/ca/bc/">British Columbia</a></li>
+          <li><a href="/ca/on/">Ontario</a></li>
+          <li><a href="/ca/ab/">Alberta</a></li>
+          <li><a href="/ca/ns/">Nova Scotia</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-col-title">United States</div>
         <ul class="footer-col-links">
           <li><a href="/us/">All States</a></li>
-          <li><a href="/us/ca">California</a></li>
-          <li><a href="/us/ny">New York</a></li>
-          <li><a href="/us/ma">Massachusetts</a></li>
-          <li><a href="/us/pa">Pennsylvania</a></li>
-          <li><a href="/us/co">Colorado</a></li>
-          <li><a href="/us/vt">Vermont</a></li>
+          <li><a href="/us/ca/">California</a></li>
+          <li><a href="/us/ny/">New York</a></li>
+          <li><a href="/us/ma/">Massachusetts</a></li>
+          <li><a href="/us/pa/">Pennsylvania</a></li>
+          <li><a href="/us/co/">Colorado</a></li>
+          <li><a href="/us/vt/">Vermont</a></li>
         </ul>
       </div>
       <div>
@@ -1470,7 +1466,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/retrofit-assessment/?city=penticton">Retrofit Assessment</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
-          <li><a href="/blog">Full Blog</a></li>
+          <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
           <li><a href="/ca/">Canada by Province</a></li>
           <li><a href="/us/">US by State</a></li>
@@ -1479,16 +1475,16 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
       <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-col-links">
-          <li><a href="/about">About</a></li>
+          <li><a href="/about/">About</a></li>
           <li><a href="/partners/">Partners</a></li>
-          <li><a href="/privacy">Privacy</a></li>
-          <li><a href="/terms">Terms</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/contact/">Contact</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <div>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about" style="color:inherit;">Sam Menard</a>. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about/" style="color:inherit;">Sam Menard</a>. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
       <div>Made in Canada 🇨🇦</div>
     </div>
   </div>
@@ -1562,8 +1558,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Track click
   if (ctaBtn) {
     ctaBtn.addEventListener('click', function() {
-      const img = new Image();
-      img.src = '/api/ab-log?event=click&variant=' + variant + '&city=' + (window.CITY || 'unknown');
     });
   }
   
@@ -1571,8 +1565,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('hpr-cw-refer-form');
   if (form) {
     form.addEventListener('submit', function() {
-      const img = new Image();
-      img.src = '/api/ab-log?event=submit&variant=' + variant + '&city=' + (window.CITY || 'unknown');
     });
   }
 });

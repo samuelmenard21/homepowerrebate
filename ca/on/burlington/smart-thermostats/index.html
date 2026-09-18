@@ -65,15 +65,15 @@
    "name": "How do I get a free smart thermostat in Burlington?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "Ontario's Home Renovation Savings Program (HRSP) gives a $100 instant rebate on an eligible ecobee or Google Nest smart thermostat. If you're enrolled in HRSP's Equity/Energy Affordability Program, the rebate rises to $125."
+    "text": "There's no longer a free-thermostat giveaway in Burlington the way peaksaver PLUS used to run years ago. What's available now is Ontario's Home Renovation Savings Program: a $100 instant or mail-in rebate on an eligible ecobee, Google Nest, Honeywell Home, Copeland Sensi, Mysa, or Sinopé thermostat, rising to $125 if you're enrolled in the program's Equity/Energy Affordability stream."
    }
   },
   {
    "@type": "Question",
-   "name": "Which thermostats qualify for rebates in Burlington?",
+   "name": "Which thermostats qualify for the Burlington rebate?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "Most programs require a Wi-Fi-connected model like ecobee or Google Nest that can talk to the utility for demand response. Check your utility's approved list before buying."
+    "text": "The Home Renovation Savings Program covers specific models from six manufacturers: ecobee, Google Nest, Honeywell Home, Copeland Sensi, Mysa, and Sinopé. Check the current model list on the program site before buying, since not every thermostat a brand sells is on it."
    }
   }
  ]
@@ -118,6 +118,18 @@ strong { color: var(--ink); }
 .highlight-box p { margin: 4px 0; font-size: 14px; }
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
 .chip { font-size: 13px; background: #fff; border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; color: var(--ink-soft); }
+.thermo-compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 18px 0 22px; }
+.thermo-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; }
+.thermo-card-head { display: flex; flex-direction: column; margin-bottom: 8px; }
+.thermo-brand { font-weight: 700; color: var(--teal-deep); font-size: 15px; }
+.thermo-model { font-size: 13px; color: var(--ink-soft); }
+.thermo-price { margin: 8px 0; }
+.thermo-retail { font-size: 13px; color: var(--ink-soft); text-decoration: line-through; margin-right: 6px; }
+.thermo-after-rebate { font-size: 16px; font-weight: 700; color: var(--amber); }
+.thermo-features { margin: 8px 0 12px 18px; font-size: 13px; }
+.thermo-features li { margin-bottom: 4px; }
+.thermo-buy { margin-top: auto; align-self: flex-start; background: var(--teal-deep); color: #fff; padding: 9px 16px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 13px; }
+.thermo-buy:hover { background: var(--amber); }
 footer { padding: 40px 0; border-top: 1px solid var(--rule); background: var(--ink); color: rgba(250,247,242,.6); text-align: center; font-size: 13px; }
 footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 .faq-item { border-bottom: 1px solid var(--rule); padding: 16px 0; }
@@ -190,12 +202,12 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <span>Home<span class="logo-power">Power</span>Rebate</span>
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
-      <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
+      <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
       <a href="/retrofit-assessment/?city=burlington" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Assessment</a>
-      <a href="/blog" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
+      <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
-      <a href="/installers" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
+      <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
       <a href="/retrofit-assessment/?city=burlington" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Assessment</a>
     </div>
     <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
@@ -231,19 +243,19 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     </div>
     <div style="padding:0 16px 16px;">
     <div id="province-cities-on" style="display:grid; gap:8px;">
-      <a href="/ca/on/toronto">Toronto</a><a href="/ca/on/ottawa">Ottawa</a><a href="/ca/on/mississauga">Mississauga</a><a href="/ca/on/brampton">Brampton</a><a href="/ca/on/hamilton">Hamilton</a><a href="/ca/on/markham">Markham</a><a href="/ca/on/vaughan">Vaughan</a><a href="/ca/on/richmond-hill">Richmond Hill</a><a href="/ca/on/barrie">Barrie</a><a href="/ca/on/london">London</a><a href="/ca/on/kitchener">Kitchener</a><a href="/ca/on/windsor">Windsor</a><a href="/ca/on/oakville">Oakville</a><a href="/ca/on/oshawa">Oshawa</a><a href="/ca/on/whitby">Whitby</a><a href="/ca/on/burlington">Burlington</a><a href="/ca/on/cambridge">Cambridge</a><a href="/ca/on/greater-sudbury">Greater Sudbury</a>
+      <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
     </div>
     <div id="province-cities-bc" style="display:none; gap:8px;">
-      <a href="/ca/bc/abbotsford">Abbotsford</a><a href="/ca/bc/burnaby">Burnaby</a><a href="/ca/bc/chilliwack">Chilliwack</a><a href="/ca/bc/coquitlam">Coquitlam</a><a href="/ca/bc/fort-st-john">Fort St. John</a><a href="/ca/bc/kamloops">Kamloops</a><a href="/ca/bc/kelowna">Kelowna</a><a href="/ca/bc/langley">Langley</a><a href="/ca/bc/maple-ridge">Maple Ridge</a><a href="/ca/bc/nanaimo">Nanaimo</a><a href="/ca/bc/penticton">Penticton</a><a href="/ca/bc/prince-george">Prince George</a><a href="/ca/bc/richmond">Richmond</a><a href="/ca/bc/squamish">Squamish</a><a href="/ca/bc/surrey">Surrey</a><a href="/ca/bc/vancouver">Vancouver</a><a href="/ca/bc/vernon">Vernon</a><a href="/ca/bc/victoria">Victoria</a>
+      <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
     </div>
     <div id="province-cities-ab" style="display:none; gap:8px;">
-      <a href="/ca/ab/calgary">Calgary</a><a href="/ca/ab/edmonton">Edmonton</a><a href="/ca/ab/red-deer">Red Deer</a><a href="/ca/ab/lethbridge">Lethbridge</a><a href="/ca/ab/st-albert">St. Albert</a>
+      <a href="/ca/ab/calgary/">Calgary</a><a href="/ca/ab/edmonton/">Edmonton</a><a href="/ca/ab/red-deer/">Red Deer</a><a href="/ca/ab/lethbridge/">Lethbridge</a><a href="/ca/ab/st-albert/">St. Albert</a>
     </div>
     <div id="province-cities-ns" style="display:none; gap:8px;">
-      <a href="/ca/ns/halifax">Halifax</a>
+      <a href="/ca/ns/halifax/">Halifax</a>
     </div>
     <div id="province-cities-ma" style="display:none; gap:8px;">
-      <a href="/us/ma/boston">Boston</a><a href="/us/ma/worcester">Worcester</a><a href="/us/ma/springfield">Springfield</a><a href="/us/ma/cambridge">Cambridge</a><a href="/us/ma/lowell">Lowell</a><a href="/us/ma/brockton">Brockton</a><a href="/us/ma/new-bedford">New Bedford</a><a href="/us/ma/quincy">Quincy</a><a href="/us/ma/lynn">Lynn</a><a href="/us/ma/fall-river">Fall River</a><a href="/us/ma/newton">Newton</a><a href="/us/ma/somerville">Somerville</a>
+      <a href="/us/ma/boston/">Boston</a><a href="/us/ma/worcester/">Worcester</a><a href="/us/ma/springfield/">Springfield</a><a href="/us/ma/cambridge/">Cambridge</a><a href="/us/ma/lowell/">Lowell</a><a href="/us/ma/brockton/">Brockton</a><a href="/us/ma/new-bedford/">New Bedford</a><a href="/us/ma/quincy/">Quincy</a><a href="/us/ma/lynn/">Lynn</a><a href="/us/ma/fall-river/">Fall River</a><a href="/us/ma/newton/">Newton</a><a href="/us/ma/somerville/">Somerville</a>
     </div>
     <div id="province-cities-ca" style="display:none; gap:8px;">
       <a href="/us/ca/los-angeles/">Los Angeles</a><a href="/us/ca/sacramento/">Sacramento</a><a href="/us/ca/bay-area/">Bay Area</a><a href="/us/ca/san-diego/">San Diego</a><a href="/us/ca/inland-empire/">Inland Empire</a>
@@ -252,13 +264,13 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <a href="/us/ny/con-edison/new-york-city/">New York City</a><a href="/us/ny/con-edison/yonkers/">Yonkers</a><a href="/us/ny/con-edison/mount-vernon/">Mount Vernon</a><a href="/us/ny/con-edison/new-rochelle/">New Rochelle</a><a href="/us/ny/con-edison/white-plains/">White Plains</a><a href="/us/ny/pseg/brookhaven/">Brookhaven</a><a href="/us/ny/pseg/islip/">Islip</a><a href="/us/ny/pseg/babylon/">Babylon</a><a href="/us/ny/pseg/huntington/">Huntington</a><a href="/us/ny/pseg/smithtown/">Smithtown</a><a href="/us/ny/pseg/oyster-bay/">Oyster Bay</a><a href="/us/ny/pseg/southampton/">Southampton</a><a href="/us/ny/central-hudson/poughkeepsie/">Poughkeepsie</a><a href="/us/ny/central-hudson/newburgh/">Newburgh</a><a href="/us/ny/central-hudson/kingston/">Kingston</a><a href="/us/ny/central-hudson/beacon/">Beacon</a><a href="/us/ny/central-hudson/saugerties/">Saugerties</a><a href="/us/ny/national-grid/albany/">Albany</a><a href="/us/ny/national-grid/buffalo/">Buffalo</a><a href="/us/ny/national-grid/rochester/">Rochester</a><a href="/us/ny/national-grid/syracuse/">Syracuse</a>
     </div>
     <div id="province-cities-pa" style="display:none; gap:8px;">
-      <a href="/us/pa/philadelphia">Philadelphia</a><a href="/us/pa/pittsburgh">Pittsburgh</a><a href="/us/pa/allentown">Allentown</a><a href="/us/pa/erie">Erie</a>
+      <a href="/us/pa/philadelphia/">Philadelphia</a><a href="/us/pa/pittsburgh/">Pittsburgh</a><a href="/us/pa/allentown/">Allentown</a><a href="/us/pa/erie/">Erie</a>
     </div>
     <div id="province-cities-co" style="display:none; gap:8px;">
-      <a href="/us/co/denver">Denver</a><a href="/us/co/colorado-springs">Colorado Springs</a><a href="/us/co/aurora">Aurora</a><a href="/us/co/fort-collins">Fort Collins</a><a href="/us/co/boulder">Boulder</a>
+      <a href="/us/co/denver/">Denver</a><a href="/us/co/colorado-springs/">Colorado Springs</a><a href="/us/co/aurora/">Aurora</a><a href="/us/co/fort-collins/">Fort Collins</a><a href="/us/co/boulder/">Boulder</a>
     </div>
     <div id="province-cities-vt" style="display:none; gap:8px;">
-      <a href="/us/vt/burlington">Burlington</a><a href="/us/vt/south-burlington">South Burlington</a><a href="/us/vt/rutland">Rutland</a><a href="/us/vt/barre">Barre</a><a href="/us/vt/montpelier">Montpelier</a>
+      <a href="/us/vt/burlington/">Burlington</a><a href="/us/vt/south-burlington/">South Burlington</a><a href="/us/vt/rutland/">Rutland</a><a href="/us/vt/barre/">Barre</a><a href="/us/vt/montpelier/">Montpelier</a>
     </div>
     </div>
   </div>
@@ -269,7 +281,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
      current city's <a> for burlington — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
 <!-- CANONICAL-BREADCRUMB-START -->
-<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/on">Ontario</a></li><li><a href="/ca/on/burlington/">Burlington</a></li><li aria-current="page">Smart Thermostat</li></ol></nav>
+<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/on/">Ontario</a></li><li><a href="/ca/on/burlington/">Burlington</a></li><li aria-current="page">Smart Thermostat</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
 
 <section class="hero">
@@ -282,15 +294,15 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 
 <section class="wrap" style="padding:24px 28px 0;">
   <div style="font-size:14px; line-height:2.2;">
-      <span style="margin-right:14px;"><a href="/ca/on/burlington">&larr; Back to Burlington rebate hub</a></span>
-      <span style="margin-right:14px;"><a href="/ca/on/burlington/heat-pump">Heat Pump Rebates in Burlington</a></span>
-      <span style="margin-right:14px;"><a href="/ca/on/burlington/solar">Solar Rebates in Burlington</a></span>
-      <span style="margin-right:14px;"><a href="/ca/on/burlington/battery">Battery Storage Rebates in Burlington</a></span>
-      <span style="margin-right:14px;"><a href="/ca/on/burlington/insulation">Insulation Rebates in Burlington</a></span>
-      <span style="margin-right:14px;"><a href="/ca/on/burlington/windows-doors">Windows & Doors Rebates in Burlington</a></span>
-      <span style="margin-right:14px;"><a href="/ca/on/burlington/water-heater">Water Heater Rebates in Burlington</a></span>
-      <span style="margin-right:14px;"><a href="/ca/on/burlington/appliances">Appliance Rebates in Burlington</a></span>
-      <span style="margin-right:14px;"><a href="/ca/on/burlington/ev-charger">EV Charger Rebates in Burlington</a></span>
+      <span style="margin-right:14px;"><a href="/ca/on/burlington/">&larr; Back to Burlington rebate hub</a></span>
+      <span style="margin-right:14px;"><a href="/ca/on/burlington/heat-pump/">Heat Pump Rebates in Burlington</a></span>
+      <span style="margin-right:14px;"><a href="/ca/on/burlington/solar/">Solar Rebates in Burlington</a></span>
+      <span style="margin-right:14px;"><a href="/ca/on/burlington/battery/">Battery Storage Rebates in Burlington</a></span>
+      <span style="margin-right:14px;"><a href="/ca/on/burlington/insulation/">Insulation Rebates in Burlington</a></span>
+      <span style="margin-right:14px;"><a href="/ca/on/burlington/windows-doors/">Windows & Doors Rebates in Burlington</a></span>
+      <span style="margin-right:14px;"><a href="/ca/on/burlington/water-heater/">Water Heater Rebates in Burlington</a></span>
+      <span style="margin-right:14px;"><a href="/ca/on/burlington/appliances/">Appliance Rebates in Burlington</a></span>
+      <span style="margin-right:14px;"><a href="/ca/on/burlington/ev-charger/">EV Charger Rebates in Burlington</a></span>
   </div>
 </section>
 
@@ -307,7 +319,104 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <span class="chip">Mysa Smart Thermostat</span>
       <span class="chip">Sinop&eacute; Smart Thermostat Lite / Pro Lite / Pro</span>
     </div>
-    <p style="margin-top:18px;">No official pricing is posted for these models — check current retail pricing before you buy. Compare brands in <a href="/blog/ontario-smart-thermostats-100-rebate-compared">our full thermostat comparison &rarr;</a></p>
+    <p style="margin-top:18px;">Burlington homeowners get a flat $100 off one eligible smart thermostat under Ontario's Home Renovation Savings Program, either as an instant discount code used at checkout or as a mail-in rebate after you buy. Six brands qualify: ecobee, Google Nest, Honeywell Home, Copeland Sensi, Mysa, and Sinopé. The rebate is capped at one per household, and current retail prices for each eligible model are compared below.</p>
+
+    
+    <h2>Compare smart thermostats you can buy</h2>
+    <p>A lot of Burlington's Lake Ontario-adjacent homes have central air paired with a gas furnace, so most of the six eligible brands below will work without special wiring.</p>
+    <div class="thermo-compare-grid">
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">ecobee</span>
+      <span class="thermo-model">Smart Thermostat Premium</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$319</span>
+      <span class="thermo-after-rebate">$219 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Built-in room sensor and air quality monitor</li>
+      <li>Works with most central air, furnaces, and many heat pumps</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.ecobee.com/en-us/smart-thermostats/" target="_blank" rel="noopener sponsored">See ecobee models &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Google Nest</span>
+      <span class="thermo-model">Learning Thermostat (4th gen)</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$329</span>
+      <span class="thermo-after-rebate">$229 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Learns your schedule after about a week</li>
+      <li>Farsight display shows time, weather, and temperature from across the room</li>
+    </ul>
+    <a class="thermo-buy" href="https://store.google.com/category/connected_home?category=thermostats" target="_blank" rel="noopener sponsored">Shop Google Nest &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Honeywell Home</span>
+      <span class="thermo-model">T9</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$229</span>
+      <span class="thermo-after-rebate">$129 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Smart Room Sensor included to even out hot/cold rooms</li>
+      <li>Geofencing pauses savings mode when you are home</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.resideo.com/us/en/products/smart-thermostats/" target="_blank" rel="noopener sponsored">View Honeywell Home T9 &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Copeland Sensi</span>
+      <span class="thermo-model">Touch 2</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$199</span>
+      <span class="thermo-after-rebate">$99 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Touchscreen with a simple, uncluttered app</li>
+      <li>No C-wire required for most installs</li>
+    </ul>
+    <a class="thermo-buy" href="https://sensi.copeland.com/en-us/products/thermostat" target="_blank" rel="noopener sponsored">See Sensi Touch 2 &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Mysa</span>
+      <span class="thermo-model">Smart Thermostat</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$179</span>
+      <span class="thermo-after-rebate">$79 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Built for electric baseboard and in-floor heat, not just forced air</li>
+      <li>Canadian company, Matter-compatible</li>
+    </ul>
+    <a class="thermo-buy" href="https://getmysa.com/" target="_blank" rel="noopener sponsored">Shop Mysa &rarr;</a>
+  </div>
+  <div class="thermo-card">
+    <div class="thermo-card-head">
+      <span class="thermo-brand">Sinopé</span>
+      <span class="thermo-model">Smart Thermostat Pro</span>
+    </div>
+    <div class="thermo-price">
+      <span class="thermo-retail">$150</span>
+      <span class="thermo-after-rebate">$50 after the $100 rebate</span>
+    </div>
+    <ul class="thermo-features">
+      <li>Quebec-built, works with electric baseboard and radiant heat</li>
+      <li>No hub required, connects directly to Wi-Fi</li>
+    </ul>
+    <a class="thermo-buy" href="https://www.sinopetech.com/en/thermostats/" target="_blank" rel="noopener sponsored">See Sinopé Pro &rarr;</a>
+  </div>
+    </div>
+    <p style="font-size:13px; color:var(--ink-soft);">Prices are approximate manufacturer list prices and change &mdash; check the brand's site for current pricing.</p>
 
     <h2>How to claim it</h2>
     <ol>
@@ -317,7 +426,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 
     <div class="callout">
       <strong>Get an exact number:</strong> Fill out our free assessment tool to see your Burlington-specific rebate amount.
-      <a href="/retrofit-assessment" class="cta" style="display:inline-block;">Run your free assessment &rarr;</a>
+      <a href="/retrofit-assessment/" class="cta" style="display:inline-block;">Run your free assessment &rarr;</a>
     </div>
 
     <h2>Smart Thermostat installers in Burlington</h2>
@@ -344,19 +453,19 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     <h2>Common questions</h2>
     <div class="faq-item">
       <h3>How do I get a free smart thermostat in Burlington?</h3>
-      <p>Ontario's Home Renovation Savings Program (HRSP) gives a $100 instant rebate on an eligible ecobee or Google Nest smart thermostat. If you're enrolled in HRSP's Equity/Energy Affordability Program, the rebate rises to $125.</p>
+      <p>There's no longer a free-thermostat giveaway in Burlington the way peaksaver PLUS used to run years ago. What's available now is Ontario's Home Renovation Savings Program: a $100 instant or mail-in rebate on an eligible ecobee, Google Nest, Honeywell Home, Copeland Sensi, Mysa, or Sinopé thermostat, rising to $125 if you're enrolled in the program's Equity/Energy Affordability stream.</p>
     </div>
     <div class="faq-item">
-      <h3>Which thermostats qualify for rebates in Burlington?</h3>
-      <p>Most programs require a Wi-Fi-connected model like ecobee or Google Nest that can talk to the utility for demand response. Check your utility's approved list before buying.</p>
+      <h3>Which thermostats qualify for the Burlington rebate?</h3>
+      <p>The Home Renovation Savings Program covers specific models from six manufacturers: ecobee, Google Nest, Honeywell Home, Copeland Sensi, Mysa, and Sinopé. Check the current model list on the program site before buying, since not every thermostat a brand sells is on it.</p>
     </div>
     <h2>Your utility: Burlington Hydro</h2>
-    <p>Burlington Hydro is the local electric utility for Burlington. The smart thermostat rebate above comes from a province-wide program, so which utility bills you doesn't change what you qualify for. Where it can matter: Burlington Hydro is who to contact about your home's electrical service capacity if your installer flags an upgrade, and who bills the electricity your new equipment uses once it's running. Some utilities layer their own incentive on top of the province rebate — worth a quick call to Burlington Hydro to ask directly.</p>
+    <p>Burlington Hydro has not published its own smart thermostat demand-response program, and the peaksaver PLUS free thermostat giveaway that many Ontario homeowners remember stopped taking new signups back in 2017. The $100 rebate on this page comes from the province's Home Renovation Savings Program, which is separate from anything Burlington Hydro runs. Call Burlington Hydro directly if you want to confirm whether a Peak Perks-style enrollment bonus is currently on offer for your account. For more, see the <a href="https://www.burlington.ca/en/services-for-you/climate-action.aspx" target="_blank" rel="noopener">City of Burlington Climate Action Plan</a>. <a href="https://www.burlingtonhydro.com" target="_blank" rel="noopener">Burlington Hydro</a>.</p>
 
 
     <h2>Next steps</h2>
     <p><strong>Ready to buy?</strong> See <a href="/blog/ontario-smart-thermostats-100-rebate-compared/">all 7 eligible brands compared, with direct links to each manufacturer's current models &rarr;</a></p>
-    <p><a href="/ca/on/burlington">View all Burlington rebate programs &rarr;</a> or check the official <a href="https://www.homerenovationsavings.ca" target="_blank" rel="noopener">Home Renovation Savings Program site &rarr;</a> for the current source of truth.</p>
+    <p><a href="/ca/on/burlington/">View all Burlington rebate programs &rarr;</a> or check the official <a href="https://www.homerenovationsavings.ca" target="_blank" rel="noopener">Home Renovation Savings Program site &rarr;</a> for the current source of truth.</p>
 
   </div>
 </article>
@@ -390,22 +499,22 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <div class="footer-col-title">Canada</div>
         <ul class="footer-col-links">
           <li><a href="/ca/">All Provinces</a></li>
-          <li><a href="/ca/bc">British Columbia</a></li>
-          <li><a href="/ca/on">Ontario</a></li>
-          <li><a href="/ca/ab">Alberta</a></li>
-          <li><a href="/ca/ns">Nova Scotia</a></li>
+          <li><a href="/ca/bc/">British Columbia</a></li>
+          <li><a href="/ca/on/">Ontario</a></li>
+          <li><a href="/ca/ab/">Alberta</a></li>
+          <li><a href="/ca/ns/">Nova Scotia</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-col-title">United States</div>
         <ul class="footer-col-links">
           <li><a href="/us/">All States</a></li>
-          <li><a href="/us/ca">California</a></li>
-          <li><a href="/us/ny">New York</a></li>
-          <li><a href="/us/ma">Massachusetts</a></li>
-          <li><a href="/us/pa">Pennsylvania</a></li>
-          <li><a href="/us/co">Colorado</a></li>
-          <li><a href="/us/vt">Vermont</a></li>
+          <li><a href="/us/ca/">California</a></li>
+          <li><a href="/us/ny/">New York</a></li>
+          <li><a href="/us/ma/">Massachusetts</a></li>
+          <li><a href="/us/pa/">Pennsylvania</a></li>
+          <li><a href="/us/co/">Colorado</a></li>
+          <li><a href="/us/vt/">Vermont</a></li>
         </ul>
       </div>
       <div>
@@ -415,7 +524,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/retrofit-assessment/?city=burlington">Retrofit Assessment</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
-          <li><a href="/blog">Full Blog</a></li>
+          <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
           <li><a href="/ca/">Canada by Province</a></li>
           <li><a href="/us/">US by State</a></li>
@@ -424,16 +533,16 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-col-links">
-          <li><a href="/about">About</a></li>
+          <li><a href="/about/">About</a></li>
           <li><a href="/partners/">Partners</a></li>
-          <li><a href="/privacy">Privacy</a></li>
-          <li><a href="/terms">Terms</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/contact/">Contact</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <div>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about" style="color:inherit;">Sam Menard</a>. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about/" style="color:inherit;">Sam Menard</a>. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
       <div>Made in Canada 🇨🇦</div>
     </div>
   </div>

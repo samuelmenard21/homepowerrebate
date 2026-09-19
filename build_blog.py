@@ -73,7 +73,7 @@ footer p { font-size:13px; color:var(--sage); }
 """
 
 def shell(title, description, slug, eyebrow, published, body_html, related):
-    related_html = "".join(f'<a href="/blog/{r["slug"]}">{r["title"]} &rarr;</a>' for r in related)
+    related_html = "".join(f'<a href="/blog/{r["slug"]}/">{r["title"]} &rarr;</a>' for r in related)
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,13 +82,13 @@ def shell(title, description, slug, eyebrow, published, body_html, related):
 <title>{title} | HomePowerRebate Blog</title>
 <meta name="description" content="{description}">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-<link rel="canonical" href="https://homepowerrebate.com/blog/{slug}">
+<link rel="canonical" href="https://homepowerrebate.com/blog/{slug}/">
 <meta name="google-site-verification" content="Yyio4MZpG_tVGKuE9hbSKTYb0Yo9LFWoNF_3_UxVkGE" />
 
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://homepowerrebate.com/blog/{slug}">
+<meta property="og:url" content="https://homepowerrebate.com/blog/{slug}/">
 <meta property="og:locale" content="en_CA">
 <meta property="article:published_time" content="{published}T09:00:00-07:00">
 
@@ -106,7 +106,7 @@ def shell(title, description, slug, eyebrow, published, body_html, related):
   "dateModified": "{published}",
   "author": {{ "@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com" }},
   "publisher": {{ "@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com" }},
-  "mainEntityOfPage": "https://homepowerrebate.com/blog/{slug}"
+  "mainEntityOfPage": "https://homepowerrebate.com/blog/{slug}/"
 }}
 </script>
 <script type="application/ld+json">
@@ -115,8 +115,8 @@ def shell(title, description, slug, eyebrow, published, body_html, related):
   "@type": "BreadcrumbList",
   "itemListElement": [
     {{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com" }},
-    {{ "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://homepowerrebate.com/blog" }},
-    {{ "@type": "ListItem", "position": 3, "name": "{title}", "item": "https://homepowerrebate.com/blog/{slug}" }}
+    {{ "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://homepowerrebate.com/blog/" }},
+    {{ "@type": "ListItem", "position": 3, "name": "{title}", "item": "https://homepowerrebate.com/blog/{slug}/" }}
   ]
 }}
 </script>
@@ -127,7 +127,7 @@ def shell(title, description, slug, eyebrow, published, body_html, related):
 
 <nav>
   <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
-  <span class="nav-tag"><a href="/blog" style="color:inherit; text-decoration:none;">Blog</a></span>
+  <span class="nav-tag"><a href="/blog/" style="color:inherit; text-decoration:none;">Blog</a></span>
 </nav>
 
 <header class="post-header">
@@ -521,7 +521,7 @@ POSTS.append({
 POSTS.append({
     'slug': 'heat-pump-bc-winter-actually-works',
     'title': 'Heat Pumps Work in BC Winter at -25°C: Data, Not Fear',
-    'description': 'Modern cold-climate heat pumps extract heat even at -25°C and work reliably in BC winters. Here's the data.',
+    'description': "Modern cold-climate heat pumps extract heat even at -25°C and work reliably in BC winters. Here's the data.",
     'eyebrow': 'Cold climate guide',
     'published': '2026-07-03',
     'body': """<p>Every BC homeowner asks: "Will a heat pump actually heat my house at -20°C?" Yes, modern cold-climate heat pumps work reliably in BC winters.</p>
@@ -538,7 +538,7 @@ POSTS.append({
 POSTS.append({
     'slug': 'peak-saver-14-day-window-3500-mistake',
     'title': 'The $3,500 Mistake: Peak Saver Enrollment and the 14-Day Window',
-    'description': 'If you install a battery but miss Peak Saver enrollment within 14 days, your rebate shrinks from $5,000 to $1,500. Here's how to avoid it.',
+    'description': "If you install a battery but miss Peak Saver enrollment within 14 days, your rebate shrinks from $5,000 to $1,500. Here's how to avoid it.",
     'eyebrow': 'Critical deadline',
     'published': '2026-07-03',
     'body': """<p>Your battery is installed. You got a $5,000 rebate. Done, right? Wrong. If you don't enroll in Peak Saver within 14 days of interconnection approval, your rebate shrinks to $1,500. That's a $3,500 mistake happening constantly.</p>
@@ -559,7 +559,7 @@ POSTS.append({
 POSTS.append({
     'slug': 'solar-heat-pump-water-heater-stacking-real-numbers',
     'title': 'Stack $18,000 in BC Energy Rebates: Solar + Heat Pump + Water Heater',
-    'description': 'BC homeowners can stack rebates from BC Hydro, CleanBC, and federal programs. Here's how one project returns $19,000.',
+    'description': "BC homeowners can stack rebates from BC Hydro, CleanBC, and federal programs. Here's how one project returns $19,000.",
     'eyebrow': 'Full home retrofit',
     'published': '2026-07-03',
     'body': """<p>Most BC homeowners don't know you can stack rebates. They see solar ($5,000) and maybe heat pump ($4,000) but don't realize you can claim both, plus water heater, plus multi-upgrade bonuses. Total: $15,000–$22,000 in one year.</p>
@@ -604,7 +604,7 @@ def main():
     cards = ""
     for post in POSTS:
         cards += f"""
-        <a href="/blog/{post['slug']}" class="post-card">
+        <a href="/blog/{post['slug']}/" class="post-card">
           <span class="tag">{post['eyebrow']}</span>
           <h3>{post['title']}</h3>
           <p>{post['description'][:110]}{'…' if len(post['description']) > 110 else ''}</p>
@@ -618,13 +618,13 @@ def main():
 <title>BC Home Energy Blog | HomePowerRebate</title>
 <meta name="description" content="Honest, no-hype guides on BC Hydro rebates, solar, batteries, and heat pumps for BC homeowners.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-<link rel="canonical" href="https://homepowerrebate.com/blog">
+<link rel="canonical" href="https://homepowerrebate.com/blog/">
 <meta name="google-site-verification" content="Yyio4MZpG_tVGKuE9hbSKTYb0Yo9LFWoNF_3_UxVkGE" />
 
 <meta property="og:title" content="BC Home Energy Blog | HomePowerRebate">
 <meta property="og:description" content="Honest, no-hype guides on BC Hydro rebates, solar, batteries, and heat pumps.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://homepowerrebate.com/blog">
+<meta property="og:url" content="https://homepowerrebate.com/blog/">
 <meta property="og:locale" content="en_CA">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -637,7 +637,7 @@ def main():
   "@type": "BreadcrumbList",
   "itemListElement": [
     {{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com" }},
-    {{ "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://homepowerrebate.com/blog" }}
+    {{ "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://homepowerrebate.com/blog/" }}
   ]
 }}
 </script>

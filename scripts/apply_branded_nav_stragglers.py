@@ -24,7 +24,7 @@ CITIES = [
 LINK_STYLE = ("padding:10px; border-radius:8px; text-decoration:none; color:var(--ink); "
               "font-weight:500; font-size:14px; border:1px solid var(--rule); text-align:center;")
 DROPDOWN_LINKS = "\n".join(
-    f'        <a href="/ca/bc/{slug}" style="{LINK_STYLE}">{name}</a>'
+    f'        <a href="/ca/bc/{slug}/" style="{LINK_STYLE}">{name}</a>'
     for slug, name in CITIES
 )
 
@@ -54,16 +54,16 @@ THIN_BAR_RE = re.compile(
 ABOUT_OLD = '''<nav class="nav">
   <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
   <div class="nav-links">
-    <a href="/about-us">About</a>
-    <a href="/how-we-vet-installers">Vetting</a>
+    <a href="/about-us/">About</a>
+    <a href="/how-we-vet-installers/">Vetting</a>
   </div>
 </nav>'''
 ABOUT_NEW = f'''<nav class="nav" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
   <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
   <div style="display:flex; align-items:center; gap:20px;">
     <div class="nav-links">
-      <a href="/about-us">About</a>
-      <a href="/how-we-vet-installers">Vetting</a>
+      <a href="/about-us/">About</a>
+      <a href="/how-we-vet-installers/">Vetting</a>
     </div>
 {PICKER}
   </div>
@@ -71,11 +71,11 @@ ABOUT_NEW = f'''<nav class="nav" style="display:flex; align-items:center; justif
 
 # ca/bc overview: add picker into its existing right-side flex group.
 OVERVIEW_OLD = '''  <div style="display:flex; align-items:center; gap:20px;">
-    <a href="/blog" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
+    <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     <span class="nav-tag">BC Overview</span>
   </div>'''
 OVERVIEW_NEW = f'''  <div style="display:flex; align-items:center; gap:20px;">
-    <a href="/blog" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
+    <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     <span class="nav-tag">BC Overview</span>
 {PICKER}
   </div>'''

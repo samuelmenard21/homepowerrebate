@@ -415,7 +415,7 @@ def build_page(city_a, city_b, same_region, generated_date):
         "@type": "Article",
         "headline": h1,
         "description": description,
-        "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"},
+        "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about/"},
         "publisher": {"@type": "Organization", "name": "HomePowerRebate"},
         "mainEntityOfPage": canonical,
         "datePublished": generated_date,

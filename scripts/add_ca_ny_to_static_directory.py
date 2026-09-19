@@ -107,7 +107,7 @@ def main():
     text = open(INDEX_PATH, encoding="utf-8").read()
 
     anchor = '''      <div class="directory-city">
-        <h3 style="font-family:'Fraunces',serif; font-size:18px; color:var(--teal-deep); margin:20px 0 8px;"><a href="/us/vt/montpelier" style="color:var(--teal-deep);">Montpelier</a></h3>
+        <h3 style="font-family:'Fraunces',serif; font-size:18px; color:var(--teal-deep); margin:20px 0 8px;"><a href="/us/vt/montpelier/" style="color:var(--teal-deep);">Montpelier</a></h3>
         <ul style="columns:2; column-gap:24px; list-style:none; padding:0; margin:0; font-size:14px; line-height:1.9;">
         <li><a href="/installers/profiles/vt/montpelier/lloyd-plumbing-heating-air-electrical/">Lloyd Plumbing Heating Air Electrical</a></li>
         <li><a href="/installers/profiles/vt/montpelier/techno-metal-post-vermont/">Techno Metal Post Vermont</a></li>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is Rebate Stacking? How to Combine Multiple Rebates</title>
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W33G4TGRHD');
+</script>
+
+<meta name="description" content="Learn how rebate stacking works: combine federal, provincial, and utility rebates to cut your home energy upgrade costs. Real examples from Vancouver, Kamloops, and Toronto.">
+<link rel="canonical" href="https://homepowerrebate.com/guides/rebate-stacking-explained/">
+<meta property="og:title" content="What Is Rebate Stacking? How to Combine Multiple Rebates">
+<meta property="og:description" content="Understand how rebate stacking works and see real dollar examples of combining federal, provincial, and utility rebates for solar, batteries, and heat pumps.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+
+<style>
+:root {
+  --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
+  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
+  --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter Tight', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; }
+.wrap { max-width: 820px; margin: 0 auto; padding: 0 28px; }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
+.nav-inner { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.logo-mark { width: 30px; height: 30px; background: var(--amber); border-radius: 50%; position: relative; box-shadow: 0 2px 8px rgba(212, 117, 28, 0.3); }
+.logo-mark::after { content: ''; position: absolute; inset: 8px; background: var(--paper); border-radius: 50%; }
+.logo-power { color: var(--amber); font-weight: 700; }
+.nav-pick { display: flex; align-items: center; gap: 8px; background: var(--teal-deep); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; transition: all 0.2s; }
+.nav-pick:hover { background: var(--amber); transform: translateY(-1px); }
+.hero { padding: 48px 28px 32px; background: var(--teal-deep); color: var(--paper); }
+.hero .wrap { max-width: 820px; }
+.hero h1 { font-family: 'Fraunces', serif; font-size: clamp(30px, 5vw, 42px); color: #fff; margin-bottom: 10px; line-height: 1.15; }
+.hero p { color: rgba(250, 247, 242, 0.8); font-size: 15px; }
+.article { padding: 40px 28px 56px; }
+h2 { font-family: 'Fraunces', serif; font-size: 24px; color: var(--teal-deep); margin: 32px 0 12px; }
+h3 { font-family: 'Fraunces', serif; font-size: 18px; color: var(--ink); margin: 24px 0 8px; }
+p { margin-bottom: 16px; font-size: 15px; line-height: 1.8; }
+ul { margin: 0 0 16px 22px; color: var(--ink-soft); }
+li { margin-bottom: 8px; line-height: 1.7; }
+strong { color: var(--ink); }
+.callout { background: var(--paper-warm); padding: 18px 20px; border-left: 4px solid var(--amber); margin: 20px 0; border-radius: 6px; }
+.callout p { margin-bottom: 0; font-size: 14px; }
+.example-box { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 20px; margin: 20px 0; }
+.example-box h4 { font-family: 'Fraunces', serif; color: var(--amber); margin-bottom: 12px; font-size: 16px; }
+.rebate-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.rebate-item:last-child { border-bottom: none; }
+.rebate-label { font-size: 14px; color: var(--ink-soft); }
+.rebate-amount { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; color: var(--green-money); }
+.total-rebate { background: var(--paper-warm); padding: 16px; border-radius: 6px; margin-top: 12px; text-align: right; }
+.total-rebate-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--sage); font-weight: 600; }
+.total-rebate-amount { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: var(--green-money); }
+.cta-box { background: var(--teal-deep); color: #fff; padding: 24px; border-radius: 8px; margin: 28px 0; }
+.cta-box h3 { color: #fff; margin-top: 0; }
+.cta-box p { color: rgba(255, 255, 255, 0.85); margin-bottom: 16px; }
+.cta-btn { display: inline-block; background: var(--amber); color: #fff; padding: 12px 24px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.2s; }
+.cta-btn:hover { background: var(--amber-bright); transform: translateY(-1px); }
+a { color: var(--teal); }
+footer { background: var(--ink); color: rgba(250, 247, 242, 0.65); padding: 56px 28px 32px; }
+footer .wrap { max-width: 1180px; font-size: 13px; }
+@media (max-width: 768px) {
+  .hero h1 { font-size: 28px; }
+  .rebate-item { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .rebate-amount { font-size: 16px; }
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"},
+    {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://homepowerrebate.com/guides/"},
+    {"@type": "ListItem", "position": 3, "name": "Rebate Stacking", "item": "https://homepowerrebate.com/guides/rebate-stacking-explained/"}
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "What Is Rebate Stacking? How to Combine Multiple Rebates",
+  "description": "Learn how rebate stacking works: combine federal, provincial, and utility rebates to cut your home energy upgrade costs.",
+  "datePublished": "2026-09-18",
+  "dateModified": "2026-09-18",
+  "author": {"@type": "Organization", "name": "HomePowerRebate"},
+  "publisher": {"@type": "Organization", "name": "HomePowerRebate"},
+  "mainEntityOfPage": "https://homepowerrebate.com/guides/rebate-stacking-explained/"
+}
+</script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark"></span>
+      <span>Home<span class="logo-power">Power</span>Rebate</span>
+    </a>
+    <button onclick="alert('City picker')" class="nav-pick" style="border:none; cursor:pointer;">
+      Pick your city →
+    </button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>What Is Rebate Stacking?</h1>
+    <p>Combine federal, provincial, and utility rebates to cut your home energy upgrade costs by thousands of dollars.</p>
+  </div>
+</section>
+
+<article class="article">
+  <div class="wrap">
+
+    <h2>The Basic Idea</h2>
+    <p>Rebate stacking means you can qualify for <strong>multiple rebates from different sources at the same time</strong> for the same upgrade. Instead of choosing one program, you get money from several.</p>
+    <p>Think of it like stacking gift cards. If you get a $50 card from one store and another $30 card from a different store, you use both on the same purchase. Rebates work the same way—you can combine them to dramatically lower your out-of-pocket cost.</p>
+
+    <h2>Where Do Rebates Come From?</h2>
+    <p>Three main sources stack together:</p>
+    <ul>
+      <li><strong>Federal government</strong> — Canada Greener Homes Initiative and other national programs</li>
+      <li><strong>Provincial/state government</strong> — BC Hydro Power Smart 2.0, provincial income-based programs, and others</li>
+      <li><strong>Utility company</strong> — Your local electric utility (BC Hydro, FortisBC, etc.) often adds its own incentives on top</li>
+    </ul>
+    <p>Each program has its own eligibility rules, but many homeowners qualify for all three at once.</p>
+
+    <h2>Real Example 1: Vancouver Solar + Battery</h2>
+    <div class="example-box">
+      <h4>A Vancouver homeowner installing a 5 kW solar system with a 10 kWh battery</h4>
+
+      <div class="rebate-item">
+        <span class="rebate-label">BC Hydro solar rebate</span>
+        <span class="rebate-amount">$5,000</span>
+      </div>
+      <div class="rebate-item">
+        <span class="rebate-label">BC Hydro battery rebate</span>
+        <span class="rebate-amount">$5,000</span>
+      </div>
+      <div class="rebate-item">
+        <span class="rebate-label">Peak Saver incentive (10 years)</span>
+        <span class="rebate-amount">~$3,000</span>
+      </div>
+      <div class="rebate-item">
+        <span class="rebate-label">Federal Greener Homes grant (if eligible)</span>
+        <span class="rebate-amount">$5,000</span>
+      </div>
+
+      <div class="total-rebate">
+        <div class="total-rebate-label">Total Rebate Stack</div>
+        <div class="total-rebate-amount">$18,000+</div>
+      </div>
+    </div>
+
+    <p>Without stacking, this homeowner might only think about the BC Hydro rebate ($10,000). But by understanding that federal and utility incentives stack, they could reduce the net cost of a $32,000 system to around $14,000—more than half the price.</p>
+
+    <h2>Real Example 2: Kamloops Heat Pump</h2>
+    <div class="example-box">
+      <h4>A Kamloops homeowner installing a whole-home heat pump</h4>
+
+      <div class="rebate-item">
+        <span class="rebate-label">BC Hydro heat pump rebate</span>
+        <span class="rebate-amount">$4,000</span>
+      </div>
+      <div class="rebate-item">
+        <span class="rebate-label">Federal Greener Homes grant (if eligible)</span>
+        <span class="rebate-amount">$5,000</span>
+      </div>
+      <div class="rebate-item">
+        <span class="rebate-label">CleanBC income-based top-up (if qualified)</span>
+        <span class="rebate-amount">$2,000–$8,000</span>
+      </div>
+
+      <div class="total-rebate">
+        <div class="total-rebate-label">Total Rebate Stack (base case)</div>
+        <div class="total-rebate-amount">$9,000–$17,000</div>
+      </div>
+    </div>
+
+    <p>A heat pump system typically costs $8,000 to $12,000 installed. With stacking, a homeowner could walk away paying little to nothing out-of-pocket—or even get paid back in some cases if incentives exceed costs.</p>
+
+    <h2>Important Rules for Stacking</h2>
+
+    <h3>1. Programs Must Allow It</h3>
+    <p>Not every rebate can be combined. Most government programs explicitly allow stacking with other programs, but you need to check each one. For example, BC Hydro rebates stack with federal programs, but some provincial income-based programs do not.</p>
+
+    <h3>2. You Must Be Eligible for Each One</h3>
+    <p>You can't just claim rebates blindly. Each program has its own eligibility rules. For example:</p>
+    <ul>
+      <li>BC Hydro rebates require you to be a BC Hydro customer (not FortisBC)</li>
+      <li>Federal programs may have income limits or specific product requirements</li>
+      <li>Some programs require installation by a certified contractor</li>
+    </ul>
+
+    <h3>3. The Equipment Matters</h3>
+    <p>Not all brands and models qualify for all rebates. For example, Tesla Powerwall is <strong>not</strong> on BC Hydro's approved battery list, so you get zero rebate. But Eguana Evolve, LG Chem RESU, and Enphase IQ all qualify for BC Hydro rebates.</p>
+
+    <h3>4. Timeline Matters</h3>
+    <p>Some programs are closing (the original Canada Greener Homes Grant is no longer accepting applications). Others have annual caps or funding limits. If you wait, you might miss the window.</p>
+
+    <h2>How to Check Your Stacking Potential</h2>
+    <p>Use our <a href="/stacking-calculator/">rebate stacking calculator</a>. Enter your city and the upgrades you're planning, and we'll show you every rebate you might qualify for, stacked together, with real estimates of how much you'll actually save.</p>
+
+    <div class="cta-box">
+      <h3>Find Your City's Rebate Stack</h3>
+      <p>We've mapped every rebate available in your area. Pick your city and category to see the exact programs, amounts, and eligibility rules—without the guesswork.</p>
+      <a href="/stacking-calculator/" class="cta-btn">Use the stacking calculator →</a>
+    </div>
+
+    <h2>The Bottom Line</h2>
+    <p>Rebate stacking can cut your upgrade costs by 30% to 60%. The difference between claiming one rebate and stacking three is often $10,000 or more. But you have to know the rules, check eligibility, and act before deadlines change.</p>
+    <p>Start with your city's rebate hub to see what's available to you—then use the calculator to stack them up.</p>
+
+  </div>
+</article>
+
+<!-- CANONICAL-FOOTER-START -->
+<footer>
+  <div class="wrap">
+    <p>&copy; 2026 HomePowerRebate. Made in Canada 🇨🇦</p>
+    <p style="font-size: 12px; margin-top: 12px;"><a href="/privacy/" style="color: rgba(250, 247, 242, 0.75);">Privacy</a> · <a href="/terms/" style="color: rgba(250, 247, 242, 0.75);">Terms</a> · <a href="/contact/" style="color: rgba(250, 247, 242, 0.75);">Contact</a></p>
+  </div>
+</footer>
+<!-- CANONICAL-FOOTER-END -->
+
+</body>
+</html>

@@ -29,7 +29,7 @@ LINK_STYLE = ("padding:10px; border-radius:8px; text-decoration:none; color:var(
 
 # The 18-city dropdown grid (shared).
 DROPDOWN_LINKS = "\n".join(
-    f'      <a href="/ca/bc/{slug}" style="{LINK_STYLE}">{name}</a>'
+    f'      <a href="/ca/bc/{slug}/" style="{LINK_STYLE}">{name}</a>'
     for slug, name in CITIES
 )
 

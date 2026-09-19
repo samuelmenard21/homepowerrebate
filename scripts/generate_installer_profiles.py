@@ -389,7 +389,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
 
   <a href="{hub_url}" class="ip-city-link">See all {city_name} rebates &rarr;</a>
 
-  <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked via Google Places API. Spot an error? <a href="/contact?subject=Correction: {escaped_name}">Let us know</a>.</p>
+  <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked via Google Places API. Spot an error? <a href="/contact/?subject=Correction: {escaped_name}">Let us know</a>.</p>
 </div>
 <script>
 (function() {{

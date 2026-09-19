@@ -164,8 +164,8 @@ def build_page(city_slug, group, display_name, utility_kind, utility_name, utili
 
     # --- category nav row + back link ---
     out = out.replace(
-        f'<a href="/us/ca/sacramento/sacramento">&larr; Back to Sacramento rebate hub</a>',
-        f'<a href="/us/ca/{group}/{city_slug}">&larr; Back to {display_name} rebate hub</a>',
+        f'<a href="/us/ca/sacramento/sacramento/">&larr; Back to Sacramento rebate hub</a>',
+        f'<a href="/us/ca/{group}/{city_slug}/">&larr; Back to {display_name} rebate hub</a>',
     )
     out = re.sub(r'/us/ca/sacramento/sacramento/(heat-pump|battery|water-heater|insulation|ev-charger|smart-thermostats)/', f'/us/ca/{group}/{city_slug}/\\1/', out)
     out = re.sub(r'in Sacramento</a>', f'in {display_name}</a>', out)
@@ -233,8 +233,8 @@ def build_page(city_slug, group, display_name, utility_kind, utility_name, utili
         f'<h3>Where do I find solar installers in {display_name}?</h3>\n      <p>Browse real, currently-reviewed installers near {display_name} on our installer directory, or run our free assessment for a shortlist matched to your project.</p>',
     )
     out = out.replace(
-        f'<p><a href="/us/ca/sacramento/sacramento">View all Sacramento rebate programs &rarr;</a> or check the official <a href="https://www.smud.org/en/Rebates-Incentives-and-Financing" target="_blank" rel="noopener">SMUD rebates &amp; incentives &rarr; &rarr;</a> for the current source of truth.</p>',
-        f'<p><a href="/us/ca/{group}/{city_slug}">View all {display_name} rebate programs &rarr;</a> or check the official <a href="{utility_url}" target="_blank" rel="noopener">{utility_name} rebates &amp; incentives &rarr;</a> for the current source of truth.</p>',
+        f'<p><a href="/us/ca/sacramento/sacramento/">View all Sacramento rebate programs &rarr;</a> or check the official <a href="https://www.smud.org/en/Rebates-Incentives-and-Financing" target="_blank" rel="noopener">SMUD rebates &amp; incentives &rarr; &rarr;</a> for the current source of truth.</p>',
+        f'<p><a href="/us/ca/{group}/{city_slug}/">View all {display_name} rebate programs &rarr;</a> or check the official <a href="{utility_url}" target="_blank" rel="noopener">{utility_name} rebates &amp; incentives &rarr;</a> for the current source of truth.</p>',
     )
 
     # --- newsletter hidden fields ---

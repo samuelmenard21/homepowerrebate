@@ -198,7 +198,7 @@ def build_water_heater_page(template_text, utility, city_slug, display_name):
     )
     text = re.sub(
         r'<section class="wrap" style="padding:24px 28px 0;">\n  <div style="font-size:14px; line-height:2\.2;">\n.*?\n  </div>\n</section>',
-        f'<section class="wrap" style="padding:24px 28px 0;">\n  <div style="font-size:14px; line-height:2.2;">\n      <span style="margin-right:14px;"><a href="/us/ny/{utility}/{city_slug}">&larr; Back to {display_name} rebate hub</a></span>\n{nav_links}\n  </div>\n</section>',
+        f'<section class="wrap" style="padding:24px 28px 0;">\n  <div style="font-size:14px; line-height:2.2;">\n      <span style="margin-right:14px;"><a href="/us/ny/{utility}/{city_slug}/">&larr; Back to {display_name} rebate hub</a></span>\n{nav_links}\n  </div>\n</section>',
         text,
         flags=re.S,
     )
@@ -266,8 +266,8 @@ def build_water_heater_page(template_text, utility, city_slug, display_name):
 
     # "Next steps"
     text = re.sub(
-        r'<h2>Next steps</h2>\n\s*<p><a href="/us/ny/[^"]+">View all [^<]+ rebate programs &rarr;</a>',
-        f'<h2>Next steps</h2>\n    <p><a href="/us/ny/{utility}/{city_slug}">View all {display_name} rebate programs &rarr;</a>',
+        r'<h2>Next steps</h2>\n\s*<p><a href="/us/ny/[^/"]+">View all [^<]+ rebate programs &rarr;</a>',
+        f'<h2>Next steps</h2>\n    <p><a href="/us/ny/{utility}/{city_slug}/">View all {display_name} rebate programs &rarr;</a>',
         text,
     )
 

@@ -106,6 +106,22 @@
     "@type": "Answer",
     "text": "Browse real, currently-reviewed installers near Islip on our installer directory, or run our free assessment for a shortlist matched to your project."
    }
+  },
+  {
+   "@type": "Question",
+   "name": "What's the difference between a Level 1 and Level 2 home charger?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Level 1 uses the regular 120V outlet already in most garages and adds roughly 3 to 5 miles of range per hour, which covers a short daily commute without any electrical work. Level 2 needs a dedicated 240V circuit (16 to 60A) and adds roughly 20 to 40 miles per hour, which is what most people who drive every day end up wanting. Car and Driver's charging-levels explainer and BC Hydro's home charger walkthrough both cover the tradeoff in more depth if you want the full picture before you buy."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Where can I actually buy a home EV charger?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Homeowners in Islip generally buy through one of five channels: straight from the manufacturer or an electrical distributor, through the electrician doing the install, from a general online retailer, in person at a home-improvement or auto-parts store, or bundled free with a new EV from a dealership. See \"Where to buy\" below for what to watch for with each one."
+   }
   }
  ]
 }
@@ -278,7 +294,7 @@ strong { color: var(--ink); }
 
 <!-- On a city/province page, call showProvinceCities('ny') once on load
      so the dropdown opens to the right tab, and add a highlighted/active style to the
-     current city's <a> for islip — do not otherwise change the link list. -->
+     current city's <a> for islip, do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ny/">New York</a></li><li><a href="/us/ny/pseg/islip/">Islip</a></li><li aria-current="page">EV Charger</li></ol></nav>
@@ -311,12 +327,26 @@ strong { color: var(--ink); }
 
     <h2>How much you get</h2>
     <p>PSEG Long Island pays a <strong>$100</strong> base rebate for a qualified Level 2 home charger (must be on the EPRI Vetted Product List), plus an additional <strong>$300</strong> (total $400) for customers in a Disadvantaged Community or enrolled in the Household Assistance Program.</p>
-    <p>This is the best-sourced claim in the entire research pass — three consistent, independent sources. The program is budget-limited and expected to run through December 31, 2026 or until funds run out.</p>
+    <p>This is the best-sourced claim in the entire research pass, three consistent, independent sources. The program is budget-limited and expected to run through December 31, 2026 or until funds run out.</p>
     
     <p class="source-note">Sources: <a href="https://www.psegliny.com/saveenergyandmoney/greenenergy/ev/residentialcustomers/chargerrebate" target="_blank" rel="noopener">PSEG LI Charger Rebate program page</a>, <a href="https://www.psegliny.com/saveenergyandmoney/GreenEnergy/EV/ResidentialCustomers/-/media/E65F8958000443BA8A282EB79714F7F5.ashx" target="_blank" rel="noopener">PSEG LI 2026 Residential Charger Rebate PDF</a>, <a href="https://rebates4evchargers.com/utility.php?utility=PSE%26G+LI+-+NY" target="_blank" rel="noopener">rebates4evchargers.com PSEG LI listing</a></p>
     <p style="font-size:12px; color:var(--sage);">Administered by: PSEG Long Island Residential Charger Rebate Program</p>
 
     
+
+    
+    <h2>What Islip homeowners should know before buying a charger</h2>
+    <p>Islip's housing is dominated by the classic 1950s-60s Long Island ranch and Cape Cod, built for a much smaller electrical load than a modern household running central air plus an EV charger. That's the real reason to get an electrician out before buying: confirm actual spare panel capacity first. If it's tight, chargers with power-sharing built in (Emporia Pro, some ChargePoint units) can share existing capacity rather than forcing a full panel upgrade, which often runs $1,500-$4,000.</p>
+<p>Once the panel question is settled, Level 1 versus Level 2 is about how far you drive. Level 1 (the 120V outlet already there) adds roughly 3-5 miles of range per hour. Level 2 (240V, 16-60A) adds 20-40 miles an hour and is the better match for a daily Long Island Expressway commute. Car and Driver's charging-levels breakdown and BC Hydro's home charger explainer video are both useful before deciding.</p>
+<p>Plug compatibility: most 2025+ non-Tesla EVs now use the NACS connector Tesla opened up in 2023, bridged to older cars with J1772 adapters. Tesla's Wall Connector handles both plugs out of the box; most third-party chargers, ChargePoint and Grizzl-E included, still ship J1772-only, so check this before buying if the household drives a non-Tesla EV.</p>
+
+    <h3>Compare a few real options</h3>
+    <div class="ev-cards">
+    <div class="ev-card" style="background:#fff;border:1px solid var(--rule);border-radius:12px;padding:16px 18px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;"><strong style="color:var(--ink);font-size:15px;">Tesla Universal Wall Connector</strong><span style="color:var(--amber);font-weight:700;">~$650</span></div><ul style="margin:8px 0 10px 18px;"><li>Only charger here with both NACS and J1772 built in, so it works whether the household drives a Tesla or not</li><li>Best pick if you expect to switch EV brands down the road</li></ul><a href="https://shop.tesla.com/product/wall-connector" target="_blank" rel="noopener sponsored" style="font-size:13px;">See current price &rarr;</a></div><div class="ev-card" style="background:#fff;border:1px solid var(--rule);border-radius:12px;padding:16px 18px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;"><strong style="color:var(--ink);font-size:15px;">ChargePoint Home Flex</strong><span style="color:var(--amber);font-weight:700;">~$549</span></div><ul style="margin:8px 0 10px 18px;"><li>Best all-around app and reliability record in current owner reviews</li><li>Adjustable amperage (16-50A) so one unit fits most panels</li></ul><a href="https://www.chargepoint.com/products/home/flex/" target="_blank" rel="noopener sponsored" style="font-size:13px;">See current price &rarr;</a></div><div class="ev-card" style="background:#fff;border:1px solid var(--rule);border-radius:12px;padding:16px 18px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;"><strong style="color:var(--ink);font-size:15px;">Grizzl-E Classic</strong><span style="color:var(--amber);font-weight:700;">~$429</span></div><ul style="margin:8px 0 10px 18px;"><li>Rugged, outdoor-rated housing and no companion app to fuss with</li><li>Good fit for anyone who wants a charger that just works over one with smart scheduling</li></ul><a href="https://www.grizzl-e.com/" target="_blank" rel="noopener sponsored" style="font-size:13px;">See current price &rarr;</a></div>
+    </div>
+
+    <h3>Where to buy a home EV charger</h3>
+    <p>Because PSEG Long Island's rebate is tied to a qualified Level 2 charger on its approved list, confirm the model before buying if you plan to claim it. In Islip, the electrician doing the panel work is usually the simplest source for the charger itself. Shopping online should mean the manufacturer's own store or a real electrical distributor, not a general marketplace where a reseller could pass off a used or counterfeit unit as new, which matters for the rebate's new-hardware requirement. Big-box retailers nearby stock a couple of models at most, so call ahead. Some area EV dealerships now bundle a free Level 1 charger with purchase.</p>
 
     <h2>EV Charger installers in Islip</h2>
     <p>Real companies serving Islip, pulled from their current Google reviews. We're not paid to list anyone here.</p>
@@ -353,6 +383,15 @@ strong { color: var(--ink); }
       <p>Browse real, currently-reviewed installers near Islip on our installer directory, or run our free assessment for a shortlist matched to your project.</p>
     </div>
 
+        <div class="faq-item">
+      <h3>What's the difference between a Level 1 and Level 2 home charger?</h3>
+      <p>Level 1 uses the regular 120V outlet already in most garages and adds roughly 3 to 5 miles of range per hour, which covers a short daily commute without any electrical work. Level 2 needs a dedicated 240V circuit (16 to 60A) and adds roughly 20 to 40 miles per hour, which is what most people who drive every day end up wanting. Car and Driver's charging-levels explainer and BC Hydro's home charger walkthrough both cover the tradeoff in more depth if you want the full picture before you buy.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Where can I actually buy a home EV charger?</h3>
+      <p>Homeowners in Islip generally buy through one of five channels: straight from the manufacturer or an electrical distributor, through the electrician doing the install, from a general online retailer, in person at a home-improvement or auto-parts store, or bundled free with a new EV from a dealership. See "Where to buy" below for what to watch for with each one.</p>
+    </div>
+
     <h2>Other PSEG Long Island Cities</h2>
     <p style="font-size:14px;">
       <a href="/us/ny/pseg/huntington/ev-charger/" style="margin-right:14px; display:inline-block;">Huntington</a>
@@ -363,7 +402,7 @@ strong { color: var(--ink); }
       <a href="/us/ny/pseg/brookhaven/ev-charger/" style="margin-right:14px; display:inline-block;">Brookhaven</a>
     </p>
     <h2>Your utility: PSEG Long Island</h2>
-    <p>PSEG Long Island is the local electric utility for Islip. The EV charger rebate above is a state-wide program, so which utility bills you doesn't change what you qualify for — but PSEG Long Island is who to ask about time-of-use or EV-specific electricity rates, since charging overnight on the right rate plan can meaningfully change your running cost. Some utilities also run their own home-charger incentive on top of the state one — worth a quick call to PSEG Long Island to check.</p>
+    <p>PSEG Long Island is the local electric utility for Islip. The EV charger rebate above is a state-wide program, so which utility bills you doesn't change what you qualify for, but PSEG Long Island is who to ask about time-of-use or EV-specific electricity rates, since charging overnight on the right rate plan can meaningfully change your running cost. Some utilities also run their own home-charger incentive on top of the state one, worth a quick call to PSEG Long Island to check.</p>
 
 
     <h2>Next steps</h2>

@@ -114,6 +114,22 @@
     "@type": "Answer",
     "text": "Browse real, currently-reviewed installers near New Rochelle on our installer directory, or run our free assessment for a shortlist matched to your project."
    }
+  },
+  {
+   "@type": "Question",
+   "name": "What's the difference between a Level 1 and Level 2 home charger?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Level 1 uses the regular 120V outlet already in most garages and adds roughly 3 to 5 miles of range per hour, which covers a short daily commute without any electrical work. Level 2 needs a dedicated 240V circuit (16 to 60A) and adds roughly 20 to 40 miles per hour, which is what most people who drive every day end up wanting. Car and Driver's charging-levels explainer and BC Hydro's home charger walkthrough both cover the tradeoff in more depth if you want the full picture before you buy."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Where can I actually buy a home EV charger?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Homeowners in New Rochelle generally buy through one of five channels: straight from the manufacturer or an electrical distributor, through the electrician doing the install, from a general online retailer, in person at a home-improvement or auto-parts store, or bundled free with a new EV from a dealership. See \"Where to buy\" below for what to watch for with each one."
+   }
   }
  ]
 }
@@ -286,7 +302,7 @@ strong { color: var(--ink); }
 
 <!-- On a city/province page, call showProvinceCities('ny') once on load
      so the dropdown opens to the right tab, and add a highlighted/active style to the
-     current city's <a> for new-rochelle — do not otherwise change the link list. -->
+     current city's <a> for new-rochelle, do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ny/">New York</a></li><li><a href="/us/ny/con-edison/new-rochelle/">New Rochelle</a></li><li aria-current="page">EV Charger</li></ol></nav>
@@ -318,13 +334,27 @@ strong { color: var(--ink); }
   <div class="wrap">
 
     <h2>How much you get</h2>
-    <p>Con Edison does not appear to offer a direct purchase/hardware rebate for home Level 2 chargers. What it does offer is <strong>SmartCharge New York</strong>, an off-peak charging behavioral incentive worth up to roughly $400/year, plus a $0.10/kWh off-peak credit — that's a usage reward, not money toward buying the charger itself.</p>
+    <p>Con Edison does not appear to offer a direct purchase/hardware rebate for home Level 2 chargers. What it does offer is <strong>SmartCharge New York</strong>, an off-peak charging behavioral incentive worth up to roughly $400/year, plus a $0.10/kWh off-peak credit. That's a usage reward, not money toward buying the charger itself.</p>
     <p>Con Edison's PowerReady program, which offset some infrastructure costs, stopped accepting new Level 2 residential-adjacent applications as of April 22, 2026.</p>
     
     <p class="source-note">Sources: <a href="https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-vehicle-rewards/electric-vehicle-charging-rewards-faq" target="_blank" rel="noopener">Con Edison SmartCharge FAQ</a>, <a href="https://www.coned.com/en/our-energy-future/electric-vehicles/power-ready-program" target="_blank" rel="noopener">Con Edison PowerReady</a></p>
     <p style="font-size:12px; color:var(--sage);">Administered by: Con Edison SmartCharge New York / PowerReady</p>
 
     <h3>New Rochelle-specific note</h3><p>No New Rochelle-specific program was found beyond the standard Con Edison/state programs above and county-level Weatherization Assistance Program delivery.</p>
+
+    
+    <h2>How to shop for a home EV charger in New Rochelle</h2>
+    <p>New Rochelle has a mix of prewar single-family homes and newer condo construction, and that split matters for chargers: a prewar home is more likely to need panel work before a 40-60A Level 2 circuit fits, while newer builds often already have the capacity. Ask an electrician to check before you buy, and if the panel is maxed out, chargers with power-sharing (Emporia, some ChargePoint models) are the practical fix rather than a full panel replacement.</p>
+<p>On the range-per-hour question: Level 1 (120V, no upgrade needed) adds roughly 3-5 miles per hour of charge, fine for light drivers. Level 2 (240V) adds 20-40 miles per hour and is what most people who drive to work daily actually need. Car and Driver's charging-levels guide and BC Hydro's home EV charger page (it has a short explainer video, even though BC Hydro is a Canadian utility) both cover this in more detail than a single-paragraph summary can.</p>
+<p>Connector compatibility is worth double-checking before you buy: Tesla's NACS plug is the new industry standard as of 2025+ models from most automakers, but a lot of third-party chargers, ChargePoint and Grizzl-E among them, still ship with the older J1772 plug and assume the driver supplies their own NACS adapter for a newer EV. Get this backwards and the charger physically won't connect.</p>
+
+    <h3>Compare a few real options</h3>
+    <div class="ev-cards">
+    <div class="ev-card" style="background:#fff;border:1px solid var(--rule);border-radius:12px;padding:16px 18px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;"><strong style="color:var(--ink);font-size:15px;">Grizzl-E Classic</strong><span style="color:var(--amber);font-weight:700;">~$429</span></div><ul style="margin:8px 0 10px 18px;"><li>Rugged, outdoor-rated housing and no companion app to fuss with</li><li>Good fit for anyone who wants a charger that just works over one with smart scheduling</li></ul><a href="https://www.grizzl-e.com/" target="_blank" rel="noopener sponsored" style="font-size:13px;">See current price &rarr;</a></div><div class="ev-card" style="background:#fff;border:1px solid var(--rule);border-radius:12px;padding:16px 18px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;"><strong style="color:var(--ink);font-size:15px;">ChargePoint Home Flex</strong><span style="color:var(--amber);font-weight:700;">~$549</span></div><ul style="margin:8px 0 10px 18px;"><li>Best all-around app and reliability record in current owner reviews</li><li>Adjustable amperage (16-50A) so one unit fits most panels</li></ul><a href="https://www.chargepoint.com/products/home/flex/" target="_blank" rel="noopener sponsored" style="font-size:13px;">See current price &rarr;</a></div><div class="ev-card" style="background:#fff;border:1px solid var(--rule);border-radius:12px;padding:16px 18px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;"><strong style="color:var(--ink);font-size:15px;">Emporia Classic</strong><span style="color:var(--amber);font-weight:700;">~$399</span></div><ul style="margin:8px 0 10px 18px;"><li>Cheapest of the group and built-in load management for tight panels</li><li>Real tradeoff: owner reports point to a higher early-failure rate than ChargePoint or Tesla, so factor in the extended warranty</li></ul><a href="https://www.emporiaenergy.com/electric-vehicle-chargers/" target="_blank" rel="noopener sponsored" style="font-size:13px;">See current price &rarr;</a></div>
+    </div>
+
+    <h3>Where to buy a home EV charger</h3>
+    <p>Electrical contractors are a common route here since New Rochelle's older housing often needs some panel or wiring work anyway, and the same contractor can supply the charger. Buying direct from the manufacturer or a real electrical distributor is the safer online option; a general marketplace listing can be a reseller passing off a used unit as new, which matters if you're counting on a rebate that requires new hardware. Local big-box stores carry a narrow selection, so check stock by phone first. Several EV brands' dealerships in the county also include a free Level 1 charger with a new purchase.</p>
 
     <h2>EV Charger installers in New Rochelle</h2>
     <p>Real companies serving New Rochelle, pulled from their current Google reviews. We're not paid to list anyone here.</p>
@@ -354,7 +384,7 @@ strong { color: var(--ink); }
     <h2>Common questions</h2>
     <div class="faq-item">
       <h3>How much is the EV Charger rebate in New Rochelle?</h3>
-      <p>Con Edison does not appear to offer a direct purchase/hardware rebate for home Level 2 chargers. What it does offer is SmartCharge New York, an off-peak charging behavioral incentive worth up to roughly $400/year, plus a $0.10/kWh off-peak credit — that's a usage reward, not money toward buying the charger itself.</p>
+      <p>Con Edison does not appear to offer a direct purchase/hardware rebate for home Level 2 chargers. What it does offer is SmartCharge New York, an off-peak charging behavioral incentive worth up to roughly $400/year, plus a $0.10/kWh off-peak credit. That's a usage reward, not money toward buying the charger itself.</p>
     </div>
     <div class="faq-item">
       <h3>Is there a New Rochelle-specific top-up beyond the territory program?</h3>
@@ -365,6 +395,15 @@ strong { color: var(--ink); }
       <p>Browse real, currently-reviewed installers near New Rochelle on our installer directory, or run our free assessment for a shortlist matched to your project.</p>
     </div>
 
+        <div class="faq-item">
+      <h3>What's the difference between a Level 1 and Level 2 home charger?</h3>
+      <p>Level 1 uses the regular 120V outlet already in most garages and adds roughly 3 to 5 miles of range per hour, which covers a short daily commute without any electrical work. Level 2 needs a dedicated 240V circuit (16 to 60A) and adds roughly 20 to 40 miles per hour, which is what most people who drive every day end up wanting. Car and Driver's charging-levels explainer and BC Hydro's home charger walkthrough both cover the tradeoff in more depth if you want the full picture before you buy.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Where can I actually buy a home EV charger?</h3>
+      <p>Homeowners in New Rochelle generally buy through one of five channels: straight from the manufacturer or an electrical distributor, through the electrician doing the install, from a general online retailer, in person at a home-improvement or auto-parts store, or bundled free with a new EV from a dealership. See "Where to buy" below for what to watch for with each one.</p>
+    </div>
+
     <h2>Other Con Edison Cities</h2>
     <p style="font-size:14px;">
       <a href="/us/ny/con-edison/new-york-city/ev-charger/" style="margin-right:14px; display:inline-block;">New York City</a>
@@ -373,7 +412,7 @@ strong { color: var(--ink); }
       <a href="/us/ny/con-edison/white-plains/ev-charger/" style="margin-right:14px; display:inline-block;">White Plains</a>
     </p>
     <h2>Your utility: Con Edison</h2>
-    <p>Con Edison is the local electric utility for New Rochelle. The EV charger rebate above is a state-wide program, so which utility bills you doesn't change what you qualify for — but Con Edison is who to ask about time-of-use or EV-specific electricity rates, since charging overnight on the right rate plan can meaningfully change your running cost. Some utilities also run their own home-charger incentive on top of the state one — worth a quick call to Con Edison to check.</p>
+    <p>Con Edison is the local electric utility for New Rochelle. The EV charger rebate above is a state-wide program, so which utility bills you doesn't change what you qualify for, but Con Edison is who to ask about time-of-use or EV-specific electricity rates, since charging overnight on the right rate plan can meaningfully change your running cost. Some utilities also run their own home-charger incentive on top of the state one, worth a quick call to Con Edison to check.</p>
 
 
     <h2>Next steps</h2>

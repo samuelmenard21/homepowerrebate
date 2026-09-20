@@ -245,6 +245,7 @@ async function handleFetch(request, env, ctx) {
     if (path === '/newsletter') return handleNewsletter(request, env);
     if (path === '/estimate-lead') return handleEstimateLead(request, env);
     if (path === '/outcomes/submit') return handleOutcomeSubmit(request, env);
+    if (path === '/contact') return handleContactSubmit(request, env);
 
     return jsonResponse({ error: `Unknown route: ${path}` }, 404);
 }
@@ -477,6 +478,82 @@ async function handleWaitlistSubmit(request, env) {
     success: true,
     waitlist_id: waitlistId
   }, 200);
+}
+
+// ===========================================================================
+// ROUTE — /contact (site-wide "Send us a message" form, no public inbox)
+// ===========================================================================
+// Replaces a plain mailto: link (which Cloudflare's Email Address
+// Obfuscation was rewriting into a non-crawlable /cdn-cgi/l/email-protection
+// href, and which had no real monitored inbox behind it). Sends straight to
+// OPS_EMAIL via Resend; no email address is ever printed on the page.
+async function handleContactSubmit(request, env) {
+  let payload;
+  try {
+    payload = await request.json();
+  } catch (e) {
+    return jsonResponse({ error: 'Invalid JSON' }, 400);
+  }
+
+  // Honeypot
+  if (payload.website) {
+    return jsonResponse({ success: true }, 200);
+  }
+
+  if (!payload.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+    return jsonResponse({ error: 'Invalid email' }, 400);
+  }
+  const message = cleanString(payload.message || '');
+  if (message.length < 5) {
+    return jsonResponse({ error: 'Please enter a message' }, 400);
+  }
+
+  const contact = {
+    record_type: 'contact',
+    timestamp: new Date().toISOString(),
+    name: cleanString(payload.name || ''),
+    email: cleanString(payload.email),
+    message,
+    page_url: cleanString(payload.page_url || ''),
+    status: 'new'
+  };
+
+  const results = await Promise.allSettled([
+    sendOpsContactAlert(contact, env),
+    logToSheet(contact, env)
+  ]);
+  const failures = results
+    .map((r, i) => ({ r, name: ['ops', 'sheet'][i] }))
+    .filter(x => x.r.status === 'rejected');
+  if (failures.length) {
+    console.error('Contact form routing partial failure:', failures.map(f => `${f.name}: ${f.r.reason}`));
+  }
+  if (results[0].status === 'rejected') {
+    // The ops alert is the whole point of this route — if it failed, the
+    // sender needs to know their message didn't actually get through.
+    return jsonResponse({ error: 'Could not send your message. Please try again shortly.' }, 502);
+  }
+
+  return jsonResponse({ success: true }, 200);
+}
+
+async function sendOpsContactAlert(contact, env) {
+  if (!env.OPS_EMAIL) return Promise.resolve();
+  return resendEmail(env.RESEND_API_KEY, {
+    from: 'HomePowerRebate <ops@homepowerrebate.com>',
+    to: env.OPS_EMAIL,
+    reply_to: contact.email,
+    subject: `[Contact] Message from ${escapeHtml(contact.name || contact.email)}`,
+    html: `
+      <p>New message from the /contact/ page.</p>
+      <ul>
+        <li><strong>Name:</strong> ${escapeHtml(contact.name || '(not provided)')}</li>
+        <li><strong>Email:</strong> ${escapeHtml(contact.email)}</li>
+        <li><strong>Page:</strong> ${escapeHtml(contact.page_url || '(unknown)')}</li>
+      </ul>
+      <p><strong>Message:</strong></p>
+      <p>${escapeHtml(contact.message).replace(/\n/g, '<br>')}</p>`
+  });
 }
 
 // ===========================================================================

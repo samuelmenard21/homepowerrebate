@@ -114,6 +114,22 @@
     "@type": "Answer",
     "text": "Browse real, currently-reviewed installers near Saugerties on our installer directory, or run our free assessment for a shortlist matched to your project."
    }
+  },
+  {
+   "@type": "Question",
+   "name": "What's the difference between a Level 1 and Level 2 home charger?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Level 1 uses the regular 120V outlet already in most garages and adds roughly 3 to 5 miles of range per hour, which covers a short daily commute without any electrical work. Level 2 needs a dedicated 240V circuit (16 to 60A) and adds roughly 20 to 40 miles per hour, which is what most people who drive every day end up wanting. Car and Driver's charging-levels explainer and BC Hydro's home charger walkthrough both cover the tradeoff in more depth if you want the full picture before you buy."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Where can I actually buy a home EV charger?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Homeowners in Saugerties generally buy through one of five channels: straight from the manufacturer or an electrical distributor, through the electrician doing the install, from a general online retailer, in person at a home-improvement or auto-parts store, or bundled free with a new EV from a dealership. See \"Where to buy\" below for what to watch for with each one."
+   }
   }
  ]
 }
@@ -286,7 +302,7 @@ strong { color: var(--ink); }
 
 <!-- On a city/province page, call showProvinceCities('ny') once on load
      so the dropdown opens to the right tab, and add a highlighted/active style to the
-     current city's <a> for saugerties — do not otherwise change the link list. -->
+     current city's <a> for saugerties, do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ny/">New York</a></li><li><a href="/us/ny/central-hudson/saugerties/">Saugerties</a></li><li aria-current="page">EV Charger</li></ol></nav>
@@ -318,13 +334,27 @@ strong { color: var(--ink); }
   <div class="wrap">
 
     <h2>How much you get</h2>
-    <p>Central Hudson's residential EV programs — EV ChargeSmart and the EV Time-of-Use Rate — are both <strong>usage-based incentives, not charger-purchase rebates</strong>. EV ChargeSmart pays a $25 incentive after three months of enrollment, plus a small quarterly off-peak usage credit (around $0.04/kWh as of February 2026).</p>
-    <p>There is no separate hardware rebate for the charger itself. This is a genuine finding, not a research gap — if you're comparing territories, Central Hudson and Con Edison both skip the hardware rebate in favor of usage credits, while PSEG Long Island pays cash toward the charger itself.</p>
+    <p>Central Hudson's residential EV programs, EV ChargeSmart and the EV Time-of-Use Rate, are both <strong>usage-based incentives, not charger-purchase rebates</strong>. EV ChargeSmart pays a $25 incentive after three months of enrollment, plus a small quarterly off-peak usage credit (around $0.04/kWh as of February 2026).</p>
+    <p>There is no separate hardware rebate for the charger itself. This is a genuine finding, not a research gap, if you're comparing territories, Central Hudson and Con Edison both skip the hardware rebate in favor of usage credits, while PSEG Long Island pays cash toward the charger itself.</p>
     
     <p class="source-note">Sources: <a href="https://www.cenhud.com/en/my-energy/electric-vehicles/residential-charging-incentives/" target="_blank" rel="noopener">Central Hudson Residential Charging Incentives</a>, <a href="https://www.cenhud.com/en/my-energy/electric-vehicles/residential-charging-incentives/ev-chargesmart-program/" target="_blank" rel="noopener">Central Hudson EV ChargeSmart Program</a></p>
     <p style="font-size:12px; color:var(--sage);">Administered by: Central Hudson EV ChargeSmart / EV Time-of-Use Rate</p>
 
     <h3>Saugerties-specific note</h3><p>No Saugerties-specific program was found in this research pass. Saugerties likely relies on Ulster County's UCCAC (the same provider as Kingston) for weatherization delivery, though this wasn't independently confirmed by name for Saugerties.</p>
+
+    
+    <h2>A Saugerties homeowner's guide to buying a home charger</h2>
+    <p>Saugerties is smaller and more rural than the other Central Hudson cities covered here, and a lot of the housing is older farmhouse-style construction where the electrical service was sized decades before anyone was thinking about EVs. Get an electrician to confirm spare panel capacity before buying a 40-60A Level 2 charger. If it's tight, chargers with load-management hardware, Emporia Pro and select ChargePoint models, can share existing capacity instead of a full $1,500-$4,000 upgrade.</p>
+<p>Level 1 (the 120V outlet already there) adds roughly 3-5 miles of range per hour, workable for a low-mileage or seasonal vehicle. Level 2 (240V, 16-60A) adds 20-40 miles an hour and is the better fit for a daily commute into Kingston or down the Thruway. Car and Driver's charging-levels piece and BC Hydro's home charger page both cover the decision in more depth than this summary can.</p>
+<p>Connector type: most 2025+ non-Tesla EVs now ship with the NACS plug Tesla opened in 2023, with J1772 adapters covering older vehicles. Tesla's own Wall Connector supports both plugs; most third-party chargers, ChargePoint and Grizzl-E included, still ship J1772-only.</p>
+
+    <h3>Compare a few real options</h3>
+    <div class="ev-cards">
+    <div class="ev-card" style="background:#fff;border:1px solid var(--rule);border-radius:12px;padding:16px 18px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;"><strong style="color:var(--ink);font-size:15px;">Emporia Classic</strong><span style="color:var(--amber);font-weight:700;">~$399</span></div><ul style="margin:8px 0 10px 18px;"><li>Cheapest of the group and built-in load management for tight panels</li><li>Real tradeoff: owner reports point to a higher early-failure rate than ChargePoint or Tesla, so factor in the extended warranty</li></ul><a href="https://www.emporiaenergy.com/electric-vehicle-chargers/" target="_blank" rel="noopener sponsored" style="font-size:13px;">See current price &rarr;</a></div><div class="ev-card" style="background:#fff;border:1px solid var(--rule);border-radius:12px;padding:16px 18px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;"><strong style="color:var(--ink);font-size:15px;">Grizzl-E Classic</strong><span style="color:var(--amber);font-weight:700;">~$429</span></div><ul style="margin:8px 0 10px 18px;"><li>Rugged, outdoor-rated housing and no companion app to fuss with</li><li>Good fit for anyone who wants a charger that just works over one with smart scheduling</li></ul><a href="https://www.grizzl-e.com/" target="_blank" rel="noopener sponsored" style="font-size:13px;">See current price &rarr;</a></div><div class="ev-card" style="background:#fff;border:1px solid var(--rule);border-radius:12px;padding:16px 18px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;"><strong style="color:var(--ink);font-size:15px;">ChargePoint Home Flex</strong><span style="color:var(--amber);font-weight:700;">~$549</span></div><ul style="margin:8px 0 10px 18px;"><li>Best all-around app and reliability record in current owner reviews</li><li>Adjustable amperage (16-50A) so one unit fits most panels</li></ul><a href="https://www.chargepoint.com/products/home/flex/" target="_blank" rel="noopener sponsored" style="font-size:13px;">See current price &rarr;</a></div>
+    </div>
+
+    <h3>Where to buy a home EV charger</h3>
+    <p>Given how rural parts of Saugerties are, an electrical contractor who already knows the local housing stock is usually the most practical source for both the panel work and the charger itself. If buying online instead, stick to the manufacturer's own store or a real electrical distributor rather than a general marketplace listing, and confirm new stock over used or refurbished. The nearest big-box retailers with EV charger stock are a drive away and carry a limited selection, so call first before making the trip. A few regional EV dealerships now bundle a free Level 1 charger with an EV purchase.</p>
 
     <h2>EV Charger installers in Saugerties</h2>
     <p>Real companies serving Saugerties, pulled from their current Google reviews. We're not paid to list anyone here.</p>
@@ -350,7 +380,7 @@ strong { color: var(--ink); }
     <h2>Common questions</h2>
     <div class="faq-item">
       <h3>How much is the EV Charger rebate in Saugerties?</h3>
-      <p>Central Hudson's residential EV programs — EV ChargeSmart and the EV Time-of-Use Rate — are both usage-based incentives, not charger-purchase rebates. EV ChargeSmart pays a $25 incentive after three months of enrollment, plus a small quarterly off-peak usage credit (around $0.04/kWh as of February 2026).</p>
+      <p>Central Hudson's residential EV programs, EV ChargeSmart and the EV Time-of-Use Rate, are both usage-based incentives, not charger-purchase rebates. EV ChargeSmart pays a $25 incentive after three months of enrollment, plus a small quarterly off-peak usage credit (around $0.04/kWh as of February 2026).</p>
     </div>
     <div class="faq-item">
       <h3>Is there a Saugerties-specific top-up beyond the territory program?</h3>
@@ -361,6 +391,15 @@ strong { color: var(--ink); }
       <p>Browse real, currently-reviewed installers near Saugerties on our installer directory, or run our free assessment for a shortlist matched to your project.</p>
     </div>
 
+        <div class="faq-item">
+      <h3>What's the difference between a Level 1 and Level 2 home charger?</h3>
+      <p>Level 1 uses the regular 120V outlet already in most garages and adds roughly 3 to 5 miles of range per hour, which covers a short daily commute without any electrical work. Level 2 needs a dedicated 240V circuit (16 to 60A) and adds roughly 20 to 40 miles per hour, which is what most people who drive every day end up wanting. Car and Driver's charging-levels explainer and BC Hydro's home charger walkthrough both cover the tradeoff in more depth if you want the full picture before you buy.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Where can I actually buy a home EV charger?</h3>
+      <p>Homeowners in Saugerties generally buy through one of five channels: straight from the manufacturer or an electrical distributor, through the electrician doing the install, from a general online retailer, in person at a home-improvement or auto-parts store, or bundled free with a new EV from a dealership. See "Where to buy" below for what to watch for with each one.</p>
+    </div>
+
     <h2>Other Central Hudson Cities</h2>
     <p style="font-size:14px;">
       <a href="/us/ny/central-hudson/poughkeepsie/ev-charger/" style="margin-right:14px; display:inline-block;">Poughkeepsie</a>
@@ -369,7 +408,7 @@ strong { color: var(--ink); }
       <a href="/us/ny/central-hudson/beacon/ev-charger/" style="margin-right:14px; display:inline-block;">Beacon</a>
     </p>
     <h2>Your utility: Central Hudson</h2>
-    <p>Central Hudson is the local electric utility for Saugerties. The EV charger rebate above is a state-wide program, so which utility bills you doesn't change what you qualify for — but Central Hudson is who to ask about time-of-use or EV-specific electricity rates, since charging overnight on the right rate plan can meaningfully change your running cost. Some utilities also run their own home-charger incentive on top of the state one — worth a quick call to Central Hudson to check.</p>
+    <p>Central Hudson is the local electric utility for Saugerties. The EV charger rebate above is a state-wide program, so which utility bills you doesn't change what you qualify for, but Central Hudson is who to ask about time-of-use or EV-specific electricity rates, since charging overnight on the right rate plan can meaningfully change your running cost. Some utilities also run their own home-charger incentive on top of the state one, worth a quick call to Central Hudson to check.</p>
 
 
     <h2>Next steps</h2>

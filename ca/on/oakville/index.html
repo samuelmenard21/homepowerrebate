@@ -44,12 +44,12 @@
   {
    "@type": "Question",
    "name": "Does Oakville have its own home energy loan program?",
-   "acceptedAnswer": { "@type": "Answer", "text": "Oakville doesn't have a Toronto-style City loan, but Oakville Hydro runs its own Retrofit Program covering up to 50% of eligible project costs, subject to application and pre-approval. Income-eligible households can also access free upgrades through the Energy Affordability Program." }
+   "acceptedAnswer": { "@type": "Answer", "text": "The Region of Waterloo's RetrofitWR program offers free energy coaching to Oakville residents. However, the low-interest loan itself was confirmed by official sources for Enova Power customers (Cambridge/North Dumfries), not Oakville's utility (Enova Power) — we could not confirm whether the loan extends to Oakville. Contact RetrofitWR directly to check." }
   },
   {
    "@type": "Question",
    "name": "Who is my utility in Oakville?",
-   "acceptedAnswer": { "@type": "Answer", "text": "Most Oakville homes are on Oakville Hydro for electricity and Enbridge Gas for natural gas." }
+   "acceptedAnswer": { "@type": "Answer", "text": "Most Oakville homes are on Enova Power for electricity and Enbridge Gas for natural gas." }
   }
  ]
 }
@@ -164,14 +164,12 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   h1 { font-size: 28px; }
 }
 
-/* ===== Canonical sitewide nav/footer CSS (from _partials/nav-footer.html) ===== */
-.nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
 .nav-inner { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
 .logo { font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
 .logo-mark { width: 30px; height: 30px; background: var(--amber); border-radius: 50%; position: relative; box-shadow: 0 2px 8px rgba(212, 117, 28, 0.3); }
 .logo-mark::after { content: ''; position: absolute; inset: 8px; background: var(--paper); border-radius: 50%; }
 .logo-power { color: var(--amber); font-weight: 700; }
-.nav-pick { display: flex; align-items: center; gap: 8px; background: var(--teal-deep); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; transition: all 0.2s; border: none; cursor: pointer; }
+.nav-pick { display: flex; align-items: center; gap: 8px; background: var(--teal-deep); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; transition: all 0.2s; }
 .nav-pick:hover { background: var(--amber); transform: translateY(-1px); }
 .nav-desktop-only { display: flex !important; }
 .nav-mobile-only { display: none !important; }
@@ -209,7 +207,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 .footer-bottom { padding-top: 24px; font-size: 12px; color: rgba(250, 247, 242, 0.35); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
-#city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
+.city-current { font-weight: 700 !important; color: var(--amber) !important; }
 
 .program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
 .status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
@@ -285,7 +283,6 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 </head>
 <body>
 
-<!-- ============================== NAV (canonical, from _partials/nav-footer.html) ============================== -->
 <!-- CANONICAL-NAV-START -->
 <nav class="nav">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
@@ -335,7 +332,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     </div>
     <div style="padding:0 16px 16px;">
     <div id="province-cities-on" style="display:grid; gap:8px;">
-      <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
+      <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
     </div>
     <div id="province-cities-bc" style="display:none; gap:8px;">
       <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
@@ -375,12 +372,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/on/">Ontario</a></li><li aria-current="page">Oakville</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
-<script>
-
-
-document.addEventListener('DOMContentLoaded', function () { showProvinceCities('on'); });
-</script>
-<!-- ============================ /NAV ============================== -->
+<script>document.addEventListener('DOMContentLoaded', function() { if (typeof showProvinceCities === 'function') showProvinceCities('on'); });</script>
 
 <section class="hero">
   <div class="wrap">
@@ -395,7 +387,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     </div>
   </div>
 </section>
-<div class="wrap" style="text-align:center; padding:14px 28px 0;"><a href="/powerscore/#city-ca-on-oakville" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:8px 18px; font-size:13px; font-weight:600; color:var(--teal-deep); text-decoration:none; box-shadow:0 1px 3px rgba(10,42,46,0.08);"><span aria-hidden="true">⚡</span><span>PowerScore: 81/100 &mdash; #11 of 18 in Ontario</span></a></div>
+<div class="wrap" style="text-align:center; padding:14px 28px 0;"><a href="/powerscore/#city-ca-on-oakville" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:8px 18px; font-size:13px; font-weight:600; color:var(--teal-deep); text-decoration:none; box-shadow:0 1px 3px rgba(10,42,46,0.08);"><span aria-hidden="true">⚡</span><span>PowerScore: 81/100 &mdash; #7 of 18 in Ontario</span></a></div>
 <div class="wrap energy-cost-pill" style="text-align:center; padding:10px 28px 0;"><a href="/powerscore/#city-ca-on-oakville" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:8px 18px; font-size:13px; font-weight:600; color:var(--teal-deep); text-decoration:none; box-shadow:0 1px 3px rgba(10,42,46,0.08);"><span aria-hidden="true">&#128268;</span><span>Estimated Annual Energy Cost: $2,750</span></a></div>
 <div class="wrap" style="text-align:center; padding:10px 28px 0;"><a href="/stacking-calculator/ca/on/oakville/" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:8px 18px; font-size:13px; font-weight:600; color:var(--teal-deep); text-decoration:none; box-shadow:0 1px 3px rgba(10,42,46,0.08);"><span aria-hidden="true">&#128172;</span><span>Rebate Stacking Calculator for Oakville &rarr;</span></a></div>
 
@@ -426,6 +418,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   <a href="#rebates">No-assessment rebates</a>
   <a href="#assessment">Assessment-required rebates</a>
   <a href="#local">Local programs</a>
+  <a href="#renters">Renters &amp; condos</a>
   <a href="#faq">FAQ</a>
 </nav>
 
@@ -433,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   <div class="wrap">
     <h2 id="rebates">What Oakville homeowners can claim &mdash; no assessment needed</h2>
     <p class="snippet-answer"><strong>In 2026, a Oakville homeowner can claim up to $12,000 for a heat pump, $10,000 for solar + battery combined, up to $1,250 for attic insulation, $100 for a smart thermostat, and up to $200 per appliance &mdash; on top of a separate assessment-required insulation/windows tier.</strong></p>
-    <p class="lead">Oakville runs on Oakville Hydro electricity and Enbridge Gas. The province's Home Renovation Savings Program (HRSP) is identical here to the rest of Ontario &mdash; the same categories and tiers as Toronto and Ottawa.</p>
+    <p class="lead">Oakville runs on Enova Power electricity and Enbridge Gas. The province's Home Renovation Savings Program (HRSP) is identical here to the rest of Ontario &mdash; the same categories and tiers as Toronto and Ottawa.</p>
 
     <div class="rebate-grid">
       <div class="rebate-card">
@@ -446,7 +439,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <span class="program-status status-open">Open</span>
         <h4>&#9728;&#65039; Solar Panels</h4>
         <div class="amount">up to $5,000</div>
-        <p>$1,000/kW, capped at 50% of total cost. Choose this rebate <strong>or</strong> net metering with Oakville Hydro &mdash; not both.</p>
+        <p>$1,000/kW, capped at 50% of total cost. Choose this rebate <strong>or</strong> net metering with Enova Power &mdash; not both.</p>
       </div>
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
@@ -542,15 +535,10 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <section class="section">
   <div class="wrap">
     <div class="eyebrow">Local programs</div>
-    <h2 id="local">Oakville Hydro Retrofit Program (utility-run, not a City loan)</h2>
-<div class="program">
-      <span class="tag tag-util">Oakville Hydro</span>
-      <div class="program-head">
-        <h4>Oakville Hydro Retrofit Program</h4>
-        <span class="program-amount">up to 50% of eligible costs</span>
-      </div>
-      <p>Not a City of Oakville loan like Toronto's HELP &mdash; this is run directly by the utility, covering up to 50% of eligible project costs for targeted energy-efficiency retrofits. Requires an application and pre-approval before work starts.</p>
-      <div class="how"><strong>Also available:</strong> a $600 rebate after completing a registered energy advisor assessment (this may overlap with the standard provincial HRSP assessment refund &mdash; confirm with Oakville Hydro whether these stack or are the same rebate). Income-eligible households can access the free Energy Affordability Program for no-cost insulation, LED lighting, and smart thermostats. <a href="https://www.oakvillehydro.com/saveonenergy/homeowners" target="_blank" rel="noopener">Oakville Hydro Save on Energy &rarr;</a></div>
+    <h2 id="local">RetrofitWR (coaching confirmed; loan terms unclear for Enova customers)</h2>
+<div class="highlight-box">
+      <h4>Important nuance: RetrofitWR's loan is confirmed for Enova Power customers, not necessarily Enova</h4>
+      <p>The Region of Waterloo's <strong>RetrofitWR</strong> program offers a free Energy Coach to residents across the whole region, including Oakville. However, the low-interest loan itself (up to $40,000 at 2.5% fixed, repaid via your utility bill) was confirmed by official sources specifically for <strong>Enova Power</strong> customers in Cambridge and North Dumfries &mdash; Oakville's electricity utility is Enova Power, a different company. We could not confirm whether the loan financing extends to Enova customers or only the free coaching does. Contact RetrofitWR directly to confirm what's actually available to Oakville homeowners before planning around loan financing.</p>
     </div>
   </div>
 </section>
@@ -563,7 +551,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0;">
       <div class="local-context">
         <h4>Your utilities</h4>
-        <p><strong>Oakville Hydro</strong> (electricity) + <strong>Enbridge Gas</strong> (natural gas)</p>
+        <p><strong>Enova Power</strong> (electricity) + <strong>Enbridge Gas</strong> (natural gas)</p>
       </div>
       <div class="local-context">
         <h4>Typical heating</h4>
@@ -580,23 +568,23 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <section class="section" style="background: var(--paper-warm);">
   <div class="wrap">
-    <div class="eyebrow">A big share of Oakville homes</div>
+    <div class="eyebrow">Not every Oakville homeowner owns a detached house</div>
     <h2 id="renters">Renting or living in a condo? Here's what actually applies to you</h2>
-    <p>Most of the rebate figures on this page assume you own the home outright and control the whole building. That's not everyone in Oakville. Here's what changes if you rent or live in a condo:</p>
+    <p>Everything above assumes you own your home outright and control the whole building. Here's what changes if you rent or live in a condo in Oakville:</p>
 
-    <div class="note-box">
+    <div class="highlight-box">
       <h4>If you rent</h4>
-      <p>The HRSP rebates above go to whoever pays for and owns the upgrade &mdash; typically your landlord, not you. If you want a heat pump, insulation, or solar added to the property, the ask has to go to your landlord; point them to this page and the official <a href="https://www.homerenovationsavings.ca" target="_blank" rel="noopener">homerenovationsavings.ca</a> program page so they can apply directly.</p>
+      <p>The structural rebates above &mdash; heat pump, insulation, windows, solar, battery &mdash; attach to the property, so they go to whoever owns it, not to you. If you want one of these upgrades, the ask has to go to your landlord; point them to this page and the official <a href="https://www.homerenovationsavings.ca" target="_blank" rel="noopener">homerenovationsavings.ca</a> program details. Some smaller rebates, like the smart thermostat rebate, may not require proof of ownership at purchase &mdash; but confirm eligibility for your specific situation with the program directly before assuming.</p>
     </div>
 
-    <div class="note-box">
+    <div class="highlight-box">
       <h4>If you own a condo unit</h4>
-      <p>In-unit upgrades you control yourself &mdash; a heat pump water heater, a smart thermostat, in-suite windows &mdash; may still qualify for the HRSP rebates above, but anything touching shared systems or the building's exterior typically needs your condo board's written approval first. Get that approval before applying, since the rebate paperwork can ask for proof the work was authorized.</p>
+      <p>In-unit upgrades you control yourself &mdash; a heat pump water heater, in-suite windows &mdash; may qualify for the rebates above, but usually need your condo board's written approval first, especially for anything touching shared systems or exterior walls. Get that approval documented before applying; the HRSP program requires proof the work was authorized.</p>
     </div>
 
-    <div class="note-box">
+    <div class="highlight-box">
       <h4>If it's a whole-building retrofit</h4>
-      <p>Heat pumps, insulation, or solar for an entire building are a group decision that goes through the condo board rather than an individual owner. Oakville Hydro's Retrofit Program is utility-run rather than city-run, and this page doesn't establish a condo-board-specific application path for it — check with Oakville Hydro directly on whether it extends to multi-unit buildings. The safest first step for a board is the official HRSP program finder above, or contacting the program directly to ask what a multi-unit building qualifies for before assuming the single-family numbers on this page apply.</p>
+      <p>A heat pump, insulation, or solar project for the whole building is a group decision that goes through your condo board or property manager, not individual owners, and the per-unit rebate math is likely different from the single-family figures on this page. This page doesn't have confirmed multi-unit numbers for Oakville &mdash; your board should contact the HRSP program directly at <a href="https://www.homerenovationsavings.ca" target="_blank" rel="noopener">homerenovationsavings.ca</a> to confirm what applies to a multi-unit building.</p>
     </div>
   </div>
 </section>
@@ -712,10 +700,10 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <p>It depends on the heat pump type and your current fuel. Enbridge Gas customers switching from gas get up to $2,000 for an air-source unit or $3,000 for ground-source. Households switching from electricity, oil, propane, or wood get up to $7,500 for air-source or up to $12,000 for ground-source. This is the same provincial HRSP structure as the rest of Ontario.</p>
 
     <h3>Does Oakville have its own home energy loan program?</h3>
-    <p>Oakville doesn't have a Toronto-style City loan, but Oakville Hydro runs its own Retrofit Program covering up to 50% of eligible project costs, subject to application and pre-approval. Income-eligible households can also access free upgrades through the Energy Affordability Program.</p>
+    <p>The Region of Waterloo's RetrofitWR program offers free energy coaching to Oakville residents. However, the low-interest loan itself was confirmed by official sources for Enova Power customers (Cambridge/North Dumfries), not Oakville's utility (Enova Power) — we could not confirm whether the loan extends to Oakville. Contact RetrofitWR directly to check.</p>
 
     <h3>Who is my utility in Oakville?</h3>
-    <p>Most Oakville homes are on Oakville Hydro for electricity and Enbridge Gas for natural gas.</p>
+    <p>Most Oakville homes are on Enova Power for electricity and Enbridge Gas for natural gas.</p>
   </div>
 </section>
 
@@ -970,7 +958,6 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 </script>
 
 
-<!-- ============================== FOOTER (canonical, from _partials/nav-footer.html) ============================== -->
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Oakville where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
@@ -986,6 +973,38 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
       <p style="font-size: 11px; color: rgba(250, 247, 242, 0.6); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
     </form>
     <div id="newsletter-response" style="display: none; margin-top: 12px; padding: 12px; background: rgba(45, 106, 79, 0.2); border-radius: 6px; border: 1px solid rgba(45, 106, 79, 0.4); font-size: 13px;"></div>
+  </div>
+</section>
+
+<section style="padding:0 28px; margin-bottom: 40px;">
+  <div class="wrap" style="max-width:1000px; margin:0 auto;">
+    <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Learn more about Ontario rebates</h2>
+    <p style="font-size: 15px; color: #666; margin-bottom: 32px;">Guides and deep-dives to help you make the right choice.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+      <a href="/blog/heat-pump-or-solar-ontario/" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
+        <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #d4751c; margin-bottom: 6px;">Guide • Decision</p>
+        <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">Heat Pump or Solar First? (Ontario Edition)</h3>
+        <p style="font-size: 13px; color: #666; margin: 0;">The optimal order to stack Ontario rebates and maximize your savings.</p>
+      </a>
+      <a href="/blog/ontario-heat-pump-rebate-tiers-explained/" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
+        <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #d4751c; margin-bottom: 6px;">Guide • Heat Pumps</p>
+        <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">Ontario Heat Pump Rebates & Income Tiers Explained</h3>
+        <p style="font-size: 13px; color: #666; margin: 0;">Income-based rebates, income verification, and eligibility for heating upgrades.</p>
+      </a>
+      <a href="/blog/ontario-solar-rebate-vs-net-metering/" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
+        <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #d4751c; margin-bottom: 6px;">Guide • Solar</p>
+        <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">Ontario Solar: Net Metering vs. Battery Storage</h3>
+        <p style="font-size: 13px; color: #666; margin: 0;">When you don't need a battery in Ontario, and when you do.</p>
+      </a>
+      <a href="/blog/rebate-rejected-ontario/" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
+        <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #d4751c; margin-bottom: 6px;">Guide • Troubleshooting</p>
+        <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">Why Your Ontario Rebate Got Rejected: Fixes & Prevention</h3>
+        <p style="font-size: 13px; color: #666; margin: 0;">Common mistakes and how to avoid them.</p>
+      </a>
+    </div>
+    <p style="text-align: center; margin-top: 32px;">
+      <a href="/blog/" style="color: #d4751c; text-decoration: none; font-weight: 600; font-size: 14px;">View all guides and articles →</a>
+    </p>
   </div>
 </section>
 
@@ -1053,8 +1072,39 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 
 <script>
 
+
+var __nlform = document.getElementById('newsletter-form');
+if (__nlform) {
+  __nlform.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = document.getElementById('newsletter-email').value;
+    var city = document.getElementById('newsletter-city').value;
+    var page = document.getElementById('newsletter-page').value;
+    var responseEl = document.getElementById('newsletter-response');
+    var button = document.querySelector('#newsletter-form button');
+    var originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Subscribing...';
+    fetch('https://leads.homepowerrebate.com/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, city: city, page: page, province: (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1] ? (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1].toUpperCase() : 'BC' })
+    }).then(function(response) {
+      if (!response.ok) throw new Error('Subscription failed');
+      responseEl.textContent = "You're in! Check your inbox for a welcome email.";
+      responseEl.style.display = 'block';
+      __nlform.style.display = 'none';
+    }).catch(function(error) {
+      responseEl.textContent = 'Something went wrong — please try again or email us directly.';
+      responseEl.style.display = 'block';
+      responseEl.style.background = 'rgba(163, 64, 47, 0.2)';
+      responseEl.style.borderColor = 'rgba(163, 64, 47, 0.4)';
+      button.disabled = false;
+      button.textContent = originalText;
+    });
+  });
+}
 </script>
-<!-- =========================== /FOOTER ============================= -->
 
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */

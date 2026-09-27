@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """
-Generate all Ontario city pages from a template.
-Each city gets a custom page with region-specific blog posts for internal linking.
+Inject the "Learn more about Ontario rebates" internal-link section into EXISTING
+Ontario city hub pages (ca/on/<slug>/index.html).
+
+WARNING (2026-09-26): an earlier version of this script copied ca/on/kitchener/index.html
+over every city and find-replaced the city name. That wiped each city's hand-researched
+content (e.g. Better Homes Ottawa) and left Kitchener / Enova Power / RetrofitWR facts on
+every page (doorway pages). It now only replaces/inserts the blog-link section, is
+idempotent, and never creates or re-templates a page.
 """
 
 import os
@@ -62,8 +68,8 @@ BLOG_POSTS_ONTARIO = [
     {
         'url': '/blog/ontario-heat-pump-rebate-tiers-explained/',
         'category': 'Guide • Heat Pumps',
-        'title': 'Ontario Heat Pump Rebates & Income Tiers Explained',
-        'description': 'Income-based rebates, income verification, and eligibility for heating upgrades.'
+        'title': 'Ontario Heat Pump Rebate Tiers Explained',
+        'description': 'Why your rebate depends on your heating fuel and heat pump type.'
     },
     {
         'url': '/blog/ontario-solar-rebate-vs-net-metering/',
@@ -85,64 +91,50 @@ BLOG_POSTS_ONTARIO = [
     }
 ]
 
-def customize_page(template, city):
-    """Replace all placeholders in the template with city-specific values."""
-    html = template
+SECTION_RE = re.compile(
+    r'<section style="padding:0 28px; margin-bottom: 40px;">\s*<div class="wrap"[^>]*>\s*'
+    r'<h2[^>]*>Learn more about Ontario rebates</h2>.*?</section>\n*', re.S)
 
-    # Replace city name and slug (both directions for URLs, titles, etc.)
-    city_title = city['name']
-    city_lower = city['slug']
 
-    # Replace in title, description, URLs
-    html = html.replace('Kitchener', city_title)
-    html = html.replace('kitchener', city_lower)
-    html = html.replace('kitchener', city_lower)
-    html = html.replace('Waterloo Region', city['region'])
-
-    # Inject Ontario-specific blog posts before footer
-    blog_html = '<section style="padding:0 28px; margin-bottom: 40px;">\n'
-    blog_html += '  <div class="wrap" style="max-width:1000px; margin:0 auto;">\n'
-    blog_html += '    <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Learn more about Ontario rebates</h2>\n'
-    blog_html += '    <p style="font-size: 15px; color: #666; margin-bottom: 32px;">Guides and deep-dives to help you make the right choice.</p>\n'
-    blog_html += '    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">\n'
-
+def blog_section():
+    h = '<section style="padding:0 28px; margin-bottom: 40px;">\n'
+    h += '  <div class="wrap" style="max-width:1000px; margin:0 auto;">\n'
+    h += '    <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Learn more about Ontario rebates</h2>\n'
+    h += '    <p style="font-size: 15px; color: #666; margin-bottom: 32px;">Guides and deep-dives to help you make the right choice.</p>\n'
+    h += '    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">\n'
     for post in BLOG_POSTS_ONTARIO:
-        blog_html += f'''      <a href="{post['url']}" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
-        <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #d4751c; margin-bottom: 6px;">{post['category']}</p>
-        <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">{post['title']}</h3>
-        <p style="font-size: 13px; color: #666; margin: 0;">{post['description']}</p>
-      </a>
-'''
+        h += ('      <a href="%s" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">\n'
+              '        <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #d4751c; margin-bottom: 6px;">%s</p>\n'
+              '        <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">%s</h3>\n'
+              '        <p style="font-size: 13px; color: #666; margin: 0;">%s</p>\n'
+              '      </a>\n') % (post['url'], post['category'], post['title'], post['description'])
+    h += '    </div>\n'
+    h += '    <p style="text-align: center; margin-top: 32px;">\n'
+    h += '      <a href="/blog/" style="color: #d4751c; text-decoration: none; font-weight: 600; font-size: 14px;">View all guides and articles →</a>\n'
+    h += '    </p>\n'
+    h += '  </div>\n'
+    h += '</section>\n\n'
+    return h
 
-    blog_html += '    </div>\n'
-    blog_html += '    <p style="text-align: center; margin-top: 32px;">\n'
-    blog_html += '      <a href="/blog/" style="color: #d4751c; text-decoration: none; font-weight: 600; font-size: 14px;">View all guides and articles →</a>\n'
-    blog_html += '    </p>\n'
-    blog_html += '  </div>\n'
-    blog_html += '</section>\n'
 
-    # Insert before footer
-    html = html.replace('<footer class="footer">', blog_html + '\n<footer class="footer">')
+def inject(html):
+    """Remove any existing blog-link section(s) and insert one fresh copy before the footer."""
+    html = SECTION_RE.sub('', html)
+    return html.replace('<footer class="footer">', blog_section() + '<footer class="footer">', 1)
 
-    return html
 
 def main():
-    # Read template
-    template_path = Path('ca/on/kitchener/index.html')
-    template = template_path.read_text(encoding='utf-8')
-
-    # Generate each city
     for city in CITIES:
-        city_dir = Path(f'ca/on/{city["slug"]}')
-        city_dir.mkdir(parents=True, exist_ok=True)
+        path = Path(f'ca/on/{city["slug"]}/index.html')
+        if not path.exists():
+            print(f'- skip {city["slug"]}: page does not exist (this script never creates pages)')
+            continue
+        html = path.read_text(encoding='utf-8')
+        new = inject(html)
+        if new != html:
+            path.write_text(new, encoding='utf-8')
+            print(f'refreshed {city["slug"]}')
 
-        # Customize template
-        html = customize_page(template, city)
-
-        # Write page
-        output_path = city_dir / 'index.html'
-        output_path.write_text(html, encoding='utf-8')
-        print(f'✓ {city["slug"]:20} → ca/on/{city["slug"]}/index.html')
 
 if __name__ == '__main__':
     main()

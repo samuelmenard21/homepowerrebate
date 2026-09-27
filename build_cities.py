@@ -2,6 +2,7 @@
 """
 Generate all BC city pages from the Kelowna template.
 Each city gets a custom page with its own saved form hidden input.
+Also injects region-specific blog posts to improve internal linking.
 """
 
 import os
@@ -152,6 +153,53 @@ CITIES = [
     }
 ]
 
+# Blog posts to inject for regional internal linking (fixes orphaned blog posts)
+BLOG_POSTS_BY_REGION = {
+    'BC': [
+        {
+            'url': '/blog/heat-pump-or-solar-bc/',
+            'category': 'Guide • Decision',
+            'title': 'Heat Pump or Solar First? (BC Edition)',
+            'description': 'The smart order to maximize your BC rebates and your home\'s comfort.'
+        },
+        {
+            'url': '/blog/bc-hydro-schedule-2289-battery-payback/',
+            'category': 'Guide • Battery',
+            'title': 'BC Hydro Schedule 2289: What It Means for Battery Savings',
+            'description': 'How the rate change affects your battery payback and Peak Saver value.'
+        },
+        {
+            'url': '/blog/cleanbc-rebate-changes-july-2026/',
+            'category': 'Update • Programs',
+            'title': 'CleanBC Rebate Changes July 6, 2026',
+            'description': 'What changed, who it affects, and what to do before the cutoff.'
+        },
+        {
+            'url': '/blog/trane-carrier-heat-pumps-bc/',
+            'category': 'Article • Comparison',
+            'title': 'Trane & Carrier Heat Pumps in BC: Why They\'re Rare and Whether to Wait',
+            'description': 'Cold-climate rated options and when they might be worth the premium.'
+        }
+    ]
+}
+
+def get_blog_posts_html(city_region):
+    """Generate HTML for region-specific blog posts."""
+    posts = BLOG_POSTS_BY_REGION.get(city_region, [])
+    if not posts:
+        return ''
+
+    html = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 20px;">\n'
+    for post in posts:
+        html += f'''      <a href="{post['url']}" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
+        <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #d4751c; margin-bottom: 6px;">{post['category']}</p>
+        <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">{post['title']}</h3>
+        <p style="font-size: 13px; color: #666; margin: 0;">{post['description']}</p>
+      </a>
+'''
+    html += '    </div>'
+    return html
+
 def customize_page(template, city):
     """Replace all placeholders in the template with city-specific values."""
     html = template
@@ -177,6 +225,13 @@ def customize_page(template, city):
     # Value and payback (in FAQ schema)
     html = html.replace('$20,000', city['value'])
     html = html.replace('7-11 yr payback', city['payback'])
+
+    # Inject region-specific blog posts (for internal linking)
+    blog_html = get_blog_posts_html('BC')  # All BC cities use BC-specific posts
+    html = html.replace(
+        '    </div>\n\n    <p style="text-align: center; margin-top: 32px;">',
+        '    </div>\n' + blog_html + '\n\n    <p style="text-align: center; margin-top: 32px;">'
+    )
 
     return html
 

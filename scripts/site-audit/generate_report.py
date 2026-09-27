@@ -80,6 +80,19 @@ TEMPLATE = """<!doctype html>
   .cta h3 {{ margin: 0 0 8px; font-size: 16px; }}
   .cta p {{ margin: 0 0 14px; font-size: 13.5px; color: #d7d7d7; line-height: 1.5; }}
 
+  .signature {{
+    margin-top: 22px; padding-top: 18px; border-top: 1px solid #e5e5e5;
+    display: flex; gap: 14px; align-items: flex-start;
+  }}
+  .sig-initials {{
+    flex: 0 0 44px; width: 44px; height: 44px; border-radius: 50%; background: #111; color: #fff;
+    display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px;
+  }}
+  .sig-name {{ font-size: 14px; font-weight: 700; color: #111; }}
+  .sig-title {{ font-size: 12.5px; color: #555; margin-top: 1px; }}
+  .sig-contact {{ font-size: 12.5px; color: #555; margin-top: 4px; }}
+  .sig-contact a {{ color: #111; text-decoration: none; border-bottom: 1px solid #ccc; }}
+
   .footer {{ margin-top: 28px; font-size: 11px; color: #999; text-align: center; }}
 </style>
 </head>
@@ -122,8 +135,17 @@ TEMPLATE = """<!doctype html>
   </ul>
 
   <div class="cta">
-    <h3>Want to see what an A-grade version of this site looks like?</h3>
-    <p>HomePowerRebate sends homeowners looking for rebates to installers we trust — and we build local-search-optimized sites for HVAC and solar companies too, the kind that show up in Google's map pack and get cited when homeowners ask AI assistants "who should I call for a heat pump install near me." Happy to send over an example built for a business like yours, or hop on a quick 15-minute call to walk through this audit.</p>
+    <h3>{cta_headline}</h3>
+    <p>{cta_body}</p>
+  </div>
+
+  <div class="signature">
+    <div class="sig-initials">SM</div>
+    <div>
+      <div class="sig-name">Sam Menard</div>
+      <div class="sig-title">Founder, HomePowerRebate &middot; former Apple &middot; 20+ years in tech</div>
+      <div class="sig-contact">I built HomePowerRebate to make it easier for homeowners to find rebates and connect with installers they can trust &mdash; happy to do the same for your business. <a href="mailto:samuelmenard@gmail.com">samuelmenard@gmail.com</a> &middot; <a href="https://www.linkedin.com/in/sammenard/">LinkedIn</a></div>
+    </div>
   </div>
 
   <div class="footer">Audit prepared by HomePowerRebate &middot; {audited_at} &middot; homepowerrebate.com</div>
@@ -181,6 +203,26 @@ def build_growth_ideas(result):
     return ideas[:6]
 
 
+def build_cta(result):
+    grade = result.get("grade", "F")
+    name = result.get("name", "your business")
+    if grade in ("D", "F"):
+        headline = "Want to see what a rebuilt version of your site could look like?"
+        body = (
+            f"HomePowerRebate sends homeowners looking for rebates to installers we trust — right now {name}'s site is losing some of that traffic to the issues above. "
+            "I build local-search-optimized sites for HVAC and solar companies, the kind that show up in Google's map pack and get cited when homeowners ask AI assistants who to call. "
+            "Happy to put together a free example rebuild of your homepage so you can see the difference before committing to anything, or hop on a quick 15-minute call to walk through this audit."
+        )
+    else:
+        headline = "Your site's ahead of most local competitors — here's how to stay there"
+        body = (
+            "HomePowerRebate sends homeowners looking for rebates to installers we trust, and your site is already in better shape than most in your area. "
+            "The ideas above (AI-search visibility, Google Verified, missed-call recovery) are where the next real gains are, not a rebuild. "
+            "Happy to walk through any of them on a quick 15-minute call, or point you toward installers on HomePowerRebate who could use a referral partner like you."
+        )
+    return headline, body
+
+
 def slugify(name):
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
@@ -211,6 +253,8 @@ def render_report(result):
     growth_ideas = build_growth_ideas(result)
     growth_html = "\n".join(f"<li>{g}</li>" for g in growth_ideas)
 
+    cta_headline, cta_body = build_cta(result)
+
     tech = result.get("technical", {})
     load_time = f"{result['load_time_sec']}s" if result.get("load_time_sec") is not None else "—"
     ssl_status = "Yes" if result.get("has_ssl") else "No"
@@ -230,6 +274,8 @@ def render_report(result):
         breakdown_html=breakdown_html,
         rec_html=rec_html,
         growth_html=growth_html,
+        cta_headline=cta_headline,
+        cta_body=cta_body,
         specialty=result.get("specialty") or "local service",
         audited_at=result.get("audited_at", ""),
     )

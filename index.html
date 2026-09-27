@@ -1093,12 +1093,28 @@ h1, h2, h3, h4, h5, h6 {
             </select>
           </div>
           <div>
-            <label for="hpr-income" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Household income</label>
+            <label for="hpr-size" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">People living in your home</label>
+            <select id="hpr-size" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
+              <option value="">Choose…</option>
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+              <option value="5">5</option><option value="6">6</option><option value="7">7 or more</option>
+            </select>
+          </div>
+          <div>
+            <label for="hpr-income" style="display:block; font-size:13px; font-weight:600; margin-bottom:5px; color:var(--ink-soft);">Combined yearly income of the adults, before tax</label>
             <select id="hpr-income" style="width:100%; padding:12px 14px; border:1.5px solid var(--rule); border-radius:9px; font-family:'Inter Tight',sans-serif; font-size:15px; background:#fff; color:var(--ink);">
               <option value="">Choose a range…</option>
-              <option value="tier1">Under $110,000</option>
-              <option value="tier2">$110,000 – $165,000</option>
-              <option value="tier3">Over $165,000</option>
+              <option value="50000">Under $51,000</option>
+              <option value="63000">$51,000 – $63,999</option>
+              <option value="78000">$64,000 – $78,999</option>
+              <option value="94000">$79,000 – $94,999</option>
+              <option value="118000">$95,000 – $118,999</option>
+              <option value="135000">$119,000 – $135,999</option>
+              <option value="169000">$136,000 – $169,999</option>
+              <option value="190000">$170,000 – $189,999</option>
+              <option value="243000">$190,000 – $242,999</option>
+              <option value="270000">$243,000 – $270,999</option>
+              <option value="999999">$271,000 or more</option>
             </select>
           </div>
         </div>
@@ -1165,9 +1181,9 @@ h1, h2, h3, h4, h5, h6 {
 
     <div id="hpr-result" style="display:none;">
       <div style="background:var(--paper-warm); border-radius:12px; padding:20px; text-align:center; margin-bottom:18px;">
-        <div style="font-size:13px; color:var(--ink-soft); margin-bottom:4px;">You likely qualify for up to</div>
-        <div id="hpr-big" style="font-family:'Fraunces',Georgia,serif; font-size:40px; font-weight:700; color:var(--amber); line-height:1;">$16,000</div>
-        <div style="font-size:13px; color:var(--ink-soft); margin-top:4px;">on a heat pump alone</div>
+        <div id="hpr-big-label" style="font-size:13px; color:var(--ink-soft); margin-bottom:4px;">Your heat pump rebate could be up to</div>
+        <div id="hpr-big" style="font-family:'Fraunces',Georgia,serif; font-size:40px; font-weight:700; color:var(--amber); line-height:1;">$4,000</div>
+        <div id="hpr-big-sub" style="font-size:13px; color:var(--ink-soft); margin-top:4px;">for a whole-home heat pump</div>
         <div id="hpr-stack" style="font-size:14px; color:var(--ink); margin-top:12px; line-height:1.6;"></div>
       </div>
       <!-- Tier 1: email (list-building) -->
@@ -1432,15 +1448,15 @@ h1, h2, h3, h4, h5, h6 {
 <!-- REBATE BREAKDOWN: WHAT YOU CAN GET -->
 <div style="max-width: 1100px; margin: 60px auto 40px; padding: 0 28px;">
   <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">What you can typically get, across every region</h2>
-  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">You don't have to qualify for everything, but you probably qualify for more than you think. Exact numbers depend on your region and household income &mdash; pick your region above for precise figures. Heat pump alone? Most homeowners get $4K&ndash;$16K depending on region. Add solar or insulation? You can stack them.</p>
+  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">You don't have to qualify for everything, but you probably qualify for more than you think. Exact numbers depend on your region and household income &mdash; pick your region above for precise figures. Heat pump alone? Rebates range from about $1,500 to $13,000, and the biggest amounts go to income-qualified households. Add solar or insulation? You can stack them.</p>
 
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; contain: layout;">
 
     <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
       <div style="font-size: 28px; margin-bottom: 8px;">🔥</div>
       <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #111;">Heat Pump</h3>
-      <p style="font-size: 24px; font-weight: 700; color: #d4751c; margin-bottom: 6px;">$4K–$16K</p>
-      <p style="font-size: 13px; color: #666;">Replaces your furnace, includes cooling.</p>
+      <p style="font-size: 24px; font-weight: 700; color: #d4751c; margin-bottom: 6px;">Up to $13K</p>
+      <p style="font-size: 13px; color: #666;">Replaces your furnace or baseboards, adds cooling. Top amounts are income-qualified.</p>
     </div>
 
     <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
@@ -1537,7 +1553,7 @@ h1, h2, h3, h4, h5, h6 {
       <a href="/blog/heat-pump-vs-air-conditioner-furnace/" style="display:block; background:#fff; border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; color:inherit; transition:all .2s;">
         <span style="font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--amber); display:block; margin-bottom:10px;">Cost comparison</span>
         <strong style="display:block; font-family:'Fraunces', Georgia, serif; font-size:19px; margin-bottom:8px; line-height:1.3;">Heat Pump vs AC: Cost, Rebates & Savings</strong>
-        <span style="font-size:14px; color:var(--ink-soft);">Compare upfront costs, annual savings, typical rebates ($4K–$16K depending on region), and true 10-year ROI.</span>
+        <span style="font-size:14px; color:var(--ink-soft);">Compare upfront costs, annual savings, typical rebates (varies by region and income), and true 10-year ROI.</span>
       </a>
       <a href="/blog/heat-pump-vs-air-conditioner-furnace/" style="display:block; background:#fff; border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; color:inherit; transition:all .2s;">
         <span style="font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--amber); display:block; margin-bottom:10px;">Heating decision</span>
@@ -1756,7 +1772,12 @@ document.addEventListener('click', (e) => {
 <!-- INLINE ASSESSMENT WIDGET LOGIC -->
 <script>
 (function () {
-  var HP = { tier1: 16000, tier2: 12000, tier3: 10500 };
+  // CleanBC Energy Savings Program income limits (invoices on/after July 6, 2026), by household size.
+  var CLEANBC_LIMITS = { 1:[51100,63900,102100], 2:[63600,79500,127200], 3:[78200,97700,156300], 4:[94900,118600,189800], 5:[107600,134500,215200], 6:[121400,151700,242700], 7:[135100,168900,270200] };
+  var FOSSIL_MAX = { 1:13000, 2:7000, 3:3500 };
+  var NORTHERN = { 'Prince George':1, 'Fort St. John':1 };
+  var OKANAGAN = { 'Kelowna':1, 'Penticton':1, 'Vernon':1 };
+  var BONUS_END = new Date('2026-10-31T23:59:59-07:00');
   var $ = function (id) { return document.getElementById(id); };
   var city, heating, income, stacked, newsletterOptIn = true;
 
@@ -1840,21 +1861,48 @@ document.addEventListener('click', (e) => {
 
     city = $('hpr-city').value;
     heating = $('hpr-heating').value;
-    income = $('hpr-income').value;
-    if (!city || !heating || !income) { $('hpr-err').style.display = 'block'; return; }
+    var size = $('hpr-size').value;
+    var incomeVal = parseInt($('hpr-income').value, 10);
+    if (!city || !heating || !size || !incomeVal) { $('hpr-err').style.display = 'block'; return; }
     $('hpr-err').style.display = 'none';
 
-    var hp = HP[income];
-    stacked = hp + 5000 + 5500 + 3000 + 2000; // heat pump + solar + insulation + water heater + windows
-    $('hpr-big').textContent = '$' + hp.toLocaleString();
+    var lim = CLEANBC_LIMITS[size];
+    var level = incomeVal <= lim[0] ? 1 : incomeVal <= lim[1] ? 2 : incomeVal <= lim[2] ? 3 : 0;
+    income = level ? 'cleanbc-level' + level : 'above-cleanbc-limits';
+    var bonusOpen = new Date() <= BONUS_END;
+    var fmt = function (n) { return '$' + n.toLocaleString(); };
+    var lines = [];
+    var hp = 0;
 
-    var fuelLine = '';
-    if (heating === 'furnace' || heating === 'oil') {
-      fuelLine = 'Because you heat with ' + (heating === 'oil' ? 'oil/propane' : 'gas') + ', you’re the ideal candidate for the fuel-switching rebate. ';
-    } else if (heating === 'electric') {
-      fuelLine = 'Switching baseboards to a heat pump also adds cooling. ';
+    function electricCase() {
+      var amt = 4000;
+      lines.push('<strong>BC Hydro:</strong> up to $4,000 to replace baseboards or an electric furnace with a whole-home heat pump ($1,500 for a partial system)' + (bonusOpen ? ', plus a bonus of up to $1,000 if the install is finished by October 31, 2026' : '') + '.');
+      if (level === 1) lines.push('<strong>CleanBC income-qualified:</strong> your household may also qualify for up to $5,000 through CleanBC’s Energy Savings Program. Your installer can confirm how the two combine.');
+      return amt + (bonusOpen ? 1000 : 0);
     }
-    $('hpr-stack').innerHTML = '<strong>' + fuelLine + '</strong>Stack solar ($5,000), insulation (up to $5,500), a battery, water heater and EV rebates and your total in <strong>' + city + '</strong> can reach <strong>~$' + stacked.toLocaleString() + '</strong>.';
+    function fossilCase() {
+      if (!level) {
+        lines.push('Right now there’s no provincial heat pump rebate for gas, oil or propane homes above CleanBC’s income limits. Your city may still have one, so check your city page below.');
+        return 0;
+      }
+      var amt = FOSSIL_MAX[level] + ((NORTHERN[city] && level <= 2) ? 3000 : 0);
+      lines.push('<strong>CleanBC income-qualified (Level ' + level + '):</strong> up to ' + fmt(FOSSIL_MAX[level]) + ' to switch from ' + (heating === 'oil' ? 'oil or propane' : heating === 'furnace' ? 'gas' : 'gas, oil or propane') + ' to a central or 3+ zone heat pump' + ((NORTHERN[city] && level <= 2) ? ', plus a $3,000 northern top-up' : '') + '. Smaller systems get less.');
+      return amt;
+    }
+    if (heating === 'electric') hp = electricCase();
+    else if (heating === 'furnace' || heating === 'oil') hp = fossilCase();
+    else {
+      var e = electricCase(); var f = fossilCase(); hp = Math.max(e, f);
+      lines.unshift('Not sure how you heat? Here are both cases:');
+    }
+    if (OKANAGAN[city]) lines.push('In parts of the Okanagan your power comes from FortisBC or the city, not BC Hydro. BC Hydro rebates only apply if BC Hydro sends your bill.');
+    stacked = hp;
+
+    $('hpr-big').textContent = hp ? fmt(hp) : 'Check local offers';
+    $('hpr-big-sub').textContent = hp ? 'on a heat pump, based on your answers' : 'for your heat pump';
+    var slug = city.toLowerCase().replace(/\./g, '').replace(/ /g, '-');
+    lines.push('<a href="/ca/bc/' + slug + '/" style="color:var(--teal-deep);font-weight:600;">See every rebate you can stack in ' + city + ' →</a> (insulation, windows, water heaters, EV chargers, batteries and more).');
+    $('hpr-stack').innerHTML = lines.map(function (l) { return '<p style="margin:0 0 8px;">' + l + '</p>'; }).join('');
 
     $('hpr-step-title').textContent = 'Your ' + city + ' rebate estimate';
     $('hpr-questions').style.display = 'none';

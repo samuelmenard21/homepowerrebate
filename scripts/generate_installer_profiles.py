@@ -271,7 +271,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
 </script>
 
 <meta name="description" content="{escaped_name} in {city_name}, {state} — {rating:.1f}★ ({reviews} reviews). {specialty} installer. See which rebates their work qualifies for and get a quote.">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, follow">
 <link rel="canonical" href="{canonical}">
 <meta property="og:type" content="business.business">
 <meta property="og:title" content="{escaped_name} — {city_name}, {state}">

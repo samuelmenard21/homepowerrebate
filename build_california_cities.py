@@ -20,6 +20,18 @@ REGIONS = [
 # Blog posts for California internal linking
 BLOG_POSTS_CALIFORNIA = [
     {
+        'url': '/guides/which-rebate-first/',
+        'category': 'Guide • Foundations',
+        'title': 'Which Rebate Should I Claim First? Priority Guide 2026',
+        'description': 'The strategic order to claim rebates and maximize your total savings.'
+    },
+    {
+        'url': '/guides/rebate-stacking-explained/',
+        'category': 'Guide • Stacking',
+        'title': 'What Is Rebate Stacking? How to Combine Multiple Rebates',
+        'description': 'Layer federal, state, utility, and local rebates for maximum benefit.'
+    },
+    {
         'url': '/blog/california-rebates-outside-utilities/',
         'category': 'Guide • Program',
         'title': 'California Rebates If You\'re Not on a Major Utility',

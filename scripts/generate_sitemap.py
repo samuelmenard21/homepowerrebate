@@ -31,6 +31,7 @@ import argparse
 import datetime
 import glob
 import os
+import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_URL = "https://homepowerrebate.com"
@@ -124,6 +125,15 @@ def classify(rel_path):
     return "0.4", "monthly"
 
 
+NOINDEX_RE = re.compile(r'<meta\s+name=["\']robots["\'][^>]*content=["\'][^"\']*noindex', re.I)
+
+
+def is_noindex(page_path):
+    # A sitemap listing noindex URLs sends Google contradictory signals.
+    with open(page_path, encoding="utf-8", errors="ignore") as f:
+        return bool(NOINDEX_RE.search(f.read(8192)))
+
+
 def find_pages():
     pages = []
     for root, dirs, files in os.walk(ROOT):
@@ -147,12 +157,16 @@ def main():
     args = ap.parse_args()
 
     pages = find_pages()
+    skipped_noindex = 0
     entries = []
     by_tier = {}
     for page_path in pages:
         rel_url = url_for(page_path)
         # skip legal/utility pages Google shouldn't waste crawl budget on
         if rel_url in ("/robots.txt",):
+            continue
+        if is_noindex(page_path):
+            skipped_noindex += 1
             continue
         priority, changefreq = classify(rel_url)
         entries.append((rel_url, priority, changefreq))
@@ -161,6 +175,7 @@ def main():
     entries.sort(key=lambda e: e[0])
 
     print(f"Found {len(entries)} pages to include (was 1,332 in the stale sitemap).")
+    print(f"  skipped {skipped_noindex} noindex pages")
     for tier, count in sorted(by_tier.items(), key=lambda x: -float(x[0])):
         print(f"  priority {tier}: {count} pages")
 

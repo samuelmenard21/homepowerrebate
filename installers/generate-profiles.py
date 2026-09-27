@@ -547,7 +547,7 @@ def render_page(inst, rank_info, city_slug, all_installers, cfg):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{page_title}</title>
 <meta name="description" content="{meta_desc}">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, follow">
 <link rel="canonical" href="{page_url}">
 <meta property="og:type" content="business.business">
 <meta property="og:title" content="{escape(name)} — {escape(city)}, {region}">

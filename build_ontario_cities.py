@@ -42,6 +42,18 @@ CITIES = [
 # Blog posts for Ontario internal linking
 BLOG_POSTS_ONTARIO = [
     {
+        'url': '/guides/which-rebate-first/',
+        'category': 'Guide • Foundations',
+        'title': 'Which Rebate Should I Claim First? Priority Guide 2026',
+        'description': 'The strategic order to claim rebates and maximize your total savings.'
+    },
+    {
+        'url': '/guides/rebate-stacking-explained/',
+        'category': 'Guide • Stacking',
+        'title': 'What Is Rebate Stacking? How to Combine Multiple Rebates',
+        'description': 'Layer federal, provincial, utility, and local rebates for maximum benefit.'
+    },
+    {
         'url': '/blog/heat-pump-or-solar-ontario/',
         'category': 'Guide • Decision',
         'title': 'Heat Pump or Solar First? (Ontario Edition)',

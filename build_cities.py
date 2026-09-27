@@ -3,6 +3,10 @@
 Generate all BC city pages from the Kelowna template.
 Each city gets a custom page with its own saved form hidden input.
 Also injects region-specific blog posts to improve internal linking.
+
+Related builders:
+- build_ontario_cities.py — Generates all Ontario city pages
+- build_california_cities.py — Generates all California region pages
 """
 
 import os

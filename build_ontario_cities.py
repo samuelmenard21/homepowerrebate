@@ -68,8 +68,8 @@ BLOG_POSTS_ONTARIO = [
     {
         'url': '/blog/ontario-heat-pump-rebate-tiers-explained/',
         'category': 'Guide • Heat Pumps',
-        'title': 'Ontario Heat Pump Rebates & Income Tiers Explained',
-        'description': 'Income-based rebates, income verification, and eligibility for heating upgrades.'
+        'title': 'Ontario Heat Pump Rebate Tiers Explained',
+        'description': 'Why your rebate depends on your heating fuel and heat pump type.'
     },
     {
         'url': '/blog/ontario-solar-rebate-vs-net-metering/',

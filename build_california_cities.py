@@ -43,6 +43,12 @@ BLOG_POSTS_CALIFORNIA = [
         'title': 'Top California Cities by Heat Pump Rebate',
         'description': 'Which California metros have the best heat pump incentives and payback.'
     },
+    {
+        'url': '/blog/insulation-buying-guide-ca/',
+        'category': 'Guide • Insulation',
+        'title': 'Insulation Buying Guide for California (2026)',
+        'description': 'What type of insulation qualifies for CA rebates and where to install it.'
+    },
 ]
 
 # Region-specific blog posts

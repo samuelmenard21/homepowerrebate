@@ -45,6 +45,12 @@ BLOG_POSTS_MA = [
         'title': '41 Massachusetts Towns Locked Out of MassSave: What to Do',
         'description': 'Which towns are excluded, why, and alternative rebate programs available.'
     },
+    {
+        'url': '/blog/smart-thermostat-buying-guide-ma/',
+        'category': 'Guide • Thermostats',
+        'title': 'Smart Thermostat Buying Guide for Massachusetts (2026)',
+        'description': 'Comparing Nest, Ecobee, Honeywell, and more with MA rebate info.'
+    },
 ]
 
 def customize_page(template, city):

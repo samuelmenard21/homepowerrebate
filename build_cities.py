@@ -195,6 +195,24 @@ BLOG_POSTS_BY_REGION = {
             'category': 'Article • Comparison',
             'title': 'Trane & Carrier Heat Pumps in BC: Why They\'re Rare and Whether to Wait',
             'description': 'Cold-climate rated options and when they might be worth the premium.'
+        },
+        {
+            'url': '/blog/solar-battery-stack-vs-heat-pump-only/',
+            'category': 'Article • Comparison',
+            'title': 'Solar + Battery vs. Heat Pump Only',
+            'description': 'Analyze the tradeoffs and which combination makes sense for your BC home.'
+        },
+        {
+            'url': '/blog/tesla-powerwall-bc-hydro-rebate-not-qualified-alternatives/',
+            'category': 'Article • Alternatives',
+            'title': 'Why Tesla Powerwall Doesn\'t Qualify for BC Hydro\'s Battery Rebate',
+            'description': 'Approved battery options and why Powerwall falls short in BC.'
+        },
+        {
+            'url': '/blog/rebate-rejected-bc/',
+            'category': 'Guide • Troubleshooting',
+            'title': 'Why Your BC Rebate Got Rejected: 5 Reasons & Fixes',
+            'description': 'Common rejection reasons and how to avoid them.'
         }
     ]
 }

@@ -76,6 +76,12 @@ BLOG_POSTS_ONTARIO = [
         'category': 'Guide • Troubleshooting',
         'title': 'Why Your Ontario Rebate Got Rejected: Fixes & Prevention',
         'description': 'Common mistakes and how to avoid them.'
+    },
+    {
+        'url': '/blog/ontario-loan-closed/',
+        'category': 'Update • Programs',
+        'title': 'Ontario: Federal Loan Closed. Here\'s What\'s Open in 2026',
+        'description': 'What changed with the federal home energy loan and your alternatives.'
     }
 ]
 

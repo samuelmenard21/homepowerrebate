@@ -11,7 +11,7 @@ appears on the linked ranking page, with the public email from its website.
 **US installers:** CAN-SPAM applies instead of CASL: accurate sender and subject,
 a physical mailing address, and a working opt-out honoured within 10 business days.
 Backlinks from ~90 BC-domain local businesses is the strongest available signal
-for local search, and it opens the relationship for paid placement later.
+for local search, and it opens the relationship for a paid model later, once volumes justify it.
 
 ---
 
@@ -95,6 +95,8 @@ Two things:
 
 1. You've earned a free "Top-rated installer" badge for your website.
    Pick your city and copy the code here: {badge_page}
+   It links back to your ranking, so homeowners can see the reviews behind
+   it. That's the only thing we ask: there's no fee, now or for being listed.
 
 2. If you'd rather not be listed at all, reply and I'll remove you today.
 

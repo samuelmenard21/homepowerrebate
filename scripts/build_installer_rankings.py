@@ -144,6 +144,8 @@ section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;
 .rank .st{font-size:14px;color:var(--ink-soft)}
 .rank .st b{color:var(--ink)}
 .rank .act{grid-column:2;font-size:13.5px;display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:4px}
+.reg{display:inline-block;font-size:12px;font-weight:700;color:var(--green-money);border:1px solid var(--green-money);border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px;cursor:help}
+p.small .reg{border:0;padding:0;margin:0;cursor:auto}
 .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--green-money);color:#fff;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:2px}
 .small{font-size:13.5px!important;color:var(--sage)!important}
 .cta{background:var(--amber);color:#fff;border-radius:14px;padding:26px 22px;text-align:center;margin-top:36px}
@@ -233,6 +235,25 @@ def hire_tips(region, service):
     return tips
 
 
+def load_registered():
+    """data/rebate-registered.json: installers matched (high confidence only) to an
+    official rebate contractor list. Returns ({(region, service, name): program}, programs)."""
+    f = ROOT / "data" / "rebate-registered.json"
+    if not f.exists():
+        return {}, {}
+    try:
+        d = json.loads(f.read_text(encoding="utf-8"))
+    except ValueError:
+        return {}, {}
+    progs = d.get("programs", {})
+    reg = {(m["region"], m["service"], m["business"].strip()): progs[m["program"]]
+           for m in d.get("matches", []) if m.get("confidence") == "high" and m.get("program") in progs}
+    return reg, progs
+
+
+REGISTERED, REG_PROGRAMS = load_registered()
+
+
 def build_page(region, service, city_label, hub, installers, other_service_url):
     c_dir, r_dir, short, long_name = REGIONS[region]
     svc = SERVICES[service]
@@ -254,10 +275,15 @@ def build_page(region, service, city_label, hub, installers, other_service_url):
     top_line = ", ".join(f"{r['name']} ({r['rating']:.1f}★, {r['reviews']:,} reviews)" for r in top3)
 
     items = []
+    reg_used = {}
     for i, r in enumerate(ranked, 1):
         prof = profile_url(region, r["city"], r["name"])
         name_html = f'<a href="{prof}">{esc(r["name"])}</a>' if prof else esc(r["name"])
         badge = '<span class="badge">Top pick</span>' if i <= 3 else ""
+        prog = REGISTERED.get((region, service, r["name"]))
+        if prog:
+            reg_used[prog["name"]] = prog
+            badge += f'<span class="reg" title="{esc(prog["why"])}">✓ {esc(prog["short"])}</span>'
         acts = []
         if r["phone"]:
             tel = re.sub(r"[^\d+]", "", r["phone"])
@@ -273,6 +299,13 @@ def build_page(region, service, city_label, hub, installers, other_service_url):
             f'<div class="st"><b>{r["rating"]:.1f}★</b> from <b>{r["reviews"]:,}</b> Google reviews'
             + (f'<br>{esc(r["address"])}' if r["address"] else "") + '</div>'
             f'<div class="act">{" · ".join(acts)}</div></li>')
+
+    reg_count = sum(1 for r in ranked if (region, service, r["name"]) in REGISTERED)
+    reg_note = "".join(
+        f'<p class="small"><span class="reg">✓</span> = on the official contractor list for {esc(p["name"])} '
+        f'(checked {date.fromisoformat(p["checked"]).strftime("%B %-d, %Y")}, <a href="{esc(p["source_url"])}" rel="nofollow noopener" target="_blank">source</a>). '
+        f'Most rebates require a registered contractor; confirm before you sign.</p>'
+        for p in reg_used.values())
 
     city_hub_url = hub["url"] if hub else ""
     rebate_url = (city_hub_url + svc["rebate_cat"] + "/") if city_hub_url and (ROOT / (city_hub_url.strip("/") + "/" + svc["rebate_cat"]) / "index.html").exists() else city_hub_url
@@ -321,6 +354,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url):
 <ol class="rank-list">
 {chr(10).join(items)}
 </ol>
+{reg_note}
 <p class="small">Together these {n} companies average {avg:.1f}★ across {total_reviews:,} reviews. {esc(most_reviewed['name'])} has the most reviews ({most_reviewed['reviews']:,}).</p>
 
 <p class="small">Ranked by Google rating weighted by review count, collected {upd_h}. Rankings are never paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
@@ -372,7 +406,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url):
 """
     page = navfooter.ensure_shared_assets(page)
     return path, page, {"region": region, "service": service, "city": city_label, "url": path,
-                        "count": n, "reviews": total_reviews, "top": [r["name"] for r in top3]}
+                        "count": n, "reviews": total_reviews, "rebate_registered": reg_count, "top": [r["name"] for r in top3]}
 
 
 def body_text(html_out, city_label):

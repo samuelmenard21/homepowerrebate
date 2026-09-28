@@ -1,122 +1,105 @@
 #!/usr/bin/env python3
 """
-Generate all New York utility region pages from a template.
-Each region gets NY-specific blog posts for internal linking.
+Inject NY-specific guide links into each existing New York utility hub.
+
+INJECT-ONLY. An earlier version of this script copied us/ny/national-grid/index.html
+over every other utility hub (find-replacing the utility name), which clobbered the
+bespoke Con Edison, PSEG Long Island and Central Hudson hubs on 2026-09-26. This
+version never replaces page content: it only adds/updates a marked guides block
+inside each hub's OWN file, and is safe to re-run.
 """
 
 from pathlib import Path
 
-# NY utility regions
 REGIONS = [
     {'name': 'Central Hudson', 'slug': 'central-hudson'},
     {'name': 'Con Edison', 'slug': 'con-edison'},
     {'name': 'National Grid', 'slug': 'national-grid'},
-    {'name': 'PSEG', 'slug': 'pseg'},
+    {'name': 'PSEG Long Island', 'slug': 'pseg'},
 ]
 
-# Blog posts for New York internal linking (fixes orphaned NY content)
 BLOG_POSTS_NY = [
-    {
-        'url': '/guides/which-rebate-first/',
-        'category': 'Guide • Foundations',
-        'title': 'Which Rebate Should I Claim First? Priority Guide 2026',
-        'description': 'The strategic order to claim rebates and maximize your total savings.'
-    },
-    {
-        'url': '/guides/rebate-stacking-explained/',
-        'category': 'Guide • Stacking',
-        'title': 'What Is Rebate Stacking? How to Combine Multiple Rebates',
-        'description': 'Layer federal, state, utility, and local rebates for maximum benefit.'
-    },
-    {
-        'url': '/blog/6-new-york-heat-pump-programs-stack-together/',
-        'category': 'Guide • NY Programs',
-        'title': '6 New York Heat Pump Programs You Can Stack Together',
-        'description': 'How to layer NY State, utility, and local heat pump rebates for maximum benefit.'
-    },
-    {
-        'url': '/blog/new-york-empower-plus-guide/',
-        'category': 'Guide • EmPower+',
-        'title': 'EmPower+ for New York Homeowners: Free/Cheap Heat Pump Guide',
-        'description': 'Income-qualified program details, eligibility, and how to apply.'
-    },
-    {
-        'url': '/blog/new-york-dac-mapping-eligibility-guide/',
-        'category': 'Guide • Eligibility',
-        'title': 'Are You in an NY Disadvantaged Community? Rebate Guide',
-        'description': 'Check your DAC status and unlock additional funding.'
-    },
-    {
-        'url': '/blog/new-york-cities-ranked-fastest-heat-pump-payback/',
-        'category': 'Guide • Payback',
-        'title': 'New York Cities Ranked by Fastest Heat Pump Payback',
-        'description': 'Where heat pumps pay back fastest in NY based on local heating costs.'
-    },
-    {
-        'url': '/blog/energy-saving-ideas-ny-home/',
-        'category': 'Guide • Quick Wins',
-        'title': '11 Ways to Cut Your Energy Bill in New York (2026)',
-        'description': 'Free and low-cost energy-saving actions with real NY incentives.'
-    },
+    {'url': '/guides/which-rebate-first/', 'category': 'Guide • Foundations',
+     'title': 'Which Rebate Should I Claim First? Priority Guide 2026',
+     'description': 'The order to claim rebates so you keep the most money.'},
+    {'url': '/guides/rebate-stacking-explained/', 'category': 'Guide • Stacking',
+     'title': 'What Is Rebate Stacking? How to Combine Multiple Rebates',
+     'description': 'Which rebates can be combined, and which ones cancel each other out.'},
+    {'url': '/blog/6-new-york-heat-pump-programs-stack-together/', 'category': 'Guide • NY Programs',
+     'title': 'New York Heat Pump Programs: What Stacks and What Doesn\'t',
+     'description': 'How NYS Clean Heat, EmPower+, Comfort Home and local programs fit together.'},
+    {'url': '/blog/new-york-empower-plus-guide/', 'category': 'Guide • EmPower+',
+     'title': 'EmPower+ for New York Homeowners',
+     'description': 'Income-qualified program details, eligibility, and how to apply.'},
+    {'url': '/blog/new-york-dac-mapping-eligibility-guide/', 'category': 'Guide • Eligibility',
+     'title': 'Are You in an NY Disadvantaged Community? Rebate Guide',
+     'description': 'Check your DAC status and see which rebates pay more there.'},
+    {'url': '/blog/new-york-cities-ranked-fastest-heat-pump-payback/', 'category': 'Guide • Payback',
+     'title': 'New York Cities Ranked by Heat Pump Payback',
+     'description': 'Where heat pumps pay back fastest in NY based on local heating costs.'},
+    {'url': '/blog/energy-saving-ideas-ny-home/', 'category': 'Guide • Quick Wins',
+     'title': '11 Ways to Cut Your Energy Bill in New York (2026)',
+     'description': 'Free and low-cost energy-saving actions with real NY incentives.'},
 ]
 
-def customize_page(template, region):
-    """Replace all placeholders with region-specific values."""
-    html = template
+START = '<!-- ny-guides:start -->'
+END = '<!-- ny-guides:end -->'
 
-    # Replace region name and slug (National Grid template)
-    region_title = region['name']
-    region_lower = region['slug']
 
-    # Try multiple variations
-    html = html.replace('National Grid', region_title)
-    html = html.replace('national-grid', region_lower)
-    html = html.replace('national_grid', region_lower.replace('-', '_'))
-
-    # Inject blog posts before footer
-    blog_html = '<section style="padding:0 28px; margin-bottom: 40px;">\n'
-    blog_html += '  <div class="wrap" style="max-width:1000px; margin:0 auto;">\n'
-    blog_html += f'    <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Learn more about New York rebates</h2>\n'
-    blog_html += '    <p style="font-size: 15px; color: #666; margin-bottom: 32px;">Guides and deep-dives to help you stack NY rebates and choose the right upgrades.</p>\n'
-    blog_html += '    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">\n'
-
+def build_blog_section():
+    h = START + '\n<section style="padding:0 28px; margin-bottom: 40px;">\n'
+    h += '  <div class="wrap" style="max-width:1000px; margin:0 auto;">\n'
+    h += '    <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Learn more about New York rebates</h2>\n'
+    h += '    <p style="font-size: 15px; color: #666; margin-bottom: 32px;">Guides to help you combine NY rebates and choose the right upgrades.</p>\n'
+    h += '    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">\n'
     for post in BLOG_POSTS_NY:
-        blog_html += f'''      <a href="{post['url']}" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
+        h += f'''      <a href="{post['url']}" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
         <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #d4751c; margin-bottom: 6px;">{post['category']}</p>
         <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #0a2a2e;">{post['title']}</h3>
         <p style="font-size: 13px; color: #666; margin: 0;">{post['description']}</p>
       </a>
 '''
+    h += '    </div>\n    <p style="text-align: center; margin-top: 32px;">\n'
+    h += '      <a href="/blog/" style="color: #d4751c; text-decoration: none; font-weight: 600; font-size: 14px;">View all guides and articles →</a>\n'
+    h += '    </p>\n  </div>\n</section>\n' + END + '\n'
+    return h
 
-    blog_html += '    </div>\n'
-    blog_html += '    <p style="text-align: center; margin-top: 32px;">\n'
-    blog_html += '      <a href="/blog/" style="color: #d4751c; text-decoration: none; font-weight: 600; font-size: 14px;">View all guides and articles →</a>\n'
-    blog_html += '    </p>\n'
-    blog_html += '  </div>\n'
-    blog_html += '</section>\n'
 
-    # Insert before footer
-    html = html.replace('<footer', blog_html + '\n<footer')
-
+def strip_legacy(html):
+    """Remove unmarked copies of the block left by the old clobbering version."""
+    marker = '<section style="padding:0 28px; margin-bottom: 40px;">\n  <div class="wrap" style="max-width:1000px; margin:0 auto;">\n    <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Learn more about New York rebates</h2>'
+    while marker in html:
+        i = html.index(marker)
+        j = html.index('</section>', i) + len('</section>')
+        html = html[:i] + html[j:].lstrip('\n')
     return html
 
+
+def inject(html, block):
+    if START in html:
+        pre, rest = html.split(START, 1)
+        post = rest.split(END, 1)[1].lstrip('\n')
+        return pre + block + post
+    html = strip_legacy(html)
+    i = html.find('<footer')
+    return html if i < 0 else html[:i] + block + '\n' + html[i:]
+
+
 def main():
-    # Read template
-    template_path = Path('us/ny/national-grid/index.html')
-    template = template_path.read_text(encoding='utf-8')
-
-    # Generate each region
+    block = build_blog_section()
     for region in REGIONS:
-        region_dir = Path(f'us/ny/{region["slug"]}')
-        region_dir.mkdir(parents=True, exist_ok=True)
+        path = Path(f'us/ny/{region["slug"]}/index.html')
+        if not path.exists():
+            print(f'skip (missing) {path}')
+            continue
+        html = path.read_text(encoding='utf-8')
+        new = inject(html, block)
+        if new != html:
+            path.write_text(new, encoding='utf-8')
+            print(f'injected {path}')
+        else:
+            print(f'unchanged {path}')
 
-        # Customize template
-        html = customize_page(template, region)
-
-        # Write page
-        output_path = region_dir / 'index.html'
-        output_path.write_text(html, encoding='utf-8')
-        print(f'✓ {region["slug"]:20} → us/ny/{region["slug"]}/index.html')
 
 if __name__ == '__main__':
     main()

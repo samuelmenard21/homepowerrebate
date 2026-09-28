@@ -53,18 +53,18 @@ BLOG_POSTS_MA = [
     },
 ]
 
-def customize_page(template, city):
-    """Replace all placeholders with city-specific values."""
-    html = template
+SECTION_MARK = 'Learn more about Massachusetts rebates'
 
-    # Replace city name and slug (Boston template)
-    city_title = city['name']
-    city_lower = city['slug']
 
-    # Try multiple variations
-    html = html.replace('Boston', city_title)
-    html = html.replace('boston', city_lower)
-    html = html.replace('boston', city_lower)
+def customize_page(html, city):
+    """Inject the MA guides section into a city's OWN existing page.
+
+    Never copies another city's page over this one (a Boston-template
+    find/replace clobbered all 14 bespoke hubs in Aug 2026). Idempotent:
+    does nothing if the section is already present.
+    """
+    if SECTION_MARK in html:
+        return html
 
     # Inject blog posts before footer
     blog_html = '<section style="padding:0 28px; margin-bottom: 40px;">\n'
@@ -89,27 +89,23 @@ def customize_page(template, city):
     blog_html += '</section>\n'
 
     # Insert before footer
-    html = html.replace('<footer', blog_html + '\n<footer')
+    html = html.replace('<footer class="footer">', blog_html + '\n<footer class="footer">', 1)
 
     return html
 
 def main():
-    # Read template
-    template_path = Path('us/ma/boston/index.html')
-    template = template_path.read_text(encoding='utf-8')
-
-    # Generate each city
     for city in CITIES:
-        city_dir = Path(f'us/ma/{city["slug"]}')
-        city_dir.mkdir(parents=True, exist_ok=True)
-
-        # Customize template
-        html = customize_page(template, city)
-
-        # Write page
-        output_path = city_dir / 'index.html'
-        output_path.write_text(html, encoding='utf-8')
-        print(f'✓ {city["slug"]:20} → us/ma/{city["slug"]}/index.html')
+        output_path = Path(f'us/ma/{city["slug"]}/index.html')
+        if not output_path.exists():
+            print(f'skip {city["slug"]}: no existing page (this script never creates pages)')
+            continue
+        html = output_path.read_text(encoding='utf-8')
+        new = customize_page(html, city)
+        if new != html:
+            output_path.write_text(new, encoding='utf-8')
+            print(f'✓ injected guides → {output_path}')
+        else:
+            print(f'= unchanged {output_path}')
 
 if __name__ == '__main__':
     main()

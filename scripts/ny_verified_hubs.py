@@ -10,8 +10,10 @@ Idempotent: the body is wrapped in <!-- ny-verified:start/end --> markers.
 
 Usage: python3 scripts/ny_verified_hubs.py
 """
-import json, re, html
+import json, re, html, sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ny_local_notes import LOCAL
 
 ROOT = Path(__file__).resolve().parent.parent
 TODAY = '2026-09-26'
@@ -191,15 +193,11 @@ def rate_table(u):
 
 def not_stack(u):
     d = U[u]
-    first = ('<li><strong>&ldquo;Utility rebate + NYS Clean Heat&rdquo; is one rebate, not two.</strong> '
-             f'NYS Clean Heat is the program {d["short"]} runs. Don&rsquo;t believe any quote that adds them together.</li>'
-             if d['clean_heat'] else
-             '<li><strong>NYS Clean Heat does not apply on Long Island.</strong> PSEG Long Island runs its own heat pump rebates for LIPA instead.</li>')
-    return ('<ul>' + first +
-            '<li><strong>There is no separate &ldquo;federal HEAR&rdquo; cheque you apply for.</strong> New York delivers the federal Home Energy Rebates '
-            '(HEAR and HOMES) to income-eligible households through <a href="/blog/new-york-empower-plus-guide/">EmPower+</a> and NYSERDA&rsquo;s Appliance Upgrade Program.</li>'
-            f'<li><strong>The federal 25C and 25D tax credits are gone.</strong> They ended for anything installed after December 31, 2025.</li>'
-            '<li><strong>Rebates are capped.</strong> ' + ('NYS Clean Heat pays at most 70% of the project cost (85% in a DAC), so a rebate can never be bigger than your bill.' if d['clean_heat'] else 'Rebates only cover part of the cost &mdash; nobody gets paid to install a heat pump.') + '</li></ul>')
+    first = (f'Clean Heat <em>is</em> the {d["short"]} rebate, so never add the two together. ' if d['clean_heat'] else
+             'Long Island is not part of NYS Clean Heat, so there is no second state rebate. ')
+    cap = 'Clean Heat is capped at 70% of cost (85% in a DAC). ' if d['clean_heat'] else ''
+    return (f'<p>{first}{cap}There is no separate federal HEAR cheque &mdash; New York delivers it through EmPower+. '
+            'The federal 25C/25D tax credits ended December 31, 2025.</p>')
 
 
 def empower_block():
@@ -236,6 +234,14 @@ def sources(u):
 
 def faqs_city(c):
     d = U[c['u']]; city = c['city']
+    extra = LOCAL.get(c.get('key', ''), {}).get('faq')
+    if extra:
+        return [
+          (f'How much is the heat pump rebate in {city}?',
+           f'{html.unescape(d["program"])} pays {html.unescape(re.sub("<[^>]+>", "", d["headline"]))} for a whole-home heat pump in {city}, depending on home size, whether you remove the old system, and DAC status.'),
+          extra,
+          ('Is the federal tax credit still available for heat pumps?', 'No. The federal 25C and 25D credits ended for anything installed after December 31, 2025.'),
+        ]
     return [
       (f'How much is the heat pump rebate in {city}?',
        f'{html.unescape(d["program"])} pays {html.unescape(re.sub("<[^>]+>", "", d["headline"]))} for a whole-home heat pump in {city}. The exact amount depends on your home size, whether you remove your old heating system, and whether you live in a Disadvantaged Community. Your contractor applies for you.'),
@@ -280,30 +286,26 @@ def city_body(key, c, header=False):
     hero = (f'<header>\n  <h1>{h1}</h1>\n  <p class="subheading">{intro}</p>\n</header>' if header else
             f'<section class="hero">\n  <div class="wrap">\n    <h1>{h1}</h1>\n    <p>{intro}</p>\n  </div>\n</section>')
     tail = '\n<div class="container">' if header else ''
+    loc = LOCAL.get(key, {})
+    local_ps = ''.join(f'<p>{p}</p>' for p in [c['local']] + loc.get('more', []))
     return hero + f'''
 {STYLE}
 <article class="nyv">
 {short}
 <h2>How much is the {c["q"]}?</h2>
+<div class="rebate-grid">
 <p>Amounts for a single-family home. You get one line from this table, not several.</p>
 {rate_table(u)}
+</div>
 <h2>What makes {city} different</h2>
-<p>{c["local"]}</p>
+{local_ps}
 {c.get("extra", "")}
 <h2>What does <em>not</em> stack</h2>
 {not_stack(u)}
-<h2>Income-qualified help: EmPower+ and Comfort Home</h2>
-{empower_block()}
-<h2>Are you in a Disadvantaged Community?</h2>
-<p>If your home is in a NYS Disadvantaged Community, some amounts go up and the Clean Heat cap rises from 70% to 85% of cost. Enter your address on the <a href="{DACMAP}" rel="noopener">state DAC map</a>, or read our <a href="/blog/new-york-dac-mapping-eligibility-guide/">DAC guide</a>.</p>
+<p>Income-qualified? <a href="/blog/new-york-empower-plus-guide/">EmPower+</a> can cover far more than the utility rebate. Check the <a href="{DACMAP}" rel="noopener">state DAC map</a> too &mdash; it can raise your amount.</p>
 {ev}
-<h2>What to do next</h2>
-<ol>
-<li>Check the name on your electric bill &mdash; it decides which rebate you get.</li>
-<li>If your income may qualify, apply to <a href="/blog/new-york-empower-plus-guide/">EmPower+</a> before you sign anything.</li>
-<li>Get 2&ndash;3 quotes from participating contractors. Ask each one which rebate tier your home fits and to show it on the quote.</li>
-<li>Insulate and air-seal first if your home is drafty &mdash; it lets you buy a smaller heat pump.</li>
-</ol>
+<h2>What to do next in {city}</h2>
+<ol>{''.join(f'<li>{s}</li>' for s in loc.get('steps', []))}<li>Get 2&ndash;3 quotes and ask each contractor to show the rebate tier on the quote.</li></ol>
 <p>More for {city}: {catlinks}</p>
 {cta(c["slug"])}
 {faq_html(faqs_city(c))}
@@ -399,6 +401,7 @@ def main():
             header = '<!-- ny-verified:start -->\n<header>' in t
         else:
             header = '<article class="article">' not in t
+        c['key'] = key
         body = city_body(key, c, header)
         faqs = faq_ld(faqs_city(c))
         if '<!-- ny-verified:start -->' not in t:

@@ -24,6 +24,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
+# Rebates paid per ton of capacity (ENS heat pump: $300-$600/ton), not as a flat amount.
+PER_TON = {("ca/ns", "heat-pump")}
+
 CATEGORIES = [
     "heat-pump", "insulation", "solar", "battery",
     "water-heater", "smart-thermostats", "ev-charger", "windows-doors",
@@ -284,6 +287,7 @@ def main():
                 stack_score = min(100, 25 * info["programs"])
                 score = 0.60 * dollar_score + 0.25 * status_score + 0.15 * stack_score
                 cat_scores[cat] = {
+                    **({"unit": "per ton"} if (region_key, cat) in PER_TON else {}),
                     "score": round(score, 1),
                     "dollar_value": dollar_val,
                     "status": info["status"],

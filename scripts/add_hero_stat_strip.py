@@ -32,7 +32,7 @@ HEADER_RE = re.compile(r"</header>")
 
 def top_categories(r, n=3):
     cats = [
-        (CAT_LABELS[k], v["dollar_value"])
+        (CAT_LABELS[k], v["dollar_value"], v.get("unit"))
         for k, v in r["categories"].items()
         if v.get("status") in ("open", "limited") and v.get("dollar_value", 0) > 0
     ]
@@ -40,7 +40,9 @@ def top_categories(r, n=3):
     return cats[:n]
 
 
-def fmt(value):
+def fmt(value, unit=None):
+    if unit == "per ton":
+        return f"${value:,.0f}/ton"
     if value < 10:
         return f"${value:,.2f}/watt"
     return f"${value:,.0f}"
@@ -50,9 +52,9 @@ def hero_strip_html(cats):
     cards = "\n".join(
         f'      <div style="background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); '
         f'border-radius:12px; padding:16px 22px; min-width:150px;">'
-        f'<div style="font-family:\'Fraunces\',serif; font-size:28px; font-weight:700; color:#fff;">{fmt(v)}</div>'
+        f'<div style="font-family:\'Fraunces\',serif; font-size:28px; font-weight:700; color:#fff;">{fmt(v, u)}</div>'
         f'<div style="font-size:12px; color:rgba(250,247,242,.7); margin-top:4px;">{label} rebate</div></div>'
-        for label, v in cats
+        for label, v, u in cats
     )
     return (
         f'    <div class="{MARKER}" style="display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:28px;">\n'
@@ -64,9 +66,9 @@ def header_strip_html(cats):
     cards = "\n".join(
         f'    <div style="background:var(--color-fg); color:var(--color-bg); border-radius:0.5rem; '
         f'padding:1rem 1.5rem; min-width:150px;">'
-        f'<div style="font-family:var(--font-display); font-size:1.8rem; font-weight:700; color:var(--color-accent);">{fmt(v)}</div>'
+        f'<div style="font-family:var(--font-display); font-size:1.8rem; font-weight:700; color:var(--color-accent);">{fmt(v, u)}</div>'
         f'<div style="font-size:0.85rem; margin-top:0.25rem;">{label} rebate</div></div>'
-        for label, v in cats
+        for label, v, u in cats
     )
     return (
         f'<div class="{MARKER}" style="max-width:900px; margin:0 auto; padding:0 2rem; '

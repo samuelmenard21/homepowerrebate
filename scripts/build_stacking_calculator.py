@@ -383,9 +383,11 @@ a { color: var(--teal); }
 def head(title, description, canonical, og_title=None, og_description=None):
     og_title = og_title or title
     og_description = og_description or description
+    # US city calculators drew almost no search impressions; keep them for users, out of the index.
+    robots = '\n<meta name="robots" content="noindex, follow">' if "/stacking-calculator/us/" in canonical else ""
     return f'''<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{esc(title)}</title>
+<title>{esc(title)}</title>{robots}
 
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>

@@ -115,20 +115,20 @@ ON_REBATE_CONTEXT = {
     "heat-pump": {
         "label": "Heat Pump",
         "programs": [
-            ("HRSP Heat Pump Rebate", "$2,000–$12,000 depending on current fuel and system type", "/blog/ontario-heat-pump-rebate-tiers-explained"),
-            ("Avoiding rejection", "Pre-installation approval + qualified-products-list check needed first", "/blog/ontario-heat-pump-rebate-rejection-mistakes"),
+            ("HRSP Heat Pump Rebate", "$2,000–$12,000 depending on current fuel and system type", "/blog/ontario-heat-pump-rebate-tiers-explained/"),
+            ("Avoiding rejection", "Pre-installation approval + qualified-products-list check needed first", "/blog/ontario-heat-pump-rebate-rejection-mistakes/"),
         ],
         "requires_cert": True,
-        "guide": ("/blog/ontario-home-renovation-savings-program-explained", "HRSP Explained"),
+        "guide": ("/blog/ontario-home-renovation-savings-program-explained/", "HRSP Explained"),
     },
     "solar": {
         "label": "Solar",
         "programs": [
-            ("HRSP Solar Rebate", "Up to $5,000 ($1,000/kW, capped at 50% of cost)", "/blog/ontario-solar-rebate-vs-net-metering"),
-            ("Battery bundle", "Up to $10,000 combined when paired with battery storage", "/blog/ontario-home-energy-rebates-2026-listicle"),
+            ("HRSP Solar Rebate", "Up to $5,000 ($1,000/kW, capped at 50% of cost)", "/blog/ontario-solar-rebate-vs-net-metering/"),
+            ("Battery bundle", "Up to $10,000 combined when paired with battery storage", "/blog/ontario-home-energy-rebates-2026-listicle/"),
         ],
         "requires_cert": False,
-        "guide": ("/blog/ontario-solar-rebate-vs-net-metering", "Solar vs. Net Metering"),
+        "guide": ("/blog/ontario-solar-rebate-vs-net-metering/", "Solar vs. Net Metering"),
     },
 }
 
@@ -136,20 +136,20 @@ AB_REBATE_CONTEXT = {
     "heat-pump": {
         "label": "Heat Pump",
         "programs": [
-            ("ENMAX / ATCO Gas Rebates", "$500–$2,000 per unit for ENERGY STAR cold-climate models, availability shifts through the year", "/ca/ab"),
-            ("CEIP Financing", "Property-tax-attached financing (not a rebate) with a 5–10% incentive on the financed cost", "/blog/alberta-100-energy-rebate-vs-heat-pump-rebate"),
+            ("ENMAX / ATCO Gas Rebates", "$500–$2,000 per unit for ENERGY STAR cold-climate models, availability shifts through the year", "/ca/ab/"),
+            ("CEIP Financing", "Property-tax-attached financing (not a rebate) with a 5–10% incentive on the financed cost", "/blog/alberta-100-energy-rebate-vs-heat-pump-rebate/"),
         ],
         "requires_cert": False,
-        "guide": ("/ca/ab", "Alberta Rebate Breakdown"),
+        "guide": ("/ca/ab/", "Alberta Rebate Breakdown"),
     },
     "solar": {
         "label": "Solar",
         "programs": [
-            ("No provincial solar rebate", "Alberta has no direct solar grant, unlike BC or Quebec — net metering + CEIP financing only", "/ca/ab"),
-            ("CEIP Financing", "Property-tax-attached financing for solar installs at competitive rates", "/blog/alberta-16-applications-one-grant"),
+            ("No provincial solar rebate", "Alberta has no direct solar grant, unlike BC or Quebec — net metering + CEIP financing only", "/ca/ab/"),
+            ("CEIP Financing", "Property-tax-attached financing for solar installs at competitive rates", "/blog/alberta-16-applications-one-grant/"),
         ],
         "requires_cert": False,
-        "guide": ("/ca/ab", "Alberta Rebate Breakdown"),
+        "guide": ("/ca/ab/", "Alberta Rebate Breakdown"),
     },
 }
 
@@ -157,20 +157,20 @@ NS_REBATE_CONTEXT = {
     "heat-pump": {
         "label": "Heat Pump",
         "programs": [
-            ("Efficiency Nova Scotia Heat Pump Rebate", "Up to $5,000 for any homeowner, up to $15,000 for moderate-income households", "/ca/ns"),
-            ("HomeWarming", "Free heat pump installation for income-qualified households", "/blog/nova-scotia-heat-pump-rebate-disappeared"),
+            ("Efficiency Nova Scotia Heat Pump Rebate", "Up to $5,000 for any homeowner, up to $15,000 for moderate-income households", "/ca/ns/"),
+            ("HomeWarming", "Free heat pump installation for income-qualified households", "/blog/nova-scotia-heat-pump-rebate-disappeared/"),
         ],
         "requires_cert": False,
-        "guide": ("/ca/ns", "Nova Scotia Rebate Breakdown"),
+        "guide": ("/ca/ns/", "Nova Scotia Rebate Breakdown"),
     },
     "solar": {
         "label": "Solar",
         "programs": [
-            ("Efficiency Nova Scotia Solar Rebate", "$0.60/watt, roughly $6,000 on a 10kW system", "/ca/ns"),
-            ("Halifax Solar City", "Property-assessed financing at 4.75% fixed over 10 years, no upfront cost, repaid via property tax", "/ca/ns/halifax"),
+            ("Efficiency Nova Scotia Solar Rebate", "$0.60/watt, roughly $6,000 on a 10kW system", "/ca/ns/"),
+            ("Halifax Solar City", "Property-assessed financing at 4.75% fixed over 10 years, no upfront cost, repaid via property tax", "/ca/ns/halifax/"),
         ],
         "requires_cert": False,
-        "guide": ("/ca/ns/halifax", "Halifax Solar & Heat Pump Guide"),
+        "guide": ("/ca/ns/halifax/", "Halifax Solar & Heat Pump Guide"),
     },
 }
 
@@ -178,20 +178,20 @@ MA_REBATE_CONTEXT = {
     "heat-pump": {
         "label": "Heat Pump",
         "programs": [
-            ("Mass Save Heat Pump Rebate", "$2,650/ton, capped at $8,500, plus up to $1,000 in sizing/weatherization bonuses (up to $9,500 total)", "/us/ma"),
-            ("Income-Qualified Mass Save", "Up to $16,000 for air-source heat pumps, up to $25,000 for ground-source systems", "/blog/mass-save-rebate-check-late-truth"),
+            ("Mass Save Heat Pump Rebate", "$2,650/ton, capped at $8,500, plus up to $1,000 in sizing/weatherization bonuses (up to $9,500 total)", "/us/ma/"),
+            ("Income-Qualified Mass Save", "Up to $16,000 for air-source heat pumps, up to $25,000 for ground-source systems", "/blog/mass-save-rebate-check-late-truth/"),
         ],
         "requires_cert": False,
-        "guide": ("/us/ma", "Massachusetts Mass Save Guide"),
+        "guide": ("/us/ma/", "Massachusetts Mass Save Guide"),
     },
     "solar": {
         "label": "Solar",
         "programs": [
-            ("SMART 3.0", "Locked-in per-kWh production incentive for 10–20 years once enrolled", "/us/ma"),
-            ("ConnectedSolutions + Battery Adder", "$0.04–0.06/kWh storage adder plus annual demand-response payments", "/blog/mass-save-rebate-check-late-truth"),
+            ("SMART 3.0", "Locked-in per-kWh production incentive for 10–20 years once enrolled", "/us/ma/"),
+            ("ConnectedSolutions + Battery Adder", "$0.04–0.06/kWh storage adder plus annual demand-response payments", "/blog/mass-save-rebate-check-late-truth/"),
         ],
         "requires_cert": False,
-        "guide": ("/us/ma", "Massachusetts Mass Save Guide"),
+        "guide": ("/us/ma/", "Massachusetts Mass Save Guide"),
     },
 }
 
@@ -204,7 +204,7 @@ PROVINCE_CONFIG = {
         "region_full": "British Columbia",
         "city_slugs": CITY_SLUGS,
         "rebate_context": REBATE_CONTEXT,
-        "hub_prefix": "/ca/bc",
+        "hub_prefix": "/ca/bc/",
         "profile_prefix": "/installers/profiles",  # unchanged — no /bc/ segment
         "heat_pump_csv": "heat-pump-installers-real.csv",
         "solar_csv": "solar-installers-real.csv",
@@ -215,7 +215,7 @@ PROVINCE_CONFIG = {
         "region_full": "Ontario",
         "city_slugs": ON_CITY_SLUGS,
         "rebate_context": ON_REBATE_CONTEXT,
-        "hub_prefix": "/ca/on",
+        "hub_prefix": "/ca/on/",
         "profile_prefix": "/installers/profiles/on",
         "heat_pump_csv": "on-heat-pump-installers-real.csv",
         "solar_csv": "on-solar-installers-real.csv",
@@ -226,7 +226,7 @@ PROVINCE_CONFIG = {
         "region_full": "Alberta",
         "city_slugs": AB_CITY_SLUGS,
         "rebate_context": AB_REBATE_CONTEXT,
-        "hub_prefix": "/ca/ab",
+        "hub_prefix": "/ca/ab/",
         "profile_prefix": "/installers/profiles/ab",
         "heat_pump_csv": "ab-heat-pump-installers-real.csv",
         "solar_csv": "ab-solar-installers-real.csv",
@@ -237,7 +237,7 @@ PROVINCE_CONFIG = {
         "region_full": "Nova Scotia",
         "city_slugs": NS_CITY_SLUGS,
         "rebate_context": NS_REBATE_CONTEXT,
-        "hub_prefix": "/ca/ns",
+        "hub_prefix": "/ca/ns/",
         "profile_prefix": "/installers/profiles/ns",
         "heat_pump_csv": "ns-heat-pump-installers-real.csv",
         "solar_csv": "ns-solar-installers-real.csv",
@@ -248,7 +248,7 @@ PROVINCE_CONFIG = {
         "region_full": "Massachusetts",
         "city_slugs": MA_CITY_SLUGS,
         "rebate_context": MA_REBATE_CONTEXT,
-        "hub_prefix": "/us/ma",
+        "hub_prefix": "/us/ma/",
         "profile_prefix": "/installers/profiles/ma",
         "heat_pump_csv": "ma-heat-pump-installers-real.csv",
         "solar_csv": "ma-solar-installers-real.csv",

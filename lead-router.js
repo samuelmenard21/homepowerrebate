@@ -30,6 +30,11 @@
 // city/state/province goes live, add a CSV row, regenerate this JSON, and
 // add a PROVINCE_CONTEXT entry below for any new region.
 import CITY_REBATE_LOOKUP from './city-rebate-lookup.json';
+// Every installer email we list (written by scripts/build_installer_rankings.py).
+// /estimate-lead only emails a homeowner-selected installer whose address is on
+// this list, so the route can't be used to send mail to arbitrary addresses.
+import ALLOWED_INSTALLER_EMAILS from './installers/allowed-installer-emails.json';
+const ALLOWED_INSTALLER_SET = new Set(ALLOWED_INSTALLER_EMAILS.map(e => String(e).toLowerCase()));
 
 // ===========================================================================
 // INSTALLER ROUTING TABLE
@@ -1311,7 +1316,7 @@ async function handleEstimateLead(request, env) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email)) return jsonResponse({ error: 'Invalid email' }, 400);
 
   const city = String(p.city || '').toLowerCase().trim();
-  const service = 'heat-pump';
+  const service = ['heat-pump', 'solar'].includes(p.service) ? p.service : 'heat-pump';
 
   // Use homeowner-selected installer (from form) OR fall back to routing table
   const selectedName = String(p.installer_name || '').trim();
@@ -1329,7 +1334,8 @@ async function handleEstimateLead(request, env) {
       phone: selectedPhone,
       cc: ''
     };
-    isReal = selectedEmail && !/example\.com$/i.test(selectedEmail);
+    // Only email installers on our own list; anything else goes to ops only.
+    isReal = !!selectedEmail && ALLOWED_INSTALLER_SET.has(selectedEmail.toLowerCase());
   } else {
     // Fall back to routing table (old behavior for direct submits)
     installer = (INSTALLER_ROUTING[service] || {})[city];
@@ -1686,7 +1692,7 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
 
         <div style="background:#faf7f2;padding:28px;border-radius:0 0 14px 14px;border:1px solid #d9d0c1;border-top:none;">
           <p style="font-size:15px;line-height:1.6;color:#1a3d42;margin:0 0 20px;">
-            This is a referral from <strong>HomePowerRebate.com</strong>, a free rebate-matching site — not a lead you paid for or requested directly. ${fn} used our rebate assessment tool, saw what they qualify for, and chose <strong>${escapeHtml(installer.name)}</strong> as one of the installers they'd like a quote from. Please reach out to them directly using the contact info below — everything they've told us is included so you don't have to ask twice.
+            This is a referral from <strong>HomePowerRebate.com</strong>, a free rebate-matching site — not a lead you paid for or requested directly. ${/\/installers\//.test(lead.page_url || '') ? `${fn} found you on our top-rated ${escapeHtml(lead.service === 'solar' ? 'solar' : 'heat pump')} installers ranking for ${ct}` : `${fn} used our rebate assessment tool, saw what they qualify for,`} and chose <strong>${escapeHtml(installer.name)}</strong> as one of the installers they'd like a quote from. Please reach out to them directly using the contact info below — everything they've told us is included so you don't have to ask twice.
           </p>
 
           <div style="background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:20px;margin-bottom:20px;">

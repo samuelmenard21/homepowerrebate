@@ -120,6 +120,15 @@ def esc(s):
 CSS = """
 :root{--ink:#0a2a2e;--ink-soft:#1a3d42;--paper:#faf7f2;--paper-warm:#f5efe5;--teal:#0d4f5c;--teal-deep:#08363f;--amber:#d4751c;--amber-bright:#e88a2e;--sage:#6b8e7f;--green-money:#2d6a4f;--rule:#d9d0c1;}
 *{margin:0;padding:0;box-sizing:border-box}
+.qf{background:#fff;border:2px solid var(--teal);border-radius:14px;padding:22px 20px;margin:28px 0}
+.qf fieldset{border:0;margin:14px 0}.qf legend{font-weight:700;margin-bottom:8px}
+.qf-pick{display:flex;gap:10px;align-items:center;min-height:44px;font-weight:500}.qf-pick input{width:20px;height:20px;flex:none}
+.qf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0 12px}
+.qf-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.qf label:not(.qf-pick){display:block;font-weight:600;font-size:15px;margin:10px 0 0}
+.qf input:not([type=checkbox]),.qf select,.qf textarea{display:block;width:100%;margin-top:4px;padding:11px;border:1px solid var(--rule);border-radius:8px;font:inherit;font-size:16px}
+.qf-btn{margin-top:16px;background:var(--amber);color:#fff;border:0;border-radius:8px;padding:14px 22px;font:inherit;font-weight:700;font-size:16px;cursor:pointer;min-height:48px}
+.qf-ok{background:#eef6f0;border-radius:8px;padding:14px}#qf-msg{margin-top:10px;font-weight:600;color:#8a2a1c}
 body{font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
 h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.2;letter-spacing:-.01em}
 .wrap{max-width:860px;margin:0 auto;padding:0 20px}
@@ -325,6 +334,8 @@ def build_page(region, service, city_label, hub, installers, other_service_url):
 
 <p class="small">Ranked by Google rating weighted by review count, collected {upd_h}. Rankings are never paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
 <p class="small"><b>Listed here?</b> <a href="/installers/badge/">Get your free top-rated badge</a> for your website.</p>
+
+{quote_form(region, service, city_label, ranked)}
 
 {climate_section(region, service, city_label)}
 
@@ -533,6 +544,63 @@ def link_city_pages(index, hubs):
     return changed
 
 
+UPGRADES = [("heat-pump", "Heat pump"), ("solar", "Solar panels"), ("battery", "Home battery"), ("insulation", "Insulation"),
+            ("water-heater", "Heat pump water heater"), ("windows", "Windows & doors"), ("ev-charger", "EV charger"), ("thermostat", "Smart thermostat")]
+
+
+def quote_form(region, service, city_label, ranked):
+    """Quote request on each ranking page. Posts once per picked installer to the Worker's /estimate-lead
+    route, which emails that installer (Resend) with the homeowner's upgrades, logs the lead and notifies ops.
+    The Worker only emails addresses in installers/allowed-installer-emails.json (written by main())."""
+    svc = SERVICES[service]
+    us = region in ("ma", "ny", "ca", "co", "pa", "vt")
+    postal_label, postal_ph = ("ZIP code", "e.g. 02139") if us else ("Postal code", "e.g. M4P 1E2")
+    picks = "".join(
+        f'<label class="qf-pick"><input type="checkbox" name="pick" value="{i}"{" checked" if i < 3 else ""}> {esc(r["name"])} '
+        f'<span class="small">({r["rating"]:.1f}★, {r["reviews"]:,} reviews)</span></label>'
+        for i, r in enumerate(ranked))
+    ups = "".join(f'<label class="qf-pick"><input type="checkbox" name="upgrade" value="{v}"{" checked" if v == service else ""}> {esc(t)}</label>'
+                  for v, t in UPGRADES)
+    inst = json.dumps([{"name": r["name"], "email": r.get("email", ""), "phone": r.get("phone", "")} for r in ranked], ensure_ascii=False)
+    return f"""<section class="qf" id="get-quotes" aria-labelledby="qf-h">
+<h2 id="qf-h">Get free quotes from these {svc['lower']} installers</h2>
+<p>Pick up to 3 companies and tell them what you want done. We send your request straight to them. Free, no obligation.</p>
+<form id="qf-form" novalidate>
+<fieldset><legend>Which companies should quote?</legend>{picks}</fieldset>
+<fieldset><legend>What do you want done?</legend><div class="qf-grid">{ups}</div></fieldset>
+<div class="qf-row"><label>First name<input name="firstname" autocomplete="given-name" required></label><label>Last name<input name="lastname" autocomplete="family-name" required></label></div>
+<div class="qf-row"><label>Email<input name="email" type="email" autocomplete="email" required></label><label>Phone<input name="phone" type="tel" autocomplete="tel" required></label></div>
+<div class="qf-row"><label>{postal_label}<input name="postal" autocomplete="postal-code" placeholder="{postal_ph}" required></label>
+<label>When do you want it done?<select name="timeline"><option>In the next 3 months</option><option>3 to 6 months</option><option>Just getting prices</option></select></label></div>
+<label>Anything they should know? (optional)<textarea name="notes" rows="3" placeholder="e.g. replacing baseboard heat in a 1970s bungalow"></textarea></label>
+<input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
+<p class="small">We only share your details with the companies you pick, and never sell them. <a href="/privacy">Privacy policy</a>.</p>
+<button type="submit" class="qf-btn">Request my quotes</button>
+<p id="qf-msg" role="status" aria-live="polite"></p>
+</form>
+</section>
+<script>
+(function(){{const I={inst},f=document.getElementById('qf-form'),m=document.getElementById('qf-msg');
+f.addEventListener('change',e=>{{if(e.target.name==='pick'&&f.querySelectorAll('input[name=pick]:checked').length>3)e.target.checked=false;}});
+f.addEventListener('submit',async e=>{{e.preventDefault();const d=new FormData(f),picks=d.getAll('pick').map(i=>I[+i]),ups=d.getAll('upgrade');
+if(!picks.length){{m.textContent='Pick at least one company.';return;}}
+if(!ups.length){{m.textContent='Tick at least one thing you want done.';return;}}
+for(const k of ['firstname','lastname','email','phone','postal'])if(!String(d.get(k)||'').trim()){{m.textContent='Please fill in every field.';f.elements[k].focus();return;}}
+if(d.get('website'))return;
+const b=f.querySelector('button');b.disabled=true;m.textContent='Sending...';
+const base={{firstname:d.get('firstname'),lastname:d.get('lastname'),email:d.get('email'),phone:d.get('phone'),postal:String(d.get('postal')).trim(),
+city:{json.dumps(city_label.lower())},province:{json.dumps(region.upper())},service:{json.dumps(service)},upgrades:ups,
+notes:'Timeline: '+d.get('timeline')+'. Also asked: '+picks.map(p=>p.name).join('; ')+(d.get('notes')?'. Notes: '+d.get('notes'):''),
+page_url:location.href,referrer:document.referrer||'direct',website:''}};
+const res=await Promise.allSettled(picks.map(p=>fetch('https://leads.homepowerrebate.com/estimate-lead',{{method:'POST',headers:{{'Content-Type':'application/json'}},
+body:JSON.stringify({{...base,installer_name:p.name,installer_email:p.email,installer_phone:p.phone}})}}).then(r=>r.ok)));
+const ok=res.filter(r=>r.status==='fulfilled'&&r.value).length;
+if(ok){{f.innerHTML='<p class="qf-ok"><b>Thanks! Your request is on its way</b> to '+picks.map(p=>p.name).join(', ')+'. Expect a call or email within a few business days.</p>';
+if(window.gtag)gtag('event','generate_lead',{{method:'ranking_quote_form',installers:ok}});}}
+else{{b.disabled=false;m.textContent='Something went wrong. Please try again or email hello@homepowerrebate.com.';}}}});}})();
+</script>"""
+
+
 def badge_svg(city, service):
     """City-specific 'Top-rated' badge (design A: seal with house medallion + five stars).
     Pure SVG with system font stacks, because web fonts don't load inside an <img>."""
@@ -678,6 +746,19 @@ def main():
         for m in index:
             if m.get("indexed"):
                 (ROOT / m["url"].strip("/") / "badge.svg").write_text(badge_svg(m["city"], m["service"]), encoding="utf-8")
+        allowed = {r["email"].strip().lower() for r in rows if "@" in (r.get("email") or "")}
+        # /get-quotes/ lets homeowners pick from installers/json/**; include those so it keeps working.
+        for jf in (ROOT / "installers" / "json").rglob("*.json"):
+            try:
+                items = json.loads(jf.read_text(encoding="utf-8"))
+            except ValueError:
+                continue
+            for it in items if isinstance(items, list) else []:
+                em = str(it.get("email", "") if isinstance(it, dict) else "").strip().lower()
+                if "@" in em:
+                    allowed.add(em)
+        allowed = sorted(e for e in allowed if not re.search(r"@(domain|example)\.(com|org)$", e))
+        (ROOT / "installers" / "allowed-installer-emails.json").write_text(json.dumps(allowed, indent=0) + "\n", encoding="utf-8")
         bp, bhtml = badge_page(index)
         (ROOT / bp.strip("/")).mkdir(parents=True, exist_ok=True)
         (ROOT / bp.strip("/") / "index.html").write_text(bhtml, encoding="utf-8")

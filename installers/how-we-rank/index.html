@@ -9,6 +9,15 @@
 <style>
 :root{--ink:#0a2a2e;--ink-soft:#1a3d42;--paper:#faf7f2;--paper-warm:#f5efe5;--teal:#0d4f5c;--teal-deep:#08363f;--amber:#d4751c;--amber-bright:#e88a2e;--sage:#6b8e7f;--green-money:#2d6a4f;--rule:#d9d0c1;}
 *{margin:0;padding:0;box-sizing:border-box}
+.qf{background:#fff;border:2px solid var(--teal);border-radius:14px;padding:22px 20px;margin:28px 0}
+.qf fieldset{border:0;margin:14px 0}.qf legend{font-weight:700;margin-bottom:8px}
+.qf-pick{display:flex;gap:10px;align-items:center;min-height:44px;font-weight:500}.qf-pick input{width:20px;height:20px;flex:none}
+.qf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0 12px}
+.qf-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.qf label:not(.qf-pick){display:block;font-weight:600;font-size:15px;margin:10px 0 0}
+.qf input:not([type=checkbox]),.qf select,.qf textarea{display:block;width:100%;margin-top:4px;padding:11px;border:1px solid var(--rule);border-radius:8px;font:inherit;font-size:16px}
+.qf-btn{margin-top:16px;background:var(--amber);color:#fff;border:0;border-radius:8px;padding:14px 22px;font:inherit;font-weight:700;font-size:16px;cursor:pointer;min-height:48px}
+.qf-ok{background:#eef6f0;border-radius:8px;padding:14px}#qf-msg{margin-top:10px;font-weight:600;color:#8a2a1c}
 body{font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
 h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.2;letter-spacing:-.01em}
 .wrap{max-width:860px;margin:0 auto;padding:0 20px}

@@ -414,7 +414,7 @@ POSTS.append({
 POSTS.append({
     'slug': 'fortisbc-vs-bc-hydro-rebates',
     'title': 'FortisBC vs. BC Hydro: Why Your Rebate Options Are Completely Different',
-    'description': 'Not sure which utility you have? Here is how to check, and why it completely changes which BC home energy rebates you qualify for.',
+    'description': 'Not sure if you\'re on BC Hydro or FortisBC? Here\'s how to check in 30 seconds, and why it decides which BC home energy rebates you can get.',
     'eyebrow': 'Clear this up first',
     'published': '2026-06-12',
     'body': """

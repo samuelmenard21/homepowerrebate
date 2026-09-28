@@ -73,7 +73,7 @@ def load_rows():
             rows.append({
                 "region": region, "service": service, "city": r["City"].strip(),
                 "name": r["Business Name"].strip(), "phone": r.get("Phone", "").strip(),
-                "website": r.get("Website", "").strip(), "gmaps": r.get("Google Maps URL", "").strip(),
+                "website": r.get("Website", "").strip(), "email": r.get("Email", "").strip(), "gmaps": r.get("Google Maps URL", "").strip(),
                 "rating": rating, "reviews": reviews, "address": re.sub(r",\s*(Canada|United States|USA)$", "", r.get("Address", "").strip()),
                 "updated": r.get("Last Updated", "").strip(),
             })
@@ -324,6 +324,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url):
 <p class="small">Together these {n} companies average {avg:.1f}★ across {total_reviews:,} reviews. {esc(most_reviewed['name'])} has the most reviews ({most_reviewed['reviews']:,}).</p>
 
 <p class="small">Ranked by Google rating weighted by review count, collected {upd_h}. Rankings are never paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
+<p class="small"><b>Listed here?</b> <a href="/installers/badge/">Get your free top-rated badge</a> for your website.</p>
 
 {climate_section(region, service, city_label)}
 
@@ -532,6 +533,92 @@ def link_city_pages(index, hubs):
     return changed
 
 
+def badge_svg(city, service):
+    """City-specific 'Top-rated' badge installers can embed. Plain SVG, brand colours, no external assets."""
+    label = f"Top-rated {SERVICES[service]['name'].lower()} installer"
+    city = esc(city)
+    size = 15 if len(city) <= 16 else 13
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="240" height="96" viewBox="0 0 240 96" role="img" aria-label="{label} in {city} - HomePowerRebate">
+<rect x="1" y="1" width="238" height="94" rx="12" fill="#faf7f2" stroke="#0d4f5c" stroke-width="2"/>
+<circle cx="34" cy="48" r="20" fill="#d4751c"/><path d="M34 36l3.5 7.2 7.9 1.1-5.7 5.6 1.3 7.9-7-3.7-7 3.7 1.3-7.9-5.7-5.6 7.9-1.1z" fill="#fff"/>
+<text x="64" y="30" font-family="Georgia,serif" font-size="12" fill="#1a3d42">{label}</text>
+<text x="64" y="52" font-family="Georgia,serif" font-size="{size}" font-weight="700" fill="#0a2a2e">{city}</text>
+<text x="64" y="76" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#0a2a2e">Home<tspan fill="#d4751c">Power</tspan>Rebate</text>
+<text x="226" y="88" font-family="Arial,sans-serif" font-size="8" fill="#6b8e7f" text-anchor="end">{date.today().year}</text>
+</svg>
+"""
+
+
+def badge_page(index):
+    path = "/installers/badge/"
+    opts = sorted((m for m in index if m.get("indexed")), key=lambda m: (m["region"], m["city"], m["service"]))
+    data = json.dumps([{"u": m["url"], "c": m["city"], "s": SERVICES[m["service"]]["name"].lower(), "t": m["top"]} for m in opts], ensure_ascii=False)
+    body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/installers/">Installers</a></li><li aria-current="page">Badge</li></ol></nav>
+<header class="hero"><div class="wrap"><h1>Your Top-Rated Installer Badge</h1>
+<p>If your company appears on one of our city rankings, you've earned it from your Google reviews. Show it on your website, free.</p></div></header>
+<section class="body"><div class="wrap">
+<h2>Get your badge</h2>
+<p><label for="bdg-pick"><b>Pick your ranking page</b></label><br><select id="bdg-pick" style="width:100%;max-width:480px;padding:10px;font:inherit;font-size:16px;"></select></p>
+<p id="bdg-who" class="small"></p>
+<p id="bdg-prev"></p>
+<p><label for="bdg-code"><b>Copy this code into your website</b></label></p>
+<textarea id="bdg-code" readonly rows="4" style="width:100%;font-family:monospace;font-size:13px;padding:10px;"></textarea>
+<p><button type="button" id="bdg-copy" style="background:#d4751c;color:#fff;border:0;border-radius:8px;padding:12px 20px;font:inherit;font-weight:700;cursor:pointer;">Copy code</button></p>
+<h2>The rules</h2>
+<ul><li>Only companies listed on the ranking page can use its badge.</li>
+<li>Rankings come from Google reviews and are updated regularly. If you drop off a ranking, please remove the badge.</li>
+<li>The badge is free. You don't need to show it to be ranked, and showing it doesn't change your rank. <a href="/installers/how-we-rank/">How we rank</a>.</li>
+<li>Questions or a correction? Email <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a>.</li></ul>
+</div></section>
+<script>
+const B={data};
+const sel=document.getElementById('bdg-pick');
+B.forEach((b,i)=>{{const o=document.createElement('option');o.value=i;o.textContent=b.c+' \u2014 '+b.s;sel.appendChild(o);}});
+function show(){{const b=B[sel.value],url='{BASE}'+b.u;
+const code='<a href="'+url+'" title="Top-rated '+b.s+' installer in '+b.c+'"><img src="'+url+'badge.svg" width="240" height="96" alt="Top-rated '+b.s+' installer in '+b.c+' on HomePowerRebate"></a>';
+document.getElementById('bdg-code').value=code;
+document.getElementById('bdg-prev').innerHTML='<img src="'+b.u+'badge.svg" width="240" height="96" alt="Badge preview">';
+document.getElementById('bdg-who').textContent='Listed on this page: '+b.t.join(', ')+(b.t.length>=3?' and others':'')+'.';}}
+sel.addEventListener('change',show);
+document.getElementById('bdg-copy').addEventListener('click',()=>{{const t=document.getElementById('bdg-code');t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);}});
+show();
+</script>"""
+    title = "Top-Rated Installer Badge | HomePowerRebate"
+    desc = "Listed on a HomePowerRebate city ranking? Add your free top-rated installer badge to your website."
+    page = f"""<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title}</title>
+<meta name="description" content="{desc}"><meta name="robots" content="noindex, follow"><link rel="canonical" href="{BASE}{path}">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>{CSS}</style></head><body>
+{navfooter.render_nav("on", "")}
+{body}
+{navfooter.render_footer("on", "", "", path)}
+</body></html>
+"""
+    return path, navfooter.ensure_shared_assets(page)
+
+
+def outreach_list(index, rows):
+    """Mail-merge CSV: each listed installer with a public email -> its ranking page and badge code."""
+    by_page = {(m["region"], m["service"], m["city"]): m for m in index if m.get("indexed")}
+    out = [["business", "email", "city", "service", "ranking_url", "badge_page", "rating", "reviews"]]
+    seen = set()
+    for r in rows:
+        hub_city = next((m for k, m in by_page.items() if k[0] == r["region"] and k[1] == r["service"]
+                         and (k[2].lower() == r["city"].lower() or slugify(k[2]) == slugify(r["city"]))), None)
+        email = (r.get("email") or "").strip()
+        if not hub_city or "@" not in email or (email, hub_city["url"]) in seen:
+            continue
+        seen.add((email, hub_city["url"]))
+        out.append([r["name"], email, hub_city["city"], SERVICES[r["service"]]["name"], BASE + hub_city["url"],
+                    BASE + "/installers/badge/", r.get("rating", ""), r.get("reviews", "")])
+    with open(ROOT / "data" / "outreach-rankings.csv", "w", newline="", encoding="utf-8") as f:
+        csv.writer(f).writerows(out)
+    return len(out) - 1
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
@@ -580,6 +667,13 @@ def main():
         (ROOT / mp.strip("/")).mkdir(parents=True, exist_ok=True)
         (ROOT / mp.strip("/") / "index.html").write_text(mhtml, encoding="utf-8")
         update_installers_hub(index)
+        for m in index:
+            if m.get("indexed"):
+                (ROOT / m["url"].strip("/") / "badge.svg").write_text(badge_svg(m["city"], m["service"]), encoding="utf-8")
+        bp, bhtml = badge_page(index)
+        (ROOT / bp.strip("/")).mkdir(parents=True, exist_ok=True)
+        (ROOT / bp.strip("/") / "index.html").write_text(bhtml, encoding="utf-8")
+        print(f"{outreach_list(index, rows)} installers with public emails in data/outreach-rankings.csv (not published).")
         print(f"{link_city_pages(index, hubs)} city pages linked to their rankings.")
         (ROOT / "installers" / "rankings.json").write_text(json.dumps(index, indent=1, ensure_ascii=False) + "\n")
     print(f"{len(rows)} installers, {len(groups)} city/service groups, {len(eligible)} pages "

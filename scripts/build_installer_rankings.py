@@ -156,6 +156,11 @@ section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;
 .reg{display:inline-block;font-size:12px;font-weight:700;color:var(--green-money);border:1px solid var(--green-money);border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px;cursor:help}
 p.small .reg{border:0;padding:0;margin:0;cursor:auto}
 .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--green-money);color:#fff;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:2px}
+.bf{display:inline-block;font-size:12px;font-weight:600;color:var(--teal-deep);background:var(--paper-warm);border:1px solid var(--rule);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:2px}
+.cb{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:6px 18px 12px;margin-bottom:10px}
+.cb-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 0 4px;border-top:1px solid var(--rule);font-size:16px}
+.cb-row:first-child{border-top:0}.cb-row b{font-family:'Fraunces',Georgia,serif;font-size:19px;color:var(--ink)}
+.cb-reb b{color:var(--green-money)}.cb-note{font-size:14px!important;margin:2px 0 6px!important}
 .small{font-size:13.5px!important;color:var(--sage)!important}
 .cta{background:var(--amber);color:#fff;border-radius:14px;padding:26px 22px;text-align:center;margin-top:36px}
 .cta h3{color:#fff;font-size:21px;margin-bottom:8px}
@@ -262,8 +267,77 @@ def load_registered():
 
 REGISTERED, REG_PROGRAMS = load_registered()
 
+PS_CITIES = {}
+for _k, _reg in json.loads((ROOT / "powerscore-data.json").read_text())["regions"].items():
+    for _c in _reg["cities"].values():
+        PS_CITIES[_c["url"]] = _c
 
-def build_page(region, service, city_label, hub, installers, other_service_url):
+# Published installed-cost studies. Only sourced figures; labelled with their year and scope.
+CA_HP_COST = ("about $12,000 to $20,000", "a cold-climate central ducted heat pump in a detached house",
+              "Canadian Climate Institute and Dunsky, <em>Heat Pumps Pay Off</em> (2023 dollars, modelled for Vancouver, Edmonton, Toronto, Montréal and Halifax)",
+              "https://climateinstitute.ca/wp-content/uploads/2023/09/2024-02-14_Dunsky-CCI-Heat-Pumps-Pay-Off-Revised-Technical-Report_FINAL-5-cities.pdf")
+US_HP_COST = ("about $17,500 to $20,700", "a typical 3-ton system ($5,830 per ton for ductless up to $6,914 per ton for ducted)",
+              "Massachusetts Residential Heat Pump Invoice Cost Study, based on real Mass Save and MassCEC invoices (January 2024 dollars)",
+              "https://ma-eeac.org/wp-content/uploads/MA23X14-B-RHPINV-Residential-Heat-Pump-Invoice-Cost-Study-Web.pdf")
+US_SOLAR_COST = ("about $22,400 to $38,500", "a 7 kW home system ($3.20 to $5.50 per watt, the middle 60% of US home systems in 2023)",
+                 "Lawrence Berkeley National Lab, <em>Tracking the Sun</em>", "https://emp.lbl.gov/tracking-the-sun")
+
+
+def cost_box(region, service, city_label, hub):
+    """'What it costs here': sourced typical price, then this city's open rebates (powerscore-data)."""
+    us = REGIONS[region][0] == "us"
+    if service == "heat-pump":
+        price = US_HP_COST if us else CA_HP_COST
+    else:
+        price = US_SOLAR_COST if us else None
+    city = PS_CITIES.get(hub["url"]) if hub else None
+    cats = ["heat-pump"] if service == "heat-pump" else ["solar", "battery"]
+    reb = []
+    for c in cats:
+        d = (city or {}).get("categories", {}).get(c)
+        if d and d.get("status") == "open" and d.get("dollar_value"):
+            reb.append((c, d["dollar_value"]))
+    rows = []
+    if price:
+        rows.append(f'<div class="cb-row"><span>Typical installed price</span><b>{price[0]}</b></div>'
+                    f'<p class="cb-note">For {price[1]}. Your home may cost more or less.</p>')
+    else:
+        rows.append('<div class="cb-row"><span>Typical installed price</span><b>No official survey</b></div>'
+                    '<p class="cb-note">Canada has no public solar price survey. Get 2 or 3 quotes for the same size system and compare price per watt '
+                    'with our <a href="/solar-quote-checker/">solar quote checker</a>.</p>')
+    names = {"heat-pump": "heat pump", "solar": "solar", "battery": "battery"}
+    if reb:
+        for c, v in reb:
+            rows.append(f'<div class="cb-row cb-reb"><span>{names[c].capitalize()} rebates open in {esc(city_label)}</span><b>up to ${v:,.0f}</b></div>')
+        total = sum(v for _, v in reb)
+        rows.append(f'<p class="cb-note">That could cut your cost by up to <b>${total:,.0f}</b> if you qualify. Most rebates have rules '
+                    f'(income, your current heating, a registered contractor, approval before work starts).</p>')
+    else:
+        rows.append(f'<div class="cb-row"><span>Rebates open in {esc(city_label)}</span><b>None confirmed right now</b></div>'
+                    f'<p class="cb-note">Financing or future programs may still help. Check the rebate page before you sign.</p>')
+    src = f'<p class="small">Price source: <a href="{price[3]}" rel="nofollow noopener" target="_blank">{price[2]}</a>. ' if price else '<p class="small">'
+    src += 'Rebates: our verified program data, checked monthly. Always confirm the exact amount for your home.</p>'
+    return f'<h2>What a {SERVICES[service]["lower"]} costs in {esc(city_label)}</h2><div class="cb">{"".join(rows)}</div>{src}'
+
+
+def best_for(ranked, other_names):
+    """Up to 2 data-backed labels per company: most reviews, top rating (50+ reviews), does both services."""
+    labels = {}
+    if len(ranked) >= 3:
+        most = max(ranked, key=lambda r: r["reviews"])
+        labels.setdefault(most["name"], []).append("Most reviews")
+        seasoned = [r for r in ranked if r["reviews"] >= 50]
+        if seasoned:
+            top = max(seasoned, key=lambda r: (r["rating"], r["reviews"]))
+            if top["name"] != most["name"]:
+                labels.setdefault(top["name"], []).append("Highest rating (50+ reviews)")
+    for r in ranked:
+        if slugify(r["name"]) in other_names:
+            labels.setdefault(r["name"], []).append(other_names[slugify(r["name"])])
+    return {k: v[:2] for k, v in labels.items()}
+
+
+def build_page(region, service, city_label, hub, installers, other_service_url, other_names=None):
     c_dir, r_dir, short, long_name = REGIONS[region]
     svc = SERVICES[service]
     city_slug = hub["slug"] if hub else slugify(city_label)
@@ -285,10 +359,12 @@ def build_page(region, service, city_label, hub, installers, other_service_url):
 
     items = []
     reg_used = {}
+    labels = best_for(ranked, other_names or {})
     for i, r in enumerate(ranked, 1):
         prof = profile_url(region, r["city"], r["name"])
         name_html = f'<a href="{prof}">{esc(r["name"])}</a>' if prof else esc(r["name"])
         badge = '<span class="badge">Top pick</span>' if i <= 3 else ""
+        badge += "".join(f'<span class="bf">{esc(t)}</span>' for t in labels.get(r["name"], []))
         prog = REGISTERED.get((region, service, r["name"]))
         if prog:
             reg_used[prog["name"]] = prog
@@ -368,6 +444,8 @@ def build_page(region, service, city_label, hub, installers, other_service_url):
 
 <p class="small">Ranked by Google rating weighted by review count, collected {upd_h}. Rankings are never paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
 <p class="small"><b>Listed here?</b> <a href="/installers/badge/">Get your free top-rated badge</a> for your website.</p>
+
+{cost_box(region, service, city_label, hub)}
 
 {quote_form(region, service, city_label, ranked)}
 
@@ -753,7 +831,9 @@ def main():
         other = "solar" if service == "heat-pump" else "heat-pump"
         other_url = page_path(region, other, city) if (region, other, city) in eligible else ""
         label = hub["label"] if hub else city
-        path, html_out, meta = build_page(region, service, label, hub, inst, other_url)
+        also = "Also installs heat pumps" if other == "heat-pump" else "Also installs solar"
+        other_names = {slugify(r["name"]): also for r in groups.get((region, other, city), [])}
+        path, html_out, meta = build_page(region, service, label, hub, inst, other_url, other_names)
         built.append({**meta, "html": html_out, "text": body_text(html_out, label)})
 
     held = near_duplicates(built)

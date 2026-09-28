@@ -102,6 +102,49 @@ REGIONS = {
         ],
         "links": [("/ca/on/", "Ontario rebates by city"), ("/blog/ontario-home-renovation-savings-program-explained/", "Home Renovation Savings explained"), ("/blog/furnace-buying-guide/", "Furnace buying guide")],
     },
+    "california": {
+        "slug": "california", "nav": "ca", "name": "California", "long": "California", "rank_region": "ca",
+        "title": "California Furnace & AC Rebates 2026 (PG&E, SCE, SMUD)",
+        "desc": "PG&E has no furnace or AC rebate for most homes in 2026, and TECH and HEEHRA heat pump funds are full. What's left: SMUD up to $5,000 and free ESA repairs.",
+        "h1": "California Furnace and Air Conditioner Rebates (2026)",
+        "short": "<b>Most California homes can't get a rebate for a new furnace or air conditioner in 2026.</b> PG&E's rebate page lists no furnace, AC or heat pump rebate. "
+                 "The two big statewide heat pump programs are full: TECH Clean California is waitlist-only, and HEEHRA was fully reserved on February 24, 2026. The federal tax credits ended December 31, 2025. "
+                 "What's still open: SMUD customers get up to $3,000 for a heat pump plus up to $2,000 when switching off gas, and income-qualified PG&E customers can get a broken or unsafe gas furnace repaired or replaced free through the Energy Savings Assistance program.",
+        "table": [
+            ("New gas furnace", "PG&E / SCE / SDG&E", "No rebate. Income-qualified homes can get an unsafe or broken furnace repaired or replaced free (ESA)."),
+            ("New central air conditioner", "PG&E / SCE / SDG&E", "No rebate listed for homeowners."),
+            ("Heat pump (statewide)", "TECH Clean California", "Waitlist only since Nov 14, 2025. Was $1,000 to $5,000."),
+            ("Heat pump (income-qualified)", "HEEHRA (state IRA rebates)", "Fully reserved Feb 24, 2026; new requests waitlisted. Was up to $8,000."),
+            ("Heat pump (Sacramento)", "SMUD", "Up to $3,000 for a two-stage or variable-speed heat pump, plus up to $2,000 Go Electric bonus when replacing a gas furnace."),
+            ("Heat pump (LA city)", "LADWP", "Check LADWP's current Consumer Rebate Program amounts."),
+            ("Federal tax credit", "IRS 25C", "Ended for installs after Dec 31, 2025."),
+            ("Free upgrades (income-qualified)", "Energy Savings Assistance (ESA)", "Free furnace and water heater repair or replacement if PG&E finds the gas unit broken or unsafe. Owners and renters."),
+        ],
+        "decide": [
+            ("Your gas furnace works and your AC is dying", "Replace the AC with a heat pump. It costs about the same, cools the same, and can take over most heating. Keep the furnace as backup."),
+            ("Your gas furnace is failing and you're a SMUD customer", "Get a heat pump quote first. Up to $5,000 in SMUD rebates often makes it cheaper than a new furnace plus AC."),
+            ("Your gas furnace is failing and you're PG&E, SCE or SDG&E", "There's no rebate either way right now. Compare real quotes for a furnace + AC and for a heat pump. Coastal and valley winters are mild, so heat pumps work well."),
+            ("Your income is limited", "Apply for Energy Savings Assistance first. If your furnace is broken or unsafe, it can be fixed or replaced free."),
+            ("You're on a TECH or HEEHRA waitlist", "Don't sign until your reservation is confirmed. Contractors apply for these, so ask yours to check."),
+        ],
+        "faq": [
+            ("Does PG&E give a rebate for a new furnace?", "No, not for most homes. PG&E's rebate page lists no furnace rebate in 2026. Income-qualified customers can get a broken or unsafe gas furnace repaired or replaced free through the Energy Savings Assistance program."),
+            ("Is there a California rebate for a new air conditioner?", "Not from PG&E, SCE or SDG&E for most homeowners. A heat pump replaces an AC and also heats, but the statewide heat pump rebates are full right now."),
+            ("Is TECH Clean California still available?", "Single-family incentives were fully reserved on November 14, 2025. New requests go on a waitlist."),
+            ("Can I still get the federal tax credit for a heat pump or furnace?", "No. The 25C credit ended for equipment installed after December 31, 2025."),
+            ("What does SMUD pay to switch from a gas furnace?", "Up to $3,000 for a qualifying heat pump, plus up to $2,000 from the Go Electric bonus when you replace a gas furnace or gas water heater."),
+        ],
+        "sources": [
+            ("PG&E rebates and incentives", "https://www.pge.com/en/save-energy-and-money/rebates-and-incentives.html"),
+            ("PG&E Energy Savings Assistance", "https://www.pge.com/en/save-energy-and-money/energy-saving-programs/energy-savings-assistance-program.html"),
+            ("TECH Clean California", "https://techcleanca.com/incentives/single-family-incentives/"),
+            ("California Energy Commission: HEEHRA", "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs"),
+            ("SMUD rebates", "https://www.smud.org/Rebates-and-Savings-Tips/Rebates-for-My-Home"),
+            ("SMUD Go Electric bonus", "https://www.smud.org/Rebates-and-Savings-Tips/Improve-Home-Efficiency/Go-Electric-Bonus-Package"),
+            ("IRS 25C credit", "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"),
+        ],
+        "links": [("/us/ca/", "California rebates by city"), ("/blog/7-california-heat-pump-rebates-you-can-stack/", "California heat pump rebates you can stack"), ("/blog/pge-pre-approval-guide/", "PG&E pre-approval guide")],
+    },
     "alberta": {
         "slug": "alberta", "nav": "ab", "name": "Alberta", "long": "Alberta", "rank_region": "ab",
         "title": "Alberta Furnace Rebates 2026: What's Actually Left",
@@ -194,7 +237,7 @@ def page(r):
 {faq}
 <p style="font-size:14px;color:#1a3d42;margin-top:28px;"><b>Sources, checked {CHECKED}:</b> {srcs}. Amounts change; confirm with the program before you buy.</p>
 <p><b>Related:</b> {links}</p>
-<p><b>Other provinces:</b> {others}</p>
+<p><b>Other regions:</b> {others}</p>
 </div></section>"""
     return path, shell(r["title"] + " | HomePowerRebate", r["desc"], path, r["nav"], body, ld)
 
@@ -203,16 +246,16 @@ def hub():
     path = "/furnace-rebates/"
     cards = "".join(f'<li><a href="/furnace-rebates/{r["slug"]}/"><b>{e(r["long"])}</b></a>: {e(r["desc"])}</li>' for r in REGIONS.values())
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Furnace rebates</li></ol></nav>
-<header class="hero"><div class="wrap"><h1>Furnace and AC Rebates by Province (2026)</h1>
+<header class="hero"><div class="wrap"><h1>Furnace and AC Rebates by Province and State (2026)</h1>
 <p>Updated {CHECKED}.</p></div></header>
 <section class="body"><div class="wrap">
-<div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;margin-bottom:28px;"><p style="margin:0;"><b>Short answer:</b> In 2026, almost no Canadian program pays you to buy a new gas furnace or a plain air conditioner. The money has moved to heat pumps, which heat and cool in one system. Pick your province to see what's really available and whether switching makes sense for your home.</p></div>
+<div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;margin-bottom:28px;"><p style="margin:0;"><b>Short answer:</b> In 2026, almost no program in Canada or California pays you to buy a new gas furnace or a plain air conditioner. The money has moved to heat pumps, which heat and cool in one system. Pick your province to see what's really available and whether switching makes sense for your home.</p></div>
 <ul style="line-height:1.9;">{cards}</ul>
 <p>Not sure which system fits? Read <a href="/blog/heat-pump-vs-air-conditioner-furnace/">furnace and AC vs heat pump</a>.</p>
 </div></section>"""
-    ld = [{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Furnace and AC Rebates by Province", "url": BASE + path, "dateModified": ISO}]
-    return path, shell("Furnace & AC Rebates by Province (2026) | HomePowerRebate",
-                       "Is there a rebate for a new furnace or air conditioner? Province-by-province answers for BC, Ontario and Alberta, checked September 2026.",
+    ld = [{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Furnace and AC Rebates by Province and State", "url": BASE + path, "dateModified": ISO}]
+    return path, shell("Furnace & AC Rebates by Province & State (2026) | HomePowerRebate",
+                       "Is there a rebate for a new furnace or air conditioner? Province-by-province answers for BC, Ontario, Alberta and California, checked September 2026.",
                        path, "on", body, ld)
 
 
@@ -241,11 +284,13 @@ table{{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}}t
 LINK_START, LINK_END = "<!-- FURNACE-LINK-START -->", "<!-- FURNACE-LINK-END -->"
 # Pages already getting furnace/AC impressions in Search Console -> which region pages to link.
 INBOUND = {
-    "blog/heat-pump-vs-air-conditioner-furnace/index.html": ("bc", "ontario", "alberta"),
+    "blog/heat-pump-vs-air-conditioner-furnace/index.html": ("bc", "ontario", "alberta", "california"),
     "blog/bc-hydro-product-rebates-appliances/index.html": ("bc",),
     "ca/bc/index.html": ("bc",),
     "ca/on/index.html": ("ontario",),
     "ca/ab/index.html": ("alberta",),
+    "us/ca/index.html": ("california",),
+    "blog/pge-pre-approval-guide/index.html": ("california",),
 }
 
 

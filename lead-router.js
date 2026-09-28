@@ -251,6 +251,7 @@ async function handleFetch(request, env, ctx) {
     if (path === '/estimate-lead') return handleEstimateLead(request, env);
     if (path === '/outcomes/submit') return handleOutcomeSubmit(request, env);
     if (path === '/contact') return handleContactSubmit(request, env);
+    if (path === '/installer-survey') return handleInstallerSurvey(request, env);
 
     return jsonResponse({ error: `Unknown route: ${path}` }, 404);
 }
@@ -539,6 +540,75 @@ async function handleContactSubmit(request, env) {
     return jsonResponse({ error: 'Could not send your message. Please try again shortly.' }, 502);
   }
 
+  return jsonResponse({ success: true }, 200);
+}
+
+// ===========================================================================
+// ROUTE — /installer-survey (2026 installer survey, /installers/survey/)
+// ===========================================================================
+// Stores answers in OUTCOMES_DB.installer_survey (schema-installer-survey.sql),
+// logs to the Sheet (record_type 'installer_survey') and alerts ops.
+const SURVEY_REGIONS = ['bc', 'on', 'ab', 'ns', 'ma', 'ny', 'ca', 'co', 'pa', 'vt', 'other'];
+const SURVEY_FIELDS = ['name', 'company_site', 'price_hp_ducted', 'price_hp_minisplit', 'price_solar_watt', 'price_battery',
+  'price_attic', 'price_trend', 'lead_time', 'rebate_share', 'rebate_other', 'rebate_pain', 'blocker', 'wish', 'page_url'];
+const SURVEY_LISTS = ['services', 'rebates', 'also_ask'];
+
+async function handleInstallerSurvey(request, env) {
+  let p;
+  try { p = await request.json(); } catch (e) { return jsonResponse({ error: 'Invalid JSON' }, 400); }
+  if (p.website) return jsonResponse({ success: true }, 200); // honeypot
+
+  const company = cleanString(p.company || '').slice(0, 200);
+  const email = cleanString(p.email || '').slice(0, 200);
+  const region = String(p.region || '').toLowerCase();
+  if (!company) return jsonResponse({ error: 'Please enter your company name' }, 400);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return jsonResponse({ error: 'Invalid email' }, 400);
+  if (!SURVEY_REGIONS.includes(region)) return jsonResponse({ error: 'Please choose where you work' }, 400);
+
+  const answers = {};
+  for (const k of SURVEY_FIELDS) if (p[k]) answers[k] = cleanString(String(p[k])).slice(0, 600);
+  for (const k of SURVEY_LISTS) if (Array.isArray(p[k])) answers[k] = p[k].slice(0, 15).map(v => cleanString(String(v)).slice(0, 120));
+
+  const record = {
+    record_type: 'installer_survey',
+    timestamp: new Date().toISOString(),
+    company, email, region,
+    city: cleanString(p.city || '').slice(0, 120),
+    services: (answers.services || []).join(', '),
+    quote_ok: p.quote_ok === 'yes' ? 1 : 0,
+    mark_ok: p.mark_ok === 'yes' ? 1 : 0,
+    answers
+  };
+
+  let stored = false;
+  if (env.OUTCOMES_DB) {
+    try {
+      await env.OUTCOMES_DB.prepare(
+        'INSERT INTO installer_survey (created_at, company, email, region, city, services, quote_ok, mark_ok, answers) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+      ).bind(record.timestamp, company, email, region, record.city, record.services, record.quote_ok, record.mark_ok,
+             JSON.stringify(answers)).run();
+      stored = true;
+    } catch (e) {
+      console.error('installer_survey insert failed:', e);
+    }
+  }
+
+  const results = await Promise.allSettled([
+    logToSheet({ ...record, answers: JSON.stringify(answers) }, env),
+    env.OPS_EMAIL ? resendEmail(env.RESEND_API_KEY, {
+      from: 'HomePowerRebate <ops@homepowerrebate.com>',
+      to: env.OPS_EMAIL,
+      reply_to: email,
+      subject: `[Survey] ${escapeHtml(company)} (${region.toUpperCase()})`,
+      html: `<p>New installer survey answer.</p><ul><li><strong>Company:</strong> ${escapeHtml(company)}</li>
+        <li><strong>Email:</strong> ${escapeHtml(email)}</li><li><strong>Region / city:</strong> ${escapeHtml(region)} / ${escapeHtml(record.city)}</li>
+        <li><strong>Quote OK:</strong> ${record.quote_ok ? 'yes' : 'no'} · <strong>Contributor mark:</strong> ${record.mark_ok ? 'yes' : 'no'}</li></ul>
+        <pre style="white-space:pre-wrap">${escapeHtml(JSON.stringify(answers, null, 1))}</pre>`
+    }) : Promise.resolve()
+  ]);
+  if (!stored && results.every(r => r.status === 'rejected')) {
+    return jsonResponse({ error: 'Could not save your answers. Please try again shortly.' }, 502);
+  }
   return jsonResponse({ success: true }, 200);
 }
 

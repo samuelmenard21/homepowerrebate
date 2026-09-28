@@ -40,7 +40,8 @@ SHEET_ID = "11YrVuRF2xutjeaPlL9zwd2LwzmBAxfFujFGMdadph-4"
 # Filter criteria
 MIN_RATING = 4.0
 MIN_REVIEWS = 10
-MAX_PER_CITY = 5
+MAX_PER_CITY = 5   # override with --max=12
+PRIOR_REVIEWS, PRIOR_RATING = 25, 4.5   # same review-weighted score as the public rankings
 
 # Fields we want back from searchText. This IS the required field mask.
 FIELD_MASK = ",".join([
@@ -84,6 +85,9 @@ WINDOWS_GOOD_TYPES = {"general_contractor", "window_installation_service", "door
 WINDOWS_GOOD_WORDS = (
     "window", "door", "glazing", "glass", "fenestration",
 )
+
+BATTERY_GOOD_TYPES = {"solar_energy_contractor", "electrician"}
+BATTERY_GOOD_WORDS = ("solar", "battery", "batteries", "powerwall", "energy storage", "electric", "energy")
 
 EV_CHARGER_GOOD_TYPES = {"electrician", "general_contractor"}
 EV_CHARGER_GOOD_WORDS = (
@@ -395,6 +399,7 @@ def is_relevant_installer(name, primary_type, installer_type):
         "insulation": (INSULATION_GOOD_TYPES, INSULATION_GOOD_WORDS),
         "windows-doors": (WINDOWS_GOOD_TYPES, WINDOWS_GOOD_WORDS),
         "ev-charger": (EV_CHARGER_GOOD_TYPES, EV_CHARGER_GOOD_WORDS),
+        "battery": (BATTERY_GOOD_TYPES, BATTERY_GOOD_WORDS),
     }
     good_types, good_words = type_map.get(installer_type, (HEATPUMP_GOOD_TYPES, HEATPUMP_GOOD_WORDS))
 
@@ -448,6 +453,8 @@ def scrape_installers(api_key, installer_type, province="bc", debug=False):
         queries = ["insulation contractor", "attic insulation company", "spray foam insulation"]
     elif installer_type == "windows-doors":
         queries = ["window installation company", "window and door company", "replacement windows"]
+    elif installer_type == "battery":
+        queries = ["home battery installer", "solar and battery storage installer", "Tesla Powerwall installer"]
     elif installer_type == "ev-charger":
         queries = ["electrician", "ev charger installation", "electrical contractor"]
     else:
@@ -555,7 +562,7 @@ def scrape_installers(api_key, installer_type, province="bc", debug=False):
     for city_name in cities:
         ranked = sorted(
             by_city.get(city_name, []),
-            key=lambda x: (-x["rating"], -x["review_count"]),
+            key=lambda x: -((x["review_count"] * x["rating"] + PRIOR_REVIEWS * PRIOR_RATING) / (x["review_count"] + PRIOR_REVIEWS)),
         )[:MAX_PER_CITY]
 
         # Auto-recommend the top pick per city (highest rating, then most reviews).
@@ -588,6 +595,16 @@ def save_to_csv(installers, installer_type, province="bc"):
             s = '"' + s.replace('"', '""') + '"'
         return s
 
+    # Places can't return emails; keep ones we already found for the same business.
+    known = {}
+    if csv_path.exists():
+        import csv as _csv
+        for r in _csv.DictReader(csv_path.open(encoding="utf-8")):
+            if r.get("Email"):
+                known[(r.get("Business Name", "").strip().lower())] = r["Email"].strip()
+    for i in installers:
+        i["email"] = i.get("email") or known.get(i["name"].strip().lower(), "")
+
     with open(csv_path, "w") as f:
         f.write("City,Business Name,Address,Phone,Email,Website,Image URL,Google Rating,Review Count,Google Maps URL,HomePowerRebate Recommended,Notes,Last Updated\n")
         for i in installers:
@@ -614,7 +631,8 @@ def tab_name_for(installer_type, province="bc"):
     """Each service+province gets its own tab so runs don't overwrite each other.
     BC keeps its original unsuffixed tab names (no change to existing data);
     Ontario gets its own tabs so a run here can never clear BC's real data."""
-    base = "Solar" if "solar" in installer_type else "Heat Pumps"
+    base = {"solar": "Solar", "insulation": "Insulation", "battery": "Batteries", "ev-charger": "EV Chargers",
+            "windows-doors": "Windows"}.get(installer_type, "Heat Pumps")
     return base if province == "bc" else f"{base} - {PROVINCES[province]['abbrev']}"
 
 
@@ -742,48 +760,42 @@ def write_to_google_sheet(installers, installer_type, province="bc"):
         return False
 
 
+TYPES = ("heat-pump", "solar", "insulation", "battery", "ev-charger", "windows-doors")
+
 if __name__ == "__main__":
+    # python3 scripts/scrape_google_places_installers.py heat-pump,solar,insulation,battery --province=all --max=12 [--no-sheet] [--debug]
     positional = [a for a in sys.argv[1:] if not a.startswith("--")]
     flags = [a for a in sys.argv[1:] if a.startswith("--")]
-
-    if len(positional) < 1:
-        print("Usage: python3 scrape_google_places_installers.py [heat-pump|solar] [--province=bc|on] [--debug]")
-        print("       (omit the API key entirely — you'll be prompted for it, input hidden)")
+    usage = "Usage: python3 scrape_google_places_installers.py TYPE[,TYPE...] [--province=bc|on|...|all] [--max=N] [--no-sheet] [--debug]"
+    if not positional or any(t not in TYPES for t in positional[-1].lower().split(",")):
+        print(usage + f"\n  TYPE is one of {', '.join(TYPES)}")
         sys.exit(1)
-
-    # Accept the key as an explicit first positional arg for backward
-    # compatibility, but the normal path now is: no key on the command line
-    # at all, just the installer type — then prompt interactively so the key
-    # never has to survive a copy-paste, an export, or a shell history file.
-    if positional[0].lower() in ("heat-pump", "solar"):
-        installer_type = positional[0].lower()
-        api_key = getpass.getpass("Google Places API key (input hidden, not saved anywhere): ").strip()
-    elif len(positional) >= 2:
-        api_key = positional[0]
-        installer_type = positional[1].lower()
-    else:
-        print("Usage: python3 scrape_google_places_installers.py [heat-pump|solar] [--province=bc|on] [--debug]")
-        sys.exit(1)
-
+    types = positional[-1].lower().split(",")
+    api_key = getpass.getpass("Google Places API key (input hidden, not saved anywhere): ").strip()
     if not api_key:
         print("No API key entered — aborting.")
         sys.exit(1)
 
     debug = "--debug" in flags
+    use_sheet = "--no-sheet" not in flags
     province = "bc"
     for arg in flags:
         if arg.startswith("--province="):
             province = arg.split("=", 1)[1].lower()
-    if province not in PROVINCES:
-        print(f"Unknown province '{province}'. Choices: {list(PROVINCES)}")
+        if arg.startswith("--max="):
+            MAX_PER_CITY = int(arg.split("=", 1)[1])
+    provinces = list(PROVINCES) if province == "all" else [province]
+    if any(p not in PROVINCES for p in provinces):
+        print(f"Unknown province '{province}'. Choices: {list(PROVINCES)} or all")
         sys.exit(1)
 
-    installers = scrape_installers(api_key, installer_type, province=province, debug=debug)
-
-    if not installers:
-        print("\n❌ No qualified installers found. Re-run with --debug to see raw results.")
-        sys.exit(1)
-
-    print(f"\n📊 Total qualified: {len(installers)} installers")
-    save_to_csv(installers, installer_type, province=province)
-    write_to_google_sheet(installers, installer_type, province=province)
+    for prov in provinces:
+        for installer_type in types:
+            installers = scrape_installers(api_key, installer_type, province=prov, debug=debug)
+            if not installers:
+                print(f"\n⚠️  {prov} {installer_type}: no qualified installers found.")
+                continue
+            print(f"\n📊 {prov} {installer_type}: {len(installers)} installers")
+            save_to_csv(installers, installer_type, province=prov)
+            if use_sheet:
+                write_to_google_sheet(installers, installer_type, province=prov)

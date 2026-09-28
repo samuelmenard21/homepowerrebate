@@ -234,58 +234,36 @@ def get_blog_posts_html(city_region):
     html += '    </div>'
     return html
 
-def customize_page(template, city):
-    """Replace all placeholders in the template with city-specific values."""
-    html = template
+GUIDES_START, GUIDES_END = "<!-- BC-GUIDES-START -->", "<!-- BC-GUIDES-END -->"
+ANCHOR = '    </div>\n\n    <p style="text-align: center; margin-top: 32px;">'
 
-    # Capitalize variants
-    city_title = city['name']  # Kelowna
-    city_lower = city['slug']  # kelowna
 
-    # Case-sensitive replacements (for structured data, URLs, geo tags)
-    html = html.replace('Kelowna', city_title)
-    html = html.replace('kelowna', city_lower)
-    html = html.replace('"Central Okanagan"', f'"{city["region"]}"')
-    html = html.replace("'Central Okanagan'", f"'{city['region']}'")
+def inject_guides(html):
+    """Insert (or refresh) the BC guide-link grid in a city's OWN page.
 
-    # Coordinates (geo.position uses semicolon, ICBM uses comma)
-    html = html.replace('49.8880;-119.4960', f'{city["lat"]};{city["lon"]}')
-    html = html.replace('49.8880, -119.4960', f'{city["lat"]}, {city["lon"]}')
+    Never copies one city's page over another: a Sept 26, 2026 run of the
+    old template-copy version overwrote 14 city hubs with Kelowna's content.
+    """
+    block = f"{GUIDES_START}\n{get_blog_posts_html('BC')}\n{GUIDES_END}"
+    if GUIDES_START in html:
+        return re.sub(re.escape(GUIDES_START) + r".*?" + re.escape(GUIDES_END), lambda m: block, html, count=1, flags=re.S)
+    if ANCHOR not in html:
+        return html
+    return html.replace(ANCHOR, "    </div>\n" + block + "\n\n    <p style=\"text-align: center; margin-top: 32px;\">", 1)
 
-    # Phone number (all instances across multiple forms + schema)
-    html = html.replace('(250) 555-0100', city['phone'])
-    html = html.replace('+1-250-555-0100', f'+1-{city["phone"].replace(" ", "-").replace("(", "").replace(")", "")}')
-
-    # Value and payback (in FAQ schema)
-    html = html.replace('$20,000', city['value'])
-    html = html.replace('7-11 yr payback', city['payback'])
-
-    # Inject region-specific blog posts (for internal linking)
-    blog_html = get_blog_posts_html('BC')  # All BC cities use BC-specific posts
-    html = html.replace(
-        '    </div>\n\n    <p style="text-align: center; margin-top: 32px;">',
-        '    </div>\n' + blog_html + '\n\n    <p style="text-align: center; margin-top: 32px;">'
-    )
-
-    return html
 
 def main():
-    # Read template
-    template_path = Path('ca/bc/kelowna/index.html')
-    template = template_path.read_text(encoding='utf-8')
-
-    # Generate each city
     for city in CITIES:
-        city_dir = Path(f'ca/bc/{city["slug"]}')
-        city_dir.mkdir(parents=True, exist_ok=True)
+        page = Path(f"ca/bc/{city['slug']}/index.html")
+        if not page.exists():
+            print(f"skip {city['slug']:15} (no page — create it by hand, never from another city)")
+            continue
+        html = page.read_text(encoding="utf-8")
+        new_html = inject_guides(html)
+        if new_html != html:
+            page.write_text(new_html, encoding="utf-8")
+        print(f"{'updated' if new_html != html else 'unchanged':9} ca/bc/{city['slug']}/index.html")
 
-        # Customize template
-        html = customize_page(template, city)
-
-        # Write page
-        output_path = city_dir / 'index.html'
-        output_path.write_text(html, encoding='utf-8')
-        print(f'✓ {city["slug"]:15} → ca/bc/{city["slug"]}/index.html')
 
 if __name__ == '__main__':
     main()

@@ -111,6 +111,53 @@ def ev():
     p.write_text(t, encoding='utf-8')
 
 
+THERMO = 'https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/bring-your-thermostat-and-get-85'
+SUR = 'https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/smart-usage-rewards'
+
+
+def thermostats():
+    p = ROOT / 'us/ny/con-edison/new-york-city/smart-thermostats/index.html'
+    t = p.read_text(encoding='utf-8')
+    title = 'Con Edison Smart Thermostat Rebate: $85 (2026)'
+    desc = 'Con Edison pays $85 per eligible smart thermostat you enroll in its Smart Thermostat Program, after purchase. How it works, eligible brands, and the catch.'
+    t = set_meta(t, title, desc)
+    t = drop_old_crumb(t)
+    t = t.replace('<h1>Smart Thermostats Rebates in New York City</h1>', '<h1>Con Edison Smart Thermostat Rebate in NYC</h1>')
+    t = t.replace("<p>Here's exactly how the smart thermostats rebate works in New York City (Con Edison territory), plus local installers to call.</p>",
+                  '<p>How Con Edison&rsquo;s $85 thermostat reward works for New York City homes, checked September 26, 2026.</p>')
+    faqs = [
+     ('How much is the Con Edison smart thermostat rebate?', 'Con Edison pays $85 for each eligible smart thermostat you enroll in its Smart Thermostat Program, up to 12 devices. It arrives 6 to 8 weeks after enrollment. From your third year, you can earn $25 more each year if you take part in at least half of the event hours.'),
+     ('Is the $85 taken off the price at the store?', 'No. You buy the thermostat at full price, then enroll it with Con Edison and get $85 back later. In return, Con Edison can adjust your thermostat a little during peak-demand events, usually for up to four hours on weekdays.'),
+     ('Which thermostats qualify?', 'Con Edison lists Nest, Honeywell Total Connect Comfort, Honeywell Home, Emerson Sensi and Amazon smart thermostats. Check the current list on Con Edison\'s page before you buy.'),
+     ('Can I join Smart Usage Rewards too?', 'Not at the same time. You cannot be in Smart Usage Rewards and the Smart Thermostat Program together, but you can switch between them.'),
+    ]
+    body = '''    <div class="callout" style="border-left:4px solid var(--amber);"><strong>Short answer:</strong> Con Edison pays <strong>$85 per eligible smart thermostat</strong> you enroll in its Smart Thermostat Program (up to 12). It is a reward paid 6&ndash;8 weeks <em>after</em> you enroll, not money off at the store, and it lets Con Edison nudge your thermostat during peak-demand events.</div>
+
+    <h2>How much is the Con Edison thermostat rebate?</h2>
+    <p>$85 per thermostat, up to 12 devices. Starting in your third year, you can earn an extra $25 a year if you take part in at least half of the scheduled event hours. Events usually last up to four hours, most often on weekdays between 11 a.m. and 11 p.m.</p>
+    <h2>Which thermostats qualify?</h2>
+    <p>Con Edison lists Nest, Honeywell Total Connect Comfort, Honeywell Home, Emerson (Copeland) Sensi and Amazon smart thermostats. If a brand is not on Con Edison&rsquo;s current list, it will not earn the $85 &mdash; check before you buy. Prices below are shown before the reward, because you get the $85 later.</p>
+    <p class="source-note">Sources, checked September 26, 2026: <a href="''' + THERMO + '''" target="_blank" rel="noopener">Con Edison Smart Thermostat Program</a>, <a href="''' + SUR + '''" target="_blank" rel="noopener">Con Edison Smart Usage Rewards</a>.</p>
+'''
+    if '    <h2>How much you get</h2>' in t:
+        a = t.index('    <h2>How much you get</h2>'); b = t.index('    <h2>Compare smart thermostats you can buy</h2>', a)
+        t = t[:a] + body + '\n' + t[b:]
+    t = re.sub(r'<span class="thermo-after-rebate">\$\d+ after the \$85 rebate</span>', '<span class="thermo-after-rebate">+ $85 back after enrolling, if eligible</span>', t)
+    t = t.replace('Listed by name as eligible for the Con Edison $85 rebate', 'Brand is on Con Edison&rsquo;s eligible list')
+    if '<h2>Common questions</h2>' in t:
+        a = t.index('    <h2>Common questions</h2>') if '    <h2>Common questions</h2>' in t else t.index('<h2>Common questions</h2>')
+        m = re.compile(r'\s*<h2>(Other Con Edison|Your utility|Next steps)').search(t, a + 10)
+        t = t[:a] + '    <h2>Common questions</h2>\n' + faq_block(faqs) + t[m.start():]
+    t = replace_ld(t, 'FAQPage', {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
+        {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in faqs]})
+    t = replace_ld(t, 'Article', {'@context': 'https://schema.org', '@type': 'Article', 'headline': title, 'description': desc,
+        'datePublished': '2026-08-22', 'dateModified': '2026-09-26', 'author': AUTHOR,
+        'publisher': {'@type': 'Organization', 'name': 'HomePowerRebate'},
+        'mainEntityOfPage': 'https://homepowerrebate.com/us/ny/con-edison/new-york-city/smart-thermostats/'})
+    p.write_text(t, encoding='utf-8')
+
+
 if __name__ == '__main__':
     ev()
+    thermostats()
     print('ok')

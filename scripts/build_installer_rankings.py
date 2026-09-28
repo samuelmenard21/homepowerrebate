@@ -471,6 +471,67 @@ def update_installers_hub(index):
     hub_path.write_text(s, encoding="utf-8")
 
 
+LINK_START, LINK_END = "<!-- RANKINGS-LINK-START -->", "<!-- RANKINGS-LINK-END -->"
+CAROUSEL_RE = re.compile(r'<section class="unified-carousel-section".*?</section>', re.S)
+
+
+def rankings_block(city, entries):
+    """Small card linking a city page to its ranked installer lists."""
+    items = []
+    for sv in ("heat-pump", "solar"):
+        e = entries.get(sv)
+        if not e:
+            continue
+        top = ", ".join(esc(n) for n in e["top"][:3])
+        items.append(
+            f'<a href="{e["url"]}" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;'
+            f'padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;">'
+            f'<strong style="font-size:17px;">Top-rated {SERVICES[sv]["name"].lower()} installers in {esc(city)} &rarr;</strong>'
+            f'<span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">{e["count"]} local companies ranked by '
+            f'{e["reviews"]:,} Google reviews. Top picks: {top}.</span></a>')
+    return (f'{LINK_START}\n<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers">'
+            f'<h2 style="font-family:\'Fraunces\',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in {esc(city)}</h2>'
+            f'<p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, '
+            f'weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p>'
+            f'<div style="display:flex;gap:14px;flex-wrap:wrap;">{"".join(items)}</div></section>\n{LINK_END}')
+
+
+def inject_block(s, block, anchor_re=None):
+    if LINK_START in s:
+        return re.sub(re.escape(LINK_START) + r".*?" + re.escape(LINK_END), lambda m: block, s, count=1, flags=re.S)
+    m = anchor_re.search(s) if anchor_re else None
+    if m:
+        return s[:m.end()] + "\n" + block + s[m.end():]
+    i = s.find('<footer')
+    return s[:i] + block + "\n" + s[i:] if i >= 0 else s
+
+
+def link_city_pages(index, hubs):
+    """Link each city hub and its heat-pump/solar pages to the matching ranking pages."""
+    by_hub = {}
+    for e in index:
+        hub = find_hub(hubs, e["region"], e["city"])
+        if hub:
+            by_hub.setdefault(hub["url"], (hub["label"], {}))[1][e["service"]] = e
+    changed = 0
+    for hub_url, (city, entries) in by_hub.items():
+        targets = [(hub_url, entries, CAROUSEL_RE)]
+        targets += [(f"{hub_url}{sv}/", {sv: e}, None) for sv, e in entries.items()]
+        for url, ents, anchor in targets:
+            f = ROOT / url.strip("/") / "index.html"
+            if not f.exists():
+                continue
+            s = f.read_text(encoding="utf-8")
+            new = inject_block(s, rankings_block(city, ents), anchor)
+            if len(ents) == 1:
+                sv, e = next(iter(ents.items()))
+                new = re.sub(r'href="/installers/">(See all [^<]*installers)', rf'href="{e["url"]}">\1', new)
+            if new != s:
+                f.write_text(new, encoding="utf-8")
+                changed += 1
+    return changed
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
@@ -519,6 +580,7 @@ def main():
         (ROOT / mp.strip("/")).mkdir(parents=True, exist_ok=True)
         (ROOT / mp.strip("/") / "index.html").write_text(mhtml, encoding="utf-8")
         update_installers_hub(index)
+        print(f"{link_city_pages(index, hubs)} city pages linked to their rankings.")
         (ROOT / "installers" / "rankings.json").write_text(json.dumps(index, indent=1, ensure_ascii=False) + "\n")
     print(f"{len(rows)} installers, {len(groups)} city/service groups, {len(eligible)} pages "
           f"({'dry run' if args.dry_run else f'{written} written'}).")

@@ -534,17 +534,25 @@ def link_city_pages(index, hubs):
 
 
 def badge_svg(city, service):
-    """City-specific 'Top-rated' badge installers can embed. Plain SVG, brand colours, no external assets."""
-    label = f"Top-rated {SERVICES[service]['name'].lower()} installer"
-    city = esc(city)
-    size = 15 if len(city) <= 16 else 13
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="240" height="96" viewBox="0 0 240 96" role="img" aria-label="{label} in {city} - HomePowerRebate">
-<rect x="1" y="1" width="238" height="94" rx="12" fill="#faf7f2" stroke="#0d4f5c" stroke-width="2"/>
-<circle cx="34" cy="48" r="20" fill="#d4751c"/><path d="M34 36l3.5 7.2 7.9 1.1-5.7 5.6 1.3 7.9-7-3.7-7 3.7 1.3-7.9-5.7-5.6 7.9-1.1z" fill="#fff"/>
-<text x="64" y="30" font-family="Georgia,serif" font-size="12" fill="#1a3d42">{label}</text>
-<text x="64" y="52" font-family="Georgia,serif" font-size="{size}" font-weight="700" fill="#0a2a2e">{city}</text>
-<text x="64" y="76" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#0a2a2e">Home<tspan fill="#d4751c">Power</tspan>Rebate</text>
-<text x="226" y="88" font-family="Arial,sans-serif" font-size="8" fill="#6b8e7f" text-anchor="end">{date.today().year}</text>
+    """City-specific 'Top-rated' badge (design A: seal with house medallion + five stars).
+    Pure SVG with system font stacks, because web fonts don't load inside an <img>."""
+    label = f"TOP-RATED {SERVICES[service]['name'].upper()} INSTALLER"
+    c = esc(city)
+    size = 40 if len(city) <= 11 else 34 if len(city) <= 14 else 28 if len(city) <= 18 else 23
+    star = "M12 2l3 6.3 6.9 1-5 4.8 1.2 6.9L12 17.8 5.9 21l1.2-6.9-5-4.8 6.9-1z"
+    stars = "".join(f'<path transform="translate({172 + i * 20} 118) scale(0.72)" d="{star}" fill="#e88a2e"/>' for i in range(5))
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="480" height="192" viewBox="0 0 480 192" role="img" aria-label="Top-rated {SERVICES[service]['name'].lower()} installer in {c}, ranked by Google reviews - homepowerrebate.com">
+<rect width="480" height="192" rx="20" fill="#08363f"/>
+<circle cx="92" cy="96" r="60" fill="#d4751c"/>
+<circle cx="92" cy="96" r="51" fill="none" stroke="#faf7f2" stroke-width="1.5" stroke-dasharray="2 4"/>
+<path d="M92 62L62 87h8v30h16V100h12v17h16V87h8z" fill="#faf7f2" stroke="#faf7f2" stroke-width="3" stroke-linejoin="round"/>
+<rect x="102" y="68" width="7" height="12" fill="#faf7f2"/>
+<text x="92" y="138" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="2" fill="#faf7f2">{date.today().year}</text>
+<text x="172" y="58" font-family="Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" letter-spacing="1.6" fill="#e88a2e">{label}</text>
+<text x="172" y="100" font-family="Georgia,'Times New Roman',serif" font-size="{size}" font-weight="700" fill="#faf7f2">{c}</text>
+{stars}
+<text x="276" y="131" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#faf7f2" fill-opacity="0.8">Ranked by Google reviews</text>
+<text x="172" y="160" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#faf7f2">homepowerrebate.com</text>
 </svg>
 """
 
@@ -575,9 +583,9 @@ const B={data};
 const sel=document.getElementById('bdg-pick');
 B.forEach((b,i)=>{{const o=document.createElement('option');o.value=i;o.textContent=b.c+' \u2014 '+b.s;sel.appendChild(o);}});
 function show(){{const b=B[sel.value],url='{BASE}'+b.u;
-const code='<a href="'+url+'" title="Top-rated '+b.s+' installer in '+b.c+'"><img src="'+url+'badge.svg" width="240" height="96" alt="Top-rated '+b.s+' installer in '+b.c+' on HomePowerRebate"></a>';
+const code='<a href="'+url+'" title="Top-rated '+b.s+' installer in '+b.c+'"><img src="'+url+'badge.svg" width="320" height="128" alt="Top-rated '+b.s+' installer in '+b.c+' on HomePowerRebate"></a>';
 document.getElementById('bdg-code').value=code;
-document.getElementById('bdg-prev').innerHTML='<img src="'+b.u+'badge.svg" width="240" height="96" alt="Badge preview">';
+document.getElementById('bdg-prev').innerHTML='<img src="'+b.u+'badge.svg" width="320" height="128" alt="Badge preview">';
 document.getElementById('bdg-who').textContent='Listed on this page: '+b.t.join(', ')+(b.t.length>=3?' and others':'')+'.';}}
 sel.addEventListener('change',show);
 document.getElementById('bdg-copy').addEventListener('click',()=>{{const t=document.getElementById('bdg-code');t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);}});

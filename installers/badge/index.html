@@ -193,9 +193,9 @@ const B=[{"u": "/installers/ab/calgary/heat-pump/", "c": "Calgary", "s": "heat p
 const sel=document.getElementById('bdg-pick');
 B.forEach((b,i)=>{const o=document.createElement('option');o.value=i;o.textContent=b.c+' — '+b.s;sel.appendChild(o);});
 function show(){const b=B[sel.value],url='https://homepowerrebate.com'+b.u;
-const code='<a href="'+url+'" title="Top-rated '+b.s+' installer in '+b.c+'"><img src="'+url+'badge.svg" width="240" height="96" alt="Top-rated '+b.s+' installer in '+b.c+' on HomePowerRebate"></a>';
+const code='<a href="'+url+'" title="Top-rated '+b.s+' installer in '+b.c+'"><img src="'+url+'badge.svg" width="320" height="128" alt="Top-rated '+b.s+' installer in '+b.c+' on HomePowerRebate"></a>';
 document.getElementById('bdg-code').value=code;
-document.getElementById('bdg-prev').innerHTML='<img src="'+b.u+'badge.svg" width="240" height="96" alt="Badge preview">';
+document.getElementById('bdg-prev').innerHTML='<img src="'+b.u+'badge.svg" width="320" height="128" alt="Badge preview">';
 document.getElementById('bdg-who').textContent='Listed on this page: '+b.t.join(', ')+(b.t.length>=3?' and others':'')+'.';}
 sel.addEventListener('change',show);
 document.getElementById('bdg-copy').addEventListener('click',()=>{const t=document.getElementById('bdg-code');t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);});

@@ -550,8 +550,8 @@ async function handleContactSubmit(request, env) {
 // logs to the Sheet (record_type 'installer_survey') and alerts ops.
 const SURVEY_REGIONS = ['bc', 'on', 'ab', 'ns', 'ma', 'ny', 'ca', 'co', 'pa', 'vt', 'other'];
 const SURVEY_FIELDS = ['name', 'company_site', 'price_hp_ducted', 'price_hp_minisplit', 'price_solar_watt', 'price_battery',
-  'price_attic', 'price_trend', 'lead_time', 'rebate_share', 'rebate_other', 'rebate_pain', 'blocker', 'wish', 'page_url'];
-const SURVEY_LISTS = ['services', 'rebates', 'also_ask'];
+  'price_attic', 'price_trend', 'tariff_impact', 'tariff_switch', 'lead_time', 'rebate_share', 'rebate_other', 'rebate_pain', 'blocker', 'wish', 'page_url'];
+const SURVEY_LISTS = ['services', 'rebates', 'also_ask', 'tariff_items'];
 
 async function handleInstallerSurvey(request, env) {
   let p;

@@ -62,6 +62,8 @@ PRICE_Q = {
     ],
 }
 
+TARIFF_ITEMS = ["Heat pump outdoor units", "Indoor units and air handlers", "Solar panels", "Inverters", "Batteries",
+                "Copper line sets and wire", "Steel and aluminum parts", "Electrical panels and breakers"]
 ALSO_ASK = ["Heat pump", "Central AC only", "New furnace", "Solar", "Home battery", "Backup generator", "Insulation or air sealing",
             "Windows or doors", "EV charger", "Electrical panel upgrade", "Heat pump water heater"]
 BLOCKERS = ["Upfront price", "Confused by rebates", "Rebates take too long to pay", "Waiting for an install date",
@@ -91,7 +93,7 @@ def build():
 
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/installers/">Installers</a></li><li aria-current="page">2026 installer survey</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>2026 Home Energy Installer Survey</h1>
-<p>Five minutes. Real answers from installers on prices, wait times and rebates, so homeowners know what to expect before they call you.</p></div></header>
+<p>Five minutes. Real answers from installers on prices, tariffs, wait times and rebates, so homeowners know what to expect before they call you.</p></div></header>
 <section class="body"><div class="wrap">
 <div class="sv-give"><h2 style="margin-top:0">What you get for taking part</h2><ul>
 <li><b>A "Survey contributor" mark</b> next to your company on our top-rated rankings. It shows you share real information with homeowners. It never changes your rank.</li>
@@ -115,6 +117,10 @@ def build():
 <p class="sv-hint" id="sv-pick-first">Choose what you install above to see these questions.</p>
 {price_html}
 <fieldset><legend>Compared to a year ago, your prices are:</legend>{radios("price_trend", ["Down more than 5%", "About the same", "Up 5–10%", "Up more than 10%"])}</fieldset>
+
+<fieldset><legend>How have tariffs and trade changes (US or Canadian) affected your equipment costs in the last 12 months?</legend>{radios("tariff_impact", ["No real effect", "Up under 5%", "Up 5–10%", "Up 10–20%", "Up more than 20%", "Not sure yet"])}</fieldset>
+<fieldset><legend>Which equipment has been hit hardest? Pick all that apply.</legend>{checks("tariff_items", [(x, x) for x in TARIFF_ITEMS], "qf-grid")}</fieldset>
+<fieldset><legend>Because of tariffs or supply, have you changed what you sell?</legend>{radios("tariff_switch", ["No", "Switched some brands", "Stocked up ahead of price increases", "Longer waits for some equipment", "Dropped some products"])}</fieldset>
 
 <h2>2. Wait times</h2>
 <fieldset><legend>If a homeowner signed today, when could you start a typical job?</legend>{radios("lead_time", ["Within a week", "1–2 weeks", "2–4 weeks", "1–2 months", "More than 2 months"])}</fieldset>
@@ -158,7 +164,7 @@ f.addEventListener('change',function(ev){{
 f.addEventListener('submit',function(ev){{
   ev.preventDefault();var msg=document.getElementById('qf-msg');msg.textContent='';
   if(!f.checkValidity()){{msg.textContent='Please fill in your company, email, region and city.';f.reportValidity();return;}}
-  var d={{}};new FormData(f).forEach(function(v,k){{if(k==='rebates'||k==='services'||k==='also_ask'){{(d[k]=d[k]||[]).push(v)}}else d[k]=v}});
+  var d={{}};new FormData(f).forEach(function(v,k){{if(k==='rebates'||k==='services'||k==='also_ask'||k==='tariff_items'){{(d[k]=d[k]||[]).push(v)}}else d[k]=v}});
   d.rebates=(d.rebates||[]).filter(function(v){{return [].some.call(f.querySelectorAll('.sv-reb:not([hidden]) input:checked'),function(x){{return x.value===v}})}});
   d.page_url=location.href;var b=f.querySelector('button');b.disabled=true;b.textContent='Sending...';
   fetch('{ENDPOINT}',{{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify(d)}})

@@ -383,8 +383,9 @@ a { color: var(--teal); }
 def head(title, description, canonical, og_title=None, og_description=None):
     og_title = og_title or title
     og_description = og_description or description
-    # US city calculators drew almost no search impressions; keep them for users, out of the index.
-    robots = '\n<meta name="robots" content="noindex, follow">' if "/stacking-calculator/us/" in canonical else ""
+    # City calculators drew almost no search impressions and competed with the city rebate pages for the same queries
+    # (Search Console, Sep 2026). Keep them for users, out of the index; only the main calculator stays indexed.
+    robots = '\n<meta name="robots" content="noindex, follow">' if canonical.rstrip("/").split("/stacking-calculator")[-1] else ""
     return f'''<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{esc(title)}</title>{robots}

@@ -37,7 +37,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_URL = "https://homepowerrebate.com"
 TODAY = datetime.date.today().isoformat()
 
-EXCLUDE_DIRS = {".git", "node_modules", "scripts", ".claude", "installers/photos", "_partials"}
+EXCLUDE_DIRS = {".git", "node_modules", "scripts", "dist", "reports", "data", ".claude", "installers/photos", "_partials"}
 
 # Dev/template/utility files that live at the repo root or scattered around it
 # and are real .html files but were never meant to be crawled — found 2026-09-01

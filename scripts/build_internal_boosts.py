@@ -54,6 +54,16 @@ JOBS += [
       "ca/on/ottawa/windows-doors/index.html", "ca/on/ottawa/water-heater/index.html", "ca/on/ottawa/hrv/index.html",
       "ca/on/ottawa/solar/index.html", "ca/on/ottawa/battery/index.html", "ca/on/ottawa/ev-charger/index.html"]),
 ]
+PSV = "/blog/bc-hydro-peak-saver-explained/"
+BCH = "/programs/bc-hydro-rebates/"
+JOBS += [
+    ("PEAK-SAVER-WORTH-LINK", f'<b>Is the BC Hydro Peak Saver battery rebate worth it?</b> Read <a href="{PSV}">the Peak Saver program explained</a>, including what you earn per device.',
+     ["blog/bc-hydro-peak-saver-battery-rebate-5000-vs-1500/index.html", "questions/peak-saver-program-bc-how-it-works/index.html",
+      "blog/is-bc-hydro-solar-rebate-worth-it/index.html", "programs/bc-hydro-peak-saver/index.html"]),
+    ("BCH-REBATES-LINK", f'<b>BC Hydro customer?</b> See <a href="{BCH}">every BC Hydro rebate, with amounts and rules</a>.',
+     ["blog/bc-hydro-product-rebates-appliances/index.html", "smart-thermostats/index.html", "ca/bc/index.html"]
+     + sorted(str(p.relative_to(ROOT)) for p in (ROOT / "ca" / "bc").glob("*/index.html"))),
+]
 INS = "/insulation-rebates/"
 JOBS += [
     ("INSULATION-HUB-LINK", f'<b>Insulation rebates in every region:</b> compare <a href="{INS}">insulation rebates by province and state</a>, with a BC attic calculator.',
@@ -127,6 +137,31 @@ def ottawa_eap():
     return 0
 
 
+PEAK_WORTH = """<!-- PEAK-WORTH-SECTION-START -->
+<h2>Is the BC Hydro Peak Saver battery rebate worth it?</h2>
+<p><b>For most homes with a battery, yes.</b> Enrolling is what unlocks the larger battery rebate: up to $5,000 with Peak Saver, against up to $1,500 if the battery is paired with solar and not enrolled. On top of that, Peak Saver pays $500 once and about $250 each winter, roughly $3,000 over 10 years for one battery. The trade-off is that BC Hydro can briefly draw power from your battery during very high demand across the grid. If backup power during outages is your main reason for a battery, see below how much control you keep. Other devices earn less: see the <a href="/programs/bc-hydro-peak-saver/">Peak Saver credits by device</a>.</p>
+<!-- PEAK-WORTH-SECTION-END -->
+"""
+
+
+def peak_section():
+    f = ROOT / "blog/bc-hydro-peak-saver-explained/index.html"
+    t = f.read_text(encoding="utf-8")
+    S, E = "<!-- PEAK-WORTH-SECTION-START -->", "<!-- PEAK-WORTH-SECTION-END -->"
+    if S in t:
+        new = re.sub(re.escape(S) + ".*?" + re.escape(E) + r"\n?", lambda m: PEAK_WORTH, t, count=1, flags=re.S)
+    else:
+        m = re.search(r"<h2[^>]*>\s*What it pays", t)
+        if not m:
+            print("no 'What it pays' heading")
+            return 0
+        new = t[:m.start()] + PEAK_WORTH + t[m.start():]
+    if new != t:
+        f.write_text(new, encoding="utf-8")
+        return 1
+    return 0
+
+
 def attic_section():
     f = ROOT / "blog/attic-insulation-guide/index.html"
     t = f.read_text(encoding="utf-8")
@@ -164,7 +199,7 @@ def greener_section():
 
 
 def main():
-    n = greener_section() + attic_section() + ottawa_eap()
+    n = greener_section() + attic_section() + ottawa_eap() + peak_section()
     for marker, html, pages in JOBS:
         S, E = f"<!-- {marker}-START -->", f"<!-- {marker}-END -->"
         blk = S + BOX.format(html) + E

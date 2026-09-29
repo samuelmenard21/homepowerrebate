@@ -47,6 +47,18 @@ JOBS += [
      ["ca/bc/index.html", "ca/on/index.html", "ca/ab/index.html", "ca/ns/index.html", "rebate-tracker/index.html"]),
 ]
 
+INS = "/insulation-rebates/"
+JOBS += [
+    ("INSULATION-HUB-LINK", f'<b>Insulation rebates in every region:</b> compare <a href="{INS}">insulation rebates by province and state</a>, with a BC attic calculator.',
+     ["blog/attic-insulation-guide/index.html", "blog/insulation-buying-guide-bc/index.html", "blog/insulation-buying-guide-ca/index.html",
+      "blog/insulation-buying-guide-on/index.html", "blog/insulation-rebates-bc-stack-federal-provincial/index.html",
+      "blog/why-insulation-first-energy-retrofit/index.html", "ca/bc/index.html", "ca/on/index.html", "ca/ab/index.html", "ca/ns/index.html",
+      "us/ma/index.html", "us/ny/index.html", "us/ca/index.html", "us/co/index.html", "us/pa/index.html", "installers/index.html"]
+     + sorted(str(p.relative_to(ROOT)) for p in ROOT.glob("ca/*/*/insulation/index.html"))
+     + sorted(str(p.relative_to(ROOT)) for p in ROOT.glob("us/*/*/insulation/index.html"))
+     + sorted(str(p.relative_to(ROOT)) for p in ROOT.glob("us/*/*/*/insulation/index.html"))),
+]
+
 GREENER_BLOCK = """<!-- GREENER-PROVINCES-START -->
 <h2>Greener Homes closed across Canada. Where to look in your province</h2>
 <div style="overflow-x:auto;"><table style="width:100%;min-width:520px;border-collapse:collapse;font-size:15px;">
@@ -59,6 +71,40 @@ GREENER_BLOCK = """<!-- GREENER-PROVINCES-START -->
 <p style="font-size:13.5px;color:#6b8e7f;">Amounts checked September 2026 against each program's official page; the <a href="/rebate-tracker/">rebate tracker</a> lists every change with sources.</p>
 <!-- GREENER-PROVINCES-END -->
 """
+
+
+ATTIC_BLOCK = """<!-- ATTIC-REBATES-START -->
+<h2>Attic insulation rebates by region</h2>
+<div style="overflow-x:auto;"><table style="width:100%;min-width:520px;border-collapse:collapse;font-size:15px;">
+<tr style="background:#f5efe5;"><th style="text-align:left;padding:8px;">Where</th><th style="text-align:left;padding:8px;">Attic rebate</th><th style="text-align:left;padding:8px;">Key rule</th></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">BC (BC Hydro)</td><td style="padding:8px;border-top:1px solid #d9d0c1;">$0.02 per sq ft per R added, up to $900</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Electric heat, HPCN contractor, at least R-12 added</td></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">Ontario</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Up to $1,250 without an assessment; to R-50 with one: $1,500, $1,200 or $900</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Assessment before and after for the larger amounts</td></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">Nova Scotia</td><td style="padding:8px;border-top:1px solid #d9d0c1;">To R-50, up to $750</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Through a Home Energy Assessment</td></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">Massachusetts</td><td style="padding:8px;border-top:1px solid #d9d0c1;">75% to 100% off insulation and air sealing</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Start with the free Mass Save assessment</td></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">New York</td><td style="padding:8px;border-top:1px solid #d9d0c1;">$2,500 or $3,000 seal-and-insulate package</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Comfort Home contractors, participating counties</td></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">California (SMUD)</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Up to $3,000 for air sealing, attic insulation and ducts</td><td style="padding:8px;border-top:1px solid #d9d0c1;">SMUD Contractor Network</td></tr>
+</table></div>
+<p>See every program, with sources and more regions, on the <a href="/insulation-rebates/">insulation rebates by province and state</a> page.</p>
+<!-- ATTIC-REBATES-END -->
+"""
+
+
+def attic_section():
+    f = ROOT / "blog/attic-insulation-guide/index.html"
+    t = f.read_text(encoding="utf-8")
+    S, E = "<!-- ATTIC-REBATES-START -->", "<!-- ATTIC-REBATES-END -->"
+    if S in t:
+        new = re.sub(re.escape(S) + ".*?" + re.escape(E) + r"\n?", lambda m: ATTIC_BLOCK, t, count=1, flags=re.S)
+    else:
+        m = re.search(r"<h2[^>]*>\s*What to do next", t)
+        if not m:
+            print("no next-steps heading")
+            return 0
+        new = t[:m.start()] + ATTIC_BLOCK + t[m.start():]
+    if new != t:
+        f.write_text(new, encoding="utf-8")
+        return 1
+    return 0
 
 
 def greener_section():
@@ -80,7 +126,7 @@ def greener_section():
 
 
 def main():
-    n = greener_section()
+    n = greener_section() + attic_section()
     for marker, html, pages in JOBS:
         S, E = f"<!-- {marker}-START -->", f"<!-- {marker}-END -->"
         blk = S + BOX.format(html) + E

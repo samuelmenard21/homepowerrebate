@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 from build_furnace_pages import shell, CHECKED, ISO, AUTHOR  # noqa: E402
+import apply_canonical_nav_footer as navfooter  # noqa: E402
 from build_installer_rankings import BASE  # noqa: E402
 
 PATH = "/smart-thermostats/"
@@ -180,7 +181,7 @@ def link_articles():
         else:
             i = s.find("</article>")
             if i < 0:
-                i = s.find("<footer")
+                i = navfooter.content_insert_point(s)
             if i < 0:
                 continue
             s = s[:i] + block + "\n" + s[i:]

@@ -22,6 +22,10 @@ import html
 import json
 import os
 import re
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import apply_canonical_nav_footer as navfooter  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -111,7 +115,7 @@ def main():
         if section is None:
             print(f"  SKIP {city_slug}: no installer data")
             continue
-        idx = text.find("<footer")
+        idx = navfooter.content_insert_point(text)
         if idx == -1:
             print(f"  SKIP {city_slug}: no <footer> anchor found")
             continue

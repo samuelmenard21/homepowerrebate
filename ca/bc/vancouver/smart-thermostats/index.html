@@ -306,7 +306,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 
 <!-- On a city/province page, call showProvinceCities('bc') once on load
      so the dropdown opens to the right tab, and add a highlighted/active style to the
-     current city's <a> for vancouver - do not otherwise change the link list. -->
+     current city's <a> for vancouver — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/bc/">British Columbia</a></li><li><a href="/ca/bc/vancouver/">Vancouver</a></li><li aria-current="page">Smart Thermostat</li></ol></nav>
@@ -471,7 +471,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 </article>
 
 <!-- CANONICAL-FOOTER-START -->
-<!-- Newsletter - every page, parameterize city dropdown default to Vancouver where relevant -->
+<!-- Newsletter — every page, parameterize city dropdown default to Vancouver where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div class="wrap" style="text-align: center; color: #fff; max-width: 600px;">
     <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
@@ -527,8 +527,11 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
-          <li><a href="/ca/">Canada by Province</a></li>
-          <li><a href="/us/">US by State</a></li>
+          <li><a href="/rebate-tracker/">Rebate Tracker</a></li>
+          <li><a href="/smart-thermostats/">Smart Thermostat Rebates</a></li>
+          <li><a href="/batteries/">Home Battery Guides</a></li>
+          <li><a href="/furnace-rebates/">Furnace &amp; AC Rebates</a></li>
+          <li><a href="/solar-quote-checker/">Solar Quote Checker</a></li>
         </ul>
       </div>
       <div>
@@ -544,7 +547,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     </div>
     <div class="footer-bottom">
       <div>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about" style="color:inherit;">Sam Menard</a>. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
-      <div>Made in Canada &#127465;&#127462;</div>
+      <div>Made in Canada 🇨🇦</div>
     </div>
   </div>
 </footer>
@@ -634,7 +637,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     responseEl.style.display = 'block';
     document.getElementById('newsletter-form').style.display = 'none';
   } catch (error) {
-    responseEl.textContent = 'Something went wrong - please try again or email us directly.';
+    responseEl.textContent = 'Something went wrong — please try again or email us directly.';
     responseEl.style.display = 'block';
     responseEl.style.background = 'rgba(163, 64, 47, 0.2)';
     responseEl.style.borderColor = 'rgba(163, 64, 47, 0.4)';

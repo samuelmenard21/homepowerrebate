@@ -151,6 +151,24 @@ def find_pages():
     return sorted(set(pages))
 
 
+def last_changed():
+    """Path -> date of the last commit that touched it (git), so <lastmod> reflects real changes.
+    Every URL carrying today's date teaches Google to ignore lastmod entirely."""
+    import subprocess
+    out = subprocess.run(["git", "-C", ROOT, "log", "--name-only", "--format=@%cs", "--no-renames"],
+                         capture_output=True, text=True).stdout
+    dates, cur = {}, None
+    for line in out.splitlines():
+        if line.startswith("@"):
+            cur = line[1:]
+        elif line and line not in dates:
+            dates[line] = cur
+    dirty = subprocess.run(["git", "-C", ROOT, "status", "--porcelain"], capture_output=True, text=True).stdout
+    for line in dirty.splitlines():
+        dates[line[3:].strip()] = TODAY
+    return dates
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
@@ -169,7 +187,7 @@ def main():
             skipped_noindex += 1
             continue
         priority, changefreq = classify(rel_url)
-        entries.append((rel_url, priority, changefreq))
+        entries.append((rel_url, priority, changefreq, os.path.relpath(page_path, ROOT)))
         by_tier[priority] = by_tier.get(priority, 0) + 1
 
     entries.sort(key=lambda e: e[0])
@@ -182,11 +200,12 @@ def main():
     if args.dry_run:
         return
 
+    changed = last_changed()
     lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for rel_url, priority, changefreq in entries:
+    for rel_url, priority, changefreq, rel_file in entries:
         loc = BASE_URL + rel_url
         lines.append(
-            f'  <url><loc>{loc}</loc><lastmod>{TODAY}</lastmod>'
+            f'  <url><loc>{loc}</loc><lastmod>{changed.get(rel_file, TODAY)}</lastmod>'
             f'<changefreq>{changefreq}</changefreq><priority>{priority}</priority></url>'
         )
     lines.append("</urlset>")

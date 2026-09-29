@@ -389,6 +389,7 @@ h1, h2, h3, h4, h5, h6 {
 .section-dark .section-lede { color: rgba(250, 247, 242, 0.75); }
 
 /* What we do — 3 step cards */
+.what-grid.what-grid-4 { grid-template-columns: repeat(4, 1fr); gap: 18px; }
 .what-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
 }
@@ -794,7 +795,7 @@ h1, h2, h3, h4, h5, h6 {
   .section { padding: 56px 22px; }
   .section-warm-inner { padding: 56px 22px; }
   .section-dark-inner { padding: 56px 22px; }
-  .what-grid, .future-grid { grid-template-columns: 1fr; }
+  .what-grid, .future-grid, .what-grid.what-grid-4 { grid-template-columns: 1fr; }
   .trust-cards { grid-template-columns: 1fr; }
   .philosophy { padding: 48px 28px; border-radius: 20px; }
   .philosophy-pillars { grid-template-columns: 1fr; gap: 16px; }
@@ -984,16 +985,19 @@ h1, h2, h3, h4, h5, h6 {
 <section class="hero">
   <div class="hero-eyebrow">
     <span class="hero-eyebrow-dot"></span>
-    8 categories &middot; 187 guides &middot; 123 cities
+    Canada &amp; US &middot; 123 cities &middot; Checked monthly
   </div>
   <h1 class="hero-h1">
-    Heat pumps, solar, insulation, and five more categories &mdash; <em>real numbers for your city.</em>
+    Find every home energy rebate <em>for your city.</em>
   </h1>
 
   <div class="quick-answer">
-    <div class="quick-answer-label">What's actually on this site</div>
+    <div class="quick-answer-label">Short answer</div>
     <p class="quick-answer-text">
-      187 guides across heat pumps, solar, batteries, insulation, water heaters, windows, EV chargers, and smart thermostats &mdash; plus top-rated installer rankings for 200+ cities, based on Google reviews. Every guide links to your city's real rebate numbers, not a provincial average.
+      HomePowerRebate shows the heat pump, solar, battery, insulation, thermostat and other home energy rebates open in your city, in Canada and the US. Each amount links to the official program and is checked every month. We also rank top-rated local installers by Google reviews. It's free, and no one pays to be listed.
+    </p>
+    <p class="quick-answer-text" style="margin-top:10px;font-size:15px;">
+      Popular now: <a href="/rebate-tracker/">what ended and what's new</a> &middot; <a href="/smart-thermostats/">smart thermostat rebates</a> &middot; <a href="/batteries/">home battery guides</a> &middot; <a href="/furnace-rebates/">furnace &amp; AC rebates</a> &middot; <a href="/solar-quote-checker/">check a solar quote</a>
     </p>
   </div>
 
@@ -1254,7 +1258,7 @@ h1, h2, h3, h4, h5, h6 {
     <h2 class="section-h2">Pick a category to see real numbers</h2>
     <p class="section-lede">Each one has its own rebate math and its own programs. Pick your city below for the exact figures.</p>
   </div>
-  <div class="what-grid" style="grid-template-columns:repeat(4, 1fr); gap:18px;">
+  <div class="what-grid what-grid-4">
     <a href="#city-picker" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:14px; padding:22px; text-decoration:none;">
       <div style="font-size:24px; margin-bottom:8px;">&#128293;</div>
       <h3 style="font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--teal-deep); margin-bottom:4px;">Heat Pump</h3>
@@ -1686,8 +1690,11 @@ h1, h2, h3, h4, h5, h6 {
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
-          <li><a href="/ca/">Canada by Province</a></li>
-          <li><a href="/us/">US by State</a></li>
+          <li><a href="/rebate-tracker/">Rebate Tracker</a></li>
+          <li><a href="/smart-thermostats/">Smart Thermostat Rebates</a></li>
+          <li><a href="/batteries/">Home Battery Guides</a></li>
+          <li><a href="/furnace-rebates/">Furnace &amp; AC Rebates</a></li>
+          <li><a href="/solar-quote-checker/">Solar Quote Checker</a></li>
         </ul>
       </div>
       <div>

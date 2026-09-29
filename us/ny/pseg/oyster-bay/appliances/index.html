@@ -185,12 +185,12 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/retrofit-assessment/?city=appliances" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Assessment</a>
+      <a href="/retrofit-assessment/?city=oyster-bay" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Assessment</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/retrofit-assessment/?city=appliances" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Assessment</a>
+      <a href="/retrofit-assessment/?city=oyster-bay" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Assessment</a>
     </div>
     <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
       Pick your city
@@ -215,7 +215,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
         <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Massachusetts</button>
-        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New York</button>
+        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New York</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
         <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Pennsylvania</button>
@@ -242,7 +242,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     <div id="province-cities-ca" style="display:none; gap:8px;">
       <a href="/us/ca/los-angeles/">Los Angeles</a><a href="/us/ca/sacramento/">Sacramento</a><a href="/us/ca/bay-area/">Bay Area</a><a href="/us/ca/san-diego/">San Diego</a><a href="/us/ca/inland-empire/">Inland Empire</a>
     </div>
-    <div id="province-cities-ny" style="display:none; gap:8px;">
+    <div id="province-cities-ny" style="display:grid; gap:8px;">
       <a href="/us/ny/con-edison/new-york-city/">New York City</a><a href="/us/ny/con-edison/yonkers/">Yonkers</a><a href="/us/ny/con-edison/mount-vernon/">Mount Vernon</a><a href="/us/ny/con-edison/new-rochelle/">New Rochelle</a><a href="/us/ny/con-edison/white-plains/">White Plains</a><a href="/us/ny/pseg/brookhaven/">Brookhaven</a><a href="/us/ny/pseg/islip/">Islip</a><a href="/us/ny/pseg/babylon/">Babylon</a><a href="/us/ny/pseg/huntington/">Huntington</a><a href="/us/ny/pseg/smithtown/">Smithtown</a><a href="/us/ny/pseg/oyster-bay/">Oyster Bay</a><a href="/us/ny/pseg/southampton/">Southampton</a><a href="/us/ny/central-hudson/poughkeepsie/">Poughkeepsie</a><a href="/us/ny/central-hudson/newburgh/">Newburgh</a><a href="/us/ny/central-hudson/kingston/">Kingston</a><a href="/us/ny/central-hudson/beacon/">Beacon</a><a href="/us/ny/central-hudson/saugerties/">Saugerties</a><a href="/us/ny/national-grid/albany/">Albany</a><a href="/us/ny/national-grid/buffalo/">Buffalo</a><a href="/us/ny/national-grid/rochester/">Rochester</a><a href="/us/ny/national-grid/syracuse/">Syracuse</a>
     </div>
     <div id="province-cities-pa" style="display:none; gap:8px;">
@@ -257,6 +257,10 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     </div>
   </div>
 </nav>
+
+<!-- On a city/province page, call showProvinceCities('ny') once on load
+     so the dropdown opens to the right tab, and add a highlighted/active style to the
+     current city's <a> for oyster-bay — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ny/pseg/">New York</a></li><li><a href="/us/ny/pseg/oyster-bay/">Oyster Bay</a></li><li aria-current="page">Appliances</li></ol></nav>
@@ -325,6 +329,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 </article>
 
 <!-- CANONICAL-FOOTER-START -->
+<!-- Newsletter — every page, parameterize city dropdown default to Oyster Bay where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div class="wrap" style="text-align: center; color: #fff; max-width: 600px;">
     <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
@@ -332,7 +337,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
     <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Every Friday: what I'm learning about rebates across every province and state we cover, heat pump reality checks, solar economics, and the installers I trust. Real stuff, no marketing.</p>
     <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
       <input type="email" id="newsletter-email" placeholder="your@email.com" required style="padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
-      <input type="hidden" id="newsletter-city" value="Appliances">
+      <input type="hidden" id="newsletter-city" value="Oyster Bay">
       <input type="hidden" id="newsletter-page" value="/us/ny/pseg/oyster-bay/appliances/">
       <button type="submit" style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'Inter Tight', sans-serif;">Subscribe</button>
       <p style="font-size: 11px; color: rgba(250, 247, 242, 0.6); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
@@ -376,18 +381,31 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
           <li><a href="/powerscore/">PowerScore Rankings</a></li>
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/get-quotes/">Get Quotes</a></li>
-          <li><a href="/retrofit-assessment/?city=appliances">Retrofit Assessment</a></li>
+          <li><a href="/retrofit-assessment/?city=oyster-bay">Retrofit Assessment</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
-          <li><a href="/ca/">Canada by Province</a></li>
-          <li><a href="/us/">US by State</a></li>
+          <li><a href="/rebate-tracker/">Rebate Tracker</a></li>
+          <li><a href="/smart-thermostats/">Smart Thermostat Rebates</a></li>
+          <li><a href="/batteries/">Home Battery Guides</a></li>
+          <li><a href="/furnace-rebates/">Furnace &amp; AC Rebates</a></li>
+          <li><a href="/solar-quote-checker/">Solar Quote Checker</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-col-links">
+          <li><a href="/about">About</a></li>
+          <li><a href="/partners/">Partners</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/contact/">Contact</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about" style="color:inherit;">Sam Menard</a>. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
-      <div>Made in USA</div>
+      <div>Made in Canada 🇨🇦</div>
     </div>
   </div>
 </footer>
@@ -415,7 +433,6 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
-showProvinceCities('pseg');
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

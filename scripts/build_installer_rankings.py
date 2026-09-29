@@ -626,7 +626,7 @@ def inject_block(s, block, anchor_re=None):
     m = anchor_re.search(s) if anchor_re else None
     if m:
         return s[:m.end()] + "\n" + block + s[m.end():]
-    i = s.find('<footer')
+    i = navfooter.content_insert_point(s)
     return s[:i] + block + "\n" + s[i:] if i >= 0 else s
 
 

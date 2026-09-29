@@ -47,7 +47,7 @@ REGION_PREFIX_TO_CODE = {
 }
 CATEGORY_NAMES = {
     "heat-pump", "insulation", "solar", "battery", "water-heater",
-    "smart-thermostats", "ev-charger", "windows-doors", "windows",
+    "smart-thermostats", "ev-charger", "windows-doors", "windows", "appliances", "hrv",
 }
 
 
@@ -77,6 +77,15 @@ CITY_LABELS = load_city_labels()
 BREADCRUMB_HREF_RE = re.compile(r'href="(/(?:ca|us)/[a-z0-9\-]+(?:/[a-z0-9\-]+)*)/?"')
 
 
+def content_insert_point(html_text: str) -> int:
+    """Where to insert new page content so it sits ABOVE the shared footer block.
+    Inserting just before "<footer" puts content inside the CANONICAL-FOOTER markers,
+    and the next restamp deletes it (happened to 327 pages before 2026-09-28).
+    Returns -1 if neither anchor exists."""
+    i = html_text.find(FOOTER_MARKER_START)
+    return i if i >= 0 else html_text.find("<footer")
+
+
 def get_context(rel_path: Path, content: str):
     """Return (province_code, city_slug, city_label, page_path)."""
     parts = rel_path.parts
@@ -100,6 +109,13 @@ def get_context(rel_path: Path, content: str):
                     label = CITY_LABELS.get(code, {}).get(leaf, leaf.replace("-", " ").title())
                     return code, leaf, label, page_path
         return "on", "", "", page_path
+
+    # installers/<region-code>/<city>/<service>/ (ranking pages, build_installer_rankings.py)
+    if len(parts) >= 3 and parts[0] == "installers" and parts[1] in REGION_PREFIX_TO_CODE.values():
+        code, leaf = parts[1], parts[2]
+        if leaf not in ("index.html",):
+            label = CITY_LABELS.get(code, {}).get(leaf, leaf.replace("-", " ").title())
+            return code, leaf, label, page_path
 
     # ca/<prov>/... or us/<state>/...
     if len(parts) >= 2 and parts[0] in ("ca", "us"):
@@ -231,6 +247,19 @@ def ensure_shared_assets(content: str) -> str:
     return content
 
 
+CHROME_RE = re.compile(r"<nav\b.*?</nav>|<footer\b.*?</footer>|<script\b.*?</script>|<style\b.*?</style>|<!--.*?-->",
+                       re.DOTALL | re.IGNORECASE)
+
+
+def visible_words(html_text: str) -> set:
+    return set(re.sub(r"<[^>]+>", " ", CHROME_RE.sub(" ", html_text)).split())
+
+
+def content_loss(before: str, after: str) -> list:
+    """Visible words (outside nav/footer/script/style/comments) present before but gone after."""
+    return sorted(visible_words(before) - visible_words(after))[:20]
+
+
 def process_file(path: Path, dry_run: bool):
     rel = path.relative_to(ROOT)
     content = path.read_text(errors="ignore")
@@ -283,6 +312,15 @@ def process_file(path: Path, dry_run: bool):
 
     content = ensure_shared_assets(content)
 
+    # Safety net (added 2026-09-28): some pages had real content (e.g. "Learn more about
+    # <city> rebates" guide cards) sitting between the old footer markers, and a restamp
+    # silently deleted it on 323 pages. Never write a page that would lose any visible
+    # text other than what lived inside its old <nav>/<footer> tags.
+    lost = content_loss(original, content)
+    if lost:
+        return {"path": str(rel), "province": prov, "city": city_label,
+                "actions": action + ["SKIPPED:would-remove-content"], "changed": False, "lost": lost}
+
     if content != original and not dry_run:
         path.write_text(content)
 
@@ -326,6 +364,11 @@ def main():
             results.append(r)
 
     changed = [r for r in results if r["changed"]]
+    skipped = [r for r in results if r.get("lost")]
+    if skipped:
+        print(f"SKIPPED {len(skipped)} pages that would lose content (fix them by hand):")
+        for r in skipped[:25]:
+            print(f"  {r['path']}: {' '.join(r['lost'][:8])}")
     no_nav_no_footer = [
         r for r in results
         if r["changed"] is False and not r["actions"]

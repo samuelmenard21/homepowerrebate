@@ -306,7 +306,7 @@ def link_inbound():
         elif "<h2>Heat pump rebates in 2026</h2>" in s:
             s = s.replace("<h2>Heat pump rebates in 2026</h2>", block + "\n    <h2>Heat pump rebates in 2026</h2>", 1)
         else:
-            i = s.index("<footer")
+            i = navfooter.content_insert_point(s)
             s = s[:i] + block + "\n" + s[i:]
         f.write_text(s, encoding="utf-8")
 

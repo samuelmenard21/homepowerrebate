@@ -216,6 +216,35 @@ PROGRAMS = {
         "keys": ["CEIP", "Alberta", "Calgary", "Edmonton", "Red Deer"],
         "related": [("/ca/ab/calgary/", "Calgary rebates"), ("/ca/ab/edmonton/", "Edmonton rebates"), ("/smart-thermostats/", "Smart thermostat rebates")],
     },
+    "federal-tax-credits-2026": {
+        "name": "Federal tax credits", "region": "US", "hub": "/us/", "rank_region": "ny",
+        "title": "Heat Pump and Solar Tax Credits 2026: Federal Credits Ended. What's Left",
+        "desc": "The 30% federal tax credits for heat pumps (25C) and solar and batteries (25D) ended December 31, 2025. What still pays in 2026: NYS Clean Heat, Mass Save, SMUD, LADWP, Efficiency Vermont and more.",
+        "h1": "Heat Pump and Solar Tax Credits in 2026: What Replaced Them",
+        "short": "The federal tax credits are gone for 2026 installs. The 30% Energy Efficient Home Improvement Credit (25C, heat pumps and insulation) and the 30% Residential Clean Energy Credit (25D, solar, batteries and geothermal) don't apply to anything installed after December 31, 2025. State and utility rebates are now the main help: up to $10,000 or more for a heat pump in New York, up to $8,500 in Massachusetts, and utility rebates in California and Vermont.",
+        "rows": [
+            ("Federal 25C (heat pumps, insulation, windows)", "Ended", "Only for improvements made through December 31, 2025.", "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"),
+            ("Federal 25D (solar, batteries, geothermal)", "Ended", "Not available for property placed in service after December 31, 2025.", "https://www.irs.gov/credits-deductions/residential-clean-energy-credit"),
+            ("New York: NYS Clean Heat", "Up to $10,000 (more in a DAC)", "Through your electric utility; participating contractor. Long Island: PSEG $4,000 to $7,500.", "https://cleanheat.ny.gov/"),
+            ("New York: EmPower+", "Free up to $12,000 to $14,000", "Low-income homes; moderate income gets 50% up to $6,000 to $7,000.", "https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program"),
+            ("Massachusetts: Mass Save", "Up to $8,500 (up to $16,000 income-qualified)", "Plus 0% HEAT Loan and 75% to 100% off insulation.", "https://goclean.masscec.com/homeowners/air-source-heat-pumps/"),
+            ("Massachusetts: state solar tax credit", "15% of cost", "State income tax credit; still available.", "https://goclean.masscec.com/homeowners/solar-electricity/"),
+            ("California: SMUD (Sacramento)", "Heat pump up to $3,000; water heater up to $4,000", "Plus up to $2,000 Go Electric bonus when replacing gas.", "https://www.smud.org/Rebates-and-Savings-Tips/Rebates-for-My-Home"),
+            ("California: LADWP (Los Angeles)", "Heat pump up to $2,500 per ton", "Water heater up to $2,500.", "https://www.ladwp.com/residential-services/assistance-programs/consumer-rebate-program"),
+            ("California: TECH Clean California and HEEHRA", "Fully reserved", "Waitlist only.", "https://techcleanca.com/incentives/single-family-incentives/"),
+            ("Vermont: Efficiency Vermont", "Up to $2,200 ducted heat pump", "Plus income bonuses and up to $2,000 from Green Mountain Power for income-eligible homes.", "https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system"),
+        ],
+        "steps": ["If your install finished in 2025, you can still claim 25C or 25D on your 2025 tax return with IRS Form 5695.",
+                  "For 2026 installs, look up your electric utility and state program; that's where the money is now.",
+                  "Many rebates need a participating contractor or approval before work starts. Check before you sign.",
+                  "Be wary of quotes that still subtract a 30% federal tax credit for a 2026 install."],
+        "faq": [("Is there a federal tax credit for heat pumps in 2026?", "No. The 25C credit covers improvements made through December 31, 2025 only. For 2026, look at state and utility rebates."),
+                ("Can I still get the 30% solar tax credit?", "Not for a system installed after December 31, 2025. The 25D credit ended early under the 2025 federal budget law (the One Big Beautiful Bill)."),
+                ("I installed a heat pump in December 2025. Can I still claim it?", "Yes, if it was installed by December 31, 2025. Claim it on your 2025 return with Form 5695."),
+                ("What replaced the federal tax credits?", "Nothing federal for most homeowners. State and utility programs like NYS Clean Heat, Mass Save and Efficiency Vermont are now the main rebates.")],
+        "keys": ["25C", "25D", "tax credit", "federal"],
+        "related": [("/programs/nys-clean-heat/", "NYS Clean Heat"), ("/programs/mass-save/", "Mass Save"), ("/us/ca/", "California rebates"), ("/us/vt/", "Vermont rebates")],
+    },
 }
 
 
@@ -281,6 +310,9 @@ def main():
     by_hub = {}
     for slug, p in PROGRAMS.items():
         by_hub.setdefault(p["hub"], []).append((slug, p["name"]))
+    # The federal tax-credit guide belongs on every US state hub.
+    for hub in ("/us/ny/", "/us/ma/", "/us/ca/", "/us/vt/", "/us/pa/", "/us/co/"):
+        by_hub.setdefault(hub, []).append(("federal-tax-credits-2026", "2026 tax credits"))
     S, E = "<!-- PROGRAM-LINKS-START -->", "<!-- PROGRAM-LINKS-END -->"
     for hub, items in by_hub.items():
         f = ROOT / hub.strip("/") / "index.html"

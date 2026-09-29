@@ -36,9 +36,51 @@ JOBS = [
      ["blog/water-heater-buying-guide-ns/index.html"]),
 ]
 
+NM = "/blog/net-metering-vs-net-billing/"
+GH = "/blog/greener-homes-grant-explained/"
+JOBS += [
+    ("NET-METERING-LINK", f'<b>Planning solar?</b> Read <a href="{NM}">net metering vs net billing: what the difference means for your savings</a>.',
+     ["blog/bc-net-metering-ended-self-generation-rate-2026/index.html", "blog/ontario-solar-rebate-vs-net-metering/index.html",
+      "us/ca/index.html", "ca/bc/index.html", "ca/on/index.html"]
+     + sorted(str(p.relative_to(ROOT)) for p in (ROOT / "ca" / "bc").glob("*/solar/index.html"))),
+    ("GREENER-LINK", f'<b>Looking for the Canada Greener Homes Grant?</b> It has closed. See <a href="{GH}">what replaced it and where to look in your province</a>.',
+     ["ca/bc/index.html", "ca/on/index.html", "ca/ab/index.html", "ca/ns/index.html", "rebate-tracker/index.html"]),
+]
+
+GREENER_BLOCK = """<!-- GREENER-PROVINCES-START -->
+<h2>Greener Homes closed across Canada. Where to look in your province</h2>
+<div style="overflow-x:auto;"><table style="width:100%;min-width:520px;border-collapse:collapse;font-size:15px;">
+<tr style="background:#f5efe5;"><th style="text-align:left;padding:8px;">Province</th><th style="text-align:left;padding:8px;">Main program now</th><th style="text-align:left;padding:8px;">Guide</th></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">British Columbia</td><td style="padding:8px;border-top:1px solid #d9d0c1;">BC Hydro heat pump rebate up to $4,000; CleanBC income-qualified up to $13,000, $7,000 or $3,500</td><td style="padding:8px;border-top:1px solid #d9d0c1;"><a href="/programs/bc-hydro-rebates/">BC Hydro</a> · <a href="/programs/cleanbc-rebates/">CleanBC</a></td></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">Ontario</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Home Renovation Savings: heat pumps up to $12,000, plus insulation, solar and battery</td><td style="padding:8px;border-top:1px solid #d9d0c1;"><a href="/programs/home-renovation-savings/">Home Renovation Savings</a></td></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">Nova Scotia</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Home Energy Assessment rebates up to $5,000; moderate-income homes can add up to $5,000 more</td><td style="padding:8px;border-top:1px solid #d9d0c1;"><a href="/programs/efficiency-nova-scotia/">Efficiency Nova Scotia</a></td></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">Alberta</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Local Clean Energy Improvement Program financing where it is open (Calgary's is closed until winter 2026/2027)</td><td style="padding:8px;border-top:1px solid #d9d0c1;"><a href="/programs/alberta-energy-rebates/">Alberta guide</a></td></tr>
+</table></div>
+<p style="font-size:13.5px;color:#6b8e7f;">Amounts checked September 2026 against each program's official page; the <a href="/rebate-tracker/">rebate tracker</a> lists every change with sources.</p>
+<!-- GREENER-PROVINCES-END -->
+"""
+
+
+def greener_section():
+    f = ROOT / "blog/greener-homes-grant-explained/index.html"
+    t = f.read_text(encoding="utf-8")
+    S, E = "<!-- GREENER-PROVINCES-START -->", "<!-- GREENER-PROVINCES-END -->"
+    if S in t:
+        new = re.sub(re.escape(S) + ".*?" + re.escape(E) + r"\n?", lambda m: GREENER_BLOCK, t, count=1, flags=re.S)
+    else:
+        m = re.search(r"<h2[^>]*>\s*The takeaway", t)
+        if not m:
+            print("no takeaway heading")
+            return 0
+        new = t[:m.start()] + GREENER_BLOCK + t[m.start():]
+    if new != t:
+        f.write_text(new, encoding="utf-8")
+        return 1
+    return 0
+
 
 def main():
-    n = 0
+    n = greener_section()
     for marker, html, pages in JOBS:
         S, E = f"<!-- {marker}-START -->", f"<!-- {marker}-END -->"
         blk = S + BOX.format(html) + E

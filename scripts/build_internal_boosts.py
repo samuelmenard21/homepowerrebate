@@ -47,6 +47,13 @@ JOBS += [
      ["ca/bc/index.html", "ca/on/index.html", "ca/ab/index.html", "ca/ns/index.html", "rebate-tracker/index.html"]),
 ]
 
+OT = "/ca/on/ottawa/smart-thermostats/"
+JOBS += [
+    ("OTTAWA-THERMOSTAT-LINK", f'<b>Looking for a free thermostat in Ottawa?</b> See <a href="{OT}">who qualifies for a free smart thermostat and how to get the $125 rebate</a>.',
+     ["ca/on/ottawa/index.html", "ca/on/ottawa/appliances/index.html", "ca/on/ottawa/heat-pump/index.html", "ca/on/ottawa/insulation/index.html",
+      "ca/on/ottawa/windows-doors/index.html", "ca/on/ottawa/water-heater/index.html", "ca/on/ottawa/hrv/index.html",
+      "ca/on/ottawa/solar/index.html", "ca/on/ottawa/battery/index.html", "ca/on/ottawa/ev-charger/index.html"]),
+]
 INS = "/insulation-rebates/"
 JOBS += [
     ("INSULATION-HUB-LINK", f'<b>Insulation rebates in every region:</b> compare <a href="{INS}">insulation rebates by province and state</a>, with a BC attic calculator.',
@@ -89,6 +96,37 @@ ATTIC_BLOCK = """<!-- ATTIC-REBATES-START -->
 """
 
 
+OTTAWA_EAP = """<!-- OTTAWA-EAP-START -->
+<h2>Free thermostat in Ottawa: do you qualify?</h2>
+<p>Ontario's <b>Energy Affordability Program</b> installs a programmable or smart thermostat for free in homes heated by electricity or oil, along with other upgrades. Hydro Ottawa lists it on its programs page. You qualify if you own, rent or lease your home in Ontario and your household income is under the limit, or if you get ODSP, Ontario Works or OESP help.</p>
+<div style="overflow-x:auto;"><table style="width:100%;min-width:420px;border-collapse:collapse;font-size:15px;">
+<tr style="background:#f5efe5;"><th style="text-align:left;padding:8px;">Household</th><th style="text-align:left;padding:8px;">Income limit for free thermostat and upgrades (before tax)</th></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">1 person</td><td style="padding:8px;border-top:1px solid #d9d0c1;">$48,220</td></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">Family of 4</td><td style="padding:8px;border-top:1px solid #d9d0c1;">$96,439</td></tr>
+</table></div>
+<p><b>How to apply:</b> call 1-844-770-3148 or use the online form on the <a href="https://www.saveonenergy.ca/en/For-Your-Home/Energy-Affordability-Program" rel="nofollow noopener" target="_blank">Save on Energy program page</a>. The program says it replies within three business days. If your income is over the limit, or you heat with gas, use the $125 rebate below instead. Limits checked September 2026.</p>
+<!-- OTTAWA-EAP-END -->
+"""
+
+
+def ottawa_eap():
+    f = ROOT / "ca/on/ottawa/smart-thermostats/index.html"
+    t = f.read_text(encoding="utf-8")
+    S, E = "<!-- OTTAWA-EAP-START -->", "<!-- OTTAWA-EAP-END -->"
+    if S in t:
+        new = re.sub(re.escape(S) + ".*?" + re.escape(E) + r"\n?", lambda m: OTTAWA_EAP, t, count=1, flags=re.S)
+    else:
+        m = re.search(r"<h2[^>]*>\s*How much you get", t)
+        if not m:
+            print("no 'How much you get' heading")
+            return 0
+        new = t[:m.start()] + OTTAWA_EAP + t[m.start():]
+    if new != t:
+        f.write_text(new, encoding="utf-8")
+        return 1
+    return 0
+
+
 def attic_section():
     f = ROOT / "blog/attic-insulation-guide/index.html"
     t = f.read_text(encoding="utf-8")
@@ -126,7 +164,7 @@ def greener_section():
 
 
 def main():
-    n = greener_section() + attic_section()
+    n = greener_section() + attic_section() + ottawa_eap()
     for marker, html, pages in JOBS:
         S, E = f"<!-- {marker}-START -->", f"<!-- {marker}-END -->"
         blk = S + BOX.format(html) + E

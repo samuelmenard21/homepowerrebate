@@ -135,8 +135,8 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
         <span style="opacity:.7;">&rarr;</span>
       </a>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
-        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
+        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
+        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
         <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">California (US)</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
@@ -154,10 +154,10 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
       </div>
     </div>
     <div style="padding:0 16px 16px;">
-    <div id="province-cities-on" style="display:grid; gap:8px;">
+    <div id="province-cities-on" style="display:none; gap:8px;">
       <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
     </div>
-    <div id="province-cities-bc" style="display:none; gap:8px;">
+    <div id="province-cities-bc" style="display:grid; gap:8px;">
       <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
     </div>
     <div id="province-cities-ab" style="display:none; gap:8px;">
@@ -188,7 +188,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
   </div>
 </nav>
 
-<!-- On a city/province page, call showProvinceCities('on') once on load
+<!-- On a city/province page, call showProvinceCities('bc') once on load
      so the dropdown opens to the right tab, and add a highlighted/active style to the
      current city's <a> for  — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
@@ -206,7 +206,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
 <h2>Common questions</h2>
 <h3>Does a Tesla Powerwall qualify for the BC Hydro rebate?</h3><p>No. Tesla products have been ineligible since March 12, 2025, so a Powerwall gets $0 from the battery rebate. It can still earn Peak Saver credits.</p><h3>Can I get the BC Hydro heat pump rebate if I heat with gas?</h3><p>No. BC Hydro&#x27;s heat pump rebate is for replacing electric heat. Homes switching from gas, oil or propane can look at CleanBC&#x27;s income-qualified rebates.</p><h3>I&#x27;m in Kelowna. Can I get BC Hydro rebates?</h3><p>Only if BC Hydro is your electric utility. FortisBC electric customers aren&#x27;t eligible for BC Hydro rebates and use FortisBC&#x27;s own offers.</p>
 <p><b>Related:</b> <a href="/programs/cleanbc-rebates/">CleanBC income-qualified rebates</a> · <a href="/batteries/">Home battery guides</a> · <a href="/smart-thermostats/">Smart thermostat rebates</a></p>
-<p><b>Other program guides:</b> <a href="/programs/cleanbc-rebates/">CleanBC rebates</a> · <a href="/programs/home-renovation-savings/">Home Renovation Savings</a> · <a href="/programs/nys-clean-heat/">NYS Clean Heat</a> · <a href="/programs/mass-save/">Mass Save</a></p>
+<p><b>Other program guides:</b> <a href="/programs/cleanbc-rebates/">CleanBC rebates</a> · <a href="/programs/home-renovation-savings/">Home Renovation Savings</a> · <a href="/programs/nys-clean-heat/">NYS Clean Heat</a> · <a href="/programs/mass-save/">Mass Save</a> · <a href="/programs/efficiency-nova-scotia/">Efficiency Nova Scotia rebates</a> · <a href="/programs/bc-hydro-peak-saver/">BC Hydro Peak Saver</a> · <a href="/programs/alberta-energy-rebates/">Alberta energy rebates</a></p>
 <p class="small">Something out of date? Email <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a> and we'll check it within a week.</p>
 </div></section>
 <!-- CANONICAL-FOOTER-START -->

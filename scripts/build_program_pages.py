@@ -143,6 +143,79 @@ PROGRAMS = {
         "keys": ["Mass Save", "Boston"],
         "related": [("/blog/mass-save-home-energy-assessment-explained/", "Mass Save home energy assessment"), ("/batteries/", "Home battery guides")],
     },
+    "efficiency-nova-scotia": {
+        "name": "Efficiency Nova Scotia rebates", "region": "NS", "hub": "/ca/ns/", "rank_region": "ns",
+        "title": "Efficiency Nova Scotia Rebates 2026: What's Open and What Closed",
+        "desc": "Efficiency Nova Scotia rebates in 2026: up to $5,000 through a Home Energy Assessment, $800 heat pump water heaters, $300-$500 per ton heat pumps, and which programs closed (OHPA, SolarHomes).",
+        "h1": "Efficiency Nova Scotia Rebates 2026",
+        "short": "Most Efficiency Nova Scotia rebates now go through a Home Energy Assessment ($199): any homeowner can get up to $5,000 for the upgrades it recommends, including $300 to $500 per ton for a new heat pump and up to $750 for attic insulation. Heat pump water heaters get $800, instantly at the store. Moderate-income homes that don't heat with electricity can add up to $5,000 more. The oil-to-heat-pump program and SolarHomes are closed.",
+        "rows": [
+            ("Home Energy Assessment rebates", "Up to $5,000", "Assessment fee $199. Do the upgrades between the first and final assessment, within 12 months.", "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf"),
+            ("Heat pump, ductless", "$300 per ton", "New capacity only; replacing a heat pump doesn't qualify. Qualifying model, certified installer.", "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf"),
+            ("Heat pump, central ducted", "$500 per ton", "Newly added capacity.", "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf"),
+            ("Heat pump water heater", "$800", "ENERGY STAR. Instant at participating stores, or through the assessment if you didn't take the instant rebate.", "https://www.efficiencyns.ca/programs-rebates/instant-rebates"),
+            ("Attic insulation to R-50", "Up to $750", "Walls up to $1,500; basement walls up to $1,200.", "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf"),
+            ("Smart thermostat (electric heat)", "$45 instant, or free installed", "Free installation is for electrically heated homes.", "https://www.efficiencyns.ca/programs-rebates/free-product-installation"),
+            ("Moderate Income Rebate", "Up to $5,000 more", "Homes mainly heated with oil, propane or wood, not electricity. Income limits apply; pre-approval needed.", "https://www.efficiencyns.ca/programs-rebates/moderate-income-rebate"),
+            ("Oil to Heat Pump Affordability", "Closed", "Closed to new applicants July 2, 2026.", "https://www.efficiencyns.ca/programs-rebates/oil-to-heat-pump-affordability-program"),
+            ("SolarHomes", "Closed to homeowners", "Stopped taking applications April 17, 2025.", "https://www.efficiencyns.ca/programs-rebates/solarhomes"),
+        ],
+        "steps": ["Book a Home Energy Assessment ($199) before you start. Upgrades done before it don't count.",
+                  "Do the recommended upgrades within 12 months, using qualifying products and a certified installer for heat pumps.",
+                  "Book the final assessment. The rebate cheque usually arrives within about 90 days.",
+                  "Buying a heat pump water heater or thermostat? Take the instant rebate at the store instead."],
+        "faq": [("Can I still get a rebate for replacing my old heat pump in Nova Scotia?", "Not through the Home Energy Assessment. Its heat pump rebate is only for newly added capacity; replacement heat pumps aren't eligible."),
+                ("Is there a solar rebate in Nova Scotia in 2026?", "Not for homeowners. SolarHomes closed to homeowners in April 2025. Halifax homeowners can finance solar through Solar City."),
+                ("Is there a battery rebate in Nova Scotia?", "We found no current Efficiency Nova Scotia battery rebate as of our last check.")],
+        "keys": ["Efficiency Nova Scotia", "OHPA", "Moderate Income", "SolarHomes", "HARP"],
+        "related": [("/heat-pump-water-heater/nova-scotia/", "Heat pump water heaters in Nova Scotia"), ("/ca/ns/halifax/", "Halifax rebates"), ("/ca/ns/cape-breton/", "Cape Breton rebates")],
+    },
+    "bc-hydro-peak-saver": {
+        "name": "BC Hydro Peak Saver", "region": "BC", "hub": "/ca/bc/", "rank_region": "bc",
+        "title": "BC Hydro Peak Saver: Is It Worth It? (2026 Credits by Device)",
+        "desc": "Is BC Hydro Peak Saver worth it? What it pays for a battery ($500 then $250 a winter), thermostat, EV charger and water heater, what you give up, and why it unlocks the $5,000 battery rebate.",
+        "h1": "BC Hydro Peak Saver: Is It Worth It?",
+        "short": "For most people, yes. Peak Saver pays bill credits for letting BC Hydro briefly dial back a device on winter evenings, up to 4 hours at a time, and you can opt out of any event. A home battery earns $500 to join and about $250 each winter, and joining raises the battery rebate from $1,500 to up to $5,000. Baseboard thermostats earn $100, then $50 a winter.",
+        "rows": [
+            ("Home battery", "$500 to join, then $250 a winter", "Also unlocks the battery rebate of up to $5,000 (instead of $1,500).", "https://www.bchydro.com/powersmart/residential/rebates-programs/peak-saver/enroll-smart-home-devices.html"),
+            ("Smart thermostat (baseboard)", "$100 to join, then $50 a winter", "Line-voltage thermostats like Mysa and Sinope. Ecobee and Nest don't qualify.", "https://www.bchydro.com/powersmart/residential/rebates-programs/peak-saver/enroll-smart-home-devices.html"),
+            ("EV charger", "$250 to join, then $50 a winter", "", "https://www.bchydro.com/powersmart/residential/rebates-programs/peak-saver/enroll-smart-home-devices.html"),
+            ("Water heater controller", "$100 to join, then $50 a winter", "", "https://www.bchydro.com/powersmart/residential/rebates-programs/peak-saver/enroll-smart-home-devices.html"),
+            ("Free thermostats", "Up to 5, free", "Baseboard-heated homes, from October 2026, enrolled in Peak Saver.", "https://news.gov.bc.ca/releases/2026ECS0037-000794"),
+        ],
+        "steps": ["Check your device is on BC Hydro's eligible list (a battery must also be on the rebate's qualified list).",
+                  "Enroll through BC Hydro's Peak Saver page or your device's app.",
+                  "During events (November to March, up to 4 hours), your device eases off. Opt out any time you need to."],
+        "faq": [("Is the BC Hydro Peak Saver battery rebate worth it?", "Usually. Joining Peak Saver raises the battery rebate from up to $1,500 to up to $5,000, and adds $500 plus about $250 a winter, roughly $3,000 over 10 years. The trade-off: during some winter evening events your battery sends power back instead of saving all of it for an outage."),
+                ("Will Peak Saver leave my house cold?", "Events last up to 4 hours and you can opt out of any of them. Thermostats usually lower the temperature a few degrees, not shut off."),
+                ("Can a Tesla Powerwall join Peak Saver?", "Tesla batteries get no BC Hydro battery rebate. Check BC Hydro's current device list for Peak Saver credits.")],
+        "keys": ["Peak Saver"],
+        "related": [("/programs/bc-hydro-rebates/", "All BC Hydro rebates"), ("/batteries/", "Home battery guides"), ("/smart-thermostats/", "Smart thermostat rebates")],
+    },
+    "alberta-energy-rebates": {
+        "name": "Alberta energy rebates", "region": "AB", "hub": "/ca/ab/", "rank_region": "ab",
+        "title": "Alberta Energy Rebates 2026: What's Actually Available (ENMAX, EPCOR, CEIP)",
+        "desc": "Alberta home energy rebates in 2026, checked against official sources: no ENMAX or ATCO heat pump rebate, Calgary and Edmonton CEIP financing, Red Deer's $50 thermostat rebate, EPCOR Peak Rewards.",
+        "h1": "Alberta Energy Rebates 2026: What's Really Available",
+        "short": "Alberta has few home energy rebates in 2026. We found no current ENMAX, ATCO, EPCOR or FortisAlberta heat pump or solar rebate on any official site. What exists: Clean Energy Improvement Program (CEIP) financing repaid on your property tax (Calgary's intake reopens winter 2026/27), a $50 smart thermostat rebate in Red Deer, EPCOR's Peak Rewards pilot, and free upgrades for income-qualified Calgarians.",
+        "rows": [
+            ("ENMAX / ATCO / EPCOR / FortisAlberta heat pump or solar rebate", "None found", "Amounts you see online come from installer blogs, not the utilities.", ""),
+            ("Calgary CEIP (financing)", "Up to $50,000, up to 20 years", "Repaid on your property tax bill. Intake closed until winter 2026/2027.", "https://www.calgary.ca/environment/programs/clean-energy-improvement-program.html"),
+            ("CEIP in other towns", "Varies", "Edmonton, Lethbridge, St. Albert and others. Not Red Deer or Fort McMurray.", "https://ceip.abmunis.ca/residential/residential-program-locations/"),
+            ("Red Deer smart thermostat", "$50", "ENERGY STAR certified; one per utility account.", "https://www.reddeer.ca/city-services/environment-and-conservation/your-home/energy-efficiency/smart-thermostat-rebate/"),
+            ("EPCOR Peak Rewards (pilot)", "$50 card, then $25 a season", "Thermostat you already own, central AC, select Edmonton neighbourhoods.", "https://www.epcor.com/ca/en/ab/edmonton/conservation/incentives/peak-rewards-thermostats.html"),
+            ("Calgary Home Upgrades Program", "Free upgrades", "Income-qualified; furnace, insulation, air sealing. Waitlist.", "https://www.homeupgradesprogram.ca/calgary"),
+            ("Oil to Heat Pump Affordability (federal)", "Closed in Alberta", "Last day to apply was July 31, 2026.", "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative"),
+        ],
+        "steps": ["Check whether your town offers CEIP and when intake opens.",
+                  "If a quote mentions a 'utility rebate', ask the installer for the official program link before you count on it.",
+                  "In Red Deer, keep your thermostat receipt and apply in the same calendar year."],
+        "faq": [("Does ENMAX have a heat pump rebate?", "Not that we could find. As of our last check, no official ENMAX, ATCO, EPCOR or FortisAlberta page offers a heat pump or solar rebate. Ask for the program link if a quote lists one."),
+                ("Is there a smart thermostat rebate in Alberta?", "Only locally: Red Deer pays $50, and EPCOR's Peak Rewards pilot pays $50 plus $25 a season in select Edmonton neighbourhoods."),
+                ("Can I still get the Oil to Heat Pump grant in Alberta?", "No. The last day for Alberta residents to apply was July 31, 2026.")],
+        "keys": ["CEIP", "Alberta", "Calgary", "Edmonton", "Red Deer"],
+        "related": [("/ca/ab/calgary/", "Calgary rebates"), ("/ca/ab/edmonton/", "Edmonton rebates"), ("/smart-thermostats/", "Smart thermostat rebates")],
+    },
 }
 
 
@@ -154,7 +227,7 @@ def changes(keys, region):
 
 def page(slug, p):
     path = f"/programs/{slug}/"
-    rows = "".join(f"<tr><td><b>{e(a)}</b></td><td>{e(b)}</td><td>{e(c)} <a href=\"{e(s)}\" rel=\"nofollow noopener\" target=\"_blank\">Source</a></td></tr>"
+    rows = "".join(f"<tr><td><b>{e(a)}</b></td><td>{e(b)}</td><td>{e(c)}{(' <a href=\"' + e(s) + '\" rel=\"nofollow noopener\" target=\"_blank\">Source</a>') if s else ''}</td></tr>"
                    for a, b, c, s in p["rows"])
     ch = changes(p["keys"], p["region"])
     ch_html = ("<h2>Recent changes</h2><ul>" + "".join(

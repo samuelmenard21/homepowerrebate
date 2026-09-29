@@ -20,7 +20,8 @@ PRODUCTS = {
         "name": "Tesla Powerwall 3", "short": "Powerwall 3", "maker": "Tesla",
         "datasheet": "https://energylibrary.tesla.com/docs/Public/EnergyStorage/Powerwall/3/Datasheet/en-us/Powerwall-3-Datasheet.pdf",
         "datasheet_label": "Tesla Powerwall 3 Datasheet (2025)",
-        "kwh": 13.5, "kw": 11.5,
+        "kwh": 13.5, "kw": 11.5, "inverter": "Built in (up to 20 kW solar)", "warranty": "10 years",
+        "cold": "It's rated to operate down to -20°C (-4°F). In places with colder winters, installers often put it in a garage or basement.",
         "specs": [
             ("Usable energy", "13.5 kWh per unit"),
             ("Continuous power", "Up to 11.5 kW (installer can set 5.8, 7.6, 10 or 11.5 kW)"),
@@ -59,7 +60,8 @@ PRODUCTS = {
         "name": "Enphase IQ Battery 5P", "short": "IQ Battery 5P", "maker": "Enphase",
         "datasheet": "https://www.solarelectricsupply.com/media/sparsh/product_attachment/IQ_Battery-5P-DSH-00010-2.0-EN-US-2023-07-26_1_.pdf",
         "datasheet_label": "Enphase IQ Battery 5P Datasheet, North America (2023)",
-        "kwh": 5.0, "kw": 3.84,
+        "kwh": 5.0, "kw": 3.84, "inverter": "No (AC coupled, works with any solar)", "warranty": "15 years",
+        "cold": "It's rated to charge down to -20°C (-4°F), and works best between 0°C and 30°C. In cold climates, a garage or basement is a better spot than an outside wall.",
         "specs": [
             ("Usable energy", "5.0 kWh per unit"),
             ("Continuous power", "3.84 kVA per unit (7.68 kVA peak for 3 seconds)"),
@@ -90,6 +92,87 @@ PRODUCTS = {
                    "is on the current list with your installer before you sign.",
                    "https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html"),
             "smud": "Enphase is on SMUD's list of eligible battery brands.",
+        },
+        "related": [],
+    },
+    "eguana-evolve": {
+        "name": "Eguana Evolve", "short": "Evolve", "maker": "Eguana",
+        "datasheet": "https://www.eguanatech.com/_resources/pdf/evolve-lfp-datasheet.pdf",
+        "datasheet_label": "Eguana Evolve LFP Datasheet",
+        "kwh": 14.0, "kw": 5.0, "pitch": "It's AC coupled, so it pairs with new or existing solar, and you can add battery modules up to 28 kWh. It needs a spot that stays above freezing. ", "inverter": "No (AC coupled, works with your solar inverter)", "warranty": "10 years (60% capacity, pro-rated)",
+        "cold": "Not below freezing. The Evolve LFP is rated to operate from 0°C to 50°C (best at 15°C to 30°C), so in Canadian winters it belongs indoors, in a heated garage or basement.",
+        "specs": [
+            ("Storage", "14 kWh base system (lithium iron phosphate modules), expandable to 28 kWh"),
+            ("Continuous power", "5.0 kVA"),
+            ("Short bursts", "120% for 30 minutes, 170% for 5 seconds (needs 6+ battery modules)"),
+            ("Built-in solar inverter", "No. AC coupled: it pairs with new or existing solar using your preferred inverter brand"),
+            ("Round-trip efficiency", "Over 85.7%"),
+            ("Chemistry", "Lithium iron phosphate (LFP), Pylontech modules"),
+            ("Operating temperature", "0°C to 50°C (recommended 15°C to 30°C)"),
+            ("Install location", "Wall mount, indoor or outdoor rated (Type 3R)"),
+            ("Backup", "Automatic backup with solar recharging and black start"),
+            ("Warranty", "10 years, 60% capacity guarantee (pro-rated); 15-year, 6,000+ cycle design life"),
+            ("Made by", "Eguana Technologies, Calgary, Alberta"),
+        ],
+        "how": ("Eguana Evolve is an AC-coupled battery system built in Calgary. It sits beside your solar system rather than replacing its "
+                "inverter, so it works with new or existing solar. The base system stores 14 kWh and can grow to 28 kWh by adding battery "
+                "modules, which suits homes that want longer backup through multi-day outages."),
+        "best_for": [
+            "Adding a battery to solar you already have, with any inverter brand.",
+            "Homes that want more storage (up to 28 kWh) for long outages.",
+            "Buyers who want a Canadian-made battery.",
+        ],
+        "watch": [
+            "It's rated down to 0°C only, so it needs a spot that stays above freezing.",
+            "5 kVA of power is less than Powerwall 3 or FranklinWH, so you may not run central AC and other big loads at once.",
+            "The warranty guarantees 60% capacity after 10 years, lower than some rivals.",
+        ],
+        "region_notes": {
+            "bc": ("Check the list", "BC Hydro only pays rebates on batteries on its qualified battery list, up to $5,000 with Peak Saver. "
+                   "Confirm the exact Evolve model is on the current list with your installer before you sign.",
+                   "https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html"),
+            "smud": "Eguana is on SMUD's list of eligible battery brands. Eguana's datasheet also says it's SGIP approved in California.",
+        },
+        "related": [("/blog/tesla-powerwall-vs-eguana-evolve/", "Tesla Powerwall vs Eguana Evolve")],
+    },
+    "franklinwh-apower-2": {
+        "name": "FranklinWH aPower 2", "short": "aPower 2", "maker": "FranklinWH",
+        "datasheet": "https://www.franklinwh.com/document/apower-2-datasheet",
+        "datasheet_label": "FranklinWH aPower 2 Datasheet (SKU APR-10K15V2-US)",
+        "kwh": 15.0, "kw": 10.0, "inverter": "No (AC coupled, works with any solar)", "warranty": "15 years or 60 MWh",
+        "cold": "It's rated to operate down to -20°C (-4°F). In places with colder winters, installers often put it in a garage or basement.",
+        "specs": [
+            ("Usable energy", "15 kWh per unit; up to 15 units (225 kWh) per aGate"),
+            ("Continuous power", "Up to 10 kW / 11.5 kVA (15 kW peak for 10 seconds)"),
+            ("Starting big motors", "Up to 185 A LRA"),
+            ("Charging power", "Up to 8 kW"),
+            ("Built-in solar inverter", "No. AC coupled, used with the FranklinWH aGate controller"),
+            ("Round-trip efficiency", "90% (grid to battery to load)"),
+            ("Chemistry", "Lithium iron phosphate (LFP)"),
+            ("Operating temperature", "-20°C to 50°C (-4°F to 122°F); to 55°C at reduced output"),
+            ("Size and weight", "1149 × 750 × 300 mm; 162 kg"),
+            ("Flood resistance", "IP67 battery and inverter; rated up to 29 inches from the bottom"),
+            ("Warranty", "15 years or 60 MWh throughput"),
+            ("Availability", "United States and Canada"),
+        ],
+        "how": ("The aPower 2 is an AC-coupled battery that works with the FranklinWH aGate, a smart panel that manages your battery, solar, "
+                "generator and the grid. Because it's AC coupled, it works with new or existing solar. Each unit stores 15 kWh and can run "
+                "big loads like air conditioners and water heaters during an outage."),
+        "best_for": [
+            "Whole-home backup, including AC and water heaters, from one unit.",
+            "Homes that want lots of storage: up to 15 units on one aGate.",
+            "Homes that also have a backup generator, which the aGate can manage.",
+        ],
+        "watch": [
+            "It needs the aGate controller, which adds cost and wall space.",
+            "It's heavy (162 kg), so plan the location with your installer.",
+            "In BC, check that the exact model is on BC Hydro's qualified battery list before you sign.",
+        ],
+        "region_notes": {
+            "bc": ("Check the list", "BC Hydro only pays rebates on batteries on its qualified battery list, up to $5,000 with Peak Saver. "
+                   "Confirm the aPower 2 is on the current list with your installer before you sign.",
+                   "https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html"),
+            "smud": "FranklinWH is on SMUD's list of eligible battery brands.",
         },
         "related": [],
     },
@@ -143,8 +226,8 @@ def product_page(slug, p):
     bc_status, bc_txt, bc_src = p["region_notes"]["bc"]
     two = round(p["kwh"] * 2, 1)
     short = (f"The {p['name']} stores {p['kwh']:g} kWh and delivers up to {p['kw']:g} kW of continuous power per unit. "
-             + ("It has a solar inverter built in, so it suits new solar and battery systems. " if "tesla" in slug else
-                "It's AC coupled, so it adds easily to solar you already have, and you stack units for more storage. ")
+             + (p.get("pitch") or ("It has a solar inverter built in, so it suits new solar and battery systems. " if "tesla" in slug else
+                "It's AC coupled, so it adds easily to solar you already have, and you stack units for more storage. "))
              + ("It gets no BC Hydro battery rebate. Ontario, Massachusetts and parts of California do have battery programs; "
                 "check that this model is on each program's list."
                 if bc_status == "Not eligible" else
@@ -156,18 +239,17 @@ def product_page(slug, p):
          f"It depends on what you run. A fridge, lights, internet and a furnace fan might use about 1 kW, so one {p['kwh']:g} kWh unit "
          f"could last around {p['kwh'] * 0.9:.0f} hours with no solar (allowing for losses). Central AC or electric heat drains it much faster. "
          "With solar, the battery refills during the day."),
-        (f"Does the {p['name']} work in the cold?",
-         "It's rated to operate down to -20°C (-4°F). In places with colder winters, installers usually put it in a garage or basement."),
+        (f"Does the {p['name']} work in the cold?", p["cold"]),
         (f"Can I get a rebate for the {p['name']} in BC?", bc_txt.replace("<b>", "").replace("</b>", "")),
     ]
-    compare = ""
-    for s, o in others:
-        compare += (f'<h2>{e(p["short"])} vs {e(o["short"])}</h2><div class="tw"><table><tr><th></th><th>{e(p["name"])}</th><th>{e(o["name"])}</th></tr>'
-                    f'<tr><th>Storage per unit</th><td>{p["kwh"]:g} kWh</td><td>{o["kwh"]:g} kWh</td></tr>'
-                    f'<tr><th>Continuous power per unit</th><td>{p["kw"]:g} kW</td><td>{o["kw"]:g} kW</td></tr>'
-                    f'<tr><th>Units for about 13.5 kWh</th><td>{max(1, round(13.5 / p["kwh"]))}</td><td>{max(1, round(13.5 / o["kwh"]))}</td></tr>'
-                    f'<tr><th>BC Hydro rebate</th><td>{e(p["region_notes"]["bc"][0])}</td><td>{e(o["region_notes"]["bc"][0])}</td></tr>'
-                    f'</table></div><p>See the full <a href="/batteries/{s}/">{e(o["name"])} guide</a>.</p>')
+    allp = [(slug, p)] + others
+    head = "".join(f"<th>{e(o['name'])}</th>" for _, o in allp)
+    rows = [("Storage per unit", lambda o: f"{o['kwh']:g} kWh"), ("Continuous power per unit", lambda o: f"{o['kw']:g} kW"),
+            ("Solar inverter", lambda o: o["inverter"]), ("Warranty", lambda o: o["warranty"]),
+            ("BC Hydro rebate", lambda o: o["region_notes"]["bc"][0])]
+    compare = (f'<h2>{e(p["short"])} vs other home batteries</h2><div class="tw"><table><tr><th></th>{head}</tr>'
+               + "".join(f"<tr><th>{e(k)}</th>" + "".join(f"<td>{e(fn(o))}</td>" for _, o in allp) + "</tr>" for k, fn in rows)
+               + "</table></div><p>Full guides: " + " · ".join(f'<a href="/batteries/{s2}/">{e(o["name"])}</a>' for s2, o in others) + ".</p>")
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/batteries/">Home batteries</a></li><li aria-current="page">{e(p['name'])}</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>{e(p['name'])}: Specs, Backup Power and Rebates (2026)</h1>
 <p>What it does, what it can back up, and which rebates it qualifies for in Canada and the US. Specs from {e(p['maker'])}'s datasheet. Last checked {CHECKED}.</p>
@@ -221,7 +303,7 @@ def hub_page():
     path = "/batteries/"
     cards = "".join(
         f'<tr><td><a href="/batteries/{s}/">{e(p["name"])}</a></td><td>{p["kwh"]:g} kWh</td><td>{p["kw"]:g} kW</td>'
-        f'<td>{"Built in" if "tesla" in s else "No (AC coupled)"}</td><td>{e(p["region_notes"]["bc"][0])}</td></tr>' for s, p in PRODUCTS.items())
+        f'<td>{e(p["inverter"])}</td><td>{e(p["region_notes"]["bc"][0])}</td></tr>' for s, p in PRODUCTS.items())
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Home batteries</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>Home Battery Guides: Specs and Rebates (2026)</h1>
 <p>Plain-language guides to the home batteries installers quote most, with specs from each maker and rebates checked monthly.</p></div></header>
@@ -232,7 +314,7 @@ def hub_page():
 <p class="small">More battery guides are coming. Something out of date? Email <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a>.</p>
 </div></section>"""
     return path, shell("Home Battery Guides 2026: Specs & Rebates | HomePowerRebate",
-                       "Compare home batteries like Tesla Powerwall 3 and Enphase IQ Battery 5P: storage, power, and battery rebates by province and state.",
+                       "Compare Tesla Powerwall 3, Enphase IQ Battery 5P, Eguana Evolve and FranklinWH aPower 2: storage, power, and battery rebates by province and state.",
                        path, "on", body, [])
 
 

@@ -20,7 +20,6 @@ CITIES = [
     {'name': 'Brampton', 'slug': 'brampton', 'region': 'Greater Toronto Area'},
     {'name': 'Burlington', 'slug': 'burlington', 'region': 'Golden Horseshoe'},
     {'name': 'Cambridge', 'slug': 'cambridge', 'region': 'Waterloo Region'},
-    {'name': 'Durham', 'slug': 'durham', 'region': 'Durham Region'},
     {'name': 'Greater Sudbury', 'slug': 'greater-sudbury', 'region': 'Northeastern Ontario'},
     {'name': 'Guelph', 'slug': 'guelph', 'region': 'Waterloo Region'},
     {'name': 'Hamilton', 'slug': 'hamilton', 'region': 'Golden Horseshoe'},
@@ -34,15 +33,11 @@ CITIES = [
     {'name': 'Oshawa', 'slug': 'oshawa', 'region': 'Durham Region'},
     {'name': 'Ottawa', 'slug': 'ottawa', 'region': 'Eastern Ontario'},
     {'name': 'Peterborough', 'slug': 'peterborough', 'region': 'Central Ontario'},
-    {'name': 'Pickering', 'slug': 'pickering', 'region': 'Durham Region'},
-    {'name': 'St. Catharines', 'slug': 'st-catharines', 'region': 'Niagara Region'},
     {'name': 'Thunder Bay', 'slug': 'thunder-bay', 'region': 'Northwestern Ontario'},
     {'name': 'Timmins', 'slug': 'timmins', 'region': 'Northeastern Ontario'},
     {'name': 'Toronto', 'slug': 'toronto', 'region': 'Greater Toronto Area'},
     {'name': 'Vaughan', 'slug': 'vaughan', 'region': 'Greater Toronto Area'},
-    {'name': 'Waterloo', 'slug': 'waterloo', 'region': 'Waterloo Region'},
     {'name': 'Windsor', 'slug': 'windsor', 'region': 'Southwestern Ontario'},
-    {'name': 'Winnipeg', 'slug': 'winnipeg', 'region': 'Manitoba'},
 ]
 
 # Blog posts for Ontario internal linking

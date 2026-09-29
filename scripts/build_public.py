@@ -9,6 +9,7 @@ Rule: allowlist by file type and location. Anything not listed stays private.
   python3 scripts/build_public.py            # build dist/
   python3 scripts/build_public.py --check    # list what would be excluded, build nothing
 """
+import json
 import shutil
 import subprocess
 import sys
@@ -59,11 +60,22 @@ def main():
         return
     if DIST.exists():
         shutil.rmtree(DIST)
+    fixes = json.loads((ROOT / "data" / "link-fixes.json").read_text()) if (ROOT / "data" / "link-fixes.json").exists() else {}
+    if fixes:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from fix_dead_links import apply_fixes
+    changed = 0
     for f in pub:
         dst = DIST / f
         dst.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(ROOT / f, dst)
-    print(f"dist/: {len(pub)} public files; {len(priv)} private files left out")
+        if fixes and f.suffix == ".html":
+            t = (ROOT / f).read_text(encoding="utf-8", errors="ignore")
+            new = apply_fixes(t, fixes.get("replace", {}), fixes.get("remove", []))
+            dst.write_text(new, encoding="utf-8")
+            changed += new != t
+        else:
+            shutil.copy2(ROOT / f, dst)
+    print(f"dist/: {len(pub)} public files; {len(priv)} private files left out; dead-link fixes applied to {changed} pages")
 
 
 if __name__ == "__main__":

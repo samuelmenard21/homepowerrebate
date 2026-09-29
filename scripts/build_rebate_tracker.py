@@ -75,6 +75,7 @@ def build():
 {sections}
 <h2>How we keep this list</h2>
 <p>Once a month we re-check every official program page on this list and add programs we find that are new. If something here is out of date, email <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a> and we'll check it within a week.</p>
+<p><b>Monthly digests:</b> <a href="/rebate-tracker/2026-09/">July to September 2026</a></p>
 <p><b>Related:</b> <a href="/furnace-rebates/">Furnace and AC rebates by province and state</a> · <a href="/solar-quote-checker/">Solar quote checker</a> · <a href="/installers/">Top-rated installers by city</a></p>
 </div></section>
 <script>

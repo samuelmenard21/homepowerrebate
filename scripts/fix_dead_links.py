@@ -34,6 +34,27 @@ REPLACE = {
 }
 
 
+def apply_fixes(t, replace, remove, log=None, rel=""):
+    """Apply link fixes to one page's HTML; returns new text. Shared with build_public.py."""
+    for u, new_u in replace.items():
+        if f'href="{u}"' in t:
+            t = t.replace(f'href="{u}"', f'href="{new_u}"')
+            if log is not None:
+                log.append([rel, u, "replaced"])
+    for u in remove:
+        if u not in t:
+            continue
+        pat = re.compile(r'(\s*(?:&middot;|·)\s*)?<a\b[^>]*href="' + re.escape(u) + r'"[^>]*>(.*?)</a>', re.S)
+
+        def sub(m):
+            raw = re.sub(r"<[^>]+>", "", m.group(2)).strip()
+            if raw.lower() in ("website", "visit website", "visit site") or raw.endswith("&rarr;") or raw.endswith("→"):
+                return ""
+            return (m.group(1) or "") + m.group(2)
+        t = pat.sub(sub, t)
+    return t
+
+
 def main():
     dry = "--dry-run" in sys.argv
     dead = {u: pages for u, code, pages, _ in json.load(open(sys.argv[1])) if code in (404, 410)}

@@ -25,6 +25,7 @@ LOG = ROOT / "data" / "installer-cleanup-log.csv"
 NOT_INSTALLER = re.compile(
     r"tint|window film|cleaning|cleaners?\b|wash|lighting store|energysage|solar panel guide|\bguide\b|"
     r"auto\b|automotive|\bcar\b|tire|cellular|phone|batteries plus|battery world|interstate|battery (shop|center|centre|sales)|"
+    r"cheerlead|racing|sprinkler|dryer vent|\brv\b|skylight|solar control|solar myth|metal post|remodel|solar studios|hardware|observatory|"
     r"golf cart|marine|drywall(?!.*insulat)|stucco(?!.*insulat)|\blaw\b|lawyer|dental|dentist|casino|realty|real estate|shades", re.I)
 # A battery listing must look like a home energy company (or also be on the solar list).
 BATTERY_OK = re.compile(r"solar|sun|energy|power|renew|volt|electri|battery storage|tesla|enphase|off.?grid|home backup", re.I)

@@ -27,18 +27,7 @@ except ImportError:
     sys.exit("pip3 install requests")
 
 HERE = Path(__file__).parent
-SOURCES = [
-    "heat-pump-installers-real.csv", "solar-installers-real.csv",
-    "on-heat-pump-installers-real.csv", "on-solar-installers-real.csv",
-    "ab-heat-pump-installers-real.csv", "ab-solar-installers-real.csv",
-    "ns-heat-pump-installers-real.csv", "ns-solar-installers-real.csv",
-    "ma-heat-pump-installers-real.csv", "ma-solar-installers-real.csv",
-    "pa-heat-pump-installers-real.csv", "pa-solar-installers-real.csv",
-    "co-heat-pump-installers-real.csv", "co-solar-installers-real.csv",
-    "vt-heat-pump-installers-real.csv", "vt-solar-installers-real.csv",
-    "ca-heat-pump-installers-real.csv", "ca-solar-installers-real.csv",
-    "ny-heat-pump-installers-real.csv", "ny-solar-installers-real.csv",
-]
+SOURCES = sorted(p.name for p in HERE.glob("*-installers-real.csv"))
 OUT = HERE / "installer-emails.csv"
 
 UA = "HomePowerRebateBot/1.0 (+https://homepowerrebate.com; installer directory)"

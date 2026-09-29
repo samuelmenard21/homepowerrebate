@@ -4,7 +4,7 @@ Build "Top-rated <service> installers in <city>" ranking pages from the
 installer CSVs (installers/*-installers-real.csv), one per city x service
 with at least MIN_INSTALLERS rated companies.
 
-  /installers/<region>/<city-slug>/<heat-pump|solar>/index.html
+  /installers/<region>/<city-slug>/<heat-pump|solar|insulation|battery>/index.html
 
 Ranking is a review-weighted (Bayesian) Google rating so a 4.9 from 500
 reviews beats a 5.0 from 3. Pages are regenerated wholesale on each run —
@@ -50,7 +50,11 @@ REGIONS = {
 SERVICES = {
     "heat-pump": {"name": "Heat Pump", "lower": "heat pump", "rebate_cat": "heat-pump"},
     "solar": {"name": "Solar", "lower": "solar", "rebate_cat": "solar"},
+    "insulation": {"name": "Insulation", "lower": "insulation", "rebate_cat": "insulation"},
+    "battery": {"name": "Home Battery", "lower": "home battery", "rebate_cat": "battery"},
 }
+# Short plural used in "Also installs ..." labels and cross-links.
+ALSO = {"heat-pump": "heat pumps", "solar": "solar", "insulation": "insulation", "battery": "batteries"}
 
 
 def slugify(s):
@@ -61,7 +65,7 @@ def slugify(s):
 def load_rows():
     rows = []
     for f in sorted((ROOT / "installers").glob("*-installers-real.csv")):
-        m = re.match(r"(?:([a-z]{2})-)?(heat-pump|solar)-installers-real\.csv$", f.name)
+        m = re.match(r"(?:([a-z]{2})-)?(heat-pump|solar|insulation|battery)-installers-real\.csv$", f.name)
         if not m:
             continue
         region, service = (m.group(1) or "bc"), m.group(2)
@@ -217,6 +221,32 @@ def climate_section(region, service, city_label):
                 f"<p>In {esc(city_label)}, the average January low is <b>{temp(low, us)}</b>{cold_txt}. "
                 f"That's milder than {warmer}% of the 123 cities we track. {advice}</p>"
                 f'<p class="small">Source: Open-Meteo historical weather data, {d.get("sample_years","2015-2024")}.</p>')
+    if service == "insulation":
+        d = city_data(CLIMATE, region, city_label)
+        if not d or d.get("avg_january_low_c") is None:
+            return ""
+        low = d["avg_january_low_c"]
+        colder = pct_rank([-(v.get("avg_january_low_c") if v.get("avg_january_low_c") is not None else 99) for v in CLIMATE.values()], -low)
+        if low <= -10:
+            advice = ("With winters this cold, the attic is usually the best place to start. Ask the installer to seal air leaks "
+                      "around lights, pipes and the attic hatch before adding insulation, or much of the benefit is lost.")
+        elif low <= -2:
+            advice = ("Sealing air leaks and topping up the attic usually pays back fastest here. Basement walls and rim joists are "
+                      "often the next biggest heat loss in older homes.")
+        else:
+            advice = ("Winters here are mild, so comfort and summer heat matter as much as heating bills. Air sealing and attic "
+                      "insulation still help most, and they also keep upstairs rooms cooler in summer.")
+        return (f"<h2>Why insulation matters in {esc(city_label)}</h2>"
+                f"<p>In {esc(city_label)}, the average January low is <b>{temp(low, us)}</b>, colder than {colder}% of the 123 cities we track. {advice}</p>"
+                f"<p>Most rebate programs pay only after an energy assessment, and some need one before the work too. Book it first.</p>"
+                f'<p class="small">Source: Open-Meteo historical weather data, {d.get("sample_years","2015-2024")}.</p>')
+    if service == "battery":
+        return ("<h2>Which battery should you ask about?</h2>"
+                "<p>Most home installers work with a few brands. Compare usable storage (kWh), how much power it can deliver at once (kW), "
+                "whether it works in an unheated garage, and the warranty. Our side-by-side guides cover the "
+                '<a href="/batteries/tesla-powerwall-3/">Tesla Powerwall 3</a>, <a href="/batteries/enphase-iq-battery-5p/">Enphase IQ Battery 5P</a>, '
+                '<a href="/batteries/eguana-evolve/">Eguana Evolve</a> and <a href="/batteries/franklinwh-apower-2/">FranklinWH aPower 2</a>. '
+                '<a href="/batteries/">Compare home batteries</a>.</p>')
     d = city_data(SOLAR, region, city_label)
     if not d or not d.get("approx_peak_sun_hours"):
         return ""
@@ -240,6 +270,22 @@ def hire_tips(region, service):
         ]
         if region == "bc":
             tips.append("For BC Hydro and CleanBC rebates, the installer must be registered with the Home Performance Contractor Network (HPCN) or the program. Ask before you sign.")
+    elif service == "insulation":
+        tips += [
+            "Ask whether they will air-seal before insulating, and what they will seal (attic hatch, pot lights, pipes, top plates).",
+            "Ask for the R-value before and after for each area, and the material and depth they will install.",
+            "Ask whether your rebate needs an energy assessment before and after the work, and who books it.",
+            "Ask how they handle ventilation and any old insulation that could contain vermiculite (asbestos risk).",
+        ]
+    elif service == "battery":
+        tips += [
+            "Ask for the usable storage (kWh) and the continuous power (kW), and which circuits it will keep running in an outage.",
+            "Ask whether the battery is on your rebate program's approved list. Brands not on the list get no rebate.",
+            "Ask where it will go. Some batteries lose capacity or stop charging in a cold garage.",
+            "Ask about the warranty: years, and how much capacity it keeps by the end.",
+        ]
+        if region == "bc":
+            tips.append("In BC, the battery rebate needs a BC Hydro approved product and Peak Saver enrollment. Tesla Powerwall is not approved, so it gets no rebate.")
     else:
         tips += [
             "Ask for a production estimate for your roof (kWh per year) and how shading was measured.",
@@ -288,10 +334,12 @@ def cost_box(region, service, city_label, hub):
     us = REGIONS[region][0] == "us"
     if service == "heat-pump":
         price = US_HP_COST if us else CA_HP_COST
+    elif service in ("insulation", "battery"):
+        price = None
     else:
         price = US_SOLAR_COST if us else None
     city = PS_CITIES.get(hub["url"]) if hub else None
-    cats = ["heat-pump"] if service == "heat-pump" else ["solar", "battery"]
+    cats = {"heat-pump": ["heat-pump"], "solar": ["solar", "battery"], "insulation": ["insulation"], "battery": ["battery"]}[service]
     reb = []
     for c in cats:
         d = (city or {}).get("categories", {}).get(c)
@@ -301,11 +349,19 @@ def cost_box(region, service, city_label, hub):
     if price:
         rows.append(f'<div class="cb-row"><span>Typical installed price</span><b>{price[0]}</b></div>'
                     f'<p class="cb-note">For {price[1]}. Your home may cost more or less.</p>')
+    elif service == "insulation":
+        rows.append('<div class="cb-row"><span>Typical installed price</span><b>Varies by area</b></div>'
+                    '<p class="cb-note">Price depends on which areas you insulate (attic, walls, basement) and how much air sealing is needed. '
+                    'Ask each company for a price per area and the R-value you end up with, so quotes are easy to compare.</p>')
+    elif service == "battery":
+        rows.append('<div class="cb-row"><span>Typical installed price</span><b>Varies by battery</b></div>'
+                    '<p class="cb-note">Price depends on the brand, how much storage you want, and whether you need a panel upgrade. '
+                    'Ask for the price per usable kWh so quotes are easy to compare.</p>')
     else:
         rows.append('<div class="cb-row"><span>Typical installed price</span><b>No official survey</b></div>'
                     '<p class="cb-note">Canada has no public solar price survey. Get 2 or 3 quotes for the same size system and compare price per watt '
                     'with our <a href="/solar-quote-checker/">solar quote checker</a>.</p>')
-    names = {"heat-pump": "heat pump", "solar": "solar", "battery": "battery"}
+    names = {"heat-pump": "heat pump", "solar": "solar", "battery": "battery", "insulation": "insulation"}
     if reb:
         for c, v in reb:
             rows.append(f'<div class="cb-row cb-reb"><span>{names[c].capitalize()} rebates open in {esc(city_label)}</span><b>up to ${v:,.0f}</b></div>')
@@ -373,6 +429,8 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
         if r["phone"]:
             tel = re.sub(r"[^\d+]", "", r["phone"])
             acts.append(f'<a href="tel:{tel}">Call {esc(r["phone"])}</a>')
+        if r["email"]:
+            acts.append(f'<a href="mailto:{esc(r["email"])}">Email {esc(r["email"])}</a>')
         if r["website"]:
             acts.append(f'<a href="{esc(r["website"])}" rel="nofollow noopener" target="_blank">Website</a>')
         if r["gmaps"]:
@@ -396,8 +454,9 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
     rebate_url = (city_hub_url + svc["rebate_cat"] + "/") if city_hub_url and (ROOT / (city_hub_url.strip("/") + "/" + svc["rebate_cat"]) / "index.html").exists() else city_hub_url
     rebate_line = (f'<p>Before you call anyone, check <a href="{rebate_url}">what {svc["lower"]} rebates you can get in {esc(city_label)}</a>. '
                    f'Many programs require approval or a registered contractor <em>before</em> work starts.</p>') if rebate_url else ""
-    other_line = (f'<p>Also comparing {"solar" if service == "heat-pump" else "heat pumps"}? See the '
-                  f'<a href="{other_service_url}">top-rated {"solar" if service == "heat-pump" else "heat pump"} installers in {esc(city_label)}</a>.</p>') if other_service_url else ""
+    other_line = (f'<p>Planning more upgrades? See the top-rated ' + ", ".join(
+        f'<a href="{u}">{SERVICES[sv]["lower"]} installers</a>' for sv, u in (other_service_url or {}).items())
+        + f' in {esc(city_label)}.</p>') if other_service_url else ""
 
     vet_line = ('<p>Full checklist: <a href="/guides/installer-vetting-checklist/">how to vet an HPCN installer in BC</a>.</p>'
                 if region == "bc" and service == "heat-pump" else "")
@@ -541,7 +600,7 @@ def method_page():
 <p><a href="/installers/">Browse installers by city →</a></p>
 </div></section>"""
     title = "How We Rank Installers | HomePowerRebate"
-    desc = "How HomePowerRebate ranks local heat pump and solar installers using review-weighted Google ratings, and how we make money."
+    desc = "How HomePowerRebate ranks local heat pump, solar, insulation and battery installers using review-weighted Google ratings, and how we make money."
     page = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title}</title>
@@ -577,13 +636,13 @@ def update_installers_hub(index):
         rows = []
         for city in sorted(cities):
             links = " · ".join(f'<a href="{cities[city][sv]}">{SERVICES[sv]["name"]}</a>'
-                               for sv in ("heat-pump", "solar") if sv in cities[city])
+                               for sv in SERVICES if sv in cities[city])
             rows.append(f'<li><strong>{esc(city)}</strong>: {links}</li>')
         blocks.append(f'<details style="margin-bottom:10px;"><summary style="cursor:pointer;font-weight:700;font-size:17px;">{long_name} ({len(cities)} cities)</summary>'
                       f'<ul style="columns:2 220px;margin:12px 0 0 18px;font-size:15px;line-height:1.9;">{"".join(rows)}</ul></details>')
     section = (f'{HUB_START}\n<section class="section" id="top-rated-by-city"><div class="wrap">'
                '<h2>Top-Rated Installers by City</h2>'
-               '<p>Each city page ranks local heat pump and solar companies by Google reviews, weighted so lots of good reviews count more than a few. '
+               '<p>Each city page ranks local heat pump, solar, insulation and battery companies by Google reviews, weighted so lots of good reviews count more than a few. '
                '<a href="/installers/how-we-rank/">How we rank</a>.</p>'
                + "".join(blocks) + f'</div></section>\n{HUB_END}')
     if HUB_START in s:
@@ -602,7 +661,7 @@ CAROUSEL_RE = re.compile(r'<section class="unified-carousel-section".*?</section
 def rankings_block(city, entries):
     """Small card linking a city page to its ranked installer lists."""
     items = []
-    for sv in ("heat-pump", "solar"):
+    for sv in SERVICES:
         e = entries.get(sv)
         if not e:
             continue
@@ -828,11 +887,14 @@ def main():
         hub = find_hub(hubs, region, city)
         if not hub:
             no_hub.append(f"{region}/{city}")
-        other = "solar" if service == "heat-pump" else "heat-pump"
-        other_url = page_path(region, other, city) if (region, other, city) in eligible else ""
+        others = [sv for sv in SERVICES if sv != service]
+        other_url = {sv: page_path(region, sv, city) for sv in others if (region, sv, city) in eligible}
         label = hub["label"] if hub else city
-        also = "Also installs heat pumps" if other == "heat-pump" else "Also installs solar"
-        other_names = {slugify(r["name"]): also for r in groups.get((region, other, city), [])}
+        also_by = {}
+        for sv in others:
+            for r in groups.get((region, sv, city), []):
+                also_by.setdefault(slugify(r["name"]), []).append(ALSO[sv])
+        other_names = {k: "Also installs " + " and ".join(v[:2]) for k, v in also_by.items()}
         path, html_out, meta = build_page(region, service, label, hub, inst, other_url, other_names)
         built.append({**meta, "html": html_out, "text": body_text(html_out, label)})
 

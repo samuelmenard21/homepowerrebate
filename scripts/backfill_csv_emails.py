@@ -25,18 +25,7 @@ ROOT = Path(__file__).parent.parent
 INSTALLERS_DIR = ROOT / "installers"
 EMAILS_CSV = INSTALLERS_DIR / "installer-emails.csv"
 
-TARGET_CSVS = [
-    "heat-pump-installers-real.csv", "solar-installers-real.csv",
-    "on-heat-pump-installers-real.csv", "on-solar-installers-real.csv",
-    "ab-heat-pump-installers-real.csv", "ab-solar-installers-real.csv",
-    "ns-heat-pump-installers-real.csv", "ns-solar-installers-real.csv",
-    "ma-heat-pump-installers-real.csv", "ma-solar-installers-real.csv",
-    "pa-heat-pump-installers-real.csv", "pa-solar-installers-real.csv",
-    "co-heat-pump-installers-real.csv", "co-solar-installers-real.csv",
-    "vt-heat-pump-installers-real.csv", "vt-solar-installers-real.csv",
-    "ca-heat-pump-installers-real.csv", "ca-solar-installers-real.csv",
-    "ny-heat-pump-installers-real.csv", "ny-solar-installers-real.csv",
-]
+TARGET_CSVS = sorted(p.name for p in INSTALLERS_DIR.glob("*-installers-real.csv"))
 
 
 def load_email_map():

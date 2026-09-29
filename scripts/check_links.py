@@ -51,6 +51,8 @@ def main():
         t = p.read_text(encoding="utf-8", errors="ignore")
         t = re.sub(r"<!--.*?-->|<script.*?</script>", "", t, flags=re.S)
         for m in re.finditer(r'<(?:a|link)\b[^>]*?href="([^"]+)"', t):
+            if re.search(r'rel="(?:preconnect|dns-prefetch)"', m.group(0)):
+                continue
             h = m.group(1).strip()
             if h.startswith(("mailto:", "tel:", "javascript:", "#", "data:")):
                 continue
@@ -73,18 +75,26 @@ def main():
     print(f"{len(pages)} pages, {len(broken)} broken internal targets, {len(ext)} distinct external links")
     if "--external" in sys.argv:
         import requests
-        bad = 0
-        for u, where in sorted(ext.items()):
+        from concurrent.futures import ThreadPoolExecutor
+        H = {"User-Agent": "Mozilla/5.0 HPR-linkcheck"}
+
+        def probe(u):
             try:
-                r = requests.head(u, allow_redirects=True, timeout=12, headers={"User-Agent": "Mozilla/5.0 HPR-linkcheck"})
-                if r.status_code in (403, 405):
-                    r = requests.get(u, timeout=12, stream=True, headers={"User-Agent": "Mozilla/5.0 HPR-linkcheck"})
-                code = r.status_code
+                r = requests.head(u, allow_redirects=True, timeout=10, headers=H)
+                if r.status_code in (403, 405, 400, 501):
+                    r = requests.get(u, timeout=10, stream=True, headers=H)
+                return u, r.status_code
             except Exception as e:
-                code = type(e).__name__
-            if code != 200 and not (isinstance(code, int) and code in (401, 403, 429)):
-                bad += 1
-                print(f"EXTERNAL {code} {u}  ({len(where)} pages, e.g. {sorted(where)[0]})")
+                return u, type(e).__name__
+
+        with ThreadPoolExecutor(48) as ex:
+            results = list(ex.map(probe, sorted(ext)))
+        bad = 0
+        for u, code in results:
+            if code == 200 or (isinstance(code, int) and code in (401, 403, 429)):
+                continue
+            bad += 1
+            print(f"EXTERNAL {code} {u}  ({len(ext[u])} pages, e.g. {sorted(ext[u])[0]})")
         print(f"{bad} external links need a look")
     sys.exit(1 if broken else 0)
 

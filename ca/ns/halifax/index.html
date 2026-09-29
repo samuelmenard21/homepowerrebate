@@ -213,6 +213,13 @@ strong { color: var(--ink); }
 .footer-bottom { padding-top: 24px; font-size: 12px; color: rgba(250, 247, 242, 0.35); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
+.sticky-cta { display: none; }
+@media (max-width: 768px) {
+  .sticky-cta { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 60; background: var(--amber); color: #fff; text-align: center; font-weight: 700; font-size: 15px; padding: 14px 16px; border-radius: 999px; text-decoration: none; box-shadow: 0 6px 20px rgba(10, 42, 46, 0.3); transform: translateY(140%); transition: transform .25s ease; }
+  .sticky-cta.show { display: block; transform: none; }
+  .sticky-cta.on { display: block; }
+  body.has-sticky-cta { padding-bottom: 76px; }
+}
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
 <style>
@@ -672,6 +679,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Halifax</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ns/halifax/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Halifax &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">8 local companies ranked by 2,111 Google reviews. Top picks: Trevor Wheatley&#x27;s plumbing &amp; heating Ltd, Nova Heat Pumps &amp; Air Conditioning - Halifax, Atmosphere Climate Control Specialists Ltd..</span></a><a href="/installers/ns/halifax/battery/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated home battery installers in Halifax &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">3 local companies ranked by 485 Google reviews. Top picks: Totally Electric Limited, Firefly Solar, BMR Electric High Efficency ETS Heating.</span></a></div></section>
 <!-- RANKINGS-LINK-END -->
 <!-- CITY-EXTRAS-START --><section style="max-width:1180px;margin:0 auto;padding:24px 28px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 10px;">More for Halifax</h2><ul style="margin:0 0 0 20px;line-height:1.9;"><li><a href="/stacking-calculator/ca/ns/halifax/">Rebate stacking calculator for Halifax</a></li><li><a href="/ca/ns/halifax/appliances/">Appliance rebates in Halifax</a></li></ul></section><!-- CITY-EXTRAS-END -->
+<!-- NS-GUIDE-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Replacing an electric tank?</b> Read the <a href="/blog/water-heater-buying-guide-ns/">Nova Scotia heat pump water heater cost, sizing and rebate guide</a>, or <a href="/heat-pump-water-heater/nova-scotia/">work out your savings at NS Power rates</a>.</p></section><!-- NS-GUIDE-LINK-END -->
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Halifax where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
@@ -753,6 +761,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     </div>
   </div>
 </footer>
+<a id="sticky-cta" class="sticky-cta" href="/get-quotes/">Get free quotes from top-rated installers</a>
 <!-- CANONICAL-FOOTER-END -->
 
 <script>
@@ -805,6 +814,16 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.textContent = originalText;
   }
 });
+(function () {
+  var b = document.getElementById('sticky-cta');
+  if (!b || /^\/(get-quotes|privacy|terms|unsubscribe)/.test(location.pathname)) return;
+  document.body.classList.add('has-sticky-cta');
+  b.classList.add('on');
+  var f = 0;
+  function upd() { f = 0; b.classList.toggle('show', window.scrollY > 600); }
+  window.addEventListener('scroll', function () { if (!f) { f = 1; requestAnimationFrame(upd); } }, { passive: true });
+  upd();
+})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

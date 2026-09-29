@@ -204,6 +204,13 @@ a { color:var(--teal-deep); }
 .footer-bottom { padding-top: 24px; font-size: 12px; color: rgba(250, 247, 242, 0.35); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
+.sticky-cta { display: none; }
+@media (max-width: 768px) {
+  .sticky-cta { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 60; background: var(--amber); color: #fff; text-align: center; font-weight: 700; font-size: 15px; padding: 14px 16px; border-radius: 999px; text-decoration: none; box-shadow: 0 6px 20px rgba(10, 42, 46, 0.3); transform: translateY(140%); transition: transform .25s ease; }
+  .sticky-cta.show { display: block; transform: none; }
+  .sticky-cta.on { display: block; }
+  body.has-sticky-cta { padding-bottom: 76px; }
+}
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
 </head>
@@ -493,6 +500,7 @@ a { color:var(--teal-deep); }
     </div>
   </div>
 </footer>
+<a id="sticky-cta" class="sticky-cta" href="/get-quotes/">Get free quotes from top-rated installers</a>
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
@@ -540,6 +548,16 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.textContent = originalText;
   }
 });
+(function () {
+  var b = document.getElementById('sticky-cta');
+  if (!b || /^\/(get-quotes|privacy|terms|unsubscribe)/.test(location.pathname)) return;
+  document.body.classList.add('has-sticky-cta');
+  b.classList.add('on');
+  var f = 0;
+  function upd() { f = 0; b.classList.toggle('show', window.scrollY > 600); }
+  window.addEventListener('scroll', function () { if (!f) { f = 1; requestAnimationFrame(upd); } }, { passive: true });
+  upd();
+})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

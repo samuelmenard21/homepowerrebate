@@ -23,7 +23,7 @@ PUBLIC_EXT = {".html", ".css", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".gif",
               ".woff", ".woff2", ".ttf", ".otf", ".xml", ".webmanifest", ".mp4", ".webm", ".pdf"}
 PUBLIC_FILES = {"robots.txt", "llms.txt", "_redirects", "_headers", "form-handlers.js",
                 "form-handlers-with-installer-select.js", "128e460777465d0f18b1a1d82780a08b.txt"}
-PUBLIC_PREFIXES = ("installers/json/", "rebate-tracker/changes.json")
+PUBLIC_PREFIXES = ("installers/json/", "rebate-tracker/changes.json", "calculator/data/", "calculator/rebate-engine.js", "calculator/widget.js")
 PRIVATE_DIRS = {"scripts", "data", "reports", ".claude", ".github", "node_modules", "_partials", "dist",
                 "meta-worker", "pinterest-worker", "powerscore-history"}
 # Dev/template pages that are real .html files but never meant to be public.

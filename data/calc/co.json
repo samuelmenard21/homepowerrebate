@@ -1,0 +1,236 @@
+{
+ "code": "co",
+ "name": "Colorado",
+ "country": "us",
+ "currency": "USD",
+ "hub": "/us/co/",
+ "installers": "/installers/",
+ "title": "Colorado Rebate Calculator 2026: Xcel Energy Heat Pump, Water Heater and More",
+ "h1": "Colorado Rebate Calculator 2026: What Xcel Energy Pays for Your Home",
+ "desc": "Free Colorado rebate calculator for Xcel Energy customers. See heat pump, water heater, thermostat, insulation, EV charger and battery rebates, with the official source for every amount.",
+ "intro": "Answer a few questions and see which Xcel Energy rebates fit your home, with a source for every number.",
+ "short": "Xcel Energy pays $750 per heating ton for a cold-climate heat pump, or $1,500 per ton for homes heated with Xcel gas, from October 1, 2026. It also pays $750 or $1,500 for a heat pump water heater, $50 for a smart thermostat and up to $500 for a home EV charger. Other utilities, such as Fort Collins and Colorado Springs, run their own programs that we have not verified yet.",
+ "faq": [
+  [
+   "How much is the Xcel Energy heat pump rebate in 2026?",
+   "$750 per heating ton for a cold-climate ducted heat pump, or $1,500 per ton with the gas bonus, starting October 1, 2026. A 3-ton system would get $2,250, or $4,500 with the bonus. Xcel's 2026 rebate sheet lists the amounts."
+  ],
+  [
+   "Who gets the Xcel Energy gas bonus?",
+   "Homes heated with natural gas from Xcel Energy. Homes with electric heat, such as baseboards, get the standard amount only."
+  ],
+  [
+   "Is there still a federal tax credit for a heat pump in Colorado?",
+   "No. The federal 25C and 25D credits ended for spending after December 31, 2025, so we do not count them."
+  ],
+  [
+   "What if my utility is not Xcel Energy?",
+   "Choose Other utility. Fort Collins Utilities, Colorado Springs Utilities and others run separate programs. We list them only after checking their own pages, so the calculator shows no amounts for them yet."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "utility",
+   "label": "Who supplies your gas or electricity?",
+   "type": "select",
+   "options": [
+    {
+     "value": "xcel",
+     "label": "Xcel Energy"
+    },
+    {
+     "value": "other",
+     "label": "Another utility (Fort Collins, Colorado Springs and others)"
+    }
+   ]
+  },
+  {
+   "id": "heating",
+   "label": "What heats your home now?",
+   "type": "select",
+   "options": [
+    {
+     "value": "gas",
+     "label": "Natural gas from Xcel"
+    },
+    {
+     "value": "electric",
+     "label": "Electric heat"
+    },
+    {
+     "value": "other",
+     "label": "Something else"
+    }
+   ]
+  },
+  {
+   "id": "tons",
+   "label": "How many heating tons is your heat pump? (optional)",
+   "type": "select",
+   "optional": true,
+   "help": "Most homes need 2 to 4 tons. Your installer sizes it. Skip this to see the per-ton rate only.",
+   "options": [
+    {
+     "value": "1",
+     "label": "1 tons"
+    },
+    {
+     "value": "2",
+     "label": "2 tons"
+    },
+    {
+     "value": "3",
+     "label": "3 tons"
+    },
+    {
+     "value": "4",
+     "label": "4 tons"
+    },
+    {
+     "value": "5",
+     "label": "5 tons"
+    }
+   ]
+  }
+ ],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump"
+  },
+  {
+   "id": "water-heater",
+   "label": "Heat pump water heater"
+  },
+  {
+   "id": "insulation",
+   "label": "Insulation"
+  },
+  {
+   "id": "battery",
+   "label": "Home battery"
+  },
+  {
+   "id": "ev",
+   "label": "EV charger"
+  },
+  {
+   "id": "thermostat",
+   "label": "Smart thermostat"
+  }
+ ],
+ "programs": [
+  {
+   "id": "xcel-hp",
+   "fact": "co-0-xcel-energy-cold-climate-air-source-heat-pump",
+   "name": "Xcel Energy cold-climate heat pump",
+   "upgrade": "heat-pump",
+   "when": {
+    "utility": [
+     "xcel"
+    ]
+   },
+   "amount": {
+    "per": {
+     "unit": "heating ton",
+     "rate": 750,
+     "bonus_rate": 1500,
+     "bonus_when": {
+      "heating": [
+       "gas"
+      ]
+     },
+     "question": "tons"
+    }
+   },
+   "rules": "Cold-climate model from a participating contractor. The gas bonus applies to homes heated with Xcel natural gas. Starts October 1, 2026."
+  },
+  {
+   "id": "xcel-hpwh",
+   "fact": "co-2-xcel-energy-heat-pump-water-heater",
+   "name": "Xcel Energy heat pump water heater",
+   "upgrade": "water-heater",
+   "when": {
+    "utility": [
+     "xcel"
+    ]
+   },
+   "amount": {
+    "by": "heating",
+    "values": {
+     "gas": 1500,
+     "electric": 750,
+     "other": 750
+    }
+   },
+   "rules": "ENERGY STAR model with a 3.3 UEF or better. $1,500 with the gas bonus, $750 otherwise. Starts October 1, 2026."
+  },
+  {
+   "id": "xcel-insulation",
+   "fact": "co-4-xcel-energy-insulation-and-air-sealing",
+   "name": "Xcel Energy insulation and air sealing",
+   "upgrade": "insulation",
+   "when": {
+    "utility": [
+     "xcel"
+    ]
+   },
+   "amount": {
+    "max": 500
+   },
+   "rules": "30% of cost: up to $500 for an attic, $350 for walls and $400 for air sealing. Xcel gas or electric heat."
+  },
+  {
+   "id": "xcel-battery",
+   "fact": "co-6-xcel-energy-renewable-battery-connect",
+   "name": "Xcel Energy Renewable Battery Connect",
+   "upgrade": "battery",
+   "when": {
+    "utility": [
+     "xcel"
+    ]
+   },
+   "amount": {
+    "max": 5000
+   },
+   "rules": "$250 per kW, up to $5,000. Tesla Powerwall or current Enphase batteries, charged by solar. Xcel can use the battery during peak events. Funding is limited."
+  },
+  {
+   "id": "xcel-ev",
+   "fact": "co-5-xcel-energy-ev-charger-and-wiring-rebate",
+   "name": "Xcel Energy home EV charger and wiring",
+   "upgrade": "ev",
+   "when": {
+    "utility": [
+     "xcel"
+    ]
+   },
+   "amount": {
+    "max": 500
+   },
+   "rules": "Up to $500, or up to $2,300 if income-qualified. Enroll in Optimize Your Charge first. First come, first served."
+  },
+  {
+   "id": "xcel-thermostat",
+   "fact": "co-3-xcel-energy-smart-thermostat",
+   "name": "Xcel Energy smart thermostat",
+   "upgrade": "thermostat",
+   "when": {
+    "utility": [
+     "xcel"
+    ]
+   },
+   "amount": {
+    "max": 50
+   },
+   "rules": "ENERGY STAR rated thermostat."
+  }
+ ],
+ "closed_facts": [
+  "co-8-federal-residential-clean-energy-credits-25c-25d"
+ ],
+ "notes": [
+  "Solar: Xcel's 2026 residential solar rebate is for income-qualified and disadvantaged-community homes only. Other homes get net metering, not a rebate, so solar is not in this calculator.",
+  "Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."
+ ]
+}

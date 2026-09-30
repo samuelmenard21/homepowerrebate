@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home Rebate Calculators: Heat Pump, Solar and Battery | HomePowerRebate</title>
+<title>Free Rebate Calculator Widget for Installers | HomePowerRebate</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W33G4TGRHD');</script>
-<meta name="description" content="Free home rebate calculators. Choose your province or state to see the rebates you can claim, with an official source for every amount."><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large"><link rel="canonical" href="https://homepowerrebate.com/calculator/">
-<meta property="og:title" content="Home Rebate Calculators: Heat Pump, Solar and Battery | HomePowerRebate"><meta property="og:description" content="Free home rebate calculators. Choose your province or state to see the rebates you can claim, with an official source for every amount."><meta property="og:url" content="https://homepowerrebate.com/calculator/"><meta property="og:type" content="article">
+<meta name="description" content="Add a free home rebate calculator to your installer website. Amounts update automatically and it links back to HomePowerRebate."><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large"><link rel="canonical" href="https://homepowerrebate.com/calculator/widget/">
+<meta property="og:title" content="Free Rebate Calculator Widget for Installers | HomePowerRebate"><meta property="og:description" content="Add a free home rebate calculator to your installer website. Amounts update automatically and it links back to HomePowerRebate."><meta property="og:url" content="https://homepowerrebate.com/calculator/widget/"><meta property="og:type" content="article">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -314,10 +314,18 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
      so the dropdown opens to the right tab, and add a highlighted/active style to the
      current city's <a> for  — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
-<header class="hero"><div class="wrap"><h1>Home Rebate Calculators</h1><p>Pick your province or state, answer a few questions and see the rebates you can claim, with the official source for every amount.</p></div></header>
-<section class="body"><div class="wrap rc-wrap"><h2>Available now</h2><ul><li><a href="/calculator/bc/"><b>British Columbia rebate calculator</b></a> <span class="small">rules verified 2026-09-26</span></li><li><a href="/calculator/co/"><b>Colorado rebate calculator</b></a> <span class="small">rules verified 2026-09-29</span></li></ul>
-<h2>Coming next</h2><p>We add a calculator only when every program in it has been checked against the program's own page. Until then, use the rebate guide for your region: <a href="/ca/on/">Ontario</a> · <a href="/ca/ab/">Alberta</a> · <a href="/ca/ns/">Nova Scotia</a> · <a href="/us/ca/">California</a> · <a href="/us/ma/">Massachusetts</a> · <a href="/us/ny/">New York</a> · <a href="/us/pa/">Pennsylvania</a> · <a href="/us/vt/">Vermont</a>.</p>
-<h2>Are you an installer?</h2><p>Add a free rebate calculator to your website. It links back to us and nothing else changes. <a href="/calculator/widget/">See how</a>.</p></div></section>
+<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/calculator/">Calculators</a></li><li aria-current="page">Installer widget</li></ol></nav>
+<header class="hero"><div class="wrap"><h1>Free Rebate Calculator for Your Website</h1><p>Let your customers check which rebates they qualify for, without leaving your site.</p></div></header>
+<section class="body"><div class="wrap rc-wrap"><h2>Copy and paste</h2>
+<pre style="background:#0a2a2e;color:#fff;padding:14px;border-radius:8px;overflow-x:auto;white-space:pre-wrap;">&lt;div data-hpr-calc="bc"&gt;&lt;/div&gt;
+&lt;script src="https://homepowerrebate.com/calculator/widget.js" async&gt;&lt;/script&gt;</pre>
+<h2>What you get</h2><ul><li>A working calculator for British Columbia, Colorado. More regions are added as we verify them.</li>
+<li>Rebate amounts that update on their own when a program changes. You never edit them.</li>
+<li>No tracking, no cookies, no ads, and no fee.</li></ul>
+<h2>What we ask</h2><p>Leave the "Rebate calculator by HomePowerRebate" link under the frame. It is a normal link. Listing here never changes where your company ranks: installers are ranked by Google reviews only.</p>
+<h2>Preview</h2><div data-hpr-calc="bc"></div><script src="/calculator/widget.js" async></script>
+<script>document.querySelectorAll('[data-hpr-calc]').forEach(function(){});</script>
+</div></section>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
@@ -328,7 +336,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
       <input type="email" id="newsletter-email" placeholder="your@email.com" required aria-label="Your email address" autocomplete="email" style="min-height: 46px; padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 16px; background: #fff; color: var(--ink);">
       <input type="hidden" id="newsletter-city" value="">
-      <input type="hidden" id="newsletter-page" value="/calculator/">
+      <input type="hidden" id="newsletter-page" value="/calculator/widget/">
       <button type="submit" style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 15px; min-height: 46px; cursor: pointer; font-family: 'Inter Tight', sans-serif;">Subscribe</button>
       <p style="font-size: 13px; color: rgba(250, 247, 242, 0.78); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
     </form>

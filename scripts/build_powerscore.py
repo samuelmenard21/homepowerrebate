@@ -268,7 +268,7 @@ def main():
 
     STATUS_SCORE = {"open": 100, "limited": 50, "closed": 0}
 
-    output = {"generated": "2026-08-23", "regions": {}}
+    output = {"generated": __import__("datetime").date.today().isoformat(), "regions": {}}
 
     all_city_rows = []
 

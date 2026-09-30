@@ -67,6 +67,24 @@ def email_ok(email, website, name):
     return any(w in dom.replace("-", "") for w in words)
 
 
+# Neighbouring places that are fine to list under the searched city.
+NEARBY_OK = {("denver", "golden"), ("folsom", "granite bay"), ("fall river", "seekonk"), ("brockton", "abington"), ("quincy", "abington"),
+             ("new rochelle", "bronxville"), ("white plains", "eastchester"), ("albany", "green island"), ("smithtown", "bohemia"),
+             ("lowell", "methuen"), ("santa monica", "los angeles")}
+
+
+def wrong_city(r):
+    """The search matched a street name, not the place: "Upper Ottawa St" is in Hamilton, "Old Victoria Rd" is in Nanaimo.
+    True when the searched city appears only in the street part of the address and the address city is somewhere else."""
+    p = [x.strip() for x in (r.get("Address") or "").split(",")]
+    if len(p) < 3:
+        return False
+    street = p[0].lower()
+    acity = (p[-3] if p[-1] in ("Canada", "USA", "United States") else p[-2]).lower()
+    city = r["City"].lower().replace("-", " ")
+    return city.split()[0] in street and city.split()[0] not in acity and (city, acity) not in NEARBY_OK
+
+
 def service_of(name):
     m = re.match(r"(?:[a-z]{2}-)?(heat-pump|solar|insulation|battery)-installers-real\.csv$", name)
     return m.group(1) if m else None
@@ -91,6 +109,8 @@ def main():
             why = None
             if NOT_INSTALLER.search(name) or "energysage" in site.lower():
                 why = "not an installer"
+            elif wrong_city(r):
+                why = "listed under a different city (only the street name matched)"
             elif sv == "battery" and name.lower() not in solar_names and BATTERY_RETAIL.search(name) and not BATTERY_SOLAR.search(name):
                 why = "battery shop or EV service, not home battery installs"
             elif sv == "battery" and not (BATTERY_OK.search(text) or name.lower() in solar_names):

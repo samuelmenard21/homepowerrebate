@@ -36,13 +36,21 @@ section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;
 .callout{background:var(--paper-warm);border:1px solid var(--rule);border-left:4px solid var(--green-money);border-radius:8px;padding:16px 18px;margin:4px 0 22px}
 .callout p{margin:0}
 .rank-list{list-style:none;margin:0 0 10px!important;padding:0}
-.rank{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:14px 16px;margin-bottom:10px!important;display:grid;grid-template-columns:34px 1fr;gap:4px 12px}
-.rank .n{grid-row:span 2;font-family:'Fraunces',Georgia,serif;font-size:22px;color:var(--amber);font-weight:700}
+.rank{background:#fff;border:1px solid var(--rule);border-radius:14px;padding:16px 16px 14px;margin-bottom:12px!important;display:grid;grid-template-columns:36px 1fr;gap:6px 12px;box-shadow:0 1px 2px rgba(10,42,46,.04)}
+.rank.top{border-left:4px solid var(--green-money)}
+.rank .n{grid-row:span 3;font-family:'Fraunces',Georgia,serif;font-size:22px;color:var(--amber);font-weight:700;line-height:1.1}
+.rank .stars{display:inline-block;font-size:17px;letter-spacing:1px;line-height:1;background:linear-gradient(90deg,#d4751c var(--p),#e3dacb var(--p));-webkit-background-clip:text;background-clip:text;color:transparent;vertical-align:-1px}
+.rank .rt{font-size:15px;color:var(--ink)}.rank .rt b{font-size:17px}.rank .rv{color:var(--ink-soft);font-size:14px}
+.rank .adr{font-size:13.5px;color:var(--sage);margin-top:3px}
+.rank .btn-call{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;background:var(--teal-deep);color:#fff!important;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none!important}
+.rank .btn-call:hover{background:var(--amber)}
+.rank .lnk{display:inline-flex;align-items:center;min-height:36px;font-size:14px}
+.rank .em{overflow-wrap:anywhere}
 .rank .nm{font-weight:700;color:var(--ink);font-size:16.5px}
 .rank .nm a{color:var(--ink);text-decoration:none}
 .rank .st{font-size:14px;color:var(--ink-soft)}
 .rank .st b{color:var(--ink)}
-.rank .act{grid-column:2;font-size:13.5px;display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:4px}
+.rank .act{grid-column:2;font-size:14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;margin-top:6px}
 .reg{display:inline-block;font-size:12px;font-weight:700;color:var(--green-money);border:1px solid var(--green-money);border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px;cursor:help}
 p.small .reg{border:0;padding:0;margin:0;cursor:auto}
 .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--green-money);color:#fff;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:2px}
@@ -125,6 +133,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .tw td:first-child { font-size: 17px; padding-top: 2px !important; }
   .tw td:first-child::before { display: none; }
 }
+.hpr-toc { background: #fff; border: 1px solid #d9d0c1; border-radius: 12px; padding: 4px 16px; margin: 18px 0 26px; max-width: 720px; }
+.hpr-toc summary { cursor: pointer; font-weight: 700; font-size: 15px; padding: 12px 0; color: var(--teal-deep); list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.hpr-toc summary::-webkit-details-marker { display: none; }
+.hpr-toc summary::after { content: "+"; font-size: 20px; color: var(--amber); }
+.hpr-toc[open] summary::after { content: "\2212"; }
+.hpr-toc ol { margin: 0 0 12px 20px !important; padding: 0; }
+.hpr-toc li { margin: 0 !important; font-size: 15px !important; }
+.hpr-toc a { display: inline-block; padding: 6px 0; text-decoration: none !important; font-weight: 500 !important; color: var(--ink) !important; }
+.hpr-toc a:hover { color: var(--amber) !important; }
+h2[id] { scroll-margin-top: 84px; }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
 </head><body>
@@ -222,6 +240,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 <div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;"><b>Short answer:</b> CleanBC&#x27;s Energy Savings Program is for income-qualified BC homes. Switching from gas, oil or propane to a heat pump pays $13,000, $7,000 or $3,500 depending on your income level, plus a $3,000 top-up for levels 1 and 2 in northern BC. Homes switching from electric heat can get up to $5,000 at income level 1. These rules apply to invoices from July 6, 2026.</p></div>
 <h2>CleanBC rebates: amounts in 2026</h2>
 <div class="tw"><table><tr><th>Upgrade</th><th>Amount</th><th>Rules</th></tr><tr><td><b>Heat pump from gas, oil or propane, level 1</b></td><td>$13,000</td><td>Central system or 3+ indoor heads. <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td><b>Heat pump from gas, oil or propane, level 2</b></td><td>$7,000</td><td>Central system or 3+ indoor heads. <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td><b>Heat pump from gas, oil or propane, level 3</b></td><td>$3,500</td><td>Central system or 3+ indoor heads. <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td><b>Northern top-up</b></td><td>+$3,000</td><td>Levels 1 and 2, 100 Mile House and north. <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td><b>Heat pump from electric heat</b></td><td>Up to $5,000</td><td>Income level 1 only. <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr></table></div>
+<p class="small">Amounts last checked September 29, 2026 against each program's official page (linked in each row).</p>
 <h2>How to apply</h2><ol><li>Check your income level on CleanBC&#x27;s Better Homes site. The limits depend on household size.</li><li>Get quotes from a registered contractor, and ask them to confirm the rebate amount for your level.</li><li>Keep invoices dated July 6, 2026 or later; older invoices fall under the previous rules.</li></ol>
 <h2>Recent changes</h2><ul><li><b>2026-07-06: CleanBC Energy Savings Program (income-qualified).</b> New rules for invoices from July 6, 2026: heat pump rebates for switching from gas, oil or propane are now $13,000, $7,000 or $3,500 by income level, plus a $3,000 northern top-up for levels 1 and 2. <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" rel="nofollow noopener" target="_blank">Source</a></li></ul><p><a href="/rebate-tracker/">See every rebate change</a>.</p>
 <h2>Find your city and an installer</h2>
@@ -380,6 +399,24 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       [].forEach.call(r.querySelectorAll('td'), function (c, i) { if (labels[i] && !c.hasAttribute('data-label')) c.setAttribute('data-label', labels[i]); });
     });
   });
+})();
+(function () {
+  var box = document.querySelector('article.article, section.body .wrap');
+  if (!box || box.querySelector('.hpr-toc')) return;
+  var hs = [].filter.call(box.querySelectorAll('h2'), function (h) { return !h.closest('footer, form, .cta, aside, nav') && h.textContent.trim().length > 3; });
+  var words = (box.innerText || '').split(/\s+/).length;
+  if (hs.length < 5 || words < 1200) return;
+  var used = {}, items = hs.map(function (h) {
+    var id = h.id || h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'section';
+    while (used[id] || (document.getElementById(id) && document.getElementById(id) !== h)) id += '-2';
+    used[id] = 1; h.id = id;
+    return '<li><a href="#' + id + '">' + h.textContent.trim().replace(/</g, '&lt;') + '</a></li>';
+  });
+  var d = document.createElement('details');
+  d.className = 'hpr-toc';
+  if (window.innerWidth > 700) d.open = true;
+  d.innerHTML = '<summary>On this page</summary><ol>' + items.join('') + '</ol>';
+  hs[0].parentNode.insertBefore(d, hs[0]);
 })();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>

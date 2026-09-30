@@ -150,13 +150,50 @@ section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;
 .callout{background:var(--paper-warm);border:1px solid var(--rule);border-left:4px solid var(--green-money);border-radius:8px;padding:16px 18px;margin:4px 0 22px}
 .callout p{margin:0}
 .rank-list{list-style:none;margin:0 0 10px!important;padding:0}
-.rank{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:14px 16px;margin-bottom:10px!important;display:grid;grid-template-columns:34px 1fr;gap:4px 12px}
-.rank .n{grid-row:span 2;font-family:'Fraunces',Georgia,serif;font-size:22px;color:var(--amber);font-weight:700}
+.rank{background:#fff;border:1px solid var(--rule);border-radius:14px;padding:16px 16px 14px;margin-bottom:12px!important;display:grid;grid-template-columns:36px 1fr;gap:6px 12px;box-shadow:0 1px 2px rgba(10,42,46,.04)}
+.rank.top{border-left:4px solid var(--green-money)}
+.rank .n{grid-row:span 3;font-family:'Fraunces',Georgia,serif;font-size:22px;color:var(--amber);font-weight:700;line-height:1.1}
+.rank .stars{display:inline-block;font-size:17px;letter-spacing:1px;line-height:1;background:linear-gradient(90deg,#d4751c var(--p),#e3dacb var(--p));-webkit-background-clip:text;background-clip:text;color:transparent;vertical-align:-1px}
+.rank .rt{font-size:15px;color:var(--ink)}.rank .rt b{font-size:17px}.rank .rv{color:var(--ink-soft);font-size:14px}
+.rank .adr{font-size:13.5px;color:var(--sage);margin-top:3px}
+.rank .btn-call{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;background:var(--teal-deep);color:#fff!important;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none!important}
+.rank .btn-call:hover{background:var(--amber)}
+.rank .lnk{display:inline-flex;align-items:center;min-height:36px;font-size:14px}
+.rank .em{overflow-wrap:anywhere}
+.hero{position:relative;overflow:hidden;background:radial-gradient(900px 340px at 88% -30%,rgba(212,117,28,.32),transparent 62%),linear-gradient(135deg,#0d4f5c 0%,#08363f 72%);padding:38px 0 70px}
+.hero-top{display:flex;gap:16px;align-items:center;margin-bottom:12px}.hero-top h1{margin:0}
+.hero-ico{flex:none;width:58px;height:58px;border-radius:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);display:grid;place-items:center;color:#f5b566}
+.hero-ico svg{width:30px;height:30px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:-44px 0 10px;position:relative;z-index:2}
+.stat{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:12px 8px;text-align:center;box-shadow:0 8px 20px rgba(10,42,46,.09)}
+.stat b{display:block;font-family:'Fraunces',Georgia,serif;font-size:23px;color:var(--teal-deep);line-height:1.1}
+.stat span{font-size:11.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.trust{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center;margin:12px 0 18px;font-size:13.5px;color:var(--ink-soft)}
+.trust span::before{content:"✓ ";color:var(--green-money);font-weight:700}
+@media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr);margin-top:-40px}.hero-ico{width:40px;height:40px;border-radius:12px}.hero-ico svg{width:22px;height:22px}.hero-top{gap:12px}}
+.sortbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px;font-size:14px;color:var(--ink-soft)}
+.sortbar button{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--rule);background:#fff;color:var(--ink);border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer}
+@media(max-width:480px){.sortbar{gap:6px}.sortbar>span{flex-basis:100%}.sortbar button{font-size:13.5px;padding:8px 11px}}
+.sortbar button.on{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff}
+.rank{transition:transform .18s ease,box-shadow .18s ease}
+.rank:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(10,42,46,.10)}
+.rank .n{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--paper-warm);border:1px solid var(--rule);font-size:17px;grid-row:span 3;align-self:start;color:var(--teal-deep)}
+.rank.g1 .n{background:linear-gradient(135deg,#f6d67a,#d9a521);border-color:#c8951a;color:#4a3200}
+.rank.g2 .n{background:linear-gradient(135deg,#eef1f3,#b9c2c9);border-color:#a5afb7;color:#37424a}
+.rank.g3 .n{background:linear-gradient(135deg,#f0cfae,#c98b52);border-color:#b9793f;color:#4a2a0d}
+.rank .bar{height:4px;border-radius:4px;background:#efe8db;margin-top:8px;max-width:220px;overflow:hidden}
+.rank .bar i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--teal),#3a8f9d);border-radius:4px}
+.js .rank{opacity:0;transform:translateY(10px)}
+.js .rank.in{opacity:1;transform:none;transition:opacity .4s ease,transform .4s ease,box-shadow .18s ease}
+.js .rank.in:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(10,42,46,.10)}
+@media (prefers-reduced-motion:reduce){.js .rank{opacity:1;transform:none}.rank,.rank:hover,.js .rank.in:hover{transition:none;transform:none}}
+.sec-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.sec-h .chip{font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:700;background:var(--paper-warm);border:1px solid var(--rule);border-radius:999px;padding:3px 10px;color:var(--teal-deep)}
+.cta{background:radial-gradient(500px 200px at 90% -20%,rgba(255,255,255,.22),transparent 60%),linear-gradient(135deg,#e88a2e,#d4751c);box-shadow:0 14px 30px rgba(212,117,28,.28)}
 .rank .nm{font-weight:700;color:var(--ink);font-size:16.5px}
 .rank .nm a{color:var(--ink);text-decoration:none}
 .rank .st{font-size:14px;color:var(--ink-soft)}
 .rank .st b{color:var(--ink)}
-.rank .act{grid-column:2;font-size:13.5px;display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:4px}
+.rank .act{grid-column:2;font-size:14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;margin-top:6px}
 .reg{display:inline-block;font-size:12px;font-weight:700;color:var(--green-money);border:1px solid var(--green-money);border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px;cursor:help}
 p.small .reg{border:0;padding:0;margin:0;cursor:auto}
 .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--green-money);color:#fff;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:2px}
@@ -407,6 +444,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
     most_reviewed = max(ranked, key=lambda r: r["reviews"])
     updated = max((r["updated"] for r in ranked if r["updated"]), default=MODIFIED)
     upd_h = date.fromisoformat(updated).strftime("%B %Y") if re.match(r"\d{4}-\d\d-\d\d$", updated) else updated
+    upd_short = date.fromisoformat(updated).strftime("%b %Y") if re.match(r"\d{4}-\d\d-\d\d$", updated) else updated
 
     title = f"Best {svc['name']} Installers in {city_label}, {short} (2026)"
     desc = (f"The top-rated {svc['lower']} installers in {city_label}, {short}, ranked by "
@@ -425,23 +463,33 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
         if prog:
             reg_used[prog["name"]] = prog
             badge += f'<span class="reg" title="{esc(prog["why"])}">✓ {esc(prog["short"])}</span>'
+        call = ""
         acts = []
         if r["phone"]:
             tel = re.sub(r"[^\d+]", "", r["phone"])
-            acts.append(f'<a href="tel:{tel}">Call {esc(r["phone"])}</a>')
-        if r["email"]:
-            acts.append(f'<a href="mailto:{esc(r["email"])}">Email {esc(r["email"])}</a>')
+            call = f'<a class="btn-call" href="tel:{tel}">Call {esc(r["phone"])}</a>'
         if r["website"]:
-            acts.append(f'<a href="{esc(r["website"])}" rel="nofollow noopener" target="_blank">Website</a>')
+            acts.append(f'<a class="lnk" href="{esc(r["website"])}" rel="nofollow noopener" target="_blank">Website</a>')
         if r["gmaps"]:
-            acts.append(f'<a href="{esc(r["gmaps"])}" rel="nofollow noopener" target="_blank">Google reviews</a>')
+            acts.append(f'<a class="lnk" href="{esc(r["gmaps"])}" rel="nofollow noopener" target="_blank">Google reviews</a>')
         if prof:
-            acts.append(f'<a href="{prof}">Profile</a>')
+            acts.append(f'<a class="lnk" href="{prof}">Profile</a>')
+        if r["email"]:
+            acts.append(f'<a class="lnk em" href="mailto:{esc(r["email"])}">Email {esc(r["email"])}</a>')
+        pct = max(0, min(100, round(r["rating"] / 5 * 100)))
+        bar = max(4, round(r["reviews"] / max(most_reviewed["reviews"], 1) * 100))
+        if r["address"]:
+            from urllib.parse import quote_plus
+            acts.insert(len(acts) - (1 if r["email"] else 0), f'<a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination={quote_plus(r["address"])}" rel="nofollow noopener" target="_blank">Directions</a>')
+        medal = f" g{i}" if i <= 3 else ""
         items.append(
-            f'<li class="rank"><div class="n">{i}</div><div class="nm">{name_html}{badge}</div>'
-            f'<div class="st"><b>{r["rating"]:.1f}★</b> from <b>{r["reviews"]:,}</b> Google reviews'
-            + (f'<br>{esc(r["address"])}' if r["address"] else "") + '</div>'
-            f'<div class="act">{" · ".join(acts)}</div></li>')
+            f'<li class="rank{" top" if i <= 3 else ""}{medal}" data-rank="{i}" data-reviews="{r["reviews"]}" data-rating="{r["rating"]}">'
+            f'<div class="n">{i}</div><div class="nm">{name_html}{badge}</div>'
+            f'<div class="st"><span class="rt"><span class="stars" style="--p:{pct}%" aria-hidden="true">★★★★★</span> '
+            f'<b>{r["rating"]:.1f}</b></span> <span class="rv">({r["reviews"]:,} Google reviews)</span>'
+            f'<div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:{bar}%"></i></div>'
+            + (f'<div class="adr">{esc(r["address"])}</div>' if r["address"] else "") + '</div>'
+            f'<div class="act">{call}{"".join(acts)}</div></li>')
 
     reg_count = sum(1 for r in ranked if (region, service, r["name"]) in REGISTERED)
     reg_note = "".join(
@@ -487,14 +535,18 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol>{crumb_html}</ol></nav>
 <header class="hero"><div class="wrap">
-<h1>Top-Rated {svc['name']} Installers in {esc(city_label)}, {short}</h1>
+<div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{ICONS.get(service, ICONS["solar"])}</svg></div>
+<h1>Top-Rated {svc['name']} Installers in {esc(city_label)}, {short}</h1></div>
 <p>{n} local companies ranked by {total_reviews:,} Google reviews. Free to compare, no sign-up.</p>
 <p class="meta">Ratings collected {upd_h} · Page updated {date.fromisoformat(MODIFIED).strftime('%B %-d, %Y')}</p>
 </div></header>
 <section class="body"><div class="wrap">
+<div class="stats"><div class="stat"><b>{n}</b><span>Companies</span></div><div class="stat"><b>{total_reviews:,}</b><span>Google reviews</span></div><div class="stat"><b>{avg:.1f}★</b><span>Average rating</span></div><div class="stat"><b>{upd_short}</b><span>Data collected</span></div></div>
+<div class="trust"><span>Ranked by Google reviews</span><span>Never paid for</span><span>Free to compare</span></div>
 <div class="callout"><p><strong>Short answer:</strong> The top-rated {svc['lower']} installers in {esc(city_label)} are {esc(top_line)}.</p></div>
 
-<h2>{svc['name']} installers in {esc(city_label)}, ranked</h2>
+<h2 class="sec-h">{svc['name']} installers in {esc(city_label)}, ranked <span class="chip">{n} listed</span></h2>
+<div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button></div>
 <ol class="rank-list">
 {chr(10).join(items)}
 </ol>
@@ -543,11 +595,13 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>{CSS}</style>
+<script>document.documentElement.classList.add('js')</script>
 {ld_html}
 </head>
 <body>
 {navfooter.render_nav(region, city_slug)}
 {body}
+{RANK_JS}
 {navfooter.render_footer(region, city_slug, city_label, path)}
 </body>
 </html>
@@ -718,6 +772,30 @@ def link_city_pages(index, hubs):
 UPGRADES = [("heat-pump", "Heat pump"), ("solar", "Solar panels"), ("battery", "Home battery"), ("insulation", "Insulation"),
             ("water-heater", "Heat pump water heater"), ("windows", "Windows & doors"), ("ev-charger", "EV charger"), ("thermostat", "Smart thermostat")]
 
+
+
+ICONS = {
+    "heat-pump": '<path d="M9.6 4.6A2 2 0 1 1 11 8H2M12.6 19.4A2 2 0 1 0 14 16H2M17.7 7.7A2.5 2.5 0 1 1 19.5 12H2"/>',
+    "solar": '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    "battery": '<rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2M6 10v4M10 10v4"/>',
+    "insulation": '<path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',
+}
+
+RANK_JS = """<script>
+(function(){var ol=document.querySelector('.rank-list');if(!ol)return;
+var btns=[].slice.call(document.querySelectorAll('.sortbar button'));
+function sortBy(k){var li=[].slice.call(ol.children);li.sort(function(a,b){
+ if(k==='reviews')return b.dataset.reviews-a.dataset.reviews;
+ if(k==='rating')return (b.dataset.rating-a.dataset.rating)||(b.dataset.reviews-a.dataset.reviews);
+ return a.dataset.rank-b.dataset.rank;});
+ li.forEach(function(x){ol.appendChild(x);});
+ btns.forEach(function(b){var on=b.dataset.s===k;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);});}
+btns.forEach(function(b){b.addEventListener('click',function(){sortBy(b.dataset.s);});});
+var items=[].slice.call(ol.children);
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -5% 0px'});items.forEach(function(x){io.observe(x);});}
+setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600);
+})();
+</script>"""
 
 def quote_form(region, service, city_label, ranked):
     """Quote request on each ranking page. Posts once per picked installer to the Worker's /estimate-lead

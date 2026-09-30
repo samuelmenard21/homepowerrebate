@@ -355,6 +355,7 @@ def page(slug, p):
 <div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;"><b>Short answer:</b> {e(p['short'])}</p></div>
 <h2>{e(p['name'])}: amounts in 2026</h2>
 <div class="tw"><table><tr><th>Upgrade</th><th>Amount</th><th>Rules</th></tr>{rows}</table></div>
+<p class="small">Amounts last checked {CHECKED_H} against each program's official page (linked in each row).</p>
 <h2>How to apply</h2><ol>{"".join(f"<li>{e(x)}</li>" for x in p['steps'])}</ol>
 {ch_html}
 <h2>Find your city and an installer</h2>

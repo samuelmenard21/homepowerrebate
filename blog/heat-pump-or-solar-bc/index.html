@@ -109,6 +109,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .tw td:first-child { font-size: 17px; padding-top: 2px !important; }
   .tw td:first-child::before { display: none; }
 }
+.hpr-toc { background: #fff; border: 1px solid #d9d0c1; border-radius: 12px; padding: 4px 16px; margin: 18px 0 26px; max-width: 720px; }
+.hpr-toc summary { cursor: pointer; font-weight: 700; font-size: 15px; padding: 12px 0; color: var(--teal-deep); list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.hpr-toc summary::-webkit-details-marker { display: none; }
+.hpr-toc summary::after { content: "+"; font-size: 20px; color: var(--amber); }
+.hpr-toc[open] summary::after { content: "\2212"; }
+.hpr-toc ol { margin: 0 0 12px 20px !important; padding: 0; }
+.hpr-toc li { margin: 0 !important; font-size: 15px !important; }
+.hpr-toc a { display: inline-block; padding: 6px 0; text-decoration: none !important; font-weight: 500 !important; color: var(--ink) !important; }
+.hpr-toc a:hover { color: var(--amber) !important; }
+h2[id] { scroll-margin-top: 84px; }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
 <style>
@@ -454,6 +464,24 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       [].forEach.call(r.querySelectorAll('td'), function (c, i) { if (labels[i] && !c.hasAttribute('data-label')) c.setAttribute('data-label', labels[i]); });
     });
   });
+})();
+(function () {
+  var box = document.querySelector('article.article, section.body .wrap');
+  if (!box || box.querySelector('.hpr-toc')) return;
+  var hs = [].filter.call(box.querySelectorAll('h2'), function (h) { return !h.closest('footer, form, .cta, aside, nav') && h.textContent.trim().length > 3; });
+  var words = (box.innerText || '').split(/\s+/).length;
+  if (hs.length < 5 || words < 1200) return;
+  var used = {}, items = hs.map(function (h) {
+    var id = h.id || h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'section';
+    while (used[id] || (document.getElementById(id) && document.getElementById(id) !== h)) id += '-2';
+    used[id] = 1; h.id = id;
+    return '<li><a href="#' + id + '">' + h.textContent.trim().replace(/</g, '&lt;') + '</a></li>';
+  });
+  var d = document.createElement('details');
+  d.className = 'hpr-toc';
+  if (window.innerWidth > 700) d.open = true;
+  d.innerHTML = '<summary>On this page</summary><ol>' + items.join('') + '</ol>';
+  hs[0].parentNode.insertBefore(d, hs[0]);
 })();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>

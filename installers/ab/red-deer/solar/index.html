@@ -46,13 +46,50 @@ section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;
 .callout{background:var(--paper-warm);border:1px solid var(--rule);border-left:4px solid var(--green-money);border-radius:8px;padding:16px 18px;margin:4px 0 22px}
 .callout p{margin:0}
 .rank-list{list-style:none;margin:0 0 10px!important;padding:0}
-.rank{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:14px 16px;margin-bottom:10px!important;display:grid;grid-template-columns:34px 1fr;gap:4px 12px}
-.rank .n{grid-row:span 2;font-family:'Fraunces',Georgia,serif;font-size:22px;color:var(--amber);font-weight:700}
+.rank{background:#fff;border:1px solid var(--rule);border-radius:14px;padding:16px 16px 14px;margin-bottom:12px!important;display:grid;grid-template-columns:36px 1fr;gap:6px 12px;box-shadow:0 1px 2px rgba(10,42,46,.04)}
+.rank.top{border-left:4px solid var(--green-money)}
+.rank .n{grid-row:span 3;font-family:'Fraunces',Georgia,serif;font-size:22px;color:var(--amber);font-weight:700;line-height:1.1}
+.rank .stars{display:inline-block;font-size:17px;letter-spacing:1px;line-height:1;background:linear-gradient(90deg,#d4751c var(--p),#e3dacb var(--p));-webkit-background-clip:text;background-clip:text;color:transparent;vertical-align:-1px}
+.rank .rt{font-size:15px;color:var(--ink)}.rank .rt b{font-size:17px}.rank .rv{color:var(--ink-soft);font-size:14px}
+.rank .adr{font-size:13.5px;color:var(--sage);margin-top:3px}
+.rank .btn-call{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;background:var(--teal-deep);color:#fff!important;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none!important}
+.rank .btn-call:hover{background:var(--amber)}
+.rank .lnk{display:inline-flex;align-items:center;min-height:36px;font-size:14px}
+.rank .em{overflow-wrap:anywhere}
+.hero{position:relative;overflow:hidden;background:radial-gradient(900px 340px at 88% -30%,rgba(212,117,28,.32),transparent 62%),linear-gradient(135deg,#0d4f5c 0%,#08363f 72%);padding:38px 0 70px}
+.hero-top{display:flex;gap:16px;align-items:center;margin-bottom:12px}.hero-top h1{margin:0}
+.hero-ico{flex:none;width:58px;height:58px;border-radius:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);display:grid;place-items:center;color:#f5b566}
+.hero-ico svg{width:30px;height:30px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:-44px 0 10px;position:relative;z-index:2}
+.stat{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:12px 8px;text-align:center;box-shadow:0 8px 20px rgba(10,42,46,.09)}
+.stat b{display:block;font-family:'Fraunces',Georgia,serif;font-size:23px;color:var(--teal-deep);line-height:1.1}
+.stat span{font-size:11.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.trust{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center;margin:12px 0 18px;font-size:13.5px;color:var(--ink-soft)}
+.trust span::before{content:"✓ ";color:var(--green-money);font-weight:700}
+@media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr);margin-top:-40px}.hero-ico{width:40px;height:40px;border-radius:12px}.hero-ico svg{width:22px;height:22px}.hero-top{gap:12px}}
+.sortbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px;font-size:14px;color:var(--ink-soft)}
+.sortbar button{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--rule);background:#fff;color:var(--ink);border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer}
+@media(max-width:480px){.sortbar{gap:6px}.sortbar>span{flex-basis:100%}.sortbar button{font-size:13.5px;padding:8px 11px}}
+.sortbar button.on{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff}
+.rank{transition:transform .18s ease,box-shadow .18s ease}
+.rank:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(10,42,46,.10)}
+.rank .n{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--paper-warm);border:1px solid var(--rule);font-size:17px;grid-row:span 3;align-self:start;color:var(--teal-deep)}
+.rank.g1 .n{background:linear-gradient(135deg,#f6d67a,#d9a521);border-color:#c8951a;color:#4a3200}
+.rank.g2 .n{background:linear-gradient(135deg,#eef1f3,#b9c2c9);border-color:#a5afb7;color:#37424a}
+.rank.g3 .n{background:linear-gradient(135deg,#f0cfae,#c98b52);border-color:#b9793f;color:#4a2a0d}
+.rank .bar{height:4px;border-radius:4px;background:#efe8db;margin-top:8px;max-width:220px;overflow:hidden}
+.rank .bar i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--teal),#3a8f9d);border-radius:4px}
+.js .rank{opacity:0;transform:translateY(10px)}
+.js .rank.in{opacity:1;transform:none;transition:opacity .4s ease,transform .4s ease,box-shadow .18s ease}
+.js .rank.in:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(10,42,46,.10)}
+@media (prefers-reduced-motion:reduce){.js .rank{opacity:1;transform:none}.rank,.rank:hover,.js .rank.in:hover{transition:none;transform:none}}
+.sec-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.sec-h .chip{font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:700;background:var(--paper-warm);border:1px solid var(--rule);border-radius:999px;padding:3px 10px;color:var(--teal-deep)}
+.cta{background:radial-gradient(500px 200px at 90% -20%,rgba(255,255,255,.22),transparent 60%),linear-gradient(135deg,#e88a2e,#d4751c);box-shadow:0 14px 30px rgba(212,117,28,.28)}
 .rank .nm{font-weight:700;color:var(--ink);font-size:16.5px}
 .rank .nm a{color:var(--ink);text-decoration:none}
 .rank .st{font-size:14px;color:var(--ink-soft)}
 .rank .st b{color:var(--ink)}
-.rank .act{grid-column:2;font-size:13.5px;display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:4px}
+.rank .act{grid-column:2;font-size:14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;margin-top:6px}
 .reg{display:inline-block;font-size:12px;font-weight:700;color:var(--green-money);border:1px solid var(--green-money);border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px;cursor:help}
 p.small .reg{border:0;padding:0;margin:0;cursor:auto}
 .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--green-money);color:#fff;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:2px}
@@ -74,6 +111,7 @@ p.small .reg{border:0;padding:0;margin:0;cursor:auto}
 .hpr-breadcrumb li[aria-current="page"]{color:var(--ink);font-weight:600}
 @media (max-width:600px){.hpr-breadcrumb{padding:10px 20px;font-size:12px}}
 </style>
+<script>document.documentElement.classList.add('js')</script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -215,6 +253,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .tw td:first-child { font-size: 17px; padding-top: 2px !important; }
   .tw td:first-child::before { display: none; }
 }
+.hpr-toc { background: #fff; border: 1px solid #d9d0c1; border-radius: 12px; padding: 4px 16px; margin: 18px 0 26px; max-width: 720px; }
+.hpr-toc summary { cursor: pointer; font-weight: 700; font-size: 15px; padding: 12px 0; color: var(--teal-deep); list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.hpr-toc summary::-webkit-details-marker { display: none; }
+.hpr-toc summary::after { content: "+"; font-size: 20px; color: var(--amber); }
+.hpr-toc[open] summary::after { content: "\2212"; }
+.hpr-toc ol { margin: 0 0 12px 20px !important; padding: 0; }
+.hpr-toc li { margin: 0 !important; font-size: 15px !important; }
+.hpr-toc a { display: inline-block; padding: 6px 0; text-decoration: none !important; font-weight: 500 !important; color: var(--ink) !important; }
+.hpr-toc a:hover { color: var(--amber) !important; }
+h2[id] { scroll-margin-top: 84px; }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
 </head>
@@ -308,22 +356,26 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 <!-- CANONICAL-NAV-END -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/installers/">Installers</a></li><li><a href="/ca/ab/red-deer/">Red Deer</a></li><li aria-current="page">Solar installers</li></ol></nav>
 <header class="hero"><div class="wrap">
-<h1>Top-Rated Solar Installers in Red Deer, AB</h1>
+<div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></div>
+<h1>Top-Rated Solar Installers in Red Deer, AB</h1></div>
 <p>7 local companies ranked by 550 Google reviews. Free to compare, no sign-up.</p>
 <p class="meta">Ratings collected September 2026 · Page updated September 29, 2026</p>
 </div></header>
 <section class="body"><div class="wrap">
+<div class="stats"><div class="stat"><b>7</b><span>Companies</span></div><div class="stat"><b>550</b><span>Google reviews</span></div><div class="stat"><b>4.9★</b><span>Average rating</span></div><div class="stat"><b>Sep 2026</b><span>Data collected</span></div></div>
+<div class="trust"><span>Ranked by Google reviews</span><span>Never paid for</span><span>Free to compare</span></div>
 <div class="callout"><p><strong>Short answer:</strong> The top-rated solar installers in Red Deer are CBI Solar (5.0★, 128 reviews), Spark Electrical Services LTD. (5.0★, 110 reviews), PASS Electric Inc. (4.9★, 212 reviews).</p></div>
 
-<h2>Solar installers in Red Deer, ranked</h2>
+<h2 class="sec-h">Solar installers in Red Deer, ranked <span class="chip">7 listed</span></h2>
+<div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button></div>
 <ol class="rank-list">
-<li class="rank"><div class="n">1</div><div class="nm"><a href="/installers/profiles/ab/red-deer/cbi-solar/">CBI Solar</a><span class="badge">Top pick</span><span class="bf">Highest rating (50+ reviews)</span><span class="bf">Also installs batteries</span></div><div class="st"><b>5.0★</b> from <b>128</b> Google reviews<br>200 Burnt Ridge Rd, Red Deer County, AB T4S 0K6</div><div class="act"><a href="tel:4033587762">Call (403) 358-7762</a> · <a href="mailto:sales@cbisolar.com">Email sales@cbisolar.com</a> · <a href="http://www.cbisolar.com/" rel="nofollow noopener" target="_blank">Website</a> · <a href="https://maps.google.com/?cid=5907246747337241956&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a> · <a href="/installers/profiles/ab/red-deer/cbi-solar/">Profile</a></div></li>
-<li class="rank"><div class="n">2</div><div class="nm"><a href="/installers/profiles/ab/red-deer/spark-electrical-services-ltd/">Spark Electrical Services LTD.</a><span class="badge">Top pick</span><span class="bf">Also installs batteries</span></div><div class="st"><b>5.0★</b> from <b>110</b> Google reviews<br>4676 61 St Unit 5, Red Deer, AB T4N 5Z9</div><div class="act"><a href="tel:4039865129">Call (403) 986-5129</a> · <a href="mailto:info@sparkelectricalservices.ca">Email info@sparkelectricalservices.ca</a> · <a href="http://www.sparkelectricalservices.ca/" rel="nofollow noopener" target="_blank">Website</a> · <a href="https://maps.google.com/?cid=11515296252336945835&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a> · <a href="/installers/profiles/ab/red-deer/spark-electrical-services-ltd/">Profile</a></div></li>
-<li class="rank"><div class="n">3</div><div class="nm"><a href="/installers/profiles/ab/red-deer/pass-electric-inc/">PASS Electric Inc.</a><span class="badge">Top pick</span><span class="bf">Most reviews</span><span class="bf">Also installs batteries</span></div><div class="st"><b>4.9★</b> from <b>212</b> Google reviews<br>6040 47 Ave #150, Red Deer, AB T4N 1C2</div><div class="act"><a href="tel:4033522591">Call (403) 352-2591</a> · <a href="https://passelectric.ca/?utm_source=gbp&amp;utm_medium=organic" rel="nofollow noopener" target="_blank">Website</a> · <a href="https://maps.google.com/?cid=10006361683019686062&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a> · <a href="/installers/profiles/ab/red-deer/pass-electric-inc/">Profile</a></div></li>
-<li class="rank"><div class="n">4</div><div class="nm"><a href="/installers/profiles/ab/red-deer/innovative-solar-inc/">Innovative Solar Inc</a><span class="bf">Also installs batteries</span></div><div class="st"><b>5.0★</b> from <b>17</b> Google reviews<br>7429 49 Ave Unit 5, Red Deer, AB T4P 1N2</div><div class="act"><a href="tel:4033460146">Call (403) 346-0146</a> · <a href="mailto:info@innovativesolar.ca">Email info@innovativesolar.ca</a> · <a href="https://www.innovativesolar.ca/" rel="nofollow noopener" target="_blank">Website</a> · <a href="https://maps.google.com/?cid=10744819037287820945&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a> · <a href="/installers/profiles/ab/red-deer/innovative-solar-inc/">Profile</a></div></li>
-<li class="rank"><div class="n">5</div><div class="nm"><a href="/installers/profiles/ab/red-deer/triple-a-electric-ltd/">Triple A Electric Ltd</a><span class="bf">Also installs batteries</span></div><div class="st"><b>4.8★</b> from <b>25</b> Google reviews<br>6209 46 Ave, Red Deer, AB T4N 6Z1</div><div class="act"><a href="tel:4033466156">Call (403) 346-6156</a> · <a href="mailto:inquiries@tripleaelectric.com">Email inquiries@tripleaelectric.com</a> · <a href="http://www.tripleaelectric.com/" rel="nofollow noopener" target="_blank">Website</a> · <a href="https://maps.google.com/?cid=7437115092764952423&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a> · <a href="/installers/profiles/ab/red-deer/triple-a-electric-ltd/">Profile</a></div></li>
-<li class="rank"><div class="n">6</div><div class="nm">Circuit Solar<span class="bf">Also installs batteries</span></div><div class="st"><b>4.7★</b> from <b>30</b> Google reviews<br>7471 Edgar Industrial Bend Unit 11, Red Deer, AB T4P 3Z5</div><div class="act"><a href="tel:8773525396">Call (877) 352-5396</a> · <a href="https://circuitsolar.com/?utm_source=google-business-profile&amp;utm_medium=organic" rel="nofollow noopener" target="_blank">Website</a> · <a href="https://maps.google.com/?cid=12570901163969746605&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a></div></li>
-<li class="rank"><div class="n">7</div><div class="nm">Canadian Energy Red Deer</div><div class="st"><b>4.4★</b> from <b>28</b> Google reviews<br>7621 Edgar Industrial Dr, Red Deer, AB T4P 3R2</div><div class="act"><a href="tel:4033424744">Call (403) 342-4744</a> · <a href="mailto:mont@cdnrg.com">Email mont@cdnrg.com</a> · <a href="https://www.cdnrg.com/help/contact-us" rel="nofollow noopener" target="_blank">Website</a> · <a href="https://maps.google.com/?cid=10708982298499909837&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a></div></li>
+<li class="rank top g1" data-rank="1" data-reviews="128" data-rating="5.0"><div class="n">1</div><div class="nm"><a href="/installers/profiles/ab/red-deer/cbi-solar/">CBI Solar</a><span class="badge">Top pick</span><span class="bf">Highest rating (50+ reviews)</span><span class="bf">Also installs batteries</span></div><div class="st"><span class="rt"><span class="stars" style="--p:100%" aria-hidden="true">★★★★★</span> <b>5.0</b></span> <span class="rv">(128 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:60%"></i></div><div class="adr">200 Burnt Ridge Rd, Red Deer County, AB T4S 0K6</div></div><div class="act"><a class="btn-call" href="tel:4033587762">Call (403) 358-7762</a><a class="lnk" href="http://www.cbisolar.com/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=5907246747337241956&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="/installers/profiles/ab/red-deer/cbi-solar/">Profile</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=200+Burnt+Ridge+Rd%2C+Red+Deer+County%2C+AB+T4S+0K6" rel="nofollow noopener" target="_blank">Directions</a><a class="lnk em" href="mailto:sales@cbisolar.com">Email sales@cbisolar.com</a></div></li>
+<li class="rank top g2" data-rank="2" data-reviews="110" data-rating="5.0"><div class="n">2</div><div class="nm"><a href="/installers/profiles/ab/red-deer/spark-electrical-services-ltd/">Spark Electrical Services LTD.</a><span class="badge">Top pick</span><span class="bf">Also installs batteries</span></div><div class="st"><span class="rt"><span class="stars" style="--p:100%" aria-hidden="true">★★★★★</span> <b>5.0</b></span> <span class="rv">(110 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:52%"></i></div><div class="adr">4676 61 St Unit 5, Red Deer, AB T4N 5Z9</div></div><div class="act"><a class="btn-call" href="tel:4039865129">Call (403) 986-5129</a><a class="lnk" href="http://www.sparkelectricalservices.ca/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=11515296252336945835&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="/installers/profiles/ab/red-deer/spark-electrical-services-ltd/">Profile</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=4676+61+St+Unit+5%2C+Red+Deer%2C+AB+T4N+5Z9" rel="nofollow noopener" target="_blank">Directions</a><a class="lnk em" href="mailto:info@sparkelectricalservices.ca">Email info@sparkelectricalservices.ca</a></div></li>
+<li class="rank top g3" data-rank="3" data-reviews="212" data-rating="4.9"><div class="n">3</div><div class="nm"><a href="/installers/profiles/ab/red-deer/pass-electric-inc/">PASS Electric Inc.</a><span class="badge">Top pick</span><span class="bf">Most reviews</span><span class="bf">Also installs batteries</span></div><div class="st"><span class="rt"><span class="stars" style="--p:98%" aria-hidden="true">★★★★★</span> <b>4.9</b></span> <span class="rv">(212 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:100%"></i></div><div class="adr">6040 47 Ave #150, Red Deer, AB T4N 1C2</div></div><div class="act"><a class="btn-call" href="tel:4033522591">Call (403) 352-2591</a><a class="lnk" href="https://passelectric.ca/?utm_source=gbp&amp;utm_medium=organic" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=10006361683019686062&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="/installers/profiles/ab/red-deer/pass-electric-inc/">Profile</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=6040+47+Ave+%23150%2C+Red+Deer%2C+AB+T4N+1C2" rel="nofollow noopener" target="_blank">Directions</a></div></li>
+<li class="rank" data-rank="4" data-reviews="17" data-rating="5.0"><div class="n">4</div><div class="nm"><a href="/installers/profiles/ab/red-deer/innovative-solar-inc/">Innovative Solar Inc</a><span class="bf">Also installs batteries</span></div><div class="st"><span class="rt"><span class="stars" style="--p:100%" aria-hidden="true">★★★★★</span> <b>5.0</b></span> <span class="rv">(17 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:8%"></i></div><div class="adr">7429 49 Ave Unit 5, Red Deer, AB T4P 1N2</div></div><div class="act"><a class="btn-call" href="tel:4033460146">Call (403) 346-0146</a><a class="lnk" href="https://www.innovativesolar.ca/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=10744819037287820945&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="/installers/profiles/ab/red-deer/innovative-solar-inc/">Profile</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=7429+49+Ave+Unit+5%2C+Red+Deer%2C+AB+T4P+1N2" rel="nofollow noopener" target="_blank">Directions</a><a class="lnk em" href="mailto:info@innovativesolar.ca">Email info@innovativesolar.ca</a></div></li>
+<li class="rank" data-rank="5" data-reviews="25" data-rating="4.8"><div class="n">5</div><div class="nm"><a href="/installers/profiles/ab/red-deer/triple-a-electric-ltd/">Triple A Electric Ltd</a><span class="bf">Also installs batteries</span></div><div class="st"><span class="rt"><span class="stars" style="--p:96%" aria-hidden="true">★★★★★</span> <b>4.8</b></span> <span class="rv">(25 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:12%"></i></div><div class="adr">6209 46 Ave, Red Deer, AB T4N 6Z1</div></div><div class="act"><a class="btn-call" href="tel:4033466156">Call (403) 346-6156</a><a class="lnk" href="http://www.tripleaelectric.com/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=7437115092764952423&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="/installers/profiles/ab/red-deer/triple-a-electric-ltd/">Profile</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=6209+46+Ave%2C+Red+Deer%2C+AB+T4N+6Z1" rel="nofollow noopener" target="_blank">Directions</a><a class="lnk em" href="mailto:inquiries@tripleaelectric.com">Email inquiries@tripleaelectric.com</a></div></li>
+<li class="rank" data-rank="6" data-reviews="30" data-rating="4.7"><div class="n">6</div><div class="nm">Circuit Solar<span class="bf">Also installs batteries</span></div><div class="st"><span class="rt"><span class="stars" style="--p:94%" aria-hidden="true">★★★★★</span> <b>4.7</b></span> <span class="rv">(30 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:14%"></i></div><div class="adr">7471 Edgar Industrial Bend Unit 11, Red Deer, AB T4P 3Z5</div></div><div class="act"><a class="btn-call" href="tel:8773525396">Call (877) 352-5396</a><a class="lnk" href="https://circuitsolar.com/?utm_source=google-business-profile&amp;utm_medium=organic" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=12570901163969746605&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=7471+Edgar+Industrial+Bend+Unit+11%2C+Red+Deer%2C+AB+T4P+3Z5" rel="nofollow noopener" target="_blank">Directions</a></div></li>
+<li class="rank" data-rank="7" data-reviews="28" data-rating="4.4"><div class="n">7</div><div class="nm">Canadian Energy Red Deer</div><div class="st"><span class="rt"><span class="stars" style="--p:88%" aria-hidden="true">★★★★★</span> <b>4.4</b></span> <span class="rv">(28 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:13%"></i></div><div class="adr">7621 Edgar Industrial Dr, Red Deer, AB T4P 3R2</div></div><div class="act"><a class="btn-call" href="tel:4033424744">Call (403) 342-4744</a><a class="lnk" href="https://www.cdnrg.com/help/contact-us" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=10708982298499909837&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=7621+Edgar+Industrial+Dr%2C+Red+Deer%2C+AB+T4P+3R2" rel="nofollow noopener" target="_blank">Directions</a><a class="lnk em" href="mailto:mont@cdnrg.com">Email mont@cdnrg.com</a></div></li>
 </ol>
 
 <p class="small">Together these 7 companies average 4.9★ across 550 reviews. PASS Electric Inc. has the most reviews (212).</p>
@@ -387,6 +439,21 @@ else{b.disabled=false;m.textContent='Something went wrong. Please try again or e
 <p>Compare top-rated local installers, ranked by Google reviews, and see the rebates you can stack. Free for homeowners.</p>
 <a href="/ca/ab/red-deer/solar/">See Red Deer rebates →</a></div>
 </div></section>
+<script>
+(function(){var ol=document.querySelector('.rank-list');if(!ol)return;
+var btns=[].slice.call(document.querySelectorAll('.sortbar button'));
+function sortBy(k){var li=[].slice.call(ol.children);li.sort(function(a,b){
+ if(k==='reviews')return b.dataset.reviews-a.dataset.reviews;
+ if(k==='rating')return (b.dataset.rating-a.dataset.rating)||(b.dataset.reviews-a.dataset.reviews);
+ return a.dataset.rank-b.dataset.rank;});
+ li.forEach(function(x){ol.appendChild(x);});
+ btns.forEach(function(b){var on=b.dataset.s===k;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);});}
+btns.forEach(function(b){b.addEventListener('click',function(){sortBy(b.dataset.s);});});
+var items=[].slice.call(ol.children);
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -5% 0px'});items.forEach(function(x){io.observe(x);});}
+setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600);
+})();
+</script>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Red Deer where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
@@ -535,6 +602,24 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       [].forEach.call(r.querySelectorAll('td'), function (c, i) { if (labels[i] && !c.hasAttribute('data-label')) c.setAttribute('data-label', labels[i]); });
     });
   });
+})();
+(function () {
+  var box = document.querySelector('article.article, section.body .wrap');
+  if (!box || box.querySelector('.hpr-toc')) return;
+  var hs = [].filter.call(box.querySelectorAll('h2'), function (h) { return !h.closest('footer, form, .cta, aside, nav') && h.textContent.trim().length > 3; });
+  var words = (box.innerText || '').split(/\s+/).length;
+  if (hs.length < 5 || words < 1200) return;
+  var used = {}, items = hs.map(function (h) {
+    var id = h.id || h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'section';
+    while (used[id] || (document.getElementById(id) && document.getElementById(id) !== h)) id += '-2';
+    used[id] = 1; h.id = id;
+    return '<li><a href="#' + id + '">' + h.textContent.trim().replace(/</g, '&lt;') + '</a></li>';
+  });
+  var d = document.createElement('details');
+  d.className = 'hpr-toc';
+  if (window.innerWidth > 700) d.open = true;
+  d.innerHTML = '<summary>On this page</summary><ol>' + items.join('') + '</ol>';
+  hs[0].parentNode.insertBefore(d, hs[0]);
 })();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>

@@ -19,6 +19,36 @@ def strip(x):
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", x)).strip()
 
 
+ART_FOLD = re.compile(r"common questions|quick questions|^sources|rebate finder|more .* (guides|rebates)|status by city|what closed|scams|read more", re.I)
+CITY_ART = re.compile(r"cities( we cover)?$", re.I)
+
+
+def tidy_article(t, have):
+    """Hubs that are one flat <article> of h2 blocks: fold the long ones, drop city lists the finder covers."""
+    m = re.search(r'<article class="article">(.*?)</article>', t, re.S)
+    if not m:
+        return t
+    body = m.group(1)
+    parts = re.split(r"(?=<h2[ >])", body)
+    out = [parts[0]]
+    for p in parts[1:]:
+        h2 = re.match(r"<h2[^>]*>(.*?)</h2>", p, re.S)
+        title = strip(h2.group(1))
+        rest = p[h2.end():]
+        if "hub-fold" in rest:
+            out.append(p)
+            continue
+        if CITY_ART.search(title):
+            links = set(re.findall(r'href="(/(?:ca|us)/[a-z-]+/[a-z-]+/)"', rest))
+            if links and links <= have:
+                continue
+        if ART_FOLD.search(title) and len(rest) > 1200:
+            label = "Read the questions and answers" if re.search(r"questions", title, re.I) else "Open this section"
+            p = p[:h2.end()] + f'\n<details class="hub-fold"><summary>{label}</summary>' + rest + "</details>\n"
+        out.append(p)
+    return t[:m.start(1)] + "".join(out) + t[m.end(1):]
+
+
 def tidy(t):
     a = t.find("<!-- HUB-SHOWCASE-END -->")
     b = t.find("<!-- CANONICAL-FOOTER-START")
@@ -60,7 +90,10 @@ def tidy(t):
         out.append(s)
     out.append(mid[pos:])
     mid = "".join(out).replace('href="#cities"', 'href="#find-city"')
-    return head + mid + tail
+    r = head + mid + tail
+    if "<article" in mid:
+        r = tidy_article(r, have)
+    return r
 
 
 def main():

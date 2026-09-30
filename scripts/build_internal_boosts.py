@@ -64,6 +64,22 @@ JOBS += [
      ["blog/bc-hydro-product-rebates-appliances/index.html", "smart-thermostats/index.html", "ca/bc/index.html"]
      + sorted(str(p.relative_to(ROOT)) for p in (ROOT / "ca" / "bc").glob("*/index.html"))),
 ]
+CATS = ("heat-pump", "water-heater", "smart-thermostats", "ev-charger", "insulation", "appliances")
+
+
+def _city(region, city):
+    base = ROOT / "us" / region / city
+    return [str((base / "index.html").relative_to(ROOT))] + [f"us/{region}/{city}/{c}/index.html" for c in CATS]
+
+
+JOBS += [
+    ("PECO-PROGRAM-LINK", '<b>PECO customer?</b> See <a href="/programs/peco-rebates/">every PECO rebate: heat pump $200 to $300, water heater $350, thermostat $25 to $50</a>.',
+     _city("pa", "philadelphia")),
+    ("PPL-PROGRAM-LINK", '<b>PPL Electric customer?</b> See <a href="/programs/ppl-electric-rebates/">every PPL Electric rebate, with heat pump, water heater, insulation and thermostat amounts</a>.',
+     _city("pa", "allentown")),
+    ("XCEL-PROGRAM-LINK", '<b>Xcel Energy customer?</b> See <a href="/programs/xcel-energy-colorado-rebates/">every Xcel Energy Colorado rebate, including the heat pump bonus for gas-heated homes</a>.',
+     _city("co", "denver") + _city("co", "aurora") + _city("co", "boulder")),
+]
 INS = "/insulation-rebates/"
 JOBS += [
     ("INSULATION-HUB-LINK", f'<b>Insulation rebates in every region:</b> compare <a href="{INS}">insulation rebates by province and state</a>, with a BC attic calculator.',

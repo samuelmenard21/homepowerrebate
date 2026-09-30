@@ -245,6 +245,89 @@ PROGRAMS = {
         "keys": ["25C", "25D", "tax credit", "federal"],
         "related": [("/programs/nys-clean-heat/", "NYS Clean Heat"), ("/programs/mass-save/", "Mass Save"), ("/us/ca/", "California rebates"), ("/us/vt/", "Vermont rebates")],
     },
+    "peco-rebates": {
+        "name": "PECO rebates", "region": "PA", "hub": "/us/pa/", "rank_region": "pa",
+        "title": "PECO Rebates 2026: Heat Pump, Water Heater, Thermostat and Appliance Amounts",
+        "desc": "What PECO pays in 2026, from PECO's own program pages: heat pumps $200 to $300, mini-splits $150 to $300, heat pump water heater $350, smart thermostat $25 to $50. Rules and deadlines.",
+        "h1": "PECO Rebates 2026: What They Pay and How to Apply",
+        "short": "PECO pays $200 to $300 for an air source heat pump, $150 to $300 for a ductless mini-split, $350 for an ENERGY STAR heat pump water heater and $25 to $50 for a smart thermostat, for PECO electric customers. Apply within 90 days of buying or installing. Natural gas rebate levels drop on October 1, 2026. We found no PECO rebate for a home EV charger.",
+        "rows": [
+            ("Air source heat pump", "$200 or $300", "$200 at 15.2 to 17.0 SEER2; $300 at 17.1 SEER2 or higher. Both need 11.0 EER2 and 7.8 HSPF2 or better. PECO electric customers.", "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-rebates"),
+            ("Ductless mini-split heat pump", "$150 or $300", "$150 at 15.2 to 17.0 SEER2; $300 at 17.1 SEER2 or higher. Same EER2 and HSPF2 minimums.", "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-rebates"),
+            ("Central air conditioning", "$150 or $200", "$150 at 15.2 to 15.9 SEER2; $200 at 16.0 SEER2 or higher; 12.0 EER2 or better.", "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-rebates"),
+            ("Heat pump or AC maintenance", "$50 heat pump, $25 AC", "Tune-up rebate.", "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-rebates"),
+            ("Smart thermostat", "$50 instant or $25 after install", "PECO also lists $25 to $50 on its appliance page.", "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/appliance-rebates"),
+            ("Heat pump water heater", "$350", "ENERGY STAR certified, electric. New equipment in a PECO electric home.", "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/appliance-rebates"),
+            ("Appliances", "$10 to $25 each", "ENERGY STAR clothes washer $25, dryer $15, refrigerator $20, dehumidifier $25, air purifier $25, room air conditioner $10.", "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/appliance-rebates"),
+            ("Natural gas furnace, boiler and water heater", "Lower from October 1, 2026", "PECO's page says natural gas rebate levels are reduced for requests submitted on or after October 1, 2026. Check PECO for the new amounts.", "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-rebates"),
+        ],
+        "steps": ["Check your bill: you must be a PECO electric or natural gas customer, and the rebate must match your fuel.",
+                  "Buy or install ENERGY STAR certified equipment that meets the efficiency numbers above.",
+                  "Keep a paid receipt showing the model number, manufacturer, price and date.",
+                  "Apply within 90 days of the purchase or installation. If you took an instant discount at the store, you can't claim the same rebate again."],
+        "faq": [("How much is the PECO heat pump rebate?", "PECO pays $200 or $300 for an air source heat pump and $150 or $300 for a ductless mini-split, depending on the efficiency rating. It's for PECO electric customers."),
+                ("Does PECO give a rebate for a heat pump water heater?", "Yes. PECO pays $350 for an ENERGY STAR certified heat pump water heater in a home with PECO electric service."),
+                ("Is there a PECO rebate for a home EV charger?", "We did not find one on PECO's rebate pages. Check PECO's EV pages before you buy, because offers can change."),
+                ("How long do I have to apply?", "PECO says the application must be received within 90 days of the purchase or installation.")],
+        "keys": ["PECO"],
+        "related": [("/programs/federal-tax-credits-2026/", "2026 tax credits"), ("/us/pa/philadelphia/", "Philadelphia rebates"), ("/smart-thermostats/", "Smart thermostat rebates")],
+    },
+    "ppl-electric-rebates": {
+        "name": "PPL Electric rebates", "region": "PA", "hub": "/us/pa/", "rank_region": "pa",
+        "title": "PPL Electric Rebates 2026: Heat Pump, Water Heater, Insulation and Thermostat",
+        "desc": "PPL Electric's 2026 rebates from its program portal: heat pumps $225 to $500, heat pump water heater $400, smart thermostat $50 or $100, insulation up to $500. Income-based amounts and deadlines.",
+        "h1": "PPL Electric Rebates 2026: What They Pay and How to Apply",
+        "short": "PPL Electric pays $225 or $325 for an air source heat pump, $225 for a mini-split, $500 for a ground source heat pump, $400 for a heat pump water heater and $50 or $100 for a smart thermostat. It also lists insulation rebates up to $500 and air sealing up to $150. Several rebates have two amounts, and which one you get depends on your income.",
+        "rows": [
+            ("Air source heat pump", "$225 or $325", "Two amounts listed; PPL's Check Best Offers tool shows which applies to you.", "https://ppl.clearesult.com/rebates"),
+            ("Mini-split heat pump", "$225", "Ductless heat pump.", "https://ppl.clearesult.com/rebates"),
+            ("Ground source heat pump", "$500", "", "https://ppl.clearesult.com/rebates"),
+            ("Heat pump water heater", "$400", "ENERGY STAR certified.", "https://ppl.clearesult.com/rebates"),
+            ("Smart thermostat", "$50 or $100", "ENERGY STAR certified; two amounts, based on your offer.", "https://ppl.clearesult.com/rebates"),
+            ("Attic, exterior wall or rim joist insulation", "Up to $200 or $500", "Two levels; Check Best Offers shows which applies to you.", "https://ppl.clearesult.com/rebates"),
+            ("Air sealing", "Up to $150", "", "https://ppl.clearesult.com/rebates"),
+            ("Refrigerator, dehumidifier, air purifier", "$50 or $75; $25 or $50; $25", "ENERGY STAR certified.", "https://ppl.clearesult.com/rebates"),
+            ("WRAP", "Free", "Free in-home energy survey and products for income-eligible customers.", "https://pplelectric.com/site/ways-to-save/rebates-and-incentives"),
+        ],
+        "steps": ["Confirm PPL Electric delivers your power. It does even if you buy from another supplier.",
+                  "Sign in and use PPL's Check Best Offers tool to see which amount you qualify for.",
+                  "Install ENERGY STAR certified equipment, or hire a contractor for insulation and air sealing.",
+                  "Apply online or by mail. PPL says applications are generally due within 180 days of installation."],
+        "faq": [("How much is the PPL Electric heat pump rebate?", "PPL lists $225 or $325 for an air source heat pump, $225 for a mini-split and $500 for a ground source heat pump. The amount depends on your offer, which PPL's Check Best Offers tool shows."),
+                ("Does PPL give a heat pump water heater rebate?", "Yes. PPL lists $400 for an ENERGY STAR certified heat pump water heater."),
+                ("How long do I have to apply for a PPL rebate?", "PPL says applications are generally due within 180 days of installation. Equipment installed on May 31, 2026 or earlier is no longer eligible."),
+                ("Is there a PPL EV charger rebate?", "PPL lists Optimized EV Charging as a program, but its rebate page shows no dollar amount. Ask PPL for details before you buy a charger.")],
+        "keys": ["PPL"],
+        "related": [("/programs/federal-tax-credits-2026/", "2026 tax credits"), ("/us/pa/allentown/", "Allentown rebates"), ("/insulation-rebates/", "Insulation rebates by region")],
+    },
+    "xcel-energy-colorado-rebates": {
+        "name": "Xcel Energy Colorado rebates", "region": "CO", "hub": "/us/co/", "rank_region": "co",
+        "title": "Xcel Energy Colorado Rebates 2026: Heat Pump, Water Heater, Thermostat and EV Charger",
+        "desc": "Xcel Energy Colorado rebates from Xcel's own 2026 rebate sheet: heat pumps $750 per heating ton, water heater $750, thermostat $50, EV charger up to $500. Gas-home bonuses from Oct 1, 2026.",
+        "h1": "Xcel Energy Colorado Rebates 2026: What They Pay and How to Qualify",
+        "short": "Xcel Energy pays $750 per heating ton for a cold-climate heat pump, $500 for a mini-split, $750 for a heat pump water heater and $50 for a smart thermostat, plus up to $500 for a home EV charger. Homes heated with Xcel natural gas get bonuses that double most heat pump amounts from October 1, 2026. Installs must be invoiced by December 31, 2026, and funding is first come, first served.",
+        "rows": [
+            ("Cold-climate air source heat pump (ducted)", "$750 per heating ton at 5°F; $1,500 with gas bonus", "15.2 SEER2, 10 EER2, 8.1 HSPF2 and strong output at 5°F. Xcel participating contractor.", "https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q"),
+            ("Air source heat pump (ducted)", "$300 per cooling ton; $600 with gas bonus", "15.2 SEER2, 11.7 EER2, 7.8 HSPF2.", "https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q"),
+            ("Mini-split (non-ducted) heat pump", "$500", "Standard or cold-climate models. You can install it yourself and still qualify.", "https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q"),
+            ("Ground source heat pump", "$1,100 per heating ton; $2,200 with gas bonus", "16 EER2, 3.3 COP, closed loop.", "https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q"),
+            ("Heat pump water heater", "$750; $1,500 with gas bonus", "ENERGY STAR, 3.3 UEF.", "https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q"),
+            ("Smart thermostat", "$50; or $100 credit plus $25 a year in AC Rewards", "ENERGY STAR rated. Electric customers can enroll in AC Rewards.", "https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q"),
+            ("Attic, wall insulation and air sealing", "30% of cost, up to $500 attic, $350 wall, $400 air sealing", "Xcel gas or electric heat. Gas customers get 1.5 times the standard rebate.", "https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q"),
+            ("Home energy audit", "$100, $160 or $200", "Standard, blower door or infrared audit; 60% of the cost, up to those amounts.", "https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q"),
+            ("Home EV charger and wiring", "Up to $500; up to $2,300 income-qualified", "Enroll in Optimize Your Charge. Up to $800 in a disproportionately impacted community. First come, first served.", "https://co.my.xcelenergy.com/s/residential/ev-charging/incentives/charger-wiring-rebate"),
+        ],
+        "steps": ["Confirm you are an Xcel Energy electric or natural gas customer in Colorado.",
+                  "For a heat pump, get a quote from an Xcel Trade Partner Network contractor, who applies the rebate for you. Mini-splits can be self-installed.",
+                  "Have the work invoiced by December 31, 2026. Xcel accepts applications through September 30, 2027.",
+                  "For an EV charger, enroll in Optimize Your Charge first, then apply in My Account."],
+        "faq": [("How much is the Xcel Energy heat pump rebate?", "For a cold-climate ducted heat pump, $750 per heating ton at 5°F, or $1,500 per ton with the gas bonus. Mini-splits get $500. Amounts are on Xcel's 2026 rebate sheet."),
+                ("Who gets the Xcel heat pump bonus?", "Homes heated with natural gas from Xcel Energy. Homes with electric heat, such as baseboards, get the standard rebate only, because bonuses ended for them on November 16, 2025."),
+                ("What is the deadline for Xcel heat pump rebates?", "Installs must be invoiced by December 31, 2026, and Xcel accepts applications through September 30, 2027. Funding is limited."),
+                ("Can I still get a federal tax credit for a heat pump in Colorado?", "No. The federal 25C credit ended for installs after December 31, 2025. Xcel's rebates are the main incentive now.")],
+        "keys": ["Xcel"],
+        "related": [("/programs/federal-tax-credits-2026/", "2026 tax credits"), ("/us/co/denver/", "Denver rebates"), ("/insulation-rebates/", "Insulation rebates by region")],
+    },
 }
 
 
@@ -270,7 +353,7 @@ def page(slug, p):
 <p>Every amount links to the official program. Last checked {CHECKED_H}.</p><p class="meta">By {e(AUTHOR['name'])}</p></div></header>
 <section class="body"><div class="wrap">
 <div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;"><b>Short answer:</b> {e(p['short'])}</p></div>
-<h2>What {e(p['name'])} pays in 2026</h2>
+<h2>{e(p['name'])}: amounts in 2026</h2>
 <div class="tw"><table><tr><th>Upgrade</th><th>Amount</th><th>Rules</th></tr>{rows}</table></div>
 <h2>How to apply</h2><ol>{"".join(f"<li>{e(x)}</li>" for x in p['steps'])}</ol>
 {ch_html}

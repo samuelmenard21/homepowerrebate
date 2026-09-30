@@ -8,7 +8,10 @@ invented; everything comes from existing .rebate-card / .amount markup.
 Formula per category, per city:
   score = 0.60 * dollar_score + 0.25 * status_score + 0.15 * stack_score
 
-  dollar_score = 100 * (city_max_amount / region_max_amount_for_that_category)
+  dollar_score = 100 * min(1, usd_amount / yardstick_for_that_category)
+  yardstick    = 90th percentile of city top amounts for the category across ALL regions, in USD
+                 (a city scores 100 by matching what the best-funded tenth of cities offer)
+  usd_amount   = amount, with Canadian dollars converted at CAD_TO_USD (an approximation)
   status_score = 100 (Open) / 50 (Funding Limited / Unclear) / 0 (Closed)
   stack_score  = min(100, 25 * distinct_program_count)   # 1=25,2=50,3=75,4+=100
 
@@ -23,6 +26,9 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+
+# Approximate exchange rate used only to put Canadian and US rebate amounts on one scale.
+CAD_TO_USD = 0.73
 
 # Rebates paid per ton of capacity (ENS heat pump: $300-$600/ton), not as a flat amount.
 PER_TON = {("ca/ns", "heat-pump")}
@@ -254,21 +260,31 @@ def main():
                     "status": status,
                 }
 
-    # compute region maxes per category
-    region_max = {}
-    for region_key, cities in raw.items():
-        region_max[region_key] = {}
-        for cat in CATEGORIES:
-            mx = 0.0
+    # Common yardstick per category: 90th percentile of city top amounts (USD) across every region.
+    def usd_of(country, v):
+        return v * (CAD_TO_USD if country == "Canada" else 1.0)
+
+    yardstick = {}
+    for cat in CATEGORIES:
+        vals = []
+        for region_key, cities in raw.items():
+            country = REGIONS[region_key][0]
             for slug, cats in cities.items():
                 amts = cats[cat]["amounts"]
                 if amts:
-                    mx = max(mx, max(amts))
-            region_max[region_key][cat] = mx or 1.0
+                    vals.append(usd_of(country, max(amts)))
+        vals.sort()
+        if not vals:
+            yardstick[cat] = 1.0
+        elif len(vals) < 10:
+            yardstick[cat] = vals[-1]
+        else:
+            yardstick[cat] = vals[min(len(vals) - 1, int(0.9 * len(vals)))]
 
     STATUS_SCORE = {"open": 100, "limited": 50, "closed": 0}
 
-    output = {"generated": __import__("datetime").date.today().isoformat(), "regions": {}}
+    output = {"generated": __import__("datetime").date.today().isoformat(), "regions": {},
+              "yardstick_usd": {c: round(v, 2) for c, v in yardstick.items()}, "cad_to_usd": CAD_TO_USD}
 
     all_city_rows = []
 
@@ -281,8 +297,8 @@ def main():
             for cat in CATEGORIES:
                 info = cats[cat]
                 dollar_val = max(info["amounts"]) if info["amounts"] else 0.0
-                dollar_score = 100.0 * (dollar_val / region_max[region_key][cat])
-                dollar_score = min(dollar_score, 100.0)
+                usd_val = usd_of(country, dollar_val)
+                dollar_score = min(100.0, 100.0 * (usd_val / yardstick[cat]))
                 status_score = STATUS_SCORE.get(info["status"], 0)
                 stack_score = min(100, 25 * info["programs"])
                 score = 0.60 * dollar_score + 0.25 * status_score + 0.15 * stack_score
@@ -290,15 +306,20 @@ def main():
                     **({"unit": "per ton"} if (region_key, cat) in PER_TON else {}),
                     "score": round(score, 1),
                     "dollar_value": dollar_val,
+                    "usd_value": round(usd_val, 2),
                     "status": info["status"],
                     "programs": info["programs"],
                 }
+            open_cats = [c for c in cat_scores.values() if c["status"] == "open" and c["usd_value"] > 0]
+            potential = round(sum(c["usd_value"] for c in open_cats))
             overall = round(sum(c["score"] for c in cat_scores.values()) / len(CATEGORIES), 1)
             meta = city_meta[region_key][slug]
             region_out["cities"][slug] = {
                 "label": meta["label"],
                 "url": meta["url"],
                 "overall": overall,
+                "potential_usd": potential,
+                "open_count": len(open_cats),
                 "categories": cat_scores,
             }
             all_city_rows.append({
@@ -309,6 +330,8 @@ def main():
                 "label": meta["label"],
                 "url": meta["url"],
                 "overall": overall,
+                "potential_usd": potential,
+                "open_count": len(open_cats),
                 "categories": cat_scores,
             })
         output["regions"][region_key] = region_out

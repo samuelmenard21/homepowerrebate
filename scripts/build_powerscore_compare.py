@@ -191,26 +191,15 @@ def build_faq(city_a, city_b, same_region):
         ),
     })
 
-    if same_region:
-        faqs.append({
-            "q": f"Is it fair to compare {a_label} and {b_label} directly?",
-            "a": (
-                f"Yes — {a_label} and {b_label} are both in {city_a['region_label']}, so their PowerScores "
-                f"are calculated on the same regional scale (each city's dollar value is normalized against "
-                f"the strongest program found anywhere in {city_a['region_label']}), making this an apples-to-apples comparison."
-            ),
-        })
-    else:
-        faqs.append({
-            "q": f"Is it fair to compare {a_label} and {b_label} directly, since they're in different regions?",
-            "a": (
-                f"Not entirely — {a_label} is in {city_a['region_label']} and {b_label} is in {city_b['region_label']}, "
-                f"and PowerScore's dollar-value component is normalized against the strongest program in each city's "
-                f"own region, not against a shared national or continental scale. Treat this comparison as directional "
-                f"(which city currently has more, better-funded, more stackable rebate programs), not as a precise "
-                f"apples-to-apples number the way a same-region comparison would be."
-            ),
-        })
+    faqs.append({
+        "q": f"Is it fair to compare {a_label} and {b_label} directly?",
+        "a": (
+            f"Yes. Every city's PowerScore is measured against one shared yardstick in US dollars, so {a_label} "
+            f"({city_a['region_label']}) and {b_label} ({city_b['region_label']}) are on the same scale. Canadian amounts "
+            f"are converted at an approximate rate, and programs have different rules, so treat scores within a few "
+            f"points of each other as a tie."
+        ),
+    })
 
     return faqs[:3]
 
@@ -373,22 +362,20 @@ def build_page(city_a, city_b, same_region, generated_date):
 
     if same_region:
         lead = (
-            f"Both cities are in {city_a['region_label']}, so these PowerScores are on the same regional "
-            f"scale &mdash; a direct, apples-to-apples comparison."
+            f"Both cities are in {city_a['region_label']}, so they share most of the same rebate programs. "
+            f"Local programs are what set them apart."
         )
         cross_region_notice = ""
     else:
         lead = (
             f"{label_a} is in {city_a['region_label']} and {label_b} is in {city_b['region_label']} &mdash; "
-            f"two different regions with two different rebate systems."
+            f"two different regions with two different rebate systems, scored on one shared yardstick."
         )
         cross_region_notice = (
-            '<div class="cross-region-notice"><strong>Heads up:</strong> these two cities are in different '
-            f"regions ({city_a['region_label']} and {city_b['region_label']}). PowerScore's dollar-value "
-            "component is normalized against the strongest program in each city's own region, so this "
-            "comparison is directional, not a precise apples-to-apples number the way comparing two cities "
-            "in the same region would be. Use it to see which city currently has more/better-funded/more "
-            "stackable programs, not as a strict ranking."
+            '<div class="cross-region-notice"><strong>Good to know:</strong> these cities are in different regions '
+            f"({city_a['region_label']} and {city_b['region_label']}). PowerScore measures every city against the same "
+            "US-dollar yardstick, with Canadian amounts converted at an approximate rate. Programs also have different "
+            "rules and income limits, so treat a gap of a few points as a tie."
         )
         cross_region_notice += "</div>"
 

@@ -188,13 +188,14 @@ def render_overall_rows():
             for c in CATEGORIES
         )
         data_cat = " ".join(f'data-c-{c}="{r["categories"][c]["score"]:.1f}"' for c in CATEGORIES)
-        data_cat += f' data-c-total="{sum((r["categories"][c].get("dollar_value") or 0) for c in CATEGORIES):.0f}"'
+        data_cat += f' data-c-potential="{r.get("potential_usd", 0)}"'
         ov = r["overall"]
         out.append(f'''<tr id="city-{esc(r["region"]).replace("/", "-")}-{esc(r["slug"]).replace("/", "-")}" data-slug="{esc(r["region"])}/{esc(r["slug"])}" data-overall="{ov}" data-region="{esc(r["region"])}" data-name="{esc(r["label"]).lower()}" data-order="{i}" {data_cat}>
   <td class="rank-cell">{"T-" if tied else "#"}{rank}</td>
   <td class="city-cell"><a href="{esc(r["url"])}">{esc(r["label"])}</a><span class="region-tag">{esc(r["region_label"])}</span>{conf_tag(r["region"])}</td>
   <td class="overall-cell"><span class="overall-badge {score_band(ov)}">{ov:.0f}</span><span class="meter"><i class="{score_band(ov)}" style="width:{max(2, min(100, ov)):.0f}%"></i></span></td>
   <td class="pills-cell"><div class="cc-grid">{cells}</div></td>
+  <td class="pot-cell"><b>US${r.get("potential_usd", 0):,.0f}</b><small>{r.get("open_count", 0)} of 8 open</small></td>
   <td class="energy-cell">{energy_cost_for(r)}</td>
 </tr>''')
     return "\n".join(out)
@@ -203,11 +204,13 @@ def render_overall_rows():
 def render_podium():
     cards = []
     ranks = comp_ranks()
-    for i, r in enumerate(rows[:3]):
-        best = sorted(((c, v) for c, v in r["categories"].items() if v.get("dollar_value")), key=lambda x: -x[1]["dollar_value"])[:3]
-        hl = "".join(f'<li>{esc(CAT_LABELS[c])}: up to ${v["dollar_value"]:,.0f}</li>' for c, v in best)
+    pool = [r for r in rows if region_verified(r["region"])][:3]
+    for i, r in enumerate(pool):
+        cur = "CA$" if r["country"] == "Canada" else "$"
+        best = sorted(((c, v) for c, v in r["categories"].items() if v.get("dollar_value")), key=lambda x: -x[1].get("usd_value", 0))[:3]
+        hl = "".join(f'<li>{esc(CAT_LABELS[c])}: up to {cur}{v["dollar_value"]:,.0f}</li>' for c, v in best)
         cards.append(f'''<a class="pod pod-{i+1}" href="{esc(r["url"])}">
-  <span class="medal m{i+1}">{ranks[i][0]}</span>
+  <span class="medal m{i+1}">{i+1}</span>
   <div class="ring" style="{gauge_style(r["overall"])}"><b>{r["overall"]:.0f}</b><small>PowerScore</small></div>
   <h3>{esc(r["label"])}</h3><p class="rg">{esc(r["region_label"])}</p>
   <ul class="hl">{hl}</ul>
@@ -315,12 +318,18 @@ region_cards_html, region_chips_html = render_regions()
 tie_count = max((sum(1 for r in rows if round(r["overall"], 1) == round(x["overall"], 1)) for x in rows), default=1)
 distinct_scores = len({round(r['overall'], 1) for r in rows})
 data_date = DATA['generated']
-sort_options_html = '<option value="overall">Overall PowerScore</option><option value="total">Top rebates added up ($)</option>' + "".join(f'<option value="{c}">{esc(CAT_LABELS[c])} score</option>' for c in CATEGORIES)
+cad = DATA.get('cad_to_usd', 0.73)
+
+_ys = DATA.get("yardstick_usd", {})
+yardstick_table_html = ('<div class="table-wrap" style="margin:14px 0;"><table class="score-table" style="min-width:0;"><thead><tr><th>Category</th><th>Earns a full dollar score at</th></tr></thead><tbody>'
+    + "".join(f'<tr><td>{esc(CAT_LABELS[c])}</td><td>US${_ys.get(c, 0):,.0f} (about CA${_ys.get(c, 0) / cad:,.0f})</td></tr>' for c in CATEGORIES)
+    + '</tbody></table></div>')
+sort_options_html = '<option value="overall">Overall PowerScore</option><option value="potential">Rebate potential (US$, open programs)</option>' + "".join(f'<option value="{c}">{esc(CAT_LABELS[c])} score</option>' for c in CATEGORIES)
 cat_buttons_html, cat_panels_html = render_category_tabs()
 city_options_html = render_city_options()
 jsonld_html = render_jsonld()
 
-TOP_CITY = rows[0]
+TOP_CITY = next(r for r in rows if region_verified(r['region']))
 BOTTOM_REGION_COUNT = total_regions
 
 NEW_CSS = r""".chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
@@ -344,9 +353,9 @@ NEW_CSS = r""".chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
 .pod-1{order:2;padding-top:44px;border-color:#e6c766;background:linear-gradient(180deg,#fffaf0,#fff 60%)}.pod-2{order:1}.pod-3{order:3}
 .medal{position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:700;border:2px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.18)}
 .m1{background:linear-gradient(135deg,#f6d67a,#d9a521);color:#4a3200}.m2{background:linear-gradient(135deg,#eef1f3,#b9c2c9);color:#37424a}.m3{background:linear-gradient(135deg,#f0cfae,#c98b52);color:#4a2a0d}
-.ring{--score-deg:0deg;position:relative;width:112px;height:112px;border-radius:50%;background:conic-gradient(var(--amber) var(--score-deg),#eee 0);display:grid;place-items:center;margin-bottom:10px}
+.ring{--score-deg:0deg;position:relative;width:124px;height:124px;border-radius:50%;background:conic-gradient(var(--amber) var(--score-deg),#eee 0);display:grid;place-items:center;margin-bottom:10px}
 .ring::before{content:'';position:absolute;inset:10px;background:#fff;border-radius:50%}
-.ring b,.ring small{position:relative;display:block;text-align:center}.ring b{font-family:'Fraunces',serif;font-size:34px;color:var(--teal-deep);line-height:1}.ring small{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--sage)}
+.ring b,.ring small{position:relative;display:block;text-align:center}.ring b{font-family:'Fraunces',serif;font-size:34px;color:var(--teal-deep);line-height:1}.ring small{font-size:9px;text-transform:uppercase;letter-spacing:.03em;color:var(--sage);white-space:nowrap}
 .pod h3{margin:4px 0 0;font-size:22px}.pod .rg{margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--sage)}
 .pod .hl{list-style:none;margin:0 0 12px;padding:0;font-size:14px;color:var(--ink-soft)}.pod .hl li{margin:2px 0}
 .pod .go{font-weight:700;font-size:14px;color:var(--amber)}
@@ -358,6 +367,7 @@ NEW_CSS = r""".chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
 .ps-podium-sec{padding:48px 0 12px}.ps-regions{padding:24px 0 36px}
 .legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-soft);margin-top:14px}.legend span::before{content:"";display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
 
+.pot-cell b{display:block;font-family:'Fraunces',serif;color:var(--green-money)}.pot-cell small{color:var(--sage);font-size:12px}
 .conf{display:inline-block;margin-left:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:999px;background:#fdf2f0;color:var(--red-flag);border:1px solid #efc9c4;vertical-align:1px}
 .rg-card .conf{align-self:flex-start;margin-left:0}
 .ps-reliable{padding:8px 0 28px}
@@ -373,7 +383,7 @@ tr.hide{display:none}
  .score-table tbody tr.hide{display:none}
  .score-table td{border:0!important;padding:0!important}
  .rank-cell{grid-row:1;grid-column:1}.city-cell{grid-row:1;grid-column:2}.overall-cell{grid-row:1;grid-column:3;min-width:0!important}.overall-cell .meter{display:none}
- .pills-cell{grid-column:1/-1;grid-row:2;min-width:0!important}.energy-cell{grid-column:1/-1;grid-row:3;font-size:13px;color:var(--sage)}
+ .pills-cell{grid-column:1/-1;grid-row:2;min-width:0!important}.pot-cell{grid-column:1/-1;grid-row:3}.energy-cell{grid-column:1/-1;grid-row:4;font-size:13px;color:var(--sage)}
  .cc-grid{grid-template-columns:repeat(4,1fr)}.cc small{display:block;font-size:9.5px;text-align:center;opacity:.92}
 }
 @media (prefers-reduced-motion:reduce){.pod,.rg-card{transition:none}.pod:hover,.rg-card:hover{transform:none}}
@@ -660,7 +670,7 @@ table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; mi
 <section class="ps-podium-sec">
   <div class="wrap">
     <h2 class="section-title">The top of the table</h2>
-    <p class="section-sub">The three highest PowerScores right now. Each ring is the city's overall score out of 100.</p>
+    <p class="section-sub">The three highest PowerScores among regions where we have checked each program against its official page. Each ring is the city's overall score out of 100. Cities with the same score are listed in the order shown.</p>
     <div class="podium">
 {podium_html}
     </div>
@@ -683,8 +693,9 @@ table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; mi
       <h2 class="section-title" id="reliability">Read this first: how reliable is this ranking?</h2>
       <p class="section-sub">PowerScore is built from the rebate numbers on our own city pages, not from a separate survey. That makes it transparent, but it also has limits you should know about.</p>
       <ul class="rel-list">
-        <li><b>Scores compare cities inside a region.</b> Each city's dollar score is measured against the best city in its own province or state. A BC city with a $4,000 heat pump rebate can score as high as a New York city with $18,000. Use the "Top rebates added up" sort to compare actual dollar amounts.</li>
-        <li><b>Currencies are not converted.</b> Canadian figures are in CAD and US figures in USD.</li>
+        <li><b>One yardstick for every city.</b> A city's dollar score is its top rebate in that category, in US dollars, compared with what the best-funded tenth of cities offer. It is no longer measured against the best city in its own province or state.</li>
+        <li><b>Currency is approximate.</b> Canadian amounts are converted at {cad} US dollars per Canadian dollar, a rough rate used only to put the two countries on one scale.</li>
+        <li><b>Rebate potential is not a promise.</b> It adds up the top open rebate in each upgrade category. Most homes will not qualify for all of them, and some programs cannot be combined.</li>
         <li><b>Ties are real.</b> Only {distinct_scores} different overall scores exist across {total_cities} cities, because most rebate programs are province-wide.</li>
         <li><b>Not every region has been verified.</b> Regions marked below as "Not yet" ({unverified}) have not had each program checked against its official page, so treat their scores as a rough guide.</li>
         <li><b>Data last rebuilt {data_date}.</b> Amounts change; the rebate tracker lists what has ended or moved.</li>
@@ -709,7 +720,7 @@ table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; mi
     <p class="lb-count" id="lb-count" aria-live="polite"></p>
     <div class="table-wrap">
       <table class="score-table" id="leaderboard-table">
-        <thead><tr><th>Overall rank</th><th>City</th><th>PowerScore</th><th>Category breakdown</th><th>Est. Energy Cost</th></tr></thead>
+        <thead><tr><th>Overall rank</th><th>City</th><th>PowerScore</th><th>Category breakdown</th><th>Rebate potential</th><th>Est. Energy Cost</th></tr></thead>
         <tbody>
 {overall_rows_html}
         </tbody>
@@ -737,10 +748,11 @@ table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; mi
       <h2 style="margin-top:0; font-size:24px;">How PowerScore is calculated</h2>
       <p>Every city gets a score from 0&ndash;100 in each of 8 categories, built entirely from the rebate numbers already published on each city's page &mdash; nothing here is estimated or invented.</p>
       <ul>
-        <li><strong>60% Dollar value</strong> &mdash; the top rebate amount available in that category, normalized against the highest amount found among cities in the same region (BC cities compare to BC's max, Ontario to Ontario's max, and so on &mdash; not across borders, since program structures differ completely between provinces, states, and countries).</li>
+        <li><strong>60% Dollar value</strong> &mdash; the top rebate amount available in that category, in US dollars, compared with a common yardstick: the 90th-percentile amount across every city we cover (shown below). Matching the yardstick earns full marks.</li>
         <li><strong>25% Program status</strong> &mdash; Open programs get full credit, Funding Limited/Unclear programs get partial credit, and Closed or nonexistent programs get zero.</li>
         <li><strong>15% Stackability</strong> &mdash; how many distinct funding layers apply (federal, provincial/state, utility, municipal) &mdash; more layers that stack together score higher.</li>
       </ul>
+      {yardstick_table_html}
       <p>A city's <strong>overall PowerScore</strong> is the plain average of its 8 category scores. We recalculate this whenever the underlying city pages are updated with new rebate figures.</p>
       <p><strong>Est. Energy Cost</strong> is estimated average annual electricity + heating fuel cost for a 2,500 sq ft home, based on utility rate schedules and typical regional usage &mdash; not a quoted bill, and it plays no role in the PowerScore calculation above. Nova Scotia and Massachusetts show a range instead of a single figure because both regions have a significant share of oil-heated homes, which run meaningfully higher than gas or electric heat, alongside their other heating types. Figures marked with an asterisk (*) are approximated from a neighboring utility territory where a precise regional rate wasn't available.</p>
     </div>

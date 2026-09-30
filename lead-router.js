@@ -1202,7 +1202,14 @@ function stackingCalculatorUrl(sub) {
 function installersUrl(sub) {
   const region = citySlug(sub.province || 'BC');
   const city = citySlug(sub.city);
-  return city ? `https://homepowerrebate.com/installers/#${region}-${city}` : 'https://homepowerrebate.com/installers/';
+  // The ranked list page for the city (installers/<region>/<city>/heat-pump/), not the hub with a hash.
+  return city ? `https://homepowerrebate.com/installers/${region}/${city}/heat-pump/` : 'https://homepowerrebate.com/installers/';
+}
+
+function calculatorUrl(sub) {
+  const region = citySlug(sub.province || 'BC');
+  const city = citySlug(sub.city);
+  return `https://homepowerrebate.com/calculator/${region}/${city ? '?city=' + encodeURIComponent(city) : ''}`;
 }
 
 // Every published rebate category for this city (see the HPR 8-category
@@ -1225,16 +1232,16 @@ function fullRebateBreakdownHtml(cityData) {
     .map(([key, label]) => {
       const value = cityData.categories[key];
       if (!value) return '';
-      return `<tr><td style="padding:7px 0;color:#1a3d42;border-top:1px solid #ece4d6;">${escapeHtml(label)}</td><td style="padding:7px 0;font-weight:600;color:#2d6a4f;text-align:right;border-top:1px solid #ece4d6;">${escapeHtml(value)}</td></tr>`;
+      return `<tr><td bgcolor="#ffffff" style="padding:12px 16px;border-top:1px solid #ece4d6;background:#ffffff;">
+        <div style="font-size:13px;font-weight:700;color:#08363f;letter-spacing:0.02em;">${escapeHtml(label)}</div>
+        <div style="font-size:14px;line-height:1.5;color:#1a3d42;margin-top:2px;">${escapeHtml(value)}</div></td></tr>`;
     })
     .join('');
   if (!rows) return '';
   return `
-    <h2 style="font-size:16px;color:#08363f;margin:24px 0 10px;">Every rebate available in ${escapeHtml(capitalize(cityData.city))}</h2>
-    <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;margin-bottom:16px;">
-      <table style="width:100%;border-collapse:collapse;font-size:14px;">${rows}</table>
-      <p style="margin:10px 0 0;font-size:12px;color:#6b7d80;">Ranges depend on your household income and which upgrades you combine — most homeowners qualify for several of these at once.</p>
-    </div>`;
+    <h2 style="font-family:Georgia,serif;font-size:19px;font-weight:500;color:#08363f;margin:22px 0 10px;">What's available in ${escapeHtml(capitalize(cityData.city))}</h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="background:#ffffff;border:1px solid #d9d0c1;border-radius:10px;border-collapse:separate;overflow:hidden;">${rows}</table>
+    <p style="margin:10px 0 0;font-size:12px;line-height:1.5;color:#5a6b6e;">Amounts are the most a program pays and depend on your income and the upgrades you combine.</p>`;
 }
 
 async function sendResultsRecapEmail(sub, env) {
@@ -1261,29 +1268,30 @@ async function sendResultsRecapEmail(sub, env) {
   // email is to be a genuinely useful reference, not a single number.
   const rebateBreakdown = fullRebateBreakdownHtml(cityRebateLookup(sub));
 
-  const html = `
-    <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:560px;margin:0 auto;padding:20px;color:#0a2a2e;">
-      <div style="background:#08363f;color:#faf7f2;padding:28px 24px;border-radius:14px 14px 0 0;">
-        <div style="font-family:Georgia,serif;font-size:14px;color:#e88a2e;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;">Your results</div>
-        <h1 style="margin:0;font-family:Georgia,serif;font-size:26px;font-weight:500;line-height:1.2;">Here's the breakdown you asked for.</h1>
-      </div>
-      <div style="background:#faf7f2;padding:28px 24px;border-radius:0 0 14px 14px;border:1px solid #d9d0c1;border-top:none;">
-        <div style="background:white;border:1px solid #d9d0c1;border-radius:10px;padding:16px;margin-bottom:16px;">
-          <table style="width:100%;border-collapse:collapse;font-size:14px;">
-            <tr><td style="padding:8px 0;color:#1a3d42;font-weight:600;width:50%;">${estimateLabel}</td><td style="padding:8px 0;color:#2d6a4f;font-weight:700;font-size:18px;">${escapeHtml(estimate || 'see your assessment')}</td></tr>
-            <tr><td style="padding:8px 0;color:#1a3d42;">City:</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(capitalize(sub.city || ''))}</td></tr>
-            ${heatingRow}
-          </table>
-        </div>
-        ${rebateBreakdown}
-        <p style="font-size:15px;line-height:1.6;margin:0 0 12px;">Keep this for reference when you're comparing quotes.</p>
-        <p style="font-size:15px;line-height:1.6;margin:0 0 10px;"><a href="${getQuotesUrl(sub)}" style="display:inline-block;padding:12px 20px;background:#d4751c;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Get matched with an installer →</a></p>
-        <p style="font-size:14px;line-height:1.6;margin:0 0 6px;"><a href="${installersUrl(sub)}" style="color:#08363f;text-decoration:underline;">Or browse ${escapeHtml(capitalize(sub.city || 'local'))} installers yourself →</a></p>
-        <p style="font-size:14px;line-height:1.6;margin:0;"><a href="${stackingCalculatorUrl(sub)}" style="color:#08363f;text-decoration:underline;">See how these rebates stack with other upgrades →</a></p>
-        ${learnMoreBlock(sub)}
-        ${dripEmailFooter(sub)}
-      </div>
-    </div>`;
+  const cityName = escapeHtml(capitalize(sub.city || 'your city'));
+  const html = `<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light only">
+<style>:root{color-scheme:light only;supported-color-schemes:light only}</style></head>
+<body bgcolor="#f5efe5" style="margin:0;padding:0;background:#f5efe5;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#f5efe5" style="background:#f5efe5;"><tr><td align="center" style="padding:20px 12px;">
+<table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:#0a2a2e;">
+  <tr><td bgcolor="#08363f" style="background:#08363f;padding:26px 24px;border-radius:14px 14px 0 0;">
+    <div style="font-family:Georgia,serif;font-size:18px;color:#faf7f2;">Home<span style="color:#e88a2e;font-weight:700;">Power</span>Rebate</div>
+    <h1 style="margin:14px 0 0;font-family:Georgia,serif;font-size:26px;font-weight:500;line-height:1.25;color:#faf7f2;">Your ${cityName} rebates, and who to call.</h1>
+  </td></tr>
+  <tr><td bgcolor="#faf7f2" style="background:#faf7f2;padding:24px;border:1px solid #d9d0c1;border-top:none;border-radius:0 0 14px 14px;">
+    ${rebateBreakdown}
+    <h2 style="font-family:Georgia,serif;font-size:19px;font-weight:500;color:#08363f;margin:26px 0 10px;">Next steps</h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td bgcolor="#d4751c" style="background:#d4751c;border-radius:8px;text-align:center;">
+      <a href="${calculatorUrl(sub)}" style="display:block;padding:14px 20px;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;">See what you could get back &rarr;</a></td></tr></table>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;"><tr><td bgcolor="#ffffff" style="background:#ffffff;border:2px solid #08363f;border-radius:8px;text-align:center;">
+      <a href="${installersUrl(sub)}" style="display:block;padding:12px 20px;color:#08363f;text-decoration:none;font-weight:700;font-size:16px;">See all top-rated installers in ${cityName} &rarr;</a></td></tr></table>
+    <p style="font-size:13px;line-height:1.5;color:#5a6b6e;margin:10px 0 0;">Ranked by Google reviews. Nobody pays to be listed, and we never pass your details on.</p>
+    ${learnMoreBlock(sub)}
+    ${dripEmailFooter(sub)}
+  </td></tr>
+</table></td></tr></table></body></html>`;
 
   return resendEmail(env.RESEND_API_KEY, {
     from: 'HomePowerRebate <hello@homepowerrebate.com>',

@@ -32,6 +32,8 @@ BATTERY_OK = re.compile(r"solar|sun|energy|power|renew|volt|electri|battery stor
 # Battery shops, EV/hybrid battery repair and EV-charger firms: not home battery installers unless also on the solar list.
 BATTERY_RETAIL = re.compile(r"batter|hybrid|\bev\b|ev charg|charging|charger|alternator|starter", re.I)
 BATTERY_SOLAR = re.compile(r"solar|sun|energy|renew|storage|off.?grid", re.I)
+# Solar lists only: EV-charger, insulation-only and retail firms that the "solar installer" search picked up.
+SOLAR_NOT = re.compile(r"ev ?charge|intocharge|insulation|remodel|ace hardware|td solar shop", re.I)
 INSULATION_OK = re.compile(r"insulat|foam|spray|attic|weather|seal|energy|efficien|comfort|thermal|home perform|cellulose|retrofit|green", re.I)
 
 JUNK_EMAIL = re.compile(r"@(example|domain|mysite|email|yourdomain|sentry|wixpress|wix|godaddy|squarespace|doe)\.|"
@@ -107,7 +109,7 @@ def main():
             name, site = r["Business Name"].strip(), (r.get("Website") or "").strip()
             text = f"{name} {site}"
             why = None
-            if NOT_INSTALLER.search(name) or "energysage" in site.lower():
+            if NOT_INSTALLER.search(name) or "energysage" in site.lower() or (sv == "solar" and SOLAR_NOT.search(name) and ("solar" not in name.lower() or "td solar shop" in name.lower())):
                 why = "not an installer"
             elif wrong_city(r):
                 why = "listed under a different city (only the street name matched)"

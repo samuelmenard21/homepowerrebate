@@ -37,7 +37,353 @@
 .rc-form{margin-top:0}.rc-by{font-size:13px;margin:14px 0 0;text-align:center}</style></head><body>
 <div id="rc-mount"></div>
 <p class="rc-by"><a href="https://homepowerrebate.com/calculator/on/" target="_blank" rel="noopener">Ontario rebate calculator by HomePowerRebate</a></p>
-<script src="/calculator/rebate-engine.js"></script>
-<script>fetch("/calculator/data/on.json").then(function(r){return r.json()}).then(function(d){HPRCalc.mount(document.getElementById("rc-mount"),d,{embed:true});
-function h(){parent.postMessage({hprCalcHeight:document.documentElement.scrollHeight},"*")}new ResizeObserver(h).observe(document.body);h();});</script>
+<script>/* HomePowerRebate rebate engine. One engine for every province and state.
+   A region is data only: /calculator/data/<code>.json (built by scripts/build_calculator.py from data/calc + data/verified-facts).
+   Nothing in this file names a region, program or dollar amount. */
+(function (root) {
+  "use strict";
+
+  var STATUS_LABEL = { active: "Open", upcoming: "Starts soon", waitlist: "Waitlist", paused: "Paused", closed: "Closed", check: "Confirm status", info: "Note" };
+  var COUNTED = { active: true };
+
+  function money(n, cur) {
+    return "$" + Math.round(n).toLocaleString("en-CA") + (cur && cur !== "USD" ? "" : "");
+  }
+
+  function values(region, a) {
+    var v = {}, k;
+    for (k in a) v[k] = a[k];
+    var cq = region.questions.filter(function (q) { return q.id === "city"; })[0];
+    if (cq && a.city) {
+      var opt = cq.options.filter(function (o) { return o.value === a.city; })[0];
+      if (opt && opt.set) for (k in opt.set) v[k] = opt.set[k];
+    }
+    var d = region.derived && region.derived.income_level;
+    if (d) {
+      var inc = parseFloat(String(a.income || "").replace(/[^0-9.]/g, ""));
+      var hh = parseInt(a.household, 10);
+      v.income_level = "unknown";
+      if (inc > 0 && hh > 0) {
+        var i = Math.min(hh, 7) - 1;
+        v.income_level = "none";
+        ["L1", "L2", "L3"].some(function (L) {
+          if (inc <= d.limits[L][i]) { v.income_level = L; return true; }
+          return false;
+        });
+      }
+    }
+    return v;
+  }
+
+  function match(p, v) {
+    var k;
+    if (p.when) for (k in p.when) if (p.when[k].indexOf(v[k]) < 0) return false;
+    if (p.when_any) {
+      var ok = p.when_any.some(function (w) {
+        for (var key in w) if (w[key].indexOf(v[key]) < 0) return false;
+        return true;
+      });
+      if (!ok) return false;
+    }
+    return true;
+  }
+
+  function dictMatch(w, v) {
+    for (var k in w) if (w[k].indexOf(v[k]) < 0) return false;
+    return true;
+  }
+
+  /* Amount models: {max}, {by: question, values: {answer: amount}}, or {per: {unit, rate, bonus_rate, bonus_when, question, cap}} for per-ton / per-kW programs. */
+  function amountOf(p, v) {
+    var a = p.amount;
+    if (a.by) return a.values[v[a.by]] || 0;
+    if (a.per) {
+      var n = parseFloat(v[a.per.question]);
+      if (!(n > 0)) return 0;
+      var rate = a.per.bonus_when && dictMatch(a.per.bonus_when, v) ? a.per.bonus_rate : a.per.rate;
+      var t = rate * n;
+      return a.per.cap ? Math.min(t, a.per.cap) : t;
+    }
+    return a.max || 0;
+  }
+
+  function labelOf(p, v, amount) {
+    var a = p.amount;
+    if (a.label) return a.label;
+    if (!a.per) return null;
+    var rate = a.per.bonus_when && dictMatch(a.per.bonus_when, v) ? a.per.bonus_rate : a.per.rate;
+    var base = "$" + Math.round(rate).toLocaleString("en-CA") + " per " + a.per.unit;
+    if (amount > 0) return "$" + Math.round(amount).toLocaleString("en-CA") + " (" + base + ")";
+    return a.per.cap ? base + ", up to $" + Math.round(a.per.cap).toLocaleString("en-CA") : base;
+  }
+
+  /* Returns {items, total, unknownIncome}. items carry counted=true when they add to the total. */
+  function evaluate(region, a, plan) {
+    var v = values(region, a);
+    var matched = region.programs.filter(function (p) { return match(p, v); });
+    var others = matched.filter(function (p) { return plan.indexOf(p.upgrade) < 0; });
+    var hit = matched.filter(function (p) { return plan.indexOf(p.upgrade) >= 0; });
+    var changed = true;
+    while (changed) {
+      changed = false;
+      var ids = hit.map(function (p) { return p.id; });
+      hit = hit.filter(function (p) {
+        if (p.requires && ids.indexOf(p.requires) < 0) { changed = true; return false; }
+        return true;
+      });
+    }
+    var items = hit.map(function (p) {
+      return { id: p.id, name: p.name, upgrade: p.upgrade, group: p.group || null, amount: amountOf(p, v), label: labelOf(p, v, amountOf(p, v)),
+               status: p.status, requires: p.requires || null, pool: p.pool || null, verified_on: p.verified_on, source_url: p.source_url, rules: p.rules, counted: false, covered: false };
+    });
+    var best = {};
+    items.forEach(function (it) {
+      if (!COUNTED[it.status] || !it.group) return;
+      if (!best[it.group] || it.amount > best[it.group].amount) best[it.group] = it;
+    });
+    var total = 0, byId = {};
+    items.forEach(function (it) { byId[it.id] = it; });
+    items.forEach(function (it) {
+      if (!COUNTED[it.status] || it.requires) return;
+      if (it.group) {
+        if (best[it.group] === it) { it.counted = true; total += it.amount; } else it.covered = true;
+      } else { it.counted = true; total += it.amount; }
+    });
+    /* Add-ons (bonus, top-up) count only when the offer they build on is the one counted. */
+    items.forEach(function (it) {
+      if (!it.requires || !COUNTED[it.status]) return;
+      if (byId[it.requires] && byId[it.requires].counted) { it.counted = true; total += it.amount; } else it.covered = true;
+    });
+    var capNotes = [];
+    (region.pools || []).forEach(function (pl) {
+      var sum = 0;
+      items.forEach(function (it) { if (it.counted && it.pool === pl.id) sum += it.amount; });
+      if (sum > pl.max) { total -= sum - pl.max; capNotes.push(pl.label); }
+    });
+    return { capNotes: capNotes, items: items, others: others.map(function (p) { return { id: p.id, name: p.name, upgrade: p.upgrade, amount: amountOf(p, v), label: labelOf(p, v, amountOf(p, v)), status: p.status, verified_on: p.verified_on, source_url: p.source_url, rules: p.rules, counted: false, covered: false }; }), total: total, incomeUnknown: v.income_level === "unknown", incomeLevel: v.income_level };
+  }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function pill(status) {
+    return el("span", "rc-pill rc-" + status, STATUS_LABEL[status] || status);
+  }
+
+  function fmtDate(iso) {
+    var m = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var p = iso.split("-");
+    return m[parseInt(p[1], 10) - 1] + " " + parseInt(p[2], 10) + ", " + p[0];
+  }
+
+  function card(it, region) {
+    var c = el("div", "rc-card" + (it.counted ? "" : " rc-muted"));
+    var top = el("div", "rc-card-top");
+    top.appendChild(el("h4", null, it.name));
+    var amt = it.label ? it.label : (it.amount ? "Up to " + money(it.amount, region.currency) : "See program");
+    top.appendChild(el("div", "rc-amt", amt));
+    c.appendChild(top);
+    var meta = el("div", "rc-meta");
+    meta.appendChild(pill(it.status));
+    if (it.covered) meta.appendChild(el("span", "rc-note", "Not added: a larger offer covers the same upgrade"));
+    c.appendChild(meta);
+    c.appendChild(el("p", "rc-rules", it.rules));
+    var f = el("p", "rc-src");
+    var a = el("a", null, "Official source");
+    a.href = it.source_url; a.rel = "nofollow noopener"; a.target = "_blank";
+    f.appendChild(a);
+    f.appendChild(document.createTextNode(" · Last verified " + fmtDate(it.verified_on)));
+    c.appendChild(f);
+    return c;
+  }
+
+  function mount(host, region, opts) {
+    opts = opts || {};
+    host.textContent = "";
+    var form = el("form", "rc-form");
+    form.setAttribute("novalidate", "");
+    var answers = {};
+    var params = new URLSearchParams(location.search);
+    var fields = {};
+    region.questions.forEach(function (q) {
+      var wrap = el("div", "rc-field");
+      fields[q.id] = wrap;
+      var label = el("label", null, q.label);
+      label.setAttribute("for", "rc-" + q.id);
+      wrap.appendChild(label);
+      var input;
+      if (q.type === "select") {
+        input = el("select");
+        var ph = el("option", null, q.placeholder || (q.optional ? "Skip" : "Choose one"));
+        ph.value = "";
+        input.appendChild(ph);
+        q.options.forEach(function (o) { var op = el("option", null, o.label); op.value = o.value; input.appendChild(op); });
+      } else {
+        input = el("input");
+        input.type = "text"; input.inputMode = "numeric"; input.placeholder = "for example 85000"; input.autocomplete = "off";
+      }
+      input.id = "rc-" + q.id; input.name = q.id;
+      var pre = params.get(q.id) || (opts.defaults && opts.defaults[q.id]);
+      if (pre) { input.value = pre; answers[q.id] = pre; }
+      input.addEventListener("input", function () { answers[q.id] = input.value; render(); });
+      wrap.appendChild(input);
+      if (q.help) wrap.appendChild(el("p", "rc-help", q.help));
+      form.appendChild(wrap);
+    });
+    var plan = params.get("plan") ? params.get("plan").split(",") : [];
+    var fs = el("fieldset", "rc-plan");
+    fs.appendChild(el("legend", null, "Which upgrades are you planning?"));
+    region.upgrades.forEach(function (u) {
+      var lab = el("label", "rc-check");
+      var cb = el("input"); cb.type = "checkbox"; cb.value = u.id; cb.checked = plan.indexOf(u.id) >= 0;
+      cb.addEventListener("change", function () {
+        plan = region.upgrades.map(function (x) { return x.id; }).filter(function (id) { return form.querySelector('.rc-plan input[value="' + id + '"]').checked; });
+        render();
+      });
+      lab.appendChild(cb); lab.appendChild(document.createTextNode(" " + u.label));
+      fs.appendChild(lab);
+    });
+    form.appendChild(fs);
+    host.appendChild(form);
+    var out = el("div", "rc-out");
+    out.setAttribute("aria-live", "polite");
+    host.appendChild(out);
+
+    function shown(q) {
+      return !q.for || q.for.some(function (u) { return plan.indexOf(u) >= 0; });
+    }
+    function ready() {
+      return plan.length > 0 && region.questions.every(function (q) { return q.optional || !shown(q) || answers[q.id]; });
+    }
+
+    function render() {
+      out.textContent = "";
+      region.questions.forEach(function (q) { fields[q.id].style.display = shown(q) ? "" : "none"; });
+      var q = new URLSearchParams();
+      for (var k in answers) if (answers[k] && k !== "income" && k !== "household") q.set(k, answers[k]);
+      if (plan.length) q.set("plan", plan.join(","));
+      try { history.replaceState(null, "", location.pathname + (q.toString() ? "?" + q.toString() : "")); } catch (e) { /* embedded */ }
+      if (!ready()) {
+        out.appendChild(el("p", "rc-empty", "Answer the questions and pick at least one upgrade. Your rebates appear here."));
+        return;
+      }
+      var live = {};
+      region.questions.forEach(function (q) { if (shown(q) && answers[q.id]) live[q.id] = answers[q.id]; });
+      var r = evaluate(region, live, plan);
+      var box = el("div", "rc-total");
+      box.appendChild(el("div", "rc-total-label", "Most you could get for the upgrades you picked"));
+      box.appendChild(el("div", "rc-total-num", money(r.total, region.currency)));
+      box.appendChild(el("p", "rc-total-sub", "Adds the biggest open offer for each upgrade you picked. Only programs open today are counted."));
+      out.appendChild(box);
+      r.capNotes.forEach(function (n) { out.appendChild(el("p", "rc-hint", n)); });
+      if (r.incomeUnknown) out.appendChild(el("p", "rc-hint", "Add your household size and income to check income-qualified programs. They pay the most."));
+      else if (r.incomeLevel === "none") out.appendChild(el("p", "rc-hint", "Your income is above the income-qualified limits, so only the general programs apply."));
+      var groups = {}, order = [];
+      var open = r.items.filter(function (it) { return it.status === "active"; });
+      var later = r.items.filter(function (it) { return it.status !== "active"; });
+      var label = {}; region.upgrades.forEach(function (u) { label[u.id] = u.label; });
+      open.forEach(function (it) { if (!groups[it.upgrade]) { groups[it.upgrade] = []; order.push(it.upgrade); } groups[it.upgrade].push(it); });
+      order.forEach(function (m) {
+        out.appendChild(el("h3", "rc-h", label[m]));
+        groups[m].forEach(function (it) { out.appendChild(card(it, region)); });
+      });
+      if (!open.length) out.appendChild(el("p", "rc-empty", "We found no open program for these answers. Check your inputs or see the programs below."));
+      if (later.length) {
+        out.appendChild(el("h3", "rc-h", "Not open yet, or waiting"));
+        later.forEach(function (it) { out.appendChild(card(it, region)); });
+      }
+      var more = r.others.filter(function (it) { return it.status === "active"; });
+      if (more.length) {
+        var det = el("details", "rc-more");
+        det.appendChild(el("summary", null, "Other rebates that fit your home (" + more.length + ", not in your total)"));
+        more.forEach(function (it) { det.appendChild(card(it, region)); });
+        out.appendChild(det);
+      }
+      if (region.closed && region.closed.length) {
+        out.appendChild(el("h3", "rc-h", "Ended programs (don't count on these)"));
+        var ul = el("ul", "rc-closed");
+        region.closed.forEach(function (c) {
+          var li = el("li");
+          li.appendChild(document.createTextNode(c.name + ". "));
+          li.appendChild(pill(c.status));
+          li.appendChild(document.createTextNode(" "));
+          var a = el("a", null, "Source");
+          a.href = c.source_url; a.rel = "nofollow noopener"; a.target = "_blank";
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        out.appendChild(ul);
+      }
+      if (region.notes) {
+        var nl = el("ul", "rc-notes");
+        region.notes.forEach(function (n) { nl.appendChild(el("li", null, n)); });
+        out.appendChild(nl);
+      }
+      if (!opts.embed) out.appendChild(savePlan(region, answers));
+      var cq = region.questions.filter(function (q) { return q.id === "city"; })[0];
+      var copt = cq && answers.city ? cq.options.filter(function (o) { return o.value === answers.city; })[0] : null;
+      if (copt && copt.installers) {
+        var upl = {}; region.upgrades.forEach(function (u) { upl[u.id] = u.label; });
+        var want = plan.filter(function (u) { return copt.installers[u]; });
+        if (!want.length) want = Object.keys(copt.installers);
+        var ib = el("div", "rc-inst");
+        ib.appendChild(el("h3", "rc-h", "Top-rated installers in " + copt.label));
+        ib.appendChild(el("p", "rc-help", "Ranked by Google reviews. Nobody pays to be listed, and we do not sell your details."));
+        var iul = el("ul", "rc-inst-list");
+        want.forEach(function (u) {
+          var li = el("li"); var ia = el("a", null, (upl[u] || u) + " installers in " + copt.label);
+          ia.href = copt.installers[u]; li.appendChild(ia); iul.appendChild(li);
+        });
+        if (copt.page) {
+          var li2 = el("li"); var pa = el("a", null, copt.label + " rebate guide"); pa.href = copt.page; li2.appendChild(pa); iul.appendChild(li2);
+        }
+        ib.appendChild(iul);
+        out.appendChild(ib);
+      }
+      var links = el("p", "rc-links");
+      var a1 = el("a", null, "See installers ranked by Google reviews");
+      a1.href = region.installers || "/installers/";
+      links.appendChild(a1);
+      links.appendChild(document.createTextNode(" · "));
+      var a2 = el("a", null, region.name + " rebate guide");
+      a2.href = region.hub;
+      links.appendChild(a2);
+      out.appendChild(links);
+    }
+    render();
+  }
+
+  function savePlan(region, answers) {
+    var f = el("form", "rc-save");
+    f.appendChild(el("h3", "rc-h", "Email me when something changes"));
+    f.appendChild(el("p", "rc-help", "One short email when a program in " + region.name + " opens, closes or changes. No installer will call you."));
+    var i = el("input"); i.type = "email"; i.required = true; i.placeholder = "you@example.com"; i.setAttribute("aria-label", "Email address");
+    var b = el("button", null, "Notify me"); b.type = "submit";
+    var msg = el("p", "rc-help");
+    f.appendChild(i); f.appendChild(b); f.appendChild(msg);
+    f.addEventListener("submit", function (e) {
+      e.preventDefault();
+      b.disabled = true;
+      fetch("https://leads.homepowerrebate.com/newsletter", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: i.value, city: answers.city || "", page: location.pathname, province: region.code.toUpperCase() })
+      }).then(function (r) {
+        if (!r.ok) throw new Error("bad");
+        f.textContent = "";
+        f.appendChild(el("p", "rc-help", "You're in. Check your inbox for a welcome email."));
+      }).catch(function () { b.disabled = false; msg.textContent = "Something went wrong. Please try again."; });
+    });
+    return f;
+  }
+
+  root.HPRCalc = { evaluate: evaluate, values: values, mount: mount };
+  if (typeof module !== "undefined") module.exports = root.HPRCalc;
+})(typeof window !== "undefined" ? window : globalThis);
+</script>
+<script>HPRCalc.mount(document.getElementById("rc-mount"),{"code":"on","name":"Ontario","country":"ca","currency":"CAD","hub":"/ca/on/","installers":"/installers/","questions":[{"id":"city","label":"Which city is closest to your home?","type":"select","options":[{"value":"barrie","label":"Barrie","installers":{"heat-pump":"/installers/on/barrie/heat-pump/","solar":"/installers/on/barrie/solar/","battery":"/installers/on/barrie/battery/","insulation":"/installers/on/barrie/insulation/"},"page":"/ca/on/barrie/"},{"value":"brampton","label":"Brampton","installers":{"heat-pump":"/installers/on/brampton/heat-pump/","solar":"/installers/on/brampton/solar/","battery":"/installers/on/brampton/battery/"},"page":"/ca/on/brampton/"},{"value":"burlington","label":"Burlington","installers":{"heat-pump":"/installers/on/burlington/heat-pump/","solar":"/installers/on/burlington/solar/","battery":"/installers/on/burlington/battery/","insulation":"/installers/on/burlington/insulation/"},"page":"/ca/on/burlington/"},{"value":"cambridge","label":"Cambridge","set":{"loan":"cambridge"},"installers":{"heat-pump":"/installers/on/cambridge/heat-pump/","solar":"/installers/on/cambridge/solar/","battery":"/installers/on/cambridge/battery/"},"page":"/ca/on/cambridge/"},{"value":"greater-sudbury","label":"Greater Sudbury","installers":{"heat-pump":"/installers/on/greater-sudbury/heat-pump/","solar":"/installers/on/greater-sudbury/solar/","battery":"/installers/on/greater-sudbury/battery/"},"page":"/ca/on/greater-sudbury/"},{"value":"guelph","label":"Guelph","installers":{"heat-pump":"/installers/on/guelph/heat-pump/","solar":"/installers/on/guelph/solar/","battery":"/installers/on/guelph/battery/"},"page":"/ca/on/guelph/"},{"value":"hamilton","label":"Hamilton","installers":{"heat-pump":"/installers/on/hamilton/heat-pump/","solar":"/installers/on/hamilton/solar/","battery":"/installers/on/hamilton/battery/","insulation":"/installers/on/hamilton/insulation/"},"page":"/ca/on/hamilton/"},{"value":"kingston","label":"Kingston","installers":{"heat-pump":"/installers/on/kingston/heat-pump/","solar":"/installers/on/kingston/solar/","battery":"/installers/on/kingston/battery/"},"page":"/ca/on/kingston/"},{"value":"kitchener","label":"Kitchener","installers":{"heat-pump":"/installers/on/kitchener/heat-pump/","solar":"/installers/on/kitchener/solar/","insulation":"/installers/on/kitchener/insulation/"},"page":"/ca/on/kitchener/"},{"value":"london","label":"London","installers":{"heat-pump":"/installers/on/london/heat-pump/","solar":"/installers/on/london/solar/","battery":"/installers/on/london/battery/","insulation":"/installers/on/london/insulation/"},"page":"/ca/on/london/"},{"value":"markham","label":"Markham","installers":{"heat-pump":"/installers/on/markham/heat-pump/","solar":"/installers/on/markham/solar/","battery":"/installers/on/markham/battery/","insulation":"/installers/on/markham/insulation/"},"page":"/ca/on/markham/"},{"value":"mississauga","label":"Mississauga","installers":{"heat-pump":"/installers/on/mississauga/heat-pump/","solar":"/installers/on/mississauga/solar/","battery":"/installers/on/mississauga/battery/","insulation":"/installers/on/mississauga/insulation/"},"page":"/ca/on/mississauga/"},{"value":"niagara-falls","label":"Niagara Falls","installers":{"heat-pump":"/installers/on/niagara-falls/heat-pump/","battery":"/installers/on/niagara-falls/battery/"},"page":"/ca/on/niagara-falls/"},{"value":"oakville","label":"Oakville","installers":{"heat-pump":"/installers/on/oakville/heat-pump/","solar":"/installers/on/oakville/solar/","battery":"/installers/on/oakville/battery/"},"page":"/ca/on/oakville/"},{"value":"oshawa","label":"Oshawa","installers":{"heat-pump":"/installers/on/oshawa/heat-pump/","battery":"/installers/on/oshawa/battery/","insulation":"/installers/on/oshawa/insulation/"},"page":"/ca/on/oshawa/"},{"value":"ottawa","label":"Ottawa","set":{"loan":"ottawa"},"installers":{"heat-pump":"/installers/on/ottawa/heat-pump/","solar":"/installers/on/ottawa/solar/","battery":"/installers/on/ottawa/battery/","insulation":"/installers/on/ottawa/insulation/"},"page":"/ca/on/ottawa/"},{"value":"peterborough","label":"Peterborough","installers":{"heat-pump":"/installers/on/peterborough/heat-pump/","solar":"/installers/on/peterborough/solar/","battery":"/installers/on/peterborough/battery/","insulation":"/installers/on/peterborough/insulation/"},"page":"/ca/on/peterborough/"},{"value":"richmond-hill","label":"Richmond Hill","installers":{"heat-pump":"/installers/on/richmond-hill/heat-pump/","solar":"/installers/on/richmond-hill/solar/","battery":"/installers/on/richmond-hill/battery/","insulation":"/installers/on/richmond-hill/insulation/"},"page":"/ca/on/richmond-hill/"},{"value":"sault-ste-marie","label":"Sault Ste. Marie","installers":{"heat-pump":"/installers/on/sault-ste-marie/heat-pump/","solar":"/installers/on/sault-ste-marie/solar/","battery":"/installers/on/sault-ste-marie/battery/"},"page":"/ca/on/sault-ste-marie/"},{"value":"thunder-bay","label":"Thunder Bay","installers":{"heat-pump":"/installers/on/thunder-bay/heat-pump/","battery":"/installers/on/thunder-bay/battery/"},"page":"/ca/on/thunder-bay/"},{"value":"timmins","label":"Timmins","installers":{"heat-pump":"/installers/on/timmins/heat-pump/","battery":"/installers/on/timmins/battery/"},"page":"/ca/on/timmins/"},{"value":"toronto","label":"Toronto","set":{"loan":"toronto"},"installers":{"heat-pump":"/installers/on/toronto/heat-pump/","solar":"/installers/on/toronto/solar/","battery":"/installers/on/toronto/battery/","insulation":"/installers/on/toronto/insulation/"},"page":"/ca/on/toronto/"},{"value":"vaughan","label":"Vaughan","installers":{"heat-pump":"/installers/on/vaughan/heat-pump/","solar":"/installers/on/vaughan/solar/","battery":"/installers/on/vaughan/battery/"},"page":"/ca/on/vaughan/"},{"value":"whitby","label":"Whitby","installers":{"heat-pump":"/installers/on/whitby/heat-pump/","battery":"/installers/on/whitby/battery/"},"page":"/ca/on/whitby/"},{"value":"windsor","label":"Windsor","installers":{"heat-pump":"/installers/on/windsor/heat-pump/","solar":"/installers/on/windsor/solar/","battery":"/installers/on/windsor/battery/"},"page":"/ca/on/windsor/"}],"optional":true,"help":"Used to show top-rated installers near you."},{"id":"heating","label":"What heats your home now?","type":"select","options":[{"value":"nongas","label":"Electricity, oil, propane or wood"},{"value":"gas","label":"Natural gas from Enbridge Gas"}],"for":["heat-pump"]},{"id":"hp_type","label":"Which kind of heat pump?","type":"select","options":[{"value":"air","label":"Air-source (most homes)"},{"value":"ground","label":"Ground-source (geothermal)"}],"for":["heat-pump"]},{"id":"tons","label":"How many heating tons is your heat pump? (optional)","type":"select","options":[{"value":"1","label":"1 ton"},{"value":"2","label":"2 tons"},{"value":"3","label":"3 tons"},{"value":"4","label":"4 tons"},{"value":"5","label":"5 tons"},{"value":"6","label":"6 tons"}],"optional":true,"help":"Most homes need 2 to 4 tons. Your installer sizes it. Skip this to see the per-ton rate only.","for":["heat-pump"]},{"id":"insulation_scope","label":"How much insulation are you adding?","type":"select","options":[{"value":"attic","label":"Attic only"},{"value":"whole","label":"Attic, walls, basement and more"}],"for":["insulation"]}],"upgrades":[{"id":"heat-pump","label":"Heat pump"},{"id":"water-heater","label":"Heat pump water heater"},{"id":"insulation","label":"Insulation"},{"id":"solar","label":"Solar panels"},{"id":"battery","label":"Home battery"},{"id":"thermostat","label":"Smart thermostat"},{"id":"appliances","label":"Appliances"},{"id":"support","label":"Free help or a low-interest loan"}],"programs":[{"id":"hrs-hp-air","name":"Home Renovation Savings: air-source heat pump","upgrade":"heat-pump","amount":{"per":{"unit":"ton","rate":1250,"question":"tons","cap":7500}},"rules":"Cold-climate model. You heat with electricity, oil, propane or wood. No home energy assessment needed. Not a new build lived in for 6 months or less.","when":{"heating":["nongas"],"hp_type":["air"]},"group":"hp","status":"active","verified_on":"2026-09-26","source_url":"https://homerenovationsavings.ca/heat-pumps"},{"id":"hrs-hp-ground","name":"Home Renovation Savings: ground-source heat pump","upgrade":"heat-pump","amount":{"per":{"unit":"ton","rate":2000,"question":"tons","cap":12000}},"rules":"The only way to reach $12,000. You heat with electricity, oil, propane or wood.","when":{"heating":["nongas"],"hp_type":["ground"]},"group":"hp","status":"active","verified_on":"2026-09-26","source_url":"https://homerenovationsavings.ca/heat-pumps"},{"id":"hrs-hp-air-gas","name":"Home Renovation Savings: air-source heat pump (Enbridge gas home)","upgrade":"heat-pump","amount":{"per":{"unit":"ton","rate":500,"question":"tons","cap":2000}},"rules":"You need an active Enbridge Gas residential account and heat mainly with a gas furnace or boiler. Rentals get the same lower amounts whatever the fuel.","when":{"heating":["gas"],"hp_type":["air"]},"group":"hp","status":"active","verified_on":"2026-09-26","source_url":"https://homerenovationsavings.ca/heat-pumps"},{"id":"hrs-hp-ground-gas","name":"Home Renovation Savings: ground-source heat pump (Enbridge gas home)","upgrade":"heat-pump","amount":{"max":3000},"rules":"You need an active Enbridge Gas residential account and heat mainly with a gas furnace or boiler.","when":{"heating":["gas"],"hp_type":["ground"]},"group":"hp","status":"active","verified_on":"2026-09-26","source_url":"https://homerenovationsavings.ca/heat-pumps"},{"id":"hrs-hpwh","name":"Home Renovation Savings: heat pump water heater","upgrade":"water-heater","amount":{"max":500},"rules":"Part of the assessment track: a home energy assessment before and after the work.","status":"active","verified_on":"2026-09-26","source_url":"https://homerenovationsavings.ca/with-assessment"},{"id":"hrs-ins-attic","name":"Home Renovation Savings: attic insulation, no assessment","upgrade":"insulation","amount":{"max":1250},"rules":"Up to $1,250 without a home energy assessment. The official page also shows lower steps by starting R-value.","when":{"insulation_scope":["attic"]},"group":"ins","status":"active","verified_on":"2026-09-26","source_url":"https://homerenovationsavings.ca/"},{"id":"hrs-ins-attic-assess","name":"Home Renovation Savings: attic insulation with assessment","upgrade":"insulation","amount":{"max":1500},"rules":"Needs a home energy assessment before and after. Pays $1,500, $1,200 or $900 depending on your starting R-value.","when":{"insulation_scope":["attic"]},"group":"ins","status":"active","verified_on":"2026-09-26","source_url":"https://homerenovationsavings.ca/with-assessment"},{"id":"hrs-ins-whole","name":"Home Renovation Savings: whole-home insulation with assessment","upgrade":"insulation","amount":{"max":7700},"rules":"Needs a home energy assessment before and after. Total insulation rebates are capped at $7,700. Walls, basement, crawlspace and more are paid by area.","when":{"insulation_scope":["whole"]},"group":"ins","status":"active","verified_on":"2026-09-26","source_url":"https://homerenovationsavings.ca/with-assessment"},{"id":"hrs-solar","name":"Home Renovation Savings: solar","upgrade":"solar","amount":{"max":5000},"rules":"$1,000 per kW, up to $5,000 and 50% of cost. You cannot also take a net-metering agreement with your utility.","status":"active","verified_on":"2026-09-26","source_url":"https://www.homerenovationsavings.ca/without-assessment/solar"},{"id":"hrs-battery","name":"Home Renovation Savings: battery","upgrade":"battery","amount":{"max":5000},"rules":"$300 per kWh, up to $5,000 and 50% of cost. Only with new solar. Solar and battery together are capped at $10,000.","requires":"hrs-solar","status":"active","verified_on":"2026-09-26","source_url":"https://www.homerenovationsavings.ca/without-assessment/solar"},{"id":"hrs-tstat","name":"Home Renovation Savings: smart thermostat","upgrade":"thermostat","amount":{"max":125},"rules":"Enbridge gas-heated home, or electrically heated or cooled home. Listed models only. Upload the receipt within 60 days. One thermostat rebate per home.","group":"tstat","status":"active","verified_on":"2026-09-26","source_url":"https://homerenovationsavings.ca/without-assessment/smart-thermostat"},{"id":"peak-perks","name":"Save on Energy Peak Perks","upgrade":"thermostat","amount":{"max":75},"rules":"$75 on enrolling, then $20 a year. Needs central AC or a heat pump run by an eligible Wi-Fi thermostat. Not for high-rise units.","group":"tstat","status":"active","verified_on":"2026-09-26","source_url":"https://saveonenergy.ca/For-Your-Home/Peak-Perks"},{"id":"hrs-appliances","name":"Home Renovation Savings: appliances","upgrade":"appliances","amount":{"label":"$25 to $200 each","max":0},"rules":"Heat pump dryer $200, induction cooktop or range $150, washer $75, fridge $50, freezer $50, dishwasher $25. Replace an existing electric appliance. Apply within 60 days.","status":"active","verified_on":"2026-09-26","source_url":"https://homerenovationsavings.ca/without-assessment/appliances"},{"id":"eap","name":"Energy Affordability Program (free upgrades)","upgrade":"support","amount":{"label":"Free","max":0},"rules":"Free upgrades for households under the income limits, from $48,220 for 1 person to $96,439 for 4 people, or on OW, ODSP or OESP. Call 1-844-770-3148.","status":"active","verified_on":"2026-09-26","source_url":"https://saveonenergy.ca/For-Your-Home/Energy-Affordability-Program"},{"id":"toronto-help","name":"Toronto Home Energy Loan Program","upgrade":"support","amount":{"label":"Loan up to $125,000","max":0},"rules":"A city loan repaid on your property tax bill, up to 10% of your home's assessed value, for up to 20 years. Confirm the current rate with the City.","when":{"loan":["toronto"]},"status":"active","verified_on":"2026-09-26","source_url":"https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/"},{"id":"ottawa-loan","name":"Better Homes Ottawa loan","upgrade":"support","amount":{"label":"Loan up to $125,000","max":0},"rules":"Repaid on your property tax bill, up to 10% of your home's assessed value, 20 years. 0% for households under the income limits. Not for gas upgrades.","when":{"loan":["ottawa"]},"status":"active","verified_on":"2026-09-26","source_url":"https://ottawa.ca/en/city-hall/budget-finance-and-corporate-planning/funding/environmental-funding/better-homes-ottawa/better-homes-ottawa-loan-program"},{"id":"waterloo-loan","name":"RetrofitWR loan (GrandBridge customers)","upgrade":"support","amount":{"label":"Loan up to $40,000","max":0},"rules":"2.5% fixed for 10 or 15 years, repaid on your GrandBridge Energy bill. Only for GrandBridge customers in Cambridge and North Dumfries. A free Energy Coach is open to homeowners across Waterloo Region.","when":{"loan":["cambridge"]},"status":"active","verified_on":"2026-09-26","source_url":"https://www.regionofwaterloo.ca/programs-and-services/climate-and-environment/climate-action/retrofit-waterloo-region/"}],"notes":["A new gas furnace gets no Home Renovation Savings rebate.","Amounts are the most a program pays. Your rebate depends on the equipment, the work and your final invoice."],"closed":[{"name":"Canada Greener Homes Loan","status":"closed","source_url":"https://www.cghli.ca/"}],"income_source":null,"verified_on":"2026-09-26"},{embed:true});</script>
+<script>function h(){parent.postMessage({hprCalcHeight:document.documentElement.scrollHeight},"*")}new ResizeObserver(h).observe(document.body);h();</script>
 </body></html>

@@ -8,7 +8,6 @@ Outputs:
   calculator/data/<code>.json          public rules with status/source resolved (read by the engine)
   calculator/<code>/index.html         the calculator page for the region
   calculator/embed/<code>/index.html   chrome-less version for the installer widget (noindex)
-  calculator/widget.js                 one-line embed for installer sites (links back to us)
   calculator/index.html                region picker
 Adding a region: write data/facts + data/calc/<code>.json, run this script, run check_facts.py. See CLAUDE.md.
 """
@@ -129,6 +128,14 @@ def program_table(spec, facts):
     return f"<div class='tw'><table><tr><th>Program</th><th>Amount</th><th>Rules</th></tr>{rows}</table></div>"
 
 
+def inline_calc(pub, opts=""):
+    """Engine + region data inlined in the page. Cloudflare's firewall on this zone returns 403 for any .js or .json
+    outside a short allow-list, so the calculator must not fetch either file."""
+    engine = (ROOT / "calculator" / "rebate-engine.js").read_text(encoding="utf-8")
+    data = json.dumps(pub, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    return f"<script>{engine}</script>\n<script>HPRCalc.mount(document.getElementById(\"rc-mount\"),{data}{opts});</script>"
+
+
 def region_page(spec, facts):
     code = spec["code"]
     path = f"/calculator/{code}/"
@@ -152,8 +159,7 @@ def region_page(spec, facts):
 <p><b>Next:</b> <a href="{e(spec['hub'])}">{e(spec['name'])} rebate guide</a> · <a href="/installers/">Top-rated installers by city</a> · <a href="/rebate-tracker/">Recent rebate changes</a></p>
 <p class="small">Something out of date? Email <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a> and we'll check it within a week.</p>
 </div></section>
-<script src="/calculator/rebate-engine.js"></script>
-<script>fetch("/calculator/data/{code}.json").then(function(r){{return r.json()}}).then(function(d){{HPRCalc.mount(document.getElementById("rc-mount"),d)}});</script>"""
+{inline_calc(pub)}"""
     ld = [
         {"@context": "https://schema.org", "@type": "WebApplication", "name": spec["title"], "url": BASE + path, "applicationCategory": "FinanceApplication",
          "operatingSystem": "Any", "description": spec["desc"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
@@ -170,7 +176,7 @@ def region_page(spec, facts):
     return path, out, pub
 
 
-def embed_page(spec):
+def embed_page(spec, pub):
     code = spec["code"]
     return f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{e(spec['name'])} rebate calculator</title><meta name="robots" content="noindex, follow"><link rel="canonical" href="{BASE}/calculator/{code}/">
@@ -179,40 +185,10 @@ def embed_page(spec):
 .rc-form{{margin-top:0}}.rc-by{{font-size:13px;margin:14px 0 0;text-align:center}}</style></head><body>
 <div id="rc-mount"></div>
 <p class="rc-by"><a href="{BASE}/calculator/{code}/" target="_blank" rel="noopener">{e(spec['name'])} rebate calculator by HomePowerRebate</a></p>
-<script src="/calculator/rebate-engine.js"></script>
-<script>fetch("/calculator/data/{code}.json").then(function(r){{return r.json()}}).then(function(d){{HPRCalc.mount(document.getElementById("rc-mount"),d,{{embed:true}});
-function h(){{parent.postMessage({{hprCalcHeight:document.documentElement.scrollHeight}},"*")}}new ResizeObserver(h).observe(document.body);h();}});</script>
+{inline_calc(pub, ",{embed:true}")}
+<script>function h(){{parent.postMessage({{hprCalcHeight:document.documentElement.scrollHeight}},"*")}}new ResizeObserver(h).observe(document.body);h();</script>
 </body></html>"""
 
-
-WIDGET = """/* HomePowerRebate rebate calculator widget.
-   Paste on your site:  <div data-hpr-calc="bc"></div><script src="https://homepowerrebate.com/calculator/widget.js" async></script>
-   It shows a free calculator in a frame, with a visible link to the full calculator. No tracking, no cookies. */
-(function () {
-  var base = "https://homepowerrebate.com";
-  function build(host) {
-    var code = (host.getAttribute("data-hpr-calc") || "bc").toLowerCase().replace(/[^a-z-]/g, "");
-    var f = document.createElement("iframe");
-    f.src = base + "/calculator/embed/" + code + "/";
-    f.title = "Rebate calculator";
-    f.loading = "lazy";
-    f.style.cssText = "width:100%;max-width:820px;height:640px;border:1px solid #d9d0c1;border-radius:12px;background:#faf7f2";
-    host.textContent = "";
-    host.appendChild(f);
-    var p = document.createElement("p");
-    p.style.cssText = "font:14px system-ui,sans-serif;margin:6px 0 0";
-    var a = document.createElement("a");
-    a.href = base + "/calculator/" + code + "/";
-    a.textContent = "Rebate calculator by HomePowerRebate";
-    p.appendChild(a);
-    host.appendChild(p);
-    window.addEventListener("message", function (ev) {
-      if (ev.origin === base && ev.source === f.contentWindow && ev.data && ev.data.hprCalcHeight) f.style.height = (ev.data.hprCalcHeight + 16) + "px";
-    });
-  }
-  Array.prototype.forEach.call(document.querySelectorAll("[data-hpr-calc]"), build);
-})();
-"""
 
 COMING = [("Ontario", "/ca/on/"), ("Alberta", "/ca/ab/"), ("Nova Scotia", "/ca/ns/"), ("California", "/us/ca/"), ("Colorado", "/us/co/"),
           ("Massachusetts", "/us/ma/"), ("New York", "/us/ny/"), ("Pennsylvania", "/us/pa/"), ("Vermont", "/us/vt/")]
@@ -240,17 +216,20 @@ def picker(specs):
 
 def widget_page(specs):
     code = specs[0]["code"]
+    names = ", ".join(f"{e(s['name'])} (<code>{s['code']}</code>)" for s in specs)
+    snippet = (f'<iframe src="https://homepowerrebate.com/calculator/embed/{code}/" title="Rebate calculator" width="100%" height="760" '
+               f'style="max-width:820px;border:1px solid #d9d0c1;border-radius:12px;" loading="lazy"></iframe>\n'
+               f'<p><a href="https://homepowerrebate.com/calculator/{code}/">Rebate calculator by HomePowerRebate</a></p>')
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/calculator/">Calculators</a></li><li aria-current="page">Installer widget</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>Free Rebate Calculator for Your Website</h1><p>Let your customers check which rebates they qualify for, without leaving your site.</p></div></header>
 <section class="body"><div class="wrap rc-wrap"><h2>Copy and paste</h2>
-<pre style="background:#0a2a2e;color:#fff;padding:14px;border-radius:8px;overflow-x:auto;white-space:pre-wrap;">&lt;div data-hpr-calc="{code}"&gt;&lt;/div&gt;
-&lt;script src="https://homepowerrebate.com/calculator/widget.js" async&gt;&lt;/script&gt;</pre>
-<h2>What you get</h2><ul><li>A working calculator for {", ".join(e(s["name"]) for s in specs)}. More regions are added as we verify them.</li>
+<pre style="background:#0a2a2e;color:#fff;padding:14px;border-radius:8px;overflow-x:auto;white-space:pre-wrap;">{e(snippet)}</pre>
+<p>Change <code>{code}</code> in both places to your region's code: {names}.</p>
+<h2>What you get</h2><ul><li>A working calculator for your province or state. It shows top-rated installers in the visitor's city, ranked by Google reviews.</li>
 <li>Rebate amounts that update on their own when a program changes. You never edit them.</li>
-<li>No tracking, no cookies, no ads, and no fee.</li></ul>
+<li>No script to install, no tracking, no cookies, no ads, and no fee.</li></ul>
 <h2>What we ask</h2><p>Leave the "Rebate calculator by HomePowerRebate" link under the frame. It is a normal link. Listing here never changes where your company ranks: installers are ranked by Google reviews only.</p>
-<h2>Preview</h2><div data-hpr-calc="{code}"></div><script src="/calculator/widget.js" async></script>
-<script>document.querySelectorAll('[data-hpr-calc]').forEach(function(){{}});</script>
+<h2>Preview</h2><iframe src="/calculator/embed/{code}/" title="Rebate calculator preview" width="100%" height="760" style="max-width:820px;border:1px solid #d9d0c1;border-radius:12px;" loading="lazy"></iframe>
 </div></section>"""
     return shell("Free Rebate Calculator Widget for Installers | HomePowerRebate",
                  "Add a free home rebate calculator to your installer website. Amounts update automatically and it links back to HomePowerRebate.",
@@ -286,17 +265,16 @@ def main():
         pub["code"] = spec["code"]
         for rel, text in ((f"calculator/data/{spec['code']}.json", json.dumps(pub, ensure_ascii=False, separators=(",", ":"))),
                           (f"calculator/{spec['code']}/index.html", out),
-                          (f"calculator/embed/{spec['code']}/index.html", embed_page(spec))):
+                          (f"calculator/embed/{spec['code']}/index.html", embed_page(spec, pub))):
             t = ROOT / rel
             t.parent.mkdir(parents=True, exist_ok=True)
             t.write_text(text, encoding="utf-8")
         link_hub(spec)
         print("Wrote", path)
-    (ROOT / "calculator" / "widget.js").write_text(WIDGET, encoding="utf-8")
     (ROOT / "calculator" / "index.html").write_text(picker(specs), encoding="utf-8")
     (ROOT / "calculator" / "widget").mkdir(exist_ok=True)
     (ROOT / "calculator" / "widget" / "index.html").write_text(widget_page(specs), encoding="utf-8")
-    print("Wrote /calculator/, /calculator/widget/, widget.js")
+    print("Wrote /calculator/, /calculator/widget/")
 
 
 if __name__ == "__main__":

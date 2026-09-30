@@ -363,8 +363,354 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 <p><b>Next:</b> <a href="/ca/bc/">British Columbia rebate guide</a> · <a href="/installers/">Top-rated installers by city</a> · <a href="/rebate-tracker/">Recent rebate changes</a></p>
 <p class="small">Something out of date? Email <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a> and we'll check it within a week.</p>
 </div></section>
-<script src="/calculator/rebate-engine.js"></script>
-<script>fetch("/calculator/data/bc.json").then(function(r){return r.json()}).then(function(d){HPRCalc.mount(document.getElementById("rc-mount"),d)});</script>
+<script>/* HomePowerRebate rebate engine. One engine for every province and state.
+   A region is data only: /calculator/data/<code>.json (built by scripts/build_calculator.py from data/calc + data/verified-facts).
+   Nothing in this file names a region, program or dollar amount. */
+(function (root) {
+  "use strict";
+
+  var STATUS_LABEL = { active: "Open", upcoming: "Starts soon", waitlist: "Waitlist", paused: "Paused", closed: "Closed", check: "Confirm status", info: "Note" };
+  var COUNTED = { active: true };
+
+  function money(n, cur) {
+    return "$" + Math.round(n).toLocaleString("en-CA") + (cur && cur !== "USD" ? "" : "");
+  }
+
+  function values(region, a) {
+    var v = {}, k;
+    for (k in a) v[k] = a[k];
+    var cq = region.questions.filter(function (q) { return q.id === "city"; })[0];
+    if (cq && a.city) {
+      var opt = cq.options.filter(function (o) { return o.value === a.city; })[0];
+      if (opt && opt.set) for (k in opt.set) v[k] = opt.set[k];
+    }
+    var d = region.derived && region.derived.income_level;
+    if (d) {
+      var inc = parseFloat(String(a.income || "").replace(/[^0-9.]/g, ""));
+      var hh = parseInt(a.household, 10);
+      v.income_level = "unknown";
+      if (inc > 0 && hh > 0) {
+        var i = Math.min(hh, 7) - 1;
+        v.income_level = "none";
+        ["L1", "L2", "L3"].some(function (L) {
+          if (inc <= d.limits[L][i]) { v.income_level = L; return true; }
+          return false;
+        });
+      }
+    }
+    return v;
+  }
+
+  function match(p, v) {
+    var k;
+    if (p.when) for (k in p.when) if (p.when[k].indexOf(v[k]) < 0) return false;
+    if (p.when_any) {
+      var ok = p.when_any.some(function (w) {
+        for (var key in w) if (w[key].indexOf(v[key]) < 0) return false;
+        return true;
+      });
+      if (!ok) return false;
+    }
+    return true;
+  }
+
+  function dictMatch(w, v) {
+    for (var k in w) if (w[k].indexOf(v[k]) < 0) return false;
+    return true;
+  }
+
+  /* Amount models: {max}, {by: question, values: {answer: amount}}, or {per: {unit, rate, bonus_rate, bonus_when, question, cap}} for per-ton / per-kW programs. */
+  function amountOf(p, v) {
+    var a = p.amount;
+    if (a.by) return a.values[v[a.by]] || 0;
+    if (a.per) {
+      var n = parseFloat(v[a.per.question]);
+      if (!(n > 0)) return 0;
+      var rate = a.per.bonus_when && dictMatch(a.per.bonus_when, v) ? a.per.bonus_rate : a.per.rate;
+      var t = rate * n;
+      return a.per.cap ? Math.min(t, a.per.cap) : t;
+    }
+    return a.max || 0;
+  }
+
+  function labelOf(p, v, amount) {
+    var a = p.amount;
+    if (a.label) return a.label;
+    if (!a.per) return null;
+    var rate = a.per.bonus_when && dictMatch(a.per.bonus_when, v) ? a.per.bonus_rate : a.per.rate;
+    var base = "$" + Math.round(rate).toLocaleString("en-CA") + " per " + a.per.unit;
+    if (amount > 0) return "$" + Math.round(amount).toLocaleString("en-CA") + " (" + base + ")";
+    return a.per.cap ? base + ", up to $" + Math.round(a.per.cap).toLocaleString("en-CA") : base;
+  }
+
+  /* Returns {items, total, unknownIncome}. items carry counted=true when they add to the total. */
+  function evaluate(region, a, plan) {
+    var v = values(region, a);
+    var matched = region.programs.filter(function (p) { return match(p, v); });
+    var others = matched.filter(function (p) { return plan.indexOf(p.upgrade) < 0; });
+    var hit = matched.filter(function (p) { return plan.indexOf(p.upgrade) >= 0; });
+    var changed = true;
+    while (changed) {
+      changed = false;
+      var ids = hit.map(function (p) { return p.id; });
+      hit = hit.filter(function (p) {
+        if (p.requires && ids.indexOf(p.requires) < 0) { changed = true; return false; }
+        return true;
+      });
+    }
+    var items = hit.map(function (p) {
+      return { id: p.id, name: p.name, upgrade: p.upgrade, group: p.group || null, amount: amountOf(p, v), label: labelOf(p, v, amountOf(p, v)),
+               status: p.status, requires: p.requires || null, pool: p.pool || null, verified_on: p.verified_on, source_url: p.source_url, rules: p.rules, counted: false, covered: false };
+    });
+    var best = {};
+    items.forEach(function (it) {
+      if (!COUNTED[it.status] || !it.group) return;
+      if (!best[it.group] || it.amount > best[it.group].amount) best[it.group] = it;
+    });
+    var total = 0, byId = {};
+    items.forEach(function (it) { byId[it.id] = it; });
+    items.forEach(function (it) {
+      if (!COUNTED[it.status] || it.requires) return;
+      if (it.group) {
+        if (best[it.group] === it) { it.counted = true; total += it.amount; } else it.covered = true;
+      } else { it.counted = true; total += it.amount; }
+    });
+    /* Add-ons (bonus, top-up) count only when the offer they build on is the one counted. */
+    items.forEach(function (it) {
+      if (!it.requires || !COUNTED[it.status]) return;
+      if (byId[it.requires] && byId[it.requires].counted) { it.counted = true; total += it.amount; } else it.covered = true;
+    });
+    var capNotes = [];
+    (region.pools || []).forEach(function (pl) {
+      var sum = 0;
+      items.forEach(function (it) { if (it.counted && it.pool === pl.id) sum += it.amount; });
+      if (sum > pl.max) { total -= sum - pl.max; capNotes.push(pl.label); }
+    });
+    return { capNotes: capNotes, items: items, others: others.map(function (p) { return { id: p.id, name: p.name, upgrade: p.upgrade, amount: amountOf(p, v), label: labelOf(p, v, amountOf(p, v)), status: p.status, verified_on: p.verified_on, source_url: p.source_url, rules: p.rules, counted: false, covered: false }; }), total: total, incomeUnknown: v.income_level === "unknown", incomeLevel: v.income_level };
+  }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function pill(status) {
+    return el("span", "rc-pill rc-" + status, STATUS_LABEL[status] || status);
+  }
+
+  function fmtDate(iso) {
+    var m = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var p = iso.split("-");
+    return m[parseInt(p[1], 10) - 1] + " " + parseInt(p[2], 10) + ", " + p[0];
+  }
+
+  function card(it, region) {
+    var c = el("div", "rc-card" + (it.counted ? "" : " rc-muted"));
+    var top = el("div", "rc-card-top");
+    top.appendChild(el("h4", null, it.name));
+    var amt = it.label ? it.label : (it.amount ? "Up to " + money(it.amount, region.currency) : "See program");
+    top.appendChild(el("div", "rc-amt", amt));
+    c.appendChild(top);
+    var meta = el("div", "rc-meta");
+    meta.appendChild(pill(it.status));
+    if (it.covered) meta.appendChild(el("span", "rc-note", "Not added: a larger offer covers the same upgrade"));
+    c.appendChild(meta);
+    c.appendChild(el("p", "rc-rules", it.rules));
+    var f = el("p", "rc-src");
+    var a = el("a", null, "Official source");
+    a.href = it.source_url; a.rel = "nofollow noopener"; a.target = "_blank";
+    f.appendChild(a);
+    f.appendChild(document.createTextNode(" · Last verified " + fmtDate(it.verified_on)));
+    c.appendChild(f);
+    return c;
+  }
+
+  function mount(host, region, opts) {
+    opts = opts || {};
+    host.textContent = "";
+    var form = el("form", "rc-form");
+    form.setAttribute("novalidate", "");
+    var answers = {};
+    var params = new URLSearchParams(location.search);
+    var fields = {};
+    region.questions.forEach(function (q) {
+      var wrap = el("div", "rc-field");
+      fields[q.id] = wrap;
+      var label = el("label", null, q.label);
+      label.setAttribute("for", "rc-" + q.id);
+      wrap.appendChild(label);
+      var input;
+      if (q.type === "select") {
+        input = el("select");
+        var ph = el("option", null, q.placeholder || (q.optional ? "Skip" : "Choose one"));
+        ph.value = "";
+        input.appendChild(ph);
+        q.options.forEach(function (o) { var op = el("option", null, o.label); op.value = o.value; input.appendChild(op); });
+      } else {
+        input = el("input");
+        input.type = "text"; input.inputMode = "numeric"; input.placeholder = "for example 85000"; input.autocomplete = "off";
+      }
+      input.id = "rc-" + q.id; input.name = q.id;
+      var pre = params.get(q.id) || (opts.defaults && opts.defaults[q.id]);
+      if (pre) { input.value = pre; answers[q.id] = pre; }
+      input.addEventListener("input", function () { answers[q.id] = input.value; render(); });
+      wrap.appendChild(input);
+      if (q.help) wrap.appendChild(el("p", "rc-help", q.help));
+      form.appendChild(wrap);
+    });
+    var plan = params.get("plan") ? params.get("plan").split(",") : [];
+    var fs = el("fieldset", "rc-plan");
+    fs.appendChild(el("legend", null, "Which upgrades are you planning?"));
+    region.upgrades.forEach(function (u) {
+      var lab = el("label", "rc-check");
+      var cb = el("input"); cb.type = "checkbox"; cb.value = u.id; cb.checked = plan.indexOf(u.id) >= 0;
+      cb.addEventListener("change", function () {
+        plan = region.upgrades.map(function (x) { return x.id; }).filter(function (id) { return form.querySelector('.rc-plan input[value="' + id + '"]').checked; });
+        render();
+      });
+      lab.appendChild(cb); lab.appendChild(document.createTextNode(" " + u.label));
+      fs.appendChild(lab);
+    });
+    form.appendChild(fs);
+    host.appendChild(form);
+    var out = el("div", "rc-out");
+    out.setAttribute("aria-live", "polite");
+    host.appendChild(out);
+
+    function shown(q) {
+      return !q.for || q.for.some(function (u) { return plan.indexOf(u) >= 0; });
+    }
+    function ready() {
+      return plan.length > 0 && region.questions.every(function (q) { return q.optional || !shown(q) || answers[q.id]; });
+    }
+
+    function render() {
+      out.textContent = "";
+      region.questions.forEach(function (q) { fields[q.id].style.display = shown(q) ? "" : "none"; });
+      var q = new URLSearchParams();
+      for (var k in answers) if (answers[k] && k !== "income" && k !== "household") q.set(k, answers[k]);
+      if (plan.length) q.set("plan", plan.join(","));
+      try { history.replaceState(null, "", location.pathname + (q.toString() ? "?" + q.toString() : "")); } catch (e) { /* embedded */ }
+      if (!ready()) {
+        out.appendChild(el("p", "rc-empty", "Answer the questions and pick at least one upgrade. Your rebates appear here."));
+        return;
+      }
+      var live = {};
+      region.questions.forEach(function (q) { if (shown(q) && answers[q.id]) live[q.id] = answers[q.id]; });
+      var r = evaluate(region, live, plan);
+      var box = el("div", "rc-total");
+      box.appendChild(el("div", "rc-total-label", "Most you could get for the upgrades you picked"));
+      box.appendChild(el("div", "rc-total-num", money(r.total, region.currency)));
+      box.appendChild(el("p", "rc-total-sub", "Adds the biggest open offer for each upgrade you picked. Only programs open today are counted."));
+      out.appendChild(box);
+      r.capNotes.forEach(function (n) { out.appendChild(el("p", "rc-hint", n)); });
+      if (r.incomeUnknown) out.appendChild(el("p", "rc-hint", "Add your household size and income to check income-qualified programs. They pay the most."));
+      else if (r.incomeLevel === "none") out.appendChild(el("p", "rc-hint", "Your income is above the income-qualified limits, so only the general programs apply."));
+      var groups = {}, order = [];
+      var open = r.items.filter(function (it) { return it.status === "active"; });
+      var later = r.items.filter(function (it) { return it.status !== "active"; });
+      var label = {}; region.upgrades.forEach(function (u) { label[u.id] = u.label; });
+      open.forEach(function (it) { if (!groups[it.upgrade]) { groups[it.upgrade] = []; order.push(it.upgrade); } groups[it.upgrade].push(it); });
+      order.forEach(function (m) {
+        out.appendChild(el("h3", "rc-h", label[m]));
+        groups[m].forEach(function (it) { out.appendChild(card(it, region)); });
+      });
+      if (!open.length) out.appendChild(el("p", "rc-empty", "We found no open program for these answers. Check your inputs or see the programs below."));
+      if (later.length) {
+        out.appendChild(el("h3", "rc-h", "Not open yet, or waiting"));
+        later.forEach(function (it) { out.appendChild(card(it, region)); });
+      }
+      var more = r.others.filter(function (it) { return it.status === "active"; });
+      if (more.length) {
+        var det = el("details", "rc-more");
+        det.appendChild(el("summary", null, "Other rebates that fit your home (" + more.length + ", not in your total)"));
+        more.forEach(function (it) { det.appendChild(card(it, region)); });
+        out.appendChild(det);
+      }
+      if (region.closed && region.closed.length) {
+        out.appendChild(el("h3", "rc-h", "Ended programs (don't count on these)"));
+        var ul = el("ul", "rc-closed");
+        region.closed.forEach(function (c) {
+          var li = el("li");
+          li.appendChild(document.createTextNode(c.name + ". "));
+          li.appendChild(pill(c.status));
+          li.appendChild(document.createTextNode(" "));
+          var a = el("a", null, "Source");
+          a.href = c.source_url; a.rel = "nofollow noopener"; a.target = "_blank";
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        out.appendChild(ul);
+      }
+      if (region.notes) {
+        var nl = el("ul", "rc-notes");
+        region.notes.forEach(function (n) { nl.appendChild(el("li", null, n)); });
+        out.appendChild(nl);
+      }
+      if (!opts.embed) out.appendChild(savePlan(region, answers));
+      var cq = region.questions.filter(function (q) { return q.id === "city"; })[0];
+      var copt = cq && answers.city ? cq.options.filter(function (o) { return o.value === answers.city; })[0] : null;
+      if (copt && copt.installers) {
+        var upl = {}; region.upgrades.forEach(function (u) { upl[u.id] = u.label; });
+        var want = plan.filter(function (u) { return copt.installers[u]; });
+        if (!want.length) want = Object.keys(copt.installers);
+        var ib = el("div", "rc-inst");
+        ib.appendChild(el("h3", "rc-h", "Top-rated installers in " + copt.label));
+        ib.appendChild(el("p", "rc-help", "Ranked by Google reviews. Nobody pays to be listed, and we do not sell your details."));
+        var iul = el("ul", "rc-inst-list");
+        want.forEach(function (u) {
+          var li = el("li"); var ia = el("a", null, (upl[u] || u) + " installers in " + copt.label);
+          ia.href = copt.installers[u]; li.appendChild(ia); iul.appendChild(li);
+        });
+        if (copt.page) {
+          var li2 = el("li"); var pa = el("a", null, copt.label + " rebate guide"); pa.href = copt.page; li2.appendChild(pa); iul.appendChild(li2);
+        }
+        ib.appendChild(iul);
+        out.appendChild(ib);
+      }
+      var links = el("p", "rc-links");
+      var a1 = el("a", null, "See installers ranked by Google reviews");
+      a1.href = region.installers || "/installers/";
+      links.appendChild(a1);
+      links.appendChild(document.createTextNode(" · "));
+      var a2 = el("a", null, region.name + " rebate guide");
+      a2.href = region.hub;
+      links.appendChild(a2);
+      out.appendChild(links);
+    }
+    render();
+  }
+
+  function savePlan(region, answers) {
+    var f = el("form", "rc-save");
+    f.appendChild(el("h3", "rc-h", "Email me when something changes"));
+    f.appendChild(el("p", "rc-help", "One short email when a program in " + region.name + " opens, closes or changes. No installer will call you."));
+    var i = el("input"); i.type = "email"; i.required = true; i.placeholder = "you@example.com"; i.setAttribute("aria-label", "Email address");
+    var b = el("button", null, "Notify me"); b.type = "submit";
+    var msg = el("p", "rc-help");
+    f.appendChild(i); f.appendChild(b); f.appendChild(msg);
+    f.addEventListener("submit", function (e) {
+      e.preventDefault();
+      b.disabled = true;
+      fetch("https://leads.homepowerrebate.com/newsletter", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: i.value, city: answers.city || "", page: location.pathname, province: region.code.toUpperCase() })
+      }).then(function (r) {
+        if (!r.ok) throw new Error("bad");
+        f.textContent = "";
+        f.appendChild(el("p", "rc-help", "You're in. Check your inbox for a welcome email."));
+      }).catch(function () { b.disabled = false; msg.textContent = "Something went wrong. Please try again."; });
+    });
+    return f;
+  }
+
+  root.HPRCalc = { evaluate: evaluate, values: values, mount: mount };
+  if (typeof module !== "undefined") module.exports = root.HPRCalc;
+})(typeof window !== "undefined" ? window : globalThis);
+</script>
+<script>HPRCalc.mount(document.getElementById("rc-mount"),{"code":"bc","name":"British Columbia","country":"ca","currency":"CAD","hub":"/ca/bc/","installers":"/installers/","questions":[{"id":"city","label":"Where is your home?","type":"select","options":[{"value":"abbotsford","label":"Abbotsford","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/abbotsford/","installers":{"heat-pump":"/installers/bc/abbotsford/heat-pump/","solar":"/installers/bc/abbotsford/solar/","battery":"/installers/bc/abbotsford/battery/","insulation":"/installers/bc/abbotsford/insulation/"}},{"value":"burnaby","label":"Burnaby","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/burnaby/","installers":{"heat-pump":"/installers/bc/burnaby/heat-pump/","solar":"/installers/bc/burnaby/solar/","battery":"/installers/bc/burnaby/battery/"}},{"value":"chilliwack","label":"Chilliwack","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/chilliwack/","installers":{"heat-pump":"/installers/bc/chilliwack/heat-pump/","solar":"/installers/bc/chilliwack/solar/","battery":"/installers/bc/chilliwack/battery/"}},{"value":"coquitlam","label":"Coquitlam","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/coquitlam/","installers":{"heat-pump":"/installers/bc/coquitlam/heat-pump/","solar":"/installers/bc/coquitlam/solar/","battery":"/installers/bc/coquitlam/battery/"}},{"value":"fort-st-john","label":"Fort St. John","set":{"utility":"bchydro","north":"yes","vancouver":"no"},"page":"/ca/bc/fort-st-john/","installers":{"solar":"/installers/bc/fort-st-john/solar/","battery":"/installers/bc/fort-st-john/battery/"}},{"value":"kamloops","label":"Kamloops","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/kamloops/","installers":{"heat-pump":"/installers/bc/kamloops/heat-pump/","solar":"/installers/bc/kamloops/solar/","battery":"/installers/bc/kamloops/battery/"}},{"value":"kelowna","label":"Kelowna","set":{"utility":"fortis_electric","north":"no","vancouver":"no"},"page":"/ca/bc/kelowna/","installers":{"heat-pump":"/installers/bc/kelowna/heat-pump/","solar":"/installers/bc/kelowna/solar/","battery":"/installers/bc/kelowna/battery/","insulation":"/installers/bc/kelowna/insulation/"}},{"value":"langley","label":"Langley","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/langley/","installers":{"heat-pump":"/installers/bc/langley/heat-pump/","solar":"/installers/bc/langley/solar/","battery":"/installers/bc/langley/battery/","insulation":"/installers/bc/langley/insulation/"}},{"value":"maple-ridge","label":"Maple Ridge","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/maple-ridge/","installers":{"heat-pump":"/installers/bc/maple-ridge/heat-pump/","solar":"/installers/bc/maple-ridge/solar/","battery":"/installers/bc/maple-ridge/battery/"}},{"value":"nanaimo","label":"Nanaimo","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/nanaimo/","installers":{"heat-pump":"/installers/bc/nanaimo/heat-pump/","solar":"/installers/bc/nanaimo/solar/","battery":"/installers/bc/nanaimo/battery/","insulation":"/installers/bc/nanaimo/insulation/"}},{"value":"penticton","label":"Penticton","set":{"utility":"fortis_electric","north":"no","vancouver":"no"},"page":"/ca/bc/penticton/","installers":{"heat-pump":"/installers/bc/penticton/heat-pump/","solar":"/installers/bc/penticton/solar/","battery":"/installers/bc/penticton/battery/"}},{"value":"prince-george","label":"Prince George","set":{"utility":"bchydro","north":"yes","vancouver":"no"},"page":"/ca/bc/prince-george/","installers":{"heat-pump":"/installers/bc/prince-george/heat-pump/","battery":"/installers/bc/prince-george/battery/"}},{"value":"richmond","label":"Richmond","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/richmond/","installers":{"heat-pump":"/installers/bc/richmond/heat-pump/","solar":"/installers/bc/richmond/solar/","battery":"/installers/bc/richmond/battery/"}},{"value":"squamish","label":"Squamish","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/squamish/","installers":{"heat-pump":"/installers/bc/squamish/heat-pump/","solar":"/installers/bc/squamish/solar/","battery":"/installers/bc/squamish/battery/"}},{"value":"surrey","label":"Surrey","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/surrey/","installers":{"heat-pump":"/installers/bc/surrey/heat-pump/","solar":"/installers/bc/surrey/solar/","battery":"/installers/bc/surrey/battery/","insulation":"/installers/bc/surrey/insulation/"}},{"value":"vancouver","label":"Vancouver","set":{"utility":"bchydro","north":"no","vancouver":"yes"},"page":"/ca/bc/vancouver/","installers":{"heat-pump":"/installers/bc/vancouver/heat-pump/","solar":"/installers/bc/vancouver/solar/","battery":"/installers/bc/vancouver/battery/"}},{"value":"vernon","label":"Vernon","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/vernon/","installers":{"heat-pump":"/installers/bc/vernon/heat-pump/","solar":"/installers/bc/vernon/solar/","battery":"/installers/bc/vernon/battery/"}},{"value":"victoria","label":"Victoria","set":{"utility":"bchydro","north":"no","vancouver":"no"},"page":"/ca/bc/victoria/","installers":{"heat-pump":"/installers/bc/victoria/heat-pump/","solar":"/installers/bc/victoria/solar/","battery":"/installers/bc/victoria/battery/","insulation":"/installers/bc/victoria/insulation/"}},{"value":"other-bch","label":"Somewhere else in BC (BC Hydro electricity)","set":{"utility":"bchydro","north":"no","vancouver":"no"}},{"value":"other-north","label":"Somewhere else in BC, at or north of 100 Mile House (BC Hydro)","set":{"utility":"bchydro","north":"yes","vancouver":"no"}},{"value":"other-fortis","label":"Somewhere else in BC (FortisBC electricity)","set":{"utility":"fortis_electric","north":"no","vancouver":"no"}}],"placeholder":"Choose your city"},{"id":"heating","label":"What heats your home now?","type":"select","options":[{"value":"electric","label":"Electric baseboards or electric furnace"},{"value":"gas","label":"Natural gas"},{"value":"oil_propane","label":"Oil or propane"},{"value":"other","label":"A heat pump, wood or something else"}]},{"id":"water_heater","label":"What heats your water?","type":"select","options":[{"value":"electric","label":"Electric tank"},{"value":"fossil","label":"Gas, oil or propane"},{"value":"other","label":"Something else"}]},{"id":"home_value","label":"What is your home's assessed value?","type":"select","options":[{"value":"under_1_2m","label":"Under $1.2 million"},{"value":"mid","label":"$1.2 million to $1.82 million"},{"value":"over","label":"Over $1.82 million"}]},{"id":"household","label":"How many people live in your home?","type":"select","optional":true,"options":[{"value":"1","label":"1"},{"value":"2","label":"2"},{"value":"3","label":"3"},{"value":"4","label":"4"},{"value":"5","label":"5"},{"value":"6","label":"6"},{"value":"7","label":"7 or more"}]},{"id":"income","label":"Combined household income before tax (optional)","type":"money","optional":true,"help":"Only used to check income-qualified programs. It never leaves your device."}],"derived":{"income_level":{"from":["household","income"],"limits":{"L1":[51100,63600,78200,94900,107600,121400,135100],"L2":[63900,79500,97700,118600,134500,151700,168900],"L3":[102100,127200,156300,189800,215200,242700,270200]}}},"programs":[{"id":"bchydro-hp-whole","name":"BC Hydro heat pump rebate","group":"hp","when":{"utility":["bchydro"],"heating":["electric"]},"amount":{"max":4000},"rules":"Replaces electric heat (baseboards or electric furnace). The heat pump must cover all of your heating at -5°C. HPCN installer and an eligible model. Covering half your heating pays $1,500.","upgrade":"heat-pump","status":"active","verified_on":"2026-09-26","source_url":"https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html"},{"id":"bchydro-hp-bonus","name":"BC Hydro heat pump bonus","requires":"bchydro-hp-whole","when":{"utility":["bchydro"],"heating":["electric"]},"amount":{"max":1000},"rules":"Extra rebate for installs finished between Aug 1 and Oct 31, 2026. First come, first served.","upgrade":"heat-pump","status":"active","verified_on":"2026-09-26","source_url":"https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html"},{"id":"esp-fossil-hp","name":"CleanBC Energy Savings Program: gas, oil or propane to heat pump","group":"hp","when":{"heating":["gas","oil_propane"]},"when_any":[{"income_level":["L1","L2"],"home_value":["under_1_2m"]},{"income_level":["L3"],"home_value":["under_1_2m","mid"]}],"amount":{"by":"income_level","values":{"L1":13000,"L2":7000,"L3":3500}},"rules":"For a central ducted or 3+ head heat pump. Smaller systems pay less. Register before work starts and use an ESP registered contractor.","upgrade":"heat-pump","status":"active","verified_on":"2026-09-26","source_url":"https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf"},{"id":"esp-north","name":"CleanBC northern top-up","requires":"esp-fossil-hp","when":{"north":["yes"],"utility":["bchydro"],"income_level":["L1","L2"]},"amount":{"max":3000},"rules":"Extra $3,000 for a ducted or multi-head system, $1,500 for a single head. Home at or north of 100 Mile House with BC Hydro electricity.","upgrade":"heat-pump","status":"active","verified_on":"2026-09-26","source_url":"https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf"},{"id":"esp-electric-hp","name":"CleanBC Energy Savings Program: electric heat to heat pump","group":"hp","when":{"heating":["electric"],"income_level":["L1"],"home_value":["under_1_2m"]},"amount":{"max":5000},"rules":"Income Level 1 only. Register before work starts and use an ESP registered contractor.","upgrade":"heat-pump","status":"active","verified_on":"2026-09-26","source_url":"https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf"},{"id":"fortis-hp","name":"FortisBC electric heat pump rebate","group":"hp","when":{"utility":["fortis_electric"],"heating":["electric"]},"amount":{"max":4000},"rules":"Replaces electric heat. Cold-climate certified model. Mini-splits only in homes of 1,200 sq ft or less. Partial-home installs get $1,500.","upgrade":"heat-pump","status":"active","verified_on":"2026-09-26","source_url":"https://www.fortisbc.com/rebates/detail/air-source-heat-pump-rebate"},{"id":"fortis-iq-hp","name":"FortisBC income-qualified heat pump rebate","group":"hp","when":{"utility":["fortis_electric"],"heating":["electric"],"income_level":["L1"]},"amount":{"max":12000},"rules":"Central ducted whole-home system. Mini or multi-split whole home pays $9,000. Same income limit as CleanBC Level 1.","upgrade":"heat-pump","status":"active","verified_on":"2026-09-26","source_url":"https://www.fortisbc.com/rebates/detail/iqheatpump"},{"id":"esp-panel","name":"CleanBC electrical service upgrade","requires":"esp-fossil-hp","when":{"income_level":["L1","L2","L3"]},"amount":{"by":"income_level","values":{"L1":5000,"L2":3500,"L3":1500}},"rules":"Only when you switch from gas, oil or propane to a heat pump and the panel needs upgrading.","upgrade":"heat-pump","status":"active","verified_on":"2026-09-26","source_url":"https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf"},{"id":"esp-hpwh-fossil","name":"CleanBC heat pump water heater (from gas, oil or propane)","group":"hpwh","when":{"water_heater":["fossil"]},"when_any":[{"income_level":["L1","L2"],"home_value":["under_1_2m"]},{"income_level":["L3"],"home_value":["under_1_2m","mid"]}],"amount":{"by":"income_level","values":{"L1":3500,"L2":3500,"L3":3500}},"rules":"Income-qualified. Use an ESP registered contractor.","upgrade":"water-heater","status":"active","verified_on":"2026-09-26","source_url":"https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf"},{"id":"esp-hpwh-electric","name":"CleanBC heat pump water heater (from electric)","group":"hpwh","when":{"water_heater":["electric"],"income_level":["L1","L2"],"home_value":["under_1_2m"]},"amount":{"by":"income_level","values":{"L1":3500,"L2":2800}},"rules":"Income Level 1 or 2. Use an ESP registered contractor.","upgrade":"water-heater","status":"active","verified_on":"2026-09-26","source_url":"https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf"},{"id":"bchydro-hpwh","name":"BC Hydro heat pump water heater rebate","group":"hpwh","when":{"utility":["bchydro"],"water_heater":["electric"]},"amount":{"max":1000},"rules":"Replaces an electric primary water heater. NEEA Tier 2 or higher model and a licensed contractor.","upgrade":"water-heater","status":"active","verified_on":"2026-09-26","source_url":"https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-water-heater.html"},{"id":"bchydro-insulation","name":"BC Hydro insulation rebate","when":{"utility":["bchydro"],"heating":["electric"]},"amount":{"max":5500},"rules":"Electrically heated home. HPCN contractor and minimum R-values. Attic pays up to $900, walls or basement up to $1,200 each.","upgrade":"insulation","status":"active","verified_on":"2026-09-26","source_url":"https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-insulation.html"},{"id":"bchydro-windows","name":"BC Hydro windows and doors rebate","when":{"utility":["bchydro"],"heating":["electric"],"vancouver":["no"]},"amount":{"max":2000},"rules":"$100 per window or door, replacing existing units. U-factor 1.22 or better and a licensed contractor.","upgrade":"insulation","status":"active","verified_on":"2026-09-26","source_url":"https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-windows-and-doors.html"},{"id":"bchydro-solar","name":"BC Hydro solar rebate","when":{"utility":["bchydro"]},"amount":{"max":5000},"rules":"$1,000 per kW, up to half the install cost. Get technical acceptance from BC Hydro before you install.","upgrade":"solar","status":"active","verified_on":"2026-09-26","source_url":"https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html"},{"id":"bchydro-battery","name":"BC Hydro battery rebate","when":{"utility":["bchydro"]},"amount":{"max":5000},"rules":"$500 per kWh, up to half the cost. Up to $5,000 if you join Peak Saver within 14 days of install; $1,500 with solar and no Peak Saver. Not for Tesla.","upgrade":"battery","status":"active","verified_on":"2026-09-26","source_url":"https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html"},{"id":"bchydro-ev","name":"BC Hydro EV charger rebate","when":{"utility":["bchydro"]},"amount":{"max":550},"rules":"Half the cost up to $350, plus $200 for a power-management device. Single-family, row home or duplex. Not for Tesla chargers.","upgrade":"ev","status":"active","verified_on":"2026-09-26","source_url":"https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/rebates-home-chargers.html"},{"id":"bchydro-ev-local","name":"Local EV charger top-up","requires":"bchydro-ev","when":{"city":["kamloops","squamish"]},"amount":{"max":150},"rules":"Added automatically for Kamloops and Squamish homes.","upgrade":"ev","status":"active","verified_on":"2026-09-26","source_url":"https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/local-rebate-top-ups.html"},{"id":"bchydro-thermostats","name":"Free smart thermostats","when":{"utility":["bchydro"],"heating":["electric"]},"amount":{"max":0,"label":"Free, up to 5"},"rules":"For baseboard-heated homes enrolled in Peak Saver. Starts in October 2026.","upgrade":"thermostat","status":"upcoming","verified_on":"2026-09-26","source_url":"https://news.gov.bc.ca/releases/2026ECS0037-000794"}],"notes":["Peak Saver pays bill credits ($500 one time for a battery, then about $250 each winter). They are not rebates, so they are not in the total.","Where two offers cover the same upgrade, we count the larger one. Ask the program if you can combine them.","Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."],"upgrades":[{"id":"heat-pump","label":"Heat pump"},{"id":"water-heater","label":"Heat pump water heater"},{"id":"insulation","label":"Insulation or windows"},{"id":"solar","label":"Solar panels"},{"id":"battery","label":"Home battery"},{"id":"ev","label":"EV charger"},{"id":"thermostat","label":"Smart thermostats"}],"closed":[{"name":"Canada Greener Homes Grant / Loan","status":"closed","source_url":"https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative"}],"income_source":"https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf","verified_on":"2026-09-26"});</script>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

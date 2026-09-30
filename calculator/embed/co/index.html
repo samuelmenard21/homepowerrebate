@@ -37,7 +37,353 @@
 .rc-form{margin-top:0}.rc-by{font-size:13px;margin:14px 0 0;text-align:center}</style></head><body>
 <div id="rc-mount"></div>
 <p class="rc-by"><a href="https://homepowerrebate.com/calculator/co/" target="_blank" rel="noopener">Colorado rebate calculator by HomePowerRebate</a></p>
-<script src="/calculator/rebate-engine.js"></script>
-<script>fetch("/calculator/data/co.json").then(function(r){return r.json()}).then(function(d){HPRCalc.mount(document.getElementById("rc-mount"),d,{embed:true});
-function h(){parent.postMessage({hprCalcHeight:document.documentElement.scrollHeight},"*")}new ResizeObserver(h).observe(document.body);h();});</script>
+<script>/* HomePowerRebate rebate engine. One engine for every province and state.
+   A region is data only: /calculator/data/<code>.json (built by scripts/build_calculator.py from data/calc + data/verified-facts).
+   Nothing in this file names a region, program or dollar amount. */
+(function (root) {
+  "use strict";
+
+  var STATUS_LABEL = { active: "Open", upcoming: "Starts soon", waitlist: "Waitlist", paused: "Paused", closed: "Closed", check: "Confirm status", info: "Note" };
+  var COUNTED = { active: true };
+
+  function money(n, cur) {
+    return "$" + Math.round(n).toLocaleString("en-CA") + (cur && cur !== "USD" ? "" : "");
+  }
+
+  function values(region, a) {
+    var v = {}, k;
+    for (k in a) v[k] = a[k];
+    var cq = region.questions.filter(function (q) { return q.id === "city"; })[0];
+    if (cq && a.city) {
+      var opt = cq.options.filter(function (o) { return o.value === a.city; })[0];
+      if (opt && opt.set) for (k in opt.set) v[k] = opt.set[k];
+    }
+    var d = region.derived && region.derived.income_level;
+    if (d) {
+      var inc = parseFloat(String(a.income || "").replace(/[^0-9.]/g, ""));
+      var hh = parseInt(a.household, 10);
+      v.income_level = "unknown";
+      if (inc > 0 && hh > 0) {
+        var i = Math.min(hh, 7) - 1;
+        v.income_level = "none";
+        ["L1", "L2", "L3"].some(function (L) {
+          if (inc <= d.limits[L][i]) { v.income_level = L; return true; }
+          return false;
+        });
+      }
+    }
+    return v;
+  }
+
+  function match(p, v) {
+    var k;
+    if (p.when) for (k in p.when) if (p.when[k].indexOf(v[k]) < 0) return false;
+    if (p.when_any) {
+      var ok = p.when_any.some(function (w) {
+        for (var key in w) if (w[key].indexOf(v[key]) < 0) return false;
+        return true;
+      });
+      if (!ok) return false;
+    }
+    return true;
+  }
+
+  function dictMatch(w, v) {
+    for (var k in w) if (w[k].indexOf(v[k]) < 0) return false;
+    return true;
+  }
+
+  /* Amount models: {max}, {by: question, values: {answer: amount}}, or {per: {unit, rate, bonus_rate, bonus_when, question, cap}} for per-ton / per-kW programs. */
+  function amountOf(p, v) {
+    var a = p.amount;
+    if (a.by) return a.values[v[a.by]] || 0;
+    if (a.per) {
+      var n = parseFloat(v[a.per.question]);
+      if (!(n > 0)) return 0;
+      var rate = a.per.bonus_when && dictMatch(a.per.bonus_when, v) ? a.per.bonus_rate : a.per.rate;
+      var t = rate * n;
+      return a.per.cap ? Math.min(t, a.per.cap) : t;
+    }
+    return a.max || 0;
+  }
+
+  function labelOf(p, v, amount) {
+    var a = p.amount;
+    if (a.label) return a.label;
+    if (!a.per) return null;
+    var rate = a.per.bonus_when && dictMatch(a.per.bonus_when, v) ? a.per.bonus_rate : a.per.rate;
+    var base = "$" + Math.round(rate).toLocaleString("en-CA") + " per " + a.per.unit;
+    if (amount > 0) return "$" + Math.round(amount).toLocaleString("en-CA") + " (" + base + ")";
+    return a.per.cap ? base + ", up to $" + Math.round(a.per.cap).toLocaleString("en-CA") : base;
+  }
+
+  /* Returns {items, total, unknownIncome}. items carry counted=true when they add to the total. */
+  function evaluate(region, a, plan) {
+    var v = values(region, a);
+    var matched = region.programs.filter(function (p) { return match(p, v); });
+    var others = matched.filter(function (p) { return plan.indexOf(p.upgrade) < 0; });
+    var hit = matched.filter(function (p) { return plan.indexOf(p.upgrade) >= 0; });
+    var changed = true;
+    while (changed) {
+      changed = false;
+      var ids = hit.map(function (p) { return p.id; });
+      hit = hit.filter(function (p) {
+        if (p.requires && ids.indexOf(p.requires) < 0) { changed = true; return false; }
+        return true;
+      });
+    }
+    var items = hit.map(function (p) {
+      return { id: p.id, name: p.name, upgrade: p.upgrade, group: p.group || null, amount: amountOf(p, v), label: labelOf(p, v, amountOf(p, v)),
+               status: p.status, requires: p.requires || null, pool: p.pool || null, verified_on: p.verified_on, source_url: p.source_url, rules: p.rules, counted: false, covered: false };
+    });
+    var best = {};
+    items.forEach(function (it) {
+      if (!COUNTED[it.status] || !it.group) return;
+      if (!best[it.group] || it.amount > best[it.group].amount) best[it.group] = it;
+    });
+    var total = 0, byId = {};
+    items.forEach(function (it) { byId[it.id] = it; });
+    items.forEach(function (it) {
+      if (!COUNTED[it.status] || it.requires) return;
+      if (it.group) {
+        if (best[it.group] === it) { it.counted = true; total += it.amount; } else it.covered = true;
+      } else { it.counted = true; total += it.amount; }
+    });
+    /* Add-ons (bonus, top-up) count only when the offer they build on is the one counted. */
+    items.forEach(function (it) {
+      if (!it.requires || !COUNTED[it.status]) return;
+      if (byId[it.requires] && byId[it.requires].counted) { it.counted = true; total += it.amount; } else it.covered = true;
+    });
+    var capNotes = [];
+    (region.pools || []).forEach(function (pl) {
+      var sum = 0;
+      items.forEach(function (it) { if (it.counted && it.pool === pl.id) sum += it.amount; });
+      if (sum > pl.max) { total -= sum - pl.max; capNotes.push(pl.label); }
+    });
+    return { capNotes: capNotes, items: items, others: others.map(function (p) { return { id: p.id, name: p.name, upgrade: p.upgrade, amount: amountOf(p, v), label: labelOf(p, v, amountOf(p, v)), status: p.status, verified_on: p.verified_on, source_url: p.source_url, rules: p.rules, counted: false, covered: false }; }), total: total, incomeUnknown: v.income_level === "unknown", incomeLevel: v.income_level };
+  }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function pill(status) {
+    return el("span", "rc-pill rc-" + status, STATUS_LABEL[status] || status);
+  }
+
+  function fmtDate(iso) {
+    var m = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var p = iso.split("-");
+    return m[parseInt(p[1], 10) - 1] + " " + parseInt(p[2], 10) + ", " + p[0];
+  }
+
+  function card(it, region) {
+    var c = el("div", "rc-card" + (it.counted ? "" : " rc-muted"));
+    var top = el("div", "rc-card-top");
+    top.appendChild(el("h4", null, it.name));
+    var amt = it.label ? it.label : (it.amount ? "Up to " + money(it.amount, region.currency) : "See program");
+    top.appendChild(el("div", "rc-amt", amt));
+    c.appendChild(top);
+    var meta = el("div", "rc-meta");
+    meta.appendChild(pill(it.status));
+    if (it.covered) meta.appendChild(el("span", "rc-note", "Not added: a larger offer covers the same upgrade"));
+    c.appendChild(meta);
+    c.appendChild(el("p", "rc-rules", it.rules));
+    var f = el("p", "rc-src");
+    var a = el("a", null, "Official source");
+    a.href = it.source_url; a.rel = "nofollow noopener"; a.target = "_blank";
+    f.appendChild(a);
+    f.appendChild(document.createTextNode(" · Last verified " + fmtDate(it.verified_on)));
+    c.appendChild(f);
+    return c;
+  }
+
+  function mount(host, region, opts) {
+    opts = opts || {};
+    host.textContent = "";
+    var form = el("form", "rc-form");
+    form.setAttribute("novalidate", "");
+    var answers = {};
+    var params = new URLSearchParams(location.search);
+    var fields = {};
+    region.questions.forEach(function (q) {
+      var wrap = el("div", "rc-field");
+      fields[q.id] = wrap;
+      var label = el("label", null, q.label);
+      label.setAttribute("for", "rc-" + q.id);
+      wrap.appendChild(label);
+      var input;
+      if (q.type === "select") {
+        input = el("select");
+        var ph = el("option", null, q.placeholder || (q.optional ? "Skip" : "Choose one"));
+        ph.value = "";
+        input.appendChild(ph);
+        q.options.forEach(function (o) { var op = el("option", null, o.label); op.value = o.value; input.appendChild(op); });
+      } else {
+        input = el("input");
+        input.type = "text"; input.inputMode = "numeric"; input.placeholder = "for example 85000"; input.autocomplete = "off";
+      }
+      input.id = "rc-" + q.id; input.name = q.id;
+      var pre = params.get(q.id) || (opts.defaults && opts.defaults[q.id]);
+      if (pre) { input.value = pre; answers[q.id] = pre; }
+      input.addEventListener("input", function () { answers[q.id] = input.value; render(); });
+      wrap.appendChild(input);
+      if (q.help) wrap.appendChild(el("p", "rc-help", q.help));
+      form.appendChild(wrap);
+    });
+    var plan = params.get("plan") ? params.get("plan").split(",") : [];
+    var fs = el("fieldset", "rc-plan");
+    fs.appendChild(el("legend", null, "Which upgrades are you planning?"));
+    region.upgrades.forEach(function (u) {
+      var lab = el("label", "rc-check");
+      var cb = el("input"); cb.type = "checkbox"; cb.value = u.id; cb.checked = plan.indexOf(u.id) >= 0;
+      cb.addEventListener("change", function () {
+        plan = region.upgrades.map(function (x) { return x.id; }).filter(function (id) { return form.querySelector('.rc-plan input[value="' + id + '"]').checked; });
+        render();
+      });
+      lab.appendChild(cb); lab.appendChild(document.createTextNode(" " + u.label));
+      fs.appendChild(lab);
+    });
+    form.appendChild(fs);
+    host.appendChild(form);
+    var out = el("div", "rc-out");
+    out.setAttribute("aria-live", "polite");
+    host.appendChild(out);
+
+    function shown(q) {
+      return !q.for || q.for.some(function (u) { return plan.indexOf(u) >= 0; });
+    }
+    function ready() {
+      return plan.length > 0 && region.questions.every(function (q) { return q.optional || !shown(q) || answers[q.id]; });
+    }
+
+    function render() {
+      out.textContent = "";
+      region.questions.forEach(function (q) { fields[q.id].style.display = shown(q) ? "" : "none"; });
+      var q = new URLSearchParams();
+      for (var k in answers) if (answers[k] && k !== "income" && k !== "household") q.set(k, answers[k]);
+      if (plan.length) q.set("plan", plan.join(","));
+      try { history.replaceState(null, "", location.pathname + (q.toString() ? "?" + q.toString() : "")); } catch (e) { /* embedded */ }
+      if (!ready()) {
+        out.appendChild(el("p", "rc-empty", "Answer the questions and pick at least one upgrade. Your rebates appear here."));
+        return;
+      }
+      var live = {};
+      region.questions.forEach(function (q) { if (shown(q) && answers[q.id]) live[q.id] = answers[q.id]; });
+      var r = evaluate(region, live, plan);
+      var box = el("div", "rc-total");
+      box.appendChild(el("div", "rc-total-label", "Most you could get for the upgrades you picked"));
+      box.appendChild(el("div", "rc-total-num", money(r.total, region.currency)));
+      box.appendChild(el("p", "rc-total-sub", "Adds the biggest open offer for each upgrade you picked. Only programs open today are counted."));
+      out.appendChild(box);
+      r.capNotes.forEach(function (n) { out.appendChild(el("p", "rc-hint", n)); });
+      if (r.incomeUnknown) out.appendChild(el("p", "rc-hint", "Add your household size and income to check income-qualified programs. They pay the most."));
+      else if (r.incomeLevel === "none") out.appendChild(el("p", "rc-hint", "Your income is above the income-qualified limits, so only the general programs apply."));
+      var groups = {}, order = [];
+      var open = r.items.filter(function (it) { return it.status === "active"; });
+      var later = r.items.filter(function (it) { return it.status !== "active"; });
+      var label = {}; region.upgrades.forEach(function (u) { label[u.id] = u.label; });
+      open.forEach(function (it) { if (!groups[it.upgrade]) { groups[it.upgrade] = []; order.push(it.upgrade); } groups[it.upgrade].push(it); });
+      order.forEach(function (m) {
+        out.appendChild(el("h3", "rc-h", label[m]));
+        groups[m].forEach(function (it) { out.appendChild(card(it, region)); });
+      });
+      if (!open.length) out.appendChild(el("p", "rc-empty", "We found no open program for these answers. Check your inputs or see the programs below."));
+      if (later.length) {
+        out.appendChild(el("h3", "rc-h", "Not open yet, or waiting"));
+        later.forEach(function (it) { out.appendChild(card(it, region)); });
+      }
+      var more = r.others.filter(function (it) { return it.status === "active"; });
+      if (more.length) {
+        var det = el("details", "rc-more");
+        det.appendChild(el("summary", null, "Other rebates that fit your home (" + more.length + ", not in your total)"));
+        more.forEach(function (it) { det.appendChild(card(it, region)); });
+        out.appendChild(det);
+      }
+      if (region.closed && region.closed.length) {
+        out.appendChild(el("h3", "rc-h", "Ended programs (don't count on these)"));
+        var ul = el("ul", "rc-closed");
+        region.closed.forEach(function (c) {
+          var li = el("li");
+          li.appendChild(document.createTextNode(c.name + ". "));
+          li.appendChild(pill(c.status));
+          li.appendChild(document.createTextNode(" "));
+          var a = el("a", null, "Source");
+          a.href = c.source_url; a.rel = "nofollow noopener"; a.target = "_blank";
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        out.appendChild(ul);
+      }
+      if (region.notes) {
+        var nl = el("ul", "rc-notes");
+        region.notes.forEach(function (n) { nl.appendChild(el("li", null, n)); });
+        out.appendChild(nl);
+      }
+      if (!opts.embed) out.appendChild(savePlan(region, answers));
+      var cq = region.questions.filter(function (q) { return q.id === "city"; })[0];
+      var copt = cq && answers.city ? cq.options.filter(function (o) { return o.value === answers.city; })[0] : null;
+      if (copt && copt.installers) {
+        var upl = {}; region.upgrades.forEach(function (u) { upl[u.id] = u.label; });
+        var want = plan.filter(function (u) { return copt.installers[u]; });
+        if (!want.length) want = Object.keys(copt.installers);
+        var ib = el("div", "rc-inst");
+        ib.appendChild(el("h3", "rc-h", "Top-rated installers in " + copt.label));
+        ib.appendChild(el("p", "rc-help", "Ranked by Google reviews. Nobody pays to be listed, and we do not sell your details."));
+        var iul = el("ul", "rc-inst-list");
+        want.forEach(function (u) {
+          var li = el("li"); var ia = el("a", null, (upl[u] || u) + " installers in " + copt.label);
+          ia.href = copt.installers[u]; li.appendChild(ia); iul.appendChild(li);
+        });
+        if (copt.page) {
+          var li2 = el("li"); var pa = el("a", null, copt.label + " rebate guide"); pa.href = copt.page; li2.appendChild(pa); iul.appendChild(li2);
+        }
+        ib.appendChild(iul);
+        out.appendChild(ib);
+      }
+      var links = el("p", "rc-links");
+      var a1 = el("a", null, "See installers ranked by Google reviews");
+      a1.href = region.installers || "/installers/";
+      links.appendChild(a1);
+      links.appendChild(document.createTextNode(" · "));
+      var a2 = el("a", null, region.name + " rebate guide");
+      a2.href = region.hub;
+      links.appendChild(a2);
+      out.appendChild(links);
+    }
+    render();
+  }
+
+  function savePlan(region, answers) {
+    var f = el("form", "rc-save");
+    f.appendChild(el("h3", "rc-h", "Email me when something changes"));
+    f.appendChild(el("p", "rc-help", "One short email when a program in " + region.name + " opens, closes or changes. No installer will call you."));
+    var i = el("input"); i.type = "email"; i.required = true; i.placeholder = "you@example.com"; i.setAttribute("aria-label", "Email address");
+    var b = el("button", null, "Notify me"); b.type = "submit";
+    var msg = el("p", "rc-help");
+    f.appendChild(i); f.appendChild(b); f.appendChild(msg);
+    f.addEventListener("submit", function (e) {
+      e.preventDefault();
+      b.disabled = true;
+      fetch("https://leads.homepowerrebate.com/newsletter", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: i.value, city: answers.city || "", page: location.pathname, province: region.code.toUpperCase() })
+      }).then(function (r) {
+        if (!r.ok) throw new Error("bad");
+        f.textContent = "";
+        f.appendChild(el("p", "rc-help", "You're in. Check your inbox for a welcome email."));
+      }).catch(function () { b.disabled = false; msg.textContent = "Something went wrong. Please try again."; });
+    });
+    return f;
+  }
+
+  root.HPRCalc = { evaluate: evaluate, values: values, mount: mount };
+  if (typeof module !== "undefined") module.exports = root.HPRCalc;
+})(typeof window !== "undefined" ? window : globalThis);
+</script>
+<script>HPRCalc.mount(document.getElementById("rc-mount"),{"code":"co","name":"Colorado","country":"us","currency":"USD","hub":"/us/co/","installers":"/installers/","questions":[{"id":"city","label":"Which city is closest to your home?","type":"select","optional":true,"help":"Used to show top-rated installers near you.","options":[{"value":"aurora","label":"Aurora","installers":{"heat-pump":"/installers/co/aurora/heat-pump/","solar":"/installers/co/aurora/solar/","battery":"/installers/co/aurora/battery/","insulation":"/installers/co/aurora/insulation/"},"page":"/us/co/aurora/"},{"value":"boulder","label":"Boulder","installers":{"heat-pump":"/installers/co/boulder/heat-pump/","solar":"/installers/co/boulder/solar/","battery":"/installers/co/boulder/battery/"},"page":"/us/co/boulder/"},{"value":"colorado-springs","label":"Colorado Springs","installers":{"heat-pump":"/installers/co/colorado-springs/heat-pump/","solar":"/installers/co/colorado-springs/solar/","battery":"/installers/co/colorado-springs/battery/","insulation":"/installers/co/colorado-springs/insulation/"},"page":"/us/co/colorado-springs/"},{"value":"denver","label":"Denver","installers":{"heat-pump":"/installers/co/denver/heat-pump/","solar":"/installers/co/denver/solar/","battery":"/installers/co/denver/battery/","insulation":"/installers/co/denver/insulation/"},"page":"/us/co/denver/"},{"value":"fort-collins","label":"Fort Collins","installers":{"heat-pump":"/installers/co/fort-collins/heat-pump/","solar":"/installers/co/fort-collins/solar/","battery":"/installers/co/fort-collins/battery/","insulation":"/installers/co/fort-collins/insulation/"},"page":"/us/co/fort-collins/"}]},{"id":"utility","label":"Who supplies your gas or electricity?","type":"select","options":[{"value":"xcel","label":"Xcel Energy"},{"value":"other","label":"Another utility (Fort Collins, Colorado Springs and others)"}]},{"id":"heating","label":"What heats your home now?","type":"select","options":[{"value":"gas","label":"Natural gas from Xcel"},{"value":"electric","label":"Electric heat"},{"value":"other","label":"Something else"}]},{"id":"tons","label":"How many heating tons is your heat pump? (optional)","type":"select","optional":true,"help":"Most homes need 2 to 4 tons. Your installer sizes it. Skip this to see the per-ton rate only.","options":[{"value":"1","label":"1 tons"},{"value":"2","label":"2 tons"},{"value":"3","label":"3 tons"},{"value":"4","label":"4 tons"},{"value":"5","label":"5 tons"}]}],"upgrades":[{"id":"heat-pump","label":"Heat pump"},{"id":"water-heater","label":"Heat pump water heater"},{"id":"insulation","label":"Insulation"},{"id":"battery","label":"Home battery"},{"id":"ev","label":"EV charger"},{"id":"thermostat","label":"Smart thermostat"}],"programs":[{"id":"xcel-hp","name":"Xcel Energy cold-climate heat pump","upgrade":"heat-pump","when":{"utility":["xcel"]},"amount":{"per":{"unit":"heating ton","rate":750,"bonus_rate":1500,"bonus_when":{"heating":["gas"]},"question":"tons"}},"rules":"Cold-climate model from a participating contractor. The gas bonus applies to homes heated with Xcel natural gas. Starts October 1, 2026.","status":"upcoming","verified_on":"2026-09-29","source_url":"https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q"},{"id":"xcel-hpwh","name":"Xcel Energy heat pump water heater","upgrade":"water-heater","when":{"utility":["xcel"]},"amount":{"by":"heating","values":{"gas":1500,"electric":750,"other":750}},"rules":"ENERGY STAR model with a 3.3 UEF or better. $1,500 with the gas bonus, $750 otherwise. Starts October 1, 2026.","status":"upcoming","verified_on":"2026-09-29","source_url":"https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q"},{"id":"xcel-insulation","name":"Xcel Energy insulation and air sealing","upgrade":"insulation","when":{"utility":["xcel"]},"amount":{"max":500},"rules":"30% of cost: up to $500 for an attic, $350 for walls and $400 for air sealing. Xcel gas or electric heat.","status":"active","verified_on":"2026-09-29","source_url":"https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q"},{"id":"xcel-battery","name":"Xcel Energy Renewable Battery Connect","upgrade":"battery","when":{"utility":["xcel"]},"amount":{"max":5000},"rules":"$250 per kW, up to $5,000. Tesla Powerwall or current Enphase batteries, charged by solar. Xcel can use the battery during peak events. Funding is limited.","status":"active","verified_on":"2026-09-29","source_url":"https://co.my.xcelenergy.com/s/renewable/battery-connect"},{"id":"xcel-ev","name":"Xcel Energy home EV charger and wiring","upgrade":"ev","when":{"utility":["xcel"]},"amount":{"max":500},"rules":"Up to $500, or up to $2,300 if income-qualified. Enroll in Optimize Your Charge first. First come, first served.","status":"active","verified_on":"2026-09-29","source_url":"https://co.my.xcelenergy.com/s/residential/ev-charging/incentives/charger-wiring-rebate"},{"id":"xcel-thermostat","name":"Xcel Energy smart thermostat","upgrade":"thermostat","when":{"utility":["xcel"]},"amount":{"max":50},"rules":"ENERGY STAR rated thermostat.","status":"active","verified_on":"2026-09-29","source_url":"https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q"}],"notes":["Solar: Xcel's 2026 residential solar rebate is for income-qualified and disadvantaged-community homes only. Other homes get net metering, not a rebate, so solar is not in this calculator.","Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."],"closed":[{"name":"Federal residential clean energy credits (25C, 25D)","status":"closed","source_url":"https://www.irs.gov/credits-deductions/residential-clean-energy-credit"}],"income_source":null,"verified_on":"2026-09-29"},{embed:true});</script>
+<script>function h(){parent.postMessage({hprCalcHeight:document.documentElement.scrollHeight},"*")}new ResizeObserver(h).observe(document.body);h();</script>
 </body></html>

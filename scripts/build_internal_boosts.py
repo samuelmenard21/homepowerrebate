@@ -252,12 +252,18 @@ def greener_section():
     return 0
 
 
+HUB_INDEXES = {f"{r}/index.html" for r in ("ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt")}
+HUB_SKIP = {"NET-METERING-LINK", "GREENER-LINK", "INSULATION-HUB-LINK", "BCH-REBATES-LINK"}  # these live in the hub "Explore more" row now
+
+
 def main():
     n = greener_section() + attic_section() + ottawa_eap() + peak_section() + rvalue_section()
     for marker, html, pages in JOBS:
         S, E = f"<!-- {marker}-START -->", f"<!-- {marker}-END -->"
         blk = S + BOX.format(html) + E
         for rel in pages:
+            if marker in HUB_SKIP and rel in HUB_INDEXES:
+                continue
             f = ROOT / rel
             if not f.exists():
                 continue

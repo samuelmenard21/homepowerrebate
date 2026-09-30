@@ -110,6 +110,21 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
   .sticky-cta.on { display: block; }
   body.has-sticky-cta { padding-bottom: 76px; }
 }
+/* design pass 2026-09-29 */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 3px solid var(--amber-bright); outline-offset: 2px; border-radius: 4px; }
+.footer-col-links a { display: inline-block; padding: 5px 0; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+@media (max-width: 600px) {
+  .tw { overflow: visible !important; }
+  .tw table { min-width: 0 !important; display: block; width: 100%; }
+  .tw tbody { display: block; }
+  .tw tr { display: block; background: #fff; border: 1px solid #d9d0c1; border-radius: 12px; margin: 0 0 12px; padding: 10px 14px; }
+  .tw tr:has(th) { display: none; }
+  .tw td { display: block; border: 0 !important; padding: 6px 0 !important; }
+  .tw td::before { content: attr(data-label); display: block; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #6b8e7f; margin-bottom: 2px; }
+  .tw td:first-child { font-size: 17px; padding-top: 2px !important; }
+  .tw td:first-child::before { display: none; }
+}
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
 </head><body>
@@ -220,16 +235,16 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
-  <div class="wrap" style="text-align: center; color: #fff; max-width: 600px;">
+  <div class="wrap" style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">
     <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
     <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get my weekly email</h2>
     <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Every Friday: what I'm learning about rebates across every province and state we cover, heat pump reality checks, solar economics, and the installers I trust. Real stuff, no marketing.</p>
     <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
-      <input type="email" id="newsletter-email" placeholder="your@email.com" required style="padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
+      <input type="email" id="newsletter-email" placeholder="your@email.com" required aria-label="Your email address" autocomplete="email" style="min-height: 46px; padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 16px; background: #fff; color: var(--ink);">
       <input type="hidden" id="newsletter-city" value="">
       <input type="hidden" id="newsletter-page" value="/programs/federal-tax-credits-2026/">
-      <button type="submit" style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'Inter Tight', sans-serif;">Subscribe</button>
-      <p style="font-size: 11px; color: rgba(250, 247, 242, 0.6); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
+      <button type="submit" style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 15px; min-height: 46px; cursor: pointer; font-family: 'Inter Tight', sans-serif;">Subscribe</button>
+      <p style="font-size: 13px; color: rgba(250, 247, 242, 0.78); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
     </form>
     <div id="newsletter-response" style="display: none; margin-top: 12px; padding: 12px; background: rgba(45, 106, 79, 0.2); border-radius: 6px; border: 1px solid rgba(45, 106, 79, 0.4); font-size: 13px;"></div>
   </div>
@@ -356,6 +371,15 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
   function upd() { f = 0; b.classList.toggle('show', window.scrollY > 600); }
   window.addEventListener('scroll', function () { if (!f) { f = 1; requestAnimationFrame(upd); } }, { passive: true });
   upd();
+})();
+(function () {
+  document.querySelectorAll('.tw table').forEach(function (t) {
+    var head = t.querySelector('tr');
+    var labels = head ? [].map.call(head.querySelectorAll('th'), function (x) { return x.textContent.trim(); }) : [];
+    t.querySelectorAll('tr').forEach(function (r) {
+      [].forEach.call(r.querySelectorAll('td'), function (c, i) { if (labels[i] && !c.hasAttribute('data-label')) c.setAttribute('data-label', labels[i]); });
+    });
+  });
 })();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>

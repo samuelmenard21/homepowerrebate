@@ -295,6 +295,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 .quick-answer-text { font-size: 17px; color: var(--ink); }
 .quick-answer-text strong { color: var(--teal-deep); }
+.quick-answer-text a { color: var(--teal); font-weight: 600; text-decoration: underline; text-decoration-color: rgba(13, 79, 92, 0.35); text-underline-offset: 3px; }
+.quick-answer-text a:hover { color: var(--amber); text-decoration-color: var(--amber); }
+.popular-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+.popular-row .popular-label { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.popular-row a { color: var(--teal); font-weight: 600; display: inline-block; padding: 7px 12px; min-height: 36px; background: #fff; border: 1px solid #d9d0c1; border-radius: 999px; font-size: 14px; text-decoration: none; }
+.popular-row a:hover { border-color: var(--amber); }
+@media (max-width: 600px) {
+  /* Phones: the rebate check comes first, the written answer below it (same HTML, so search engines read it unchanged). */
+  .hero { display: flex; flex-direction: column; }
+  .hero > * { order: 0; width: 100%; }
+  .hero-sub { order: 1; }
+  #hpr-assess { order: 2; }
+  .hero-cta-row { order: 3; }
+  .hero-trust-line { order: 4; }
+  .quick-answer { order: 5; margin-top: 28px; width: 100%; }
+  .quick-answer { padding: 14px 16px; margin-bottom: 20px; }
+  .quick-answer-text { font-size: 15.5px; line-height: 1.55; }
+  .hero-sub { font-size: 17px; margin-bottom: 20px; }
+}
 
 .hero-sub {
   font-size: 20px; color: var(--ink-soft);
@@ -896,6 +915,21 @@ h1, h2, h3, h4, h5, h6 {
   .sticky-cta.on { display: block; }
   body.has-sticky-cta { padding-bottom: 76px; }
 }
+/* design pass 2026-09-29 */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 3px solid var(--amber-bright); outline-offset: 2px; border-radius: 4px; }
+.footer-col-links a { display: inline-block; padding: 5px 0; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+@media (max-width: 600px) {
+  .tw { overflow: visible !important; }
+  .tw table { min-width: 0 !important; display: block; width: 100%; }
+  .tw tbody { display: block; }
+  .tw tr { display: block; background: #fff; border: 1px solid #d9d0c1; border-radius: 12px; margin: 0 0 12px; padding: 10px 14px; }
+  .tw tr:has(th) { display: none; }
+  .tw td { display: block; border: 0 !important; padding: 6px 0 !important; }
+  .tw td::before { content: attr(data-label); display: block; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #6b8e7f; margin-bottom: 2px; }
+  .tw td:first-child { font-size: 17px; padding-top: 2px !important; }
+  .tw td:first-child::before { display: none; }
+}
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
 </head>
@@ -1004,13 +1038,11 @@ h1, h2, h3, h4, h5, h6 {
     <p class="quick-answer-text">
       HomePowerRebate shows the heat pump, solar, battery, insulation, thermostat and other home energy rebates open in your city, in Canada and the US. Each amount links to the official program and is checked every month. We also rank top-rated local installers by Google reviews. It's free, and no one pays to be listed.
     </p>
-    <p class="quick-answer-text" style="margin-top:10px;font-size:15px;">
-      Popular now: <a href="/rebate-tracker/">what ended and what's new</a> &middot; <a href="/smart-thermostats/">smart thermostat rebates</a> &middot; <a href="/batteries/">home battery guides</a> &middot; <a href="/furnace-rebates/">furnace &amp; AC rebates</a> &middot; <a href="/solar-quote-checker/">check a solar quote</a>
-    </p>
+    <div class="popular-row"><span class="popular-label">Popular now</span><a href="/rebate-tracker/">what ended and what's new</a><a href="/smart-thermostats/">smart thermostat rebates</a><a href="/batteries/">home battery guides</a><a href="/furnace-rebates/">furnace &amp; AC rebates</a><a href="/solar-quote-checker/">check a solar quote</a></div>
   </div>
 
   <p class="hero-sub">
-    Take 20 seconds to see what your home qualifies for. Then pick your city, compare top-rated local installers, or read a guide on the category you're weighing. No sales pitch. No spam.
+    Take 20 seconds to see what your home qualifies for. No sales pitch. No spam.
   </p>
 
   <!-- INLINE ASSESSMENT WIDGET -->
@@ -1643,21 +1675,7 @@ h1, h2, h3, h4, h5, h6 {
 <!-- FOOTER -->
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
-<section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
-  <div class="wrap" style="text-align: center; color: #fff; max-width: 600px;">
-    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
-    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get my weekly email</h2>
-    <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Every Friday: what I'm learning about rebates across every province and state we cover, heat pump reality checks, solar economics, and the installers I trust. Real stuff, no marketing.</p>
-    <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
-      <input type="email" id="newsletter-email" placeholder="your@email.com" required style="padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 14px; background: #fff; color: var(--ink);">
-      <input type="hidden" id="newsletter-city" value="">
-      <input type="hidden" id="newsletter-page" value="/">
-      <button type="submit" style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'Inter Tight', sans-serif;">Subscribe</button>
-      <p style="font-size: 11px; color: rgba(250, 247, 242, 0.6); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
-    </form>
-    <div id="newsletter-response" style="display: none; margin-top: 12px; padding: 12px; background: rgba(45, 106, 79, 0.2); border-radius: 6px; border: 1px solid rgba(45, 106, 79, 0.4); font-size: 13px;"></div>
-  </div>
-</section>
+
 
 <footer class="footer">
   <div class="footer-inner">
@@ -2121,6 +2139,15 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
   function upd() { f = 0; b.classList.toggle('show', window.scrollY > 600); }
   window.addEventListener('scroll', function () { if (!f) { f = 1; requestAnimationFrame(upd); } }, { passive: true });
   upd();
+})();
+(function () {
+  document.querySelectorAll('.tw table').forEach(function (t) {
+    var head = t.querySelector('tr');
+    var labels = head ? [].map.call(head.querySelectorAll('th'), function (x) { return x.textContent.trim(); }) : [];
+    t.querySelectorAll('tr').forEach(function (r) {
+      [].forEach.call(r.querySelectorAll('td'), function (c, i) { if (labels[i] && !c.hasAttribute('data-label')) c.setAttribute('data-label', labels[i]); });
+    });
+  });
 })();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>

@@ -201,8 +201,11 @@ def render_nav(prov, city_slug):
     return f"{NAV_MARKER_START}\n{html}\n{NAV_MARKER_END}"
 
 
-def render_footer(prov, city_slug, city_label, page_path):
+def render_footer(prov, city_slug, city_label, page_path, skip_newsletter=False):
     html = FOOTER_RAW
+    if skip_newsletter:
+        # The page already has its own newsletter form. Two forms share the same ids (only the first works) and read as a duplicate.
+        html = NEWSLETTER_SECTION_RE.sub("", html, count=1)
     html = html.replace("{{CURRENT_CITY_SLUG}}", city_slug)
     html = html.replace("{{CURRENT_CITY_LABEL}}", city_label)
     html = html.replace("{{PAGE_PATH}}", page_path)
@@ -273,7 +276,9 @@ def process_file(path: Path, dry_run: bool):
     context_source = OLD_CANONICAL_FOOTER_RE.sub("", context_source)
     prov, city_slug, city_label, page_path = get_context(rel, context_source)
     nav_html = render_nav(prov, city_slug)
-    footer_html = render_footer(prov, city_slug, city_label, page_path)
+    outside_footer = OLD_CANONICAL_FOOTER_RE.sub("", content)
+    footer_html = render_footer(prov, city_slug, city_label, page_path,
+                                skip_newsletter='id="newsletter-form"' in outside_footer)
 
     original = content
     action = []
@@ -316,7 +321,9 @@ def process_file(path: Path, dry_run: bool):
     # <city> rebates" guide cards) sitting between the old footer markers, and a restamp
     # silently deleted it on 323 pages. Never write a page that would lose any visible
     # text other than what lived inside its old <nav>/<footer> tags.
-    lost = content_loss(original, content)
+    # Dropping the footer newsletter on a page that has its own form is intentional, not content loss.
+    baseline = NEWSLETTER_SECTION_RE.sub("", original) if 'id="newsletter-form"' in outside_footer else original
+    lost = content_loss(baseline, content)
     if lost:
         return {"path": str(rel), "province": prov, "city": city_label,
                 "actions": action + ["SKIPPED:would-remove-content"], "changed": False, "lost": lost}

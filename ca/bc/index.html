@@ -308,6 +308,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+.hub-fold { margin-top: 18px; }
+.hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
+.hub-fold > summary::-webkit-details-marker { display: none; }
+.hub-fold > summary::after { content: "+"; font-size: 20px; line-height: 1; }
+.hub-fold[open] > summary::after { content: "\2212"; }
+.hub-fold[open] > summary { margin-bottom: 20px; }
 .hs-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 20px 0 26px; position: relative; z-index: 2; }
 @media (min-width: 900px) { .hs-stats { margin-top: -34px; } }
 .hs-stat { background: #fff; border: 1px solid #d9d0c1; border-radius: 14px; padding: 14px 10px; text-align: center; box-shadow: 0 8px 20px rgba(10,42,46,.09); }
@@ -475,10 +481,11 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 
 
+
 <!-- HUB-TOP-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> BC Hydro pays up to $4,000 for a heat pump that replaces electric heat, up to $10,000 for solar plus a battery, and free Mysa or Sinopé thermostats for baseboard homes. CleanBC pays income-qualified homes up to $13,000 to switch from gas, oil or propane to a heat pump. FortisBC customers have their own rebates instead.</p><p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Updated September 28, 2026 · By <a href="/about">Sam Menard</a> · Every amount links to the official program.</p></div><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in BC right now</h2><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;"><tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump (replacing electric heat)</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">BC Hydro</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $4,000 whole home, $1,500 partial</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">HPCN-registered installer. Extra bonus up to $1,000 for installs finished by Oct 31, 2026. <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump (from gas, oil or propane)</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">CleanBC, income-qualified</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$13,000 / $7,000 / $3,500 by income level</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Plus a $3,000 northern top-up for levels 1 and 2. <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Solar panels</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">BC Hydro</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$1,000 per kW, up to $5,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Max 50% of cost. Approval before you install. <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Home battery</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">BC Hydro</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $5,000 with Peak Saver ($1,500 without)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Must be on the qualified list. Tesla batteries get $0. <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Smart thermostats</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">BC Hydro</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Free (up to 5), from October 2026</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Baseboard-heated homes, enrolled in Peak Saver. <a href="https://news.gov.bc.ca/releases/2026ECS0037-000794" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>FortisBC customers</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">FortisBC</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Insulation, windows, heat pump water heater, thermostat</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">FortisBC customers can&#x27;t use BC Hydro rebates. <a href="https://www.fortisbc.com/rebates-and-energy-savings/rebates-and-offers" rel="nofollow noopener" target="_blank">Source</a></td></tr></table></div></section><!-- HUB-TOP-END -->
 <!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in BC</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 28, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>October 2026: BC Hydro heat pump bonus</b> (coming). The extra bonus of up to $1,000 on BC Hydro heat pump rebates only covers installs completed by October 31, 2026. <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html" rel="nofollow noopener" target="_blank">Source</a></li><li><b>July 2026: CleanBC Energy Savings Program (income-qualified)</b> (cut). New rules for invoices from July 6, 2026: heat pump rebates for switching from gas, oil or propane are now $13,000, $7,000 or $3,500 by income level, plus a $3,000 northern top-up for levels 1 and 2. <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" rel="nofollow noopener" target="_blank">Source</a></li><li><b>July 2026: BC Hydro net metering</b> (changed). Net metering closed to new customers. New solar owners get the self-generation rate, which pays 10 cents per kWh for power you export. <a href="https://www.bchydro.com/toolbar/about/strategies-plans-regulatory/rate-design/self-generation-rate-updates.html" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Canada Greener Homes Grant</b> (ended). The last day to submit documents was December 31, 2025. The Greener Homes Loan stopped taking applications October 1, 2025. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
 <!-- PROGRAM-LINKS-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Program guides:</b> <a href="/programs/bc-hydro-rebates/">BC Hydro rebates</a> · <a href="/programs/cleanbc-rebates/">CleanBC rebates</a> · <a href="/programs/bc-hydro-peak-saver/">BC Hydro Peak Saver</a></p><!-- PROGRAM-LINKS-END -->
-<!-- HUB-SHOWCASE-START --><section class="hs-wrap hs-sec" aria-label="British Columbia at a glance">
+<!-- HUB-SHOWCASE-START --><section class="hs-wrap hs-sec" id="find-city" aria-label="British Columbia at a glance">
 <h2 class="hs-h">Find your city in British Columbia</h2>
 <p class="hs-sub">Each ring is the city's PowerScore out of 100. Tap a city for its full rebate guide and top-rated installers.</p>
 <div class="hs-ctl"><input type="search" id="hs-q" placeholder="Search 18 cities" aria-label="Search cities in British Columbia"><button type="button" class="hs-sort on" data-s="score">Top score</button><button type="button" class="hs-sort" data-s="az">A to Z</button></div>
@@ -487,8 +494,9 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <p class="hs-sub">The largest amount found in British Columbia for each type of upgrade, and where.</p>
 <div class="hs-tiles"><a class="hs-tile" href="/ca/bc/vancouver/heat-pump/"><span class="hs-ti">🔥</span><span class="hs-tt"><em>Heat Pump</em>up to <b>CA$4,000</b><small>best in Vancouver · open in 18 of 18 cities</small></span></a><a class="hs-tile" href="/ca/bc/vancouver/insulation/"><span class="hs-ti">🌡️</span><span class="hs-tt"><em>Insulation</em>up to <b>CA$5,500</b><small>best in Vancouver · open in 18 of 18 cities</small></span></a><a class="hs-tile" href="/ca/bc/vancouver/solar/"><span class="hs-ti">☀️</span><span class="hs-tt"><em>Solar</em>up to <b>CA$5,000</b><small>best in Vancouver · open in 18 of 18 cities</small></span></a><a class="hs-tile" href="/ca/bc/vancouver/battery/"><span class="hs-ti">🔋</span><span class="hs-tt"><em>Battery Storage</em>up to <b>CA$5,000</b><small>best in Vancouver · open in 18 of 18 cities</small></span></a><a class="hs-tile" href="/ca/bc/vancouver/water-heater/"><span class="hs-ti">💧</span><span class="hs-tt"><em>Water Heater</em>up to <b>CA$3,000</b><small>best in Vancouver · open in 18 of 18 cities</small></span></a><a class="hs-tile" href="/ca/bc/vancouver/smart-thermostats/"><span class="hs-ti">🎛️</span><span class="hs-tt"><em>Smart Thermostat</em>up to <b>CA$200</b><small>best in Vancouver · open in 2 of 18 cities</small></span></a><a class="hs-tile" href="/ca/bc/vancouver/ev-charger/"><span class="hs-ti">🚗</span><span class="hs-tt"><em>EV Charger</em>up to <b>CA$550</b><small>best in Vancouver · open in 18 of 18 cities</small></span></a><a class="hs-tile" href="/ca/bc/vancouver/windows/"><span class="hs-ti">🪟</span><span class="hs-tt"><em>Windows &amp; Doors</em>up to <b>CA$2,000</b><small>best in Vancouver · open in 18 of 18 cities</small></span></a></div>
 <h2 class="hs-h" style="margin-top:34px;">Explore more</h2>
-<div class="hs-chips"><a class="hs-chip" href="/programs/bc-hydro-rebates/">BC Hydro rebates</a><a class="hs-chip" href="/programs/cleanbc-rebates/">CleanBC rebates</a><a class="hs-chip" href="/programs/bc-hydro-peak-saver/">Peak Saver</a><a class="hs-chip" href="/blog/greener-homes-grant-explained/">Greener Homes Grant: what replaced it</a><a class="hs-chip" href="/blog/net-metering-vs-net-billing/">Net metering vs net billing</a><a class="hs-chip" href="/insulation-rebates/">Insulation rebates by region</a><a class="hs-chip" href="/rebate-tracker/">What ended and what&#x27;s new</a><a class="hs-chip" href="/installers/">Top-rated installers</a><a class="hs-chip" href="/powerscore/">PowerScore rankings</a></div>
+<div class="hs-chips"><a class="hs-chip" href="/programs/bc-hydro-rebates/">BC Hydro rebates</a><a class="hs-chip" href="/programs/cleanbc-rebates/">CleanBC rebates</a><a class="hs-chip" href="/programs/bc-hydro-peak-saver/">Peak Saver</a><a class="hs-chip" href="/blog/greener-homes-grant-explained/">Greener Homes Grant: what replaced it</a><a class="hs-chip" href="/blog/net-metering-vs-net-billing/">Net metering vs net billing</a><a class="hs-chip" href="/insulation-rebates/">Insulation rebates by region</a><a class="hs-chip" href="/rebate-tracker/">What ended and what&#x27;s new</a><a class="hs-chip" href="/installers/">Top-rated installers</a><a class="hs-chip" href="/powerscore/">PowerScore rankings</a><a class="hs-chip" href="/ca/bc/fraser-valley/">Fraser Valley guide</a></div>
 </section><!-- HUB-SHOWCASE-END -->
+
 
 
 
@@ -499,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <nav class="toc" aria-label="On this page">
   <span class="toc-lbl">On this page:</span>
-  <a href="#cities">18 BC cities</a>
+  <a href="#find-city">18 BC cities</a>
   <a href="#programs">Power Smart 2.0</a>
   <a href="#rebate-finder">Rebate finder</a>
   <a href="#faq">FAQ</a>
@@ -540,126 +548,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 </section>
 
 <!-- Cities — full static link list, all 18 -->
-<section id="cities">
-  <div class="wrap">
-    <div class="eyebrow-dark">18 cities served</div>
-    <h2 class="big">Where HomePowerRebate operates in BC.</h2>
-    <p class="lede">Click any city to see your estimated savings and compare top-rated local installers, with the exact provincial, utility, and (where they exist) city-specific rebate amounts.</p>
 
-    <div class="cities-grid">
-      <div class="city-card">
-        <h3>Abbotsford</h3>
-        <div class="value">~$20,000</div>
-        <p>Fraser Valley</p>
-        <a href="/ca/bc/abbotsford/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Burnaby</h3>
-        <div class="value">~$18,500</div>
-        <p>Metro Vancouver</p>
-        <a href="/ca/bc/burnaby/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Chilliwack</h3>
-        <div class="value">~$20,000</div>
-        <p>Fraser Valley East</p>
-        <a href="/ca/bc/chilliwack/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Coquitlam</h3>
-        <div class="value">~$18,500</div>
-        <p>Tri-Cities, Metro Vancouver</p>
-        <a href="/ca/bc/coquitlam/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Fort St. John</h3>
-        <div class="value">$13,000+</div>
-        <p>Northeast BC</p>
-        <a href="/ca/bc/fort-st-john/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Kamloops</h3>
-        <div class="value">~$22,000</div>
-        <p>Thompson Region</p>
-        <a href="/ca/bc/kamloops/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Kelowna</h3>
-        <div class="value">~$20,000</div>
-        <p>Central Okanagan</p>
-        <a href="/ca/bc/kelowna/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Langley</h3>
-        <div class="value">~$18,500</div>
-        <p>Metro Vancouver</p>
-        <a href="/ca/bc/langley/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Maple Ridge</h3>
-        <div class="value">~$19,000</div>
-        <p>Metro Vancouver</p>
-        <a href="/ca/bc/maple-ridge/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Nanaimo</h3>
-        <div class="value">~$19,500</div>
-        <p>Central Vancouver Island</p>
-        <a href="/ca/bc/nanaimo/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Penticton</h3>
-        <div class="value">~$22,500</div>
-        <p>South Okanagan</p>
-        <a href="/ca/bc/penticton/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Prince George</h3>
-        <div class="value">~$20,500</div>
-        <p>Northern BC</p>
-        <a href="/ca/bc/prince-george/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Richmond</h3>
-        <div class="value">~$18,500</div>
-        <p>Metro Vancouver</p>
-        <a href="/ca/bc/richmond/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Squamish</h3>
-        <div class="value">~$19,000</div>
-        <p>Sea-to-Sky</p>
-        <a href="/ca/bc/squamish/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Surrey</h3>
-        <div class="value">~$18,500</div>
-        <p>Metro Vancouver South</p>
-        <a href="/ca/bc/surrey/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Vancouver</h3>
-        <div class="value">~$18,500</div>
-        <p>Metro Vancouver — City top-up available</p>
-        <a href="/ca/bc/vancouver/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Vernon</h3>
-        <div class="value">$13,000+</div>
-        <p>North Okanagan</p>
-        <a href="/ca/bc/vernon/">View savings →</a>
-      </div>
-      <div class="city-card">
-        <h3>Victoria</h3>
-        <div class="value">~$19,000</div>
-        <p>Vancouver Island South</p>
-        <a href="/ca/bc/victoria/">View savings →</a>
-      </div>
-    </div>
-
-    <p style="margin-top:32px; font-size:14px; color:var(--ink-soft);">Fraser Valley homeowner? See our <a href="/ca/bc/fraser-valley/" style="color:var(--teal); font-weight:600;">regional Fraser Valley hub</a> covering Abbotsford and Chilliwack together.</p>
-  </div>
-</section>
 
 <section class="section-tight">
   <div class="wrap" style="text-align:center;">
@@ -677,6 +566,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <div class="eyebrow-dark">Rebate finder</div>
     <h2 class="big">Every BC rebate program, by category.</h2>
     <p class="lede">These are the real, published rebate amounts already shown on our city pages — sampled from Vancouver, whose figures apply province-wide unless a card says otherwise. Filter by category below.</p>
+<details class="hub-fold"><summary>Open the full rebate list</summary>
 
     <div class="finder-filters" role="group" aria-label="Filter rebates by category">
       <button type="button" class="finder-filter-btn active" data-filter="all">All categories</button>
@@ -762,8 +652,9 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <div class="finder-source">Source: /ca/bc/vancouver &middot; BC Hydro</div>
       </div>
     </div>
-    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">A handful of cities layer a local top-up on top of this stack &mdash; Vancouver, Coquitlam, Langley, Maple Ridge, and Richmond each add their own heat pump top-up; Nanaimo and Penticton have their own financing programs. See your <a href="#cities" style="color:var(--teal); font-weight:600;">city page</a> for the exact local breakdown.</p>
-  </div>
+    <p style="margin-top:24px; font-size:13px; color:var(--ink-soft);">A handful of cities layer a local top-up on top of this stack &mdash; Vancouver, Coquitlam, Langley, Maple Ridge, and Richmond each add their own heat pump top-up; Nanaimo and Penticton have their own financing programs. See your <a href="#find-city" style="color:var(--teal); font-weight:600;">city page</a> for the exact local breakdown.</p>
+  </details>
+</div>
 </section>
 <script>
 (function() {
@@ -787,6 +678,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   <div class="wrap">
     <div class="eyebrow-dark">Common questions</div>
     <h2 id="faq" class="big">What you should know about Power Smart 2.0.</h2>
+<details class="hub-fold"><summary>Read the questions and answers</summary>
 
     <div class="faq-item">
       <h4>What is the BC Hydro Power Smart 2.0 rebate?</h4>
@@ -832,7 +724,8 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       <h4>Is my contractor's rebate quote a scam?</h4>
       <p>It can be, if the promised rebate is doing most of the work to make an inflated price look reasonable. <a href="/blog/is-my-contractors-rebate-quote-a-scam/" style="color:var(--amber); font-weight:600; text-decoration:underline;">Check the real rebate cap before you sign →</a></p>
     </div>
-  </div>
+  </details>
+</div>
 </section>
 
 <!-- From the blog -->
@@ -840,6 +733,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   <div class="wrap">
     <div class="eyebrow-dark">From the blog</div>
     <h2 class="big">Before you sign anything, read this.</h2>
+<details class="hub-fold"><summary>See the guides</summary>
     <div class="cities-grid">
       <div class="city-card">
         <h3 style="font-size:19px;">Is it actually worth it?</h3>
@@ -893,7 +787,8 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
     </div>
     <p style="margin-top:28px;"><a href="/blog/" style="color:var(--amber); font-weight:600; text-decoration:underline;">See all articles →</a></p>
-  </div>
+  </details>
+</div>
 </section>
 
 <!-- ============================ FOOTER (canonical, from _partials/nav-footer.html) ============================= -->
@@ -1088,6 +983,8 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
   if (more) more.addEventListener('click', function () { all = true; apply(); });
   apply();
 })();
+(function(){function o(){var h=location.hash&&document.getElementById(location.hash.slice(1));if(!h)return;var d=h.closest?h.closest('details.hub-fold'):null;if(d){d.open=true;h.scrollIntoView();}}
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

@@ -100,7 +100,7 @@ def showcase_block(reg, rs, country, label):
     chips = "".join(f'<a class="hs-chip" href="{u}">{e(t)}</a>' for u, t in links)
     warn = "" if reg in VERIFIED else '<p class="hs-note">Heads up: we have not yet checked every program in this region against its official page, so treat the amounts as a guide.</p>'
     more = f'<button type="button" class="hs-more" id="hs-more">Show all {len(rs)} cities</button>' if len(rs) > 12 else ""
-    return f'''<!-- HUB-SHOWCASE-START --><section class="hs-wrap hs-sec" aria-label="{e(label)} at a glance">
+    return f'''<!-- HUB-SHOWCASE-START --><section class="hs-wrap hs-sec" id="find-city" aria-label="{e(label)} at a glance">
 <h2 class="hs-h">Find your city in {e(label)}</h2>
 <p class="hs-sub">Each ring is the city's PowerScore out of 100. Tap a city for its full rebate guide and top-rated installers.</p>
 <div class="hs-ctl"><input type="search" id="hs-q" placeholder="Search {len(rs)} cities" aria-label="Search cities in {e(label)}"><button type="button" class="hs-sort on" data-s="score">Top score</button><button type="button" class="hs-sort" data-s="az">A to Z</button></div>

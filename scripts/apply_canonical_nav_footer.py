@@ -23,6 +23,7 @@ Run from the Powerrebate root:
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -322,7 +323,10 @@ def process_file(path: Path, dry_run: bool):
     # silently deleted it on 323 pages. Never write a page that would lose any visible
     # text other than what lived inside its old <nav>/<footer> tags.
     # Dropping the footer newsletter on a page that has its own form is intentional, not content loss.
-    baseline = NEWSLETTER_SECTION_RE.sub("", original) if 'id="newsletter-form"' in outside_footer else original
+    # --newsletter-copy: the newsletter block's own wording was changed on purpose in the partial, so it is not compared.
+    baseline = NEWSLETTER_SECTION_RE.sub("", original) if ('id="newsletter-form"' in outside_footer or "--newsletter-copy" in sys.argv) else original
+    if "--newsletter-copy" in sys.argv:
+        baseline = re.sub(r'<a id="sticky-cta".*?</a>', '', baseline, flags=re.S)
     lost = content_loss(baseline, content)
     if lost:
         return {"path": str(rel), "province": prov, "city": city_label,
@@ -357,6 +361,7 @@ def find_pages():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--newsletter-copy", action="store_true", help="newsletter wording changed on purpose; do not treat as content loss")
     ap.add_argument("--limit", type=int, default=0)
     args = ap.parse_args()
 

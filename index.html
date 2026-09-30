@@ -909,6 +909,11 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 .sticky-cta { display: none; }
+@media (min-width: 769px) {
+  .sticky-cta { position: fixed; right: 24px; bottom: 24px; z-index: 60; background: var(--amber); color: #fff; font-weight: 700; font-size: 15px; padding: 14px 22px; border-radius: 999px; text-decoration: none; box-shadow: 0 6px 20px rgba(10, 42, 46, 0.3); transform: translateY(140%); transition: transform .25s ease; }
+  .sticky-cta.show { display: block; transform: none; }
+  .sticky-cta.on { display: block; }
+}
 @media (max-width: 768px) {
   .sticky-cta { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 60; background: var(--amber); color: #fff; text-align: center; font-weight: 700; font-size: 15px; padding: 14px 16px; border-radius: 999px; text-decoration: none; box-shadow: 0 6px 20px rgba(10, 42, 46, 0.3); transform: translateY(140%); transition: transform .25s ease; }
   .sticky-cta.show { display: block; transform: none; }
@@ -1294,64 +1299,22 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 
 <!-- 8 CATEGORIES -->
 
-<!-- POWERSCORE SPOTLIGHT -->
-<div style="padding: 56px 28px 60px; max-width: 1100px; margin: 0 auto;">
-  <div style="text-align: center; margin-bottom: 40px;">
-    <p style="font-size: 13px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: #d4751c; margin: 0 0 10px;">New: PowerScore</p>
-    <h2 style="font-family: 'Fraunces', serif; font-size: clamp(28px, 5vw, 42px); font-weight: 500; line-height: 1.2; color: #111; margin: 0 0 16px;">How does your city stack up?</h2>
-    <p style="font-size: 16px; color: #666; margin: 0 auto; max-width: 640px;">We scored every city we cover, 0&ndash;100, on how much rebate money is actually available &mdash; dollar value, program status, and how many programs stack. Here's the top city in every region.</p>
+<!-- POWERSCORE-SPOTLIGHT-START -->
+<style>.ps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+.ps-card{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:#111;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;position:relative}
+.ps-first{background:linear-gradient(135deg,#0d4f5c,#08363f);border:0;color:#fff}
+.ps-num{font-family:'Fraunces',serif;font-size:38px;line-height:1.1}.ps-lab{font-size:12px;opacity:.65;margin-bottom:8px}
+.ps-city{font-size:16px}.ps-sub{font-size:13px;opacity:.75}.ps-tag{position:absolute;top:12px;right:16px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.7}</style>
+<div style="padding:56px 28px 60px;max-width:1100px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:40px;">
+    <p style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:#d4751c;margin:0 0 10px;">PowerScore</p>
+    <h2 style="font-family:'Fraunces',serif;font-size:clamp(28px,5vw,42px);font-weight:500;line-height:1.2;color:#111;margin:0 0 16px;">How does your city stack up?</h2>
+    <p style="font-size:16px;color:#666;margin:0 auto;max-width:640px;">We scored 123 cities, 0 to 100, on how much rebate money is open today: dollar value, program status and how many programs stack. Here is the top city in each of our 10 regions.</p>
   </div>
-
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px;">
-    <a href="/ca/bc/vancouver/" style="display: block; text-decoration: none; color: inherit; background: linear-gradient(135deg, #0d4f5c, #08363f); border-radius: 14px; padding: 24px; position: relative; overflow: hidden;">
-      <div style="position: absolute; top: 12px; right: 16px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: .06em;">#1 National</div>
-      <div style="font-family: 'Fraunces', serif; font-size: 40px; font-weight: 700; color: #fff; margin-bottom: 2px;">90</div>
-      <div style="font-size: 12px; color: rgba(255,255,255,.6); margin-bottom: 10px;">PowerScore</div>
-      <div style="font-weight: 700; color: #fff; font-size: 16px;">Vancouver, BC</div>
-      <div style="font-size: 13px; color: rgba(255,255,255,.7);">British Columbia's top city</div>
-    </a>
-    <a href="/ca/on/barrie/" style="display: block; text-decoration: none; color: inherit; background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 24px;">
-      <div style="font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: #111; margin-bottom: 2px;">81</div>
-      <div style="font-size: 12px; color: #999; margin-bottom: 10px;">PowerScore</div>
-      <div style="font-weight: 700; color: #111; font-size: 15px;">Barrie, ON</div>
-      <div style="font-size: 13px; color: #666;">Ontario's top city</div>
-    </a>
-    <a href="/us/ca/sacramento/folsom/" style="display: block; text-decoration: none; color: inherit; background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 24px;">
-      <div style="font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: #111; margin-bottom: 2px;">76</div>
-      <div style="font-size: 12px; color: #999; margin-bottom: 10px;">PowerScore</div>
-      <div style="font-weight: 700; color: #111; font-size: 15px;">Folsom, CA</div>
-      <div style="font-size: 13px; color: #666;">California's top city</div>
-    </a>
-    <a href="/us/ny/pseg/brookhaven/" style="display: block; text-decoration: none; color: inherit; background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 24px;">
-      <div style="font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: #111; margin-bottom: 2px;">74</div>
-      <div style="font-size: 12px; color: #999; margin-bottom: 10px;">PowerScore</div>
-      <div style="font-weight: 700; color: #111; font-size: 15px;">Brookhaven, NY</div>
-      <div style="font-size: 13px; color: #666;">New York's top city</div>
-    </a>
-    <a href="/us/ma/boston/" style="display: block; text-decoration: none; color: inherit; background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 24px;">
-      <div style="font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: #111; margin-bottom: 2px;">67</div>
-      <div style="font-size: 12px; color: #999; margin-bottom: 10px;">PowerScore</div>
-      <div style="font-weight: 700; color: #111; font-size: 15px;">Boston, MA</div>
-      <div style="font-size: 13px; color: #666;">Massachusetts's top city</div>
-    </a>
-    <a href="/ca/ab/red-deer/" style="display: block; text-decoration: none; color: inherit; background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 24px;">
-      <div style="font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: #111; margin-bottom: 2px;">44</div>
-      <div style="font-size: 12px; color: #999; margin-bottom: 10px;">PowerScore</div>
-      <div style="font-weight: 700; color: #111; font-size: 15px;">Red Deer, AB</div>
-      <div style="font-size: 13px; color: #666;">Alberta's top city</div>
-    </a>
-    <a href="/ca/ns/halifax/" style="display: block; text-decoration: none; color: inherit; background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 24px;">
-      <div style="font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: #111; margin-bottom: 2px;">31</div>
-      <div style="font-size: 12px; color: #999; margin-bottom: 10px;">PowerScore</div>
-      <div style="font-weight: 700; color: #111; font-size: 15px;">Halifax, NS</div>
-      <div style="font-size: 13px; color: #666;">Nova Scotia's top city</div>
-    </a>
-  </div>
-
-  <div style="text-align: center;">
-    <a href="/powerscore/" style="display: inline-block; background: #0d4f5c; color: white; padding: 14px 32px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 15px;">See the full leaderboard →</a>
-  </div>
+  <div class="ps-grid"><a href="/us/ny/pseg/babylon/" class="ps-card ps-first"><span class="ps-tag">#1 overall</span><b class="ps-num">72</b><span class="ps-lab">PowerScore</span><b class="ps-city">Babylon, NY</b><span class="ps-sub">New York's top city</span></a><a href="/ca/on/barrie/" class="ps-card"><b class="ps-num">71</b><span class="ps-lab">PowerScore</span><b class="ps-city">Barrie, ON</b><span class="ps-sub">Ontario's top city</span></a><a href="/ca/bc/vancouver/" class="ps-card"><b class="ps-num">70</b><span class="ps-lab">PowerScore</span><b class="ps-city">Vancouver, BC</b><span class="ps-sub">British Columbia's top city</span></a><a href="/us/ca/sacramento/roseville/" class="ps-card"><b class="ps-num">62</b><span class="ps-lab">PowerScore</span><b class="ps-city">Roseville, CA</b><span class="ps-sub">California's top city</span></a><a href="/us/vt/burlington/" class="ps-card"><b class="ps-num">47</b><span class="ps-lab">PowerScore</span><b class="ps-city">Burlington, VT</b><span class="ps-sub">Vermont's top city</span></a><a href="/us/ma/boston/" class="ps-card"><b class="ps-num">41</b><span class="ps-lab">PowerScore</span><b class="ps-city">Boston, MA</b><span class="ps-sub">Massachusetts's top city</span></a><a href="/us/co/aurora/" class="ps-card"><b class="ps-num">38</b><span class="ps-lab">PowerScore</span><b class="ps-city">Aurora, CO</b><span class="ps-sub">Colorado's top city</span></a><a href="/us/pa/allentown/" class="ps-card"><b class="ps-num">29</b><span class="ps-lab">PowerScore</span><b class="ps-city">Allentown, PA</b><span class="ps-sub">Pennsylvania's top city</span></a><a href="/ca/ns/cape-breton/" class="ps-card"><b class="ps-num">26</b><span class="ps-lab">PowerScore</span><b class="ps-city">Cape Breton, NS</b><span class="ps-sub">Nova Scotia's top city</span></a><a href="/ca/ab/red-deer/" class="ps-card"><b class="ps-num">6</b><span class="ps-lab">PowerScore</span><b class="ps-city">Red Deer, AB</b><span class="ps-sub">Alberta's top city</span></a></div>
+  <div style="text-align:center;"><a href="/powerscore/" style="display:inline-block;background:#0d4f5c;color:white;padding:14px 32px;border-radius:999px;text-decoration:none;font-weight:700;font-size:15px;">See the full leaderboard &rarr;</a></div>
 </div>
+<!-- POWERSCORE-SPOTLIGHT-END -->
 
 
 <div class="section" id="categories" style="padding-top:0;">
@@ -1637,56 +1600,27 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="faq" style="max-width: 800px; margin: 0 auto; padding: 64px 24px;">
-  <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: clamp(28px, 4vw, 36px); margin-bottom: 32px; color: var(--ink);">Common questions</h2>
-  <div style="display: flex; flex-direction: column; gap: 24px;">
-    <div>
-      <h3 style="font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 700; color: var(--teal-deep); margin-bottom: 8px;">Is HomePowerRebate actually free for homeowners?</h3>
-      <p style="color: var(--ink-soft); line-height: 1.6;">Yes. The rebate assessment, installer rankings and quote requests are free. Installers don't pay us either: no referral fees, no paid listings.</p>
-    </div>
-    <div>
-      <h3 style="font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 700; color: var(--teal-deep); margin-bottom: 8px;">How much can I get in rebates?</h3>
-      <p style="color: var(--ink-soft); line-height: 1.6;">It depends entirely on your city, province or state, and equipment. Rebate stacks range from a few thousand dollars up to $28,000+ in some New York utility territories. The 20-second assessment gives you a real number for your specific address, not a national average.</p>
-    </div>
-    <div>
-      <h3 style="font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 700; color: var(--teal-deep); margin-bottom: 8px;">Do you sell my information to multiple installers?</h3>
-      <p style="color: var(--ink-soft); line-height: 1.6;">No. We're an independent directory sourced from Google Places — you browse real local installers with ratings and reviews and choose your own. We don't run lead auctions or sell one homeowner's contact info to multiple companies.</p>
-    </div>
-    <div>
-      <h3 style="font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 700; color: var(--teal-deep); margin-bottom: 8px;">What if my city isn't covered yet?</h3>
-      <p style="color: var(--ink-soft); line-height: 1.6;">We currently cover 10 regions across Canada and the US. If your city isn't listed, tell us and we'll flag it for research — we don't publish rebate numbers for a city until we've verified them against official program pages.</p>
-    </div>
+<!-- HOME-FEED-START -->
+<style>.hf-i{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid #e5e0d6;list-style:none}
+.hf-i p{margin:4px 0 0;font-size:15px;line-height:1.5;color:#1a3d42}.hf-m{font-size:13px;color:#4a5f5b;white-space:nowrap}
+.hf-pill{flex:none;min-width:78px;text-align:center;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:700}
+.hf-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:36px}
+.hf-strip a{display:block;text-decoration:none;background:#fff;border:1px solid #d9d0c1;border-radius:12px;padding:18px;color:#0a2a2e}
+.hf-strip b{display:block;font-family:'Fraunces',Georgia,serif;font-size:19px;margin-bottom:4px}
+@media(max-width:600px){.hf-i{flex-direction:column;gap:6px}.hf-m{white-space:normal}}</style>
+<section style="max-width:800px;margin:0 auto;padding:64px 24px;">
+  <p style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:#d4751c;margin:0 0 8px;">What changed</p>
+  <h2 style="font-family:'Fraunces',Georgia,serif;font-size:clamp(28px,4vw,36px);margin:0 0 6px;color:var(--ink);">Rebates are opening and closing</h2>
+  <p style="color:#4a5f5b;margin:0 0 14px;">Every item is checked against the program's own page. Last checked 2026-09-29.</p>
+  <ul style="padding:0;margin:0;"><li class="hf-i"><span class="hf-pill" style="background:#fdeccf;color:#8a4a06">Coming up</span><div><b>Nova Scotia Heating Assistance Rebate (HARP)</b> <span class="hf-m"><a href="/ca/ns/">Nova Scotia</a> &middot; 2026-10-01</span><p>HARP helps lower-income households with winter heating bills. It paid $400 last winter and has opened on October 1 in past years. Confirm the 2026-27 date and amount with the Province.</p></div></li><li class="hf-i"><span class="hf-pill" style="background:#fdeccf;color:#8a4a06">Coming up</span><div><b>BC Hydro heat pump bonus</b> <span class="hf-m"><a href="/ca/bc/">British Columbia</a> &middot; 2026-10-31</span><p>The extra bonus of up to $1,000 on BC Hydro heat pump rebates only covers installs completed by October 31, 2026.</p></div></li><li class="hf-i"><span class="hf-pill" style="background:#fdeccf;color:#8a4a06">Paused</span><div><b>Calgary Clean Energy Improvement Program (CEIP)</b> <span class="hf-m"><a href="/ca/ab/">Alberta</a> &middot; 2026-09</span><p>Calgary&#x27;s CEIP financing (up to $50,000 repaid on your property tax) is closed to new applications until winter 2026/2027.</p></div></li><li class="hf-i"><span class="hf-pill" style="background:#fdeccf;color:#8a4a06">Paused</span><div><b>Lethbridge and St. Albert CEIP</b> <span class="hf-m"><a href="/ca/ab/">Alberta</a> &middot; 2026-09</span><p>Lethbridge&#x27;s CEIP is at capacity and closed to new pre-qualification. St. Albert is taking waitlist applications only.</p></div></li><li class="hf-i"><span class="hf-pill" style="background:#f3dcdc;color:#8a2b2b">Ended</span><div><b>Federal Oil to Heat Pump Affordability (Alberta)</b> <span class="hf-m"><a href="/ca/ab/">Alberta</a> &middot; 2026-07-31</span><p>The federal grant of up to $10,000 to switch from oil to a heat pump closed to Albertans on July 31, 2026.</p></div></li><li class="hf-i"><span class="hf-pill" style="background:#f3dcdc;color:#8a2b2b">Cut</span><div><b>CleanBC Energy Savings Program (income-qualified)</b> <span class="hf-m"><a href="/ca/bc/">British Columbia</a> &middot; 2026-07-06</span><p>New rules for invoices from July 6, 2026: heat pump rebates for switching from gas, oil or propane are now $13,000, $7,000 or $3,500 by income level, plus a $3,000 northern top-up for levels 1 and 2.</p></div></li><li class="hf-i"><span class="hf-pill" style="background:#f3dcdc;color:#8a2b2b">Ended</span><div><b>Oil to Heat Pump Affordability (Nova Scotia)</b> <span class="hf-m"><a href="/ca/ns/">Nova Scotia</a> &middot; 2026-07-02</span><p>Closed to new applicants on July 2, 2026 after funding ran out. A standby list is reviewed only if money frees up.</p></div></li></ul>
+  <p style="margin-top:16px;"><a href="/rebate-tracker/"><b>See every change &rarr;</b></a></p>
+  <div class="hf-strip">
+    <a href="/calculator/"><b>Rebate calculators</b>Pick your province or state and see what you could get back.</a>
+    <a href="/powerscore/"><b>PowerScore</b>See how your city ranks on open rebate money.</a>
+    <a href="/how-we-vet-installers"><b>How we rank installers</b>Google reviews only. Free for you, and nobody pays to be listed.</a>
   </div>
 </section>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Is HomePowerRebate actually free for homeowners?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes. The rebate assessment, installer rankings and quote requests are free. Installers don't pay us either: no referral fees, no paid listings." }
-    },
-    {
-      "@type": "Question",
-      "name": "How much can I get in rebates?",
-      "acceptedAnswer": { "@type": "Answer", "text": "It depends entirely on your city, province or state, and equipment. Rebate stacks range from a few thousand dollars up to $28,000+ in some New York utility territories. The 20-second assessment gives you a real number for your specific address, not a national average." }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you sell my information to multiple installers?",
-      "acceptedAnswer": { "@type": "Answer", "text": "No. We're an independent directory sourced from Google Places — you browse real local installers with ratings and reviews and choose your own. We don't run lead auctions or sell one homeowner's contact info to multiple companies." }
-    },
-    {
-      "@type": "Question",
-      "name": "What if my city isn't covered yet?",
-      "acceptedAnswer": { "@type": "Answer", "text": "We currently cover 10 regions across Canada and the US. If your city isn't listed, tell us and we'll flag it for research — we don't publish rebate numbers for a city until we've verified them against official program pages." }
-    }
-  ]
-}
-</script>
+<!-- HOME-FEED-END -->
 
 <!-- FINAL CTA -->
 <div class="final-cta">
@@ -1705,7 +1639,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
   <div style="max-width: 600px; margin: 0 auto; text-align: center;">
     <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 16px;">Stay informed</div>
     <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: clamp(28px, 5vw, 40px); line-height: 1.2; margin-bottom: 16px; color: #fff;">Understand your region's rebates—before you call anyone</h2>
-    <p style="font-size: 16px; color: rgba(250, 247, 242, 0.85); margin-bottom: 28px; line-height: 1.6;">Get weekly emails on:<br><strong>• Income-qualified rebates & grant strategies</strong><br><strong>• Installer comparisons & red flags</strong><br><strong>• Heat pump, solar, and battery deep-dives</strong></p>
+    <p style="font-size: 16px; color: rgba(250, 247, 242, 0.85); margin-bottom: 28px; line-height: 1.6;">Once a month, in your inbox:<br><strong>• New and changing rebate programs</strong><br><strong>• Income-qualified rebates &amp; grant strategies</strong><br><strong>• What's new in heat pumps, solar and batteries</strong></p>
 
     <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 12px;">
       <input
@@ -1725,7 +1659,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
         type="submit"
         style="padding: 14px 28px; background: #d4751c; color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; font-family: 'Inter Tight', sans-serif; transition: background 0.15s;"
       >
-        Send me weekly insights
+        Send me the monthly update
       </button>
       <p style="font-size: 12px; color: rgba(250, 247, 242, 0.6); margin-top: 8px;">No spam, ever. Unsubscribe anytime.</p>
     </form>
@@ -1803,7 +1737,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     </div>
   </div>
 </footer>
-<a id="sticky-cta" class="sticky-cta" href="/get-quotes/">Get free quotes from top-rated installers</a>
+<a id="sticky-cta" class="sticky-cta" href="/get-quotes/">See your rebates and top installers</a>
 <!-- CANONICAL-FOOTER-END -->
 
 <script>

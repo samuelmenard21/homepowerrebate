@@ -260,6 +260,11 @@ p.small .reg{border:0;padding:0;margin:0;cursor:auto}
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 .sticky-cta { display: none; }
+@media (min-width: 769px) {
+  .sticky-cta { position: fixed; right: 24px; bottom: 24px; z-index: 60; background: var(--amber); color: #fff; font-weight: 700; font-size: 15px; padding: 14px 22px; border-radius: 999px; text-decoration: none; box-shadow: 0 6px 20px rgba(10, 42, 46, 0.3); transform: translateY(140%); transition: transform .25s ease; }
+  .sticky-cta.show { display: block; transform: none; }
+  .sticky-cta.on { display: block; }
+}
 @media (max-width: 768px) {
   .sticky-cta { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 60; background: var(--amber); color: #fff; text-align: center; font-weight: 700; font-size: 15px; padding: 14px 16px; border-radius: 999px; text-decoration: none; box-shadow: 0 6px 20px rgba(10, 42, 46, 0.3); transform: translateY(140%); transition: transform .25s ease; }
   .sticky-cta.show { display: block; transform: none; }
@@ -545,8 +550,8 @@ setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600)
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div class="wrap" style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">
     <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
-    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get my weekly email</h2>
-    <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Every Friday: what I'm learning about rebates across every province and state we cover, heat pump reality checks, solar economics, and the installers I trust. Real stuff, no marketing.</p>
+    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get the monthly rebate update</h2>
+    <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Once a month: new and changing rebate programs across every province and state we cover, plus what's new in heat pumps, solar and batteries. Short, sourced, no marketing.</p>
     <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
       <input type="email" id="newsletter-email" placeholder="your@email.com" required aria-label="Your email address" autocomplete="email" style="min-height: 46px; padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 16px; background: #fff; color: var(--ink);">
       <input type="hidden" id="newsletter-city" value="Ottawa">
@@ -622,7 +627,7 @@ setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600)
     </div>
   </div>
 </footer>
-<a id="sticky-cta" class="sticky-cta" href="/get-quotes/">Get free quotes from top-rated installers</a>
+<a id="sticky-cta" class="sticky-cta" href="/get-quotes/">See your rebates and top installers</a>
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */

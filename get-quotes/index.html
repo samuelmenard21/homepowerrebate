@@ -128,6 +128,11 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 .sticky-cta { display: none; }
+@media (min-width: 769px) {
+  .sticky-cta { position: fixed; right: 24px; bottom: 24px; z-index: 60; background: var(--amber); color: #fff; font-weight: 700; font-size: 15px; padding: 14px 22px; border-radius: 999px; text-decoration: none; box-shadow: 0 6px 20px rgba(10, 42, 46, 0.3); transform: translateY(140%); transition: transform .25s ease; }
+  .sticky-cta.show { display: block; transform: none; }
+  .sticky-cta.on { display: block; }
+}
 @media (max-width: 768px) {
   .sticky-cta { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 60; background: var(--amber); color: #fff; text-align: center; font-weight: 700; font-size: 15px; padding: 14px 16px; border-radius: 999px; text-decoration: none; box-shadow: 0 6px 20px rgba(10, 42, 46, 0.3); transform: translateY(140%); transition: transform .25s ease; }
   .sticky-cta.show { display: block; transform: none; }
@@ -304,64 +309,127 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
      current city's <a> for  — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
 
-<section class="hero">
-  <div class="wrap">
-    <h1>Get quotes from local installers</h1>
-    <p>Tell us what you're interested in and pick a few vetted installers near you — the same details go to each, so you can compare real quotes instead of chasing multiple forms.</p>
-    <div class="city-note" id="cityNote">Loading your area…</div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <h2>What are you interested in?</h2>
-    <div class="checklist" id="upgradeChecklist">
-      <label class="check-item"><input type="checkbox" value="heat-pump"><span class="check-label"><h4>🔥 Heat pump</h4><p>Replaces a furnace or baseboards — heats and cools one machine.</p></span></label>
-      <label class="check-item"><input type="checkbox" value="solar"><span class="check-label"><h4>☀️ Solar panels</h4><p>Rooftop solar, typically 8–12 kW for a home.</p></span></label>
-      <label class="check-item"><input type="checkbox" value="battery"><span class="check-label"><h4>🔋 Home battery</h4><p>Backup power, and pairs well with solar.</p></span></label>
-      <label class="check-item"><input type="checkbox" value="insulation"><span class="check-label"><h4>🏠 Insulation</h4><p>Attic, walls, or crawlspace — often the best first upgrade.</p></span></label>
-      <label class="check-item"><input type="checkbox" value="water-heater"><span class="check-label"><h4>💧 Heat pump water heater</h4><p>Replaces an electric or gas tank.</p></span></label>
-      <label class="check-item"><input type="checkbox" value="windows"><span class="check-label"><h4>🟫 Windows &amp; doors</h4><p>Energy-efficient replacements.</p></span></label>
-      <label class="check-item"><input type="checkbox" value="ev-charger"><span class="check-label"><h4>🚗 EV charger</h4><p>Home Level 2 charger installation.</p></span></label>
-      <label class="check-item"><input type="checkbox" value="thermostat"><span class="check-label"><h4>📱 Smart thermostat</h4><p>Nest, Ecobee, or similar.</p></span></label>
-    </div>
-
-    <h2>Your details</h2>
-    <div class="form-card">
-      <form id="quoteForm">
-        <div class="field-row">
-          <div class="field"><label for="qFirstname">First name</label><input type="text" id="qFirstname" required></div>
-          <div class="field"><label for="qLastname">Last name</label><input type="text" id="qLastname" required></div>
-        </div>
-        <div class="field-row">
-          <div class="field full"><label for="qEmail">Email</label><input type="email" id="qEmail" required></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label for="qPhone">Phone</label><input type="tel" id="qPhone" required></div>
-          <div class="field"><label for="qPostal">Postal / zip code</label><input type="text" id="qPostal" required></div>
-        </div>
-        <div class="field-row">
-          <div class="field full">
-            <label for="qNotes">Anything else the installer should know? (optional)</label>
-            <textarea id="qNotes" rows="3" placeholder="e.g. timeline, access constraints, an existing quote you're comparing against…"></textarea>
-          </div>
-        </div>
-        <input type="text" id="qWebsite" style="position:absolute;left:-9999px;" tabindex="-1" autocomplete="off">
-        <button type="submit" class="submit-btn" id="quoteSubmitBtn">Choose installers &amp; send my details →</button>
-        <p class="privacy-note">No spam, no auto-dial. Only the installers you pick receive your details.</p>
-        <div class="response-msg" id="quoteResponse"></div>
-      </form>
-    </div>
-  </div>
-</section>
+<!-- GQ-START -->
+<style>
+.gq{max-width:820px;margin:0 auto;padding:0 20px}
+.gq-card{background:#fff;border:1px solid var(--rule);border-radius:16px;padding:24px;margin:0 0 20px}
+.gq-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.gq-row>*{min-width:0}.gq-f{display:flex;flex-direction:column;gap:6px}.gq-f.full{grid-column:1/-1}
+.gq-f label{font-size:13px;font-weight:700;color:var(--ink-soft)}
+.gq-f input,.gq-f select{font:inherit;font-size:16px;min-height:46px;padding:9px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);width:100%}
+.gq-chips{display:flex;flex-wrap:wrap;gap:8px}.gq-chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:99px;background:#fff;cursor:pointer;font-size:15px}
+.gq-chip input{accent-color:var(--amber);width:18px;height:18px}.gq-chip.on{border-color:var(--amber);background:#fff6ea}
+.gq-cta{display:inline-block;background:var(--amber);color:#fff;text-decoration:none;font-weight:700;border-radius:999px;padding:14px 24px;border:0;font:inherit;font-weight:700;cursor:pointer}
+.gq-cta[disabled]{opacity:.5;cursor:not-allowed}.gq-alt{display:inline-block;margin-left:14px;font-weight:600}
+.gq-inst{display:grid;grid-template-columns:1fr auto;gap:10px 16px;padding:14px 0;border-top:1px solid var(--rule);align-items:start}
+.gq-inst:first-of-type{border-top:0}.gq-inst h4{margin:0;font-size:17px}.gq-meta{font-size:14px;color:var(--ink-soft)}
+.gq-links{display:flex;gap:14px;flex-wrap:wrap;font-size:15px;margin-top:4px}
+.gq-pick{display:flex;align-items:center;gap:8px;font-size:14px;white-space:nowrap}.gq-pick input{width:20px;height:20px;accent-color:var(--amber)}
+.gq-h{font-family:'Fraunces',serif;font-size:22px;color:var(--teal-deep);margin:0 0 6px}.gq-sub{font-size:14px;color:var(--ink-soft);margin:0 0 10px}
+.gq-msg{margin-top:14px;padding:14px 16px;border-radius:8px;font-size:15px;display:none}.gq-msg.show{display:block}.gq-msg.ok{background:#eaf3ee;color:#1f5a3d}.gq-msg.err{background:#fef3e6;color:#8a4a06}
+.gq details summary{cursor:pointer;font-weight:700;font-size:17px}
+@media(max-width:600px){.gq-row{grid-template-columns:1fr}.gq-inst{grid-template-columns:1fr}.gq-card{padding:18px}}
+</style>
+<section class="hero"><div class="wrap"><h1>Your rebates and top-rated installers, in one place</h1>
+<p>Pick your city and see what you could get back, plus the best-reviewed local installers. No sign-up needed. Nobody pays to be listed.</p></div></section>
+<section class="section"><div class="gq">
+<div class="gq-card"><div class="gq-row"><div class="gq-f"><label for="gq-region">Province or state</label><select id="gq-region"><option value="">Choose one</option></select></div>
+<div class="gq-f"><label for="gq-city">City</label><select id="gq-city"><option value="">Choose your city</option></select></div></div>
+<div class="gq-f"><label>What are you planning? (optional)</label><div class="gq-chips" id="gq-chips"></div></div></div>
+<div id="gq-out" style="display:none">
+<div class="gq-card"><h2 class="gq-h" id="gq-r-title">Rebates</h2><p class="gq-sub">Every amount comes from the program's own page. We only add up programs that are open today.</p>
+<a class="gq-cta" id="gq-calc" href="/calculator/">Estimate my rebates</a><a class="gq-alt" id="gq-guide" href="/">City rebate guide</a></div>
+<div class="gq-card"><h2 class="gq-h" id="gq-i-title">Top-rated installers</h2><p class="gq-sub">Ranked by Google reviews. <a href="/installers/how-we-rank/">How we rank</a>.</p><div id="gq-list"></div></div>
+<div class="gq-card" id="gq-contact" style="display:none"><details><summary>Want an installer to contact you?</summary>
+<p class="gq-sub" style="margin-top:10px">Tick "Ask for a quote" next to the installers you want, then send your details. Only those installers get them. We never sell your details.</p>
+<form id="gq-form"><div class="gq-row"><div class="gq-f"><label for="gq-fn">First name</label><input id="gq-fn" required autocomplete="given-name"></div><div class="gq-f"><label for="gq-ln">Last name</label><input id="gq-ln" required autocomplete="family-name"></div></div>
+<div class="gq-row"><div class="gq-f full"><label for="gq-em">Email</label><input id="gq-em" type="email" required autocomplete="email"></div></div>
+<div class="gq-row"><div class="gq-f"><label for="gq-ph">Phone</label><input id="gq-ph" type="tel" required autocomplete="tel"></div><div class="gq-f"><label for="gq-po">Postal or ZIP code</label><input id="gq-po" required autocomplete="postal-code"></div></div>
+<input id="gq-web" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button class="gq-cta" id="gq-send" type="submit" disabled>Send my details</button><div class="gq-msg" id="gq-msg"></div></form></details></div>
+</div></div></section>
+<script>
+(function(){
+var D=[{"code":"bc","name":"British Columbia","prov":"BC","jsonDir":"","instDir":"bc","hub":"/ca/bc/","cityPage":{"abbotsford":"/ca/bc/abbotsford/","burnaby":"/ca/bc/burnaby/","chilliwack":"/ca/bc/chilliwack/","coquitlam":"/ca/bc/coquitlam/","fort-st-john":"/ca/bc/fort-st-john/","kamloops":"/ca/bc/kamloops/","kelowna":"/ca/bc/kelowna/","langley":"/ca/bc/langley/","maple-ridge":"/ca/bc/maple-ridge/","nanaimo":"/ca/bc/nanaimo/","penticton":"/ca/bc/penticton/","prince-george":"/ca/bc/prince-george/","richmond":"/ca/bc/richmond/","squamish":"/ca/bc/squamish/","surrey":"/ca/bc/surrey/","vancouver":"/ca/bc/vancouver/","vernon":"/ca/bc/vernon/","victoria":"/ca/bc/victoria/"},"cities":[["abbotsford","Abbotsford"],["burnaby","Burnaby"],["chilliwack","Chilliwack"],["coquitlam","Coquitlam"],["fort-st-john","Fort St. John"],["kamloops","Kamloops"],["kelowna","Kelowna"],["langley","Langley"],["maple-ridge","Maple Ridge"],["nanaimo","Nanaimo"],["penticton","Penticton"],["prince-george","Prince George"],["richmond","Richmond"],["squamish","Squamish"],["surrey","Surrey"],["vancouver","Vancouver"],["vernon","Vernon"],["victoria","Victoria"]]},{"code":"on","name":"Ontario","prov":"ON","jsonDir":"on","instDir":"on","hub":"/ca/on/","cityPage":{"barrie":"/ca/on/barrie/","brampton":"/ca/on/brampton/","burlington":"/ca/on/burlington/","cambridge":"/ca/on/cambridge/","greater-sudbury":"/ca/on/greater-sudbury/","guelph":"/ca/on/guelph/","hamilton":"/ca/on/hamilton/","kingston":"/ca/on/kingston/","kitchener":"/ca/on/kitchener/","london":"/ca/on/london/","markham":"/ca/on/markham/","mississauga":"/ca/on/mississauga/","niagara-falls":"/ca/on/niagara-falls/","oakville":"/ca/on/oakville/","oshawa":"/ca/on/oshawa/","ottawa":"/ca/on/ottawa/","peterborough":"/ca/on/peterborough/","richmond-hill":"/ca/on/richmond-hill/","sault-ste-marie":"/ca/on/sault-ste-marie/","thunder-bay":"/ca/on/thunder-bay/","timmins":"/ca/on/timmins/","toronto":"/ca/on/toronto/","vaughan":"/ca/on/vaughan/","whitby":"/ca/on/whitby/","windsor":"/ca/on/windsor/"},"cities":[["barrie","Barrie"],["brampton","Brampton"],["burlington","Burlington"],["cambridge","Cambridge"],["greater-sudbury","Greater Sudbury"],["guelph","Guelph"],["hamilton","Hamilton"],["kingston","Kingston"],["kitchener","Kitchener"],["london","London"],["markham","Markham"],["mississauga","Mississauga"],["niagara-falls","Niagara Falls"],["oakville","Oakville"],["oshawa","Oshawa"],["ottawa","Ottawa"],["peterborough","Peterborough"],["richmond-hill","Richmond Hill"],["sault-ste-marie","Sault Ste. Marie"],["thunder-bay","Thunder Bay"],["timmins","Timmins"],["toronto","Toronto"],["vaughan","Vaughan"],["whitby","Whitby"],["windsor","Windsor"]]},{"code":"ab","name":"Alberta","prov":"AB","jsonDir":"ab","instDir":"ab","hub":"/ca/ab/","cityPage":{"calgary":"/ca/ab/calgary/","edmonton":"/ca/ab/edmonton/","fort-mcmurray":"/ca/ab/fort-mcmurray/","lethbridge":"/ca/ab/lethbridge/","red-deer":"/ca/ab/red-deer/","st-albert":"/ca/ab/st-albert/"},"cities":[["calgary","Calgary"],["edmonton","Edmonton"],["fort-mcmurray","Fort McMurray"],["lethbridge","Lethbridge"],["red-deer","Red Deer"],["st-albert","St. Albert"]]},{"code":"ns","name":"Nova Scotia","prov":"NS","jsonDir":"ns","instDir":"ns","hub":"/ca/ns/","cityPage":{"cape-breton":"/ca/ns/cape-breton/","halifax":"/ca/ns/halifax/"},"cities":[["cape-breton","Cape Breton"],["halifax","Halifax"]]},{"code":"ma","name":"Massachusetts","prov":"MA","jsonDir":"ma","instDir":"ma","hub":"/us/ma/","cityPage":{"boston":"/us/ma/boston/","brockton":"/us/ma/brockton/","cambridge":"/us/ma/cambridge/","fall-river":"/us/ma/fall-river/","lawrence":"/us/ma/lawrence/","lowell":"/us/ma/lowell/","lynn":"/us/ma/lynn/","new-bedford":"/us/ma/new-bedford/","newton":"/us/ma/newton/","quincy":"/us/ma/quincy/","somerville":"/us/ma/somerville/","springfield":"/us/ma/springfield/","worcester":"/us/ma/worcester/"},"cities":[["boston","Boston"],["brockton","Brockton"],["cambridge","Cambridge"],["fall-river","Fall River"],["lawrence","Lawrence"],["lowell","Lowell"],["lynn","Lynn"],["new-bedford","New Bedford"],["newton","Newton"],["quincy","Quincy"],["somerville","Somerville"],["springfield","Springfield"],["worcester","Worcester"]]},{"code":"ny","name":"New York","prov":"NY","jsonDir":"ny","instDir":"ny","hub":"/us/ny/","cityPage":{"albany":"/us/ny/national-grid/albany/","babylon":"/us/ny/pseg/babylon/","beacon":"/us/ny/central-hudson/beacon/","brookhaven":"/us/ny/pseg/brookhaven/","buffalo":"/us/ny/national-grid/buffalo/","huntington":"/us/ny/pseg/huntington/","islip":"/us/ny/pseg/islip/","kingston":"/us/ny/central-hudson/kingston/","mount-vernon":"/us/ny/con-edison/mount-vernon/","new-rochelle":"/us/ny/con-edison/new-rochelle/","new-york-city":"/us/ny/con-edison/new-york-city/","newburgh":"/us/ny/central-hudson/newburgh/","oyster-bay":"/us/ny/pseg/oyster-bay/","poughkeepsie":"/us/ny/central-hudson/poughkeepsie/","rochester":"/us/ny/national-grid/rochester/","saugerties":"/us/ny/central-hudson/saugerties/","southampton":"/us/ny/pseg/southampton/","syracuse":"/us/ny/national-grid/syracuse/","white-plains":"/us/ny/con-edison/white-plains/","yonkers":"/us/ny/con-edison/yonkers/"},"cities":[["albany","Albany"],["babylon","Babylon"],["beacon","Beacon"],["brookhaven","Brookhaven"],["buffalo","Buffalo"],["huntington","Huntington"],["islip","Islip"],["kingston","Kingston"],["mount-vernon","Mount Vernon"],["new-rochelle","New Rochelle"],["new-york-city","New York City"],["newburgh","Newburgh"],["oyster-bay","Oyster Bay"],["poughkeepsie","Poughkeepsie"],["rochester","Rochester"],["saugerties","Saugerties"],["southampton","Southampton"],["syracuse","Syracuse"],["white-plains","White Plains"],["yonkers","Yonkers"]]},{"code":"ca","name":"California","prov":"CA","jsonDir":"ca","instDir":"ca","hub":"/us/ca/","cityPage":{"bakersfield":"/us/ca/bakersfield/","berkeley":"/us/ca/bay-area/berkeley/","burbank":"/us/ca/los-angeles/burbank/","chula-vista":"/us/ca/san-diego/chula-vista/","escondido":"/us/ca/san-diego/escondido/","folsom":"/us/ca/sacramento/folsom/","fremont":"/us/ca/bay-area/fremont/","fresno":"/us/ca/fresno/","glendale":"/us/ca/los-angeles/glendale/","long-beach":"/us/ca/los-angeles/long-beach/","los-angeles":"/us/ca/los-angeles/","moreno-valley":"/us/ca/inland-empire/moreno-valley/","oakland":"/us/ca/bay-area/oakland/","ontario":"/us/ca/inland-empire/ontario/","pasadena":"/us/ca/los-angeles/pasadena/","rancho-cordova":"/us/ca/sacramento/rancho-cordova/","riverside":"/us/ca/inland-empire/riverside/","roseville":"/us/ca/sacramento/roseville/","sacramento":"/us/ca/sacramento/","san-bernardino":"/us/ca/inland-empire/san-bernardino/","san-diego":"/us/ca/san-diego/","san-francisco":"/us/ca/bay-area/san-francisco/","san-jose":"/us/ca/bay-area/san-jose/","santa-monica":"/us/ca/los-angeles/santa-monica/"},"cities":[["bakersfield","Bakersfield"],["berkeley","Berkeley"],["burbank","Burbank"],["chula-vista","Chula Vista"],["escondido","Escondido"],["folsom","Folsom"],["fremont","Fremont"],["fresno","Fresno"],["glendale","Glendale"],["long-beach","Long Beach"],["los-angeles","Los Angeles"],["moreno-valley","Moreno Valley"],["oakland","Oakland"],["ontario","Ontario"],["pasadena","Pasadena"],["rancho-cordova","Rancho Cordova"],["riverside","Riverside"],["roseville","Roseville"],["sacramento","Sacramento"],["san-bernardino","San Bernardino"],["san-diego","San Diego"],["san-francisco","San Francisco"],["san-jose","San Jose"],["santa-monica","Santa Monica"]]},{"code":"pa","name":"Pennsylvania","prov":"PA","jsonDir":"pa","instDir":"pa","hub":"/us/pa/","cityPage":{"allentown":"/us/pa/allentown/","erie":"/us/pa/erie/","philadelphia":"/us/pa/philadelphia/","pittsburgh":"/us/pa/pittsburgh/"},"cities":[["allentown","Allentown"],["erie","Erie"],["philadelphia","Philadelphia"],["pittsburgh","Pittsburgh"]]},{"code":"co","name":"Colorado","prov":"CO","jsonDir":"co","instDir":"co","hub":"/us/co/","cityPage":{"aurora":"/us/co/aurora/","boulder":"/us/co/boulder/","colorado-springs":"/us/co/colorado-springs/","denver":"/us/co/denver/","fort-collins":"/us/co/fort-collins/"},"cities":[["aurora","Aurora"],["boulder","Boulder"],["colorado-springs","Colorado Springs"],["denver","Denver"],["fort-collins","Fort Collins"]]},{"code":"vt","name":"Vermont","prov":"VT","jsonDir":"vt","instDir":"vt","hub":"/us/vt/","cityPage":{"barre":"/us/vt/barre/","burlington":"/us/vt/burlington/","rutland":"/us/vt/rutland/","south-burlington":"/us/vt/south-burlington/"},"cities":[["barre","Barre"],["burlington","Burlington"],["rutland","Rutland"],["south-burlington","South Burlington"]]}];
+var $=function(id){return document.getElementById(id)};
+var P=new URLSearchParams(location.search);
+var UPG=[["heat-pump","Heat pump"],["solar","Solar"],["battery","Battery"],["insulation","Insulation"],["water-heater","Heat pump water heater"],["thermostat","Smart thermostat"],["ev","EV charger"]];
+var chipBox=$("gq-chips");
+UPG.forEach(function(u){var l=document.createElement("label");l.className="gq-chip";var c=document.createElement("input");c.type="checkbox";c.value=u[0];
+ c.addEventListener("change",function(){l.classList.toggle("on",c.checked);show()});l.appendChild(c);l.appendChild(document.createTextNode(u[1]));chipBox.appendChild(l)});
+var rs=$("gq-region"),cs=$("gq-city");
+D.forEach(function(r){var o=document.createElement("option");o.value=r.code;o.textContent=r.name;rs.appendChild(o)});
+function fillCities(){cs.textContent="";var ph=document.createElement("option");ph.value="";ph.textContent="Choose your city";cs.appendChild(ph);
+ var r=D.filter(function(x){return x.code===rs.value})[0];if(!r)return;r.cities.forEach(function(c){var o=document.createElement("option");o.value=c[0];o.textContent=c[1];cs.appendChild(o)})}
+rs.addEventListener("change",function(){fillCities();show()});cs.addEventListener("change",show);
+var prov=(P.get("province")||"").toLowerCase();if(prov&&D.some(function(r){return r.code===prov})){rs.value=prov;fillCities();var cc=(P.get("city")||"").toLowerCase().replace(/\s+/g,"-");cs.value=cc;if(cs.value!==cc)cs.value=""}
+var picks=[];var shown=[];
+function stars(i){return (i.rating?i.rating.toFixed(1)+" ★":"")+(i.reviews?" ("+i.reviews+" Google reviews)":"")}
+function get(url){return fetch(url).then(function(r){return r.ok?r.json():[]}).catch(function(){return []})}
+var token=0;
+function show(){
+ var out=$("gq-out");var r=D.filter(function(x){return x.code===rs.value})[0];var city=cs.value;
+ var plan=[].map.call(document.querySelectorAll("#gq-chips input:checked"),function(c){return c.value});
+ if(!r||!city){out.style.display="none";return}
+ out.style.display="block";var label=cs.options[cs.selectedIndex].textContent;var t=++token;
+ $("gq-r-title").textContent="Rebates in "+label;
+ var q="?city="+encodeURIComponent(city)+(plan.length?"&plan="+plan.join(","):"");
+ $("gq-calc").href="/calculator/"+r.code+"/"+q;
+ $("gq-guide").href=r.cityPage[city]||r.hub;
+ $("gq-i-title").textContent="Top-rated installers in "+label;
+ var want=plan.filter(function(p){return p==="heat-pump"||p==="solar"});if(!want.length&&!plan.length)want=["heat-pump"];
+ var base="/installers/json/"+(r.jsonDir?r.jsonDir+"/":"");
+ var jobs=want.map(function(s){return get(base+(s==="solar"?"solar/":"")+city+".json").then(function(a){return{s:s,a:a}})});
+ Promise.all(jobs).then(function(res){
+  if(t!==token)return;var box=$("gq-list");box.textContent="";picks=[];shown=[];
+  res.forEach(function(g){
+   var h=document.createElement("h4");h.style.margin="14px 0 0";h.textContent=(g.s==="solar"?"Solar":"Heat pump")+" installers";box.appendChild(h);
+   var top=g.a.slice(0,3);
+   if(!top.length){var p=document.createElement("p");p.className="gq-meta";p.textContent="We have not listed installers for this yet.";box.appendChild(p)}
+   top.forEach(function(i){shown.push(i);
+    var d=document.createElement("div");d.className="gq-inst";var l=document.createElement("div");
+    var n=document.createElement("h4");n.textContent=i.name;l.appendChild(n);
+    var m=document.createElement("div");m.className="gq-meta";m.textContent=stars(i);l.appendChild(m);
+    var k=document.createElement("div");k.className="gq-links";
+    if(i.phone){var a=document.createElement("a");a.href="tel:"+i.phone.replace(/[^0-9+]/g,"");a.textContent=i.phone;k.appendChild(a)}
+    if(i.website){var w=document.createElement("a");w.href=i.website;w.rel="nofollow noopener";w.target="_blank";w.textContent="Website";k.appendChild(w)}
+    if(i.gmaps_url){var g2=document.createElement("a");g2.href=i.gmaps_url;g2.rel="nofollow noopener";g2.target="_blank";g2.textContent="Google reviews";k.appendChild(g2)}
+    l.appendChild(k);d.appendChild(l);
+    if(i.email){var pk=document.createElement("label");pk.className="gq-pick";var cb=document.createElement("input");cb.type="checkbox";
+     cb.addEventListener("change",function(){var ix=picks.indexOf(i);if(cb.checked&&ix<0)picks.push(i);if(!cb.checked&&ix>=0)picks.splice(ix,1);$("gq-send").disabled=!picks.length});
+     pk.appendChild(cb);pk.appendChild(document.createTextNode("Ask for a quote"));d.appendChild(pk)}
+    box.appendChild(d)});
+   var more=document.createElement("p");var ma=document.createElement("a");ma.href="/installers/"+r.instDir+"/"+city+"/"+g.s+"/";ma.textContent="See every "+(g.s==="solar"?"solar":"heat pump")+" installer in "+label+" →";more.appendChild(ma);box.appendChild(more)});
+  var others=plan.filter(function(p){return p==="battery"||p==="insulation"});
+  others.forEach(function(s){var p=document.createElement("p");var a=document.createElement("a");a.href="/installers/"+r.instDir+"/"+city+"/"+s+"/";a.textContent="See "+s+" installers in "+label+" →";p.appendChild(a);box.appendChild(p)});
+  $("gq-send").disabled=true;$("gq-contact").style.display=shown.some(function(i){return i.email})?"block":"none";
+ });
+}
+$("gq-form").addEventListener("submit",function(e){
+ e.preventDefault();var r=D.filter(function(x){return x.code===rs.value})[0];var msg=$("gq-msg");
+ if($("gq-web").value)return;if(!picks.length)return;
+ var plan=[].map.call(document.querySelectorAll("#gq-chips input:checked"),function(c){return c.value});
+ var shared={firstname:$("gq-fn").value,lastname:$("gq-ln").value,email:$("gq-em").value,phone:$("gq-ph").value,postal:$("gq-po").value,city:cs.value,province:r.prov,notes:"",upgrades:plan,page_url:location.href,referrer:document.referrer||"direct",website:""};
+ var b=$("gq-send");b.disabled=true;b.textContent="Sending...";
+ Promise.all(picks.map(function(i){return fetch("https://leads.homepowerrebate.com/estimate-lead",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({},shared,{installer_name:i.name||"",installer_email:i.email||"",installer_phone:i.phone||""}))}).then(function(x){return x.json()}).then(function(x){return!!x.success}).catch(function(){return false})})).then(function(rs2){
+  var n=rs2.filter(Boolean).length;b.textContent="Send my details";b.disabled=false;
+  msg.className="gq-msg show "+(n?"ok":"err");
+  msg.textContent=n?"Sent to "+n+" installer"+(n>1?"s":"")+". Expect a call or email within 1 business day. Only the installers you ticked got your details.":"That did not go through. Check your postal or ZIP code and try again.";
+  if(n)$("gq-form").reset();
+ });
+});
+show();
+})();
+</script>
+<!-- GQ-END -->
 
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div class="wrap" style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">
     <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
-    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get my weekly email</h2>
-    <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Every Friday: what I'm learning about rebates across every province and state we cover, heat pump reality checks, solar economics, and the installers I trust. Real stuff, no marketing.</p>
+    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get the monthly rebate update</h2>
+    <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Once a month: new and changing rebate programs across every province and state we cover, plus what's new in heat pumps, solar and batteries. Short, sourced, no marketing.</p>
     <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
       <input type="email" id="newsletter-email" placeholder="your@email.com" required aria-label="Your email address" autocomplete="email" style="min-height: 46px; padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 16px; background: #fff; color: var(--ink);">
       <input type="hidden" id="newsletter-city" value="">
@@ -437,117 +505,9 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     </div>
   </div>
 </footer>
-<a id="sticky-cta" class="sticky-cta" href="/get-quotes/">Get free quotes from top-rated installers</a>
+<a id="sticky-cta" class="sticky-cta" href="/get-quotes/">See your rebates and top installers</a>
 <!-- CANONICAL-FOOTER-END -->
 
-<script src="/form-handlers-with-installer-select.js?v=2"></script>
-<script>
-const params = new URLSearchParams(location.search);
-const CITY = params.get('city') || '';
-const PROVINCE = (params.get('province') || '').toUpperCase();
-const CITY_DISPLAY = CITY ? CITY.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : '';
-
-const cityNote = document.getElementById('cityNote');
-cityNote.textContent = CITY_DISPLAY && PROVINCE ? `Showing installers for ${CITY_DISPLAY}, ${PROVINCE}` : 'Enter your details below to get started';
-
-const form = document.getElementById('quoteForm');
-const responseEl = document.getElementById('quoteResponse');
-const submitBtn = document.getElementById('quoteSubmitBtn');
-
-function showResponse(msg, ok) {
-  responseEl.textContent = msg;
-  responseEl.className = 'response-msg show ' + (ok ? 'success' : 'error');
-}
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  if (!CITY || !PROVINCE) {
-    showResponse('Missing your city — please go back to your city\'s rebate page and click through from there.', false);
-    return;
-  }
-
-  const upgrades = [...document.querySelectorAll('#upgradeChecklist input:checked')].map(el => el.value);
-  const sharedFields = {
-    firstname: document.getElementById('qFirstname').value,
-    lastname: document.getElementById('qLastname').value,
-    email: document.getElementById('qEmail').value,
-    phone: document.getElementById('qPhone').value,
-    postal: document.getElementById('qPostal').value,
-    city: CITY,
-    province: PROVINCE,
-    notes: document.getElementById('qNotes').value,
-    upgrades,
-    page_url: location.href,
-    referrer: document.referrer || 'direct',
-    website: document.getElementById('qWebsite').value // honeypot
-  };
-
-  if (sharedFields.website) return; // bot
-
-  async function submitToInstallers(selectedInstallers) {
-    const submissions = (selectedInstallers.length ? selectedInstallers : [null]).map(installer =>
-      fetch('https://leads.homepowerrebate.com/estimate-lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...sharedFields,
-          installer_name: installer?.name || '',
-          installer_email: installer?.email || '',
-          installer_phone: installer?.phone || ''
-        })
-      }).then(r => r.json()).then(r => r.success).catch(() => false)
-    );
-    const results = await Promise.allSettled(submissions);
-    return results.filter(r => r.status === 'fulfilled' && r.value).length;
-  }
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Loading installers…';
-
-  try {
-    const installers = await loadInstallersForCity(CITY, PROVINCE);
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Choose installers & send my details →';
-
-    if (installers.length === 0) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
-      const sent = await submitToInstallers([]);
-      showResponse(sent
-        ? "Got it! We're still building our installer network in your area — we'll follow up personally."
-        : 'Something went wrong — please try again.', sent);
-      if (sent) form.reset();
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Choose installers & send my details →';
-      return;
-    }
-
-    showInstallerChooser(
-      installers,
-      async (selectedInstallers) => {
-        submitBtn.disabled = true;
-        submitBtn.textContent = `Sending to ${selectedInstallers.length} installer${selectedInstallers.length !== 1 ? 's' : ''}...`;
-        const sentCount = await submitToInstallers(selectedInstallers);
-        showResponse(sentCount > 0
-          ? `Sent to ${sentCount} installer${sentCount !== 1 ? 's' : ''} — expect a call or email within 1 business day.`
-          : 'Something went wrong — please try again.', sentCount > 0);
-        if (sentCount > 0) form.reset();
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Choose installers & send my details →';
-      },
-      () => {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Choose installers & send my details →';
-      }
-    );
-  } catch (err) {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Choose installers & send my details →';
-    showResponse('Something went wrong — please try again.', false);
-  }
-});
-</script>
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
 function toggleCityDropdown() {

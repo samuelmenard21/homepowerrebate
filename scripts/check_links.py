@@ -33,6 +33,8 @@ def redirect_rules():
 
 def exists(path, rules):
     path = unquote(path.split("#")[0].split("?")[0])
+    if path.startswith("/pagefind/"):  # search index is generated at publish time, not stored in the repo
+        return True
     if not path or path == "/":
         return True
     rel = path.lstrip("/")

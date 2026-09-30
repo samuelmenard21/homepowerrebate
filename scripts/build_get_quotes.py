@@ -48,7 +48,9 @@ function fillCities(){cs.textContent="";var ph=document.createElement("option");
  var r=D.filter(function(x){return x.code===rs.value})[0];if(!r)return;r.cities.forEach(function(c){var o=document.createElement("option");o.value=c[0];o.textContent=c[1];cs.appendChild(o)})}
 rs.addEventListener("change",function(){fillCities();show()});cs.addEventListener("change",show);
 var prov=(P.get("province")||"").toLowerCase();if(prov&&D.some(function(r){return r.code===prov})){rs.value=prov;fillCities();var cc=(P.get("city")||"").toLowerCase().replace(/\s+/g,"-");cs.value=cc;if(cs.value!==cc)cs.value=""}
-var picks=[];var shown=[];
+var shown=[];
+function slug(n){return n.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")}
+function purl(r,city,ps){return "/installers/profiles/"+(r.jsonDir?r.jsonDir+"/":"")+city+"/"+ps+"/"}
 function stars(i){return (i.rating?i.rating.toFixed(1)+" ★":"")+(i.reviews?" ("+i.reviews+" Google reviews)":"")}
 function get(url){return fetch(url).then(function(r){return r.ok?r.json():[]}).catch(function(){return []})}
 var token=0;
@@ -66,43 +68,36 @@ function show(){
  var base="/installers/json/"+(r.jsonDir?r.jsonDir+"/":"");
  var jobs=want.map(function(s){return get(base+(s==="solar"?"solar/":"")+city+".json").then(function(a){return{s:s,a:a}})});
  Promise.all(jobs).then(function(res){
-  if(t!==token)return;var box=$("gq-list");box.textContent="";picks=[];shown=[];
+  if(t!==token)return;var box=$("gq-list");box.textContent="";shown=[];
   res.forEach(function(g){
    var h=document.createElement("h4");h.style.margin="14px 0 0";h.textContent=(g.s==="solar"?"Solar":"Heat pump")+" installers";box.appendChild(h);
    var top=g.a.slice(0,3);
    if(!top.length){var p=document.createElement("p");p.className="gq-meta";p.textContent="We have not listed installers for this yet.";box.appendChild(p)}
    top.forEach(function(i){shown.push(i);
     var d=document.createElement("div");d.className="gq-inst";var l=document.createElement("div");
-    var n=document.createElement("h4");n.textContent=i.name;l.appendChild(n);
+    var n=document.createElement("h4");var ps=slug(i.name);var has=(r.profiles[city]||[]).indexOf(ps)>=0;
+    if(has){var na=document.createElement("a");na.href=purl(r,city,ps);na.textContent=i.name;n.appendChild(na)}else n.textContent=i.name;l.appendChild(n);i._url=has?location.origin+purl(r,city,ps):"";
     var m=document.createElement("div");m.className="gq-meta";m.textContent=stars(i);l.appendChild(m);
     var k=document.createElement("div");k.className="gq-links";
     if(i.phone){var a=document.createElement("a");a.href="tel:"+i.phone.replace(/[^0-9+]/g,"");a.textContent=i.phone;k.appendChild(a)}
     if(i.website){var w=document.createElement("a");w.href=i.website;w.rel="nofollow noopener";w.target="_blank";w.textContent="Website";k.appendChild(w)}
     if(i.gmaps_url){var g2=document.createElement("a");g2.href=i.gmaps_url;g2.rel="nofollow noopener";g2.target="_blank";g2.textContent="Google reviews";k.appendChild(g2)}
     l.appendChild(k);d.appendChild(l);
-    if(i.email){var pk=document.createElement("label");pk.className="gq-pick";var cb=document.createElement("input");cb.type="checkbox";
-     cb.addEventListener("change",function(){var ix=picks.indexOf(i);if(cb.checked&&ix<0)picks.push(i);if(!cb.checked&&ix>=0)picks.splice(ix,1);$("gq-send").disabled=!picks.length});
-     pk.appendChild(cb);pk.appendChild(document.createTextNode("Ask for a quote"));d.appendChild(pk)}
     box.appendChild(d)});
    var more=document.createElement("p");var ma=document.createElement("a");ma.href="/installers/"+r.instDir+"/"+city+"/"+g.s+"/";ma.textContent="See every "+(g.s==="solar"?"solar":"heat pump")+" installer in "+label+" →";more.appendChild(ma);box.appendChild(more)});
   var others=plan.filter(function(p){return p==="battery"||p==="insulation"});
   others.forEach(function(s){var p=document.createElement("p");var a=document.createElement("a");a.href="/installers/"+r.instDir+"/"+city+"/"+s+"/";a.textContent="See "+s+" installers in "+label+" →";p.appendChild(a);box.appendChild(p)});
-  $("gq-send").disabled=true;$("gq-contact").style.display=shown.some(function(i){return i.email})?"block":"none";
+  $("gq-save").style.display=shown.length?"block":"none";
  });
 }
-$("gq-form").addEventListener("submit",function(e){
- e.preventDefault();var r=D.filter(function(x){return x.code===rs.value})[0];var msg=$("gq-msg");
- if($("gq-web").value)return;if(!picks.length)return;
- var plan=[].map.call(document.querySelectorAll("#gq-chips input:checked"),function(c){return c.value});
- var shared={firstname:$("gq-fn").value,lastname:$("gq-ln").value,email:$("gq-em").value,phone:$("gq-ph").value,postal:$("gq-po").value,city:cs.value,province:r.prov,notes:"",upgrades:plan,page_url:location.href,referrer:document.referrer||"direct",website:""};
- var b=$("gq-send");b.disabled=true;b.textContent="Sending...";
- Promise.all(picks.map(function(i){return fetch("https://leads.homepowerrebate.com/estimate-lead",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({},shared,{installer_name:i.name||"",installer_email:i.email||"",installer_phone:i.phone||""}))}).then(function(x){return x.json()}).then(function(x){return!!x.success}).catch(function(){return false})})).then(function(rs2){
-  var n=rs2.filter(Boolean).length;b.textContent="Send my details";b.disabled=false;
-  msg.className="gq-msg show "+(n?"ok":"err");
-  msg.textContent=n?"Sent to "+n+" installer"+(n>1?"s":"")+". Expect a call or email within 1 business day. Only the installers you ticked got your details.":"That did not go through. Check your postal or ZIP code and try again.";
-  if(n)$("gq-form").reset();
- });
-});
+function listText(){var r=D.filter(function(x){return x.code===rs.value})[0];var label=cs.options[cs.selectedIndex].textContent;
+ var t="Top-rated installers in "+label+" (ranked by Google reviews)\n\n";
+ shown.forEach(function(i){t+=i.name+"\n"+stars(i)+"\n"+(i.phone?i.phone+"\n":"")+(i._url||i.website||"")+"\n\n"});
+ t+="Rebates you could get: "+location.origin+$("gq-calc").getAttribute("href")+"\n";return t}
+$("gq-mail").addEventListener("click",function(){var label=cs.options[cs.selectedIndex].textContent;
+ location.href="mailto:?subject="+encodeURIComponent("Installers and rebates in "+label)+"&body="+encodeURIComponent(listText())});
+$("gq-copy").addEventListener("click",function(){var b=$("gq-copy");var u=location.origin+location.pathname+"?province="+rs.value+"&city="+cs.value;
+ (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){b.textContent="Link copied"},function(){b.textContent="Copy failed"});setTimeout(function(){b.textContent="Copy link to this list"},2500)});
 show();
 })();
 """
@@ -119,8 +114,12 @@ def main():
             hits = glob.glob(str(ROOT / hub.strip("/") / "**" / c / "index.html"), recursive=True)
             if hits:
                 cp[c] = "/" + os.path.relpath(os.path.dirname(hits[0]), ROOT) + "/"
+        prof = {}
+        for c in cities:
+            d = ROOT / "installers" / "profiles" / (jdir or "") / c
+            prof[c] = sorted(x.name for x in d.iterdir() if x.is_dir()) if d.exists() else []
         data.append({"code": code, "name": name, "prov": prov, "jsonDir": jdir, "instDir": code, "hub": hub, "cityPage": cp,
-                     "cities": [[c, OV.get(c, c.replace("-", " ").title())] for c in cities]})
+                     "profiles": prof, "cities": [[c, OV.get(c, c.replace("-", " ").title())] for c in cities]})
     js = JS.replace("__DATA__", json.dumps(data, separators=(",", ":")))
     body = f"""{S}
 <style>{CSS}</style>
@@ -134,13 +133,9 @@ def main():
 <div class="gq-card"><h2 class="gq-h" id="gq-r-title">Rebates</h2><p class="gq-sub">Every amount comes from the program's own page. We only add up programs that are open today.</p>
 <a class="gq-cta" id="gq-calc" href="/calculator/">Estimate my rebates</a><a class="gq-alt" id="gq-guide" href="/">City rebate guide</a></div>
 <div class="gq-card"><h2 class="gq-h" id="gq-i-title">Top-rated installers</h2><p class="gq-sub">Ranked by Google reviews. <a href="/installers/how-we-rank/">How we rank</a>.</p><div id="gq-list"></div></div>
-<div class="gq-card" id="gq-contact" style="display:none"><details><summary>Want an installer to contact you?</summary>
-<p class="gq-sub" style="margin-top:10px">Tick "Ask for a quote" next to the installers you want, then send your details. Only those installers get them. We never sell your details.</p>
-<form id="gq-form"><div class="gq-row"><div class="gq-f"><label for="gq-fn">First name</label><input id="gq-fn" required autocomplete="given-name"></div><div class="gq-f"><label for="gq-ln">Last name</label><input id="gq-ln" required autocomplete="family-name"></div></div>
-<div class="gq-row"><div class="gq-f full"><label for="gq-em">Email</label><input id="gq-em" type="email" required autocomplete="email"></div></div>
-<div class="gq-row"><div class="gq-f"><label for="gq-ph">Phone</label><input id="gq-ph" type="tel" required autocomplete="tel"></div><div class="gq-f"><label for="gq-po">Postal or ZIP code</label><input id="gq-po" required autocomplete="postal-code"></div></div>
-<input id="gq-web" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off" aria-hidden="true">
-<button class="gq-cta" id="gq-send" type="submit" disabled>Send my details</button><div class="gq-msg" id="gq-msg"></div></form></details></div>
+<div class="gq-card" id="gq-save" style="display:none"><h2 class="gq-h">Take this list with you</h2>
+<p class="gq-sub">Compare a few, read their profiles and Google reviews, then call the ones you like. We never pass your details to anyone.</p>
+<button class="gq-cta" id="gq-mail" type="button">Email me this list</button><button class="gq-cta" id="gq-copy" type="button" style="margin-left:10px;background:var(--teal-deep)">Copy link to this list</button></div>
 </div></div></section>
 <script>{js}</script>
 {E}"""

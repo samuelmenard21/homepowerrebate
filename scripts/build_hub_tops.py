@@ -88,8 +88,11 @@ def load_data_hubs():
         spec = json.loads(f.read_text())
         facts = {x["program"]: x for x in json.loads((ROOT / "data" / "verified-facts" / f.name).read_text())["facts"]}
         rows = [(r["upgrade"], r["program"], r["amount"], r["rules"], facts[r["fact"]]["source_url"]) for r in spec["rows"]]
+        status = [facts[r["fact"]]["status"] for r in spec["rows"]]
+        verified = max(facts[r["fact"]]["verified_on"] for r in spec["rows"])
         key = next(k for k, v in HUBS.items() if v["code"] == spec["code"])
-        HUBS[key].update(name=spec["name"], short=spec["short"], rows=rows, top_only=True, eyebrow=spec["eyebrow"])
+        HUBS[key].update(name=spec["name"], short=spec["short"], rows=rows, top_only=True, eyebrow=spec["eyebrow"],
+                         row_status=status, verified=verified)
 
 
 load_data_hubs()
@@ -128,12 +131,27 @@ def unify_hero(s, cfg):
     return s[:m.start()] + hero + s[m.end():]
 
 
+STATUS_PILL = {  # status -> (label, background, text colour); the label is always a word, never colour alone
+    "active": ("Open", "#e3f1e8", "#1f5a3d"), "upcoming": ("Starts soon", "#fdeccf", "#8a4a06"),
+    "waitlist": ("Waitlist", "#fdeccf", "#8a4a06"), "paused": ("Paused", "#f3dcdc", "#8a2b2b"),
+    "closed": ("Closed", "#f3dcdc", "#8a2b2b"), "check": ("Confirm status", "#e8e8e8", "#444"), "info": ("Note", "#e8e8e8", "#444"),
+}
+
+
+def status_pill(st):
+    label, bg, fg = STATUS_PILL[st]
+    return (f'<span class="rb-status rb-{st}" style="display:inline-block;margin-left:6px;padding:1px 8px;border-radius:99px;'
+            f'font-size:12px;font-weight:600;background:{bg};color:{fg};white-space:nowrap;">{label}</span>')
+
+
 def top_block(cfg):
-    rows = "".join(f'<tr><td><b>{e(w)}</b></td><td>{e(p)}</td><td>{e(a)}</td><td>{e(n)} <a href="{e(s)}" rel="nofollow noopener" target="_blank">Source</a></td></tr>'
-                   for w, p, a, n, s in cfg["rows"])
+    sts = cfg.get("row_status") or ["active"] * len(cfg["rows"])
+    rows = "".join(f'<tr><td><b>{e(w)}</b></td><td>{e(p)}</td><td>{e(a)}{status_pill(st)}</td><td>{e(n)} <a href="{e(s)}" rel="nofollow noopener" target="_blank">Source</a></td></tr>'
+                   for (w, p, a, n, s), st in zip(cfg["rows"], sts))
+    vdate = fmt(cfg["verified"]) if cfg.get("verified") else CHECKED_H
     return (f'{TOP_S}<section style="max-width:880px;margin:24px auto;padding:0 20px;">'
             f'<div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> {e(cfg["short"])}</p>'
-            f'<p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Updated {CHECKED_H} · By <a href="/about">{e(AUTHOR["name"])}</a> · Every amount links to the official program.</p></div>'
+            f'<p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Last verified {vdate} · By <a href="/about">{e(AUTHOR["name"])}</a> · Every amount links to the official program.</p></div>'
             f'<h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in {e(cfg["name"])} right now</h2>'
             f'<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;">'
             f'<tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr>'

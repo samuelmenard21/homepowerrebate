@@ -38,10 +38,10 @@ JS = r"""
 var D=__DATA__;
 var $=function(id){return document.getElementById(id)};
 var P=new URLSearchParams(location.search);
-var UPG=[["heat-pump","Heat pump"],["solar","Solar"],["battery","Battery"],["insulation","Insulation"],["water-heater","Heat pump water heater"],["thermostat","Smart thermostat"],["ev","EV charger"]];
+var UPG=[["heat-pump","\uD83D\uDD25","Heat pump","Replaces a furnace or baseboards \u2014 heats and cools with one machine."],["solar","\u2600\uFE0F","Solar panels","Rooftop solar, typically 8\u201312 kW for a home."],["battery","\uD83D\uDD0B","Home battery","Backup power, and pairs well with solar."],["insulation","\uD83C\uDFE0","Insulation","Attic, walls, or crawlspace \u2014 often the best first upgrade."],["water-heater","\uD83D\uDCA7","Heat pump water heater","Replaces an electric or gas tank."],["windows","\uD83D\uDFEB","Windows & doors","Energy-efficient replacements."],["ev","\uD83D\uDE97","EV charger","Home Level 2 charger installation."],["thermostat","\uD83D\uDCF1","Smart thermostat","Nest, Ecobee, or similar."]];
 var chipBox=$("gq-chips");
-UPG.forEach(function(u){var l=document.createElement("label");l.className="gq-chip";var c=document.createElement("input");c.type="checkbox";c.value=u[0];
- c.addEventListener("change",function(){l.classList.toggle("on",c.checked);show()});l.appendChild(c);l.appendChild(document.createTextNode(u[1]));chipBox.appendChild(l)});
+UPG.forEach(function(u){var l=document.createElement("label");l.className="check-item";var c=document.createElement("input");c.type="checkbox";c.value=u[0];
+ c.addEventListener("change",show);l.appendChild(c);var sp=document.createElement("span");sp.className="check-label";var h=document.createElement("h4");h.textContent=u[1]+" "+u[2];var p=document.createElement("p");p.textContent=u[3];sp.appendChild(h);sp.appendChild(p);l.appendChild(sp);chipBox.appendChild(l)});
 var rs=$("gq-region"),cs=$("gq-city");
 D.forEach(function(r){var o=document.createElement("option");o.value=r.code;o.textContent=r.name;rs.appendChild(o)});
 function fillCities(){cs.textContent="";var ph=document.createElement("option");ph.value="";ph.textContent="Choose your city";cs.appendChild(ph);
@@ -129,7 +129,7 @@ def main():
 <section class="section"><div class="gq">
 <div class="gq-card"><div class="gq-row"><div class="gq-f"><label for="gq-region">Province or state</label><select id="gq-region"><option value="">Choose one</option></select></div>
 <div class="gq-f"><label for="gq-city">City</label><select id="gq-city"><option value="">Choose your city</option></select></div></div>
-<div class="gq-f"><label>What are you planning? (optional)</label><div class="gq-chips" id="gq-chips"></div></div></div>
+<h2 class="gq-h" style="margin-top:6px">What are you planning? <span class="gq-meta">(optional)</span></h2><div class="checklist" id="gq-chips" style="margin:0"></div></div>
 <div id="gq-out" style="display:none">
 <div class="gq-card"><h2 class="gq-h" id="gq-r-title">Rebates</h2><p class="gq-sub">Every amount comes from the program's own page. We only add up programs that are open today.</p>
 <a class="gq-cta" id="gq-calc" href="/calculator/">Estimate my rebates</a><a class="gq-alt" id="gq-guide" href="/">City rebate guide</a></div>

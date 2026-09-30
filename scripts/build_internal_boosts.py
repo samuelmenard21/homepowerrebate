@@ -178,6 +178,44 @@ def peak_section():
     return 0
 
 
+RVALUE_BLOCK = """<!-- CANADA-RVALUES-START -->
+<h2>Canada: attic R-value targets by climate zone</h2>
+<p>Natural Resources Canada's <em>Keeping the Heat In</em> guide recommends attic insulation by climate zone, measured in heating degree-days (HDD), a count of how cold a place is over the year. Colder zones need more. Find your zone, then check your local building code, which may set a different minimum.</p>
+<div style="overflow-x:auto;"><table style="width:100%;min-width:560px;border-collapse:collapse;font-size:15px;">
+<tr style="background:#f5efe5;"><th style="text-align:left;padding:8px;">Zone</th><th style="text-align:left;padding:8px;">Heating degree-days</th><th style="text-align:left;padding:8px;">BC examples</th><th style="text-align:left;padding:8px;">Recommended attic</th></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">4</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Under 3,000</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Vancouver, Victoria, Surrey, Burnaby</td><td style="padding:8px;border-top:1px solid #d9d0c1;"><b>R-45</b> (RSI 7.9)</td></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">5</td><td style="padding:8px;border-top:1px solid #d9d0c1;">3,000 to 3,999</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Kamloops, Kelowna, Nanaimo, Vernon</td><td style="padding:8px;border-top:1px solid #d9d0c1;"><b>R-55</b> (RSI 9.7)</td></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">6</td><td style="padding:8px;border-top:1px solid #d9d0c1;">4,000 to 4,999</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Prince George, Cranbrook, Whistler</td><td style="padding:8px;border-top:1px solid #d9d0c1;"><b>R-60</b> (RSI 10.6)</td></tr>
+<tr><td style="padding:8px;border-top:1px solid #d9d0c1;">7a to 8</td><td style="padding:8px;border-top:1px solid #d9d0c1;">5,000 and above</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Fort St. John, Dawson Creek, Fort Nelson</td><td style="padding:8px;border-top:1px solid #d9d0c1;"><b>R-80</b> (RSI 14.1)</td></tr>
+</table></div>
+<p style="font-size:13.5px;color:#6b8e7f;">Sources: <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-2-your-house-works" rel="nofollow noopener" target="_blank">Natural Resources Canada, Table 2-1</a> · <a href="https://betterhomesbc.ca/definitions/climate-zones/" rel="nofollow noopener" target="_blank">Better Homes BC climate zones</a>. Checked September 29, 2026. These are guidelines, not code.</p>
+<ul>
+<li><b>Rebates may stop short of the guideline.</b> Ontario's and Nova Scotia's attic rebates are for insulating up to R-50, which is below the guideline for zones 5 and up. You can add more at your own cost.</li>
+<li><b>Adding over old insulation with a plastic vapour barrier?</b> Natural Resources Canada says to put at least twice the insulating value above the barrier as below it (its example: R-12 below means at least R-24 on top). That keeps moisture from getting trapped.</li>
+<li><b>Not in BC?</b> Look up your town's heating degree-days and match it to the zone above.</li>
+</ul>
+<!-- CANADA-RVALUES-END -->
+"""
+
+
+def rvalue_section():
+    f = ROOT / "blog/attic-insulation-guide/index.html"
+    t = f.read_text(encoding="utf-8")
+    S, E = "<!-- CANADA-RVALUES-START -->", "<!-- CANADA-RVALUES-END -->"
+    if S in t:
+        new = re.sub(re.escape(S) + ".*?" + re.escape(E) + r"\n?", lambda m: RVALUE_BLOCK, t, count=1, flags=re.S)
+    else:
+        m = re.search(r"<h2[^>]*>\s*Why air sealing comes first", t)
+        if not m:
+            print("no air sealing heading")
+            return 0
+        new = t[:m.start()] + RVALUE_BLOCK + t[m.start():]
+    if new != t:
+        f.write_text(new, encoding="utf-8")
+        return 1
+    return 0
+
+
 def attic_section():
     f = ROOT / "blog/attic-insulation-guide/index.html"
     t = f.read_text(encoding="utf-8")
@@ -215,7 +253,7 @@ def greener_section():
 
 
 def main():
-    n = greener_section() + attic_section() + ottawa_eap() + peak_section()
+    n = greener_section() + attic_section() + ottawa_eap() + peak_section() + rvalue_section()
     for marker, html, pages in JOBS:
         S, E = f"<!-- {marker}-START -->", f"<!-- {marker}-END -->"
         blk = S + BOX.format(html) + E

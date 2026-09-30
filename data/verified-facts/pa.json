@@ -3,7 +3,10 @@
  "notes": "PECO and PPL amounts come from the utilities' own rebate pages as captured in /programs/peco-rebates/ and /programs/ppl-electric-rebates/. Not verified: Penelec (FirstEnergy) and Duquesne Light Phase V amounts (their portals were not readable on 2026-09-29), PECO income-eligible amounts, Philadelphia Energy Authority solar rebate status for 2026. Do not state those as verified.",
  "facts": [
   {
+   "id": "pa-0-peco-air-source-heat-pump",
    "program": "PECO air source heat pump",
+   "status": "active",
+   "verified_on": "2026-09-29",
    "claim": "$200 at 15.2-17.0 SEER2; $300 at 17.1 SEER2 or higher",
    "amount": "$200 or $300",
    "eligibility": "PECO electric customers; 11.0 EER2 and 7.8 HSPF2 minimum",
@@ -11,7 +14,10 @@
    "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-rebates"
   },
   {
+   "id": "pa-1-peco-ductless-mini-split-heat-pump",
    "program": "PECO ductless mini-split heat pump",
+   "status": "active",
+   "verified_on": "2026-09-29",
    "claim": "$150 or $300 by efficiency",
    "amount": "$150 or $300",
    "eligibility": "Same as above",
@@ -19,7 +25,10 @@
    "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-rebates"
   },
   {
+   "id": "pa-2-peco-heat-pump-water-heater",
    "program": "PECO heat pump water heater",
+   "status": "active",
+   "verified_on": "2026-09-29",
    "claim": "$350",
    "amount": "$350",
    "eligibility": "ENERGY STAR certified, electric",
@@ -27,7 +36,10 @@
    "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/appliance-rebates"
   },
   {
+   "id": "pa-3-peco-smart-thermostat",
    "program": "PECO smart thermostat",
+   "status": "active",
+   "verified_on": "2026-09-29",
    "claim": "$50 instant or $25 after install",
    "amount": "$25 to $50",
    "eligibility": "PECO customers",
@@ -35,7 +47,10 @@
    "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/appliance-rebates"
   },
   {
+   "id": "pa-4-ppl-electric-heat-pumps",
    "program": "PPL Electric heat pumps",
+   "status": "check",
+   "verified_on": "2026-09-29",
    "claim": "Air source $225 or $325; mini-split $225; ground source $500",
    "amount": "$225 to $500",
    "eligibility": "PPL Electric customers; amount depends on your offer",
@@ -43,7 +58,10 @@
    "source_url": "https://ppl.clearesult.com/rebates"
   },
   {
+   "id": "pa-5-ppl-electric-heat-pump-water-heater",
    "program": "PPL Electric heat pump water heater",
+   "status": "active",
+   "verified_on": "2026-09-29",
    "claim": "$400",
    "amount": "$400",
    "eligibility": "ENERGY STAR certified",
@@ -51,7 +69,10 @@
    "source_url": "https://ppl.clearesult.com/rebates"
   },
   {
+   "id": "pa-6-ppl-electric-smart-thermostat",
    "program": "PPL Electric smart thermostat",
+   "status": "active",
+   "verified_on": "2026-09-29",
    "claim": "$50 or $100",
    "amount": "$50 to $100",
    "eligibility": "ENERGY STAR certified",
@@ -59,7 +80,10 @@
    "source_url": "https://ppl.clearesult.com/rebates"
   },
   {
+   "id": "pa-7-ppl-electric-insulation-and-air-sealing",
    "program": "PPL Electric insulation and air sealing",
+   "status": "active",
+   "verified_on": "2026-09-29",
    "claim": "Insulation up to $200 or $500; air sealing up to $150",
    "amount": "up to $500",
    "eligibility": "Amount depends on your offer",
@@ -67,7 +91,10 @@
    "source_url": "https://ppl.clearesult.com/rebates"
   },
   {
+   "id": "pa-8-pa-sunshine-solar-program",
    "program": "PA Sunshine Solar Program",
+   "status": "closed",
+   "verified_on": "2026-09-29",
    "claim": "Stopped accepting applications in 2013. No active statewide PA solar rebate.",
    "amount": "$0",
    "eligibility": "-",
@@ -76,7 +103,10 @@
    "notes": "Do not advertise 'up to 35% / $17,500'. Confirm with PA DEP before saying anything about a new state solar program."
   },
   {
+   "id": "pa-9-federal-residential-clean-energy-credits-25c-25d",
    "program": "Federal residential clean energy credits (25C, 25D)",
+   "status": "closed",
+   "verified_on": "2026-09-29",
    "claim": "Ended for spending after Dec 31, 2025",
    "amount": "$0",
    "eligibility": "All homeowners",
@@ -85,7 +115,10 @@
    "notes": "Applies to solar, battery and heat pump credits."
   },
   {
+   "id": "pa-10-peco-act-129-solar-rebate",
    "program": "PECO Act 129 solar rebate",
+   "status": "closed",
+   "verified_on": "2026-09-29",
    "claim": "$500 for systems with Permission to Operate Sep 2024 to Apr 2026; window closed",
    "amount": "$0 now",
    "eligibility": "PECO customers",

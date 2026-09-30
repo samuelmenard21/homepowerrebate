@@ -1,0 +1,12 @@
+site: dist
+exclude_selectors:
+  - ".hpr-breadcrumb"
+  - "#city-dropdown-modal"
+  - ".sticky-cta"
+  - ".rt-filters"
+force_language: en
+ranking:
+  term_similarity: 1.2
+  page_length: 0.3
+  term_saturation: 0.5
+  term_frequency: 0.3

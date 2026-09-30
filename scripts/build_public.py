@@ -10,6 +10,7 @@ Rule: allowlist by file type and location. Anything not listed stays private.
   python3 scripts/build_public.py --check    # list what would be excluded, build nothing
 """
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -71,6 +72,12 @@ def main():
         if fixes and f.suffix == ".html":
             t = (ROOT / f).read_text(encoding="utf-8", errors="ignore")
             new = apply_fixes(t, fixes.get("replace", {}), fixes.get("remove", []))
+            # Site search (Pagefind) should only index pages we want found: skip anything marked noindex.
+            if re.search(r'<meta\s+name="robots"[^>]*noindex', new, re.I) and "data-pagefind-ignore" not in new:
+                new = re.sub(r"<body", '<body data-pagefind-ignore="all"', new, count=1)
+            # Site search relevance: a page's main heading counts far more than repeated words in its body.
+            new = re.sub(r'<header class="hero">(.*?)</header>', r'<div class="hero">\1</div>', new, count=1, flags=re.S)  # Pagefind skips <header>
+            new = re.sub(r"<h1(?![^>]*data-pagefind-weight)", '<h1 data-pagefind-weight="10"', new, count=1)
             dst.write_text(new, encoding="utf-8")
             changed += new != t
         else:

@@ -187,3 +187,10 @@ source_1_url: https://www.bchydro.com/...
 **Total cities:** 89  
 **Total data points:** ~712  
 **All sources:** 3+ per city verified  
+
+## Site search (Pagefind), added 2026-09-29
+- Cloudflare Pages build command: `python3 scripts/build_public.py && npx -y pagefind --site dist` (output directory stays `dist`).
+- `build_public.py` marks noindex pages so they stay out of the search index, weights each page's h1, and converts the `<header class="hero">` wrapper to a `<div>` in the published copy only (Pagefind skips `<header>`).
+- Config: `pagefind.yml`. Page: `search/index.html` (built by `scripts/build_search_page.py`, noindex).
+- Cloudflare firewall rule "Block private files" must allow `/pagefind/`: add `and not starts_with(http.request.uri.path, "/pagefind/")` or the search script and index files get a 403.
+- New files must be `git add`ed before `build_public.py` sees them (it publishes tracked files only).

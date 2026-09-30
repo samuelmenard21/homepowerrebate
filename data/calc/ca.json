@@ -1,0 +1,725 @@
+{
+ "code": "ca",
+ "name": "California",
+ "country": "us",
+ "currency": "USD",
+ "hub": "/us/ca/",
+ "installers": "/installers/",
+ "installers_dir": "ca",
+ "city_page": "us/ca/{c}",
+ "title": "California Rebate Calculator 2026: SMUD, LADWP and City Utility Heat Pump Rebates",
+ "h1": "California Rebate Calculator 2026: What Your Utility Pays",
+ "desc": "Free California rebate calculator. Heat pump, water heater, insulation, EV charger and battery rebates from SMUD, LADWP, Glendale, Burbank, Pasadena and SCE, with the official source for every amount.",
+ "intro": "California's rebates depend on your electric utility. Pick yours and see what is open, what is on a waitlist and what has ended.",
+ "short": "California's statewide heat pump programs (TECH Clean California and the federal HEEHRA) are fully reserved and on waitlists. What still pays is local: SMUD pays up to $3,000 for a heat pump and up to $4,000 for a heat pump water heater, LADWP pays up to $2,500 per ton, Glendale pays $1,000 per ton (up to $5,000) when you replace a gas furnace, and Burbank and Pasadena have their own rebates.",
+ "faq": [
+  [
+   "Is there a statewide heat pump rebate in California?",
+   "Not open right now. TECH Clean California single-family incentives were fully reserved on November 14, 2025 and take waitlist applications only. The federal HEEHRA program was fully reserved on February 24, 2026. The federal 25C and 25D tax credits also ended for 2026 installs."
+  ],
+  [
+   "How much does SMUD pay for a heat pump?",
+   "Up to $3,000 for a two-stage or variable-stage heat pump with a participating contractor, plus up to $2,000 more in Go Electric bonuses when you replace a gas furnace or water heater. A heat pump water heater pays up to $4,000."
+  ],
+  [
+   "What does LADWP pay?",
+   "Up to $2,500 per ton for a heat pump, up to $2,500 for a heat pump water heater, and other rebates such as $2.00 per square foot for ENERGY STAR windows. Apply within 12 months after the work."
+  ],
+  [
+   "What if my utility is PG&E or SDG&E?",
+   "Choose Another utility. We have not verified a current PG&E or SDG&E home rebate on a program page, so the calculator shows only the statewide programs and their status."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "utility",
+   "label": "Who supplies your electricity?",
+   "type": "select",
+   "options": [
+    {
+     "value": "smud",
+     "label": "SMUD (Sacramento)"
+    },
+    {
+     "value": "ladwp",
+     "label": "LADWP (Los Angeles)"
+    },
+    {
+     "value": "gwp",
+     "label": "Glendale Water & Power"
+    },
+    {
+     "value": "bwp",
+     "label": "Burbank Water & Power"
+    },
+    {
+     "value": "pwp",
+     "label": "Pasadena Water & Power"
+    },
+    {
+     "value": "sce",
+     "label": "Southern California Edison (for example Long Beach, Santa Monica)"
+    },
+    {
+     "value": "other",
+     "label": "Another utility (PG&E, SDG&E and others)"
+    }
+   ]
+  },
+  {
+   "id": "city",
+   "label": "Which city is closest to your home?",
+   "type": "select",
+   "options": [
+    {
+     "value": "bakersfield",
+     "label": "Bakersfield"
+    },
+    {
+     "value": "bay-area",
+     "label": "Bay Area"
+    },
+    {
+     "value": "berkeley",
+     "label": "Berkeley"
+    },
+    {
+     "value": "burbank",
+     "label": "Burbank"
+    },
+    {
+     "value": "chula-vista",
+     "label": "Chula Vista"
+    },
+    {
+     "value": "escondido",
+     "label": "Escondido"
+    },
+    {
+     "value": "folsom",
+     "label": "Folsom"
+    },
+    {
+     "value": "fremont",
+     "label": "Fremont"
+    },
+    {
+     "value": "fresno",
+     "label": "Fresno"
+    },
+    {
+     "value": "glendale",
+     "label": "Glendale"
+    },
+    {
+     "value": "inland-empire",
+     "label": "Inland Empire"
+    },
+    {
+     "value": "long-beach",
+     "label": "Long Beach"
+    },
+    {
+     "value": "los-angeles",
+     "label": "Los Angeles"
+    },
+    {
+     "value": "moreno-valley",
+     "label": "Moreno Valley"
+    },
+    {
+     "value": "oakland",
+     "label": "Oakland"
+    },
+    {
+     "value": "ontario",
+     "label": "Ontario"
+    },
+    {
+     "value": "pasadena",
+     "label": "Pasadena"
+    },
+    {
+     "value": "rancho-cordova",
+     "label": "Rancho Cordova"
+    },
+    {
+     "value": "riverside",
+     "label": "Riverside"
+    },
+    {
+     "value": "roseville",
+     "label": "Roseville"
+    },
+    {
+     "value": "sacramento",
+     "label": "Sacramento"
+    },
+    {
+     "value": "san-bernardino",
+     "label": "San Bernardino"
+    },
+    {
+     "value": "san-diego",
+     "label": "San Diego"
+    },
+    {
+     "value": "san-francisco",
+     "label": "San Francisco"
+    },
+    {
+     "value": "san-jose",
+     "label": "San Jose"
+    },
+    {
+     "value": "santa-monica",
+     "label": "Santa Monica"
+    }
+   ],
+   "optional": true,
+   "help": "Used to show top-rated installers near you."
+  },
+  {
+   "id": "heating",
+   "label": "What heats your home now?",
+   "type": "select",
+   "options": [
+    {
+     "value": "gas",
+     "label": "Natural gas"
+    },
+    {
+     "value": "heatpump",
+     "label": "An existing heat pump"
+    },
+    {
+     "value": "other",
+     "label": "Something else"
+    }
+   ],
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
+   "id": "tons",
+   "label": "How many heating tons is your heat pump? (optional)",
+   "type": "select",
+   "options": [
+    {
+     "value": "1",
+     "label": "1 ton"
+    },
+    {
+     "value": "2",
+     "label": "2 tons"
+    },
+    {
+     "value": "3",
+     "label": "3 tons"
+    },
+    {
+     "value": "4",
+     "label": "4 tons"
+    },
+    {
+     "value": "5",
+     "label": "5 tons"
+    },
+    {
+     "value": "6",
+     "label": "6 tons"
+    }
+   ],
+   "optional": true,
+   "help": "Most homes need 2 to 4 tons. Your installer sizes it. Skip this to see the per-ton rate only.",
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
+   "id": "water_heater",
+   "label": "What fuel does your water heater use now?",
+   "type": "select",
+   "options": [
+    {
+     "value": "gas",
+     "label": "Natural gas"
+    },
+    {
+     "value": "other",
+     "label": "Electric or something else"
+    }
+   ],
+   "for": [
+    "water-heater"
+   ]
+  }
+ ],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump"
+  },
+  {
+   "id": "water-heater",
+   "label": "Heat pump water heater"
+  },
+  {
+   "id": "insulation",
+   "label": "Insulation"
+  },
+  {
+   "id": "battery",
+   "label": "Home battery"
+  },
+  {
+   "id": "ev",
+   "label": "EV charger"
+  },
+  {
+   "id": "thermostat",
+   "label": "Smart thermostat"
+  }
+ ],
+ "programs": [
+  {
+   "id": "tech-hp",
+   "fact": "us-ca-1-tech-clean-california-single-family-hp-hvac-hpwh",
+   "name": "TECH Clean California (single-family)",
+   "upgrade": "heat-pump",
+   "amount": {
+    "label": "Waitlist only",
+    "max": 0
+   },
+   "rules": "Single-family incentives are fully reserved. New requests go on a waitlist. It was a contractor-applied discount of $1,000 to $5,000."
+  },
+  {
+   "id": "heehra-hp",
+   "fact": "us-ca-2-heehra-ca-ira-home-electrification-and-appliance-r",
+   "name": "HEEHRA income-qualified heat pump rebate",
+   "upgrade": "heat-pump",
+   "amount": {
+    "label": "Waitlist only",
+    "max": 0
+   },
+   "rules": "Fully reserved statewide since February 24, 2026. It was up to $8,000 for households under 80% of area median income."
+  },
+  {
+   "id": "smud-hp",
+   "fact": "us-ca-4-smud-heat-pump-hvac-rebate",
+   "name": "SMUD heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 3000
+   },
+   "rules": "Two-stage or variable-stage heat pump installed by a participating contractor.",
+   "when": {
+    "utility": [
+     "smud"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "smud-go-electric",
+   "fact": "us-ca-7-smud-go-electric-bonus",
+   "name": "SMUD Go Electric bonus",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 2000
+   },
+   "rules": "Up to $500 per eligible circuit or panel, up to $2,000, when you replace a gas furnace or gas water heater with a heat pump. The home must be all-electric ready.",
+   "when": {
+    "utility": [
+     "smud"
+    ],
+    "heating": [
+     "gas"
+    ]
+   },
+   "requires": "smud-hp"
+  },
+  {
+   "id": "smud-hpwh",
+   "fact": "us-ca-5-smud-heat-pump-water-heater-rebate",
+   "name": "SMUD heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 4000
+   },
+   "rules": "NEEA Tier III or IV model.",
+   "when": {
+    "utility": [
+     "smud"
+    ]
+   }
+  },
+  {
+   "id": "smud-ins",
+   "fact": "us-ca-6-smud-seal-insulate",
+   "name": "SMUD seal and insulate",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 3000
+   },
+   "rules": "Air sealing, attic insulation and ducts through a Home Performance Program contractor.",
+   "when": {
+    "utility": [
+     "smud"
+    ]
+   }
+  },
+  {
+   "id": "smud-battery",
+   "fact": "us-ca-10-smud-my-energy-optimizer-partner-battery-enrollmen",
+   "name": "SMUD partner battery enrollment",
+   "upgrade": "battery",
+   "amount": {
+    "max": 6000
+   },
+   "rules": "$300 per kWh, up to $6,000, for projects submitted on or after September 23, 2026. Needs the Solar and Storage Rate and enrolment within 90 days of permission to operate. SMUD has no separate solar cash rebate.",
+   "when": {
+    "utility": [
+     "smud"
+    ]
+   }
+  },
+  {
+   "id": "smud-ev",
+   "fact": "us-ca-8-smud-charge-home",
+   "name": "SMUD Charge@Home",
+   "upgrade": "ev",
+   "amount": {
+    "max": 600
+   },
+   "rules": "Up to $600 for an EV charger and/or circuit.",
+   "when": {
+    "utility": [
+     "smud"
+    ]
+   }
+  },
+  {
+   "id": "smud-tstat",
+   "fact": "us-ca-9-smud-smart-thermostat-induction",
+   "name": "SMUD smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 50
+   },
+   "rules": "An instant rebate at the SMUD Energy Store.",
+   "when": {
+    "utility": [
+     "smud"
+    ]
+   }
+  },
+  {
+   "id": "ladwp-hp",
+   "fact": "us-ca-11-ladwp-consumer-rebate-program",
+   "name": "LADWP heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 2500,
+     "question": "tons"
+    }
+   },
+   "rules": "Up to $2,500 per ton for rebates from November 1, 2025. Apply after the work, within 12 months.",
+   "when": {
+    "utility": [
+     "ladwp"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ladwp-hpwh",
+   "fact": "us-ca-11-ladwp-consumer-rebate-program",
+   "name": "LADWP heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 2500
+   },
+   "rules": "Up to $2,500. Apply after the work, within 12 months.",
+   "when": {
+    "utility": [
+     "ladwp"
+    ]
+   }
+  },
+  {
+   "id": "gwp-hp-gas",
+   "fact": "us-ca-la-munis-7-gwp-heat-pump-hvac-replacing-gas-furnace-gas-elect",
+   "name": "Glendale Water & Power: heat pump replacing a gas furnace",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 1000,
+     "question": "tons",
+     "cap": 5000
+    }
+   },
+   "rules": "SEER2 15.2 or more and HSPF2 7.8 or more, AHRI certified, with a finalized mechanical permit. Paid by check until funds run out.",
+   "when": {
+    "utility": [
+     "gwp"
+    ],
+    "heating": [
+     "gas"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "gwp-hp-hp",
+   "fact": "us-ca-la-munis-8-gwp-heat-pump-hvac-replacing-an-existing-heat-pump",
+   "name": "Glendale Water & Power: replacing an existing heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 500,
+     "question": "tons",
+     "cap": 2500
+    }
+   },
+   "rules": "Paid as a bill credit.",
+   "when": {
+    "utility": [
+     "gwp"
+    ],
+    "heating": [
+     "heatpump"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "gwp-panel",
+   "fact": "us-ca-la-munis-10-gwp-panel-upgrade",
+   "name": "Glendale Water & Power: panel upgrade",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 1000
+   },
+   "rules": "Only when paired with a heat pump HVAC or heat pump water heater install. Needs a finalized electrical permit.",
+   "when": {
+    "utility": [
+     "gwp"
+    ],
+    "heating": [
+     "gas"
+    ]
+   },
+   "requires": "gwp-hp-gas"
+  },
+  {
+   "id": "gwp-hpwh",
+   "fact": "us-ca-la-munis-9-gwp-heat-pump-water-heater",
+   "name": "Glendale Water & Power: heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 4000
+   },
+   "rules": "Limited time. Must replace a natural gas water heater. Needs gas capping and electrical permits.",
+   "when": {
+    "utility": [
+     "gwp"
+    ],
+    "water_heater": [
+     "gas"
+    ]
+   }
+  },
+  {
+   "id": "bwp-hp",
+   "fact": "us-ca-la-munis-12-bwp-heat-pump-hvac-mini-split-replacing-gas",
+   "name": "Burbank Water & Power: heat pump replacing gas",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 1000,
+     "question": "tons",
+     "cap": 2500
+    }
+   },
+   "rules": "Equipment and panel only, not labor. Low-income households can reach $5,000.",
+   "when": {
+    "utility": [
+     "bwp"
+    ],
+    "heating": [
+     "gas"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "bwp-hpwh",
+   "fact": "us-ca-la-munis-13-bwp-electrification-other",
+   "name": "Burbank Water & Power: heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 1500
+   },
+   "rules": "For customers replacing gas.",
+   "when": {
+    "utility": [
+     "bwp"
+    ],
+    "water_heater": [
+     "gas"
+    ]
+   }
+  },
+  {
+   "id": "bwp-ev",
+   "fact": "us-ca-la-munis-14-bwp-ev-charger-rebate",
+   "name": "Burbank Water & Power: EV charger",
+   "upgrade": "ev",
+   "amount": {
+    "max": 1250
+   },
+   "rules": "Standard charger $200, smart charger $500, panel upgrade up to $750. More in a disadvantaged community. Needs a time-of-use rate. Up to two chargers.",
+   "when": {
+    "utility": [
+     "bwp"
+    ]
+   }
+  },
+  {
+   "id": "bwp-tstat",
+   "fact": "us-ca-la-munis-15-bwp-efficiency-rebates",
+   "name": "Burbank Water & Power: smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 75
+   },
+   "rules": "Up to $75.",
+   "when": {
+    "utility": [
+     "bwp"
+    ]
+   }
+  },
+  {
+   "id": "pwp-hp",
+   "fact": "us-ca-la-munis-0-pwp-heat-pump-rebate",
+   "name": "Pasadena Water & Power: heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 170,
+     "question": "tons"
+    }
+   },
+   "rules": "SEER2 15.3 or more and HSPF2 7.8 or more. Apply within 180 days. Adds $20 per ton if bought in Pasadena, and $170 per ton for bill payment assistance customers.",
+   "when": {
+    "utility": [
+     "pwp"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "pwp-hpwh",
+   "fact": "us-ca-la-munis-1-pwp-heat-pump-water-heater-rebate",
+   "name": "Pasadena Water & Power: heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 500
+   },
+   "rules": "Adds $20 if bought in Pasadena. Apply within 180 days.",
+   "when": {
+    "utility": [
+     "pwp"
+    ]
+   }
+  },
+  {
+   "id": "pwp-ev",
+   "fact": "us-ca-la-munis-2-pwp-ev-charger-rebate",
+   "name": "Pasadena Water & Power: EV charger",
+   "upgrade": "ev",
+   "amount": {
+    "max": 600
+   },
+   "rules": "$600 for a connected Level 2 charger, $200 for a standard one. Up to 2 per address, permit and professional install.",
+   "when": {
+    "utility": [
+     "pwp"
+    ]
+   }
+  },
+  {
+   "id": "pwp-tstat",
+   "fact": "us-ca-la-munis-3-pwp-smart-thermostat-rebate",
+   "name": "Pasadena Water & Power: smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 50
+   },
+   "rules": "Adds $10 if bought in Pasadena, and $50 more for bill payment assistance customers.",
+   "when": {
+    "utility": [
+     "pwp"
+    ]
+   }
+  },
+  {
+   "id": "sce-tstat",
+   "fact": "us-ca-la-munis-17-sce-smart-energy-program",
+   "name": "SCE Smart Energy Program",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 75
+   },
+   "rules": "A $75 bill credit for enrolling an eligible smart thermostat in demand response.",
+   "when": {
+    "utility": [
+     "sce"
+    ]
+   }
+  },
+  {
+   "id": "sce-ev-panel",
+   "fact": "us-ca-la-munis-16-sce-charge-ready-home",
+   "name": "SCE Charge Ready Home",
+   "upgrade": "ev",
+   "amount": {
+    "label": "Up to $4,200",
+    "max": 0
+   },
+   "rules": "A panel upgrade rebate for households under 80% of area median income or on assistance. You must install a Level 2 charger within 180 days. Not added to your total because we cannot check income here.",
+   "when": {
+    "utility": [
+     "sce"
+    ]
+   }
+  },
+  {
+   "id": "sgip",
+   "fact": "us-ca-13-sgip-self-generation-incentive-program",
+   "name": "Self-Generation Incentive Program (SGIP)",
+   "upgrade": "battery",
+   "amount": {
+    "label": "Varies by tier",
+    "max": 0
+   },
+   "rules": "Income-qualified, medical baseline or high fire-threat households. Much of it is waitlisted. Check the SGIP step tracker at selfgenca.com. Not added to your total."
+  }
+ ],
+ "closed_facts": [
+  "us-ca-0-federal-25c-25d-tax-credits"
+ ],
+ "notes": [
+  "PG&E, SDG&E and SCE customers who add solar after April 14, 2023 are on the Net Billing Tariff, which credits exports well below the retail rate. SMUD and LADWP set their own rules.",
+  "Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."
+ ]
+}

@@ -1,0 +1,526 @@
+{
+ "code": "ns",
+ "name": "Nova Scotia",
+ "country": "ca",
+ "currency": "CAD",
+ "hub": "/ca/ns/",
+ "installers": "/installers/",
+ "installers_dir": "ns",
+ "city_page": "ca/ns/{c}",
+ "title": "Nova Scotia Rebate Calculator 2026: Efficiency Nova Scotia and Income-Based Help",
+ "h1": "Nova Scotia Rebate Calculator 2026: What You Could Get Back",
+ "desc": "Free Nova Scotia rebate calculator. Efficiency Nova Scotia heat pump, insulation and water heater rebates plus income-based top-ups, with the official source for every amount.",
+ "intro": "Answer a few questions and see which Nova Scotia rebates fit your home, with a source for every number.",
+ "short": "Efficiency Nova Scotia pays up to $5,000 back on upgrades from a Home Energy Assessment: $300 per ton for a ductless heat pump, $500 per ton for a ducted one and $600 per ton for geothermal. A heat pump water heater gets $800. Homes without electric heat and under the income limits can add up to $5,000 more. The oil-to-heat-pump program closed on July 2, 2026.",
+ "faq": [
+  [
+   "How much is the Nova Scotia heat pump rebate in 2026?",
+   "$300 per ton for a ductless mini-split, $500 per ton of new capacity for a centrally ducted heat pump and $600 per ton for geothermal, through a Home Energy Assessment. Replacement heat pumps are not eligible, and total assessment rebates are capped at $5,000."
+  ],
+  [
+   "Is the oil-to-heat-pump program still open in Nova Scotia?",
+   "No. It closed to new applicants on July 2, 2026 when the funding was fully allocated."
+  ],
+  [
+   "What is the Moderate Income Rebate?",
+   "A top-up for homeowners with mostly non-electric heat and after-tax household income under the limits. It is now capped at $5,000 and stacks with the assessment rebates for up to $10,000 in total. It must be approved before the work starts."
+  ],
+  [
+   "Is there a solar or battery rebate in Nova Scotia?",
+   "Not for homeowners. SolarHomes closed in April 2025 and we found no current residential battery rebate."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "city",
+   "label": "Which city is closest to your home?",
+   "type": "select",
+   "options": [
+    {
+     "value": "cape-breton",
+     "label": "Cape Breton"
+    },
+    {
+     "value": "halifax",
+     "label": "Halifax"
+    },
+    {
+     "value": "other",
+     "label": "Somewhere else in Nova Scotia"
+    }
+   ],
+   "optional": true,
+   "help": "Used to show top-rated installers near you."
+  },
+  {
+   "id": "heating",
+   "label": "What heats your home now?",
+   "type": "select",
+   "options": [
+    {
+     "value": "electric",
+     "label": "Electricity"
+    },
+    {
+     "value": "other",
+     "label": "Oil, propane, wood or gas"
+    }
+   ]
+  },
+  {
+   "id": "existing_hp",
+   "label": "Is the new heat pump replacing an existing heat pump?",
+   "type": "select",
+   "options": [
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "yes",
+     "label": "Yes"
+    }
+   ],
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
+   "id": "hp_type",
+   "label": "Which kind of heat pump?",
+   "type": "select",
+   "options": [
+    {
+     "value": "ductless",
+     "label": "Ductless mini-split"
+    },
+    {
+     "value": "ducted",
+     "label": "Central ducted"
+    },
+    {
+     "value": "geothermal",
+     "label": "Geothermal"
+    }
+   ],
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
+   "id": "tons",
+   "label": "How many heating tons is your heat pump? (optional)",
+   "type": "select",
+   "options": [
+    {
+     "value": "1",
+     "label": "1 ton"
+    },
+    {
+     "value": "2",
+     "label": "2 tons"
+    },
+    {
+     "value": "3",
+     "label": "3 tons"
+    },
+    {
+     "value": "4",
+     "label": "4 tons"
+    },
+    {
+     "value": "5",
+     "label": "5 tons"
+    },
+    {
+     "value": "6",
+     "label": "6 tons"
+    }
+   ],
+   "optional": true,
+   "help": "Most homes need 2 to 4 tons. Your installer sizes it. Skip this to see the per-ton rate only.",
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
+   "id": "insulation_scope",
+   "label": "Which parts of your home are you insulating?",
+   "type": "select",
+   "options": [
+    {
+     "value": "attic",
+     "label": "Attic only"
+    },
+    {
+     "value": "attic_walls",
+     "label": "Attic and exterior walls"
+    },
+    {
+     "value": "attic_walls_basement",
+     "label": "Attic, walls and basement walls"
+    }
+   ],
+   "for": [
+    "insulation"
+   ]
+  },
+  {
+   "id": "household",
+   "label": "How many people live in your home?",
+   "type": "select",
+   "options": [
+    {
+     "value": "1",
+     "label": "1"
+    },
+    {
+     "value": "2",
+     "label": "2"
+    },
+    {
+     "value": "3",
+     "label": "3"
+    },
+    {
+     "value": "4",
+     "label": "4"
+    },
+    {
+     "value": "5",
+     "label": "5 or more"
+    }
+   ],
+   "optional": true
+  },
+  {
+   "id": "income",
+   "label": "Household income after tax (optional)",
+   "type": "money",
+   "optional": true,
+   "help": "Only used to check income-based programs. It never leaves your device."
+  }
+ ],
+ "derived": {
+  "income_level": {
+   "from": [
+    "household",
+    "income"
+   ],
+   "source_fact": "ns-4-moderate-income-rebate-mir",
+   "limits": {
+    "L1": [
+     30187,
+     57075,
+     57075,
+     57075,
+     79163,
+     79163,
+     79163
+    ],
+    "L2": [
+     37260,
+     77050,
+     98900,
+     120750,
+     126500,
+     126500,
+     126500
+    ],
+    "L3": [
+     37260,
+     77050,
+     98900,
+     120750,
+     126500,
+     126500,
+     126500
+    ]
+   }
+  }
+ },
+ "pools": [
+  {
+   "id": "hea",
+   "max": 5000,
+   "label": "Efficiency Nova Scotia caps assessment rebates at $5,000 in total. We already took anything above that off your total."
+  },
+  {
+   "id": "mir",
+   "max": 5000,
+   "label": "The Moderate Income Rebate is capped at $5,000. We already took anything above that off your total."
+  }
+ ],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump"
+  },
+  {
+   "id": "water-heater",
+   "label": "Heat pump water heater"
+  },
+  {
+   "id": "insulation",
+   "label": "Insulation"
+  },
+  {
+   "id": "thermostat",
+   "label": "Smart thermostat"
+  },
+  {
+   "id": "support",
+   "label": "Free help or income-based help"
+  }
+ ],
+ "programs": [
+  {
+   "id": "hea-ductless",
+   "fact": "ns-1-hea-heat-pump-rebates",
+   "name": "Efficiency Nova Scotia: ductless heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 300,
+     "question": "tons"
+    }
+   },
+   "rules": "Through a Home Energy Assessment. Model on the ENS list, installed by a certified contractor. Replacement heat pumps are not eligible.",
+   "when": {
+    "existing_hp": [
+     "no"
+    ],
+    "hp_type": [
+     "ductless"
+    ]
+   },
+   "group": "hp",
+   "pool": "hea"
+  },
+  {
+   "id": "hea-ducted",
+   "fact": "ns-1-hea-heat-pump-rebates",
+   "name": "Efficiency Nova Scotia: central ducted heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 500,
+     "question": "tons"
+    }
+   },
+   "rules": "Paid per ton of newly added capacity, through a Home Energy Assessment. Replacement heat pumps and ducted mini-splits are not eligible.",
+   "when": {
+    "existing_hp": [
+     "no"
+    ],
+    "hp_type": [
+     "ducted"
+    ]
+   },
+   "group": "hp",
+   "pool": "hea"
+  },
+  {
+   "id": "hea-geo",
+   "fact": "ns-1-hea-heat-pump-rebates",
+   "name": "Efficiency Nova Scotia: geothermal heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 600,
+     "question": "tons"
+    }
+   },
+   "rules": "Through a Home Energy Assessment. Replacement heat pumps are not eligible.",
+   "when": {
+    "existing_hp": [
+     "no"
+    ],
+    "hp_type": [
+     "geothermal"
+    ]
+   },
+   "group": "hp",
+   "pool": "hea"
+  },
+  {
+   "id": "mir-ductless",
+   "fact": "ns-4-moderate-income-rebate-mir",
+   "name": "Moderate Income Rebate: ductless heat pump top-up",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 500,
+     "question": "tons"
+    }
+   },
+   "rules": "For homeowners with mostly non-electric heat under the income limits. Must be approved before the work starts.",
+   "when": {
+    "heating": [
+     "other"
+    ],
+    "income_level": [
+     "L1",
+     "L2"
+    ],
+    "existing_hp": [
+     "no"
+    ],
+    "hp_type": [
+     "ductless"
+    ]
+   },
+   "requires": "hea-ductless",
+   "pool": "mir"
+  },
+  {
+   "id": "mir-ducted",
+   "fact": "ns-4-moderate-income-rebate-mir",
+   "name": "Moderate Income Rebate: ducted heat pump top-up",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 1500,
+     "question": "tons"
+    }
+   },
+   "rules": "For homeowners with mostly non-electric heat under the income limits. Must be approved before the work starts.",
+   "when": {
+    "heating": [
+     "other"
+    ],
+    "income_level": [
+     "L1",
+     "L2"
+    ],
+    "existing_hp": [
+     "no"
+    ],
+    "hp_type": [
+     "ducted"
+    ]
+   },
+   "requires": "hea-ducted",
+   "pool": "mir"
+  },
+  {
+   "id": "hea-hpwh",
+   "fact": "ns-2-hea-heat-pump-water-heater",
+   "name": "Efficiency Nova Scotia: heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 800
+   },
+   "rules": "ENERGY STAR model. The same $800 is paid instantly at participating stores, or through the assessment if you did not take the instant rebate."
+  },
+  {
+   "id": "hea-ins",
+   "fact": "ns-3-hea-insulation-windows-air-sealing-hrv-wood",
+   "name": "Efficiency Nova Scotia: insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "by": "insulation_scope",
+    "values": {
+     "attic": 750,
+     "attic_walls": 2250,
+     "attic_walls_basement": 3450
+    }
+   },
+   "rules": "Attic to R-50 up to $750, exterior walls up to $1,500, basement walls up to $1,200. Paid by the share of area insulated, through a Home Energy Assessment.",
+   "pool": "hea"
+  },
+  {
+   "id": "instant-tstat",
+   "fact": "ns-7-ens-instant-rebates",
+   "name": "Instant rebate: smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 45
+   },
+   "rules": "At participating stores, and online at getmysa.com. Only for thermostats that control electric heat.",
+   "when": {
+    "heating": [
+     "electric"
+    ]
+   }
+  },
+  {
+   "id": "free-tstat",
+   "fact": "ns-12-free-product-installation",
+   "name": "Free smart thermostat installation",
+   "upgrade": "thermostat",
+   "amount": {
+    "label": "Free, worth up to $160",
+    "max": 0
+   },
+   "rules": "For electrically heated homes on the residential rate that have an analog or non-programmable thermostat.",
+   "when": {
+    "heating": [
+     "electric"
+    ]
+   }
+  },
+  {
+   "id": "mir-general",
+   "fact": "ns-4-moderate-income-rebate-mir",
+   "name": "Moderate Income Rebate",
+   "upgrade": "support",
+   "amount": {
+    "label": "Up to $5,000",
+    "max": 0
+   },
+   "rules": "A top-up on other upgrades too, for homeowners with mostly non-electric heat under the after-tax income limits. Together with the assessment rebates you can reach $10,000. Must be approved before the work starts.",
+   "when": {
+    "heating": [
+     "other"
+    ],
+    "income_level": [
+     "L1",
+     "L2"
+    ]
+   }
+  },
+  {
+   "id": "homewarming",
+   "fact": "ns-6-homewarming",
+   "name": "HomeWarming (free upgrades)",
+   "upgrade": "support",
+   "amount": {
+    "label": "Free",
+    "max": 0
+   },
+   "rules": "Free insulation, draft-proofing and heat pumps for lower-income homeowners, with a free home energy assessment. Wait times are long.",
+   "when": {
+    "income_level": [
+     "L1"
+    ]
+   }
+  },
+  {
+   "id": "harp",
+   "fact": "ns-16-heating-assistance-rebate-program-harp-province-of",
+   "name": "Heating Assistance Rebate Program",
+   "upgrade": "support",
+   "amount": {
+    "label": "$400 in 2025-26",
+    "max": 0
+   },
+   "rules": "A yearly rebate for lower-income households, including renters who pay their own electric heat. 2026-27 applications open October 1, 2026 and the amount is not posted yet."
+  }
+ ],
+ "closed_facts": [
+  "ns-5-oil-to-heat-pump-affordability-ohpa-in-ns",
+  "ns-8-solarhomes-residential",
+  "ns-11-home-heating-system-rebates",
+  "ns-13-eco-shift"
+ ],
+ "notes": [
+  "We found no current Efficiency Nova Scotia battery rebate. Homeowner solar rebates ended in April 2025.",
+  "Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."
+ ]
+}

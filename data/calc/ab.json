@@ -1,0 +1,231 @@
+{
+ "code": "ab",
+ "name": "Alberta",
+ "country": "ca",
+ "currency": "CAD",
+ "hub": "/ca/ab/",
+ "installers": "/installers/",
+ "installers_dir": "ab",
+ "city_page": "ca/ab/{c}",
+ "title": "Alberta Rebate Calculator 2026: What's Open Right Now",
+ "h1": "Alberta Rebate Calculator 2026: What's Actually Open",
+ "desc": "Free Alberta rebate calculator. See which city programs are open, on a waitlist or closed, with the official source for every amount. Honest answers, including when there is nothing to claim.",
+ "intro": "Alberta has fewer rebates than most provinces. This calculator shows what is open in your city today, and what is not.",
+ "short": "Alberta has no provincial heat pump or solar rebate, and the federal Greener Homes grant and oil-to-heat-pump program are closed. What exists is local: Red Deer pays $50 for a smart thermostat, EPCOR runs a small thermostat pilot in Edmonton, and clean energy loans in Calgary, St. Albert and Edmonton are paused, on a waitlist or unconfirmed.",
+ "faq": [
+  [
+   "Is there a heat pump rebate in Alberta?",
+   "We could not find one. Utility heat pump rebate ranges quoted on some sites (ENMAX, ATCO, EPCOR, FortisAlberta) have no source on the utilities' own pages, so we do not list amounts. Ask your utility before you buy."
+  ],
+  [
+   "What happened to the federal oil-to-heat-pump program in Alberta?",
+   "It closed. July 31, 2026 was the last day for Alberta residents to apply. The Greener Homes grant and loan are also closed."
+  ],
+  [
+   "What is the Clean Energy Improvement Program?",
+   "A loan repaid on your property tax bill. It is financing, not a rebate. Calgary's intake is closed until winter 2026/2027, St. Albert takes waitlist applications only, and Lethbridge is at capacity."
+  ],
+  [
+   "Does Alberta join the new federal affordability program?",
+   "Not as of August 31, 2026. Only BC, Manitoba, Nova Scotia, PEI and Quebec take part."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "city",
+   "label": "Which city is closest to your home?",
+   "type": "select",
+   "options": [
+    {
+     "value": "calgary",
+     "label": "Calgary"
+    },
+    {
+     "value": "edmonton",
+     "label": "Edmonton"
+    },
+    {
+     "value": "fort-mcmurray",
+     "label": "Fort McMurray"
+    },
+    {
+     "value": "lethbridge",
+     "label": "Lethbridge"
+    },
+    {
+     "value": "red-deer",
+     "label": "Red Deer"
+    },
+    {
+     "value": "st-albert",
+     "label": "St. Albert"
+    },
+    {
+     "value": "other",
+     "label": "Somewhere else in Alberta"
+    }
+   ]
+  }
+ ],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump"
+  },
+  {
+   "id": "solar",
+   "label": "Solar panels"
+  },
+  {
+   "id": "thermostat",
+   "label": "Smart thermostat"
+  },
+  {
+   "id": "support",
+   "label": "Financing or free upgrades"
+  }
+ ],
+ "programs": [
+  {
+   "id": "reddeer-tstat",
+   "fact": "ab-5-red-deer-smart-thermostat-rebate",
+   "name": "Red Deer smart thermostat rebate",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 50
+   },
+   "rules": "ENERGY STAR certified smart thermostat. One per utility account, bought in the same calendar year. Apply by December 31, 2026 or until funds run out.",
+   "when": {
+    "city": [
+     "red-deer"
+    ]
+   }
+  },
+  {
+   "id": "epcor-peak",
+   "fact": "ab-13-epcor-peak-rewards-pilot",
+   "name": "EPCOR Peak Rewards pilot",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 50
+   },
+   "rules": "$50 prepaid card to enrol a thermostat you already own, plus $25 a season. Needs central AC and is limited to select Edmonton neighbourhoods. There are no free thermostats.",
+   "when": {
+    "city": [
+     "edmonton"
+    ]
+   }
+  },
+  {
+   "id": "util-hp",
+   "fact": "ab-9-enmax-atco-epcor-fortisalberta-heat-pump-or-solar-",
+   "name": "Utility heat pump rebates (ENMAX, ATCO, EPCOR, FortisAlberta)",
+   "upgrade": "heat-pump",
+   "amount": {
+    "label": "Not confirmed",
+    "max": 0
+   },
+   "rules": "We found no current rebate on the utilities' own pages, so we list no amount. Ask your utility before you buy."
+  },
+  {
+   "id": "util-solar",
+   "fact": "ab-9-enmax-atco-epcor-fortisalberta-heat-pump-or-solar-",
+   "name": "Utility solar incentives",
+   "upgrade": "solar",
+   "amount": {
+    "label": "Not confirmed",
+    "max": 0
+   },
+   "rules": "We found no current utility solar incentive on the utilities' own pages. Ask your utility before you buy."
+  },
+  {
+   "id": "calgary-ceip",
+   "fact": "ab-0-calgary-residential-ceip",
+   "name": "Calgary Clean Energy Improvement Program",
+   "upgrade": "support",
+   "amount": {
+    "label": "Loan up to $50,000",
+    "max": 0
+   },
+   "rules": "Financing, not a rebate: up to 100% of cost over up to 20 years, repaid on your property tax bill. Intake is closed until winter 2026/2027.",
+   "when": {
+    "city": [
+     "calgary"
+    ]
+   }
+  },
+  {
+   "id": "calgary-upgrades",
+   "fact": "ab-11-calgary-home-upgrades-program",
+   "name": "Calgary Home Upgrades Program",
+   "upgrade": "support",
+   "amount": {
+    "label": "Free",
+    "max": 0
+   },
+   "rules": "Free furnaces, insulation and air sealing for income-qualified Calgarians, run by Kambo Energy Group. There is a waitlist.",
+   "when": {
+    "city": [
+     "calgary"
+    ]
+   }
+  },
+  {
+   "id": "stalbert-ceip",
+   "fact": "ab-2-st-albert-ceip",
+   "name": "St. Albert Clean Energy Improvement Program",
+   "upgrade": "support",
+   "amount": {
+    "label": "Loan",
+    "max": 0
+   },
+   "rules": "Financing up to 100% of cost. Waitlist applications only, processed first come, first served.",
+   "when": {
+    "city": [
+     "st-albert"
+    ]
+   }
+  },
+  {
+   "id": "stalbert-incentive",
+   "fact": "ab-10-st-albert-ceip-incentive",
+   "name": "St. Albert CEIP incentive",
+   "upgrade": "support",
+   "amount": {
+    "label": "$1,400",
+    "max": 0
+   },
+   "rules": "A $1,400 incentive applied to the Clean Energy Improvement Tax per project. Minimum project $3,000. Waitlist only.",
+   "when": {
+    "city": [
+     "st-albert"
+    ]
+   }
+  },
+  {
+   "id": "edmonton-ceip",
+   "fact": "ab-4-edmonton-ceip-city-programs",
+   "name": "Edmonton Clean Energy Improvement Program",
+   "upgrade": "support",
+   "amount": {
+    "label": "Loan, rate not confirmed",
+    "max": 0
+   },
+   "rules": "Edmonton's residential loan is listed by Alberta Municipalities. We could not confirm the rate or whether intake is open, so check with the City.",
+   "when": {
+    "city": [
+     "edmonton"
+    ]
+   }
+  }
+ ],
+ "closed_facts": [
+  "ab-1-lethbridge-ceip",
+  "ab-6-federal-oil-to-heat-pump-affordability-alberta",
+  "ab-7-canada-greener-homes-grant-loan"
+ ],
+ "notes": [
+  "Alberta is not part of the federal Canada Greener Homes Affordability Program.",
+  "Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."
+ ]
+}

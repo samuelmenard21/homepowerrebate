@@ -1,0 +1,236 @@
+{
+ "code": "pa",
+ "name": "Pennsylvania",
+ "country": "us",
+ "currency": "USD",
+ "hub": "/us/pa/",
+ "installers": "/installers/",
+ "installers_dir": "pa",
+ "city_page": "us/pa/{c}",
+ "title": "Pennsylvania Rebate Calculator 2026: PECO and PPL Electric Heat Pump and Thermostat Rebates",
+ "h1": "Pennsylvania Rebate Calculator 2026: What Your Utility Pays",
+ "desc": "Free Pennsylvania rebate calculator for PECO and PPL Electric customers. Heat pump, water heater, thermostat and insulation rebates, with the official source for every amount.",
+ "intro": "Pennsylvania rebates are small and come from your electric utility. This calculator shows what PECO and PPL Electric pay today.",
+ "short": "Pennsylvania has no statewide heat pump rebate. PECO pays $200 to $300 for a heat pump, $350 for a heat pump water heater and $25 to $50 for a smart thermostat. PPL Electric pays $400 for a heat pump water heater, $50 to $100 for a thermostat and up to $500 for insulation. The state solar program and the federal tax credits have ended.",
+ "faq": [
+  [
+   "Is there a heat pump rebate in Pennsylvania?",
+   "Only from some utilities. PECO pays $200 or $300 for an air-source heat pump and $150 or $300 for a ductless one, depending on efficiency. PPL Electric lists $225 to $500 but its offer changes, so confirm it with PPL. We have not verified Duquesne Light or Penelec amounts."
+  ],
+  [
+   "Is there a solar rebate in Pennsylvania?",
+   "No current statewide one. The PA Sunshine program stopped taking applications in 2013, and PECO's Act 129 solar rebate has ended."
+  ],
+  [
+   "Is the federal heat pump tax credit still available?",
+   "No. The 25C and 25D credits ended for spending after December 31, 2025."
+  ],
+  [
+   "How long do I have to apply to PECO?",
+   "Within 90 days of purchase for the heat pump and water heater rebates."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "utility",
+   "label": "Who supplies your electricity?",
+   "type": "select",
+   "options": [
+    {
+     "value": "peco",
+     "label": "PECO"
+    },
+    {
+     "value": "ppl",
+     "label": "PPL Electric"
+    },
+    {
+     "value": "other",
+     "label": "Another utility (Duquesne Light, Penelec and others)"
+    }
+   ]
+  },
+  {
+   "id": "city",
+   "label": "Which city is closest to your home?",
+   "type": "select",
+   "options": [
+    {
+     "value": "allentown",
+     "label": "Allentown"
+    },
+    {
+     "value": "erie",
+     "label": "Erie"
+    },
+    {
+     "value": "philadelphia",
+     "label": "Philadelphia"
+    },
+    {
+     "value": "pittsburgh",
+     "label": "Pittsburgh"
+    }
+   ],
+   "optional": true,
+   "help": "Used to show top-rated installers near you."
+  }
+ ],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump"
+  },
+  {
+   "id": "water-heater",
+   "label": "Heat pump water heater"
+  },
+  {
+   "id": "insulation",
+   "label": "Insulation and air sealing"
+  },
+  {
+   "id": "thermostat",
+   "label": "Smart thermostat"
+  }
+ ],
+ "programs": [
+  {
+   "id": "peco-hp",
+   "fact": "pa-0-peco-air-source-heat-pump",
+   "name": "PECO air-source heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 300,
+    "label": "$200 or $300"
+   },
+   "rules": "$200 at 15.2 to 17.0 SEER2, $300 at 17.1 SEER2 or higher. Minimums: 11.0 EER2 and 7.8 HSPF2. Apply within 90 days of purchase.",
+   "when": {
+    "utility": [
+     "peco"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "peco-mini",
+   "fact": "pa-1-peco-ductless-mini-split-heat-pump",
+   "name": "PECO ductless mini-split heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 300,
+    "label": "$150 or $300"
+   },
+   "rules": "$150 or $300 depending on efficiency. Apply within 90 days of purchase.",
+   "when": {
+    "utility": [
+     "peco"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "peco-hpwh",
+   "fact": "pa-2-peco-heat-pump-water-heater",
+   "name": "PECO heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 350
+   },
+   "rules": "ENERGY STAR certified electric model. Apply within 90 days of purchase.",
+   "when": {
+    "utility": [
+     "peco"
+    ]
+   }
+  },
+  {
+   "id": "peco-tstat",
+   "fact": "pa-3-peco-smart-thermostat",
+   "name": "PECO smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 50,
+    "label": "$25 to $50"
+   },
+   "rules": "$50 instant, or $25 after install.",
+   "when": {
+    "utility": [
+     "peco"
+    ]
+   }
+  },
+  {
+   "id": "ppl-hp",
+   "fact": "pa-4-ppl-electric-heat-pumps",
+   "name": "PPL Electric heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 0,
+    "label": "$225 to $500"
+   },
+   "rules": "Air source $225 or $325, mini-split $225, ground source $500, depending on your offer. Confirm the current offer with PPL, so it is not added to your total. Equipment installed on or before May 31, 2026 is no longer eligible.",
+   "when": {
+    "utility": [
+     "ppl"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ppl-hpwh",
+   "fact": "pa-5-ppl-electric-heat-pump-water-heater",
+   "name": "PPL Electric heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 400
+   },
+   "rules": "ENERGY STAR certified.",
+   "when": {
+    "utility": [
+     "ppl"
+    ]
+   }
+  },
+  {
+   "id": "ppl-tstat",
+   "fact": "pa-6-ppl-electric-smart-thermostat",
+   "name": "PPL Electric smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 100,
+    "label": "$50 or $100"
+   },
+   "rules": "ENERGY STAR certified. The amount depends on your offer.",
+   "when": {
+    "utility": [
+     "ppl"
+    ]
+   }
+  },
+  {
+   "id": "ppl-ins",
+   "fact": "pa-7-ppl-electric-insulation-and-air-sealing",
+   "name": "PPL Electric insulation and air sealing",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 500
+   },
+   "rules": "Insulation up to $200 or $500 and air sealing up to $150, depending on your offer.",
+   "when": {
+    "utility": [
+     "ppl"
+    ]
+   }
+  }
+ ],
+ "closed_facts": [
+  "pa-8-pa-sunshine-solar-program",
+  "pa-9-federal-residential-clean-energy-credits-25c-25d",
+  "pa-10-peco-act-129-solar-rebate"
+ ],
+ "notes": [
+  "We have not verified Duquesne Light or Penelec amounts, PECO's income-qualified amounts, or the Philadelphia solar rebate. We list only what we have read on a program's own page.",
+  "Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."
+ ]
+}

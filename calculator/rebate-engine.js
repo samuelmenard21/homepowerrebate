@@ -74,7 +74,8 @@
     if (!a.per) return null;
     var rate = a.per.bonus_when && dictMatch(a.per.bonus_when, v) ? a.per.bonus_rate : a.per.rate;
     var base = "$" + Math.round(rate).toLocaleString("en-CA") + " per " + a.per.unit;
-    return amount > 0 ? "$" + Math.round(amount).toLocaleString("en-CA") + " (" + base + ")" : base;
+    if (amount > 0) return "$" + Math.round(amount).toLocaleString("en-CA") + " (" + base + ")";
+    return a.per.cap ? base + ", up to $" + Math.round(a.per.cap).toLocaleString("en-CA") : base;
   }
 
   /* Returns {items, total, unknownIncome}. items carry counted=true when they add to the total. */
@@ -94,7 +95,7 @@
     }
     var items = hit.map(function (p) {
       return { id: p.id, name: p.name, upgrade: p.upgrade, group: p.group || null, amount: amountOf(p, v), label: labelOf(p, v, amountOf(p, v)),
-               status: p.status, requires: p.requires || null, verified_on: p.verified_on, source_url: p.source_url, rules: p.rules, counted: false, covered: false };
+               status: p.status, requires: p.requires || null, pool: p.pool || null, verified_on: p.verified_on, source_url: p.source_url, rules: p.rules, counted: false, covered: false };
     });
     var best = {};
     items.forEach(function (it) {
@@ -114,7 +115,13 @@
       if (!it.requires || !COUNTED[it.status]) return;
       if (byId[it.requires] && byId[it.requires].counted) { it.counted = true; total += it.amount; } else it.covered = true;
     });
-    return { items: items, others: others.map(function (p) { return { id: p.id, name: p.name, upgrade: p.upgrade, amount: amountOf(p, v), label: labelOf(p, v, amountOf(p, v)), status: p.status, verified_on: p.verified_on, source_url: p.source_url, rules: p.rules, counted: false, covered: false }; }), total: total, incomeUnknown: v.income_level === "unknown", incomeLevel: v.income_level };
+    var capNotes = [];
+    (region.pools || []).forEach(function (pl) {
+      var sum = 0;
+      items.forEach(function (it) { if (it.counted && it.pool === pl.id) sum += it.amount; });
+      if (sum > pl.max) { total -= sum - pl.max; capNotes.push(pl.label); }
+    });
+    return { capNotes: capNotes, items: items, others: others.map(function (p) { return { id: p.id, name: p.name, upgrade: p.upgrade, amount: amountOf(p, v), label: labelOf(p, v, amountOf(p, v)), status: p.status, verified_on: p.verified_on, source_url: p.source_url, rules: p.rules, counted: false, covered: false }; }), total: total, incomeUnknown: v.income_level === "unknown", incomeLevel: v.income_level };
   }
 
   function el(tag, cls, text) {
@@ -162,8 +169,10 @@
     form.setAttribute("novalidate", "");
     var answers = {};
     var params = new URLSearchParams(location.search);
+    var fields = {};
     region.questions.forEach(function (q) {
       var wrap = el("div", "rc-field");
+      fields[q.id] = wrap;
       var label = el("label", null, q.label);
       label.setAttribute("for", "rc-" + q.id);
       wrap.appendChild(label);
@@ -205,12 +214,16 @@
     out.setAttribute("aria-live", "polite");
     host.appendChild(out);
 
+    function shown(q) {
+      return !q.for || q.for.some(function (u) { return plan.indexOf(u) >= 0; });
+    }
     function ready() {
-      return plan.length > 0 && region.questions.every(function (q) { return q.optional || answers[q.id]; });
+      return plan.length > 0 && region.questions.every(function (q) { return q.optional || !shown(q) || answers[q.id]; });
     }
 
     function render() {
       out.textContent = "";
+      region.questions.forEach(function (q) { fields[q.id].style.display = shown(q) ? "" : "none"; });
       var q = new URLSearchParams();
       for (var k in answers) if (answers[k] && k !== "income" && k !== "household") q.set(k, answers[k]);
       if (plan.length) q.set("plan", plan.join(","));
@@ -219,12 +232,15 @@
         out.appendChild(el("p", "rc-empty", "Answer the questions and pick at least one upgrade. Your rebates appear here."));
         return;
       }
-      var r = evaluate(region, answers, plan);
+      var live = {};
+      region.questions.forEach(function (q) { if (shown(q) && answers[q.id]) live[q.id] = answers[q.id]; });
+      var r = evaluate(region, live, plan);
       var box = el("div", "rc-total");
       box.appendChild(el("div", "rc-total-label", "Most you could get for the upgrades you picked"));
       box.appendChild(el("div", "rc-total-num", money(r.total, region.currency)));
       box.appendChild(el("p", "rc-total-sub", "Adds the biggest open offer for each upgrade you picked. Only programs open today are counted."));
       out.appendChild(box);
+      r.capNotes.forEach(function (n) { out.appendChild(el("p", "rc-hint", n)); });
       if (r.incomeUnknown) out.appendChild(el("p", "rc-hint", "Add your household size and income to check income-qualified programs. They pay the most."));
       else if (r.incomeLevel === "none") out.appendChild(el("p", "rc-hint", "Your income is above the income-qualified limits, so only the general programs apply."));
       var groups = {}, order = [];
@@ -269,6 +285,26 @@
         out.appendChild(nl);
       }
       if (!opts.embed) out.appendChild(savePlan(region, answers));
+      var cq = region.questions.filter(function (q) { return q.id === "city"; })[0];
+      var copt = cq && answers.city ? cq.options.filter(function (o) { return o.value === answers.city; })[0] : null;
+      if (copt && copt.installers) {
+        var upl = {}; region.upgrades.forEach(function (u) { upl[u.id] = u.label; });
+        var want = plan.filter(function (u) { return copt.installers[u]; });
+        if (!want.length) want = Object.keys(copt.installers);
+        var ib = el("div", "rc-inst");
+        ib.appendChild(el("h3", "rc-h", "Top-rated installers in " + copt.label));
+        ib.appendChild(el("p", "rc-help", "Ranked by Google reviews. Nobody pays to be listed, and we do not sell your details."));
+        var iul = el("ul", "rc-inst-list");
+        want.forEach(function (u) {
+          var li = el("li"); var ia = el("a", null, (upl[u] || u) + " installers in " + copt.label);
+          ia.href = copt.installers[u]; li.appendChild(ia); iul.appendChild(li);
+        });
+        if (copt.page) {
+          var li2 = el("li"); var pa = el("a", null, copt.label + " rebate guide"); pa.href = copt.page; li2.appendChild(pa); iul.appendChild(li2);
+        }
+        ib.appendChild(iul);
+        out.appendChild(ib);
+      }
       var links = el("p", "rc-links");
       var a1 = el("a", null, "See installers ranked by Google reviews");
       a1.href = region.installers || "/installers/";

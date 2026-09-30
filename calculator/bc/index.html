@@ -128,6 +128,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
 .rc-save input{min-height:44px;padding:8px 10px;border:1px solid #b9ae9c;border-radius:8px;font:inherit;width:min(320px,100%)}
 .rc-save button{min-height:44px;margin-left:8px;padding:0 18px;border:0;border-radius:8px;background:#d4751c;color:#fff;font-weight:700;cursor:pointer}
 .rc-links{font-size:15px}
+.rc-inst{background:#fff;border:1px solid #d9d0c1;border-radius:12px;padding:4px 18px 12px;margin:20px 0}.rc-inst-list{margin:6px 0 0;padding-left:20px;line-height:1.9}
 .rc-plan{grid-column:1/-1;border:0;padding:0;margin:0}.rc-plan legend{font-weight:600;font-size:15px;margin-bottom:6px;padding:0}
 .rc-check{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin:0 14px 4px 0;font-size:15px}.rc-check input{width:20px;height:20px}
 .rc-more{margin:18px 0}.rc-more summary{cursor:pointer;font-weight:600;padding:8px 0}
@@ -288,8 +289,8 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
         <span style="opacity:.7;">&rarr;</span>
       </a>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
-        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
+        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
+        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
         <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">California (US)</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
@@ -307,10 +308,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
       </div>
     </div>
     <div style="padding:0 16px 16px;">
-    <div id="province-cities-on" style="display:grid; gap:8px;">
+    <div id="province-cities-on" style="display:none; gap:8px;">
       <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
     </div>
-    <div id="province-cities-bc" style="display:none; gap:8px;">
+    <div id="province-cities-bc" style="display:grid; gap:8px;">
       <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
     </div>
     <div id="province-cities-ab" style="display:none; gap:8px;">
@@ -341,7 +342,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
   </div>
 </nav>
 
-<!-- On a city/province page, call showProvinceCities('on') once on load
+<!-- On a city/province page, call showProvinceCities('bc') once on load
      so the dropdown opens to the right tab, and add a highlighted/active style to the
      current city's <a> for  — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->

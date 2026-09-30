@@ -30,6 +30,35 @@
  ],
  "questions": [
   {
+   "id": "city",
+   "label": "Which city is closest to your home?",
+   "type": "select",
+   "optional": true,
+   "help": "Used to show top-rated installers near you.",
+   "options": [
+    {
+     "value": "aurora",
+     "label": "Aurora"
+    },
+    {
+     "value": "boulder",
+     "label": "Boulder"
+    },
+    {
+     "value": "colorado-springs",
+     "label": "Colorado Springs"
+    },
+    {
+     "value": "denver",
+     "label": "Denver"
+    },
+    {
+     "value": "fort-collins",
+     "label": "Fort Collins"
+    }
+   ]
+  },
+  {
    "id": "utility",
    "label": "Who supplies your gas or electricity?",
    "type": "select",
@@ -232,5 +261,7 @@
  "notes": [
   "Solar: Xcel's 2026 residential solar rebate is for income-qualified and disadvantaged-community homes only. Other homes get net metering, not a rebate, so solar is not in this calculator.",
   "Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."
- ]
+ ],
+ "installers_dir": "co",
+ "city_page": "us/co/{c}"
 }

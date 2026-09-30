@@ -1,0 +1,643 @@
+{
+ "code": "ma",
+ "name": "Massachusetts",
+ "country": "us",
+ "currency": "USD",
+ "hub": "/us/ma/",
+ "installers": "/installers/",
+ "installers_dir": "ma",
+ "city_page": "us/ma/{c}",
+ "title": "Massachusetts Rebate Calculator 2026: Mass Save Heat Pump, Water Heater and More",
+ "h1": "Massachusetts Rebate Calculator 2026: What Mass Save Pays for Your Home",
+ "desc": "Free Massachusetts rebate calculator for Mass Save customers. See heat pump, water heater, insulation and solar incentives, with the official source for every amount.",
+ "intro": "Answer a few questions and see which Massachusetts rebates fit your home, with a source for every number.",
+ "short": "Mass Save pays up to $8,500 for a whole-home air-source heat pump ($2,650 per ton), $750 for a heat pump water heater and 75% to 100% off insulation after a free home energy assessment. Households that qualify for the income-based Enhanced offer can get the heat pump at no cost or up to $16,000 back. Homes in a town with its own municipal electric company use different programs.",
+ "faq": [
+  [
+   "How much is the Mass Save heat pump rebate in 2026?",
+   "Up to $8,500 for a whole-home air-source system, paid at $2,650 per ton. A partial-home system pays $1,125 per ton, up to $8,500. Households that qualify for Enhanced rebates can get the system at no cost or up to $16,000 back. Installs must be done in 2026 by a Heat Pump Installer Network contractor."
+  ],
+  [
+   "Do I qualify for Mass Save if my town has a municipal electric company?",
+   "Not for the electric programs. About 50 towns are served by municipal light plants. They use their own rebates and the 0% DOER MLP Z-Loan. If you heat with gas and the gas company is a Mass Save sponsor, some gas-side offers may still apply."
+  ],
+  [
+   "Is the federal tax credit for heat pumps still available?",
+   "No. The 25C and 25D credits ended for spending after December 31, 2025."
+  ],
+  [
+   "Can I get a battery rebate in Massachusetts?",
+   "We found no upfront Mass Save battery rebate. Batteries earn money through the ConnectedSolutions program instead, about $1,375 a year for a 5 kW battery in MassCEC's example."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "city",
+   "label": "Which city is closest to your home?",
+   "type": "select",
+   "options": [
+    {
+     "value": "boston",
+     "label": "Boston",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "brockton",
+     "label": "Brockton",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "cambridge",
+     "label": "Cambridge",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "cape-cod",
+     "label": "Cape Cod",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "fall-river",
+     "label": "Fall River",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "lawrence",
+     "label": "Lawrence",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "lowell",
+     "label": "Lowell",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "lynn",
+     "label": "Lynn",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "new-bedford",
+     "label": "New Bedford",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "newton",
+     "label": "Newton",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "quincy",
+     "label": "Quincy",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "salem",
+     "label": "Salem",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "somerville",
+     "label": "Somerville",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "springfield",
+     "label": "Springfield",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "worcester",
+     "label": "Worcester",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "other-iou",
+     "label": "Another town served by Eversource, National Grid, Unitil or Cape Light Compact",
+     "set": {
+      "utility": "iou"
+     }
+    },
+    {
+     "value": "mlp",
+     "label": "A town with its own municipal electric company (for example Belmont, Braintree, Concord or Taunton)",
+     "set": {
+      "utility": "mlp"
+     }
+    }
+   ]
+  },
+  {
+   "id": "heating",
+   "label": "What heats your home now?",
+   "type": "select",
+   "options": [
+    {
+     "value": "oil",
+     "label": "Oil, propane or electric baseboards"
+    },
+    {
+     "value": "gas",
+     "label": "Natural gas"
+    },
+    {
+     "value": "other",
+     "label": "Something else"
+    }
+   ],
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
+   "id": "hp_type",
+   "label": "Which kind of heat pump?",
+   "type": "select",
+   "options": [
+    {
+     "value": "air",
+     "label": "Air-source"
+    },
+    {
+     "value": "ground",
+     "label": "Ground-source (geothermal)"
+    }
+   ],
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
+   "id": "hp_scope",
+   "label": "How much of your heating will it replace?",
+   "type": "select",
+   "options": [
+    {
+     "value": "whole",
+     "label": "All of it (whole home)"
+    },
+    {
+     "value": "partial",
+     "label": "Part of it (partial home)"
+    }
+   ],
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
+   "id": "enhanced",
+   "label": "Does your household qualify for Mass Save's income-based Enhanced offer?",
+   "type": "select",
+   "options": [
+    {
+     "value": "no",
+     "label": "No or not sure"
+    },
+    {
+     "value": "yes",
+     "label": "Yes"
+    }
+   ],
+   "help": "Income limits change each year. Check the income page on masssave.com.",
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
+   "id": "tons",
+   "label": "How many heating tons is your heat pump? (optional)",
+   "type": "select",
+   "options": [
+    {
+     "value": "1",
+     "label": "1 ton"
+    },
+    {
+     "value": "2",
+     "label": "2 tons"
+    },
+    {
+     "value": "3",
+     "label": "3 tons"
+    },
+    {
+     "value": "4",
+     "label": "4 tons"
+    },
+    {
+     "value": "5",
+     "label": "5 tons"
+    },
+    {
+     "value": "6",
+     "label": "6 tons"
+    }
+   ],
+   "optional": true,
+   "help": "Most homes need 2 to 4 tons. Your installer sizes it. Skip this to see the per-ton rate only.",
+   "for": [
+    "heat-pump"
+   ]
+  }
+ ],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump"
+  },
+  {
+   "id": "water-heater",
+   "label": "Heat pump water heater"
+  },
+  {
+   "id": "insulation",
+   "label": "Insulation and air sealing"
+  },
+  {
+   "id": "solar",
+   "label": "Solar panels"
+  },
+  {
+   "id": "battery",
+   "label": "Home battery"
+  },
+  {
+   "id": "appliances",
+   "label": "Appliances"
+  },
+  {
+   "id": "support",
+   "label": "Loans and free assessment"
+  }
+ ],
+ "programs": [
+  {
+   "id": "ms-ashp-whole",
+   "fact": "ma-16-mass-save-ashp-rebate-table-2026",
+   "name": "Mass Save: whole-home air-source heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 2650,
+     "question": "tons",
+     "cap": 8500
+    }
+   },
+   "rules": "Replaces oil, propane or electric baseboards, or gas from a Mass Save gas sponsor. ENERGY STAR cold-climate model, installed in 2026 by a Heat Pump Installer Network contractor. Needs enough weatherization. Apply by February 28, 2027.",
+   "when": {
+    "utility": [
+     "iou"
+    ],
+    "heating": [
+     "oil",
+     "gas"
+    ],
+    "hp_type": [
+     "air"
+    ],
+    "hp_scope": [
+     "whole"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ms-ashp-partial",
+   "fact": "ma-16-mass-save-ashp-rebate-table-2026",
+   "name": "Mass Save: partial-home air-source heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 1125,
+     "question": "tons",
+     "cap": 8500
+    }
+   },
+   "rules": "Same equipment and installer rules. Adds a $500 weatherization bonus and a $500 sizing bonus. Integrated controls required.",
+   "when": {
+    "utility": [
+     "iou"
+    ],
+    "heating": [
+     "oil",
+     "gas"
+    ],
+    "hp_type": [
+     "air"
+    ],
+    "hp_scope": [
+     "partial"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ms-ashp-enh",
+   "fact": "ma-1-mass-save-enhanced-rebates-income-qualified",
+   "name": "Mass Save Enhanced: whole-home heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 16000,
+    "label": "No cost, or up to $16,000"
+   },
+   "rules": "Only for households that qualify for the income-based Enhanced offer. Not the standard amount.",
+   "when": {
+    "utility": [
+     "iou"
+    ],
+    "heating": [
+     "oil",
+     "gas"
+    ],
+    "hp_type": [
+     "air"
+    ],
+    "hp_scope": [
+     "whole"
+    ],
+    "enhanced": [
+     "yes"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ms-gshp-whole",
+   "fact": "ma-17-mass-save-gshp-rebate-2026",
+   "name": "Mass Save: whole-home geothermal heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 13500
+   },
+   "rules": "Same eligibility rules as the air-source offer.",
+   "when": {
+    "utility": [
+     "iou"
+    ],
+    "heating": [
+     "oil",
+     "gas"
+    ],
+    "hp_type": [
+     "ground"
+    ],
+    "hp_scope": [
+     "whole"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ms-gshp-partial",
+   "fact": "ma-17-mass-save-gshp-rebate-2026",
+   "name": "Mass Save: partial-home geothermal heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "per": {
+     "unit": "ton",
+     "rate": 2000,
+     "question": "tons",
+     "cap": 13500
+    }
+   },
+   "rules": "Same eligibility rules as the air-source offer.",
+   "when": {
+    "utility": [
+     "iou"
+    ],
+    "heating": [
+     "oil",
+     "gas"
+    ],
+    "hp_type": [
+     "ground"
+    ],
+    "hp_scope": [
+     "partial"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ms-gshp-enh",
+   "fact": "ma-17-mass-save-gshp-rebate-2026",
+   "name": "Mass Save Enhanced: geothermal heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 25000,
+    "label": "Up to $25,000"
+   },
+   "rules": "Only for households that qualify for the income-based Enhanced offer.",
+   "when": {
+    "utility": [
+     "iou"
+    ],
+    "heating": [
+     "oil",
+     "gas"
+    ],
+    "hp_type": [
+     "ground"
+    ],
+    "enhanced": [
+     "yes"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ms-hpwh",
+   "fact": "ma-7-mass-save-heat-pump-water-heater",
+   "name": "Mass Save: heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 750
+   },
+   "rules": "An instant rebate when you replace an existing electric, oil, propane or gas water heater. The rebate never exceeds the cost.",
+   "when": {
+    "utility": [
+     "iou"
+    ]
+   }
+  },
+  {
+   "id": "ms-weather",
+   "fact": "ma-6-mass-save-weatherization",
+   "name": "Mass Save: insulation and air sealing",
+   "upgrade": "insulation",
+   "amount": {
+    "label": "75% to 100% off",
+    "max": 0
+   },
+   "rules": "Start with the free home energy assessment. 100% off is generally for income-qualified households, 75% is standard. Also $75 per window replaced with a triple-pane window.",
+   "when": {
+    "utility": [
+     "iou"
+    ]
+   }
+  },
+  {
+   "id": "ma-solar-credit",
+   "fact": "ma-12-ma-state-solar-tax-credit",
+   "name": "Massachusetts solar tax credit",
+   "upgrade": "solar",
+   "amount": {
+    "max": 1000
+   },
+   "rules": "15% of the system cost, capped at $1,000, claimed on your state tax return."
+  },
+  {
+   "id": "smart-solar",
+   "fact": "ma-11-smart-solar-massachusetts-renewable-target",
+   "name": "SMART solar program",
+   "upgrade": "solar",
+   "amount": {
+    "label": "Paid per kWh over time",
+    "max": 0
+   },
+   "rules": "MassCEC's example is about $300 a year for an 8 kW system. It is paid over time, so it is not added to your total. Only for National Grid, Eversource and Unitil customers.",
+   "when": {
+    "utility": [
+     "iou"
+    ]
+   }
+  },
+  {
+   "id": "connected-solutions",
+   "fact": "ma-13-connectedsolutions-battery",
+   "name": "ConnectedSolutions battery program",
+   "upgrade": "battery",
+   "amount": {
+    "label": "About $1,375 a year",
+    "max": 0
+   },
+   "rules": "MassCEC's example for a 5 kW battery. It is paid for letting the utility use the battery in peak events, so it is not added to your total.",
+   "when": {
+    "utility": [
+     "iou"
+    ]
+   }
+  },
+  {
+   "id": "ms-appliances",
+   "fact": "ma-19-mass-save-appliances-per-masscec",
+   "name": "Mass Save: appliance rebates",
+   "upgrade": "appliances",
+   "amount": {
+    "label": "$50 or $500",
+    "max": 0
+   },
+   "rules": "$50 for an ENERGY STAR clothes dryer. $500 for an induction cooktop when you switch from gas or propane.",
+   "when": {
+    "utility": [
+     "iou"
+    ]
+   }
+  },
+  {
+   "id": "ms-assess",
+   "fact": "ma-27-mass-save-home-energy-assessment-primary",
+   "name": "Mass Save: free home energy assessment",
+   "upgrade": "support",
+   "amount": {
+    "label": "Free",
+    "max": 0
+   },
+   "rules": "A free virtual or in-person assessment. Income-qualified homes can get insulation, air sealing and heat pumps at no cost. Call 866-527-7283.",
+   "when": {
+    "utility": [
+     "iou"
+    ]
+   }
+  },
+  {
+   "id": "ms-heat-loan",
+   "fact": "ma-3-mass-save-heat-loan",
+   "name": "Mass Save HEAT Loan",
+   "upgrade": "support",
+   "amount": {
+    "label": "0% loan up to $25,000",
+    "max": 0
+   },
+   "rules": "For heat pumps, insulation, heat pump water heaters and more. Terms up to 7 years.",
+   "when": {
+    "utility": [
+     "iou"
+    ]
+   }
+  },
+  {
+   "id": "energy-saver-loan",
+   "fact": "ma-4-energy-saver-home-loan",
+   "name": "Energy Saver Home Loan",
+   "upgrade": "support",
+   "amount": {
+    "label": "Up to $100,000 at up to 2%",
+    "max": 0
+   },
+   "rules": "A low-interest loan for income-qualified households, up to 20 years.",
+   "when": {
+    "utility": [
+     "iou"
+    ]
+   }
+  },
+  {
+   "id": "mlp-loan",
+   "fact": "ma-21-doer-mlp-z-loan",
+   "name": "DOER MLP Z-Loan",
+   "upgrade": "support",
+   "amount": {
+    "label": "0% loan, $500 to $25,000",
+    "max": 0
+   },
+   "rules": "For customers of a municipal light plant who are not eligible for Mass Save. Up to 5 years. Solar and EV chargers are excluded. Apply at myz-loan.com.",
+   "when": {
+    "utility": [
+     "mlp"
+    ]
+   }
+  }
+ ],
+ "closed_facts": [
+  "ma-15-federal-25c-25d-tax-credits"
+ ],
+ "notes": [
+  "Massachusetts also pays about $250 to $1,000 in Alternative Energy Certificates for a whole-home heat pump. It is a one-time payment and is not added to your total.",
+  "Mass Save's own site blocks automated readers, so per-ton amounts come from MassCEC and DOER pages that republish Mass Save offers. Confirm on masssave.com before you sign.",
+  "Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."
+ ]
+}

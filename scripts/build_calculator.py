@@ -51,6 +51,7 @@ CSS = """
 .rc-save input{min-height:44px;padding:8px 10px;border:1px solid #b9ae9c;border-radius:8px;font:inherit;width:min(320px,100%)}
 .rc-save button{min-height:44px;margin-left:8px;padding:0 18px;border:0;border-radius:8px;background:#d4751c;color:#fff;font-weight:700;cursor:pointer}
 .rc-links{font-size:15px}
+.rc-inst{background:#fff;border:1px solid #d9d0c1;border-radius:12px;padding:4px 18px 12px;margin:20px 0}.rc-inst-list{margin:6px 0 0;padding-left:20px;line-height:1.9}
 .rc-plan{grid-column:1/-1;border:0;padding:0;margin:0}.rc-plan legend{font-weight:600;font-size:15px;margin-bottom:6px;padding:0}
 .rc-check{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin:0 14px 4px 0;font-size:15px}.rc-check input{width:20px;height:20px}
 .rc-more{margin:18px 0}.rc-more summary{cursor:pointer;font-weight:600;padding:8px 0}
@@ -66,9 +67,32 @@ def load_facts():
     return facts
 
 
+SERVICES = ("heat-pump", "solar", "battery", "insulation")
+
+
+def link_cities(spec):
+    """Give every city option its city page and its installer list pages, from the files that exist.
+    spec['installers_dir'] = folder under /installers/ (for example 'on'); spec['city_page'] = path pattern with {c}."""
+    q = next((x for x in spec["questions"] if x["id"] == "city"), None)
+    if not q:
+        return
+    for o in q["options"]:
+        c = o["value"]
+        d = spec.get("installers_dir")
+        found = {s: f"/installers/{d}/{c}/{s}/" for s in SERVICES if d and (ROOT / "installers" / d / c / s / "index.html").exists()}
+        if found:
+            o["installers"] = found
+        pat = spec.get("city_page")
+        if pat and not o.get("page"):
+            hits = sorted(ROOT.glob(pat.format(c=c).strip("/") + "/index.html"))
+            if hits:
+                o["page"] = "/" + str(hits[0].parent.relative_to(ROOT)) + "/"
+
+
 def resolve(spec, facts):
     """Public region JSON: rules from data/calc, status/source/date from the linked fact."""
     out = json.loads(json.dumps(spec))
+    link_cities(out)
     for p in out["programs"]:
         fx = facts[p["fact"]]
         p["status"], p["verified_on"], p["source_url"] = fx["status"], fx["verified_on"], fx["source_url"]
@@ -76,7 +100,7 @@ def resolve(spec, facts):
     out["closed"] = [{"name": facts[i]["program"], "status": facts[i]["status"], "source_url": facts[i]["source_url"]} for i in out.pop("closed_facts", [])]
     src = facts[out["derived"]["income_level"].pop("source_fact")] if out.get("derived") else None
     out["income_source"] = src["source_url"] if src else None
-    for k in ("faq", "short", "h1", "title", "desc", "intro"):
+    for k in ("faq", "short", "h1", "title", "desc", "intro", "installers_dir", "city_page"):
         out.pop(k, None)
     out["verified_on"] = max([p["verified_on"] for p in out["programs"]])
     return out
@@ -195,14 +219,22 @@ COMING = [("Ontario", "/ca/on/"), ("Alberta", "/ca/ab/"), ("Nova Scotia", "/ca/n
 
 
 def picker(specs):
-    cards = "".join(f'<li><a href="/calculator/{s["code"]}/"><b>{e(s["name"])} rebate calculator</b></a> <span class="small">rules verified {e(max(p_v for p_v in [s["_v"]]))}</span></li>' for s in specs)
-    coming = " · ".join(f'<a href="{u}">{e(n)}</a>' for n, u in COMING if n.lower() not in {s["name"].lower() for s in specs})
-    body = f"""<header class="hero"><div class="wrap"><h1>Home Rebate Calculators</h1><p>Pick your province or state, answer a few questions and see the rebates you can claim, with the official source for every amount.</p></div></header>
-<section class="body"><div class="wrap rc-wrap"><h2>Available now</h2><ul>{cards}</ul>
-<h2>Coming next</h2><p>We add a calculator only when every program in it has been checked against the program's own page. Until then, use the rebate guide for your region: {coming}.</p>
+    def li(s):
+        return f'<li><a href="/calculator/{s["code"]}/"><b>{e(s["name"])} rebate calculator</b></a> <span class="small">rules verified {e(s["_v"])}</span></li>'
+    ca = "".join(li(s) for s in specs if s["country"] == "ca")
+    us = "".join(li(s) for s in specs if s["country"] == "us")
+    live = {s["name"].lower() for s in specs}
+    left = [(n, u) for n, u in COMING if n.lower() not in live]
+    coming = ""
+    if left:
+        coming = ("<h2>Coming next</h2><p>We add a calculator only when every program in it has been checked against the program's own page. Until then, use the rebate guide: "
+                  + " · ".join(f'<a href="{u}">{e(n)}</a>' for n, u in left) + ".</p>")
+    body = f"""<header class="hero"><div class="wrap"><h1>Home Rebate Calculators</h1><p>Pick your province or state, answer a few questions and see the rebates you can claim, with the official source for every amount. Free for homeowners, and we show top-rated installers in your city.</p></div></header>
+<section class="body"><div class="wrap rc-wrap"><h2>Canada</h2><ul>{ca}</ul><h2>United States</h2><ul>{us}</ul>{coming}
+<h2>How these calculators work</h2><p>Each amount comes from the program's own page, and every result shows the date we last checked it. We only add up programs that are open today. Programs on a waitlist, paused or closed are shown but never counted. Nobody pays to be included.</p>
 <h2>Are you an installer?</h2><p>Add a free rebate calculator to your website. It links back to us and nothing else changes. <a href="/calculator/widget/">See how</a>.</p></div></section>"""
     return shell("Home Rebate Calculators: Heat Pump, Solar and Battery | HomePowerRebate",
-                 "Free home rebate calculators. Choose your province or state to see the rebates you can claim, with an official source for every amount.",
+                 "Free home rebate calculators for 10 provinces and states. Choose yours to see the rebates you can claim, with an official source for every amount.",
                  "/calculator/", "bc", body, [])
 
 

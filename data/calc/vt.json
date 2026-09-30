@@ -1,0 +1,255 @@
+{
+ "code": "vt",
+ "name": "Vermont",
+ "country": "us",
+ "currency": "USD",
+ "hub": "/us/vt/",
+ "installers": "/installers/",
+ "installers_dir": "vt",
+ "city_page": "us/vt/{c}",
+ "title": "Vermont Rebate Calculator 2026: Efficiency Vermont Heat Pump, Water Heater and Weatherization",
+ "h1": "Vermont Rebate Calculator 2026: What Efficiency Vermont Pays",
+ "desc": "Free Vermont rebate calculator. Efficiency Vermont heat pump, heat pump water heater and weatherization rebates, with income-based bonuses and the official source for every amount.",
+ "intro": "Answer a few questions and see which Vermont rebates fit your home, with a source for every number.",
+ "short": "Efficiency Vermont pays up to $475 for a ductless heat pump and up to $2,200 for a ducted one, $600 for a heat pump water heater, and 75% of weatherization costs back, up to $4,000. Low- and moderate-income households get bonuses on all three, and weatherization goes up to $9,500.",
+ "faq": [
+  [
+   "How much is the Vermont heat pump rebate in 2026?",
+   "Efficiency Vermont pays up to $475 on a ductless heat pump and up to $2,200 on a ducted one, plus $600 more for integrated controls with a ductless system. Low- and moderate-income households get a $200 to $2,200 bonus, depending on utility and income."
+  ],
+  [
+   "Do Green Mountain Power customers get extra?",
+   "Green Mountain Power lists a $2,000 heat pump rebate for customers at or below 80% of area median income, paid on top of the Efficiency Vermont rebate. We have not re-confirmed it recently, so we do not add it to your total."
+  ],
+  [
+   "How much does Efficiency Vermont pay for weatherization?",
+   "75% of the project cost back, up to $4,000. Moderate-income households get 75% up to $9,500. You need an Efficiency Excellence Network contractor."
+  ],
+  [
+   "Is the federal tax credit still available?",
+   "No. The 25C and 25D credits ended for spending after December 31, 2025."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "city",
+   "label": "Which city is closest to your home?",
+   "type": "select",
+   "options": [
+    {
+     "value": "barre",
+     "label": "Barre",
+     "set": {
+      "utility": "gmp"
+     }
+    },
+    {
+     "value": "burlington",
+     "label": "Burlington",
+     "set": {
+      "utility": "bed"
+     }
+    },
+    {
+     "value": "montpelier",
+     "label": "Montpelier",
+     "set": {
+      "utility": "gmp"
+     }
+    },
+    {
+     "value": "rutland",
+     "label": "Rutland",
+     "set": {
+      "utility": "gmp"
+     }
+    },
+    {
+     "value": "south-burlington",
+     "label": "South Burlington",
+     "set": {
+      "utility": "gmp"
+     }
+    },
+    {
+     "value": "other",
+     "label": "Another Vermont town",
+     "set": {
+      "utility": "other"
+     }
+    }
+   ]
+  },
+  {
+   "id": "income",
+   "label": "Is your household low or moderate income by Efficiency Vermont's guidelines?",
+   "type": "select",
+   "options": [
+    {
+     "value": "standard",
+     "label": "No or not sure"
+    },
+    {
+     "value": "lowmod",
+     "label": "Yes"
+    }
+   ],
+   "help": "The 2026 income limits took effect July 1, 2026. Check them on efficiencyvermont.com.",
+   "for": [
+    "heat-pump",
+    "water-heater",
+    "insulation"
+   ]
+  },
+  {
+   "id": "hp_type",
+   "label": "Which kind of heat pump?",
+   "type": "select",
+   "options": [
+    {
+     "value": "ductless",
+     "label": "Ductless mini-split"
+    },
+    {
+     "value": "ducted",
+     "label": "Ducted"
+    }
+   ],
+   "for": [
+    "heat-pump"
+   ]
+  }
+ ],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump"
+  },
+  {
+   "id": "water-heater",
+   "label": "Heat pump water heater"
+  },
+  {
+   "id": "insulation",
+   "label": "Weatherization and insulation"
+  }
+ ],
+ "programs": [
+  {
+   "id": "ev-ductless",
+   "fact": "vt-0-efficiency-vermont-heat-pump-rebates",
+   "name": "Efficiency Vermont: ductless heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 475
+   },
+   "rules": "Qualifying cold-climate equipment for Vermont electric customers. Distributor discounts start at $375.",
+   "when": {
+    "hp_type": [
+     "ductless"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ev-ducted",
+   "fact": "vt-0-efficiency-vermont-heat-pump-rebates",
+   "name": "Efficiency Vermont: ducted heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 2200
+   },
+   "rules": "Qualifying cold-climate equipment for Vermont electric customers. Distributor discounts start at $1,200.",
+   "when": {
+    "hp_type": [
+     "ducted"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ev-controls",
+   "fact": "vt-0-efficiency-vermont-heat-pump-rebates",
+   "name": "Efficiency Vermont: integrated controls bonus",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 600
+   },
+   "rules": "An extra $600 for integrated controls with a ductless heat pump.",
+   "when": {
+    "hp_type": [
+     "ductless"
+    ]
+   },
+   "requires": "ev-ductless"
+  },
+  {
+   "id": "ev-income-hp",
+   "fact": "vt-1-efficiency-vermont-income-bonus-heat-pumps",
+   "name": "Efficiency Vermont: income bonus for heat pumps",
+   "upgrade": "heat-pump",
+   "amount": {
+    "label": "$200 to $2,200 bonus",
+    "max": 0
+   },
+   "rules": "The amount depends on your utility and income level. Confirm yours with Efficiency Vermont, so it is not added to your total.",
+   "when": {
+    "income": [
+     "lowmod"
+    ]
+   }
+  },
+  {
+   "id": "gmp-income",
+   "fact": "vt-2-green-mountain-power-income-eligible-heat-pump-reb",
+   "name": "Green Mountain Power income-eligible heat pump rebate",
+   "upgrade": "heat-pump",
+   "amount": {
+    "label": "$2,000",
+    "max": 0
+   },
+   "rules": "For customers at or below 80% of area median income, paid with the Efficiency Vermont rebate. We have not re-confirmed it is still open, so it is not in your total.",
+   "when": {
+    "utility": [
+     "gmp"
+    ],
+    "income": [
+     "lowmod"
+    ]
+   }
+  },
+  {
+   "id": "ev-hpwh",
+   "fact": "vt-3-efficiency-vermont-heat-pump-water-heater",
+   "name": "Efficiency Vermont: heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "by": "income",
+    "values": {
+     "standard": 600,
+     "lowmod": 1000
+    }
+   },
+   "rules": "$600 discount, plus $400 more for low- and moderate-income households."
+  },
+  {
+   "id": "ev-weather",
+   "fact": "vt-4-efficiency-vermont-home-weatherization",
+   "name": "Efficiency Vermont: weatherization",
+   "upgrade": "insulation",
+   "amount": {
+    "by": "income",
+    "values": {
+     "standard": 4000,
+     "lowmod": 9500
+    }
+   },
+   "rules": "75% of the project cost back, up to $4,000. Moderate-income households get up to $9,500. You need an Efficiency Excellence Network contractor."
+  }
+ ],
+ "closed_facts": [],
+ "notes": [
+  "Burlington is served by Burlington Electric Department, and Barre, Montpelier, Rutland and South Burlington by Green Mountain Power. Burlington Electric offers its own extras that we have not verified.",
+  "Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."
+ ]
+}

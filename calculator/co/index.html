@@ -128,6 +128,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
 .rc-save input{min-height:44px;padding:8px 10px;border:1px solid #b9ae9c;border-radius:8px;font:inherit;width:min(320px,100%)}
 .rc-save button{min-height:44px;margin-left:8px;padding:0 18px;border:0;border-radius:8px;background:#d4751c;color:#fff;font-weight:700;cursor:pointer}
 .rc-links{font-size:15px}
+.rc-inst{background:#fff;border:1px solid #d9d0c1;border-radius:12px;padding:4px 18px 12px;margin:20px 0}.rc-inst-list{margin:6px 0 0;padding-left:20px;line-height:1.9}
 .rc-plan{grid-column:1/-1;border:0;padding:0;margin:0}.rc-plan legend{font-weight:600;font-size:15px;margin-bottom:6px;padding:0}
 .rc-check{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin:0 14px 4px 0;font-size:15px}.rc-check input{width:20px;height:20px}
 .rc-more{margin:18px 0}.rc-more summary{cursor:pointer;font-weight:600;padding:8px 0}
@@ -288,7 +289,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
         <span style="opacity:.7;">&rarr;</span>
       </a>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
+        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
         <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
         <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">California (US)</button>
       </div>
@@ -302,12 +303,12 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
         <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Pennsylvania</button>
-        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Colorado</button>
+        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Colorado</button>
         <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Vermont</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
-    <div id="province-cities-on" style="display:grid; gap:8px;">
+    <div id="province-cities-on" style="display:none; gap:8px;">
       <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
     </div>
     <div id="province-cities-bc" style="display:none; gap:8px;">
@@ -331,7 +332,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     <div id="province-cities-pa" style="display:none; gap:8px;">
       <a href="/us/pa/philadelphia/">Philadelphia</a><a href="/us/pa/pittsburgh/">Pittsburgh</a><a href="/us/pa/allentown/">Allentown</a><a href="/us/pa/erie/">Erie</a>
     </div>
-    <div id="province-cities-co" style="display:none; gap:8px;">
+    <div id="province-cities-co" style="display:grid; gap:8px;">
       <a href="/us/co/denver/">Denver</a><a href="/us/co/colorado-springs/">Colorado Springs</a><a href="/us/co/aurora/">Aurora</a><a href="/us/co/fort-collins/">Fort Collins</a><a href="/us/co/boulder/">Boulder</a>
     </div>
     <div id="province-cities-vt" style="display:none; gap:8px;">
@@ -341,7 +342,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
   </div>
 </nav>
 
-<!-- On a city/province page, call showProvinceCities('on') once on load
+<!-- On a city/province page, call showProvinceCities('co') once on load
      so the dropdown opens to the right tab, and add a highlighted/active style to the
      current city's <a> for  — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->

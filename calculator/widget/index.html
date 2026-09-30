@@ -257,8 +257,8 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
         <span style="opacity:.7;">&rarr;</span>
       </a>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
-        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
+        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
+        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
         <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">California (US)</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
@@ -276,10 +276,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
       </div>
     </div>
     <div style="padding:0 16px 16px;">
-    <div id="province-cities-on" style="display:grid; gap:8px;">
+    <div id="province-cities-on" style="display:none; gap:8px;">
       <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
     </div>
-    <div id="province-cities-bc" style="display:none; gap:8px;">
+    <div id="province-cities-bc" style="display:grid; gap:8px;">
       <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
     </div>
     <div id="province-cities-ab" style="display:none; gap:8px;">
@@ -310,20 +310,20 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
   </div>
 </nav>
 
-<!-- On a city/province page, call showProvinceCities('on') once on load
+<!-- On a city/province page, call showProvinceCities('bc') once on load
      so the dropdown opens to the right tab, and add a highlighted/active style to the
      current city's <a> for  — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/calculator/">Calculators</a></li><li aria-current="page">Installer widget</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>Free Rebate Calculator for Your Website</h1><p>Let your customers check which rebates they qualify for, without leaving your site.</p></div></header>
 <section class="body"><div class="wrap rc-wrap"><h2>Copy and paste</h2>
-<pre style="background:#0a2a2e;color:#fff;padding:14px;border-radius:8px;overflow-x:auto;white-space:pre-wrap;">&lt;div data-hpr-calc="bc"&gt;&lt;/div&gt;
+<pre style="background:#0a2a2e;color:#fff;padding:14px;border-radius:8px;overflow-x:auto;white-space:pre-wrap;">&lt;div data-hpr-calc="ab"&gt;&lt;/div&gt;
 &lt;script src="https://homepowerrebate.com/calculator/widget.js" async&gt;&lt;/script&gt;</pre>
-<h2>What you get</h2><ul><li>A working calculator for British Columbia, Colorado. More regions are added as we verify them.</li>
+<h2>What you get</h2><ul><li>A working calculator for Alberta, British Columbia, California, Colorado, Massachusetts, Nova Scotia, New York, Ontario, Pennsylvania, Vermont. More regions are added as we verify them.</li>
 <li>Rebate amounts that update on their own when a program changes. You never edit them.</li>
 <li>No tracking, no cookies, no ads, and no fee.</li></ul>
 <h2>What we ask</h2><p>Leave the "Rebate calculator by HomePowerRebate" link under the frame. It is a normal link. Listing here never changes where your company ranks: installers are ranked by Google reviews only.</p>
-<h2>Preview</h2><div data-hpr-calc="bc"></div><script src="/calculator/widget.js" async></script>
+<h2>Preview</h2><div data-hpr-calc="ab"></div><script src="/calculator/widget.js" async></script>
 <script>document.querySelectorAll('[data-hpr-calc]').forEach(function(){});</script>
 </div></section>
 <!-- CANONICAL-FOOTER-START -->

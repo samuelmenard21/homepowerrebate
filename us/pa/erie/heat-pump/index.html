@@ -13,11 +13,11 @@
   gtag('config', 'G-W33G4TGRHD');
 </script>
 
-<meta name="description" content="Heat Pump rebates for Erie homeowners in 2026 through Penelec (FirstEnergy): Up to $500. Eligibility, sources, and how to apply.">
+<meta name="description" content="Heat Pump rebates for Erie homeowners in 2026 through Penelec (FirstEnergy): Confirm status. Eligibility, sources, and how to apply.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://homepowerrebate.com/us/pa/erie/heat-pump/">
 <meta property="og:title" content="Heat Pump Rebates in Erie 2026">
-<meta property="og:description" content="How much rebate you get for heat pump in Erie: Up to $500 through Penelec (FirstEnergy).">
+<meta property="og:description" content="How much rebate you get for heat pump in Erie: Confirm status through Penelec (FirstEnergy).">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://homepowerrebate.com/us/pa/erie/heat-pump/">
 <meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
@@ -206,6 +206,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -358,7 +366,7 @@ h2[id] { scroll-margin-top: 84px; }
 
 <section class="hero">
   <div class="wrap">
-    <div class="amount-badge">Up to $500</div>
+    <div class="amount-badge">Confirm status</div>
     <h1>Heat Pump Rebates in Erie</h1>
     <p>Penelec (FirstEnergy) runs this program for Erie homeowners. Here's exactly how it works and where the number comes from.</p>
   </div>
@@ -377,9 +385,9 @@ h2[id] { scroll-margin-top: 84px; }
     <h2>How much you get</h2>
     <div class="rebate-card">
       <span class="program-status status-limited" style="display:none;">limited</span>
-      <div class="amount">Up to $500</div>
+      <div class="amount">Confirm status</div>
     </div>
-    <p><strong>Up to $500</strong> — Penelec, one of FirstEnergy's four Pennsylvania utilities, offers Act 129 rebates up to $500 for a qualifying ENERGY STAR-certified heat pump. The program ran on purchases made between June 1, 2021 and May 31, 2026, with applications due by June 6, 2026 — confirm Phase V status and amounts with Penelec before purchasing.</p>
+    <p><strong>Confirm status</strong> Penelec's Act 129 heat pump rebate of up to $500 covered purchases through May 31, 2026. We could not confirm the amounts for the program that started in June 2026, so check Penelec's rebate portal before you buy.</p>
 
     <div class="callout">
       <strong>Want your exact number?</strong> Run our free assessment to see what you'd actually get.
@@ -543,6 +551,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

@@ -49,6 +49,38 @@ def tidy_article(t, have):
     return t[:m.start(1)] + "".join(out) + t[m.end(1):]
 
 
+TOC_SKIP = re.compile(r"not sure|weekly email|sources|newsletter|installers", re.I)
+
+
+TOC_LABELS = [(r"rebate finder|rebate program|by category|by utility", "Rebate finder"), (r"question|faq|what you should know", "FAQ"),
+              (r"before you sign|read more|guides|scams", "Guides"), (r"cities", "Cities"), (r"stack", "Rebate stack"),
+              (r"utility|serves you", "Your utility"), (r"statewide|federal|covers|program", "Programs"), (r"what to do next|next", "Next steps"),
+              (r"heat pump|furnace", "Heat pumps"), (r"status", "Status by city"), (r"closed", "What closed")]
+
+
+def toc_label(title):
+    for rx, label in TOC_LABELS:
+        if re.search(rx, title, re.I):
+            return label
+    t = re.sub(r"[.?:]+$", "", title)
+    return t if len(t) <= 26 else t[:26].rsplit(" ", 1)[0] + "…"
+
+
+def toc_ids(mid):
+    """Give every h2 an id (slug of its text) so the table of contents can link to it."""
+    seen = set(re.findall(r'\bid="([^"]+)"', mid))
+
+    def add(m):
+        if re.search(r'\bid="', m.group(1)):
+            return m.group(0)
+        slug = re.sub(r"[^a-z0-9]+", "-", strip(m.group(2)).lower()).strip("-")[:40] or "section"
+        while slug in seen:
+            slug += "-x"
+        seen.add(slug)
+        return f'<h2{m.group(1)} id="{slug}">{m.group(2)}</h2>'
+    return re.sub(r"<h2([^>]*)>(.*?)</h2>", add, mid, flags=re.S)
+
+
 def tidy(t):
     a = t.find("<!-- HUB-SHOWCASE-END -->")
     b = t.find("<!-- CANONICAL-FOOTER-START")
@@ -90,19 +122,40 @@ def tidy(t):
         out.append(s)
     out.append(mid[pos:])
     mid = "".join(out).replace('href="#cities"', 'href="#find-city"')
-    r = head + mid + tail
+    mid = re.sub(r"<!-- HUB-TOC-START -->.*?<!-- HUB-TOC-END -->\s*", "", mid, flags=re.S)
+    mid = re.sub(r'<nav class="toc"[^>]*>.*?</nav>\s*', "", mid, flags=re.S)
+    mid = toc_ids(mid)
+    links = ['<a href="#find-city">Find your city</a>']
+    for m in re.finditer(r'<h2[^>]*\bid="([^"]+)"[^>]*>(.*?)</h2>', mid, re.S):
+        title = strip(m.group(2))
+        if TOC_SKIP.search(title) or len(links) >= 7:
+            continue
+        label = toc_label(title)
+        if any(f">{label}<" in l for l in links):
+            continue
+        links.append(f'<a href="#{m.group(1)}">{label}</a>')
+    toc = ('<!-- HUB-TOC-START --><nav class="toc" aria-label="On this page"><span class="toc-lbl">On this page:</span>'
+           + "".join(links) + "</nav><!-- HUB-TOC-END -->")
+    mid = "\n" + toc + mid
+    r = (head + mid + tail).replace('href="#cities" class="btn"', 'href="#find-city" class="btn"')
     if "<article" in mid:
         r = tidy_article(r, have)
     return r
 
 
+def clean_head(t):
+    """Drop the per-hub city-picker script (the shared nav picks the region from the URL) and the old Home / All States strip."""
+    t = re.sub(r"\s*<script>\s*document\.addEventListener\('DOMContentLoaded', function \(\) \{ showProvinceCities\('[a-z]+'\); \}\);\s*</script>", "", t, count=1)
+    t = re.sub(r'\s*<section class="wrap"[^>]*>\s*<div[^>]*>\s*<span[^>]*><a href="/">&larr; Home</a></span>\s*<span[^>]*><a href="/(?:us|ca)/">All [A-Za-z ]+</a></span>\s*</div>\s*</section>', "", t, count=1)
+    return t
+
+
 def main():
     for reg in HUBS:
         f = ROOT / reg / "index.html"
-        t = f.read_text(encoding="utf-8")
+        t = clean_head(f.read_text(encoding="utf-8"))
         n = tidy(t)
-        if n != t:
-            f.write_text(n, encoding="utf-8")
+        f.write_text(n, encoding="utf-8")
         print(reg, len(t), "->", len(n))
 
 

@@ -212,6 +212,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -362,19 +370,7 @@ h2[id] { scroll-margin-top: 84px; }
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Colorado</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
 
-<section class="wrap" style="padding:24px 28px 0;">
-  <div style="font-size:14px; line-height:2.2;">
-      <span style="margin-right:14px;"><a href="/">&larr; Home</a></span>
-      <span style="margin-right:14px;"><a href="/us/">All US States</a></span>
-  </div>
-</section>
-
-<section class="hero">
-  <div class="wrap">
-    <h1>Home Energy Rebates in Colorado</h1>
-    <p>Complete 2026 guide to Colorado home energy rebates &mdash; Xcel Energy's statewide programs, municipal utility programs in Colorado Springs and Fort Collins, and the Colorado Energy Office's state tax credits.</p>
-  </div>
-</section>
+<header class="hero hub-hero"><div class="wrap"><div class="eyebrow">Xcel Energy · Colorado Springs · Fort Collins</div><h1>Home Energy Rebates in Colorado</h1><p class="sub">Complete 2026 guide to Colorado home energy rebates &mdash; Xcel Energy's statewide programs, municipal utility programs in Colorado Springs and Fort Collins, and the Colorado Energy Office's state tax credits.</p><div class="cta-row"><a href="#find-city" class="btn">Find your city →</a><a href="/programs/" class="btn btn-secondary">See all programs</a></div></div></header>
 <!-- HUB-STATS-START --><div class="hs-wrap"><div class="hs-stats"><div class="hs-stat"><b>5</b><span>cities covered</span></div><div class="hs-stat"><b>1</b><span>utility program guides</span></div><div class="hs-stat"><b>Being checked</b><span>city-page amounts vs official pages</span></div></div></div><!-- HUB-STATS-END -->
 
 
@@ -382,30 +378,31 @@ h2[id] { scroll-margin-top: 84px; }
 
 
 
-<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in Colorado</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 28, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>June 2026: Federal EV charger tax credit (30C)</b> (ended). The 30% credit (up to $1,000) for a home EV charger only covers equipment in service by June 30, 2026. <a href="https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Federal home energy tax credits (25C and 25D)</b> (ended). The 30% credits for heat pumps, insulation, windows, solar and batteries you own ended for anything installed after December 31, 2025. <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
+<!-- HUB-TOP-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> Xcel Energy pays $750 per heating ton for a cold-climate heat pump, and $1,500 per ton for homes heated with Xcel gas from October 1, 2026. A heat pump water heater gets $750 or $1,500, a smart thermostat $50 and a home EV charger up to $500. Solar has no upfront rebate for most homes in 2026, and the federal credits ended after 2025. Colorado Springs and Fort Collins have their own utilities with different programs that we are still checking.</p><p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Updated September 29, 2026 · By <a href="/about">Sam Menard</a> · Every amount links to the official program.</p></div><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in Colorado right now</h2><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;"><tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Xcel Energy</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$750 per heating ton ($1,500 with the gas bonus)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Cold-climate model, participating contractor. Bonus starts October 1, 2026. <a href="https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump water heater</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Xcel Energy</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$750 ($1,500 with the gas bonus)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">ENERGY STAR, 3.3 UEF. <a href="https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Smart thermostat</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Xcel Energy</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$50</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">ENERGY STAR rated. <a href="https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Insulation</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Xcel Energy</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">30% of cost, up to $500 attic</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $350 wall and $400 air sealing. <a href="https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>EV charger</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Xcel Energy</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $500 ($2,300 income-qualified)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Enroll in Optimize Your Charge first. <a href="https://co.my.xcelenergy.com/s/residential/ev-charging/incentives/charger-wiring-rebate" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Battery</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Xcel Renewable Battery Connect</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $5,000, plus $100 a year for 5 years</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Tesla Powerwall or Enphase. Xcel controls it at peak times. <a href="https://co.my.xcelenergy.com/s/renewable/battery-connect" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Solar</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Xcel Solar*Rewards</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$1 per watt, income-qualified only</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Everyone else gets net metering credit only. <a href="https://co.my.xcelenergy.com/s/renewable/solar-rewards" rel="nofollow noopener" target="_blank">Source</a></td></tr></table></div></section><!-- HUB-TOP-END -->
+
+
+
+
+
+
+<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in Colorado</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 29, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>June 2026: Federal EV charger tax credit (30C)</b> (ended). The 30% credit (up to $1,000) for a home EV charger only covers equipment in service by June 30, 2026. <a href="https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Federal home energy tax credits (25C and 25D)</b> (ended). The 30% credits for heat pumps, insulation, windows, solar and batteries you own ended for anything installed after December 31, 2025. <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
 <!-- PROGRAM-LINKS-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Program guides:</b> <a href="/programs/xcel-energy-colorado-rebates/">Xcel Energy Colorado rebates</a> · <a href="/programs/federal-tax-credits-2026/">2026 tax credits</a></p><!-- PROGRAM-LINKS-END -->
 <!-- HUB-SHOWCASE-START --><section class="hs-wrap hs-sec" id="find-city" aria-label="Colorado at a glance">
 <h2 class="hs-h">Find your city in Colorado</h2>
 <p class="hs-sub">Each ring is the city's PowerScore out of 100. Tap a city for its full rebate guide and top-rated installers.</p>
 <div class="hs-ctl"><input type="search" id="hs-q" placeholder="Search 5 cities" aria-label="Search cities in Colorado"><button type="button" class="hs-sort on" data-s="score">Top score</button><button type="button" class="hs-sort" data-s="az">A to Z</button></div>
-<div class="hs-grid" id="hs-grid"><a class="hs-city" href="/us/co/aurora/" data-name="aurora" data-score="45.5" data-order="0"><span class="hs-ring" style="--d:164deg"><b>46</b></span><span class="hs-cn"><b>Aurora</b><small>Open rebates worth up to $4,950</small><small>5 of 8 upgrades open · 22 installers ranked</small></span></a><a class="hs-city" href="/us/co/boulder/" data-name="boulder" data-score="45.5" data-order="1"><span class="hs-ring" style="--d:164deg"><b>46</b></span><span class="hs-cn"><b>Boulder</b><small>Open rebates worth up to $4,950</small><small>5 of 8 upgrades open · 25 installers ranked</small></span></a><a class="hs-city" href="/us/co/denver/" data-name="denver" data-score="42.4" data-order="2"><span class="hs-ring" style="--d:153deg"><b>42</b></span><span class="hs-cn"><b>Denver</b><small>Open rebates worth up to $3,450</small><small>4 of 8 upgrades open · 44 installers ranked</small></span></a><a class="hs-city" href="/us/co/fort-collins/" data-name="fort collins" data-score="29.3" data-order="3"><span class="hs-ring" style="--d:105deg"><b>29</b></span><span class="hs-cn"><b>Fort Collins</b><small>Open rebates worth up to $10,000</small><small>3 of 8 upgrades open · 31 installers ranked</small></span></a><a class="hs-city" href="/us/co/colorado-springs/" data-name="colorado springs" data-score="16.5" data-order="4"><span class="hs-ring" style="--d:59deg"><b>16</b></span><span class="hs-cn"><b>Colorado Springs</b><small>Local programs only</small><small>0 of 8 upgrades open · 35 installers ranked</small></span></a></div>
+<div class="hs-grid" id="hs-grid"><a class="hs-city" href="/us/co/aurora/" data-name="aurora" data-score="38.3" data-order="0"><span class="hs-ring" style="--d:138deg"><b>38</b></span><span class="hs-cn"><b>Aurora</b><small>Open rebates worth up to $4,050</small><small>5 of 8 upgrades open · 22 installers ranked</small></span></a><a class="hs-city" href="/us/co/boulder/" data-name="boulder" data-score="38.3" data-order="1"><span class="hs-ring" style="--d:138deg"><b>38</b></span><span class="hs-cn"><b>Boulder</b><small>Open rebates worth up to $4,050</small><small>5 of 8 upgrades open · 25 installers ranked</small></span></a><a class="hs-city" href="/us/co/denver/" data-name="denver" data-score="35.2" data-order="2"><span class="hs-ring" style="--d:127deg"><b>35</b></span><span class="hs-cn"><b>Denver</b><small>Open rebates worth up to $2,550</small><small>4 of 8 upgrades open · 44 installers ranked</small></span></a><a class="hs-city" href="/us/co/fort-collins/" data-name="fort collins" data-score="29.3" data-order="3"><span class="hs-ring" style="--d:105deg"><b>29</b></span><span class="hs-cn"><b>Fort Collins</b><small>Open rebates worth up to $10,000</small><small>3 of 8 upgrades open · 31 installers ranked</small></span></a><a class="hs-city" href="/us/co/colorado-springs/" data-name="colorado springs" data-score="16.5" data-order="4"><span class="hs-ring" style="--d:59deg"><b>16</b></span><span class="hs-cn"><b>Colorado Springs</b><small>Local programs only</small><small>0 of 8 upgrades open · 35 installers ranked</small></span></a></div>
 <h2 class="hs-h" style="margin-top:34px;">Biggest rebates by upgrade</h2>
 <p class="hs-sub">The largest amount found in Colorado for each type of upgrade, and where.</p>
-<div class="hs-tiles"><a class="hs-tile" href="/us/co/fort-collins/heat-pump/"><span class="hs-ti">🔥</span><span class="hs-tt"><em>Heat Pump</em>up to <b>$2,000</b><small>best in Fort Collins · open in 4 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/fort-collins/insulation/"><span class="hs-ti">🌡️</span><span class="hs-tt"><em>Insulation</em>up to <b>$2,000</b><small>best in Fort Collins · open in 4 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/aurora/solar/"><span class="hs-ti">☀️</span><span class="hs-tt"><em>Solar</em>up to <b>$1,500</b><small>best in Aurora · open in 0 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/fort-collins/battery/"><span class="hs-ti">🔋</span><span class="hs-tt"><em>Battery Storage</em>up to <b>$6,000</b><small>best in Fort Collins · open in 1 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/aurora/water-heater/"><span class="hs-ti">💧</span><span class="hs-tt"><em>Water Heater</em>up to <b>$1,500</b><small>best in Aurora · open in 2 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/aurora/smart-thermostats/"><span class="hs-ti">🎛️</span><span class="hs-tt"><em>Smart Thermostat</em>up to <b>$50</b><small>best in Aurora · open in 3 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/aurora/ev-charger/"><span class="hs-ti">🚗</span><span class="hs-tt"><em>EV Charger</em>up to <b>$1,300</b><small>best in Aurora · open in 3 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/aurora/"><span class="hs-ti">🪟</span><span class="hs-tt"><em>Windows &amp; Doors</em><b>No amount listed</b><small>see city pages for local programs</small></span></a></div><p class="hs-note">Heads up: we have not yet checked every program in this region against its official page, so treat the amounts as a guide.</p>
+<div class="hs-tiles"><a class="hs-tile" href="/us/co/fort-collins/heat-pump/"><span class="hs-ti">🔥</span><span class="hs-tt"><em>Heat Pump</em>up to <b>$2,000</b><small>best in Fort Collins · open in 4 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/fort-collins/insulation/"><span class="hs-ti">🌡️</span><span class="hs-tt"><em>Insulation</em>up to <b>$2,000</b><small>best in Fort Collins · open in 4 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/aurora/"><span class="hs-ti">☀️</span><span class="hs-tt"><em>Solar</em><b>No amount listed</b><small>see city pages for local programs</small></span></a><a class="hs-tile" href="/us/co/fort-collins/battery/"><span class="hs-ti">🔋</span><span class="hs-tt"><em>Battery Storage</em>up to <b>$6,000</b><small>best in Fort Collins · open in 1 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/aurora/water-heater/"><span class="hs-ti">💧</span><span class="hs-tt"><em>Water Heater</em>up to <b>$1,500</b><small>best in Aurora · open in 2 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/aurora/smart-thermostats/"><span class="hs-ti">🎛️</span><span class="hs-tt"><em>Smart Thermostat</em>up to <b>$50</b><small>best in Aurora · open in 3 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/aurora/ev-charger/"><span class="hs-ti">🚗</span><span class="hs-tt"><em>EV Charger</em>up to <b>$500</b><small>best in Aurora · open in 3 of 5 cities</small></span></a><a class="hs-tile" href="/us/co/aurora/"><span class="hs-ti">🪟</span><span class="hs-tt"><em>Windows &amp; Doors</em><b>No amount listed</b><small>see city pages for local programs</small></span></a></div><p class="hs-note">Heads up: we have not yet checked every program in this region against its official page, so treat the amounts as a guide.</p>
 <h2 class="hs-h" style="margin-top:34px;">Explore more</h2>
 <div class="hs-chips"><a class="hs-chip" href="/programs/xcel-energy-colorado-rebates/">Xcel Energy rebates</a><a class="hs-chip" href="/programs/federal-tax-credits-2026/">2026 federal tax credits</a><a class="hs-chip" href="/insulation-rebates/">Insulation rebates by region</a><a class="hs-chip" href="/rebate-tracker/">What ended and what&#x27;s new</a><a class="hs-chip" href="/installers/">Top-rated installers</a><a class="hs-chip" href="/powerscore/">PowerScore rankings</a></div>
 </section><!-- HUB-SHOWCASE-END -->
-
-
-
-
-
-
-
+<!-- HUB-TOC-START --><nav class="toc" aria-label="On this page"><span class="toc-lbl">On this page:</span><a href="#find-city">Find your city</a><a href="#which-utility-serves-you">Your utility</a><a href="#rebate-finder">Rebate finder</a><a href="#quick-questions">FAQ</a></nav><!-- HUB-TOC-END -->
 <article class="article">
   <div class="wrap">
 
-    <h2>Which utility serves you?</h2>
+    <h2 id="which-utility-serves-you">Which utility serves you?</h2>
     <p>Colorado's rebate landscape splits mainly along utility lines. <strong>Xcel Energy</strong> is the state's dominant investor-owned utility and covers most of the Front Range, including Denver, Aurora, and Boulder. Two of our five covered cities run their own municipal utilities with a separate rebate menu: <strong>Colorado Springs Utilities</strong> (Colorado Springs) and <strong>Fort Collins Utilities</strong>, whose rebates run through the regional <strong>Efficiency Works</strong> program. Pick your city below to see the rebates that actually apply to you.</p>
 
     <div class="rebate-grid">
@@ -436,7 +433,7 @@ h2[id] { scroll-margin-top: 84px; }
       </div>
     </div>
 
-    <h2>Statewide programs that apply no matter your utility</h2>
+    <h2 id="statewide-programs-that-apply-no-matter-">Statewide programs that apply no matter your utility</h2>
     <div class="rebate-grid">
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
@@ -522,7 +519,7 @@ h2[id] { scroll-margin-top: 84px; }
     </div>
 
     </details>
-<h2>Quick Questions</h2>
+<h2 id="quick-questions">Quick Questions</h2>
 <details class="hub-fold"><summary>Read the questions and answers</summary>
     <div class="faq-item">
       <h3>Why did Xcel Energy stop taking rebate applications?</h3>
@@ -538,7 +535,7 @@ h2[id] { scroll-margin-top: 84px; }
     </div>
 
     </details>
-<h2>Sources</h2>
+<h2 id="sources">Sources</h2>
     <ul>
       <li><a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates</a></li>
       <li><a href="https://www.csu.org/rebates-incentives/residential-hvac" target="_blank" rel="noopener">Colorado Springs Utilities &mdash; HVAC &amp; heat pump rebates</a></li>
@@ -681,6 +678,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

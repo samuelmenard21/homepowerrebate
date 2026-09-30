@@ -267,6 +267,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -323,7 +331,7 @@ h2[id] { scroll-margin-top: 84px; }
 @media (max-width: 600px) { .hpr-breadcrumb { padding: 10px 20px; font-size: 12px; } }
 /* CANONICAL-BREADCRUMB-CSS-END */
 </style>
-<!-- HUB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Home Renovation Savings 2026: Ontario Rebates by City", "description": "Ontario's Home Renovation Savings Program pays $1,250 to $2,000 per ton for a heat pump (up to $12,000), up to $5,000 each for solar and a battery, up to $7,700 for insulation with an energy assessment, and $125 for a smart thermostat. Income-qualified homes can get free upgrades, and Toronto adds a home energy loan of up to $125,000.", "dateModified": "2026-09-28", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com"}, "mainEntityOfPage": "https://homepowerrebate.com/ca/on/"}</script><!-- HUB-LD-END -->
+<!-- HUB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Home Renovation Savings 2026: Ontario Rebates by City", "description": "Ontario's Home Renovation Savings Program pays $1,250 to $2,000 per ton for a heat pump (up to $12,000), up to $5,000 each for solar and a battery, up to $7,700 for insulation with an energy assessment, and $125 for a smart thermostat. Income-qualified homes can get free upgrades, and Toronto adds a home energy loan of up to $125,000.", "dateModified": "2026-09-29", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com"}, "mainEntityOfPage": "https://homepowerrebate.com/ca/on/"}</script><!-- HUB-LD-END -->
 </head>
 <body>
 
@@ -418,24 +426,9 @@ h2[id] { scroll-margin-top: 84px; }
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Ontario</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
-<script>
-
-
-document.addEventListener('DOMContentLoaded', function () { showProvinceCities('on'); });
-</script>
 <!-- ============================ /NAV ============================== -->
 
-<header class="hero">
-  <div class="wrap">
-    <div class="eyebrow">Home Renovation Savings Program</div>
-    <h1>Ontario Home Renovation Savings Rebates 2026</h1>
-    <p class="sub">Up to $12,000 for a heat pump, $5,000 for solar, $5,000 for battery storage. Find your city below and compare top-rated local installers.</p>
-    <div class="cta-row">
-      <a href="#cities" class="btn">Find your city →</a>
-      <a href="/programs" class="btn btn-secondary">See all programs</a>
-    </div>
-  </div>
-</header>
+<header class="hero hub-hero"><div class="wrap"><div class="eyebrow">Home Renovation Savings Program</div><h1>Ontario Home Renovation Savings Rebates 2026</h1><p class="sub">Up to $12,000 for a heat pump, $5,000 for solar, $5,000 for battery storage. Find your city below and compare top-rated local installers.</p><div class="cta-row"><a href="#find-city" class="btn">Find your city →</a><a href="/programs/" class="btn btn-secondary">See all programs</a></div></div></header>
 <!-- HUB-STATS-START --><div class="hs-wrap"><div class="hs-stats"><div class="hs-stat"><b>25</b><span>cities covered</span></div><div class="hs-stat"><b>70</b><span>average PowerScore</span></div><div class="hs-stat"><b>CA$12,000<small>Heat Pump</small></b><span>biggest single rebate</span></div><div class="hs-stat"><b>8 of 8</b><span>upgrade types with an open rebate</span></div></div></div><!-- HUB-STATS-END -->
 
 
@@ -443,8 +436,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 
 
-<!-- HUB-TOP-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> Ontario&#x27;s Home Renovation Savings Program pays $1,250 to $2,000 per ton for a heat pump (up to $12,000), up to $5,000 each for solar and a battery, up to $7,700 for insulation with an energy assessment, and $125 for a smart thermostat. Income-qualified homes can get free upgrades, and Toronto adds a home energy loan of up to $125,000.</p><p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Updated September 28, 2026 · By <a href="/about">Sam Menard</a> · Every amount links to the official program.</p></div><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in Ontario right now</h2><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;"><tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Home Renovation Savings</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$1,250 to $2,000 per ton, up to $12,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Amount depends on your home and program track. <a href="https://homerenovationsavings.ca/heat-pumps" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump (Enbridge gas customers)</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Home Renovation Savings</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$500 per ton, up to $2,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Active Enbridge Gas account. <a href="https://homerenovationsavings.ca/heat-pumps" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Solar and battery</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Home Renovation Savings</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $5,000 each, $10,000 combined</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Max 50% of cost. No net-metering agreement with your utility. <a href="https://www.homerenovationsavings.ca/without-assessment/solar" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Insulation</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Home Renovation Savings</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $7,700 with an assessment; attic up to $1,250 without</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Pre- and post-work assessment for the bigger amount. <a href="https://homerenovationsavings.ca/with-assessment" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Smart thermostat</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Home Renovation Savings</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$125</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">First thermostat rebate only. Claim within 60 days. <a href="https://homerenovationsavings.ca/without-assessment/smart-thermostat" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Free upgrades</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Energy Affordability Program</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Free</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Income-qualified owners and renters. <a href="https://saveonenergy.ca/For-Your-Home/Energy-Affordability-Program" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Toronto only</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Home Energy Loan Program (HELP)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Loan up to $125,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Capped at 10% of your home&#x27;s assessed value; up to 20 years. <a href="https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/" rel="nofollow noopener" target="_blank">Source</a></td></tr></table></div></section><!-- HUB-TOP-END -->
-<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in Ontario</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 28, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>2026: RetrofitWR (Region of Waterloo)</b> (new). Launched spring 2026: free energy coaching across Waterloo Region, and loans up to $40,000 at 2.5% for GrandBridge Energy customers. <a href="https://www.regionofwaterloo.ca/programs-and-services/climate-and-environment/climate-action/retrofit-waterloo-region/" rel="nofollow noopener" target="_blank">Source</a></li><li><b>2026: Home Renovation Savings: thermostat and attic</b> (raised). The smart thermostat rebate rose to $125 (from $100) and the no-assessment attic insulation rebate to $1,250 (from $1,000). <a href="https://homerenovationsavings.ca/without-assessment/smart-thermostat" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Canada Greener Homes Grant</b> (ended). The last day to submit documents was December 31, 2025. The Greener Homes Loan stopped taking applications October 1, 2025. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
+
+
+
+
+
+
+<!-- HUB-TOP-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> Ontario&#x27;s Home Renovation Savings Program pays $1,250 to $2,000 per ton for a heat pump (up to $12,000), up to $5,000 each for solar and a battery, up to $7,700 for insulation with an energy assessment, and $125 for a smart thermostat. Income-qualified homes can get free upgrades, and Toronto adds a home energy loan of up to $125,000.</p><p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Updated September 29, 2026 · By <a href="/about">Sam Menard</a> · Every amount links to the official program.</p></div><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in Ontario right now</h2><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;"><tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Home Renovation Savings</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$1,250 to $2,000 per ton, up to $12,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Amount depends on your home and program track. <a href="https://homerenovationsavings.ca/heat-pumps" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump (Enbridge gas customers)</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Home Renovation Savings</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$500 per ton, up to $2,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Active Enbridge Gas account. <a href="https://homerenovationsavings.ca/heat-pumps" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Solar and battery</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Home Renovation Savings</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $5,000 each, $10,000 combined</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Max 50% of cost. No net-metering agreement with your utility. <a href="https://www.homerenovationsavings.ca/without-assessment/solar" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Insulation</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Home Renovation Savings</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $7,700 with an assessment; attic up to $1,250 without</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Pre- and post-work assessment for the bigger amount. <a href="https://homerenovationsavings.ca/with-assessment" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Smart thermostat</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Home Renovation Savings</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$125</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">First thermostat rebate only. Claim within 60 days. <a href="https://homerenovationsavings.ca/without-assessment/smart-thermostat" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Free upgrades</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Energy Affordability Program</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Free</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Income-qualified owners and renters. <a href="https://saveonenergy.ca/For-Your-Home/Energy-Affordability-Program" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Toronto only</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Home Energy Loan Program (HELP)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Loan up to $125,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Capped at 10% of your home&#x27;s assessed value; up to 20 years. <a href="https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/" rel="nofollow noopener" target="_blank">Source</a></td></tr></table></div></section><!-- HUB-TOP-END -->
+<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in Ontario</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 29, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>2026: RetrofitWR (Region of Waterloo)</b> (new). Launched spring 2026: free energy coaching across Waterloo Region, and loans up to $40,000 at 2.5% for GrandBridge Energy customers. <a href="https://www.regionofwaterloo.ca/programs-and-services/climate-and-environment/climate-action/retrofit-waterloo-region/" rel="nofollow noopener" target="_blank">Source</a></li><li><b>2026: Home Renovation Savings: thermostat and attic</b> (raised). The smart thermostat rebate rose to $125 (from $100) and the no-assessment attic insulation rebate to $1,250 (from $1,000). <a href="https://homerenovationsavings.ca/without-assessment/smart-thermostat" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Canada Greener Homes Grant</b> (ended). The last day to submit documents was December 31, 2025. The Greener Homes Loan stopped taking applications October 1, 2025. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
 <!-- PROGRAM-LINKS-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Program guides:</b> <a href="/programs/home-renovation-savings/">Home Renovation Savings</a></p><!-- PROGRAM-LINKS-END -->
 <!-- HUB-SHOWCASE-START --><section class="hs-wrap hs-sec" id="find-city" aria-label="Ontario at a glance">
 <h2 class="hs-h">Find your city in Ontario</h2>
@@ -457,25 +456,10 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <h2 class="hs-h" style="margin-top:34px;">Explore more</h2>
 <div class="hs-chips"><a class="hs-chip" href="/programs/home-renovation-savings/">Home Renovation Savings</a><a class="hs-chip" href="/blog/greener-homes-grant-explained/">Greener Homes Grant: what replaced it</a><a class="hs-chip" href="/blog/net-metering-vs-net-billing/">Net metering vs net billing</a><a class="hs-chip" href="/insulation-rebates/">Insulation rebates by region</a><a class="hs-chip" href="/rebate-tracker/">What ended and what&#x27;s new</a><a class="hs-chip" href="/installers/">Top-rated installers</a><a class="hs-chip" href="/powerscore/">PowerScore rankings</a></div>
 </section><!-- HUB-SHOWCASE-END -->
-
-
-
-
-
-
-
+<!-- HUB-TOC-START --><nav class="toc" aria-label="On this page"><span class="toc-lbl">On this page:</span><a href="#find-city">Find your city</a><a href="#programs">Programs</a><a href="#every-ontario-rebate-program-by-category">Rebate finder</a><a href="#faq">FAQ</a><a href="#before-you-sign-anything-read-this">Guides</a></nav><!-- HUB-TOC-END -->
 <div class="wrap">
   
 </div>
-
-<nav class="toc" aria-label="On this page">
-  <span class="toc-lbl">On this page:</span>
-  <a href="#find-city">19 Ontario cities</a>
-  <a href="#programs">HRSP</a>
-  <a href="#rebate-finder">Rebate finder</a>
-  <a href="#faq">FAQ</a>
-  <a href="#blog">From the blog</a>
-</nav>
 
 <!-- Quick facts — value before the CTA-heavy city list -->
 <section class="section-tight" style="background:var(--paper-warm);">
@@ -516,7 +500,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <section class="section-tight">
   <div class="wrap" style="text-align:center;">
     <div style="background:var(--teal-deep); border-radius:16px; padding:40px 32px; color:#fff;">
-      <h2 style="color:#fff; font-size:26px; margin-bottom:10px;">Not sure what your home qualifies for?</h2>
+      <h2 style="color:#fff; font-size:26px; margin-bottom:10px;" id="not-sure-what-your-home-qualifies-for">Not sure what your home qualifies for?</h2>
       <p style="color:rgba(250,247,242,.85); max-width:520px; margin:0 auto 20px;">Two quick questions — free, instant estimate, no sales calls.</p>
       <a href="/retrofit-assessment/" class="btn">Start your assessment →</a>
     </div>
@@ -527,7 +511,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <section id="rebate-finder" style="background:var(--paper-warm);">
   <div class="wrap">
     <div class="eyebrow-dark">Rebate finder</div>
-    <h2 class="big">Every Ontario rebate program, by category.</h2>
+    <h2 class="big" id="every-ontario-rebate-program-by-category">Every Ontario rebate program, by category.</h2>
     <p class="lede">These are the real, published rebate amounts already shown on our city pages &mdash; sampled from Toronto, whose HRSP figures apply province-wide unless a card says otherwise. Filter by category below.</p>
 <details class="hub-fold"><summary>Open the full rebate list</summary>
 
@@ -680,7 +664,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <section id="blog" class="section-tight" style="background:var(--paper-warm);">
   <div class="wrap">
     <div class="eyebrow-dark">From the blog</div>
-    <h2 class="big">Before you sign anything, read this.</h2>
+    <h2 class="big" id="before-you-sign-anything-read-this">Before you sign anything, read this.</h2>
 <details class="hub-fold"><summary>See the guides</summary>
     <div class="cities-grid">
       <div class="city-card">
@@ -838,6 +822,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

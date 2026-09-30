@@ -146,6 +146,9 @@ def main():
             else:
                 m = t.find("<!-- PROGRAM-LINKS-END -->")
                 i = m + len("<!-- PROGRAM-LINKS-END -->") if m >= 0 else -1
+                if i < 0:  # California's body is rebuilt by build_hub_tops, so anchor after the changes box
+                    m = t.find("<!-- HUB-CHANGES-END -->")
+                    i = m + len("<!-- HUB-CHANGES-END -->") if m >= 0 else -1
             if i < 0:
                 print("no anchor for", name, reg)
                 continue

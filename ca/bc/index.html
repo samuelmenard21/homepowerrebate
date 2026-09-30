@@ -308,6 +308,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -364,7 +372,7 @@ h2[id] { scroll-margin-top: 84px; }
 @media (max-width: 600px) { .hpr-breadcrumb { padding: 10px 20px; font-size: 12px; } }
 /* CANONICAL-BREADCRUMB-CSS-END */
 </style>
-<!-- HUB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "BC Hydro Rebates 2026: Heat Pump, Solar, Battery & Insulation", "description": "BC Hydro pays up to $4,000 for a heat pump that replaces electric heat, up to $10,000 for solar plus a battery, and free Mysa or Sinopé thermostats for baseboard homes. CleanBC pays income-qualified homes up to $13,000 to switch from gas, oil or propane to a heat pump. FortisBC customers have their own rebates instead.", "dateModified": "2026-09-28", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com"}, "mainEntityOfPage": "https://homepowerrebate.com/ca/bc/"}</script><!-- HUB-LD-END -->
+<!-- HUB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "BC Hydro Rebates 2026: Heat Pump, Solar, Battery & Insulation", "description": "BC Hydro pays up to $4,000 for a heat pump that replaces electric heat, up to $10,000 for solar plus a battery, and free Mysa or Sinopé thermostats for baseboard homes. CleanBC pays income-qualified homes up to $13,000 to switch from gas, oil or propane to a heat pump. FortisBC customers have their own rebates instead.", "dateModified": "2026-09-29", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com"}, "mainEntityOfPage": "https://homepowerrebate.com/ca/bc/"}</script><!-- HUB-LD-END -->
 </head>
 <body>
 
@@ -459,24 +467,9 @@ h2[id] { scroll-margin-top: 84px; }
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">British Columbia</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
-<script>
-
-
-document.addEventListener('DOMContentLoaded', function () { showProvinceCities('bc'); });
-</script>
 <!-- ============================ /NAV ============================== -->
 
-<header class="hero">
-  <div class="wrap">
-    <div class="eyebrow">BC Hydro · CleanBC · FortisBC</div>
-    <h1>BC Hydro and CleanBC Rebates 2026</h1>
-    <p class="sub">Up to $10,000 in rebates for solar + battery, plus heat pump incentives. Find your city below and compare top-rated local installers.</p>
-    <div class="cta-row">
-      <a href="#cities" class="btn">Find your city →</a>
-      <a href="/programs" class="btn btn-secondary">See all programs</a>
-    </div>
-  </div>
-</header>
+<header class="hero hub-hero"><div class="wrap"><div class="eyebrow">BC Hydro · CleanBC · FortisBC</div><h1>BC Hydro and CleanBC Rebates 2026</h1><p class="sub">Up to $10,000 in rebates for solar + battery, plus heat pump incentives. Find your city below and compare top-rated local installers.</p><div class="cta-row"><a href="#find-city" class="btn">Find your city →</a><a href="/programs/" class="btn btn-secondary">See all programs</a></div></div></header>
 <!-- HUB-STATS-START --><div class="hs-wrap"><div class="hs-stats"><div class="hs-stat"><b>18</b><span>cities covered</span></div><div class="hs-stat"><b>62</b><span>average PowerScore</span></div><div class="hs-stat"><b>CA$5,500<small>Insulation</small></b><span>biggest single rebate</span></div><div class="hs-stat"><b>8 of 8</b><span>upgrade types with an open rebate</span></div></div></div><!-- HUB-STATS-END -->
 
 
@@ -484,8 +477,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 
 
-<!-- HUB-TOP-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> BC Hydro pays up to $4,000 for a heat pump that replaces electric heat, up to $10,000 for solar plus a battery, and free Mysa or Sinopé thermostats for baseboard homes. CleanBC pays income-qualified homes up to $13,000 to switch from gas, oil or propane to a heat pump. FortisBC customers have their own rebates instead.</p><p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Updated September 28, 2026 · By <a href="/about">Sam Menard</a> · Every amount links to the official program.</p></div><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in BC right now</h2><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;"><tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump (replacing electric heat)</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">BC Hydro</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $4,000 whole home, $1,500 partial</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">HPCN-registered installer. Extra bonus up to $1,000 for installs finished by Oct 31, 2026. <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump (from gas, oil or propane)</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">CleanBC, income-qualified</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$13,000 / $7,000 / $3,500 by income level</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Plus a $3,000 northern top-up for levels 1 and 2. <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Solar panels</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">BC Hydro</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$1,000 per kW, up to $5,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Max 50% of cost. Approval before you install. <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Home battery</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">BC Hydro</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $5,000 with Peak Saver ($1,500 without)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Must be on the qualified list. Tesla batteries get $0. <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Smart thermostats</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">BC Hydro</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Free (up to 5), from October 2026</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Baseboard-heated homes, enrolled in Peak Saver. <a href="https://news.gov.bc.ca/releases/2026ECS0037-000794" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>FortisBC customers</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">FortisBC</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Insulation, windows, heat pump water heater, thermostat</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">FortisBC customers can&#x27;t use BC Hydro rebates. <a href="https://www.fortisbc.com/rebates-and-energy-savings/rebates-and-offers" rel="nofollow noopener" target="_blank">Source</a></td></tr></table></div></section><!-- HUB-TOP-END -->
-<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in BC</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 28, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>October 2026: BC Hydro heat pump bonus</b> (coming). The extra bonus of up to $1,000 on BC Hydro heat pump rebates only covers installs completed by October 31, 2026. <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html" rel="nofollow noopener" target="_blank">Source</a></li><li><b>July 2026: CleanBC Energy Savings Program (income-qualified)</b> (cut). New rules for invoices from July 6, 2026: heat pump rebates for switching from gas, oil or propane are now $13,000, $7,000 or $3,500 by income level, plus a $3,000 northern top-up for levels 1 and 2. <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" rel="nofollow noopener" target="_blank">Source</a></li><li><b>July 2026: BC Hydro net metering</b> (changed). Net metering closed to new customers. New solar owners get the self-generation rate, which pays 10 cents per kWh for power you export. <a href="https://www.bchydro.com/toolbar/about/strategies-plans-regulatory/rate-design/self-generation-rate-updates.html" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Canada Greener Homes Grant</b> (ended). The last day to submit documents was December 31, 2025. The Greener Homes Loan stopped taking applications October 1, 2025. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
+
+
+
+
+
+
+<!-- HUB-TOP-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> BC Hydro pays up to $4,000 for a heat pump that replaces electric heat, up to $10,000 for solar plus a battery, and free Mysa or Sinopé thermostats for baseboard homes. CleanBC pays income-qualified homes up to $13,000 to switch from gas, oil or propane to a heat pump. FortisBC customers have their own rebates instead.</p><p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Updated September 29, 2026 · By <a href="/about">Sam Menard</a> · Every amount links to the official program.</p></div><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in BC right now</h2><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;"><tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump (replacing electric heat)</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">BC Hydro</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $4,000 whole home, $1,500 partial</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">HPCN-registered installer. Extra bonus up to $1,000 for installs finished by Oct 31, 2026. <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump (from gas, oil or propane)</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">CleanBC, income-qualified</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$13,000 / $7,000 / $3,500 by income level</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Plus a $3,000 northern top-up for levels 1 and 2. <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Solar panels</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">BC Hydro</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$1,000 per kW, up to $5,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Max 50% of cost. Approval before you install. <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Home battery</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">BC Hydro</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $5,000 with Peak Saver ($1,500 without)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Must be on the qualified list. Tesla batteries get $0. <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Smart thermostats</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">BC Hydro</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Free (up to 5), from October 2026</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Baseboard-heated homes, enrolled in Peak Saver. <a href="https://news.gov.bc.ca/releases/2026ECS0037-000794" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>FortisBC customers</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">FortisBC</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Insulation, windows, heat pump water heater, thermostat</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">FortisBC customers can&#x27;t use BC Hydro rebates. <a href="https://www.fortisbc.com/rebates-and-energy-savings/rebates-and-offers" rel="nofollow noopener" target="_blank">Source</a></td></tr></table></div></section><!-- HUB-TOP-END -->
+<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in BC</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 29, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>October 2026: BC Hydro heat pump bonus</b> (coming). The extra bonus of up to $1,000 on BC Hydro heat pump rebates only covers installs completed by October 31, 2026. <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html" rel="nofollow noopener" target="_blank">Source</a></li><li><b>July 2026: CleanBC Energy Savings Program (income-qualified)</b> (cut). New rules for invoices from July 6, 2026: heat pump rebates for switching from gas, oil or propane are now $13,000, $7,000 or $3,500 by income level, plus a $3,000 northern top-up for levels 1 and 2. <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" rel="nofollow noopener" target="_blank">Source</a></li><li><b>July 2026: BC Hydro net metering</b> (changed). Net metering closed to new customers. New solar owners get the self-generation rate, which pays 10 cents per kWh for power you export. <a href="https://www.bchydro.com/toolbar/about/strategies-plans-regulatory/rate-design/self-generation-rate-updates.html" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Canada Greener Homes Grant</b> (ended). The last day to submit documents was December 31, 2025. The Greener Homes Loan stopped taking applications October 1, 2025. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
 <!-- PROGRAM-LINKS-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Program guides:</b> <a href="/programs/bc-hydro-rebates/">BC Hydro rebates</a> · <a href="/programs/cleanbc-rebates/">CleanBC rebates</a> · <a href="/programs/bc-hydro-peak-saver/">BC Hydro Peak Saver</a></p><!-- PROGRAM-LINKS-END -->
 <!-- HUB-SHOWCASE-START --><section class="hs-wrap hs-sec" id="find-city" aria-label="British Columbia at a glance">
 <h2 class="hs-h">Find your city in British Columbia</h2>
@@ -498,25 +497,10 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <h2 class="hs-h" style="margin-top:34px;">Explore more</h2>
 <div class="hs-chips"><a class="hs-chip" href="/programs/bc-hydro-rebates/">BC Hydro rebates</a><a class="hs-chip" href="/programs/cleanbc-rebates/">CleanBC rebates</a><a class="hs-chip" href="/programs/bc-hydro-peak-saver/">Peak Saver</a><a class="hs-chip" href="/blog/greener-homes-grant-explained/">Greener Homes Grant: what replaced it</a><a class="hs-chip" href="/blog/net-metering-vs-net-billing/">Net metering vs net billing</a><a class="hs-chip" href="/insulation-rebates/">Insulation rebates by region</a><a class="hs-chip" href="/rebate-tracker/">What ended and what&#x27;s new</a><a class="hs-chip" href="/installers/">Top-rated installers</a><a class="hs-chip" href="/powerscore/">PowerScore rankings</a></div>
 </section><!-- HUB-SHOWCASE-END -->
-
-
-
-
-
-
-
+<!-- HUB-TOC-START --><nav class="toc" aria-label="On this page"><span class="toc-lbl">On this page:</span><a href="#find-city">Find your city</a><a href="#programs">Programs</a><a href="#every-bc-rebate-program-by-category">Rebate finder</a><a href="#faq">FAQ</a><a href="#before-you-sign-anything-read-this">Guides</a></nav><!-- HUB-TOC-END -->
 <div class="wrap">
   
 </div>
-
-<nav class="toc" aria-label="On this page">
-  <span class="toc-lbl">On this page:</span>
-  <a href="#find-city">18 BC cities</a>
-  <a href="#programs">Power Smart 2.0</a>
-  <a href="#rebate-finder">Rebate finder</a>
-  <a href="#faq">FAQ</a>
-  <a href="#blog">From the blog</a>
-</nav>
 
 <!-- Quick facts — moved above the city grid so value comes before the CTA-heavy list -->
 <section class="section-tight" style="background:var(--paper-warm);">
@@ -557,7 +541,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <section class="section-tight">
   <div class="wrap" style="text-align:center;">
     <div style="background:var(--teal-deep); border-radius:16px; padding:40px 32px; color:#fff;">
-      <h2 style="color:#fff; font-size:26px; margin-bottom:10px;">Not sure what your home qualifies for?</h2>
+      <h2 style="color:#fff; font-size:26px; margin-bottom:10px;" id="not-sure-what-your-home-qualifies-for">Not sure what your home qualifies for?</h2>
       <p style="color:rgba(250,247,242,.85); max-width:520px; margin:0 auto 20px;">Two quick questions — free, instant estimate, no sales calls.</p>
       <a href="/retrofit-assessment/" class="btn">Start your assessment →</a>
     </div>
@@ -568,7 +552,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <section id="rebate-finder" style="background:var(--paper-warm);">
   <div class="wrap">
     <div class="eyebrow-dark">Rebate finder</div>
-    <h2 class="big">Every BC rebate program, by category.</h2>
+    <h2 class="big" id="every-bc-rebate-program-by-category">Every BC rebate program, by category.</h2>
     <p class="lede">These are the real, published rebate amounts already shown on our city pages — sampled from Vancouver, whose figures apply province-wide unless a card says otherwise. Filter by category below.</p>
 <details class="hub-fold"><summary>Open the full rebate list</summary>
 
@@ -736,7 +720,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <section id="blog" class="section-tight" style="background:var(--paper-warm);">
   <div class="wrap">
     <div class="eyebrow-dark">From the blog</div>
-    <h2 class="big">Before you sign anything, read this.</h2>
+    <h2 class="big" id="before-you-sign-anything-read-this">Before you sign anything, read this.</h2>
 <details class="hub-fold"><summary>See the guides</summary>
     <div class="cities-grid">
       <div class="city-card">
@@ -904,6 +888,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

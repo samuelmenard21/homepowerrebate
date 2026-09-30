@@ -251,6 +251,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -584,6 +592,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

@@ -191,6 +191,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -343,22 +351,11 @@ h2[id] { scroll-margin-top: 84px; }
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Massachusetts</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
-<script>
-
-
-document.addEventListener('DOMContentLoaded', function () { showProvinceCities('ma'); });
-</script>
 <!-- ============================ /NAV ============================== -->
 
 
 
-<section class="hero">
-  <div class="wrap">
-    <h1>Massachusetts Heat Pump &amp; Home Energy Rebates (2026)</h1>
-    <p>Mass Save rebates by city: heat pumps up to $8,500 ($16,000 if income-qualified), 75&ndash;100% off insulation, $750 heat pump water heaters, and a 0% loan. Tell us about your home for an estimate.</p>
-    <a href="/retrofit-assessment/" class="cta">Start Your Free Assessment</a>
-  </div>
-</section>
+<header class="hero hub-hero"><div class="wrap"><div class="eyebrow">Mass Save · MassCEC · DOER</div><h1>Massachusetts Heat Pump &amp; Home Energy Rebates (2026)</h1><p class="sub">Mass Save rebates by city: heat pumps up to $8,500 ($16,000 if income-qualified), 75&ndash;100% off insulation, $750 heat pump water heaters, and a 0% loan. Tell us about your home for an estimate.</p><div class="cta-row"><a href="#find-city" class="btn">Find your city →</a><a href="/programs/" class="btn btn-secondary">See all programs</a></div></div></header>
 <!-- HUB-STATS-START --><div class="hs-wrap"><div class="hs-stats"><div class="hs-stat"><b>13</b><span>cities covered</span></div><div class="hs-stat"><b>38</b><span>average PowerScore</span></div><div class="hs-stat"><b>$8,500<small>Heat Pump</small></b><span>biggest single rebate</span></div><div class="hs-stat"><b>5 of 8</b><span>upgrade types with an open rebate</span></div></div></div><!-- HUB-STATS-END -->
 
 
@@ -366,7 +363,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 
 
-<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in Massachusetts</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 28, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>June 2026: Federal EV charger tax credit (30C)</b> (ended). The 30% credit (up to $1,000) for a home EV charger only covers equipment in service by June 30, 2026. <a href="https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit" rel="nofollow noopener" target="_blank">Source</a></li><li><b>2026: Boston Solar Loan Pilot</b> (new). A 0% loan of up to $25,000 for rooftop solar, fully forgiven after 20 years of living in the home. <a href="https://www.boston.gov/departments/housing/solar-loan-pilot-program" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Federal home energy tax credits (25C and 25D)</b> (ended). The 30% credits for heat pumps, insulation, windows, solar and batteries you own ended for anything installed after December 31, 2025. <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow noopener" target="_blank">Source</a></li><li><b>February 2025: Mass Save 2025-2027 budget</b> (cut). Regulators cut the three-year Mass Save budget by $500 million. Residential budgets fell about 25% for gas and 15% for electric. <a href="https://www.mass.gov/news/dpu-reduces-mass-save-plan-by-500-million-and-approves-proposals-to-reduce-residential-gas-bills" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
+<!-- HUB-TOP-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> Mass Save pays up to $8,500 for a whole-home heat pump and $750 for a heat pump water heater, with 75% to 100% off insulation after a free home energy assessment. Income-qualified households can get up to $16,000 or no cost for a heat pump. Homes in towns with a municipal light plant are not covered by Mass Save&#x27;s electric programs. The federal tax credits ended on December 31, 2025.</p><p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Updated September 29, 2026 · By <a href="/about">Sam Menard</a> · Every amount links to the official program.</p></div><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in Massachusetts right now</h2><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;"><tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Mass Save</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $8,500</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Whole-home system. Mass Save electric customers only, not municipal light plant towns. <a href="https://goclean.masscec.com/homeowners/air-source-heat-pumps/" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump (income-qualified)</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Mass Save Enhanced Rebates</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $16,000, or no cost</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Income-qualified households only. <a href="https://goclean.masscec.com/homeowners/air-source-heat-pumps/" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump water heater</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Mass Save</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$750</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Mass Save customers. <a href="https://goclean.masscec.com/homeowners/heat-pump-water-heater/" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Insulation</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Mass Save weatherization</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">75% to 100% off</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">100% for income-qualified homes and some 1 to 4 unit buildings. <a href="https://goclean.masscec.com/homeowners/weatherization/" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Home energy assessment</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Mass Save</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Free</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Mass Save customers. <a href="https://goclean.masscec.com/homeowners/weatherization/" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Solar</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">SMART 3.0</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$0.03 per kWh ($0.06 low-income)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Small residential systems in National Grid, Eversource and Unitil areas. <a href="https://www.mass.gov/info-details/smart-30-program-details" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Battery</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">ConnectedSolutions</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">About $1,375 a year for a 5 kW battery</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Paid for summer peak events. Mass Save utilities. <a href="https://goclean.masscec.com/homeowners/battery-storage/" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Financing</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Mass Save HEAT Loan</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Loan up to $25,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to 7 years. <a href="https://goclean.masscec.com/homeowners/air-source-heat-pumps/" rel="nofollow noopener" target="_blank">Source</a></td></tr></table></div></section><!-- HUB-TOP-END -->
+
+
+
+
+
+
+<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in Massachusetts</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 29, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>June 2026: Federal EV charger tax credit (30C)</b> (ended). The 30% credit (up to $1,000) for a home EV charger only covers equipment in service by June 30, 2026. <a href="https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit" rel="nofollow noopener" target="_blank">Source</a></li><li><b>2026: Boston Solar Loan Pilot</b> (new). A 0% loan of up to $25,000 for rooftop solar, fully forgiven after 20 years of living in the home. <a href="https://www.boston.gov/departments/housing/solar-loan-pilot-program" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Federal home energy tax credits (25C and 25D)</b> (ended). The 30% credits for heat pumps, insulation, windows, solar and batteries you own ended for anything installed after December 31, 2025. <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow noopener" target="_blank">Source</a></li><li><b>February 2025: Mass Save 2025-2027 budget</b> (cut). Regulators cut the three-year Mass Save budget by $500 million. Residential budgets fell about 25% for gas and 15% for electric. <a href="https://www.mass.gov/news/dpu-reduces-mass-save-plan-by-500-million-and-approves-proposals-to-reduce-residential-gas-bills" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
 <!-- PROGRAM-LINKS-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Program guides:</b> <a href="/programs/mass-save/">Mass Save</a> · <a href="/programs/federal-tax-credits-2026/">2026 tax credits</a></p><!-- PROGRAM-LINKS-END -->
 <!-- HUB-SHOWCASE-START --><section class="hs-wrap hs-sec" id="find-city" aria-label="Massachusetts at a glance">
 <h2 class="hs-h">Find your city in Massachusetts</h2>
@@ -379,13 +383,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <h2 class="hs-h" style="margin-top:34px;">Explore more</h2>
 <div class="hs-chips"><a class="hs-chip" href="/programs/mass-save/">Mass Save</a><a class="hs-chip" href="/programs/federal-tax-credits-2026/">2026 federal tax credits</a><a class="hs-chip" href="/insulation-rebates/">Insulation rebates by region</a><a class="hs-chip" href="/rebate-tracker/">What ended and what&#x27;s new</a><a class="hs-chip" href="/installers/">Top-rated installers</a><a class="hs-chip" href="/powerscore/">PowerScore rankings</a></div>
 </section><!-- HUB-SHOWCASE-END -->
-
-
-
-
-
-
-
+<!-- HUB-TOC-START --><nav class="toc" aria-label="On this page"><span class="toc-lbl">On this page:</span><a href="#find-city">Find your city</a><a href="#how-much-is-the-massachusetts-heat-pump-">Heat pumps</a><a href="#rebate-finder-every-mass-save-program-by">Rebate finder</a><a href="#quick-questions">FAQ</a><a href="#read-more">Guides</a></nav><!-- HUB-TOC-END -->
 <section class="section">
   <div class="wrap">
     <div class="alert-box">
@@ -398,7 +396,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <section class="section">
   <div class="wrap">
-    <h2>How much is the Massachusetts heat pump rebate in 2026?</h2>
+    <h2 id="how-much-is-the-massachusetts-heat-pump-">How much is the Massachusetts heat pump rebate in 2026?</h2>
     <div class="highlight-box">
       <strong>Short answer:</strong> Through Mass Save, a whole-home air-source heat pump gets $2,650 per ton, up to $8,500. A partial-home system (you keep your old boiler or furnace as backup) gets $1,125 per ton, up to $8,500, plus up to $1,000 in bonuses. Income-qualified households can get up to $16,000, or no cost. Ground-source systems get $13,500, or up to $25,000 with enhanced rebates. The federal tax credit ended December 31, 2025.
     </div>
@@ -430,7 +428,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <section id="rebate-finder" class="section" style="background:#fff; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);">
   <div class="wrap" style="max-width:1100px;">
-    <h2>Rebate finder: every Mass Save program, by category.</h2>
+    <h2 id="rebate-finder-every-mass-save-program-by">Rebate finder: every Mass Save program, by category.</h2>
 <details class="hub-fold"><summary>Open the full rebate list</summary>
     <p>These are the real, current Mass Save amounts &mdash; sampled from Boston, but the same statewide program applies in every Massachusetts city we cover. The whole-home heat pump ceiling is $8,500 in 2026, down from $10,000 in 2024, and regulators trimmed the 2025&ndash;2027 Mass Save budget by $500 million, and Mass Save has documented processing delays (mailed rebates can take months), so treat these as caps to plan around, not guaranteed instant payouts. Filter by category below.</p>
     
@@ -530,7 +528,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <section class="faq-section">
   <div class="wrap">
-    <h2>Quick Questions</h2>
+    <h2 id="quick-questions">Quick Questions</h2>
 <details class="hub-fold"><summary>Read the questions and answers</summary>
 
     <div class="faq-item">
@@ -568,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <section class="section">
   <div class="wrap">
-    <h2>Read More</h2>
+    <h2 id="read-more">Read More</h2>
     <div class="blog-links">
       <a href="/blog/heat-pump-or-solar-massachusetts/" class="blog-card">
         <h3>Heat Pump or Solar First?</h3>
@@ -592,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <!-- ============================ FOOTER (canonical, from _partials/nav-footer.html) ============================= -->
 
-<section class="hpr-ma-faq" style="max-width:1000px;margin:0 auto 40px;padding:0 28px;"><h2>Common questions</h2>
+<section class="hpr-ma-faq" style="max-width:1000px;margin:0 auto 40px;padding:0 28px;"><h2 id="common-questions">Common questions</h2>
     <h3>How much is the Massachusetts heat pump rebate?</h3>
     <p>Mass Save pays $2,650 per ton up to $8,500 for whole-home air-source heat pumps, and $1,125 per ton up to $8,500 for partial-home systems. Income-qualified households can get up to $16,000 or no cost.</p>
     <h3>Is there a federal heat pump tax credit in 2026?</h3>
@@ -709,6 +707,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

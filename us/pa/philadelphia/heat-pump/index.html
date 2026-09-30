@@ -13,11 +13,11 @@
   gtag('config', 'G-W33G4TGRHD');
 </script>
 
-<meta name="description" content="Heat Pump rebates for Philadelphia homeowners in 2026 through PECO: Up to $1,950. Eligibility, sources, and how to apply.">
+<meta name="description" content="Heat Pump rebates for Philadelphia homeowners in 2026 through PECO: $200 to $300. Eligibility, sources, and how to apply.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://homepowerrebate.com/us/pa/philadelphia/heat-pump/">
 <meta property="og:title" content="Heat Pump Rebates in Philadelphia 2026">
-<meta property="og:description" content="How much rebate you get for heat pump in Philadelphia: Up to $1,950 through PECO.">
+<meta property="og:description" content="How much rebate you get for heat pump in Philadelphia: $200 to $300 through PECO.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://homepowerrebate.com/us/pa/philadelphia/heat-pump/">
 <meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
@@ -206,6 +206,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -358,7 +366,7 @@ h2[id] { scroll-margin-top: 84px; }
 
 <section class="hero">
   <div class="wrap">
-    <div class="amount-badge">Up to $1,950</div>
+    <div class="amount-badge">$200 to $300</div>
     <h1>Heat Pump Rebates in Philadelphia</h1>
     <p>PECO runs this program for Philadelphia homeowners. Here's exactly how it works and where the number comes from.</p>
   </div>
@@ -376,10 +384,10 @@ h2[id] { scroll-margin-top: 84px; }
 
     <h2>How much you get</h2>
     <div class="rebate-card">
-      <span class="program-status status-limited" style="display:none;">limited</span>
-      <div class="amount">Up to $1,950</div>
+      <span class="program-status status-open" style="display:none;">open</span>
+      <div class="amount">$200 to $300</div>
     </div>
-    <p><strong>Up to $1,950</strong> — PECO's Act 129 program offers up to $1,950 for a heat pump when stacked with income-qualified (EAP) offers. The standard, non-income-qualified rebate is smaller and has run seasonal promotions (for example, a $350 spring 2026 offer with a 90-day install/application window). Confirm the current amount and deadline with PECO before committing to a purchase.</p>
+    <p><strong>$200 to $300</strong> PECO pays $200 or $300 for an air source heat pump and $150 or $300 for a ductless mini-split, depending on the efficiency rating. The higher amount needs 17.1 SEER2 or better. Apply within 90 days of buying or installing. Income-qualified homes may get more through PECO's income-eligible programs, so ask PECO.</p>
 
     <div class="callout">
       <strong>Want your exact number?</strong> Run our free assessment to see what you'd actually get.
@@ -544,6 +552,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

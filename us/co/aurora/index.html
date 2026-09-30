@@ -225,6 +225,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -418,15 +426,15 @@ h2[id] { scroll-margin-top: 84px; }
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
         <h4>&#129003; Insulation &amp; Air Sealing</h4>
-        <div class="amount">Up to $600 + 25% bonus</div>
-        <p>Xcel Energy pays up to $600 for qualifying attic and wall insulation, plus a 25% bonus across all standard efficiency rebates when you install three or more qualifying measures within two years of enrolling. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a></p>
+        <div class="amount">Up to $500 attic</div>
+        <p>Xcel Energy pays 30% of the cost of insulation and air sealing: up to $500 for attic insulation, $350 for wall insulation and $400 for air sealing. Homes heated with Xcel natural gas get 1.5 times the standard rebate. Check Xcel's 2026 rebate sheet before you book the work. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a></p>
       
         <p style="margin-top:8px;"><a href="/us/co/aurora/insulation/" style="font-weight:600; font-size:13px;">Full insulation guide &rarr;</a></p>
       </div>
       <div class="rebate-card">
         <span class="program-status status-limited">Confirm status</span>
         <h4>&#9728;&#65039; Solar</h4>
-        <div class="amount">$300/kW, up to $1,500</div>
+        <div class="amount">No cash rebate</div>
         <p>Xcel Energy's Solar Rewards program pays $300 per kW of installed solar capacity, capped at $1,500 per home. Note: the federal 30% residential solar tax credit (Section 25D) expired for installations after December 31, 2025 under the One Big Beautiful Bill Act &mdash; it no longer applies to systems installed in 2026. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a> <a href="https://www.energystar.gov/about/federal-tax-credits" target="_blank" rel="noopener">ENERGY STAR &mdash; federal tax credit status &rarr;</a></p>
       
         <p style="margin-top:8px;"><a href="/us/co/aurora/solar/" style="font-weight:600; font-size:13px;">Full solar guide &rarr;</a></p>
@@ -458,8 +466,8 @@ h2[id] { scroll-margin-top: 84px; }
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
         <h4>&#128664; EV Charger</h4>
-        <div class="amount">Up to $1,300</div>
-        <p>Xcel Energy covers up to $1,300 of home wiring costs for a Level 2 EV charger, rising to $2,300 for income-qualified customers or homes in a designated Disproportionately Impacted Community. Enrollment in a Time-of-Use rate plan or Xcel's smart-charging program is required to qualify. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a></p>
+        <div class="amount">Up to $500</div>
+        <p>Xcel Energy pays up to $500 toward a Level 2 charger and the wiring for a 240-volt circuit. Income-qualified customers can get up to $2,300, and homes in a Disproportionately Impacted Community can get a standard rebate up to $800. You enroll in Xcel's Optimize Your Charge program first. EV Accelerate At Home closed to new Colorado applicants on July 14, 2026. Rebates are first come, first served. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a></p>
       
         <p style="margin-top:8px;"><a href="/us/co/aurora/ev-charger/" style="font-weight:600; font-size:13px;">Full EV charger guide &rarr;</a></p>
       </div>
@@ -498,14 +506,14 @@ h2[id] { scroll-margin-top: 84px; }
       <div class="finder-card" data-cat="insulation">
         <div class="finder-cat">Insulation</div>
         <h4>Insulation &amp; Air Sealing</h4>
-        <div class="finder-amount">Up to $600 + 25% bonus</div>
-        <p>Xcel Energy pays up to $600 for qualifying attic and wall insulation, plus a 25% bonus across all standard efficiency rebates when you install three or more qualifying measures within two years of enrolling. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a></p>
+        <div class="finder-amount">Up to $500 attic</div>
+        <p>Xcel Energy pays 30% of the cost of insulation and air sealing: up to $500 for attic insulation, $350 for wall insulation and $400 for air sealing. Homes heated with Xcel natural gas get 1.5 times the standard rebate. Check Xcel's 2026 rebate sheet before you book the work. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a></p>
         <div class="finder-source">Source: /us/co/aurora &middot; Xcel Energy / Colorado Energy Office</div>
       </div>
       <div class="finder-card" data-cat="solar">
         <div class="finder-cat">Solar</div>
         <h4>Solar</h4>
-        <div class="finder-amount">$300/kW, up to $1,500</div>
+        <div class="finder-amount">No cash rebate</div>
         <p>Xcel Energy's Solar Rewards program pays $300 per kW of installed solar capacity, capped at $1,500 per home. Note: the federal 30% residential solar tax credit (Section 25D) expired for installations after December 31, 2025 under the One Big Beautiful Bill Act &mdash; it no longer applies to systems installed in 2026. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a> <a href="https://www.energystar.gov/about/federal-tax-credits" target="_blank" rel="noopener">ENERGY STAR &mdash; federal tax credit status &rarr;</a></p>
         <div class="finder-source">Source: /us/co/aurora &middot; Xcel Energy / Colorado Energy Office</div>
       </div>
@@ -533,8 +541,8 @@ h2[id] { scroll-margin-top: 84px; }
       <div class="finder-card" data-cat="ev-charger">
         <div class="finder-cat">EV charger</div>
         <h4>EV Charger</h4>
-        <div class="finder-amount">Up to $1,300</div>
-        <p>Xcel Energy covers up to $1,300 of home wiring costs for a Level 2 EV charger, rising to $2,300 for income-qualified customers or homes in a designated Disproportionately Impacted Community. Enrollment in a Time-of-Use rate plan or Xcel's smart-charging program is required to qualify. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a></p>
+        <div class="finder-amount">Up to $500</div>
+        <p>Xcel Energy pays up to $500 toward a Level 2 charger and the wiring for a 240-volt circuit. Income-qualified customers can get up to $2,300, and homes in a Disproportionately Impacted Community can get a standard rebate up to $800. You enroll in Xcel's Optimize Your Charge program first. EV Accelerate At Home closed to new Colorado applicants on July 14, 2026. Rebates are first come, first served. <a href="https://co.my.xcelenergy.com/s/residential/home-rebates" target="_blank" rel="noopener">Xcel Energy &mdash; Colorado residential rebates &rarr;</a></p>
         <div class="finder-source">Source: /us/co/aurora &middot; Xcel Energy / Colorado Energy Office</div>
       </div>
     </div>
@@ -767,6 +775,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

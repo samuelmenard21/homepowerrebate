@@ -209,6 +209,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -359,19 +367,7 @@ h2[id] { scroll-margin-top: 84px; }
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Vermont</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
 
-<section class="wrap" style="padding:24px 28px 0;">
-  <div style="font-size:14px; line-height:2.2;">
-      <span style="margin-right:14px;"><a href="/">&larr; Home</a></span>
-      <span style="margin-right:14px;"><a href="/us/">All US States</a></span>
-  </div>
-</section>
-
-<section class="hero">
-  <div class="wrap">
-    <h1>Home Energy Rebates in Vermont</h1>
-    <p>Complete 2026 guide to Vermont home energy rebates &mdash; Efficiency Vermont's statewide efficiency programs, Green Mountain Power's battery and EV incentives, and Burlington Electric Department's municipal rebates.</p>
-  </div>
-</section>
+<header class="hero hub-hero"><div class="wrap"><div class="eyebrow">Efficiency Vermont · Green Mountain Power</div><h1>Home Energy Rebates in Vermont</h1><p class="sub">Complete 2026 guide to Vermont home energy rebates &mdash; Efficiency Vermont's statewide efficiency programs, Green Mountain Power's battery and EV incentives, and Burlington Electric Department's municipal rebates.</p><div class="cta-row"><a href="#find-city" class="btn">Find your city →</a><a href="/programs/" class="btn btn-secondary">See all programs</a></div></div></header>
 <!-- HUB-STATS-START --><div class="hs-wrap"><div class="hs-stats"><div class="hs-stat"><b>5</b><span>cities covered</span></div><div class="hs-stat"><b>44</b><span>average PowerScore</span></div><div class="hs-stat"><b>$9,500<small>Insulation</small></b><span>biggest single rebate</span></div><div class="hs-stat"><b>5 of 8</b><span>upgrade types with an open rebate</span></div></div></div><!-- HUB-STATS-END -->
 
 
@@ -379,7 +375,14 @@ h2[id] { scroll-margin-top: 84px; }
 
 
 
-<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in Vermont</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 28, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>June 2026: Federal EV charger tax credit (30C)</b> (ended). The 30% credit (up to $1,000) for a home EV charger only covers equipment in service by June 30, 2026. <a href="https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Federal home energy tax credits (25C and 25D)</b> (ended). The 30% credits for heat pumps, insulation, windows, solar and batteries you own ended for anything installed after December 31, 2025. <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
+<!-- HUB-TOP-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> Efficiency Vermont pays up to $475 for a ductless heat pump and up to $2,200 for a ducted one, with an income bonus of $200 to $2,200. Green Mountain Power adds $2,000 for households at or below 80% of area median income. A heat pump water heater gets $600, and home weatherization gets up to $4,000, or $9,500 for moderate-income homes. The federal tax credits ended on December 31, 2025.</p><p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Updated September 29, 2026 · By <a href="/about">Sam Menard</a> · Every amount links to the official program.</p></div><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in Vermont right now</h2><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;"><tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Efficiency Vermont</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $475 ductless, up to $2,200 ducted</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Cold-climate equipment. Vermont electric customers. <a href="https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump (income bonus)</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Efficiency Vermont</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$200 to $2,200 extra</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Low and moderate income limits effective July 1, 2026. <a href="https://www.efficiencyvermont.com/rebates/list/centrally-ducted-heat-pumps" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump (income-eligible)</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Green Mountain Power</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$2,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">GMP customers at or below 80% of area median income. <a href="https://greenmountainpower.com/heat-pump-rebate/" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump water heater</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Efficiency Vermont</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$600 ($1,000 income-eligible)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Vermont homeowners. <a href="https://www.efficiencyvermont.com/rebates/list/heat-pump-water-heaters" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Weatherization</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Efficiency Vermont</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $4,000 ($9,500 moderate income)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Efficiency Excellence Network contractor. <a href="https://www.efficiencyvermont.com/news-blog/news/efficiency-vermont-announces-2026-rebates-to-help-vermonters-achieve-their-home-energy-goals-in-the-new-year" rel="nofollow noopener" target="_blank">Source</a></td></tr></table></div></section><!-- HUB-TOP-END -->
+
+
+
+
+
+
+<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in Vermont</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 29, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>June 2026: Federal EV charger tax credit (30C)</b> (ended). The 30% credit (up to $1,000) for a home EV charger only covers equipment in service by June 30, 2026. <a href="https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Federal home energy tax credits (25C and 25D)</b> (ended). The 30% credits for heat pumps, insulation, windows, solar and batteries you own ended for anything installed after December 31, 2025. <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
 <!-- PROGRAM-LINKS-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Program guides:</b> <a href="/programs/federal-tax-credits-2026/">2026 tax credits</a></p><!-- PROGRAM-LINKS-END -->
 <!-- HUB-SHOWCASE-START --><section class="hs-wrap hs-sec" id="find-city" aria-label="Vermont at a glance">
 <h2 class="hs-h">Find your city in Vermont</h2>
@@ -392,17 +395,11 @@ h2[id] { scroll-margin-top: 84px; }
 <h2 class="hs-h" style="margin-top:34px;">Explore more</h2>
 <div class="hs-chips"><a class="hs-chip" href="/programs/federal-tax-credits-2026/">2026 federal tax credits</a><a class="hs-chip" href="/insulation-rebates/">Insulation rebates by region</a><a class="hs-chip" href="/rebate-tracker/">What ended and what&#x27;s new</a><a class="hs-chip" href="/installers/">Top-rated installers</a><a class="hs-chip" href="/powerscore/">PowerScore rankings</a></div>
 </section><!-- HUB-SHOWCASE-END -->
-
-
-
-
-
-
-
+<!-- HUB-TOC-START --><nav class="toc" aria-label="On this page"><span class="toc-lbl">On this page:</span><a href="#find-city">Find your city</a><a href="#how-vermont-s-rebates-are-organized">How Vermont's rebates are…</a><a href="#statewide-programs-that-apply-no-matter-">Your utility</a><a href="#rebate-finder">Rebate finder</a><a href="#quick-questions">FAQ</a></nav><!-- HUB-TOC-END -->
 <article class="article">
   <div class="wrap">
 
-    <h2>How Vermont's rebates are organized</h2>
+    <h2 id="how-vermont-s-rebates-are-organized">How Vermont's rebates are organized</h2>
     <p>Vermont works differently than most states. Instead of splitting rebates by investor-owned utility, almost all efficiency rebates &mdash; heat pumps (outside Burlington), water heaters, insulation, and thermostats &mdash; run through a single statewide nonprofit efficiency utility called <strong>Efficiency Vermont</strong>. <strong>Green Mountain Power (GMP)</strong>, the state's largest electric utility, runs its own separate battery storage and EV charger programs. <strong>Burlington</strong> is the one exception: it's served by its own municipal utility, <strong>Burlington Electric Department (BED)</strong>, which runs its own heat pump and EV charger rebates instead of Efficiency Vermont's. Pick your city below to see exactly what applies to you.</p>
 
     <div class="rebate-grid">
@@ -433,7 +430,7 @@ h2[id] { scroll-margin-top: 84px; }
       </div>
     </div>
 
-    <h2>Statewide programs that apply no matter your utility</h2>
+    <h2 id="statewide-programs-that-apply-no-matter-">Statewide programs that apply no matter your utility</h2>
     <div class="rebate-grid">
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
@@ -503,13 +500,13 @@ h2[id] { scroll-margin-top: 84px; }
     </div>
 
     </details>
-<h2>Quick Questions</h2>
+<h2 id="quick-questions">Quick Questions</h2>
     <div class="faq-item">
       <h3>Is my contractor's rebate quote a scam?</h3>
       <p>It can be, if the promised rebate is doing most of the work to make an inflated price look reasonable. <a href="/blog/is-my-contractors-rebate-quote-a-scam/">Check the real rebate cap before you sign &rarr;</a></p>
     </div>
 
-    <h2>Sources</h2>
+    <h2 id="sources">Sources</h2>
 <details class="hub-fold"><summary>Open this section</summary>
     <ul>
       <li><a href="https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system" target="_blank" rel="noopener">Efficiency Vermont &mdash; Heat pump rebates</a></li>
@@ -659,6 +656,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

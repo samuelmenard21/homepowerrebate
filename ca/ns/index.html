@@ -228,6 +228,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -463,21 +471,10 @@ h2[id] { scroll-margin-top: 84px; }
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Nova Scotia</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
-<script>
-
-
-document.addEventListener('DOMContentLoaded', function () { showProvinceCities('ns'); });
-</script>
 <!-- ============================ /NAV ============================== -->
 
 
-<section class="hero">
-  <div class="wrap">
-    <span class="badge">Checked September 28, 2026</span>
-    <h1>Nova Scotia Heating and Home Energy Rebates 2026</h1>
-    <p>Help with your heating bill, rebates for heat pumps and insulation, and free upgrades if money is tight. Here's what's open right now, who can get it, and how to check on your rebate.</p>
-  </div>
-</section>
+<header class="hero hub-hero"><div class="wrap"><div class="eyebrow">Efficiency Nova Scotia · HARP · Federal</div><h1>Nova Scotia Heating and Home Energy Rebates 2026</h1><p class="sub">Help with your heating bill, rebates for heat pumps and insulation, and free upgrades if money is tight. Here's what's open right now, who can get it, and how to check on your rebate.</p><div class="cta-row"><a href="#find-city" class="btn">Find your city →</a><a href="/programs/" class="btn btn-secondary">See all programs</a></div></div></header>
 <!-- HUB-STATS-START --><div class="hs-wrap"><div class="hs-stats"><div class="hs-stat"><b>2</b><span>cities covered</span></div><div class="hs-stat"><b>26</b><span>average PowerScore</span></div><div class="hs-stat"><b>CA$10,000<small>Insulation</small></b><span>biggest single rebate</span></div><div class="hs-stat"><b>5 of 8</b><span>upgrade types with an open rebate</span></div></div></div><!-- HUB-STATS-END -->
 
 
@@ -485,7 +482,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 
 
-<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in Nova Scotia</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 28, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>October 2026: Nova Scotia Heating Assistance Rebate (HARP)</b> (coming). HARP helps lower-income households with winter heating bills. It paid $400 last winter and has opened on October 1 in past years. Confirm the 2026-27 date and amount with the Province. <a href="https://news.novascotia.ca/en/2025/09/26/heating-assistance-rebate-program-opens-october-1" rel="nofollow noopener" target="_blank">Source</a></li><li><b>July 2026: Oil to Heat Pump Affordability (Nova Scotia)</b> (ended). Closed to new applicants on July 2, 2026 after funding ran out. A standby list is reviewed only if money frees up. <a href="https://www.efficiencyns.ca/programs-rebates/oil-to-heat-pump-affordability-program" rel="nofollow noopener" target="_blank">Source</a></li><li><b>July 2026: Nova Scotia Moderate Income Rebate</b> (cut). The provincial top-up was cut from a maximum of $10,000 to $5,000. Stacked with the Home Energy Assessment, the most you can get is now $10,000. <a href="https://www.efficiencyns.ca/programs-rebates/moderate-income-rebate" rel="nofollow noopener" target="_blank">Source</a></li><li><b>April 2026: Efficiency Nova Scotia Eco Shift</b> (paused). The demand-response pilot stopped taking new enrollments on April 9, 2026. <a href="https://www.efficiencyns.ca/programs-rebates/eco-shift" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Canada Greener Homes Grant</b> (ended). The last day to submit documents was December 31, 2025. The Greener Homes Loan stopped taking applications October 1, 2025. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
+<!-- HUB-TOP-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> Efficiency Nova Scotia pays $300 to $600 per ton for a heat pump and $800 for a heat pump water heater when you book a home energy assessment, with up to $5,000 in total rebates. Moderate-income homes that heat with something other than electricity can add up to $5,000 more, and HomeWarming is free for low-income homes. The federal oil-to-heat-pump program closed on July 2, 2026, and we found no solar or battery rebate for homeowners.</p><p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Updated September 29, 2026 · By <a href="/about">Sam Menard</a> · Every amount links to the official program.</p></div><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in Nova Scotia right now</h2><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;"><tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Efficiency Nova Scotia</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$300 per ton ductless, $500 ducted, $600 geothermal</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Qualifying model, certified installer, home energy assessment ($199). <a href="https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump water heater</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Efficiency Nova Scotia</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$800</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">ENERGY STAR model. Needs a home energy assessment. <a href="https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Whole-home upgrades</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Efficiency Nova Scotia</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $5,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Insulation, windows, air sealing and more, after an assessment. <a href="https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Moderate-income top-up</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Moderate Income Rebate</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $5,000 more (up to $10,000 with the assessment rebate)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Homes that mainly heat with non-electric fuel. <a href="https://www.efficiencyns.ca/programs-rebates/moderate-income-rebate" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Free upgrades</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">HomeWarming</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Free</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Income limits apply. About 4 to 6 weeks to hear back. <a href="https://www.efficiencyns.ca/programs-rebates/homewarming" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Free thermostat install</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Free Product Installation</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Free</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Electrically heated homes on the residential rate. <a href="https://www.efficiencyns.ca/programs-rebates/free-product-installation" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heating bill help</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Heating Assistance Rebate Program</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$400 (2025-26)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">The 2026-27 program opens October 1, 2026. <a href="https://news.novascotia.ca/en/2025/09/26/heating-assistance-rebate-program-opens-october-1" rel="nofollow noopener" target="_blank">Source</a></td></tr></table></div></section><!-- HUB-TOP-END -->
+
+
+
+
+
+
+<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in Nova Scotia</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 29, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>October 2026: Nova Scotia Heating Assistance Rebate (HARP)</b> (coming). HARP helps lower-income households with winter heating bills. It paid $400 last winter and has opened on October 1 in past years. Confirm the 2026-27 date and amount with the Province. <a href="https://news.novascotia.ca/en/2025/09/26/heating-assistance-rebate-program-opens-october-1" rel="nofollow noopener" target="_blank">Source</a></li><li><b>July 2026: Oil to Heat Pump Affordability (Nova Scotia)</b> (ended). Closed to new applicants on July 2, 2026 after funding ran out. A standby list is reviewed only if money frees up. <a href="https://www.efficiencyns.ca/programs-rebates/oil-to-heat-pump-affordability-program" rel="nofollow noopener" target="_blank">Source</a></li><li><b>July 2026: Nova Scotia Moderate Income Rebate</b> (cut). The provincial top-up was cut from a maximum of $10,000 to $5,000. Stacked with the Home Energy Assessment, the most you can get is now $10,000. <a href="https://www.efficiencyns.ca/programs-rebates/moderate-income-rebate" rel="nofollow noopener" target="_blank">Source</a></li><li><b>April 2026: Efficiency Nova Scotia Eco Shift</b> (paused). The demand-response pilot stopped taking new enrollments on April 9, 2026. <a href="https://www.efficiencyns.ca/programs-rebates/eco-shift" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Canada Greener Homes Grant</b> (ended). The last day to submit documents was December 31, 2025. The Greener Homes Loan stopped taking applications October 1, 2025. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
 <!-- PROGRAM-LINKS-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Program guides:</b> <a href="/programs/efficiency-nova-scotia/">Efficiency Nova Scotia rebates</a></p><!-- PROGRAM-LINKS-END -->
 <!-- HUB-SHOWCASE-START --><section class="hs-wrap hs-sec" id="find-city" aria-label="Nova Scotia at a glance">
 <h2 class="hs-h">Find your city in Nova Scotia</h2>
@@ -498,13 +502,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <h2 class="hs-h" style="margin-top:34px;">Explore more</h2>
 <div class="hs-chips"><a class="hs-chip" href="/programs/efficiency-nova-scotia/">Efficiency Nova Scotia</a><a class="hs-chip" href="/blog/greener-homes-grant-explained/">Greener Homes Grant: what replaced it</a><a class="hs-chip" href="/insulation-rebates/">Insulation rebates by region</a><a class="hs-chip" href="/rebate-tracker/">What ended and what&#x27;s new</a><a class="hs-chip" href="/installers/">Top-rated installers</a><a class="hs-chip" href="/powerscore/">PowerScore rankings</a></div>
 </section><!-- HUB-SHOWCASE-END -->
-
-
-
-
-
-
-
+<!-- HUB-TOC-START --><nav class="toc" aria-label="On this page"><span class="toc-lbl">On this page:</span><a href="#find-city">Find your city</a><a href="#which-nova-scotia-rebate-is-for-you">Which Nova Scotia rebate…</a><a href="#nova-scotia-heating-rebate-harp-2026-dat">Nova Scotia heating…</a><a href="#how-to-check-your-heating-rebate-status">Status by city</a><a href="#is-there-a-nova-scotia-power-rebate-in-2">Is there a Nova Scotia…</a><a href="#nova-scotia-heat-pump-rebate-2026">Heat pumps</a><a href="#everything-else-you-can-still-claim">Everything else you can…</a></nav><!-- HUB-TOC-END -->
 <article class="article">
   <div class="wrap">
 
@@ -512,7 +510,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       <strong>Short answer:</strong> There are two kinds of help in Nova Scotia. <strong>For your heating bill:</strong> the Heating Assistance Rebate Program (HARP) opens for the 2026&ndash;27 winter on <strong>October 1, 2026</strong>. Last winter it paid <strong>$400</strong> per household to lower-income homes. <strong>For upgrades:</strong> any homeowner can get up to <strong>$5,000</strong> through Efficiency Nova Scotia's Home Energy Assessment, up to <strong>$10,000</strong> with the Moderate Income Rebate (non-electric heat), or <strong>free upgrades</strong> through HomeWarming. The oil-to-heat-pump grant (OHPA) closed July 2, 2026.
     </div>
 
-    <h2>Which Nova Scotia rebate is for you?</h2>
+    <h2 id="which-nova-scotia-rebate-is-for-you">Which Nova Scotia rebate is for you?</h2>
     <div style="overflow-x:auto;">
     <table style="width:100%; border-collapse:collapse; font-size:14px; margin:16px 0;">
       <thead><tr style="text-align:left; border-bottom:2px solid var(--rule);"><th style="padding:8px;">If you&hellip;</th><th style="padding:8px;">Look at</th><th style="padding:8px;">What you get</th></tr></thead>
@@ -528,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     </table>
     </div>
 
-    <h2>Nova Scotia heating rebate (HARP) 2026: dates and who qualifies</h2>
+    <h2 id="nova-scotia-heating-rebate-harp-2026-dat">Nova Scotia heating rebate (HARP) 2026: dates and who qualifies</h2>
     <p>The <strong>Heating Assistance Rebate Program</strong> is run by the Province of Nova Scotia, not by Nova Scotia Power. It helps lower-income households with the cost of heating.</p>
     <ul>
       <li><strong>When:</strong> Applications for the 2026&ndash;27 winter open <strong>October 1, 2026</strong>. Last season ran October 1 to March 31.</li>
@@ -538,14 +536,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       <li><strong>How to apply:</strong> online on the <a href="https://www.novascotia.ca/apply-heating-assistance-rebate-heating-assistance-rebate-program" target="_blank" rel="noopener">HARP application page</a>, or on paper at Access Nova Scotia centres and MLA offices. Payment comes by direct deposit (if you're set up with the CRA) or cheque.</li>
     </ul>
 
-    <h2>How to check your heating rebate status</h2>
+    <h2 id="how-to-check-your-heating-rebate-status">How to check your heating rebate status</h2>
     <p>Already applied? You can check your HARP status online at <a href="https://harp.novascotia.ca/#/harp/en/check-status" target="_blank" rel="noopener">harp.novascotia.ca</a>. You'll need your <strong>application confirmation number</strong> and your <strong>postal code</strong>. The province says it usually takes <strong>8 to 10 weeks</strong> to get your rebate. It can take longer if they need more papers from you or if there's a mistake on the form. (<a href="https://www.novascotia.ca/check-status-your-heating-assistance-rebate-application-heating-assistance-rebate-program" target="_blank" rel="noopener">Province status page</a>)</p>
     <p>Waiting on an <strong>Efficiency Nova Scotia</strong> rebate instead (heat pump, insulation)? That's a different program. Those cheques come after your final home assessment. Contact Efficiency Nova Scotia, not the HARP line.</p>
 
-    <h2>Is there a Nova Scotia Power rebate in 2026?</h2>
+    <h2 id="is-there-a-nova-scotia-power-rebate-in-2">Is there a Nova Scotia Power rebate in 2026?</h2>
     <p>People often search "NS Power rebate," but Nova Scotia Power doesn't run the main rebates. Upgrade rebates come from <strong>Efficiency Nova Scotia</strong>. Heating bill help comes from the <strong>province</strong> through HARP. Your power rate is still worth knowing: Nova Scotia Power's residential energy charge is 18.324 cents per kWh in 2026, rising to 19.067 cents on January 1, 2027, plus a $20.08 monthly base charge. That high rate is why cutting electric use pays off faster here than in most provinces.</p>
 
-    <h2>Nova Scotia heat pump rebate 2026</h2>
+    <h2 id="nova-scotia-heat-pump-rebate-2026">Nova Scotia heat pump rebate 2026</h2>
     <p>Yes, there's still one, but it's smaller than before. Through the <a href="https://www.efficiencyns.ca/programs-rebates/home-energy-assessments" target="_blank" rel="noopener">Home Energy Assessment</a>:</p>
     <ul>
       <li><strong>$300 per ton</strong> for a ductless mini-split</li>
@@ -555,10 +553,10 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <p>The model must be on Efficiency Nova Scotia's list and installed by a certified technician. <strong>Replacing an old heat pump doesn't qualify.</strong> Moderate-income homes that don't heat mainly with electricity can add more through the <a href="https://www.efficiencyns.ca/programs-rebates/moderate-income-rebate" target="_blank" rel="noopener">Moderate Income Rebate</a>.</p>
     <p><strong>Honest math:</strong> a 2-ton ductless unit earns about $600 through the assessment, and the visit costs $199. It's still worth it if you also do insulation or a water heater, since those rebates stack under the same $5,000 cap. Compare top-rated local installers, ranked by Google reviews: <a href="/installers/ns/halifax/heat-pump/">Halifax heat pump installers</a> &middot; <a href="/installers/ns/cape-breton/heat-pump/">Cape Breton heat pump installers</a>.</p>
 
-    <h2>Heat pump water heater rebate: Halifax and Cape Breton</h2>
+    <h2 id="heat-pump-water-heater-rebate-halifax-an">Heat pump water heater rebate: Halifax and Cape Breton</h2>
     <p>It's <strong>$800</strong> for an ENERGY STAR heat pump water heater, taken off at checkout at <a href="https://www.efficiencyns.ca/programs-rebates/instant-rebates" target="_blank" rel="noopener">participating retailers</a>. If you didn't get it in store, you can claim it through a Home Energy Assessment. It's the same across the province, including Sydney and the rest of Cape Breton. Full guide: <a href="/blog/water-heater-buying-guide-ns/">heat pump water heaters in Nova Scotia</a>.</p>
 
-    <h2>Everything else you can still claim</h2>
+    <h2 id="everything-else-you-can-still-claim">Everything else you can still claim</h2>
     <div class="rebate-grid">
       <div class="rebate-card free">
         <span class="program-status status-open">Open</span>
@@ -597,7 +595,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     </div>
     <p>Moderate Income Rebate limits (after tax): $37,260 for 1 person, $77,050 for 2, $98,900 for 3, $120,750 for 4, $126,500 for 5 or more. Homes heated mainly with electricity can't get it. You must be pre-approved before any work starts.</p>
 
-    <h2>What closed, and when</h2>
+    <h2 id="what-closed-and-when">What closed, and when</h2>
     <ul>
       <li><strong>Oil to Heat Pump Affordability (OHPA)</strong> closed to new applicants July 2, 2026. People already on the standby list may still be reviewed if money frees up.</li>
       <li><strong>Home Heating System Rebates</strong> closed December 31, 2025.</li>
@@ -606,7 +604,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       <li>After OHPA ended, the <strong>Moderate Income Rebate</strong> was cut from $10,000 to $5,000. If you see "$15,000 for moderate income," that's the old number.</li>
     </ul>
 
-    <h2>What to do next</h2>
+    <h2 id="what-to-do-next">What to do next</h2>
     <ol>
       <li><strong>Heating bill help:</strong> apply for HARP on or after October 1, 2026. Keep your confirmation number to check status.</li>
       <li><strong>Upgrades:</strong> if you might qualify for HomeWarming or the Moderate Income Rebate, apply <strong>first</strong>, before booking anything.</li>
@@ -615,7 +613,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       <li>Finish the work within 12 months, then book your final assessment.</li>
     </ol>
 
-    <h2>Common questions</h2>
+    <h2 id="common-questions">Common questions</h2>
 <details class="hub-fold"><summary>Read the questions and answers</summary>
     <div class="faq-item"><h3>When does the Nova Scotia heating rebate open for 2026?</h3><p>The Heating Assistance Rebate Program (HARP) takes applications for the 2026-27 winter starting October 1, 2026. Last season it paid $400 per household and ran from October 1 to March 31.</p></div>
     <div class="faq-item"><h3>How do I check my heating rebate status in Nova Scotia?</h3><p>Go to the HARP check-status page at harp.novascotia.ca and enter your application confirmation number and postal code. The province says rebates usually take 8 to 10 weeks.</p></div>
@@ -626,14 +624,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <div class="faq-item"><h3>Is there still a solar rebate in Nova Scotia?</h3><p>Not for homeowners. SolarHomes stopped taking homeowner applications on April 17, 2025.</p></div>
 
     </details>
-<h2>More on Nova Scotia rebates</h2>
+<h2 id="more-on-nova-scotia-rebates">More on Nova Scotia rebates</h2>
     <ul>
       <li><a href="/blog/nova-scotia-heat-pump-rebate-disappeared/">What happened to Nova Scotia's heat pump rebate</a></li>
       <li><a href="/blog/water-heater-buying-guide-ns/">Heat pump water heaters in Nova Scotia</a></li>
       <li><a href="/blog/energy-saving-ideas-ns-home/">Ways to cut your energy bill in Nova Scotia</a></li>
     </ul>
 
-    <h2>Watch out for rebate scams</h2>
+    <h2 id="watch-out-for-rebate-scams">Watch out for rebate scams</h2>
 <details class="hub-fold"><summary>Open this section</summary>
     <p>Efficiency Nova Scotia says contractors will never ask for your ID, banking details or a void cheque, and can't approve your application. <a href="/blog/is-the-person-at-my-door-really-from-the-rebate-program/">What to watch for at your door &rarr;</a></p>
 
@@ -769,6 +767,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

@@ -203,6 +203,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -420,19 +428,8 @@ h2[id] { scroll-margin-top: 84px; }
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">New York</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
-<script>
 
-
-document.addEventListener('DOMContentLoaded', function () { showProvinceCities('ca'); });
-</script>
-
-<section class="hero">
-  <div class="wrap">
-    <h1>New York State Energy Rebates 2026</h1>
-    <p>Heat pump, insulation, water heater, solar and EV rebates for New York homeowners &mdash; checked against NYSERDA and each utility on September 26, 2026.</p>
-    <a href="#cities" class="cta">See your city&rsquo;s rebates</a>
-  </div>
-</section>
+<header class="hero hub-hero"><div class="wrap"><div class="eyebrow">NYS Clean Heat · NYSERDA · Your utility</div><h1>New York State Energy Rebates 2026</h1><p class="sub">Heat pump, insulation, water heater, solar and EV rebates for New York homeowners &mdash; checked against NYSERDA and each utility on September 26, 2026.</p><div class="cta-row"><a href="#find-city" class="btn">Find your city →</a><a href="/programs/" class="btn btn-secondary">See all programs</a></div></div></header>
 <!-- HUB-STATS-START --><div class="hs-wrap"><div class="hs-stats"><div class="hs-stat"><b>21</b><span>cities covered</span></div><div class="hs-stat"><b>51</b><span>average PowerScore</span></div><div class="hs-stat"><b>$18,000<small>Heat Pump</small></b><span>biggest single rebate</span></div><div class="hs-stat"><b>8 of 8</b><span>upgrade types with an open rebate</span></div></div></div><!-- HUB-STATS-END -->
 
 
@@ -440,7 +437,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 
 
-<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in New York</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 28, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>June 2026: Federal EV charger tax credit (30C)</b> (ended). The 30% credit (up to $1,000) for a home EV charger only covers equipment in service by June 30, 2026. <a href="https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit" rel="nofollow noopener" target="_blank">Source</a></li><li><b>April 2026: Con Edison PowerReady (Level 2 chargers)</b> (paused). Con Edison stopped accepting new Level 2 charger applications on April 22, 2026. <a href="https://www.coned.com/en/our-energy-future/electric-vehicles/power-ready-program" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Federal home energy tax credits (25C and 25D)</b> (ended). The 30% credits for heat pumps, insulation, windows, solar and batteries you own ended for anything installed after December 31, 2025. <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
+<!-- HUB-TOP-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> In New York your heat pump rebate depends on your electric utility. NYS Clean Heat pays up to $10,000 through Con Edison, National Grid, NYSEG and RG&amp;E, up to $9,000 through Orange &amp; Rockland and up to $8,000 through Central Hudson. PSEG Long Island runs its own program at $4,000 to $7,500. Income-eligible homes can get free upgrades through EmPower+. The federal tax credits ended on December 31, 2025.</p><p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Updated September 29, 2026 · By <a href="/about">Sam Menard</a> · Every amount links to the official program.</p></div><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in New York right now</h2><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;"><tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Con Edison Clean Heat</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $10,000 ($11,000 in a disadvantaged community)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Single-family home in NYC or Westchester. Approved contractor. <a href="https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-heating-and-cooling-technology-for-renters-homeowners/save-on-a-central-air-source-heat-pump" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">National Grid Clean Heat (upstate)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $10,000 ($12,000 in a disadvantaged community)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Buffalo, Syracuse, Albany. Participating contractor. <a href="https://cleanheat.ny.gov/assets/pdf/NYS%20Clean%20Heat%20Program%20Manual%202025_v2.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">NYSEG Clean Heat</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $10,000 ($11,000 in a disadvantaged community)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">NYSEG electric customers. <a href="https://cleanheat.ny.gov/assets/pdf/NYS%20Clean%20Heat%20Program%20Manual%202025_v2.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">RG&amp;E Clean Heat</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $10,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Rochester is served by RG&amp;E, not National Grid. <a href="https://cleanheat.ny.gov/assets/pdf/NYS%20Clean%20Heat%20Program%20Manual%202025_v2.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Central Hudson Clean Heat</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $8,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Central Hudson electric customers. <a href="https://cleanheat.ny.gov/assets/pdf/NYS%20Clean%20Heat%20Program%20Manual%202025_v2.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Orange &amp; Rockland Clean Heat</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Up to $9,000 ($10,000 in a disadvantaged community)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">O&amp;R electric customers. <a href="https://cleanheat.ny.gov/assets/pdf/NYS%20Clean%20Heat%20Program%20Manual%202025_v2.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump (Long Island)</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">PSEG Long Island</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$4,000, $5,000 or $7,500</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Whole-home sizing. Not part of NYS Clean Heat. <a href="https://www.psegliny.com/en/saveenergyandmoney/homeefficiency/HomeComfort/HeatPumps/Rebates" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Heat pump water heater</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">NYS Clean Heat</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$1,000 to $1,250</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Electric customers of the utility. <a href="https://cleanheat.ny.gov/assets/pdf/NYS%20Clean%20Heat%20Program%20Manual%202025_v2.pdf" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Free upgrades</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">EmPower+ (NYSERDA)</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Income-based</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Income-eligible owners and renters of 1 to 4 family homes. <a href="https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program" rel="nofollow noopener" target="_blank">Source</a></td></tr></table></div></section><!-- HUB-TOP-END -->
+
+
+
+
+
+
+<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in New York</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 29, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>June 2026: Federal EV charger tax credit (30C)</b> (ended). The 30% credit (up to $1,000) for a home EV charger only covers equipment in service by June 30, 2026. <a href="https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit" rel="nofollow noopener" target="_blank">Source</a></li><li><b>April 2026: Con Edison PowerReady (Level 2 chargers)</b> (paused). Con Edison stopped accepting new Level 2 charger applications on April 22, 2026. <a href="https://www.coned.com/en/our-energy-future/electric-vehicles/power-ready-program" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Federal home energy tax credits (25C and 25D)</b> (ended). The 30% credits for heat pumps, insulation, windows, solar and batteries you own ended for anything installed after December 31, 2025. <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
 <!-- PROGRAM-LINKS-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Program guides:</b> <a href="/programs/nys-clean-heat/">NYS Clean Heat</a> · <a href="/programs/federal-tax-credits-2026/">2026 tax credits</a></p><!-- PROGRAM-LINKS-END -->
 <!-- HUB-SHOWCASE-START --><section class="hs-wrap hs-sec" id="find-city" aria-label="New York at a glance">
 <h2 class="hs-h">Find your city in New York</h2>
@@ -453,13 +457,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <h2 class="hs-h" style="margin-top:34px;">Explore more</h2>
 <div class="hs-chips"><a class="hs-chip" href="/programs/nys-clean-heat/">NYS Clean Heat</a><a class="hs-chip" href="/programs/federal-tax-credits-2026/">2026 federal tax credits</a><a class="hs-chip" href="/insulation-rebates/">Insulation rebates by region</a><a class="hs-chip" href="/rebate-tracker/">What ended and what&#x27;s new</a><a class="hs-chip" href="/installers/">Top-rated installers</a><a class="hs-chip" href="/powerscore/">PowerScore rankings</a></div>
 </section><!-- HUB-SHOWCASE-END -->
-
-
-
-
-
-
-
+<!-- HUB-TOC-START --><nav class="toc" aria-label="On this page"><span class="toc-lbl">On this page:</span><a href="#find-city">Find your city</a><a href="#how-much-is-the-heat-pump-rebate-for-you">Your utility</a><a href="#new-york-rebate-finder-by-utility">Rebate finder</a><a href="#what-stacks-in-new-york-mdash-and-what-d">Rebate stack</a><a href="#what-to-do-next">Next steps</a><a href="#quick-questions">FAQ</a><a href="#read-more">Guides</a></nav><!-- HUB-TOC-END -->
 <section class="section">
   <div class="wrap">
     <div class="alert-box">
@@ -470,7 +468,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <section class="section" style="background: var(--paper-warm);">
   <div class="wrap">
-    <h2 style="text-align: center; margin-bottom: 32px;">How much is the heat pump rebate for your utility?</h2>
+    <h2 style="text-align: center; margin-bottom: 32px;" id="how-much-is-the-heat-pump-rebate-for-you">How much is the heat pump rebate for your utility?</h2>
 
     <div style="background: #fff; border-radius: 12px; padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
       <div style="margin-bottom: 20px;">
@@ -522,7 +520,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <section id="rebate-finder" class="section" style="background: var(--paper-warm);">
   <div class="wrap" style="max-width:1000px;">
-    <h2>New York rebate finder, by utility.</h2>
+    <h2 id="new-york-rebate-finder-by-utility">New York rebate finder, by utility.</h2>
 <details class="hub-fold"><summary>Open the full rebate list</summary>
     <p>New York rebates are genuinely different depending which utility serves your address — there's no single statewide number. Con Edison, PSEG Long Island, National Grid and Central Hudson each run their own program with their own dollar amounts. Filter by category, or scroll to your utility&rsquo;s group below. The heat pump figures <em>are</em> the NYS Clean Heat amounts (PSEG Long Island runs its own) &mdash; don&rsquo;t add Clean Heat on top.</p>
 
@@ -774,14 +772,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <section class="section">
   <div class="wrap">
-    <h2>NY heat pump rebates by utility (2026)</h2>
+    <h2 id="ny-heat-pump-rebates-by-utility-2026">NY heat pump rebates by utility (2026)</h2>
 <details class="hub-fold"><summary>Read the utility-by-utility breakdown</summary>
     <p>Single-family, whole-home cold-climate heat pump. The higher number is for removing your old oil, gas or propane system. Apartments and homes under 1,000 sq ft get less.</p>
     <div style="overflow-x:auto;"><table style="width:100%; border-collapse:collapse; font-size:15px; background:#fff;">
       <thead><tr style="background:var(--paper-warm);"><th style="text-align:left; padding:8px; border:1px solid var(--rule);">Utility</th><th style="text-align:left; padding:8px; border:1px solid var(--rule);">Program</th><th style="text-align:left; padding:8px; border:1px solid var(--rule);">Standard</th><th style="text-align:left; padding:8px; border:1px solid var(--rule);">Disadvantaged Community</th></tr></thead>
       <tbody><tr><td style="padding:8px; border:1px solid var(--rule);">Con Edison (NYC, Westchester)</td><td style="padding:8px; border:1px solid var(--rule);">NYS Clean Heat</td><td style="padding:8px; border:1px solid var(--rule);">$7,000&ndash;$10,000</td><td style="padding:8px; border:1px solid var(--rule);">$8,000&ndash;$11,000</td></tr><tr><td style="padding:8px; border:1px solid var(--rule);">National Grid (Buffalo, Syracuse, Albany)</td><td style="padding:8px; border:1px solid var(--rule);">NYS Clean Heat</td><td style="padding:8px; border:1px solid var(--rule);">$6,000&ndash;$10,000</td><td style="padding:8px; border:1px solid var(--rule);">$8,000&ndash;$12,000</td></tr><tr><td style="padding:8px; border:1px solid var(--rule);">NYSEG</td><td style="padding:8px; border:1px solid var(--rule);">NYS Clean Heat</td><td style="padding:8px; border:1px solid var(--rule);">$6,000&ndash;$10,000</td><td style="padding:8px; border:1px solid var(--rule);">$7,000&ndash;$11,000</td></tr><tr><td style="padding:8px; border:1px solid var(--rule);">RG&amp;E (Rochester)</td><td style="padding:8px; border:1px solid var(--rule);">NYS Clean Heat</td><td style="padding:8px; border:1px solid var(--rule);">$6,000&ndash;$10,000</td><td style="padding:8px; border:1px solid var(--rule);">$6,000&ndash;$10,000</td></tr><tr><td style="padding:8px; border:1px solid var(--rule);">Central Hudson (Hudson Valley)</td><td style="padding:8px; border:1px solid var(--rule);">NYS Clean Heat</td><td style="padding:8px; border:1px solid var(--rule);">$5,000&ndash;$8,000</td><td style="padding:8px; border:1px solid var(--rule);">not listed separately</td></tr><tr><td style="padding:8px; border:1px solid var(--rule);">Orange &amp; Rockland</td><td style="padding:8px; border:1px solid var(--rule);">NYS Clean Heat</td><td style="padding:8px; border:1px solid var(--rule);">$5,000&ndash;$9,000</td><td style="padding:8px; border:1px solid var(--rule);">$6,000&ndash;$10,000</td></tr><tr><td style="padding:8px; border:1px solid var(--rule);">PSEG Long Island</td><td style="padding:8px; border:1px solid var(--rule);">PSEG LI rebates</td><td style="padding:8px; border:1px solid var(--rule);">$4,000 (up to $7,500 by income)</td><td style="padding:8px; border:1px solid var(--rule);">$5,000</td></tr></tbody>
     </table></div>
-    <h2 style="margin-top:36px;">What stacks in New York &mdash; and what doesn&rsquo;t</h2>
+    <h2 style="margin-top:36px;" id="what-stacks-in-new-york-mdash-and-what-d">What stacks in New York &mdash; and what doesn&rsquo;t</h2>
     <ul>
       <li><strong>Stacks:</strong> your utility heat pump rebate + EmPower+ (if your income qualifies) + NYSERDA Comfort Home for insulation + a separate heat pump water heater rebate ($1,000&ndash;$1,250).</li>
       <li><strong>Doesn&rsquo;t stack:</strong> &ldquo;utility rebate + NYS Clean Heat&rdquo; &mdash; they are the same money.</li>
@@ -789,7 +787,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       <li><strong>Ended:</strong> the federal 25C and 25D tax credits, for anything installed after December 31, 2025.</li>
       <li><strong>Capped:</strong> NYS Clean Heat pays at most 70% of the project cost (85% in a Disadvantaged Community). Nobody gets paid to install a heat pump.</li>
     </ul>
-    <h2 style="margin-top:36px;">What to do next</h2>
+    <h2 style="margin-top:36px;" id="what-to-do-next">What to do next</h2>
     <ol>
       <li>Find your utility on your electric bill, then open your city page above.</li>
       <li>Check the <a href="https://www.nyserda.ny.gov/ny/Disadvantaged-Communities" rel="noopener">Disadvantaged Community map</a> &mdash; it can raise your rebate.</li>
@@ -802,7 +800,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <section class="faq-section">
   <div class="wrap">
-    <h2>Quick Questions</h2>
+    <h2 id="quick-questions">Quick Questions</h2>
 <details class="hub-fold"><summary>Read the questions and answers</summary>
     <div class="faq-item"><div class="faq-q">What energy rebates can I get in New York State in 2026?</div><div class="faq-a">The biggest is the heat pump rebate from your electric utility. Con Edison, National Grid, NYSEG, RG&amp;E, Central Hudson and Orange &amp; Rockland run it as NYS Clean Heat, paying about $8,000 to $12,000 for a whole-home switch. PSEG Long Island pays $4,000 to $7,500. Lower-income households can also get free or half-price upgrades through EmPower+, and NYSERDA Comfort Home pays $2,500 to $3,000 toward insulation.</div></div><div class="faq-item"><div class="faq-q">Can I stack NYS Clean Heat with my utility rebate?</div><div class="faq-a">No. NYS Clean Heat is the heat pump rebate your utility pays, so it is one rebate, not two. You can combine it with EmPower+ help if your income qualifies.</div></div><div class="faq-item"><div class="faq-q">Is there a federal HEAR rebate I can apply for in New York?</div><div class="faq-a">Not as a separate cheque. New York delivers the federal Home Energy Rebates to income-eligible households through EmPower+ and NYSERDA's Appliance Upgrade Program.</div></div><div class="faq-item"><div class="faq-q">Are the federal 25C and 25D tax credits still available?</div><div class="faq-a">No. They ended for anything installed after December 31, 2025.</div></div><div class="faq-item"><div class="faq-q">Who can use EmPower+?</div><div class="faq-a">Lower-income owners and renters of 1-4 family homes anywhere in New York State. Low-income households can get free upgrades up to $12,000 upstate or $14,000 downstate; moderate-income households get 50% covered up to $6,000 upstate or $7,000 downstate.</div></div>
     <div class="faq-item"><div class="faq-q">Is my contractor&rsquo;s rebate quote a scam?</div><div class="faq-a">It can be, if the promised rebate is doing most of the work to make an inflated price look reasonable. <a href="/blog/is-my-contractors-rebate-quote-a-scam/">Check the real rebate cap before you sign &rarr;</a></div></div>
@@ -813,7 +811,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 <section class="section">
   <div class="wrap">
-    <h2>Read More</h2>
+    <h2 id="read-more">Read More</h2>
     <div class="blog-links">
       <a href="/blog/heat-pump-or-solar-new-york/" class="blog-card">
         <h3>Heat Pump or Solar First?</h3>
@@ -971,6 +969,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

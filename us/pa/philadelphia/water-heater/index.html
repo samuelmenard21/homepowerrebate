@@ -206,6 +206,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -358,7 +366,7 @@ h2[id] { scroll-margin-top: 84px; }
 
 <section class="hero">
   <div class="wrap">
-    <div class="amount-badge">Confirm status</div>
+    <div class="amount-badge">$350</div>
     <h1>Water Heater Rebates in Philadelphia</h1>
 <p>Rowhomes make up most of Philadelphia's housing, and that single fact matters more here than almost anywhere else in Pennsylvania when it comes to picking a water heater. Here's where PECO's rebate actually stands, and why the housing type might matter more than the dollar amount.</p>
   </div>
@@ -376,10 +384,10 @@ h2[id] { scroll-margin-top: 84px; }
 
     <h2>How much you get</h2>
     <div class="rebate-card">
-      <span class="program-status status-limited" style="display:none;">limited</span>
-      <div class="amount">Confirm status</div>
+      <span class="program-status status-open" style="display:none;">open</span>
+      <div class="amount">$350</div>
     </div>
-    <p><strong>Confirm status.</strong> Heat pump water heaters may qualify under PECO's broader Act 129 program, but the specific dollar figure for Phase V hasn't been published yet. Source: <a href="https://cleanair.org/run/peco/" target="_blank" rel="noopener">Clean Air Council's PECO rebates overview</a>.</p>
+    <p><strong>$350.</strong> PECO pays $350 for an ENERGY STAR certified heat pump water heater in a home with PECO electric service. Apply within 90 days of buying or installing.</p>
 
     <h2>Tankless vs. heat pump water heaters in Philadelphia rowhomes</h2>
     <p>Philadelphia's rowhomes, especially the pre-1940 stock that covers huge stretches of the city, tend to have narrow, low-clearance basements or none at all in some conversions. A heat pump water heater wants roughly 750 cubic feet of open air to run efficiently, which a lot of Philly rowhome basements simply don't have without ducting the unit's intake and exhaust to another space. A tankless unit sidesteps that constraint completely: it wall-mounts, needs no surrounding air volume, and can free up real floor space in a house where every square foot of basement or utility closet counts. It also runs about 97% efficient with no standby heat loss and a 15-plus year lifespan, against roughly 67% and 6 to 8 years for a storage tank. In the rowhomes with enough basement clearance, a heat pump water heater's $150-$300 annual operating cost against $400-$600 for electric resistance still wins on long-run cost, but the housing type itself is often the deciding factor before the rebate math even comes up.</p>
@@ -519,6 +527,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

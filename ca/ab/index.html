@@ -259,6 +259,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -429,21 +437,10 @@ h2[id] { scroll-margin-top: 84px; }
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Alberta</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
-<script>
-
-
-document.addEventListener('DOMContentLoaded', function () { showProvinceCities('ab'); });
-</script>
 <!-- ============================ /NAV ============================== -->
 
 
-<section class="hero">
-  <div class="wrap">
-    <span class="badge">Checked September 26, 2026</span>
-    <h1>Alberta Home Energy Rebates 2026</h1>
-    <p>Alberta has no province-wide home energy rebate. Most help comes as financing through your city, plus a few small local rebates. Here's what's actually open, city by city.</p>
-  </div>
-</section>
+<header class="hero hub-hero"><div class="wrap"><div class="eyebrow">Alberta · City programs · Federal</div><h1>Alberta Home Energy Rebates 2026</h1><p class="sub">Alberta has no province-wide home energy rebate. Most help comes as financing through your city, plus a few small local rebates. Here's what's actually open, city by city.</p><div class="cta-row"><a href="#find-city" class="btn">Find your city →</a><a href="/programs/" class="btn btn-secondary">See all programs</a></div></div></header>
 <!-- HUB-STATS-START --><div class="hs-wrap"><div class="hs-stats"><div class="hs-stat"><b>6</b><span>cities covered</span></div><div class="hs-stat"><b>4</b><span>average PowerScore</span></div><div class="hs-stat"><b>CA$1,400<small>Insulation</small></b><span>biggest single rebate</span></div><div class="hs-stat"><b>1 of 8</b><span>upgrade types with an open rebate</span></div></div></div><!-- HUB-STATS-END -->
 
 
@@ -451,7 +448,14 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 
 
 
-<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in Alberta</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 28, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>September 2026: Calgary Clean Energy Improvement Program (CEIP)</b> (paused). Calgary&#x27;s CEIP financing (up to $50,000 repaid on your property tax) is closed to new applications until winter 2026/2027. <a href="https://www.calgary.ca/environment/programs/clean-energy-improvement-program.html" rel="nofollow noopener" target="_blank">Source</a></li><li><b>September 2026: Lethbridge and St. Albert CEIP</b> (paused). Lethbridge&#x27;s CEIP is at capacity and closed to new pre-qualification. St. Albert is taking waitlist applications only. <a href="https://ceip.abmunis.ca/residential/residential-program-locations/" rel="nofollow noopener" target="_blank">Source</a></li><li><b>July 2026: Federal Oil to Heat Pump Affordability (Alberta)</b> (ended). The federal grant of up to $10,000 to switch from oil to a heat pump closed to Albertans on July 31, 2026. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Canada Greener Homes Grant</b> (ended). The last day to submit documents was December 31, 2025. The Greener Homes Loan stopped taking applications October 1, 2025. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
+<!-- HUB-TOP-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> We found no province-wide heat pump or solar rebate for Alberta homes in 2026. Help comes from city programs: Clean Energy Improvement Program (CEIP) financing in Calgary, Lethbridge and St. Albert (some intakes are closed or on a waitlist), a $50 thermostat rebate in Red Deer, and the free Calgary Home Upgrades Program for income-qualified homes. The federal oil-to-heat-pump program closed on July 31, 2026.</p><p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Updated September 29, 2026 · By <a href="/about">Sam Menard</a> · Every amount links to the official program.</p></div><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in Alberta right now</h2><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;"><tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Home energy financing</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Calgary CEIP</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Financing up to $50,000</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Intake closed; reopens winter 2026/2027. <a href="https://www.calgary.ca/environment/programs/clean-energy-improvement-program.html" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Home energy financing</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Lethbridge CEIP</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">2.83% fixed rate, plus a $1,350 rebate</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Closed to new pre-qualification as of September 2026. <a href="https://www.lethbridge.ca/ceip" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Home energy financing</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">St. Albert CEIP</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Financing, plus a $1,400 incentive</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Waitlist as of September 2026. <a href="https://stalbert.ca/city/environment/energy-conservation/programs/ceip/" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Smart thermostat</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Red Deer</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">$50</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Apply by December 31, 2026. <a href="https://www.reddeer.ca/city-services/environment-and-conservation/your-home/energy-efficiency/smart-thermostat-rebate/" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Free upgrades</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Calgary Home Upgrades Program</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Free</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Income-qualified homes. 2026 waitlist. <a href="https://www.homeupgradesprogram.ca/calgary" rel="nofollow noopener" target="_blank">Source</a></td></tr><tr><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;"><b>Oil to heat pump</b></td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Federal Oil to Heat Pump Affordability</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Closed</td><td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">Closed July 31, 2026. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" rel="nofollow noopener" target="_blank">Source</a></td></tr></table></div></section><!-- HUB-TOP-END -->
+
+
+
+
+
+
+<!-- HUB-CHANGES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">What changed recently in Alberta</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked September 29, 2026. <a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;"><li><b>September 2026: Calgary Clean Energy Improvement Program (CEIP)</b> (paused). Calgary&#x27;s CEIP financing (up to $50,000 repaid on your property tax) is closed to new applications until winter 2026/2027. <a href="https://www.calgary.ca/environment/programs/clean-energy-improvement-program.html" rel="nofollow noopener" target="_blank">Source</a></li><li><b>September 2026: Lethbridge and St. Albert CEIP</b> (paused). Lethbridge&#x27;s CEIP is at capacity and closed to new pre-qualification. St. Albert is taking waitlist applications only. <a href="https://ceip.abmunis.ca/residential/residential-program-locations/" rel="nofollow noopener" target="_blank">Source</a></li><li><b>July 2026: Federal Oil to Heat Pump Affordability (Alberta)</b> (ended). The federal grant of up to $10,000 to switch from oil to a heat pump closed to Albertans on July 31, 2026. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" rel="nofollow noopener" target="_blank">Source</a></li><li><b>December 2025: Canada Greener Homes Grant</b> (ended). The last day to submit documents was December 31, 2025. The Greener Homes Loan stopped taking applications October 1, 2025. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" rel="nofollow noopener" target="_blank">Source</a></li></ul></div></section><!-- HUB-CHANGES-END -->
 <!-- PROGRAM-LINKS-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Program guides:</b> <a href="/programs/alberta-energy-rebates/">Alberta energy rebates</a></p><!-- PROGRAM-LINKS-END -->
 <!-- HUB-SHOWCASE-START --><section class="hs-wrap hs-sec" id="find-city" aria-label="Alberta at a glance">
 <h2 class="hs-h">Find your city in Alberta</h2>
@@ -464,13 +468,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <h2 class="hs-h" style="margin-top:34px;">Explore more</h2>
 <div class="hs-chips"><a class="hs-chip" href="/programs/alberta-energy-rebates/">Alberta rebates guide</a><a class="hs-chip" href="/blog/greener-homes-grant-explained/">Greener Homes Grant: what replaced it</a><a class="hs-chip" href="/insulation-rebates/">Insulation rebates by region</a><a class="hs-chip" href="/rebate-tracker/">What ended and what&#x27;s new</a><a class="hs-chip" href="/installers/">Top-rated installers</a><a class="hs-chip" href="/powerscore/">PowerScore rankings</a></div>
 </section><!-- HUB-SHOWCASE-END -->
-
-
-
-
-
-
-
+<!-- HUB-TOC-START --><nav class="toc" aria-label="On this page"><span class="toc-lbl">On this page:</span><a href="#find-city">Find your city</a><a href="#is-there-a-heat-pump-or-furnace-rebate-i">Heat pumps</a><a href="#ceip-status-by-city-september-2026">Status by city</a><a href="#what-you-can-get-by-upgrade">What you can get, by…</a><a href="#what-to-do-next">Next steps</a><a href="#common-questions">FAQ</a><a href="#more-alberta-guides">Guides</a></nav><!-- HUB-TOC-END -->
 <article class="article">
   <div class="wrap">
 
@@ -478,10 +476,10 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       <strong>Short answer:</strong> There is no Alberta government rebate for heat pumps, furnaces, insulation or solar in 2026. The federal Greener Homes Grant and Loan are closed, and the federal oil-to-heat-pump grant closed to Albertans on July 31, 2026. What's left is <strong>CEIP</strong>, a city program that lends you up to $50,000 for upgrades and lets you pay it back on your property tax bill. But several cities' CEIP programs are full right now. A few cities add small cash: Lethbridge ($1,350), St. Albert ($1,400) and Red Deer ($50 thermostat rebate).
     </div>
 
-    <h2>Is there a heat pump or furnace rebate in Alberta?</h2>
+    <h2 id="is-there-a-heat-pump-or-furnace-rebate-i">Is there a heat pump or furnace rebate in Alberta?</h2>
     <p>Not from the province. We also couldn't find a current published heat pump or furnace rebate from ENMAX, ATCO or EPCOR in September 2026. Utility offers can appear and disappear, so call yours before you buy. Your real options are CEIP financing (if your city has room) and, for new mortgages, <a href="https://www.cmhc-schl.gc.ca/consumers/home-buying/mortgage-loan-insurance-for-consumers/cmhc-eco-products" target="_blank" rel="noopener">CMHC Eco Plus</a>, a partial refund of mortgage insurance premiums for energy-efficient homes.</p>
 
-    <h2>CEIP status by city (September 2026)</h2>
+    <h2 id="ceip-status-by-city-september-2026">CEIP status by city (September 2026)</h2>
 <details class="hub-fold"><summary>Open this section</summary>
     <div style="overflow-x:auto;">
     <table style="width:100%; border-collapse:collapse; font-size:14px; margin:16px 0;">
@@ -499,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <p>CEIP is a loan, not free money. You pay it back with interest. It can cover up to 100% of an eligible project, up to $50,000, over up to 20 years. You must be approved <strong>before</strong> work starts. (<a href="https://ceip.abmunis.ca/residential/residential-program-locations/" target="_blank" rel="noopener">CEIP program locations</a>)</p>
 
     </details>
-<h2>What you can get, by upgrade</h2>
+<h2 id="what-you-can-get-by-upgrade">What you can get, by upgrade</h2>
     <div class="rebate-grid">
       <div class="rebate-card none">
         <h3>🔥 Heat Pump / Furnace</h3>
@@ -528,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
     </div>
 
-    <h2>What to do next</h2>
+    <h2 id="what-to-do-next">What to do next</h2>
     <ol>
       <li>Check your city in the table above. If CEIP is open or has a waitlist, get on it early.</li>
       <li>Get an EnerGuide home evaluation if your CEIP program asks for one.</li>
@@ -537,12 +535,12 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     </ol>
 
     <div id="rebate-finder"></div>
-    <h2>Common questions</h2>
+    <h2 id="common-questions">Common questions</h2>
     <div class="faq-item"><h3>Does Alberta have an energy efficient home rebate in 2026?</h3><p>No province-wide one. Alberta's main tool is CEIP, a city-run loan repaid on your property tax bill. Lethbridge and St. Albert add small cash incentives, and Red Deer has a $50 thermostat rebate.</p></div>
     <div class="faq-item"><h3>Are there furnace rebates in Alberta?</h3><p>We found none from the province or from ENMAX, ATCO or EPCOR in September 2026. CEIP may finance a qualifying heating upgrade if your city's program is open.</p></div>
     <div class="faq-item"><h3>Is the oil to heat pump grant open in Alberta?</h3><p>No. July 31, 2026 was the last day for Albertans to apply.</p></div>
 
-    <h2>More Alberta guides</h2>
+    <h2 id="more-alberta-guides">More Alberta guides</h2>
 <details class="hub-fold"><summary>Open this section</summary>
     <ul>
       <li><a href="/blog/alberta-100-energy-rebate-vs-heat-pump-rebate/">The Alberta "energy rebate" vs a heat pump rebate</a></li>
@@ -682,6 +680,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

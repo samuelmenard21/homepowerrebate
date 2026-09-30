@@ -222,6 +222,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h2[id] { scroll-margin-top: 84px; }
 /* hub showcase */
 .hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
 .hub-fold { margin-top: 18px; }
 .hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
 .hub-fold > summary::-webkit-details-marker { display: none; }
@@ -394,7 +402,7 @@ h2[id] { scroll-margin-top: 84px; }
 </section>
 
 
-<div class="wrap" style="text-align:center; padding:14px 28px 0;"><a href="/powerscore/#city-us-pa-allentown" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:8px 18px; font-size:13px; font-weight:600; color:var(--teal-deep); text-decoration:none; box-shadow:0 1px 3px rgba(10,42,46,0.08);"><span aria-hidden="true">⚡</span><span>PowerScore: 26.9/100 &mdash; #1 of 4 in Pennsylvania</span></a></div>
+<div class="wrap" style="text-align:center; padding:14px 28px 0;"><a href="/powerscore/#city-us-pa-allentown" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:8px 18px; font-size:13px; font-weight:600; color:var(--teal-deep); text-decoration:none; box-shadow:0 1px 3px rgba(10,42,46,0.08);"><span aria-hidden="true">⚡</span><span>PowerScore: 28.6/100 &mdash; #1 of 4 in Pennsylvania</span></a></div>
 <div class="wrap energy-cost-pill" style="text-align:center; padding:10px 28px 0;"><a href="/powerscore/#city-us-pa-allentown" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:8px 18px; font-size:13px; font-weight:600; color:var(--teal-deep); text-decoration:none; box-shadow:0 1px 3px rgba(10,42,46,0.08);"><span aria-hidden="true">&#128268;</span><span>Estimated Annual Energy Cost: $3,400</span></a></div>
 <div class="wrap" style="text-align:center; padding:10px 28px 0;"><a href="/stacking-calculator/us/pa/allentown/" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:8px 18px; font-size:13px; font-weight:600; color:var(--teal-deep); text-decoration:none; box-shadow:0 1px 3px rgba(10,42,46,0.08);"><span aria-hidden="true">&#128172;</span><span>Rebate Stacking Calculator for Allentown &rarr;</span></a></div>
 <article class="article">
@@ -407,7 +415,7 @@ h2[id] { scroll-margin-top: 84px; }
       <div class="rebate-card">
         <span class="program-status status-limited">Confirm status</span>
         <h4>&#128293; Heat Pump (air-source)</h4>
-        <div class="amount">Up to $450</div>
+        <div class="amount">$225 to $500</div>
         <p>PPL Electric Act 129 rebate. <a href="https://www.pplelectricsavings.com/ppl/homeequipment/products/" target="_blank" rel="noopener">PPL Electric Savings rebates &rarr;</a></p>
       
         <p style="margin-top:8px;"><a href="/us/pa/allentown/heat-pump/" style="font-weight:600; font-size:13px;">Full heat pump guide &rarr;</a></p>
@@ -455,7 +463,7 @@ h2[id] { scroll-margin-top: 84px; }
       <div class="rebate-card">
         <span class="program-status status-limited">Confirm status</span>
         <h4>&#128268; Battery Storage</h4>
-        <div class="amount">Federal credit only</div>
+        <div class="amount">No rebate found</div>
         <p>No PPL-specific battery rebate confirmed as of this writing; the 30% federal Section 25D credit applies to home batteries.</p>
       
         <p style="margin-top:8px;"><a href="/us/pa/allentown/battery/" style="font-weight:600; font-size:13px;">Full battery storage guide &rarr;</a></p>
@@ -487,7 +495,7 @@ h2[id] { scroll-margin-top: 84px; }
       <div class="finder-card" data-cat="heat-pump">
         <div class="finder-cat">Heat pump</div>
         <h4>Heat Pump (air-source)</h4>
-        <div class="finder-amount">Up to $450</div>
+        <div class="finder-amount">$225 to $500</div>
         <p>PPL Electric Act 129 rebate. <a href="https://www.pplelectricsavings.com/ppl/homeequipment/products/" target="_blank" rel="noopener">PPL Electric Savings rebates &rarr;</a></p>
         <div class="finder-source">Source: /us/pa/allentown &middot; PPL Electric / PA utility programs</div>
       </div>
@@ -515,7 +523,7 @@ h2[id] { scroll-margin-top: 84px; }
       <div class="finder-card" data-cat="battery">
         <div class="finder-cat">Battery storage</div>
         <h4>Battery Storage</h4>
-        <div class="finder-amount">Federal credit only</div>
+        <div class="finder-amount">No rebate found</div>
         <p>No PPL-specific battery rebate confirmed as of this writing; the 30% federal Section 25D credit applies to home batteries.</p>
         <div class="finder-source">Source: /us/pa/allentown &middot; PPL Electric / PA utility programs</div>
       </div>
@@ -767,6 +775,10 @@ function showProvinceCities(prov) {
     tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;

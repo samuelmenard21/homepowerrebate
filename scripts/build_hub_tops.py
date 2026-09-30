@@ -81,6 +81,20 @@ HUBS = {
 FED = {"ca": "CA-FED", "us": "US"}
 
 
+def load_data_hubs():
+    """Regions added by data alone: data/hub-tops/<code>.json (short answer + rows) plus data/verified-facts/<code>.json for sources.
+    Adding a region = add those two files; the hub gets the same short-answer and open-programs block as every other hub."""
+    for f in sorted((ROOT / "data" / "hub-tops").glob("*.json")):
+        spec = json.loads(f.read_text())
+        facts = {x["program"]: x for x in json.loads((ROOT / "data" / "verified-facts" / f.name).read_text())["facts"]}
+        rows = [(r["upgrade"], r["program"], r["amount"], r["rules"], facts[r["fact"]]["source_url"]) for r in spec["rows"]]
+        key = next(k for k, v in HUBS.items() if v["code"] == spec["code"])
+        HUBS[key].update(name=spec["name"], short=spec["short"], rows=rows, top_only=True, eyebrow=spec["eyebrow"])
+
+
+load_data_hubs()
+
+
 def fmt(d):
     parts = d.split("-")
     months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -99,6 +113,19 @@ def changes_box(key, cfg):
             f'border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">'
             f'What changed recently in {e(cfg["name"])}</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked {CHECKED_H}. '
             f'<a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;">{lis}</ul></div></section>{CH_E}')
+
+
+def unify_hero(s, cfg):
+    """Every hub gets the same hero: eyebrow, h1, one-line sub, and the same two buttons."""
+    m = re.search(r'<(header|section) class="hero[^"]*"[^>]*>.*?</\1>', s, re.S)
+    if not m:
+        return s
+    h1 = re.search(r"<h1[^>]*>(.*?)</h1>", m.group(0), re.S).group(1)
+    sub = re.search(r'<p[^>]*class="sub"[^>]*>(.*?)</p>', m.group(0), re.S) or re.search(r"<p[^>]*>(.*?)</p>", m.group(0), re.S)
+    hero = (f'<header class="hero hub-hero"><div class="wrap"><div class="eyebrow">{e(cfg["eyebrow"])}</div><h1>{h1}</h1>'
+            f'<p class="sub">{sub.group(1) if sub else ""}</p><div class="cta-row"><a href="#find-city" class="btn">Find your city →</a>'
+            f'<a href="/programs/" class="btn btn-secondary">See all programs</a></div></div></header>')
+    return s[:m.start()] + hero + s[m.end():]
 
 
 def top_block(cfg):
@@ -192,6 +219,12 @@ def main():
                 a = s.index("<!-- ============================ /NAV ============================== -->") + len("<!-- ============================ /NAV ============================== -->")
                 b = s.index("<!-- FURNACE-LINK-START -->")
                 s = s[:a] + "\n" + body + "\n" + s[b:]
+        elif cfg.get("top_only"):
+            anchor = re.escape("<!-- HUB-STATS-END -->") if "<!-- HUB-STATS-END -->" in s else r"<header class=\"hero\">.*?</header>"
+            s = replace_or_insert(s, TOP_S, TOP_E, top_block(cfg), anchor)
+            box = changes_box(key, cfg)
+            if box:
+                s = replace_or_insert(s, CH_S, CH_E, box, re.escape(TOP_E))
         elif "rows" in cfg:
             s = set_head(s, cfg, url)
             s = re.sub(r"(<header class=\"hero\">.*?<h1>).*?(</h1>)", lambda m: m.group(1) + e(cfg["h1"]) + m.group(2), s, count=1, flags=re.S)
@@ -210,6 +243,8 @@ def main():
             box = changes_box(key, cfg)
             if box:
                 s = replace_or_insert(s, CH_S, CH_E, box, r"<h1\b.*?</h1>.*?</(?:section|header)>")
+        if cfg.get("eyebrow"):
+            s = unify_hero(s, cfg)
         f.write_text(s, encoding="utf-8")
         print("updated", key)
 

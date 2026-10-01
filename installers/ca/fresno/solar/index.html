@@ -254,6 +254,17 @@ p.small .reg{border:0;padding:0;margin:0;cursor:auto}
   .sticky-cta.on { display: block; }
   body.has-sticky-cta { padding-bottom: 76px; }
 }
+
+/* city page opening: numbers right after the lead on phones, detail notes after them */
+@media (max-width: 700px) {
+  .hero:has(.hero-stat-strip) .wrap { display: flex; flex-direction: column; }
+  .hero:has(.hero-stat-strip) .wrap > * { order: 3; }
+  .hero:has(.hero-stat-strip) .wrap > h1 { order: 0; }
+  .hero:has(.hero-stat-strip) .wrap > .lead { order: 1; }
+  .hero:has(.hero-stat-strip) .wrap > .hero-stat-strip { order: 2; display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 8px !important; margin: 16px 0 18px !important; }
+  .hero-stat-strip > div { min-width: 0 !important; padding: 12px 8px !important; text-align: center; }
+  .hero-stat-strip > div > div:first-child { font-size: 18px !important; }
+}
 /* design pass 2026-09-29 */
 .hero strong, .hero b, header.hero strong { color: inherit; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 3px solid var(--amber-bright); outline-offset: 2px; border-radius: 4px; }

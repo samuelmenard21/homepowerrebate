@@ -242,13 +242,13 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?city=&province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Get my plan</a>
+      <a href="/get-quotes/?city=&province=bc" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Get my plan</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
       <a href="/search/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Search</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?city=&province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Get my plan</a>
+      <a href="/get-quotes/?city=&province=bc" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Get my plan</a>
     </div>
     <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
       Pick your city
@@ -263,8 +263,8 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
         <span style="opacity:.7;">&rarr;</span>
       </a>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
-        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
+        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
+        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
         <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">California (US)</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
@@ -282,10 +282,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
       </div>
     </div>
     <div style="padding:0 16px 16px;">
-    <div id="province-cities-on" style="display:grid; gap:8px;">
+    <div id="province-cities-on" style="display:none; gap:8px;">
       <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
     </div>
-    <div id="province-cities-bc" style="display:none; gap:8px;">
+    <div id="province-cities-bc" style="display:grid; gap:8px;">
       <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
     </div>
     <div id="province-cities-ab" style="display:none; gap:8px;">
@@ -316,12 +316,12 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
   </div>
 </nav>
 
-<!-- On a city/province page, call showProvinceCities('on') once on load
+<!-- On a city/province page, call showProvinceCities('bc') once on load
      so the dropdown opens to the right tab, and add a highlighted/active style to the
      current city's <a> for  — do not otherwise change the link list. -->
 <!-- CANONICAL-NAV-END -->
 <header class="hero"><div class="wrap"><h1>Home Energy Technology: What Is New and What Is Real</h1><p>Short explainers on new heat pumps, water heaters, batteries and solar, with a source for every claim and a note on which rebates apply.</p></div></header>
-<section class="body"><div class="wrap"><h2>Latest</h2><ul style="list-style:none;padding:0;"><li style="margin:0 0 16px;"><a href="/technology/plug-in-heat-pump-water-heaters/"><b>Plug-In Heat Pump Water Heaters: Can You Skip the Electrician?</b></a><br><span class="small">Water heating · checked September 30, 2026</span><br>A normal outlet, not a new 240-volt circuit, can now run a heat pump water heater. Here is who that helps.</li><li style="margin:0 0 16px;"><a href="/technology/cold-climate-heat-pumps-2026/"><b>Cold-Climate Heat Pumps in 2026: What &quot;Rated to -15°C&quot; Really Means</b></a><br><span class="small">Heating · checked September 30, 2026</span><br>Two numbers on every spec sheet decide whether a heat pump keeps your house warm in a cold snap.</li></ul>
+<section class="body"><div class="wrap"><h2>Latest</h2><ul style="list-style:none;padding:0;"><li style="margin:0 0 16px;"><a href="/technology/plug-in-heat-pump-water-heaters/"><b>Plug-In Heat Pump Water Heaters: Can You Skip the Electrician?</b></a><br><span class="small">Water heating · checked September 30, 2026</span><br>A normal outlet, not a new 240-volt circuit, can now run a heat pump water heater. Here is who that helps.</li><li style="margin:0 0 16px;"><a href="/technology/cold-climate-heat-pumps-2026/"><b>Cold-Climate Heat Pumps in 2026: What &quot;Rated to -15°C&quot; Really Means</b></a><br><span class="small">Heating · checked September 30, 2026</span><br>Two numbers on every spec sheet decide whether a heat pump keeps your house warm in a cold snap.</li><li style="margin:0 0 16px;"><a href="/technology/quilt-heat-pump-canada/"><b>Quilt Heat Pumps Arrive in Canada: What We Know and What We Don&#x27;t</b></a><br><span class="small">Heating · checked September 30, 2026</span><br>A design-led ductless heat pump is now sold in five provinces. Here is what is confirmed and what is not.</li></ul>
 <h2>How we label things</h2><ul><li><span style="display:inline-block;padding:1px 9px;border-radius:99px;font-size:12px;font-weight:600;background:#e3f1e8;color:#1f5a3d">Available: maker page read</span> The maker's own page says it is for sale, and we read it on the date shown.</li>
 <li><span style="display:inline-block;padding:1px 9px;border-radius:99px;font-size:12px;font-weight:600;background:#fdeccf;color:#8a4a06">Reported</span> We found it in news or a search summary but have not confirmed it with the maker.</li>
 <li><span style="display:inline-block;padding:1px 9px;border-radius:99px;font-size:12px;font-weight:600;background:#e8e8e8;color:#444">Lab result</span> Announced in a lab or pilot. You cannot buy it yet.</li></ul>

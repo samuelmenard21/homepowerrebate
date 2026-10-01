@@ -26,6 +26,9 @@ POSTS = [
  {"slug": "cold-climate-heat-pumps-2026", "title": "Cold-Climate Heat Pumps in 2026: What \"Rated to -15°C\" Really Means",
   "desc": "What the cold-climate rating on a heat pump means, how to read two temperatures on a spec sheet, and where the rating decides your rebate.",
   "kicker": "Heating", "summary": "Two numbers on every spec sheet decide whether a heat pump keeps your house warm in a cold snap."},
+ {"slug": "quilt-heat-pump-canada", "title": "Quilt Heat Pumps Arrive in Canada: What We Know and What We Don't",
+  "desc": "Quilt, a US ductless heat pump maker, launched in Canada in December 2025. Where it is sold, who installs it, its cold-weather ratings and the open questions on price and rebates.",
+  "kicker": "Heating", "summary": "A design-led ductless heat pump is now sold in five provinces. Here is what is confirmed and what is not."},
 ]
 COMING = ["Sodium-ion vs lithium home batteries: what to wait for", "Can your EV power your house? Which cars, what it costs, why it is stuck",
           "Solar panels: what 26.9% efficiency means and when you can buy it"]
@@ -105,6 +108,34 @@ def post_hp():
 <p>Model lists and ratings for Lennox, Bosch, Trane, Daikin and Rheem's 2026 launches. Prices for any brand.</p>"""
 
 
+def post_quilt():
+    return f"""<p class="meta">By {e(AUTHOR['name'])} · Sources read {READ_H}</p>
+<div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;"><b>Short answer:</b> Quilt is a ductless heat pump with a modern design, and it is now sold in Ontario, British Columbia, Nova Scotia, New Brunswick and Manitoba. It is installed only through Quilt's own partners. We could not find a price, and we do not yet know whether leased or rented systems qualify for rebates.</p></div>
+<h2>What it is</h2>
+<p>Quilt makes ductless (mini-split) heat pumps with one outdoor unit and two or three indoor units, controlled by a dial and an app. {pill('Available: maker page read', 'ok')}</p>
+<table><tr><th>What Quilt states</th><th>Detail</th></tr>
+<tr><td>Efficiency</td><td>SEER2 25 (2 indoor units) or 25.3 (3 units). HSPF2 12 (Region IV). ENERGY STAR Cold Climate certified.</td></tr>
+<tr><td>Cold weather (Canada page)</td><td>100% of heating capacity down to -5°F (-21°C), and 90% at -13°F (-25°C).</td></tr>
+<tr><td>Capacity at 47°F</td><td>18,000 BTU/h (2 units) or 27,000 BTU/h (3 units).</td></tr>
+<tr><td>Noise</td><td>Indoor units 27 to 48 dBA. Outdoor units 50 to 52 dBA.</td></tr>
+<tr><td>Refrigerant</td><td>R32.</td></tr></table>
+<p class="small">Sources: <a href="https://www.quilt.com/canada" rel="nofollow noopener" target="_blank">Quilt Canada page</a> and <a href="https://www.quilt.com/tech-specs" rel="nofollow noopener" target="_blank">Quilt tech specs</a>, read {READ_H}.</p>
+<h2>Where you can get it</h2>
+<p>Quilt's Canada page lists Ontario, British Columbia, Nova Scotia, New Brunswick and Manitoba, and names two installers: Go Lime in Toronto and Wilsons in Halifax. A law-firm write-up dates the Canadian launch to December 11, 2025, and says it is Quilt's first market outside the US. {pill('Available: maker page read', 'ok')}</p>
+<p class="small">Source: <a href="https://www.goodmans.ca/insights/post/goodmans-tech-blog/quilt-brings-next-gen-heat-pumps-to-canada" rel="nofollow noopener" target="_blank">Goodmans</a>, read {READ_H}.</p>
+<h2>About Go Lime</h2>
+<p>Go Lime is a Greater Toronto Area home-services company. News coverage says it offers leases and rentals for water heaters and HVAC equipment through a program called GoFlex, and that it is Quilt's installation and service partner in Canada. {pill('Reported: news, not Go Lime\'s own site', 'rep')} We have not read Go Lime's own pages, so check its current terms before you sign anything.</p>
+<h2>Does a rebate apply?</h2>
+<p>Possibly, but we cannot say yet. Rebate programs look at the model, the installer and sometimes who owns the equipment:</p>
+<ul><li><b>BC Hydro</b> needs an eligible model on its list and an installer in its Home Performance Contractor Network. <a href="/programs/bc-hydro-rebates/">Details</a></li>
+<li><b>Ontario Home Renovation Savings</b> pays per ton for a cold-climate heat pump for homeowners. <a href="/calculator/on/">Ontario calculator</a></li>
+<li><b>Nova Scotia</b> pays per ton through a Home Energy Assessment, and only for models on Efficiency Nova Scotia's list. <a href="/calculator/ns/">Nova Scotia calculator</a></li></ul>
+<p>Ask Quilt or your installer three things in writing: is this exact model on my program's list, is the installer registered with the program, and does a lease or rental still qualify for the rebate.</p>
+<h2>What we could not confirm</h2>
+<ul><li>Canadian pricing. Quilt says it gives a price after a free consultation.</li><li>Whether leased or rented systems get rebates.</li><li>Whether the model is on BC Hydro's, Ontario's or Nova Scotia's qualified lists.</li><li>How many Google reviews Go Lime and Wilsons have. Our installer rankings use Google reviews only, and neither company is in our lists yet.</li></ul>
+<p>Comparing options? Read <a href="/technology/cold-climate-heat-pumps-2026/">what the cold-climate rating means</a>, then <a href="/get-quotes/">see top-rated installers in your city</a>.</p>"""
+
+
 def page(post, body):
     path = f"/technology/{post['slug']}/"
     full = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/technology/">Technology</a></li><li aria-current="page">{e(post['kicker'])}</li></ol></nav>
@@ -135,7 +166,7 @@ def hub():
 
 
 def main():
-    outs = [hub(), page(POSTS[0], post_water()), page(POSTS[1], post_hp())]
+    outs = [hub(), page(POSTS[0], post_water()), page(POSTS[1], post_hp()), page(POSTS[2], post_quilt())]
     for path, html_ in outs:
         f = ROOT / path.strip("/") / "index.html"
         f.parent.mkdir(parents=True, exist_ok=True)

@@ -667,7 +667,10 @@ async function handleNewsletter(request, env) {
   if (p.newsletter !== false) tasks.unshift(addToResendAudience(record.email, env));
   // Results drip: sends the recap immediately, then a local-comparison and a
   // lock-in-your-numbers email on a delay via the daily cron (see runDripQueue).
-  tasks.push(startResultsDrip(record, env));
+  // `upgrades` (the services the homeowner ticked) and `plan: true` (they asked for their plan) come from the unified
+  // /get-quotes form. A plan request always sends the email, even to someone already on the list.
+  const upgrades = (Array.isArray(p.upgrades) ? p.upgrades : []).map(String).filter(u => PLAN_UPGRADES.has(u)).slice(0, 8);
+  tasks.push(startResultsDrip({ ...record, newsletter: p.newsletter, upgrades, resend: p.plan === true }, env));
   const results = await Promise.allSettled(tasks);
   const failures = results.filter(r => r.status === 'rejected');
   if (failures.length) {
@@ -687,6 +690,9 @@ async function handleNewsletter(request, env) {
 
 const DRIP_DAY_MS = 24 * 60 * 60 * 1000;
 
+const PLAN_UPGRADES = new Set(['heat-pump', 'solar', 'battery', 'insulation', 'water-heater', 'windows', 'ev', 'thermostat']);
+const PLAN_CATEGORY_KEY = { 'heat-pump': 'heat_pump', solar: 'solar', battery: 'battery', insulation: 'insulation', 'water-heater': 'water_heater', windows: 'windows', ev: 'ev_charger', thermostat: 'thermostat' };
+
 async function startResultsDrip(p, env) {
   if (!env.OUTCOMES_DB || !p.email) return;
   if (p.newsletter === false) return; // respect CASL opt-out on any entry point
@@ -698,6 +704,7 @@ async function startResultsDrip(p, env) {
     await env.OUTCOMES_DB.prepare(
       `UPDATE subscribers SET city = ?, province = ?, heating = ?, income = ?, estimate = ?, source = ? WHERE id = ?`
     ).bind(p.city, province, p.heating, p.income, p.estimate, p.source, existing.id).run();
+    if (p.resend) await sendResultsRecapEmail({ id: existing.id, email: p.email, city: p.city, province, heating: p.heating, estimate: p.estimate, upgrades: p.upgrades }, env);
     return;
   }
 
@@ -710,7 +717,7 @@ async function startResultsDrip(p, env) {
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?, 0, ?)`
   ).bind(id, p.email, p.city, province, p.heating, p.income, p.estimate, p.source, nextSendAt, now.toISOString()).run();
 
-  await sendResultsRecapEmail({ id, email: p.email, city: p.city, province, heating: p.heating, estimate: p.estimate }, env);
+  await sendResultsRecapEmail({ id, email: p.email, city: p.city, province, heating: p.heating, estimate: p.estimate, upgrades: p.upgrades }, env);
 }
 
 // Called daily by the Worker's cron trigger (see wrangler.toml [triggers]).
@@ -1202,14 +1209,17 @@ function stackingCalculatorUrl(sub) {
 function installersUrl(sub) {
   const region = citySlug(sub.province || 'BC');
   const city = citySlug(sub.city);
-  // The ranked list page for the city (installers/<region>/<city>/heat-pump/), not the hub with a hash.
-  return city ? `https://homepowerrebate.com/installers/${region}/${city}/heat-pump/` : 'https://homepowerrebate.com/installers/';
+  // Ranked list page for the city and the first service they picked that has one (default heat pump).
+  const svc = (sub.upgrades || []).find(u => ['heat-pump', 'solar', 'battery', 'insulation'].includes(u)) || 'heat-pump';
+  return city ? `https://homepowerrebate.com/installers/${region}/${city}/${svc}/` : 'https://homepowerrebate.com/installers/';
 }
 
 function calculatorUrl(sub) {
   const region = citySlug(sub.province || 'BC');
   const city = citySlug(sub.city);
-  return `https://homepowerrebate.com/calculator/${region}/${city ? '?city=' + encodeURIComponent(city) : ''}`;
+  const plan = (sub.upgrades || []).filter(u => u !== 'windows');
+  const q = [city ? 'city=' + encodeURIComponent(city) : '', plan.length ? 'plan=' + plan.join(',') : ''].filter(Boolean).join('&');
+  return `https://homepowerrebate.com/calculator/${region}/${q ? '?' + q : ''}`;
 }
 
 // Every published rebate category for this city (see the HPR 8-category
@@ -1226,22 +1236,26 @@ const REBATE_CATEGORY_LABELS = {
   thermostat: 'Smart thermostat'
 };
 
-function fullRebateBreakdownHtml(cityData) {
+function fullRebateBreakdownHtml(cityData, picked) {
   if (!cityData || !cityData.categories) return '';
-  const rows = Object.entries(REBATE_CATEGORY_LABELS)
-    .map(([key, label]) => {
-      const value = cityData.categories[key];
-      if (!value) return '';
-      return `<tr><td bgcolor="#ffffff" style="padding:12px 16px;border-top:1px solid #ece4d6;background:#ffffff;">
+  const pickedKeys = (picked || []).map(u => PLAN_CATEGORY_KEY[u]).filter(Boolean);
+  const row = ([key, label]) => {
+    const value = cityData.categories[key];
+    if (!value) return '';
+    return `<tr><td bgcolor="#ffffff" style="padding:12px 16px;border-top:1px solid #ece4d6;background:#ffffff;">
         <div style="font-size:13px;font-weight:700;color:#08363f;letter-spacing:0.02em;">${escapeHtml(label)}</div>
         <div style="font-size:14px;line-height:1.5;color:#1a3d42;margin-top:2px;">${escapeHtml(value)}</div></td></tr>`;
-    })
-    .join('');
-  if (!rows) return '';
-  return `
-    <h2 style="font-family:Georgia,serif;font-size:19px;font-weight:500;color:#08363f;margin:22px 0 10px;">What's available in ${escapeHtml(capitalize(cityData.city))}</h2>
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="background:#ffffff;border:1px solid #d9d0c1;border-radius:10px;border-collapse:separate;overflow:hidden;">${rows}</table>
-    <p style="margin:10px 0 0;font-size:12px;line-height:1.5;color:#5a6b6e;">Amounts are the most a program pays and depend on your income and the upgrades you combine.</p>`;
+  };
+  const box = (rows) => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="background:#ffffff;border:1px solid #d9d0c1;border-radius:10px;border-collapse:separate;overflow:hidden;">${rows}</table>`;
+  const h2 = (t) => `<h2 style="font-family:Georgia,serif;font-size:19px;font-weight:500;color:#08363f;margin:22px 0 10px;">${t}</h2>`;
+  const entries = Object.entries(REBATE_CATEGORY_LABELS);
+  const city = escapeHtml(capitalize(cityData.city));
+  const mine = entries.filter(([k]) => pickedKeys.includes(k)).map(row).join('');
+  const rest = entries.filter(([k]) => !pickedKeys.includes(k)).map(row).join('');
+  if (!mine && !rest) return '';
+  const note = `<p style="margin:10px 0 0;font-size:12px;line-height:1.5;color:#5a6b6e;">Amounts are the most a program pays and depend on your income and the upgrades you combine.</p>`;
+  if (!mine) return h2(`What's available in ${city}`) + box(rest) + note;
+  return h2(`What you picked, in ${city}`) + box(mine) + (rest ? h2('Also available') + box(rest) : '') + note;
 }
 
 async function sendResultsRecapEmail(sub, env) {
@@ -1266,7 +1280,7 @@ async function sendResultsRecapEmail(sub, env) {
   // Show every published rebate category for this city, not just the one
   // program that happened to trigger the estimate above — the point of this
   // email is to be a genuinely useful reference, not a single number.
-  const rebateBreakdown = fullRebateBreakdownHtml(cityRebateLookup(sub));
+  const rebateBreakdown = fullRebateBreakdownHtml(cityRebateLookup(sub), sub.upgrades);
 
   const cityName = escapeHtml(capitalize(sub.city || 'your city'));
   const html = `<!DOCTYPE html>

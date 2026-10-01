@@ -90,12 +90,15 @@ function show(){
   $("gq-save").style.display=shown.length?"block":"none";
  });
 }
-function listText(){var r=D.filter(function(x){return x.code===rs.value})[0];var label=cs.options[cs.selectedIndex].textContent;
- var t="Top-rated installers in "+label+" (ranked by Google reviews)\n\n";
- shown.forEach(function(i){t+=i.name+"\n"+stars(i)+"\n"+(i.phone?i.phone+"\n":"")+(i._url||i.website||"")+"\n\n"});
- t+="Rebates you could get: "+location.origin+$("gq-calc").getAttribute("href")+"\n";return t}
-$("gq-mail").addEventListener("click",function(){var label=cs.options[cs.selectedIndex].textContent;
- location.href="mailto:?subject="+encodeURIComponent("Installers and rebates in "+label)+"&body="+encodeURIComponent(listText())});
+$("gq-plan").addEventListener("submit",function(e){
+ e.preventDefault();if($("gq-web").value)return;var r=D.filter(function(x){return x.code===rs.value})[0];var msg=$("gq-msg");var b=$("gq-send");
+ var plan=[].map.call(document.querySelectorAll("#gq-chips input:checked"),function(c){return c.value});
+ b.disabled=true;b.textContent="Sending...";
+ fetch("https://leads.homepowerrebate.com/newsletter",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:$("gq-em").value,city:cs.options[cs.selectedIndex].textContent,province:r.prov,upgrades:plan,plan:true,newsletter:$("gq-news").checked,source:"get-quotes",page:location.pathname})})
+ .then(function(x){if(!x.ok)throw 0;msg.className="gq-msg show ok";msg.textContent="Sent. Check your inbox in a minute (and your spam folder). Your plan has your rebates, a few articles and the installer list for "+cs.options[cs.selectedIndex].textContent+".";$("gq-plan").reset()})
+ .catch(function(){msg.className="gq-msg show err";msg.textContent="That did not go through. Please check your email address and try again."})
+ .then(function(){b.disabled=false;b.textContent="Email me my plan"});
+});
 $("gq-copy").addEventListener("click",function(){var b=$("gq-copy");var u=location.origin+location.pathname+"?province="+rs.value+"&city="+cs.value;
  (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){b.textContent="Link copied"},function(){b.textContent="Copy failed"});setTimeout(function(){b.textContent="Copy link to this list"},2500)});
 show();
@@ -133,9 +136,13 @@ def main():
 <div class="gq-card"><h2 class="gq-h" id="gq-r-title">Rebates</h2><p class="gq-sub">Every amount comes from the program's own page. We only add up programs that are open today.</p>
 <a class="gq-cta" id="gq-calc" href="/calculator/">Estimate my rebates</a><a class="gq-alt" id="gq-guide" href="/">City rebate guide</a></div>
 <div class="gq-card"><h2 class="gq-h" id="gq-i-title">Top-rated installers</h2><p class="gq-sub">Ranked by Google reviews. <a href="/installers/how-we-rank/">How we rank</a>.</p><div id="gq-list"></div></div>
-<div class="gq-card" id="gq-save" style="display:none"><h2 class="gq-h">Take this list with you</h2>
-<p class="gq-sub">Compare a few, read their profiles and Google reviews, then call the ones you like. We never pass your details to anyone.</p>
-<button class="gq-cta" id="gq-mail" type="button">Email me this list</button><button class="gq-cta" id="gq-copy" type="button" style="margin-left:10px;background:var(--teal-deep)">Copy link to this list</button></div>
+<div class="gq-card" id="gq-save" style="display:none"><h2 class="gq-h">Email me this plan</h2>
+<p class="gq-sub">We will email your rebates for the services you picked, a few helpful articles, and a link to every top-rated installer in your city. You choose who to call. We never pass your details to installers.</p>
+<form id="gq-plan"><div class="gq-row"><div class="gq-f full"><label for="gq-em">Email</label><input id="gq-em" type="email" required autocomplete="email" placeholder="you@example.com"></div></div>
+<label class="gq-pick" style="white-space:normal;margin:0 0 12px"><input id="gq-news" type="checkbox"> Also send me the monthly update on new programs and technology</label>
+<input id="gq-web" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button class="gq-cta" id="gq-send" type="submit">Email me my plan</button><button class="gq-cta" id="gq-copy" type="button" style="margin-left:10px;background:var(--teal-deep)">Copy link</button>
+<div class="gq-msg" id="gq-msg"></div></form></div>
 </div></div></section>
 <script>{js}</script>
 {E}"""

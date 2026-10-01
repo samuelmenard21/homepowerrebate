@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get Quotes From Local Installers | HomePowerRebate</title>
+<title>Get My Rebate Plan and Top-Rated Installers | HomePowerRebate</title>
 
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
@@ -14,9 +14,9 @@
   gtag('config', 'G-W33G4TGRHD');
 </script>
 
-<meta name="description" content="Tell us what you're interested in, pick a few local vetted installers, and get quotes — no sales calls, no obligation.">
+<meta name="description" content="Pick your services, province or state and city. See the rebates you could get back, read a few helpful guides and find the top-rated installers near you. Free.">
 <link rel="canonical" href="https://homepowerrebate.com/get-quotes/">
-<meta property="og:title" content="Get Quotes From Local Installers | HomePowerRebate">
+<meta property="og:title" content="Get My Rebate Plan and Top-Rated Installers | HomePowerRebate">
 <meta property="og:description" content="Tell us what you're interested in, pick a few local vetted installers, and get quotes — no sales calls, no obligation.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://homepowerrebate.com/get-quotes/">
@@ -230,13 +230,13 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/retrofit-assessment/?city=" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Assessment</a>
+      <a href="/get-quotes/?city=&province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Get my plan</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
       <a href="/search/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Search</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/retrofit-assessment/?city=" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Assessment</a>
+      <a href="/get-quotes/?city=&province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Get my plan</a>
     </div>
     <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
       Pick your city
@@ -340,9 +340,13 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 <div class="gq-card"><h2 class="gq-h" id="gq-r-title">Rebates</h2><p class="gq-sub">Every amount comes from the program's own page. We only add up programs that are open today.</p>
 <a class="gq-cta" id="gq-calc" href="/calculator/">Estimate my rebates</a><a class="gq-alt" id="gq-guide" href="/">City rebate guide</a></div>
 <div class="gq-card"><h2 class="gq-h" id="gq-i-title">Top-rated installers</h2><p class="gq-sub">Ranked by Google reviews. <a href="/installers/how-we-rank/">How we rank</a>.</p><div id="gq-list"></div></div>
-<div class="gq-card" id="gq-save" style="display:none"><h2 class="gq-h">Take this list with you</h2>
-<p class="gq-sub">Compare a few, read their profiles and Google reviews, then call the ones you like. We never pass your details to anyone.</p>
-<button class="gq-cta" id="gq-mail" type="button">Email me this list</button><button class="gq-cta" id="gq-copy" type="button" style="margin-left:10px;background:var(--teal-deep)">Copy link to this list</button></div>
+<div class="gq-card" id="gq-save" style="display:none"><h2 class="gq-h">Email me this plan</h2>
+<p class="gq-sub">We will email your rebates for the services you picked, a few helpful articles, and a link to every top-rated installer in your city. You choose who to call. We never pass your details to installers.</p>
+<form id="gq-plan"><div class="gq-row"><div class="gq-f full"><label for="gq-em">Email</label><input id="gq-em" type="email" required autocomplete="email" placeholder="you@example.com"></div></div>
+<label class="gq-pick" style="white-space:normal;margin:0 0 12px"><input id="gq-news" type="checkbox"> Also send me the monthly update on new programs and technology</label>
+<input id="gq-web" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button class="gq-cta" id="gq-send" type="submit">Email me my plan</button><button class="gq-cta" id="gq-copy" type="button" style="margin-left:10px;background:var(--teal-deep)">Copy link</button>
+<div class="gq-msg" id="gq-msg"></div></form></div>
 </div></div></section>
 <script>
 (function(){
@@ -401,12 +405,15 @@ function show(){
   $("gq-save").style.display=shown.length?"block":"none";
  });
 }
-function listText(){var r=D.filter(function(x){return x.code===rs.value})[0];var label=cs.options[cs.selectedIndex].textContent;
- var t="Top-rated installers in "+label+" (ranked by Google reviews)\n\n";
- shown.forEach(function(i){t+=i.name+"\n"+stars(i)+"\n"+(i.phone?i.phone+"\n":"")+(i._url||i.website||"")+"\n\n"});
- t+="Rebates you could get: "+location.origin+$("gq-calc").getAttribute("href")+"\n";return t}
-$("gq-mail").addEventListener("click",function(){var label=cs.options[cs.selectedIndex].textContent;
- location.href="mailto:?subject="+encodeURIComponent("Installers and rebates in "+label)+"&body="+encodeURIComponent(listText())});
+$("gq-plan").addEventListener("submit",function(e){
+ e.preventDefault();if($("gq-web").value)return;var r=D.filter(function(x){return x.code===rs.value})[0];var msg=$("gq-msg");var b=$("gq-send");
+ var plan=[].map.call(document.querySelectorAll("#gq-chips input:checked"),function(c){return c.value});
+ b.disabled=true;b.textContent="Sending...";
+ fetch("https://leads.homepowerrebate.com/newsletter",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:$("gq-em").value,city:cs.options[cs.selectedIndex].textContent,province:r.prov,upgrades:plan,plan:true,newsletter:$("gq-news").checked,source:"get-quotes",page:location.pathname})})
+ .then(function(x){if(!x.ok)throw 0;msg.className="gq-msg show ok";msg.textContent="Sent. Check your inbox in a minute (and your spam folder). Your plan has your rebates, a few articles and the installer list for "+cs.options[cs.selectedIndex].textContent+".";$("gq-plan").reset()})
+ .catch(function(){msg.className="gq-msg show err";msg.textContent="That did not go through. Please check your email address and try again."})
+ .then(function(){b.disabled=false;b.textContent="Email me my plan"});
+});
 $("gq-copy").addEventListener("click",function(){var b=$("gq-copy");var u=location.origin+location.pathname+"?province="+rs.value+"&city="+cs.value;
  (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){b.textContent="Link copied"},function(){b.textContent="Copy failed"});setTimeout(function(){b.textContent="Copy link to this list"},2500)});
 show();
@@ -465,10 +472,11 @@ show();
         <div class="footer-col-title">Guides &amp; Tools</div>
         <ul class="footer-col-links">
           <li><a href="/powerscore/">PowerScore Rankings</a></li>
+          <li><a href="/technology/">Technology</a></li>
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/search/">Search the Site</a></li>
           <li><a href="/get-quotes/">Get Quotes</a></li>
-          <li><a href="/retrofit-assessment/?city=">Retrofit Assessment</a></li>
+          <li><a href="/get-quotes/?city=&province={{CURRENT_PROVINCE}}">Get My Plan</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>

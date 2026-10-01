@@ -689,8 +689,8 @@ table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; mi
 
 <section class="ps-reliable">
   <div class="wrap">
-    <div class="rel-box">
-      <h2 class="section-title" id="reliability">Read this first: how reliable is this ranking?</h2>
+    <details class="rel-box" id="rel-details">
+      <summary style="cursor:pointer;list-style:none"><h2 class="section-title" id="reliability" style="display:inline">Read this first: how reliable is this ranking? <span style="font-size:15px;color:var(--amber)">(tap to read)</span></h2></summary>
       <p class="section-sub">PowerScore is built from the rebate numbers on our own city pages, not from a separate survey. That makes it transparent, but it also has limits you should know about.</p>
       <ul class="rel-list">
         <li><b>One yardstick for every city.</b> A city's dollar score is its top rebate in that category, in US dollars, compared with what the best-funded tenth of cities offer. It is no longer measured against the best city in its own province or state.</li>
@@ -704,7 +704,8 @@ table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; mi
         <thead><tr><th>Region</th><th>Cities</th><th>Facts verified</th><th>Category cells with a $ amount</th><th>Cities scoring alike</th><th>How to read the ranking</th></tr></thead>
         <tbody>{reliability_rows_html}</tbody>
       </table></div>
-    </div>
+    </details>
+    <script>if(window.innerWidth>=900)document.getElementById("rel-details").open=true;</script>
   </div>
 </section>
 

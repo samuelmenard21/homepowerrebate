@@ -265,6 +265,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .tw td::before { content: attr(data-label); display: block; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #6b8e7f; margin-bottom: 2px; }
   .tw td:first-child { font-size: 17px; padding-top: 2px !important; }
   .tw td:first-child::before { display: none; }
+  /* rebate tables on phones: amount directly under the name in green, no label rows for Amount/Rules */
+  .tw td[data-label="Amount"] { font-size: 19px; font-weight: 700; color: #2d6a4f; padding-top: 0 !important; }
+  .tw td[data-label="Amount"]::before, .tw td[data-label="Rules"]::before { display: none; }
+  .tw td[data-label="Rules"] { font-size: 15px; color: #1a3d42; padding-top: 2px !important; }
 }
 .hpr-toc { background: #fff; border: 1px solid #d9d0c1; border-radius: 12px; padding: 4px 16px; margin: 18px 0 26px; max-width: 720px; }
 .hpr-toc summary { cursor: pointer; font-weight: 700; font-size: 15px; padding: 12px 0; color: var(--teal-deep); list-style: none; display: flex; justify-content: space-between; align-items: center; }
@@ -663,8 +667,8 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 
 <section class="ps-reliable">
   <div class="wrap">
-    <div class="rel-box">
-      <h2 class="section-title" id="reliability">Read this first: how reliable is this ranking?</h2>
+    <details class="rel-box" id="rel-details">
+      <summary style="cursor:pointer;list-style:none"><h2 class="section-title" id="reliability" style="display:inline">Read this first: how reliable is this ranking? <span style="font-size:15px;color:var(--amber)">(tap to read)</span></h2></summary>
       <p class="section-sub">PowerScore is built from the rebate numbers on our own city pages, not from a separate survey. That makes it transparent, but it also has limits you should know about.</p>
       <ul class="rel-list">
         <li><b>One yardstick for every city.</b> A city's dollar score is its top rebate in that category, in US dollars, compared with what the best-funded tenth of cities offer. It is no longer measured against the best city in its own province or state.</li>
@@ -672,13 +676,14 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
         <li><b>Rebate potential is not a promise.</b> It adds up the top open rebate in each upgrade category. Most homes will not qualify for all of them, and some programs cannot be combined.</li>
         <li><b>Ties are real.</b> Only 50 different overall scores exist across 123 cities, because most rebate programs are province-wide.</li>
         <li><b>Not every region has been verified.</b> Regions marked below as "Not yet" (Colorado, Pennsylvania) have not had each program checked against its official page, so treat their scores as a rough guide.</li>
-        <li><b>Data last rebuilt 2026-09-29.</b> Amounts change; the rebate tracker lists what has ended or moved.</li>
+        <li><b>Data last rebuilt 2026-09-30.</b> Amounts change; the rebate tracker lists what has ended or moved.</li>
       </ul>
       <div class="table-wrap"><table class="score-table rel-table">
         <thead><tr><th>Region</th><th>Cities</th><th>Facts verified</th><th>Category cells with a $ amount</th><th>Cities scoring alike</th><th>How to read the ranking</th></tr></thead>
         <tbody><tr><td><b>Alberta</b></td><td>6</td><td>Yes</td><td>4%</td><td>1 of 6</td><td><span class="lvl high">Good for comparing cities inside this region.</span></td></tr><tr><td><b>British Columbia</b></td><td>18</td><td>Yes</td><td>89%</td><td>16 of 18</td><td><span class="lvl mid">Province-wide programs decide most scores, so many cities tie. Local programs are what separate them.</span></td></tr><tr><td><b>Nova Scotia</b></td><td>2</td><td>Yes</td><td>62%</td><td>1 of 2</td><td><span class="lvl mid">Only a few cities covered, so comparisons are limited.</span></td></tr><tr><td><b>Ontario</b></td><td>25</td><td>Yes</td><td>100%</td><td>18 of 25</td><td><span class="lvl mid">Province-wide programs decide most scores, so many cities tie. Local programs are what separate them.</span></td></tr><tr><td><b>California</b></td><td>24</td><td>Yes</td><td>58%</td><td>5 of 24</td><td><span class="lvl high">Good for comparing cities inside this region.</span></td></tr><tr><td><b>Colorado</b></td><td>5</td><td><span class=conf-no>Not yet</span></td><td>57%</td><td>2 of 5</td><td><span class="lvl low">Unverified: treat as a rough guide until we check each program against its official page.</span></td></tr><tr><td><b>Massachusetts</b></td><td>13</td><td>Yes</td><td>60%</td><td>10 of 13</td><td><span class="lvl mid">Province-wide programs decide most scores, so many cities tie. Local programs are what separate them.</span></td></tr><tr><td><b>New York</b></td><td>21</td><td>Yes</td><td>73%</td><td>5 of 21</td><td><span class="lvl high">Good for comparing cities inside this region.</span></td></tr><tr><td><b>Pennsylvania</b></td><td>4</td><td><span class=conf-no>Not yet</span></td><td>31%</td><td>1 of 4</td><td><span class="lvl low">Unverified: treat as a rough guide until we check each program against its official page.</span></td></tr><tr><td><b>Vermont</b></td><td>5</td><td>Yes</td><td>72%</td><td>4 of 5</td><td><span class="lvl mid">Province-wide programs decide most scores, so many cities tie. Local programs are what separate them.</span></td></tr></tbody>
       </table></div>
-    </div>
+    </details>
+    <script>if(window.innerWidth>=900)document.getElementById("rel-details").open=true;</script>
   </div>
 </section>
 
@@ -3405,21 +3410,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 <!-- ============================ FOOTER ============================= -->
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
-<section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
-  <div class="wrap" style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">
-    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
-    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get the monthly rebate update</h2>
-    <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Once a month: new and changing rebate programs across every province and state we cover, plus what's new in heat pumps, solar and batteries. Short, sourced, no marketing.</p>
-    <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
-      <input type="email" id="newsletter-email" placeholder="your@email.com" required aria-label="Your email address" autocomplete="email" style="min-height: 46px; padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 16px; background: #fff; color: var(--ink);">
-      <input type="hidden" id="newsletter-city" value="">
-      <input type="hidden" id="newsletter-page" value="/powerscore/">
-      <button type="submit" style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 15px; min-height: 46px; cursor: pointer; font-family: 'Inter Tight', sans-serif;">Subscribe</button>
-      <p style="font-size: 13px; color: rgba(250, 247, 242, 0.78); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
-    </form>
-    <div id="newsletter-response" style="display: none; margin-top: 12px; padding: 12px; background: rgba(45, 106, 79, 0.2); border-radius: 6px; border: 1px solid rgba(45, 106, 79, 0.4); font-size: 13px;"></div>
-  </div>
-</section>
+
 
 <footer class="footer">
   <div class="footer-inner">

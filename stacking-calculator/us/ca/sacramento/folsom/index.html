@@ -192,6 +192,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .tw td::before { content: attr(data-label); display: block; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #6b8e7f; margin-bottom: 2px; }
   .tw td:first-child { font-size: 17px; padding-top: 2px !important; }
   .tw td:first-child::before { display: none; }
+  /* rebate tables on phones: amount directly under the name in green, no label rows for Amount/Rules */
+  .tw td[data-label="Amount"] { font-size: 19px; font-weight: 700; color: #2d6a4f; padding-top: 0 !important; }
+  .tw td[data-label="Amount"]::before, .tw td[data-label="Rules"]::before { display: none; }
+  .tw td[data-label="Rules"] { font-size: 15px; color: #1a3d42; padding-top: 2px !important; }
 }
 .hpr-toc { background: #fff; border: 1px solid #d9d0c1; border-radius: 12px; padding: 4px 16px; margin: 18px 0 26px; max-width: 720px; }
 .hpr-toc summary { cursor: pointer; font-weight: 700; font-size: 15px; padding: 12px 0; color: var(--teal-deep); list-style: none; display: flex; justify-content: space-between; align-items: center; }

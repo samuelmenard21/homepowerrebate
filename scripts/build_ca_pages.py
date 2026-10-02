@@ -81,6 +81,8 @@ def build(slug, cat):
     sib = "".join(f'<span style="margin-right:14px;"><a href="/us/ca/{area}/{slug}/{k}/">{LABEL[k]} Rebates in {e(name)}</a></span>\n' for k in sibs)
     cards = "".join(card(x) for x in d["cards"])
     kind = "hvac" if is_hub else INSTALLER_SET.get(cat)
+    if d.get("no_installers"):
+        kind = None
     inst = installer_html(slug, name, kind, d["installers_intro"]) if kind else ""
     steps = "".join(f"<li>{s}</li>\n" for s in d.get("claim_steps", []))
     claim = f"<h2>{d['claim_heading']}</h2>\n<ol>\n{steps}</ol>" if steps else ""

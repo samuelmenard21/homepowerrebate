@@ -75,16 +75,29 @@ def card(slug, cat, link=True):
             f"<span class='small'>(checked {e(max(FACTS[i]['verified_on'] for i in ids))})</span></p></div>")
 
 
+SD_INTRO = "San Diego homes are served by San Diego Gas and Electric (SDG&E)."
+for _s, _n in (("san-diego", "San Diego"), ("chula-vista", "Chula Vista"), ("escondido", "Escondido")):
+    CITIES[_s] = dict(name=_n, area="san-diego", area_name="San Diego area", intro=SD_INTRO if _s == "san-diego" else f"{_n} is in SDG&E's service area (San Diego Gas and Electric).", cats={}, facts=["us-ca-24-sdge-retail-coupons"])
+
+
 def main():
     for slug, c in CITIES.items():
-        name, base = c["name"], f"/us/ca/los-angeles/{slug}/"
-        d = ROOT / "us/ca/los-angeles" / slug
-        latest = max(FACTS[i]["verified_on"] for v in c["cats"].values() for i in v[3])
-        crumbs = [("Home", "/"), ("California", "/us/ca/"), ("Los Angeles area", "/us/ca/los-angeles/")]
+        area = c.get("area", "los-angeles")
+        name, base = c["name"], f"/us/ca/{area}/{slug}/"
+        d = ROOT / "us/ca" / area / slug
+        latest = max(FACTS[i]["verified_on"] for i in (c.get("facts") or [i for v in c["cats"].values() for i in v[3]]))
+        crumbs = [("Home", "/"), ("California", "/us/ca/"), (c.get("area_name", "Los Angeles area"), f"/us/ca/{area}/")]
         amts = [v[1] for k, v in c["cats"].items() if not v[1].startswith("No ")]
-        body = (f"<div style='background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;'><p style='margin:0;'><b>Short answer:</b> {e(c['intro'])} "
-                f"We verified {len(c['cats'])} home rebate areas for {e(name)}, listed below with a source for each. Statewide heat pump help (TECH Clean California and the federal HEEHRA program) is fully reserved and takes new requests on hold only.</p></div>"
-                f"<h2>What is offered in {e(name)}</h2>" + "".join(card(slug, k) for k in c["cats"]) +
+        lead = (f"We verified {len(c['cats'])} home rebate areas for {name}, listed below with a source for each. " if c["cats"]
+                else f"We could not verify an open home rebate from SDG&E for {name}, so we show no utility amount. ")
+        if c["cats"]:
+            offers = f"<h2>What is offered in {e(name)}</h2>" + "".join(card(slug, k) for k in c["cats"])
+        else:
+            offers = ("<h2>What SDG&amp;E lists</h2><p>SDG&amp;E's rebates page lists retail coupons: $75 for an ENERGY STAR smart thermostat, $40 for an Amazon smart thermostat, $500 for a heat pump water heater that replaces an electric water heater, and $15 for a room air conditioner. "
+                      "The same page says the program's retail rebate offerings have ended, and it does not honour rebates after purchase, so we do not count these as open. "
+                      f"<a href='{e(FACTS['us-ca-24-sdge-retail-coupons']['source_url'])}' rel='nofollow noopener' target='_blank'>Source</a> <span class='small'>(read 2026-10-01)</span></p>")
+        body = ("<div style='background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;'><p style='margin:0;'><b>Short answer:</b> " + e(c["intro"]) + " " + e(lead) +
+                "Statewide heat pump help (TECH Clean California and the federal HEEHRA program) is fully reserved and takes new requests on hold only.</p></div>" + offers +
                 "<h2>What we could not confirm</h2><p>Anything not listed above, such as other categories or amounts quoted on other sites. We show no figure we could not read on the utility's own page. "
                 "Tell us at <a href='mailto:hello@homepowerrebate.com'>hello@homepowerrebate.com</a> if you find a current one.</p>"
                 "<h2>Statewide programs</h2>" + table(STATEWIDE) +

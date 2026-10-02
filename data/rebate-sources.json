@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 185,
+ "count": 194,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -111,7 +111,15 @@
    "facts": [
     "us-ca-19-bayren-ease-home"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/us/ca/san-francisco/",
+    "/us/ca/san-francisco/heat-pump/",
+    "/us/ca/san-francisco/water-heater/",
+    "/us/ca/san-jose/",
+    "/us/ca/san-jose/heat-pump/",
+    "/us/ca/san-jose/insulation/",
+    "/us/ca/san-jose/water-heater/"
+   ],
    "last_read": "2026-10-01"
   },
   {
@@ -359,13 +367,9 @@
    "host": "www.cleanpowersf.org",
    "region": "CA-SF",
    "check": "CleanPowerSF credits",
-   "facts": [
-    "us-ca-15-cleanpowersf-hpwh-credit",
-    "us-ca-16-cleanpowersf-hp-heating-credit",
-    "us-ca-17-cleanpowersf-cooking-dryer-meter"
-   ],
+   "facts": [],
    "used_by_pages": [],
-   "last_read": "2026-10-01"
+   "last_read": ""
   },
   {
    "url": "https://www.smud.org/Going-Green/Battery-storage",
@@ -490,7 +494,13 @@
     "us-ca-22-sjce-ecohome-prewiring-panel",
     "us-ca-23-sjce-ecohome-battery"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/us/ca/san-jose/",
+    "/us/ca/san-jose/ev-charger/",
+    "/us/ca/san-jose/heat-pump/",
+    "/us/ca/san-jose/insulation/",
+    "/us/ca/san-jose/water-heater/"
+   ],
    "last_read": "2026-10-01"
   },
   {
@@ -932,6 +942,21 @@
    "last_read": "2026-09-29"
   },
   {
+   "url": "https://cleanpowersf.org/programs-and-rebates-for-residents",
+   "host": "cleanpowersf.org",
+   "region": "ca-pages",
+   "check": "CleanPowerSF programs and rebates for residents",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/san-francisco/",
+    "/us/ca/san-francisco/appliances/",
+    "/us/ca/san-francisco/heat-pump/",
+    "/us/ca/san-francisco/solar/",
+    "/us/ca/san-francisco/water-heater/"
+   ],
+   "last_read": ""
+  },
+  {
    "url": "https://pwp.cityofpasadena.net/electricheatpumpwaterheaterrebate/",
    "host": "pwp.cityofpasadena.net",
    "region": "ca-pages",
@@ -939,6 +964,55 @@
    "facts": [],
    "used_by_pages": [
     "/us/ca/pasadena/water-heater/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://sanjosecleanenergy.org/ecohome-payment-plan/",
+   "host": "sanjosecleanenergy.org",
+   "region": "ca-pages",
+   "check": "San Jose Clean Energy EcoHome Payment Plan",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/san-jose/",
+    "/us/ca/san-jose/ev-charger/",
+    "/us/ca/san-jose/heat-pump/",
+    "/us/ca/san-jose/insulation/",
+    "/us/ca/san-jose/water-heater/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.sanjoseca.gov/businesses/development-services-permit-center/start-your-project/appliance-installations",
+   "host": "www.sanjoseca.gov",
+   "region": "ca-pages",
+   "check": "City of San Jose appliance installation permits",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/san-jose/ev-charger/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.sanjoseca.gov/businesses/development-services-permit-center/start-your-project/mechanical-projects",
+   "host": "www.sanjoseca.gov",
+   "region": "ca-pages",
+   "check": "City of San Jose mechanical permits",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/san-jose/heat-pump/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.sanjoseca.gov/businesses/development-services-permit-center/start-your-project/water-heaters",
+   "host": "www.sanjoseca.gov",
+   "region": "ca-pages",
+   "check": "City of San Jose water heater permits",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/san-jose/",
+    "/us/ca/san-jose/water-heater/"
    ],
    "last_read": ""
   },
@@ -1952,6 +2026,50 @@
    "last_read": "2026-09-29"
   },
   {
+   "url": "https://cleanpowersf.org/electrify-your-home",
+   "host": "cleanpowersf.org",
+   "region": "us-ca",
+   "check": "CleanPowerSF Electrify Your Home; CleanPowerSF electric cooking, dryer and gas meter removal credits; CleanPowerSF heat pump heating bill credit; CleanPowerSF heat pump water heater bill credit",
+   "facts": [
+    "us-ca-15-cleanpowersf-hpwh-credit",
+    "us-ca-16-cleanpowersf-hp-heating-credit",
+    "us-ca-17-cleanpowersf-cooking-dryer-meter"
+   ],
+   "used_by_pages": [
+    "/us/ca/san-francisco/",
+    "/us/ca/san-francisco/appliances/",
+    "/us/ca/san-francisco/heat-pump/",
+    "/us/ca/san-francisco/water-heater/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://cleanpowersf.org/residential-battery-storage",
+   "host": "cleanpowersf.org",
+   "region": "us-ca",
+   "check": "CleanPowerSF Residential Battery Storage Program; CleanPowerSF residential battery storage",
+   "facts": [
+    "us-ca-31-cleanpowersf-battery"
+   ],
+   "used_by_pages": [
+    "/us/ca/san-francisco/solar/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://cleanpowersf.org/residential-rooftop-solar",
+   "host": "cleanpowersf.org",
+   "region": "us-ca",
+   "check": "CleanPowerSF and GoSolarSF solar programs; CleanPowerSF residential rooftop solar",
+   "facts": [
+    "us-ca-32-cleanpowersf-solar"
+   ],
+   "used_by_pages": [
+    "/us/ca/san-francisco/solar/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
    "url": "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/self-generation-incentive-program",
    "host": "www.cpuc.ca.gov",
    "region": "us-ca",
@@ -2053,6 +2171,23 @@
    ],
    "used_by_pages": [],
    "last_read": "2026-09-26"
+  },
+  {
+   "url": "https://www.sf.gov/apply-plumbing-and-mechanical-permit",
+   "host": "www.sf.gov",
+   "region": "us-ca",
+   "check": "City of San Francisco plumbing and mechanical permits; City of San Francisco plumbing and mechanical permits (PermitSF)",
+   "facts": [
+    "us-ca-33-sf-permit-plumbing-mechanical"
+   ],
+   "used_by_pages": [
+    "/us/ca/san-francisco/",
+    "/us/ca/san-francisco/appliances/",
+    "/us/ca/san-francisco/heat-pump/",
+    "/us/ca/san-francisco/solar/",
+    "/us/ca/san-francisco/water-heater/"
+   ],
+   "last_read": "2026-10-02"
   },
   {
    "url": "https://evhome.sce.com/",

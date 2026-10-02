@@ -6351,7 +6351,7 @@
         "los-angeles/pasadena": {
           "label": "Pasadena",
           "url": "/us/ca/los-angeles/pasadena/",
-          "overall": 35.0,
+          "overall": 41.6,
           "potential_usd": 1871,
           "open_count": 7,
           "categories": {
@@ -6363,46 +6363,46 @@
               "programs": 4
             },
             "insulation": {
-              "score": 28.8,
-              "dollar_value": 0.1,
-              "usd_value": 0.1,
+              "score": 40.0,
+              "dollar_value": 0.25,
+              "usd_value": 0.25,
               "status": "open",
-              "programs": 1
+              "programs": 4
             },
             "solar": {
+              "score": 45.5,
+              "dollar_value": 550.0,
+              "usd_value": 550.0,
+              "status": "open",
+              "programs": 4
+            },
+            "battery": {
               "score": 28.8,
               "dollar_value": 0.6,
               "usd_value": 0.6,
               "status": "open",
               "programs": 1
             },
-            "battery": {
-              "score": 33.3,
-              "dollar_value": 550.0,
-              "usd_value": 550.0,
-              "status": "open",
-              "programs": 1
-            },
             "water-heater": {
-              "score": 36.2,
+              "score": 43.8,
               "dollar_value": 500.0,
               "usd_value": 500.0,
               "status": "open",
-              "programs": 1
+              "programs": 3
             },
             "smart-thermostats": {
-              "score": 58.8,
+              "score": 70.0,
               "dollar_value": 50.0,
               "usd_value": 50.0,
               "status": "open",
-              "programs": 1
+              "programs": 4
             },
             "ev-charger": {
-              "score": 52.8,
+              "score": 64.0,
               "dollar_value": 600.0,
               "usd_value": 600.0,
               "status": "open",
-              "programs": 1
+              "programs": 4
             },
             "windows-doors": {
               "score": 0.0,
@@ -12033,6 +12033,75 @@
       }
     },
     {
+      "region": "us/ca",
+      "region_label": "California",
+      "country": "United States",
+      "slug": "los-angeles/pasadena",
+      "label": "Pasadena",
+      "url": "/us/ca/los-angeles/pasadena/",
+      "overall": 41.6,
+      "potential_usd": 1871,
+      "open_count": 7,
+      "categories": {
+        "heat-pump": {
+          "score": 40.9,
+          "dollar_value": 170.0,
+          "usd_value": 170.0,
+          "status": "open",
+          "programs": 4
+        },
+        "insulation": {
+          "score": 40.0,
+          "dollar_value": 0.25,
+          "usd_value": 0.25,
+          "status": "open",
+          "programs": 4
+        },
+        "solar": {
+          "score": 45.5,
+          "dollar_value": 550.0,
+          "usd_value": 550.0,
+          "status": "open",
+          "programs": 4
+        },
+        "battery": {
+          "score": 28.8,
+          "dollar_value": 0.6,
+          "usd_value": 0.6,
+          "status": "open",
+          "programs": 1
+        },
+        "water-heater": {
+          "score": 43.8,
+          "dollar_value": 500.0,
+          "usd_value": 500.0,
+          "status": "open",
+          "programs": 3
+        },
+        "smart-thermostats": {
+          "score": 70.0,
+          "dollar_value": 50.0,
+          "usd_value": 50.0,
+          "status": "open",
+          "programs": 4
+        },
+        "ev-charger": {
+          "score": 64.0,
+          "dollar_value": 600.0,
+          "usd_value": 600.0,
+          "status": "open",
+          "programs": 4
+        },
+        "windows-doors": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        }
+      }
+    },
+    {
       "region": "us/ma",
       "region_label": "Massachusetts",
       "country": "United States",
@@ -13754,75 +13823,6 @@
           "usd_value": 0.0,
           "status": "closed",
           "programs": 1
-        }
-      }
-    },
-    {
-      "region": "us/ca",
-      "region_label": "California",
-      "country": "United States",
-      "slug": "los-angeles/pasadena",
-      "label": "Pasadena",
-      "url": "/us/ca/los-angeles/pasadena/",
-      "overall": 35.0,
-      "potential_usd": 1871,
-      "open_count": 7,
-      "categories": {
-        "heat-pump": {
-          "score": 40.9,
-          "dollar_value": 170.0,
-          "usd_value": 170.0,
-          "status": "open",
-          "programs": 4
-        },
-        "insulation": {
-          "score": 28.8,
-          "dollar_value": 0.1,
-          "usd_value": 0.1,
-          "status": "open",
-          "programs": 1
-        },
-        "solar": {
-          "score": 28.8,
-          "dollar_value": 0.6,
-          "usd_value": 0.6,
-          "status": "open",
-          "programs": 1
-        },
-        "battery": {
-          "score": 33.3,
-          "dollar_value": 550.0,
-          "usd_value": 550.0,
-          "status": "open",
-          "programs": 1
-        },
-        "water-heater": {
-          "score": 36.2,
-          "dollar_value": 500.0,
-          "usd_value": 500.0,
-          "status": "open",
-          "programs": 1
-        },
-        "smart-thermostats": {
-          "score": 58.8,
-          "dollar_value": 50.0,
-          "usd_value": 50.0,
-          "status": "open",
-          "programs": 1
-        },
-        "ev-charger": {
-          "score": 52.8,
-          "dollar_value": 600.0,
-          "usd_value": 600.0,
-          "status": "open",
-          "programs": 1
-        },
-        "windows-doors": {
-          "score": 0.0,
-          "dollar_value": 0.0,
-          "usd_value": 0.0,
-          "status": "closed",
-          "programs": 0
         }
       }
     },
@@ -17920,6 +17920,18 @@
         "programs": 1
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "los-angeles/pasadena",
+        "label": "Pasadena",
+        "url": "/us/ca/los-angeles/pasadena/",
+        "score": 40.0,
+        "dollar_value": 0.25,
+        "status": "open",
+        "programs": 4
+      },
+      {
         "region": "us/co",
         "region_label": "Colorado",
         "country": "United States",
@@ -18000,18 +18012,6 @@
         "url": "/us/ca/inland-empire/san-bernardino/",
         "score": 28.8,
         "dollar_value": 0.0,
-        "status": "open",
-        "programs": 1
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/pasadena",
-        "label": "Pasadena",
-        "url": "/us/ca/los-angeles/pasadena/",
-        "score": 28.8,
-        "dollar_value": 0.1,
         "status": "open",
         "programs": 1
       },
@@ -18966,6 +18966,18 @@
         "programs": 1
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "los-angeles/pasadena",
+        "label": "Pasadena",
+        "url": "/us/ca/los-angeles/pasadena/",
+        "score": 45.5,
+        "dollar_value": 550.0,
+        "status": "open",
+        "programs": 4
+      },
+      {
         "region": "us/ny",
         "region_label": "New York",
         "country": "United States",
@@ -18974,18 +18986,6 @@
         "url": "/us/ny/pseg/babylon/",
         "score": 28.8,
         "dollar_value": 0.0,
-        "status": "open",
-        "programs": 1
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/pasadena",
-        "label": "Pasadena",
-        "url": "/us/ca/los-angeles/pasadena/",
-        "score": 28.8,
-        "dollar_value": 0.6,
         "status": "open",
         "programs": 1
       },
@@ -20492,18 +20492,6 @@
         "programs": 1
       },
       {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/pasadena",
-        "label": "Pasadena",
-        "url": "/us/ca/los-angeles/pasadena/",
-        "score": 33.3,
-        "dollar_value": 550.0,
-        "status": "open",
-        "programs": 1
-      },
-      {
         "region": "us/ny",
         "region_label": "New York",
         "country": "United States",
@@ -20668,6 +20656,18 @@
         "url": "/us/ny/national-grid/syracuse/",
         "score": 30.4,
         "dollar_value": 200.0,
+        "status": "open",
+        "programs": 1
+      },
+      {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "los-angeles/pasadena",
+        "label": "Pasadena",
+        "url": "/us/ca/los-angeles/pasadena/",
+        "score": 28.8,
+        "dollar_value": 0.6,
         "status": "open",
         "programs": 1
       },
@@ -21850,6 +21850,18 @@
         "programs": 1
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "los-angeles/pasadena",
+        "label": "Pasadena",
+        "url": "/us/ca/los-angeles/pasadena/",
+        "score": 43.8,
+        "dollar_value": 500.0,
+        "status": "open",
+        "programs": 3
+      },
+      {
         "region": "us/ma",
         "region_label": "Massachusetts",
         "country": "United States",
@@ -22072,18 +22084,6 @@
         "slug": "inland-empire/san-bernardino",
         "label": "San Bernardino",
         "url": "/us/ca/inland-empire/san-bernardino/",
-        "score": 36.2,
-        "dollar_value": 500.0,
-        "status": "open",
-        "programs": 1
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/pasadena",
-        "label": "Pasadena",
-        "url": "/us/ca/los-angeles/pasadena/",
         "score": 36.2,
         "dollar_value": 500.0,
         "status": "open",
@@ -23439,6 +23439,18 @@
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
+        "slug": "los-angeles/pasadena",
+        "label": "Pasadena",
+        "url": "/us/ca/los-angeles/pasadena/",
+        "score": 70.0,
+        "dollar_value": 50.0,
+        "status": "open",
+        "programs": 4
+      },
+      {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
         "slug": "sacramento/folsom",
         "label": "Folsom",
         "url": "/us/ca/sacramento/folsom/",
@@ -23574,18 +23586,6 @@
         "slug": "denver",
         "label": "Denver",
         "url": "/us/co/denver/",
-        "score": 58.8,
-        "dollar_value": 50.0,
-        "status": "open",
-        "programs": 1
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/pasadena",
-        "label": "Pasadena",
-        "url": "/us/ca/los-angeles/pasadena/",
         "score": 58.8,
         "dollar_value": 50.0,
         "status": "open",
@@ -24170,6 +24170,18 @@
         "programs": 1
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "los-angeles/pasadena",
+        "label": "Pasadena",
+        "url": "/us/ca/los-angeles/pasadena/",
+        "score": 64.0,
+        "dollar_value": 600.0,
+        "status": "open",
+        "programs": 4
+      },
+      {
         "region": "ca/on",
         "region_label": "Ontario",
         "country": "Canada",
@@ -24500,18 +24512,6 @@
         "slug": "sacramento/sacramento",
         "label": "Sacramento",
         "url": "/us/ca/sacramento/sacramento/",
-        "score": 52.8,
-        "dollar_value": 600.0,
-        "status": "open",
-        "programs": 1
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/pasadena",
-        "label": "Pasadena",
-        "url": "/us/ca/los-angeles/pasadena/",
         "score": 52.8,
         "dollar_value": 600.0,
         "status": "open",
@@ -26512,6 +26512,18 @@
         "programs": 0
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "los-angeles/pasadena",
+        "label": "Pasadena",
+        "url": "/us/ca/los-angeles/pasadena/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
         "region": "us/ny",
         "region_label": "New York",
         "country": "United States",
@@ -26614,18 +26626,6 @@
         "slug": "national-grid/syracuse",
         "label": "Syracuse",
         "url": "/us/ny/national-grid/syracuse/",
-        "score": 0.0,
-        "dollar_value": 0.0,
-        "status": "closed",
-        "programs": 0
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/pasadena",
-        "label": "Pasadena",
-        "url": "/us/ca/los-angeles/pasadena/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",

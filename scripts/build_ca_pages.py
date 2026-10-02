@@ -54,7 +54,7 @@ def installer_html(slug, name, kind, intro):
 
 def card(c):
     cls, label = PILL[c.get("status", "active")]
-    return (f'<div class="rebate-card"><span class="program-status {cls}">{label}</span><h4>{e(c["title"])}</h4><div class="amount">{e(c["amount"])}</div>'
+    return (f'<div class="rebate-card"><span class="program-status {cls}">{label}</span><h4>{(f"<a href='{c['href']}'>" + e(c["title"]) + "</a>") if c.get("href") else e(c["title"])}</h4><div class="amount">{e(c["amount"])}</div>'
             f'<p style="font-size:14px;margin:8px 0 0;">{c["note"]}</p></div>')
 
 
@@ -69,19 +69,21 @@ def build(slug, cat):
     if not pj.exists():
         return None
     d = json.loads(pj.read_text())
-    path = f"/us/ca/{area}/{slug}/{cat}/"
     hub = f"/us/ca/{area}/{slug}/"
+    path = hub if cat == "index" else f"{hub}{cat}/"
+    is_hub = cat == "index"
     fids = [i for cd in d["cards"] for i in cd.get("facts", [])] + d.get("facts", [])
     for i in fids:
         assert i in FACTS, f"unknown fact {i}"
     checked = max(FACTS[i]["verified_on"] for i in fids)
     when = date.fromisoformat(checked).strftime("%B %-d, %Y")
-    sibs = [k for k in LABEL if (ROOT / "data/ca/pages" / slug / f"{k}.json").exists() and k != cat]
+    sibs = [] if is_hub else [k for k in LABEL if (ROOT / "data/ca/pages" / slug / f"{k}.json").exists() and k != cat]
     sib = "".join(f'<span style="margin-right:14px;"><a href="/us/ca/{area}/{slug}/{k}/">{LABEL[k]} Rebates in {e(name)}</a></span>\n' for k in sibs)
     cards = "".join(card(x) for x in d["cards"])
-    kind = INSTALLER_SET.get(cat)
+    kind = "hvac" if is_hub else INSTALLER_SET.get(cat)
     inst = installer_html(slug, name, kind, d["installers_intro"]) if kind else ""
-    steps = "".join(f"<li>{s}</li>\n" for s in d["claim_steps"])
+    steps = "".join(f"<li>{s}</li>\n" for s in d.get("claim_steps", []))
+    claim = f"<h2>{d['claim_heading']}</h2>\n<ol>\n{steps}</ol>" if steps else ""
     faq = "".join(f'<div class="faq-item"><h3>{e(q)}</h3><p>{a}</p></div>\n' for q, a in d["faq"])
     sources = " ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>' + ("," if i < len(d["refs"]) - 1 else "") for i, (t, u) in enumerate(d["refs"]))
     article = f"""<h2>{d['cards_heading']}</h2>
@@ -92,9 +94,7 @@ def build(slug, cat):
 {d.get('after_cards', '')}
 {''.join(f"<h2>{h}</h2>{b}" for h, b in d['sections'])}
 {inst}
-<h2>{d['claim_heading']}</h2>
-<ol>
-{steps}</ol>
+{claim}
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city={slug}" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in {e(name)}</a>.</div>
 <h2>Common questions</h2>
 {faq}
@@ -125,7 +125,9 @@ def build(slug, cat):
            "datePublished": checked, "dateModified": checked, "mainEntityOfPage": BASE + path},
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE}, {"@type": "ListItem", "position": 2, "name": "California", "item": BASE + "/us/ca/"},
-              {"@type": "ListItem", "position": 3, "name": name, "item": BASE + hub}, {"@type": "ListItem", "position": 4, "name": LABEL[cat], "item": BASE + path}]}, faq_ld]
+              {"@type": "ListItem", "position": 3, "name": name, "item": BASE + hub}, {"@type": "ListItem", "position": 4, "name": LABEL[cat], "item": BASE + path}] if not is_hub else [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE}, {"@type": "ListItem", "position": 2, "name": "California", "item": BASE + "/us/ca/"},
+              {"@type": "ListItem", "position": 3, "name": name, "item": BASE + hub}]}, faq_ld]
     lds = "".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in ld)
     page = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -140,10 +142,10 @@ def build(slug, cat):
 {CSS}
 {lds}</head><body>
 {navfooter.render_nav("ca", "")}
-<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ca/">California</a></li><li><a href="{hub}">{e(name)}</a></li><li aria-current="page">{LABEL[cat]}</li></ol></nav>
+<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ca/">California</a></li>{"" if is_hub else f'<li><a href="{hub}">{e(name)}</a></li>'}<li aria-current="page">{LABEL[cat] if not is_hub else e(name)}</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">{e(d['badge'])}</div><h1>{e(d['h1'])}</h1><p>{d['lead']}</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
-<span style="margin-right:14px;"><a href="{hub}">&larr; Back to {e(name)} rebate hub</a></span>
+{"" if is_hub else f'<span style="margin-right:14px;"><a href="{hub}">&larr; Back to {e(name)} rebate hub</a></span>'}
 {sib}</div></section>
 <article class="article"><div class="wrap">
 {article}
@@ -162,7 +164,7 @@ if __name__ == "__main__":
     for slug in CITIES:
         if only and slug not in only:
             continue
-        for cat in LABEL:
+        for cat in ["index"] + list(LABEL):
             r = build(slug, cat)
             if r:
                 print("built", r[0], r[1], "words")

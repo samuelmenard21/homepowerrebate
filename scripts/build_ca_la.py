@@ -82,6 +82,8 @@ for _s, _n in (("san-diego", "San Diego"), ("chula-vista", "Chula Vista"), ("esc
 
 def main():
     for slug, c in CITIES.items():
+        if (ROOT / "data/ca/pages" / slug).exists():
+            continue  # hand-written pages, built by build_ca_pages.py
         area = c.get("area", "los-angeles")
         name, base = c["name"], f"/us/ca/{area}/{slug}/"
         d = ROOT / "us/ca" / area / slug

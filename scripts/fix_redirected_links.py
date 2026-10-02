@@ -27,6 +27,8 @@ for f in files:
     if f.startswith(("_partials/", "calculator/embed/")):
         continue
     p = ROOT / f
+    if not p.exists():
+        continue
     s = p.read_text(encoding="utf-8", errors="ignore")
     o = s
     s = re.sub(r'(href="/retrofit-assessment/"[^>]*>)(Assessment|Retrofit Assessment)(<)', lambda m: m.group(1).replace("/retrofit-assessment/", "/get-quotes/") + "Get my plan" + m.group(3), s)

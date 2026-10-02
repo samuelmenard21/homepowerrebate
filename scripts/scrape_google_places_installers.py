@@ -16,6 +16,8 @@ Notes:
   - One searchText call returns everything we need — no separate details call.
 """
 
+import json
+import os
 import sys
 import time
 import getpass
@@ -55,7 +57,9 @@ FIELD_MASK = ",".join([
     "places.googleMapsUri",
     "places.primaryType",
     "places.photos",
-])
+] + (["places.reviewSummary"] if os.environ.get("PLACES_REVIEW_SUMMARY") else []))
+# Opt-in: PLACES_REVIEW_SUMMARY=1 also requests Google's generated review summary (may bill at a higher Places SKU; check pricing first).
+REVIEW_SUMMARIES = {}
 
 # Google Places API does NOT return email addresses — column left blank on purpose.
 PHOTO_MAX_PX = 640
@@ -517,6 +521,10 @@ def scrape_installers(api_key, installer_type, province="bc", debug=False):
                 photos = p.get("photos", []) or []
                 photo_name = photos[0].get("name", "") if photos else ""
 
+                _rs = p.get("reviewSummary") or {}
+                if _rs.get("text", {}).get("text") and p.get("googleMapsUri"):
+                    REVIEW_SUMMARIES[p["googleMapsUri"]] = {"text": _rs["text"]["text"], "disclosure": (_rs.get("disclosureText") or {}).get("text", ""),
+                                                            "flag_uri": _rs.get("flagContentUri", ""), "fetched": time.strftime("%Y-%m-%d")}
                 global_found[pid] = {
                     "city": actual_city,
                     "name": name,
@@ -605,6 +613,13 @@ def save_to_csv(installers, installer_type, province="bc"):
     for i in installers:
         i["email"] = i.get("email") or known.get(i["name"].strip().lower(), "")
 
+    if REVIEW_SUMMARIES:
+        rsp = Path("data/places-review-summaries.json")
+        old = json.loads(rsp.read_text()) if rsp.exists() else {}
+        old.update(REVIEW_SUMMARIES)
+        rsp.parent.mkdir(exist_ok=True)
+        rsp.write_text(json.dumps(old, ensure_ascii=False, indent=1))
+        print(f"✓ Saved {len(REVIEW_SUMMARIES)} review summaries to {rsp}")
     with open(csv_path, "w") as f:
         f.write("City,Business Name,Address,Phone,Email,Website,Image URL,Google Rating,Review Count,Google Maps URL,HomePowerRebate Recommended,Notes,Last Updated\n")
         for i in installers:

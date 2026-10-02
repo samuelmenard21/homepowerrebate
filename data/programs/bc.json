@@ -1,0 +1,422 @@
+{
+  "province": "bc",
+  "verified_date": "2026-07-12",
+  "income_tiers": {
+    "description": "Household size determines income thresholds. Level 1 = highest rebate, Level 3 = lowest (ground-oriented homes only, switching from fossil fuels)",
+    "tiers": {
+      "1": {
+        "level_1_max": 51100,
+        "level_2_max": 63900,
+        "level_3_max": 102100
+      },
+      "2": {
+        "level_1_max": 63600,
+        "level_2_max": 79500,
+        "level_3_max": 127200
+      },
+      "3": {
+        "level_1_max": 78200,
+        "level_2_max": 97700,
+        "level_3_max": 156300
+      },
+      "4": {
+        "level_1_max": 94900,
+        "level_2_max": 118600,
+        "level_3_max": 189800
+      },
+      "5": {
+        "level_1_max": 107600,
+        "level_2_max": 134500,
+        "level_3_max": 215200
+      },
+      "6": {
+        "level_1_max": 121400,
+        "level_2_max": 151700,
+        "level_3_max": 242700
+      },
+      "7_plus": {
+        "level_1_max": 135100,
+        "level_2_max": 168900,
+        "level_3_max": 270200
+      }
+    },
+    "note": "Level 3 only applies to ground-oriented homes switching from natural gas, propane, or oil to electric heat pump. Assessed property value ≤$1,230,000.",
+    "source_url": "https://betterhomesbc.ca/learn-about-programs/energy-savings-program/",
+    "source_name": "BetterHomesBC"
+  },
+  "programs": {
+    "heat_pump_esp": {
+      "label": "Air source heat pump (ground-oriented)",
+      "category": "heating",
+      "eligible_homes": ["detached", "townhome", "rowhouse", "duplex", "mobile_permanent", "garage_coach_house"],
+      "ineligible_homes": [],
+      "heating_fuel_trigger": ["gas", "oil", "propane", "electric_baseboard", "electric_resistance"],
+      "bc_hydro": {
+        "rebate_by_income": {
+          "level_1": 16000,
+          "level_2": 12000,
+          "level_3": 13000
+        },
+        "conditions": [
+          "Replaces fossil fuel heating (gas, oil, propane) or electric resistance heating",
+          "Cold-climate model on NRCan list",
+          "HPCN-certified contractor",
+          "Whole-home heating solution"
+        ],
+        "add_ons": [
+          "Ventilation upgrade: up to $2,000",
+          "Health & safety (mould/pest remediation): up to $5,000",
+          "Electrical service upgrade: if needed for panel capacity"
+        ],
+        "utility": "BC Hydro",
+        "process": "Pre-register in portal → get code (valid 3 months) → quotes from ESP-registered contractors → contractor receives rebate, homeowner pays remainder",
+        "support": "1-833-856-0333",
+        "portal": "https://bcenergysavingsprogram.ca",
+        "source_url": "https://betterhomesbc.ca/learn-about-programs/energy-savings-program/",
+        "source_name": "BetterHomesBC / Energy Savings Program",
+        "verified_date": "2026-07-12"
+      },
+      "fortisbc": {
+        "rebate_by_income": {
+          "whole_home": 4000,
+          "partial_home": 1500
+        },
+        "note": "FortisBC rebate is flat-rate, not income-qualified. Replaces electric space heating only.",
+        "conditions": [
+          "Replaces electric space heating system with high-efficiency air source heat pump",
+          "Whole-home or partial-home system"
+        ],
+        "utility": "FortisBC",
+        "source_url": "https://www.fortisbc.com/rebates/detail/air-source-heat-pump-rebate",
+        "source_name": "FortisBC",
+        "verified_date": "2026-07-12"
+      }
+    },
+    "heat_pump_water_heater": {
+      "label": "Heat pump water heater (HPWH)",
+      "category": "water_heating",
+      "eligible_homes": ["detached", "townhome", "rowhouse", "duplex", "mobile_permanent", "condo", "apartment"],
+      "bc_hydro": {
+        "rebate": 3500,
+        "conditions": [
+          "Replaces electric resistance or gas water heater",
+          "HPCN-certified contractor",
+          "Can be added to same ESP application as heat pump"
+        ],
+        "utility": "BC Hydro",
+        "source_url": "https://betterhomesbc.ca/learn-about-programs/energy-savings-program/",
+        "source_name": "BetterHomesBC",
+        "verified_date": "2026-07-12"
+      }
+    },
+    "insulation_weatherization": {
+      "label": "Insulation & air sealing",
+      "category": "envelope",
+      "eligible_homes": ["detached", "townhome", "rowhouse", "duplex", "mobile_permanent", "condo", "apartment"],
+      "bc_hydro": {
+        "rebate": "Variable, up to $5,000+",
+        "note": "Assessed per home via EnerGuide evaluation. Shrinks the heat pump size needed.",
+        "conditions": [
+          "Improves thermal envelope",
+          "Reduces air leakage",
+          "Part of ESP application"
+        ],
+        "utility": "BC Hydro",
+        "source_url": "https://betterhomesbc.ca/learn-about-programs/energy-savings-program/",
+        "source_name": "BetterHomesBC",
+        "verified_date": "2026-07-12"
+      }
+    },
+    "solar_pv": {
+      "label": "Solar PV system",
+      "category": "generation",
+      "eligible_homes": ["detached", "townhome", "rowhouse", "duplex", "mobile_permanent", "garage_coach_house", "farm_building"],
+      "ineligible_homes": ["condo", "apartment", "secondary_suite", "separately_metered"],
+      "bc_hydro": {
+        "rebate": {
+          "per_kw": 1000,
+          "max": 5000,
+          "note": "Capped at 50% of total installed cost (labour + materials)"
+        },
+        "conditions": [
+          "HPCN-certified contractor (required since June 1, 2026)",
+          "Pre-approval BEFORE purchasing equipment",
+          "Self-installs not eligible",
+          "Licensed contractor with GST + BC licence"
+        ],
+        "rate_change_july_2026": {
+          "old_rate": "Net metering (RS 1289) — closed to new customers June 30, 2026",
+          "old_rate_terms": "Excess kWh banked one-for-one at retail rate; annual payout at market price",
+          "new_rate": "Self-generation rate (RS 2289) — effective July 1, 2026",
+          "new_rate_terms": "Excess kWh credited at fixed 10¢/kWh per billing period",
+          "strategy": "Size solar to self-consumption, not export. Battery stores midday excess for evening use.",
+          "system_size_limit": "Up to 300 kW (vs. 100 kW single-phase before)",
+          "existing_customers": "Keep net metering for 10 years from service start; then transition to self-generation rate"
+        },
+        "payback_note": "Exported kWh = $0.10. Self-consumed kWh = full retail rate. New math makes battery pairing more valuable.",
+        "utility": "BC Hydro",
+        "contractor_list": "https://homeperformance.ca/find-a-contractor/",
+        "support": "1-833-856-0333",
+        "payment_timeline": "30–45 business days after interconnection approval",
+        "source_url": "https://www.bchydro.com/powersmart/residential/rebates-programs/solar-battery.html",
+        "source_name": "BC Hydro",
+        "verified_date": "2026-07-12"
+      },
+      "fortisbc": {
+        "rebate": null,
+        "note": "FortisBC does not offer a solar rebate. Net metering/self-generation program available; excess generation credited per FortisBC rate schedule.",
+        "utility": "FortisBC",
+        "source_url": "https://www.fortisbc.com/services/electricity-services/generating-your-own-electricity/net-metering",
+        "source_name": "FortisBC Net Metering Program",
+        "verified_date": "2026-07-12"
+      }
+    },
+    "battery_storage": {
+      "label": "Battery energy storage system",
+      "category": "storage",
+      "eligible_homes": ["detached", "townhome", "rowhouse", "duplex", "mobile_permanent", "garage_coach_house"],
+      "ineligible_homes": ["condo", "apartment"],
+      "bc_hydro": {
+        "rebate": {
+          "per_kwh": 500,
+          "max_if_peak_saver_enrolled": 5000,
+          "max_if_not_enrolled": 1500,
+          "minimum_kwh": 5,
+          "note": "Peak Saver enrollment must occur within 14 days of interconnection approval. Missing this window = $3,500 cost difference."
+        },
+        "peak_saver": {
+          "reward": "$50/year base, $100/year for income-qualified households",
+          "how_it_works": "BC Hydro briefly adjusts your heating/cooling during peak demand events (winter evenings). You can override anytime.",
+          "grid_benefit": "Your battery becomes virtual power plant infrastructure; BC Hydro coordinates remotely for grid support."
+        },
+        "eligible_products": "CUL 1973 + CUL 9540 certified; commonly used list: https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/power-smart/residential/programs/energy-storage-battery-list.pdf",
+        "ineligible_products": ["Tesla Powerwall"],
+        "conditions": [
+          "Minimum 5 kWh capacity",
+          "HPCN-certified contractor",
+          "Pre-approval BEFORE purchasing equipment",
+          "Installed with or without solar"
+        ],
+        "strategy_note": "Pairs with solar: store midday excess, use at evening peak (high-value time). Avoids exporting at 10¢/kWh.",
+        "utility": "BC Hydro",
+        "support": "1-833-856-0333",
+        "payment_timeline": "30–45 business days after interconnection approval",
+        "source_url": "https://www.bchydro.com/powersmart/residential/rebates-programs/solar-battery.html",
+        "source_name": "BC Hydro",
+        "verified_date": "2026-07-12"
+      }
+    },
+    "smart_thermostat_free": {
+      "label": "Free smart thermostats (NEW July 2026)",
+      "category": "smart_device",
+      "eligible_homes": ["detached", "townhome", "rowhouse", "duplex", "mobile_permanent", "condo", "apartment"],
+      "heating_fuel_trigger": ["electric_baseboard"],
+      "bc_hydro": {
+        "offer": {
+          "units": "Up to 5 per home",
+          "value_per_home": "~$350 (Mysa or Sinopé)",
+          "cost": "Free",
+          "shipping": "Free, included",
+          "timeline": "Registration open now; devices ship October 2026"
+        },
+        "manufacturers": ["Mysa", "Sinopé"],
+        "manufacturer_note": "Both Canadian companies. Order through their platforms.",
+        "peak_saver_integration": {
+          "pre_enrolled": true,
+          "reward_base": "$50/year",
+          "reward_income_qualified": "$100/year",
+          "override": "Anytime from your phone"
+        },
+        "conditions": [
+          "Electric baseboard heating only",
+          "Residential customer",
+          "No income requirement",
+          "Register now (email signup), order in October"
+        },
+        "eligibility_note": "~40% of BC homes have electric baseboard heat. Program explicitly designed for renters + condos.",
+        "registration_url": "https://www.bchydro.com/powersmart/residential/rebates-programs/product-rebates.html#thermostat",
+        "utility": "BC Hydro",
+        "program": "Power Smart 2.0",
+        "source_url": "https://news.gov.bc.ca/releases/2026ECS0037-000794",
+        "source_name": "BC Government / BC Hydro",
+        "verified_date": "2026-07-12"
+      }
+    },
+    "energy_saving_kit": {
+      "label": "Free energy saving kit (income-qualified)",
+      "category": "smart_device",
+      "eligible_homes": ["detached", "townhome", "rowhouse", "duplex", "mobile_permanent", "condo", "apartment"],
+      "income_qualified": true,
+      "bc_hydro": {
+        "offer": {
+          "cost": "Free",
+          "shipping": "Free",
+          "timeline": "Delivery in 3–6 weeks",
+          "application_time": "~5 minutes online"
+        },
+        "contents": [
+          "4 LED bulbs",
+          "Weather stripping",
+          "High-efficiency showerheads",
+          "Tap aerators",
+          "Foam outlet gaskets",
+          "LED night light",
+          "Fridge/freezer thermometer",
+          "Installation guide"
+        ],
+        "customizable": true,
+        "income_thresholds": {
+          "1": 51100,
+          "2": 63600,
+          "3": 78200,
+          "4": 94900,
+          "5": 108000,
+          "6": 121400,
+          "7_plus": 135100
+        },
+        "income_note": "Household income includes all members 18+, from previous year. Different from ESP table at 5-person threshold.",
+        "renter_eligible": true,
+        "renter_note": "Yes, if utility account is in renter's name (not landlord/strata).",
+        "reorder": "Allowed after 5 years or after moving",
+        "utilities": ["BC Hydro", "FortisBC", "Pacific Natural Gas"],
+        "utility_note": "Program brought to you by BC Hydro, FortisBC, Pacific Natural Gas — renters in any service area can apply",
+        "application_url": "https://www.bchydro.com/powersmart/residential/rebates-programs/savings-based-on-income.html",
+        "source_url": "https://www.bchydro.com/powersmart/residential/rebates-programs/savings-based-on-income/free-energy-savings-kit.html",
+        "source_name": "BC Hydro",
+        "verified_date": "2026-07-12"
+      }
+    },
+    "ecap_free_retrofit": {
+      "label": "Free home energy retrofit (ECAP, income-qualified)",
+      "category": "retrofit",
+      "eligible_homes": ["detached", "townhome", "rowhouse", "duplex", "mobile_permanent"],
+      "income_qualified": true,
+      "expanded_june_2026": true,
+      "bc_hydro": {
+        "offer": {
+          "cost": "Free",
+          "includes": [
+            "Free home energy evaluation",
+            "Free installation of recommended upgrades",
+            "Personalized energy coaching"
+          ]
+        },
+        "eligible_upgrades": [
+          "Heat pump installation",
+          "Insulation & weatherization",
+          "Ventilation upgrades"
+        ],
+        "availability": "First-come, first-served, subject to available funding",
+        "note": "Program expanded June 29, 2026 to include MORE low-income homeowners AND tenants. See expanded program details.",
+        "support": "1-800-BC HYDRO (1-800-224-9376)",
+        "source_url": "https://news.gov.bc.ca/releases/2026ECS0035-000771",
+        "source_name": "BC Government",
+        "verified_date": "2026-07-12"
+      }
+    },
+    "ev_charger": {
+      "label": "Level 2 EV home charger",
+      "category": "ev",
+      "eligible_homes": ["detached", "townhome", "rowhouse", "duplex", "mobile_permanent"],
+      "bc_hydro": {
+        "total_first_year_value": "Up to $1,050+",
+        "rebate_components": {
+          "base_charger_rebate": {
+            "amount": 350,
+            "calculation": "50% of cost, capped at $350",
+            "includes": "Purchase + installation"
+          },
+          "ev_power_management_device": {
+            "amount": 200,
+            "note": "Avoids $2K–$5K electrical panel upgrade"
+          },
+          "peak_saver_enrollment": {
+            "bill_credit": 250,
+            "ongoing_annual": "$50/season (4 seasons = $200/year typical)"
+          }
+        },
+        "charger_requirements": [
+          "Must be on official BC Hydro eligible list",
+          "Bought (not leased) in Canada",
+          "New, certified (cUL/ULC/cETL/CSA/cQPS)",
+          "Level 2 208V or 240V",
+          "NACS J3400 or SAE J1772 connector",
+          "Permanent wall-mounted installation (not portable)"
+        ],
+        "ineligible_chargers": ["Tesla charging stations"],
+        "electrical_permit": "Required (contractor pulls it; Technical Safety BC or municipality)",
+        "gotchas": [
+          "Rebate NOT available for 240V outlet installation only",
+          "Pre-existing 240V outlet = simplified application (charger invoice + photo), zero electrical work",
+          "Submit rebate docs within 90 days of installation (some sources say 180 days — link both, advise applying immediately)"
+        ],
+        "local_municipal_topups": "Some cities offer additional rebates — research per city",
+        "payment_timeline": "Within 90 days of application approval",
+        "utility": "BC Hydro",
+        "fortisbc_routing": "FortisBC customers apply via fortisbc.com",
+        "eligible_charger_list": "https://www.bchydro.com/powersmart/residential/rebates-programs/rebate-eligible-chargers.html",
+        "eligible_charger_list_note": "Do not replicate this list — it changes. Link with verified-date stamp.",
+        "support": "1-833-856-0333",
+        "source_url": "https://www.bchydro.com/powersmart/residential/rebates-programs/solar-battery.html",
+        "source_name": "BC Hydro",
+        "verified_date": "2026-07-12"
+      }
+    }
+  },
+  "renter_paths": {
+    "description": "Renters can qualify for several programs, depending on utility account ownership and income",
+    "eligible_programs": [
+      "free_energy_saving_kit (if income-qualified + utility account in renter's name)",
+      "smart_thermostat_free (if baseboard heat + any income)",
+      "ecap_free_retrofit (if income-qualified + landlord consent)"
+    ],
+    "heat_pump_note": "Renters can apply for ESP heat pump rebates with landlord consent form. Utility account must not be in landlord/strata name.",
+    "free_offerings": [
+      "5 free smart thermostats (up to $350 value, October 2026, baseboard heat only)",
+      "Free energy saving kit (income-qualified, 3–6 weeks delivery)",
+      "Free retrofit program (ECAP, income-qualified, expanded June 2026)"
+    ]
+  },
+  "condo_paths": {
+    "description": "Condos/apartments historically excluded from heat pump rebates in BC. This has changed as of July 2026.",
+    "eligible_programs": [
+      "heat_pump_water_heater ($3,500, electrically heated condos)",
+      "heat_pump ($5,000 if electrically heated, vs. $16K ground-oriented homes)",
+      "smart_thermostat_free (if baseboard heat)",
+      "energy_saving_kit (if income-qualified)"
+    ],
+    "heat_pump_note": "Condos with electric baseboard or resistance heating qualify for up to $5,000 heat pump rebate. NOT $16K, but significant.",
+    "solar_battery_note": "Strata units, secondary suites, separately metered units NOT eligible for solar/battery rebates.",
+    "provincial_note": "Ontario differs — condos fully ineligible there."
+  },
+  "utility_routing": {
+    "description": "Different utilities route to different programs",
+    "bc_hydro": {
+      "service_areas": ["Metro Vancouver", "Vancouver Island", "Okanagan (partial)", "Thompson", "Central Interior", "Kootenay", "Northern BC"],
+      "programs": ["heat_pump_esp", "solar_pv", "battery_storage", "smart_thermostat_free", "energy_saving_kit", "ecap_free_retrofit", "ev_charger"]
+    },
+    "fortisbc": {
+      "service_areas": ["Okanagan (primary)", "Interior (partial)", "Kootenay (partial)"],
+      "programs": ["heat_pump_esp (different amounts)", "energy_saving_kit", "smart_thermostat_free"],
+      "note": "FortisBC does not offer solar/battery rebates. Uses self-generation rate instead."
+    }
+  },
+  "program_changes_2026": {
+    "july_1_solar_rate_change": {
+      "old": "Net metering (RS 1289) closed to new customers",
+      "new": "Self-generation rate (RS 2289) — 10¢/kWh export credit",
+      "impact": "Sizing strategy shifts to self-consumption + battery pairing",
+      "source": "https://www.bchydro.com/powersmart/residential/rebates-programs/solar-battery/rebate-return.html"
+    },
+    "july_6_smart_thermostat_launch": {
+      "new_program": "Free smart thermostats via Power Smart 2.0",
+      "rollout": "Registration now, devices October 2026",
+      "target": "800,000 BC homes with electric baseboard heat"
+    },
+    "june_29_ecap_expansion": {
+      "expanded_from": "Low-income homeowners only",
+      "expanded_to": "Low-income homeowners AND tenants",
+      "source": "https://news.gov.bc.ca/releases/2026ECS0035-000771"
+    }
+  }
+}

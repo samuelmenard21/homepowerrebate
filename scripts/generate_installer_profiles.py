@@ -18,8 +18,13 @@ import json
 import os
 import re
 import html
+from datetime import date, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+REVIEW_SUMMARIES = {}
+_rsf = os.path.join(ROOT, "data", "places-review-summaries.json")
+if os.path.exists(_rsf):
+    REVIEW_SUMMARIES = json.load(open(_rsf))
 
 
 def slugify(name):
@@ -115,6 +120,9 @@ a { color:var(--teal-deep); }
 .ip-hero { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap; margin-bottom:8px; }
 .ip-hero h1 { font-size:clamp(26px,4vw,36px); margin:0 0 6px; line-height:1.15; }
 .ip-hero-meta { color:#5a5348; font-size:15px; }
+.ip-reviewsum { margin:18px 0 0; max-width:62ch; background:var(--paper-warm); border-radius:10px; padding:14px 18px; }
+.ip-reviewsum h3 { font-size:15px; margin:0 0 6px; }
+.ip-reviewsum p { margin:0 0 6px; font-size:14.5px; }
 .ip-intro { font-size:16px; color:#3d3830; margin:18px 0 0; max-width:62ch; }
 .ip-rating { text-align:right; }
 .ip-rating-num { font-family:'Fraunces',Georgia,serif; font-size:32px; font-weight:700; color:var(--amber); line-height:1; }
@@ -215,6 +223,15 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     specialty = " & ".join(dict.fromkeys(inst["specialty"] for inst, _, _, _ in listings))
     image = installer["image_url"]
     escaped_name = html.escape(name)
+    _sp = specialty.lower()
+    lb_type = "Plumber" if "plumb" in _sp else "Electrician" if "electric" in _sp else "HVACBusiness" if ("hvac" in _sp or "heat pump" in _sp) else "HomeAndConstructionBusiness"
+    # Google Places review summary (optional, written by the scraper when PLACES_REVIEW_SUMMARY=1). Shown with Google's own disclosure; never used in markup.
+    rs = REVIEW_SUMMARIES.get(installer.get("gmaps_url", ""))
+    rs_html = ""
+    if rs and rs.get("text") and rs.get("fetched", "") >= (date.today() - timedelta(days=30)).isoformat():
+        rs_html = (f'<div class="ip-reviewsum"><h3>What Google Maps reviewers mention</h3><p>{html.escape(rs["text"])}</p>'
+                   f'<p class="ip-vet-note">{html.escape(rs.get("disclosure") or "Summarized with Gemini")} Source: Google Maps.'
+                   + (f' <a href="{html.escape(rs["flag_uri"])}" target="_blank" rel="noopener">Report a problem</a>' if rs.get("flag_uri") else "") + '</p></div>')
 
     canonical = f"https://homepowerrebate.com/installers/profiles/{region_key}/{city_slug}/{slug}/"
     breadcrumb_city_url = f"https://homepowerrebate.com/us/{region_key}/"  # generic state hub, safe fallback
@@ -289,6 +306,23 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
   "@context": "https://schema.org",
   "@graph": [
     {{
+      "@type": {json.dumps(lb_type)},
+      "name": {json.dumps(name)},
+      "image": {json.dumps(image)},
+      "address": {{
+        "@type": "PostalAddress",
+        "streetAddress": {json.dumps(installer["location"])},
+        "addressRegion": {json.dumps(state)},
+        "addressCountry": "US"
+      }},
+      "telephone": {json.dumps(installer["phone"])},
+      "url": {json.dumps(installer["website"])},
+      "areaServed": {{
+        "@type": "City",
+        "name": {json.dumps(city_name)}
+      }}
+    }},
+    {{
       "@type": "BreadcrumbList",
       "itemListElement": [
         {{"@type": "ListItem", "position": 1, "name": "HomePowerRebate", "item": "https://homepowerrebate.com/"}},
@@ -317,6 +351,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
   <img src="{image}" alt="{escaped_name}" class="ip-photo" loading="lazy" width="760" height="380">
 
   <p class="ip-intro">{escaped_name} is a {specialty.lower()} provider in {city_name} with a current Google Maps rating of {rating:.1f}★ from {reviews} reviews (source: Google Maps).</p>
+  {rs_html}
 
   <div class="ip-actions">
     <a href="{installer["website"]}" target="_blank" rel="noopener" class="ip-btn ip-btn-primary">Visit Website</a>

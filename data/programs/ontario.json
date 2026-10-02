@@ -1,0 +1,336 @@
+{
+  "province": "Ontario",
+  "lastVerified": "2026-07-12",
+  "programs": [
+    {
+      "id": "hrsp",
+      "name": "Home Renovation Savings Program",
+      "description": "Ontario's primary rebate program. No income restrictions. Available to all homeowners.",
+      "source": "https://www.homerenovationsavings.ca/",
+      "expiresDate": "2026-11-30",
+      "incomeRestricted": false,
+      "services": {
+        "heatPump": {
+          "groundSource": 12000,
+          "coldClimateAirSource": 7500,
+          "standardAirSource": 5000
+        },
+        "solarPanels": 5000,
+        "batteryStorage": 5000,
+        "insulationBundle": 7700,
+        "insulationAttic": 1250,
+        "insulationWallCavity": 2500,
+        "insulationFoundation": 2000,
+        "airSealing": 250,
+        "windowsDoors": 100,
+        "smartThermostat": 100,
+        "heatPumpWaterHeater": 500,
+        "appliances": 200
+      },
+      "requirements": {
+        "mustHavePreAssessment": "Required for bundled upgrades; not required for single services",
+        "contractorLicensing": "Licensed electrician or gas fitter required (not HPCN)",
+        "manufacturerApproved": true
+      }
+    },
+    {
+      "id": "eap",
+      "name": "Energy Affordability Program",
+      "description": "Income-qualified program providing free energy upgrades to eligible Ontario households.",
+      "source": "https://saveonenergy.ca/For-Your-Home/Energy-Affordability-Program",
+      "incomeRestricted": true,
+      "incomeTiers": [
+        {
+          "householdSize": 1,
+          "comprehensiveSupport": 48220,
+          "energySavingKits": 71437
+        },
+        {
+          "householdSize": 2,
+          "comprehensiveSupport": 64293,
+          "energySavingKits": 95250
+        },
+        {
+          "householdSize": 3,
+          "comprehensiveSupport": 80367,
+          "energySavingKits": 119062
+        },
+        {
+          "householdSize": 4,
+          "comprehensiveSupport": 96440,
+          "energySavingKits": 142875
+        },
+        {
+          "householdSize": 5,
+          "comprehensiveSupport": 112514,
+          "energySavingKits": 166687
+        },
+        {
+          "householdSize": 6,
+          "comprehensiveSupport": 128587,
+          "energySavingKits": 174983
+        },
+        {
+          "householdSize": "7+",
+          "comprehensiveSupport": 128587,
+          "energySavingKits": 174983
+        }
+      ],
+      "alternativeEligibility": [
+        "Ontario Disability Support Program (ODSP)",
+        "Ontario Works",
+        "Guaranteed Income Supplement",
+        "Allowance for Seniors",
+        "Ontario Electricity Support Program (OESP)",
+        "Low-Income Energy Assistance Program (LEAP)",
+        "On-reserve community members"
+      ],
+      "services": {
+        "energySavingKits": "Free energy-saving kits (thermostats, weatherstripping, LED bulbs, water heater blankets)",
+        "comprehensiveSupport": "Full audits, HVAC upgrades, insulation, weatherization, heat pump installation (fully funded)"
+      }
+    },
+    {
+      "id": "peakperks",
+      "name": "Peak Perks Program",
+      "description": "Utility-delivered peak demand reduction incentives. Varies by utility company.",
+      "source": "https://www.peakperks.ca/",
+      "utilities": [
+        "Toronto Hydro",
+        "Hydro Ottawa",
+        "Alectra Utilities",
+        "Enbridge Gas"
+      ],
+      "services": {
+        "smartThermostat": {
+          "min": 50,
+          "max": 100
+        },
+        "poolPumpTimer": 25,
+        "homeEnergyAudit": "Free or subsidized"
+      }
+    },
+    {
+      "id": "enbridgeWinterproofing",
+      "name": "Enbridge Home Winterproofing Program",
+      "description": "Gas utility rebate for winterproofing and efficiency measures.",
+      "source": "https://www.enbridgegas.com/ontario/rebates-energy-conservation/home-winterproofing-program",
+      "utilities": ["Enbridge Gas"],
+      "services": {
+        "programmableThermostat": 100,
+        "energyAudit": "Free"
+      }
+    },
+    {
+      "id": "enbridgeEfficiencyRebatePlus",
+      "name": "Enbridge Home Efficiency Rebate Plus",
+      "description": "Enbridge Gas rebate for high-efficiency heating equipment.",
+      "source": "https://www.enbridgegas.com/en/ontario/rebates-energy-conservation/home-efficiency-rebate-plus",
+      "utilities": ["Enbridge Gas"],
+      "services": {
+        "highEfficiencyFurnace": 250,
+        "highEfficiencyBoiler": 250,
+        "energyAudit": "Free"
+      }
+    },
+    {
+      "id": "torontoGreenHome",
+      "name": "Toronto Green Roof Incentive & Home Grants",
+      "description": "City of Toronto incentives for green infrastructure and energy efficiency.",
+      "source": "https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/and-rebates-to-green-your-home/",
+      "cities": ["Toronto"],
+      "services": {
+        "greenRoof": "Reimbursement up to 75% of eligible costs (max varies by project size)",
+        "rainwater": "Rebate for rainwater harvesting systems",
+        "treePlanting": "Reimbursement for native trees and shrubs"
+      }
+    }
+  ],
+  "cities": [
+    {
+      "id": "toronto",
+      "name": "Toronto",
+      "province": "Ontario",
+      "population": 2930000,
+      "priority": 1,
+      "electricity": {
+        "utility": "Toronto Hydro",
+        "company": "Toronto Hydro-Electric System",
+        "serviceArea": "Toronto",
+        "website": "https://www.torontohydro.com/"
+      },
+      "naturalGas": {
+        "utility": "Enbridge Gas",
+        "company": "Enbridge Gas Inc.",
+        "serviceArea": "Southern Ontario",
+        "website": "https://www.enbridgegas.com/ontario"
+      },
+      "eligiblePrograms": ["hrsp", "eap", "peakperks", "enbridgeWinterproofing", "enbridgeEfficiencyRebatePlus", "torontoGreenHome"],
+      "localPrograms": ["torontoGreenHome"],
+      "notes": "Largest market. Toronto Hydro offers smart thermostat rebates ($50-$100). Multiple local incentives."
+    },
+    {
+      "id": "ottawa",
+      "name": "Ottawa",
+      "province": "Ontario",
+      "population": 1400000,
+      "priority": 2,
+      "electricity": {
+        "utility": "Hydro Ottawa",
+        "company": "Hydro Ottawa Holding Inc.",
+        "serviceArea": "National Capital Region",
+        "website": "https://www.hydroottawa.com/"
+      },
+      "naturalGas": {
+        "utility": "Enbridge Gas",
+        "company": "Enbridge Gas Inc.",
+        "serviceArea": "Southern Ontario",
+        "website": "https://www.enbridgegas.com/ontario"
+      },
+      "eligiblePrograms": ["hrsp", "eap", "peakperks", "enbridgeWinterproofing", "enbridgeEfficiencyRebatePlus"],
+      "notes": "National capital region. Hydro Ottawa provides smart thermostat incentives and home energy audits."
+    },
+    {
+      "id": "mississauga",
+      "name": "Mississauga",
+      "province": "Ontario",
+      "population": 850000,
+      "priority": 3,
+      "electricity": {
+        "utility": "Alectra Utilities",
+        "company": "Alectra Utilities Inc.",
+        "serviceArea": "Greater Toronto Area",
+        "website": "https://www.alectra.com/"
+      },
+      "naturalGas": {
+        "utility": "Enbridge Gas",
+        "company": "Enbridge Gas Inc.",
+        "serviceArea": "Southern Ontario",
+        "website": "https://www.enbridgegas.com/ontario"
+      },
+      "eligiblePrograms": ["hrsp", "eap", "peakperks", "enbridgeWinterproofing", "enbridgeEfficiencyRebatePlus"],
+      "notes": "Part of GTA. Alectra serves 1.08M customers across multiple municipalities."
+    },
+    {
+      "id": "brampton",
+      "name": "Brampton",
+      "province": "Ontario",
+      "population": 650000,
+      "priority": 4,
+      "electricity": {
+        "utility": "Alectra Utilities",
+        "company": "Alectra Utilities Inc.",
+        "serviceArea": "Greater Toronto Area",
+        "website": "https://www.alectra.com/"
+      },
+      "naturalGas": {
+        "utility": "Enbridge Gas",
+        "company": "Enbridge Gas Inc.",
+        "serviceArea": "Southern Ontario",
+        "website": "https://www.enbridgegas.com/ontario"
+      },
+      "eligiblePrograms": ["hrsp", "eap", "peakperks", "enbridgeWinterproofing", "enbridgeEfficiencyRebatePlus"],
+      "notes": "GTA municipality served by Alectra."
+    },
+    {
+      "id": "hamilton",
+      "name": "Hamilton",
+      "province": "Ontario",
+      "population": 580000,
+      "priority": 5,
+      "electricity": {
+        "utility": "Alectra Utilities",
+        "company": "Alectra Utilities Inc.",
+        "serviceArea": "Greater Toronto Area & Niagara",
+        "website": "https://www.alectra.com/"
+      },
+      "naturalGas": {
+        "utility": "Enbridge Gas",
+        "company": "Enbridge Gas Inc.",
+        "serviceArea": "Southern Ontario",
+        "website": "https://www.enbridgegas.com/ontario"
+      },
+      "eligiblePrograms": ["hrsp", "eap", "peakperks", "enbridgeWinterproofing", "enbridgeEfficiencyRebatePlus"],
+      "notes": "Steel city with growing green initiatives."
+    },
+    {
+      "id": "kitchener-waterloo",
+      "name": "Kitchener-Waterloo",
+      "province": "Ontario",
+      "population": 340000,
+      "priority": 6,
+      "electricity": {
+        "utility": "Kitchener-Wilmot Hydro",
+        "company": "Kitchener-Wilmot Hydro Inc.",
+        "serviceArea": "Waterloo Region",
+        "website": "https://www.kwhydro.com/"
+      },
+      "naturalGas": {
+        "utility": "Enbridge Gas",
+        "company": "Enbridge Gas Inc.",
+        "serviceArea": "Southern Ontario",
+        "website": "https://www.enbridgegas.com/ontario"
+      },
+      "eligiblePrograms": ["hrsp", "eap", "peakperks", "enbridgeWinterproofing", "enbridgeEfficiencyRebatePlus"],
+      "notes": "Tech hub. Regional hydro serves 97K customers."
+    },
+    {
+      "id": "london",
+      "name": "London",
+      "province": "Ontario",
+      "population": 400000,
+      "priority": 7,
+      "electricity": {
+        "utility": "London Hydro",
+        "company": "London Hydro Inc.",
+        "serviceArea": "London",
+        "website": "https://www.londonhydro.com/"
+      },
+      "naturalGas": {
+        "utility": "Enbridge Gas",
+        "company": "Enbridge Gas Inc.",
+        "serviceArea": "Southern Ontario",
+        "website": "https://www.enbridgegas.com/ontario"
+      },
+      "eligiblePrograms": ["hrsp", "eap", "peakperks", "enbridgeWinterproofing", "enbridgeEfficiencyRebatePlus"],
+      "notes": "Southwestern Ontario regional hub."
+    },
+    {
+      "id": "windsor",
+      "name": "Windsor",
+      "province": "Ontario",
+      "population": 230000,
+      "priority": 8,
+      "electricity": {
+        "utility": "Enwin Utilities",
+        "company": "Enwin Utilities Ltd.",
+        "serviceArea": "Windsor & Essex County",
+        "website": "https://www.enwin.com/"
+      },
+      "naturalGas": {
+        "utility": "Enbridge Gas",
+        "company": "Enbridge Gas Inc.",
+        "serviceArea": "Southern Ontario",
+        "website": "https://www.enbridgegas.com/ontario"
+      },
+      "eligiblePrograms": ["hrsp", "eap", "peakperks", "enbridgeWinterproofing", "enbridgeEfficiencyRebatePlus"],
+      "notes": "Gateway city near Detroit."
+    }
+  ],
+  "keyDifferences": {
+    "vsBC": {
+      "noHPCNRequirement": "Ontario programs do NOT require HPCN certification. Contractors just need standard licensing (electrician/gas fitter).",
+      "higherHeatPumpRebates": "Ontario offers $12K for ground-source (vs BC's variable amounts) and $7.5K for cold-climate air-source.",
+      "noIncomeRestrictionMainProgram": "HRSP is available to all homeowners regardless of income. Only EAP is income-restricted.",
+      "programExpiration": "HRSP expires Nov 30, 2026 (not permanent like BC Hydro programs).",
+      "multipleUtilities": "Ontario has 7+ competing electricity utilities vs BC's simpler BC Hydro/FortisBC split."
+    }
+  },
+  "notes": {
+    "contractorPath": "Unlike BC, Ontario doesn't require HPCN. Focus on licensed electricians and gas fitters. Consider recruiting different contractor base.",
+    "marketStrategy": "HRSP expires end of 2026 — this creates urgency. Target contractors now before program winds down. EAP is permanent.",
+    "calculatorAdaptation": "Ontario calculator can be simpler — no income tiers for HRSP, but include EAP income tiers as secondary path.",
+    "pricingStrategy": "No HPCN requirement means lower barrier to entry for installers. May need different positioning vs BC's 'certified professional' angle.",
+    "futureExpansion": "Hydro One serves 90% geographic area but is primarily rural. Focus initial 8 cities on urban centers with higher density."
+  }
+}

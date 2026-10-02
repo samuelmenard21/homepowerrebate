@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Google Maps Platform terms: ratings and reviews from Places may be shown on a page with attribution, but must not power LocalBusiness, AggregateRating or Review markup.
-Existing installer pages: drop the LocalBusiness JSON-LD from profile pages (name, address and phone come from Places) and make the attribution to Google Maps explicit.
+Existing installer pages: keep a factual LocalBusiness block (name, address, telephone, url, area served; no rating or review properties) and make the attribution to Google Maps explicit.
 The generators now write this directly; this script cleans pages generated earlier. Safe to re-run."""
 import json
 import re
@@ -23,8 +23,11 @@ for f in subprocess.run(["git", "ls-files", "installers/*.html"], cwd=ROOT, capt
                 return m.group(0)
             g = d.get("@graph")
             if isinstance(g, list):
-                keep = [x for x in g if x.get("@type") not in ("LocalBusiness", "Review", "AggregateRating")]
-                if len(keep) != len(g):
+                keep = [x for x in g if x.get("@type") not in ("Review", "AggregateRating")]
+                for x in keep:
+                    x.pop("aggregateRating", None)
+                    x.pop("review", None)
+                if keep != g:
                     d["@graph"] = keep
                     n["ld"] += 1
                     return m.group(1) + json.dumps(d, ensure_ascii=False, indent=1) + m.group(3)

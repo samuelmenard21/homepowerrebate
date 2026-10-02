@@ -1,0 +1,72 @@
+{
+"heat-pump": {
+ "label": "Heat pump heating and cooling", "noun": "heat pump",
+ "what": "A heat pump moves heat instead of making it. In winter it pulls heat from outside air into your home. In summer it runs backwards and works like an air conditioner. One system does both jobs, and it uses far less electricity than an electric heater.",
+ "ask": ["Ask for the size in tons, and ask how the installer chose it. A bigger unit is not always better. A unit that is too big switches on and off too often.", "Ask for the model's efficiency ratings (SEER2 and HSPF2). Most rebate programs set minimum ratings, and the ratings must match the exact indoor and outdoor parts you buy.", "Ask whether your electrical panel can handle the new system. A panel upgrade is a separate cost, and some programs pay for it.", "Ask whether the quote includes the permit. Many rebates need a finished permit before they pay."],
+ "mistakes": ["Buying equipment before the rebate is approved, when the program needs approval first.", "Buying a system that meets the maker's claims but not the program's rating list.", "Waiting until the invoice is old. Many programs only accept applications for a set number of days after the install."],
+ "faq": [["Do I need to keep my old furnace?", "Usually not. A heat pump can heat the whole home. Some homeowners keep a backup, which is a choice you make with your installer, not a rule."], ["Is a heat pump the same as a mini-split?", "A mini-split is one type of heat pump. It has no ducts and heats single rooms or zones. Ducted heat pumps use the vents you may already have."], ["Will it work in hot weather?", "Yes. Every heat pump also cools. In a hot climate it often replaces the air conditioner you were going to buy anyway."]]
+},
+"water-heater": {
+ "label": "Heat pump water heater", "noun": "heat pump water heater",
+ "what": "A heat pump water heater pulls heat from the air around the tank and uses it to heat the water. That uses much less electricity than an old electric water heater. It is bigger than a gas tank and it needs room, a drain, and a spot with air around it.",
+ "ask": ["Ask about the space. These tanks need air around them, and many are taller than the gas tank they replace.", "Ask whether the unit has a 240-volt or 120-volt plug. Some 120-volt models fit homes without a free 240-volt circuit.", "Ask who handles the permit and the gas line cap, if you are leaving gas. Some rebates pay only when gas is capped.", "Ask about noise. A heat pump water heater hums like a refrigerator."],
+ "mistakes": ["Installing in a closet with no airflow, which makes the unit work harder.", "Replacing the tank before you apply when the program needs approval first.", "Picking a model that is not on the program's qualified list."],
+ "faq": [["Will I run out of hot water?", "Most models have a backup heating element for heavy use, so you do not run out faster than with your old tank."], ["Can I put one in a garage?", "Often yes. Cold garages make it work harder, so ask your installer about your climate."], ["Is it worth it if I use little hot water?", "The savings depend on how much hot water you use. Ask your installer to show you the numbers for your household."]]
+},
+"solar": {
+ "label": "Solar panels", "noun": "solar system",
+ "what": "Rooftop solar makes electricity from sunlight. Under California's current rules, what you earn for power you send back to the grid is lower than it used to be, so many homes pair solar with a battery and use more of their own power.",
+ "ask": ["Ask for the price per watt and the total cost, in writing, with and without a battery.", "Ask how much of your power the system will make and how that compares to your last twelve months of bills.", "Ask which rate plan you would be on and what the utility pays for power you export.", "Ask who does the permit and the utility connection, and how long the utility usually takes."],
+ "mistakes": ["Signing a long contract on the day of a sales visit.", "Counting on a federal tax credit for 2026 spending. The 25D credit ended for spending after December 31, 2025.", "Not checking whether the quote includes the roof work and the electrical panel."],
+ "faq": [["Is the federal solar tax credit still available?", "Not for 2026 spending. The 25D credit applies only to systems paid for through December 31, 2025."], ["Do I need a battery with solar?", "No. A battery is optional. It can help you use more of your own power and keep some lights on in an outage."], ["What should I compare between quotes?", "Compare the price per watt, the panel and inverter brands, the warranty, and who is responsible after the install."]]
+},
+"battery": {
+ "label": "Home battery", "noun": "home battery",
+ "what": "A home battery stores electricity and gives it back when you need it, such as in the evening or during an outage. It can work with solar or on its own. Some utilities pay you to let them use a small part of it at busy times.",
+ "ask": ["Ask how many kilowatt-hours the battery holds and how many kilowatts it can deliver at once. The first sets how long it lasts and the second sets what it can run.", "Ask which circuits stay on in an outage, and whether the whole home is backed up or only a few circuits.", "Ask whether you must join a utility program to earn an incentive, and what it asks you to give up.", "Ask about the warranty in years and in total energy the battery can deliver."],
+ "mistakes": ["Assuming a battery runs the whole house. Many back up only chosen circuits.", "Buying before checking whether the incentive is still open. Battery programs often close when the money runs out.", "Not asking what the battery does when the grid is up. Some systems are set to save money, others to hold backup power."],
+ "faq": [["Can I add a battery to solar I already have?", "Often yes. Ask your installer whether your inverter works with the battery you are considering."], ["What does a battery do in an outage?", "It powers the circuits it is wired to, for as long as it has charge. Solar can recharge it during the day."], ["Are battery incentives guaranteed?", "No. Many are first come, first served and close when funds run out, so check the program page before you buy."]]
+},
+"ev-charger": {
+ "label": "EV charger", "noun": "EV charger",
+ "what": "A Level 2 home charger runs on a 240-volt circuit and charges a typical electric car overnight. Many people use the plug that comes with the car for a while, then add a Level 2 charger. Your panel and wiring decide what is easy and what costs more.",
+ "ask": ["Ask whether your panel has room for a new 240-volt circuit, or whether it needs an upgrade.", "Ask how far the charger will be from the panel. Longer wire runs cost more.", "Ask whether you need a permit and who pulls it.", "Ask whether your utility has an electric vehicle rate that makes overnight charging cheaper."],
+ "mistakes": ["Buying a charger before checking the panel.", "Missing a program rule such as a required time-of-use rate.", "Not asking whether a smart (internet-connected) charger earns a higher rebate than a basic one."],
+ "faq": [["Do I need a Level 2 charger?", "Not always. If you drive a short distance each day, the plug that comes with the car can be enough. Ask yourself how far you drive and how fast you need to recharge."], ["Can renters get a charger rebate?", "Some programs allow renters with the owner's permission. Check each program's rules."], ["Will it raise my electric bill?", "Charging uses electricity, but it usually costs less than the gas it replaces. A time-of-use rate can lower the cost further."]]
+},
+"insulation": {
+ "label": "Insulation and air sealing", "noun": "insulation upgrade",
+ "what": "Insulation and air sealing slow the heat that leaks out in winter and in during summer. They are often the cheapest way to make a home more comfortable, and they let a smaller heat pump do the job.",
+ "ask": ["Ask for a blower-door test or an energy audit before and after, so you can see the leaks.", "Ask for the R-value you will get. Programs usually set a minimum, such as R-30 for ceilings.", "Ask whether ducts are in the attic. Sealing and insulating ducts can matter as much as the attic floor.", "Ask whether the contractor must be on the utility's approved list."],
+ "mistakes": ["Adding insulation without sealing the air leaks first.", "Hiring a contractor who is not on the program's approved list.", "Buying material yourself when the rebate pays only for contractor installs."],
+ "faq": [["Where should I insulate first?", "Usually the attic, because heat rises and attics are easy to reach. An energy audit can show you the biggest leaks."], ["Can I do it myself?", "Some work is safe for a handy homeowner, but many rebates require a licensed contractor."], ["Does insulation help in a warm climate?", "Yes. It keeps heat out in summer, so your air conditioner works less."]]
+},
+"smart-thermostats": {
+ "label": "Smart thermostat", "noun": "smart thermostat",
+ "what": "A smart thermostat learns your schedule or lets you set one from your phone. It can lower your heating and cooling use and join utility programs that pay you to cut power at busy times.",
+ "ask": ["Check that it works with your system, including a heat pump. Not every model handles heat pumps well.", "Check whether it needs a C-wire, a common wire, and whether your system already has one.", "Check whether your utility offers a bill credit for joining a demand-response program.", "Check the program's list of qualifying models before you buy."],
+ "mistakes": ["Buying a model that is not on the rebate list.", "Using a thermostat that does not support heat pump staging.", "Skipping the bill credit enrolment step after the rebate."],
+ "faq": [["Will a smart thermostat save money?", "It can, if you use its schedule and set-back features. The savings depend on your home and habits."], ["Can I install it myself?", "Many people do, if they are comfortable turning off power and labelling wires. Take a photo of the old wiring first."], ["What is demand response?", "A program where your utility asks smart thermostats to ease off for a short time on the hottest or coldest days, and may give you a credit."]]
+},
+"appliances": {
+ "label": "Electric appliances", "noun": "electric appliance",
+ "what": "Electric appliances such as induction cooktops, heat pump dryers and efficient refrigerators use less energy than older models. Some utilities pay more when the new appliance replaces a gas one.",
+ "ask": ["Ask whether the rebate needs the old appliance to be gas, and whether you must prove it.", "Ask whether the model is on the qualified list.", "Ask whether the new appliance needs a new circuit. Dryers and ranges need a 240-volt outlet.", "Keep the invoice and the model number."],
+ "mistakes": ["Buying before checking the qualified list.", "Missing the application window after the purchase.", "Forgetting that a new 240-volt circuit is an extra cost."],
+ "faq": [["Do I need a new outlet for an induction cooktop?", "Most need a 240-volt circuit. Some portable units run on a normal outlet."], ["Is induction cooking safer than gas?", "It makes no flame and no combustion gases in the room. The cooktop surface can still be hot, so take care."], ["Does the old appliance need to be recycled?", "Some programs ask for proof of the old appliance or pay more when you recycle it. Check the rules."]]
+},
+"windows-doors": {
+ "label": "Windows and doors", "noun": "window upgrade",
+ "what": "Efficient windows and doors cut drafts and stop heat moving through glass. They are one of the most expensive upgrades per dollar saved, so many homes do insulation and air sealing first.",
+ "ask": ["Ask for the U-factor and the solar heat gain rating of each window.", "Ask whether the window carries the ENERGY STAR label for your climate zone.", "Ask whether the quote includes installation, trim and disposal.", "Ask how the rebate counts the area: usually per square foot of glass."],
+ "mistakes": ["Replacing windows before fixing attic insulation.", "Buying windows that lack the label the rebate needs.", "Applying after the program's deadline."],
+ "faq": [["Should I replace windows or add insulation first?", "Insulation and air sealing usually pay back faster. Windows add comfort and quiet, but cost more per dollar saved."], ["What does ENERGY STAR on a window mean?", "It means the window meets efficiency limits set for your region."], ["Do window rebates cover labour?", "Many pay by the square foot of window and do not separate labour. Check the program page."]]
+},
+"hrv": {
+ "label": "Ventilation (HRV and ERV)", "noun": "ventilation system",
+ "what": "A heat recovery ventilator brings in fresh air and passes the heat from outgoing air to it. It keeps air fresh in a tight, well-sealed home without wasting the heat you paid for.",
+ "ask": ["Ask whether your home is tight enough to need mechanical ventilation.", "Ask whether the system is an HRV or an ERV, and which suits your climate.", "Ask how often the filters need cleaning.", "Ask whether your utility or a program pays for ventilation upgrades."],
+ "mistakes": ["Adding an HRV to a leaky home where it does little.", "Skipping filter changes.", "Assuming every program covers ventilation."],
+ "faq": [["Do I need an HRV with a heat pump?", "No. They do different jobs. A heat pump heats and cools. A ventilator brings in fresh air."], ["What is the difference between an HRV and an ERV?", "An ERV also moves some moisture between the air streams, which can suit humid or very dry climates."], ["Are ventilation upgrades common rebate items?", "Not very. Many utility programs do not list them, so check before you count on one."]]
+}
+}

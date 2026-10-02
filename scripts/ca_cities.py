@@ -83,3 +83,6 @@ for slug, n in (("oakland", "Oakland"), ("berkeley", "Berkeley"), ("fremont", "F
 for slug, n in (("riverside", "Riverside"), ("san-bernardino", "San Bernardino"), ("moreno-valley", "Moreno Valley"), ("ontario", "Ontario")):
     CITIES[slug] = dict(area="inland-empire", area_name="Inland Empire", name=n, utility="rpu" if slug == "riverside" else "sce",
                         utility_name="Riverside Public Utilities" if slug == "riverside" else "Southern California Edison", intro=f"{n} home energy programs.", offers={})
+
+CITIES["fresno"] = dict(area="fresno", area_name="Fresno", name="Fresno", utility="pge", utility_name="PG&E", hub="/us/ca/fresno/", intro="Fresno's electricity and gas come from PG&E.", offers={})
+CITIES["bakersfield"] = dict(area="bakersfield", area_name="Bakersfield", name="Bakersfield", utility="pge", utility_name="PG&E", hub="/us/ca/bakersfield/", intro="Bakersfield's electricity comes from PG&E and its gas from SoCalGas.", offers={})

@@ -538,7 +538,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 <div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{ICONS.get(service, ICONS["solar"])}</svg></div>
 <h1>Top-Rated {svc['name']} Installers in {esc(city_label)}, {short}</h1></div>
 <p>{n} local companies ranked by {total_reviews:,} Google reviews. Free to compare, no sign-up.</p>
-<p class="meta">Ratings collected {upd_h} · Page updated {date.fromisoformat(MODIFIED).strftime('%B %-d, %Y')}</p>
+<p class="meta">Ratings and review counts from Google Maps, collected {upd_h} · Page updated {date.fromisoformat(MODIFIED).strftime('%B %-d, %Y')}</p>
 </div></header>
 <section class="body"><div class="wrap">
 <div class="stats"><div class="stat"><b>{n}</b><span>Companies</span></div><div class="stat"><b>{total_reviews:,}</b><span>Google reviews</span></div><div class="stat"><b>{avg:.1f}★</b><span>Average rating</span></div><div class="stat"><b>{upd_short}</b><span>Data collected</span></div></div>

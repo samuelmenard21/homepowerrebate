@@ -18,6 +18,7 @@ for l in lines:
     drop = False
     if m:
         city = m.group(1).rsplit("/", 1)[1]
+        city = {"fresno": "fresno", "bakersfield": "bakersfield"}.get(m.group(1).split("/")[-1], city)
         cat = m.group(2)
         if city in CITIES and (ROOT / "data/ca/pages" / city / f"{cat}.json").exists():
             drop = True
@@ -29,11 +30,11 @@ for slug, c in CITIES.items():
     pdir = ROOT / "data/ca/pages" / slug
     if not pdir.exists():
         continue
-    hub = f"/us/ca/{c['area']}/{slug}/"
+    hub = c.get("hub", f"/us/ca/{c['area']}/{slug}/")
     for cat in LABEL:
         if (pdir / f"{cat}.json").exists():
             continue
-        shutil.rmtree(ROOT / "us/ca" / c["area"] / slug / cat, ignore_errors=True)
+        shutil.rmtree(ROOT / hub.strip("/") / cat, ignore_errors=True)
         for suf in ("/", ""):
             r = f"{hub}{cat}{suf}  {hub}  301"
             if r not in have and not any(x.startswith(f"{hub}{cat}{suf} ") for x in out):

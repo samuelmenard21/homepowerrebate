@@ -69,7 +69,7 @@ def build(slug, cat):
     if not pj.exists():
         return None
     d = json.loads(pj.read_text())
-    hub = f"/us/ca/{area}/{slug}/"
+    hub = c.get("hub", f"/us/ca/{area}/{slug}/")
     path = hub if cat == "index" else f"{hub}{cat}/"
     is_hub = cat == "index"
     fids = [i for cd in d["cards"] for i in cd.get("facts", [])] + d.get("facts", [])
@@ -78,7 +78,7 @@ def build(slug, cat):
     checked = max(FACTS[i]["verified_on"] for i in fids)
     when = date.fromisoformat(checked).strftime("%B %-d, %Y")
     sibs = [] if is_hub else [k for k in LABEL if (ROOT / "data/ca/pages" / slug / f"{k}.json").exists() and k != cat]
-    sib = "".join(f'<span style="margin-right:14px;"><a href="/us/ca/{area}/{slug}/{k}/">{LABEL[k]} Rebates in {e(name)}</a></span>\n' for k in sibs)
+    sib = "".join(f'<span style="margin-right:14px;"><a href="{hub}{k}/">{LABEL[k]} Rebates in {e(name)}</a></span>\n' for k in sibs)
     cards = "".join(card(x) for x in d["cards"])
     kind = "hvac" if is_hub else INSTALLER_SET.get(cat)
     if d.get("no_installers"):

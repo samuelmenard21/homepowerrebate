@@ -289,23 +289,6 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
   "@context": "https://schema.org",
   "@graph": [
     {{
-      "@type": "LocalBusiness",
-      "name": {json.dumps(name)},
-      "image": {json.dumps(image)},
-      "address": {{
-        "@type": "PostalAddress",
-        "streetAddress": {json.dumps(installer["location"])},
-        "addressRegion": {json.dumps(state)},
-        "addressCountry": "US"
-      }},
-      "telephone": {json.dumps(installer["phone"])},
-      "url": {json.dumps(installer["website"])},
-      "areaServed": {{
-        "@type": "City",
-        "name": {json.dumps(city_name)}
-      }}
-    }},
-    {{
       "@type": "BreadcrumbList",
       "itemListElement": [
         {{"@type": "ListItem", "position": 1, "name": "HomePowerRebate", "item": "https://homepowerrebate.com/"}},
@@ -333,7 +316,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
 
   <img src="{image}" alt="{escaped_name}" class="ip-photo" loading="lazy" width="760" height="380">
 
-  <p class="ip-intro">{escaped_name} is a {specialty.lower()} provider in {city_name} with a current Google rating of {rating:.1f}★ from {reviews} reviews.</p>
+  <p class="ip-intro">{escaped_name} is a {specialty.lower()} provider in {city_name} with a current Google Maps rating of {rating:.1f}★ from {reviews} reviews (source: Google Maps).</p>
 
   <div class="ip-actions">
     <a href="{installer["website"]}" target="_blank" rel="noopener" class="ip-btn ip-btn-primary">Visit Website</a>
@@ -355,7 +338,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     <h3>What We Checked</h3>
     <div class="ip-vet-row ip-vet-yes">
       <span class="ip-vet-icon">✓</span>
-      <div><strong>Listed on Google Business Profile</strong><br><span class="ip-vet-detail">{rating:.1f}★ from {reviews} reviews</span></div>
+      <div><strong>Listed on Google Business Profile</strong><br><span class="ip-vet-detail">{rating:.1f}★ from {reviews} reviews on Google Maps</span></div>
     </div>
     <p class="ip-vet-note">{cfg["vetting_note"]} &mdash; <a href="https://homepowerrebate.com/guides/installer-vetting-checklist/">see the full checklist</a>.</p>
     <div class="ip-verify-links">

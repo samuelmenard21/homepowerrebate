@@ -6091,23 +6091,23 @@
         "los-angeles/burbank": {
           "label": "Burbank",
           "url": "/us/ca/los-angeles/burbank/",
-          "overall": 27.0,
-          "potential_usd": 4575,
+          "overall": 34.4,
+          "potential_usd": 4825,
           "open_count": 4,
           "categories": {
             "heat-pump": {
-              "score": 42.4,
+              "score": 53.6,
               "dollar_value": 2500.0,
               "usd_value": 2500.0,
               "status": "open",
-              "programs": 1
+              "programs": 4
             },
             "insulation": {
-              "score": 0.0,
+              "score": 11.2,
               "dollar_value": 0.0,
               "usd_value": 0.0,
               "status": "closed",
-              "programs": 0
+              "programs": 3
             },
             "solar": {
               "score": 0.0,
@@ -6124,25 +6124,25 @@
               "programs": 0
             },
             "water-heater": {
-              "score": 51.2,
+              "score": 58.8,
               "dollar_value": 1500.0,
               "usd_value": 1500.0,
               "status": "open",
-              "programs": 1
+              "programs": 3
             },
             "smart-thermostats": {
-              "score": 73.8,
+              "score": 81.2,
               "dollar_value": 75.0,
               "usd_value": 75.0,
               "status": "open",
-              "programs": 1
+              "programs": 3
             },
             "ev-charger": {
-              "score": 48.8,
-              "dollar_value": 500.0,
-              "usd_value": 500.0,
+              "score": 70.0,
+              "dollar_value": 750.0,
+              "usd_value": 750.0,
               "status": "open",
-              "programs": 1
+              "programs": 4
             },
             "windows-doors": {
               "score": 0.0,
@@ -6156,16 +6156,16 @@
         "los-angeles/glendale": {
           "label": "Glendale",
           "url": "/us/ca/los-angeles/glendale/",
-          "overall": 18.1,
+          "overall": 20.9,
           "potential_usd": 9000,
           "open_count": 2,
           "categories": {
             "heat-pump": {
-              "score": 56.0,
+              "score": 67.3,
               "dollar_value": 5000.0,
               "usd_value": 5000.0,
               "status": "open",
-              "programs": 1
+              "programs": 4
             },
             "insulation": {
               "score": 0.0,
@@ -6189,11 +6189,11 @@
               "programs": 0
             },
             "water-heater": {
-              "score": 88.8,
+              "score": 100.0,
               "dollar_value": 4000.0,
               "usd_value": 4000.0,
               "status": "open",
-              "programs": 1
+              "programs": 4
             },
             "smart-thermostats": {
               "score": 0.0,
@@ -13830,6 +13830,75 @@
       "region": "us/ca",
       "region_label": "California",
       "country": "United States",
+      "slug": "los-angeles/burbank",
+      "label": "Burbank",
+      "url": "/us/ca/los-angeles/burbank/",
+      "overall": 34.4,
+      "potential_usd": 4825,
+      "open_count": 4,
+      "categories": {
+        "heat-pump": {
+          "score": 53.6,
+          "dollar_value": 2500.0,
+          "usd_value": 2500.0,
+          "status": "open",
+          "programs": 4
+        },
+        "insulation": {
+          "score": 11.2,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 3
+        },
+        "solar": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "battery": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "water-heater": {
+          "score": 58.8,
+          "dollar_value": 1500.0,
+          "usd_value": 1500.0,
+          "status": "open",
+          "programs": 3
+        },
+        "smart-thermostats": {
+          "score": 81.2,
+          "dollar_value": 75.0,
+          "usd_value": 75.0,
+          "status": "open",
+          "programs": 3
+        },
+        "ev-charger": {
+          "score": 70.0,
+          "dollar_value": 750.0,
+          "usd_value": 750.0,
+          "status": "open",
+          "programs": 4
+        },
+        "windows-doors": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        }
+      }
+    },
+    {
+      "region": "us/ca",
+      "region_label": "California",
+      "country": "United States",
       "slug": "bakersfield",
       "label": "Bakersfield",
       "url": "/us/ca/bakersfield/",
@@ -14310,75 +14379,6 @@
       }
     },
     {
-      "region": "us/ca",
-      "region_label": "California",
-      "country": "United States",
-      "slug": "los-angeles/burbank",
-      "label": "Burbank",
-      "url": "/us/ca/los-angeles/burbank/",
-      "overall": 27.0,
-      "potential_usd": 4575,
-      "open_count": 4,
-      "categories": {
-        "heat-pump": {
-          "score": 42.4,
-          "dollar_value": 2500.0,
-          "usd_value": 2500.0,
-          "status": "open",
-          "programs": 1
-        },
-        "insulation": {
-          "score": 0.0,
-          "dollar_value": 0.0,
-          "usd_value": 0.0,
-          "status": "closed",
-          "programs": 0
-        },
-        "solar": {
-          "score": 0.0,
-          "dollar_value": 0.0,
-          "usd_value": 0.0,
-          "status": "closed",
-          "programs": 0
-        },
-        "battery": {
-          "score": 0.0,
-          "dollar_value": 0.0,
-          "usd_value": 0.0,
-          "status": "closed",
-          "programs": 0
-        },
-        "water-heater": {
-          "score": 51.2,
-          "dollar_value": 1500.0,
-          "usd_value": 1500.0,
-          "status": "open",
-          "programs": 1
-        },
-        "smart-thermostats": {
-          "score": 73.8,
-          "dollar_value": 75.0,
-          "usd_value": 75.0,
-          "status": "open",
-          "programs": 1
-        },
-        "ev-charger": {
-          "score": 48.8,
-          "dollar_value": 500.0,
-          "usd_value": 500.0,
-          "status": "open",
-          "programs": 1
-        },
-        "windows-doors": {
-          "score": 0.0,
-          "dollar_value": 0.0,
-          "usd_value": 0.0,
-          "status": "closed",
-          "programs": 0
-        }
-      }
-    },
-    {
       "region": "ca/ns",
       "region_label": "Nova Scotia",
       "country": "Canada",
@@ -14660,6 +14660,75 @@
       "region": "us/ca",
       "region_label": "California",
       "country": "United States",
+      "slug": "los-angeles/glendale",
+      "label": "Glendale",
+      "url": "/us/ca/los-angeles/glendale/",
+      "overall": 20.9,
+      "potential_usd": 9000,
+      "open_count": 2,
+      "categories": {
+        "heat-pump": {
+          "score": 67.3,
+          "dollar_value": 5000.0,
+          "usd_value": 5000.0,
+          "status": "open",
+          "programs": 4
+        },
+        "insulation": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "solar": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "battery": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "water-heater": {
+          "score": 100.0,
+          "dollar_value": 4000.0,
+          "usd_value": 4000.0,
+          "status": "open",
+          "programs": 4
+        },
+        "smart-thermostats": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "ev-charger": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "windows-doors": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        }
+      }
+    },
+    {
+      "region": "us/ca",
+      "region_label": "California",
+      "country": "United States",
       "slug": "los-angeles/long-beach",
       "label": "Long Beach",
       "url": "/us/ca/los-angeles/long-beach/",
@@ -14860,75 +14929,6 @@
           "usd_value": 0.0,
           "status": "limited",
           "programs": 1
-        }
-      }
-    },
-    {
-      "region": "us/ca",
-      "region_label": "California",
-      "country": "United States",
-      "slug": "los-angeles/glendale",
-      "label": "Glendale",
-      "url": "/us/ca/los-angeles/glendale/",
-      "overall": 18.1,
-      "potential_usd": 9000,
-      "open_count": 2,
-      "categories": {
-        "heat-pump": {
-          "score": 56.0,
-          "dollar_value": 5000.0,
-          "usd_value": 5000.0,
-          "status": "open",
-          "programs": 1
-        },
-        "insulation": {
-          "score": 0.0,
-          "dollar_value": 0.0,
-          "usd_value": 0.0,
-          "status": "closed",
-          "programs": 0
-        },
-        "solar": {
-          "score": 0.0,
-          "dollar_value": 0.0,
-          "usd_value": 0.0,
-          "status": "closed",
-          "programs": 0
-        },
-        "battery": {
-          "score": 0.0,
-          "dollar_value": 0.0,
-          "usd_value": 0.0,
-          "status": "closed",
-          "programs": 0
-        },
-        "water-heater": {
-          "score": 88.8,
-          "dollar_value": 4000.0,
-          "usd_value": 4000.0,
-          "status": "open",
-          "programs": 1
-        },
-        "smart-thermostats": {
-          "score": 0.0,
-          "dollar_value": 0.0,
-          "usd_value": 0.0,
-          "status": "closed",
-          "programs": 0
-        },
-        "ev-charger": {
-          "score": 0.0,
-          "dollar_value": 0.0,
-          "usd_value": 0.0,
-          "status": "closed",
-          "programs": 0
-        },
-        "windows-doors": {
-          "score": 0.0,
-          "dollar_value": 0.0,
-          "usd_value": 0.0,
-          "status": "closed",
-          "programs": 0
         }
       }
     },
@@ -16298,6 +16298,18 @@
         "programs": 1
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "los-angeles/glendale",
+        "label": "Glendale",
+        "url": "/us/ca/los-angeles/glendale/",
+        "score": 67.3,
+        "dollar_value": 5000.0,
+        "status": "open",
+        "programs": 4
+      },
+      {
         "region": "us/ny",
         "region_label": "New York",
         "country": "United States",
@@ -16349,13 +16361,13 @@
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
-        "slug": "los-angeles/glendale",
-        "label": "Glendale",
-        "url": "/us/ca/los-angeles/glendale/",
-        "score": 56.0,
-        "dollar_value": 5000.0,
+        "slug": "los-angeles/burbank",
+        "label": "Burbank",
+        "url": "/us/ca/los-angeles/burbank/",
+        "score": 53.6,
+        "dollar_value": 2500.0,
         "status": "open",
-        "programs": 1
+        "programs": 4
       },
       {
         "region": "ca/bc",
@@ -16666,18 +16678,6 @@
         "url": "/us/ca/sacramento/sacramento/",
         "score": 45.1,
         "dollar_value": 3000.0,
-        "status": "open",
-        "programs": 1
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/burbank",
-        "label": "Burbank",
-        "url": "/us/ca/los-angeles/burbank/",
-        "score": 42.4,
-        "dollar_value": 2500.0,
         "status": "open",
         "programs": 1
       },
@@ -18136,6 +18136,18 @@
         "programs": 0
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "los-angeles/burbank",
+        "label": "Burbank",
+        "url": "/us/ca/los-angeles/burbank/",
+        "score": 11.2,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 3
+      },
+      {
         "region": "us/ma",
         "region_label": "Massachusetts",
         "country": "United States",
@@ -18307,9 +18319,9 @@
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
-        "slug": "los-angeles/burbank",
-        "label": "Burbank",
-        "url": "/us/ca/los-angeles/burbank/",
+        "slug": "fresno",
+        "label": "Fresno",
+        "url": "/us/ca/fresno/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -18319,9 +18331,9 @@
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
-        "slug": "fresno",
-        "label": "Fresno",
-        "url": "/us/ca/fresno/",
+        "slug": "los-angeles/glendale",
+        "label": "Glendale",
+        "url": "/us/ca/los-angeles/glendale/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -18346,18 +18358,6 @@
         "slug": "los-angeles/santa-monica",
         "label": "Santa Monica",
         "url": "/us/ca/los-angeles/santa-monica/",
-        "score": 0.0,
-        "dollar_value": 0.0,
-        "status": "closed",
-        "programs": 0
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/glendale",
-        "label": "Glendale",
-        "url": "/us/ca/los-angeles/glendale/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -19569,6 +19569,18 @@
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
+        "slug": "los-angeles/burbank",
+        "label": "Burbank",
+        "url": "/us/ca/los-angeles/burbank/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
         "slug": "bakersfield",
         "label": "Bakersfield",
         "url": "/us/ca/bakersfield/",
@@ -19608,18 +19620,6 @@
         "slug": "quincy",
         "label": "Quincy",
         "url": "/us/ma/quincy/",
-        "score": 0.0,
-        "dollar_value": 0.0,
-        "status": "closed",
-        "programs": 0
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/burbank",
-        "label": "Burbank",
-        "url": "/us/ca/los-angeles/burbank/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -19677,6 +19677,18 @@
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
+        "slug": "los-angeles/glendale",
+        "label": "Glendale",
+        "url": "/us/ca/los-angeles/glendale/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
         "slug": "los-angeles/long-beach",
         "label": "Long Beach",
         "url": "/us/ca/los-angeles/long-beach/",
@@ -19692,18 +19704,6 @@
         "slug": "los-angeles/santa-monica",
         "label": "Santa Monica",
         "url": "/us/ca/los-angeles/santa-monica/",
-        "score": 0.0,
-        "dollar_value": 0.0,
-        "status": "closed",
-        "programs": 0
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/glendale",
-        "label": "Glendale",
-        "url": "/us/ca/los-angeles/glendale/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -20987,6 +20987,18 @@
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
+        "slug": "los-angeles/burbank",
+        "label": "Burbank",
+        "url": "/us/ca/los-angeles/burbank/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
         "slug": "bakersfield",
         "label": "Bakersfield",
         "url": "/us/ca/bakersfield/",
@@ -21026,18 +21038,6 @@
         "slug": "quincy",
         "label": "Quincy",
         "url": "/us/ma/quincy/",
-        "score": 0.0,
-        "dollar_value": 0.0,
-        "status": "closed",
-        "programs": 0
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/burbank",
-        "label": "Burbank",
-        "url": "/us/ca/los-angeles/burbank/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -21095,6 +21095,18 @@
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
+        "slug": "los-angeles/glendale",
+        "label": "Glendale",
+        "url": "/us/ca/los-angeles/glendale/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
         "slug": "los-angeles/long-beach",
         "label": "Long Beach",
         "url": "/us/ca/los-angeles/long-beach/",
@@ -21110,18 +21122,6 @@
         "slug": "los-angeles/santa-monica",
         "label": "Santa Monica",
         "url": "/us/ca/los-angeles/santa-monica/",
-        "score": 0.0,
-        "dollar_value": 0.0,
-        "status": "closed",
-        "programs": 0
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/glendale",
-        "label": "Glendale",
-        "url": "/us/ca/los-angeles/glendale/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -21201,6 +21201,18 @@
       }
     ],
     "water-heater": [
+      {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "los-angeles/glendale",
+        "label": "Glendale",
+        "url": "/us/ca/los-angeles/glendale/",
+        "score": 100.0,
+        "dollar_value": 4000.0,
+        "status": "open",
+        "programs": 4
+      },
       {
         "region": "us/ny",
         "region_label": "New York",
@@ -21376,18 +21388,6 @@
         "slug": "central-hudson/saugerties",
         "label": "Saugerties",
         "url": "/us/ny/central-hudson/saugerties/",
-        "score": 88.8,
-        "dollar_value": 4000.0,
-        "status": "open",
-        "programs": 1
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/glendale",
-        "label": "Glendale",
-        "url": "/us/ca/los-angeles/glendale/",
         "score": 88.8,
         "dollar_value": 4000.0,
         "status": "open",
@@ -21634,6 +21634,18 @@
         "programs": 1
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "los-angeles/burbank",
+        "label": "Burbank",
+        "url": "/us/ca/los-angeles/burbank/",
+        "score": 58.8,
+        "dollar_value": 1500.0,
+        "status": "open",
+        "programs": 3
+      },
+      {
         "region": "us/co",
         "region_label": "Colorado",
         "country": "United States",
@@ -21652,18 +21664,6 @@
         "slug": "boulder",
         "label": "Boulder",
         "url": "/us/co/boulder/",
-        "score": 51.2,
-        "dollar_value": 1500.0,
-        "status": "open",
-        "programs": 1
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/burbank",
-        "label": "Burbank",
-        "url": "/us/ca/los-angeles/burbank/",
         "score": 51.2,
         "dollar_value": 1500.0,
         "status": "open",
@@ -23280,6 +23280,18 @@
         "programs": 1
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "los-angeles/burbank",
+        "label": "Burbank",
+        "url": "/us/ca/los-angeles/burbank/",
+        "score": 81.2,
+        "dollar_value": 75.0,
+        "status": "open",
+        "programs": 3
+      },
+      {
         "region": "us/ny",
         "region_label": "New York",
         "country": "United States",
@@ -23382,18 +23394,6 @@
         "slug": "bakersfield",
         "label": "Bakersfield",
         "url": "/us/ca/bakersfield/",
-        "score": 73.8,
-        "dollar_value": 75.0,
-        "status": "open",
-        "programs": 1
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/burbank",
-        "label": "Burbank",
-        "url": "/us/ca/los-angeles/burbank/",
         "score": 73.8,
         "dollar_value": 75.0,
         "status": "open",
@@ -24158,6 +24158,18 @@
         "programs": 1
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "los-angeles/burbank",
+        "label": "Burbank",
+        "url": "/us/ca/los-angeles/burbank/",
+        "score": 70.0,
+        "dollar_value": 750.0,
+        "status": "open",
+        "programs": 4
+      },
+      {
         "region": "us/vt",
         "region_label": "Vermont",
         "country": "United States",
@@ -24632,18 +24644,6 @@
         "slug": "denver",
         "label": "Denver",
         "url": "/us/co/denver/",
-        "score": 48.8,
-        "dollar_value": 500.0,
-        "status": "open",
-        "programs": 1
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/burbank",
-        "label": "Burbank",
-        "url": "/us/ca/los-angeles/burbank/",
         "score": 48.8,
         "dollar_value": 500.0,
         "status": "open",
@@ -26635,9 +26635,9 @@
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
-        "slug": "bakersfield",
-        "label": "Bakersfield",
-        "url": "/us/ca/bakersfield/",
+        "slug": "los-angeles/burbank",
+        "label": "Burbank",
+        "url": "/us/ca/los-angeles/burbank/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -26647,9 +26647,9 @@
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
-        "slug": "los-angeles/burbank",
-        "label": "Burbank",
-        "url": "/us/ca/los-angeles/burbank/",
+        "slug": "bakersfield",
+        "label": "Bakersfield",
+        "url": "/us/ca/bakersfield/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -26683,6 +26683,18 @@
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
+        "slug": "los-angeles/glendale",
+        "label": "Glendale",
+        "url": "/us/ca/los-angeles/glendale/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
         "slug": "los-angeles/long-beach",
         "label": "Long Beach",
         "url": "/us/ca/los-angeles/long-beach/",
@@ -26698,18 +26710,6 @@
         "slug": "los-angeles/santa-monica",
         "label": "Santa Monica",
         "url": "/us/ca/los-angeles/santa-monica/",
-        "score": 0.0,
-        "dollar_value": 0.0,
-        "status": "closed",
-        "programs": 0
-      },
-      {
-        "region": "us/ca",
-        "region_label": "California",
-        "country": "United States",
-        "slug": "los-angeles/glendale",
-        "label": "Glendale",
-        "url": "/us/ca/los-angeles/glendale/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",

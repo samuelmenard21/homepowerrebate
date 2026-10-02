@@ -22,7 +22,7 @@ CITIES = {
         "water-heater": ("$1,500", "It must replace a gas water heater.", [L + "13-bwp-electrification-other"], None),
         "ev-charger": ("Up to $500", "A smart charger pays $500 and a standard charger $200, with a panel upgrade up to $750. You must be on a time-of-use rate. Renters can apply.", [L + "14-bwp-ev-charger-rebate"], None),
         "smart-thermostats": ("Up to $75", "A rebate for an eligible smart thermostat.", [L + "15-bwp-efficiency-rebates"], None),
-        "appliances": ("Up to $500", "An electric range pays $500. A heat pump dryer or induction cooktop pays $200, with higher amounts for low-income customers. They must replace gas.", [L + "13-bwp-electrification-other"], None),
+        "appliances": ("$200", "A heat pump dryer or induction cooktop pays $200, with higher amounts for low-income customers. They must replace gas.", [L + "13-bwp-electrification-other"], None),
         "insulation": ("Set on application", "BWP lists attic and wall insulation rebates, with the amount set on the application. We could not read a fixed per-square-foot figure.", [L + "15-bwp-efficiency-rebates"], None)}),
     "pasadena": dict(area="los-angeles", area_name="Los Angeles area", name="Pasadena", utility="pwp", utility_name="Pasadena Water and Power",
         intro="Pasadena has its own utility, Pasadena Water and Power (PWP), which runs its own rebates.", offers={

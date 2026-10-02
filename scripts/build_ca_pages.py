@@ -18,7 +18,7 @@ from ca_cities import CITIES  # noqa: E402
 
 e = html.escape
 BASE = "https://homepowerrebate.com"
-AUTHOR = {"@type": "Person", "name": "Sam Menard", "url": f"{BASE}/about"}
+AUTHOR = {"@type": "Person", "@id": f"{BASE}/#sam", "name": "Sam Menard", "url": f"{BASE}/about"}
 FACTS = load_facts()
 TEMPLATE = (ROOT / "ca/on/kitchener/heat-pump/index.html").read_text(encoding="utf-8")
 CSS = "".join(re.findall(r"<style[\s\S]*?</style>", TEMPLATE))
@@ -102,7 +102,7 @@ def build(slug, cat):
 {faq}
 <h2>What to do next</h2>
 {d['next']}
-<p style="font-size:14px;">Sources, last read {when}: {sources}. <a href="{hub}">All {e(name)} rebates &rarr;</a></p>"""
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {sources}. <a href="{hub}">All {e(name)} rebates &rarr;</a></p>"""
     # quality gate
     w = words(article)
     ext = {m for m in re.findall(r'href="(https?://[^"]+)"', article)}
@@ -138,7 +138,7 @@ def build(slug, cat):
 <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-W33G4TGRHD');</script>
 <meta name="description" content="{e(desc)}"><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large"><link rel="canonical" href="{BASE}{path}">
 <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="article">
-<meta property="og:image" content="{BASE}/og-image.svg">
+<meta property="og:image" content="{BASE}/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 {CSS}

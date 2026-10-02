@@ -300,12 +300,6 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
       }},
       "telephone": {json.dumps(installer["phone"])},
       "url": {json.dumps(installer["website"])},
-      "aggregateRating": {{
-        "@type": "AggregateRating",
-        "ratingValue": {json.dumps(str(rating))},
-        "reviewCount": {json.dumps(str(reviews))},
-        "bestRating": "5"
-      }},
       "areaServed": {{
         "@type": "City",
         "name": {json.dumps(city_name)}

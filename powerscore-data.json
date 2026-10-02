@@ -5633,6 +5633,71 @@
             }
           }
         },
+        "bay-area/san-francisco": {
+          "label": "San Francisco",
+          "url": "/us/ca/bay-area/san-francisco/",
+          "overall": 10.3,
+          "potential_usd": 2400,
+          "open_count": 2,
+          "categories": {
+            "heat-pump": {
+              "score": 35.3,
+              "dollar_value": 1200.0,
+              "usd_value": 1200.0,
+              "status": "open",
+              "programs": 1
+            },
+            "insulation": {
+              "score": 0.0,
+              "dollar_value": 0.0,
+              "usd_value": 0.0,
+              "status": "closed",
+              "programs": 0
+            },
+            "solar": {
+              "score": 0.0,
+              "dollar_value": 0.0,
+              "usd_value": 0.0,
+              "status": "closed",
+              "programs": 0
+            },
+            "battery": {
+              "score": 0.0,
+              "dollar_value": 0.0,
+              "usd_value": 0.0,
+              "status": "closed",
+              "programs": 0
+            },
+            "water-heater": {
+              "score": 46.8,
+              "dollar_value": 1200.0,
+              "usd_value": 1200.0,
+              "status": "open",
+              "programs": 1
+            },
+            "smart-thermostats": {
+              "score": 0.0,
+              "dollar_value": 0.0,
+              "usd_value": 0.0,
+              "status": "closed",
+              "programs": 0
+            },
+            "ev-charger": {
+              "score": 0.0,
+              "dollar_value": 0.0,
+              "usd_value": 0.0,
+              "status": "closed",
+              "programs": 0
+            },
+            "windows-doors": {
+              "score": 0.0,
+              "dollar_value": 0.0,
+              "usd_value": 0.0,
+              "status": "closed",
+              "programs": 0
+            }
+          }
+        },
         "fresno": {
           "label": "Fresno",
           "url": "/us/ca/fresno/",
@@ -15343,6 +15408,75 @@
       }
     },
     {
+      "region": "us/ca",
+      "region_label": "California",
+      "country": "United States",
+      "slug": "bay-area/san-francisco",
+      "label": "San Francisco",
+      "url": "/us/ca/bay-area/san-francisco/",
+      "overall": 10.3,
+      "potential_usd": 2400,
+      "open_count": 2,
+      "categories": {
+        "heat-pump": {
+          "score": 35.3,
+          "dollar_value": 1200.0,
+          "usd_value": 1200.0,
+          "status": "open",
+          "programs": 1
+        },
+        "insulation": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "solar": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "battery": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "water-heater": {
+          "score": 46.8,
+          "dollar_value": 1200.0,
+          "usd_value": 1200.0,
+          "status": "open",
+          "programs": 1
+        },
+        "smart-thermostats": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "ev-charger": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "windows-doors": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        }
+      }
+    },
+    {
       "region": "ca/ab",
       "region_label": "Alberta",
       "country": "Canada",
@@ -16908,6 +17042,18 @@
         "url": "/us/co/denver/",
         "score": 36.9,
         "dollar_value": 1500.0,
+        "status": "open",
+        "programs": 1
+      },
+      {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "bay-area/san-francisco",
+        "label": "San Francisco",
+        "url": "/us/ca/bay-area/san-francisco/",
+        "score": 35.3,
+        "dollar_value": 1200.0,
         "status": "open",
         "programs": 1
       },
@@ -18546,6 +18692,18 @@
         "programs": 0
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "bay-area/san-francisco",
+        "label": "San Francisco",
+        "url": "/us/ca/bay-area/san-francisco/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
         "region": "ca/ab",
         "region_label": "Alberta",
         "country": "Canada",
@@ -19898,6 +20056,18 @@
         "slug": "fresno",
         "label": "Fresno",
         "url": "/us/ca/fresno/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "bay-area/san-francisco",
+        "label": "San Francisco",
+        "url": "/us/ca/bay-area/san-francisco/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -21334,6 +21504,18 @@
         "programs": 0
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "bay-area/san-francisco",
+        "label": "San Francisco",
+        "url": "/us/ca/bay-area/san-francisco/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
         "region": "ca/ab",
         "region_label": "Alberta",
         "country": "Canada",
@@ -21944,6 +22126,18 @@
         "url": "/us/ny/national-grid/syracuse/",
         "score": 47.5,
         "dollar_value": 1250.0,
+        "status": "open",
+        "programs": 1
+      },
+      {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "bay-area/san-francisco",
+        "label": "San Francisco",
+        "url": "/us/ca/bay-area/san-francisco/",
+        "score": 46.8,
+        "dollar_value": 1200.0,
         "status": "open",
         "programs": 1
       },
@@ -24146,6 +24340,18 @@
         "programs": 0
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "bay-area/san-francisco",
+        "label": "San Francisco",
+        "url": "/us/ca/bay-area/san-francisco/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
         "region": "ca/ab",
         "region_label": "Alberta",
         "country": "Canada",
@@ -25522,6 +25728,18 @@
         "slug": "los-angeles/glendale",
         "label": "Glendale",
         "url": "/us/ca/los-angeles/glendale/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "bay-area/san-francisco",
+        "label": "San Francisco",
+        "url": "/us/ca/bay-area/san-francisco/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -26958,6 +27176,18 @@
         "programs": 0
       },
       {
+        "region": "us/ca",
+        "region_label": "California",
+        "country": "United States",
+        "slug": "bay-area/san-francisco",
+        "label": "San Francisco",
+        "url": "/us/ca/bay-area/san-francisco/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
         "region": "ca/ab",
         "region_label": "Alberta",
         "country": "Canada",
@@ -27018,7 +27248,7 @@
     "windows-doors": "Windows & Doors"
   },
   "stats": {
-    "total_cities": 117,
+    "total_cities": 118,
     "total_regions": 10,
     "categories": 8
   }

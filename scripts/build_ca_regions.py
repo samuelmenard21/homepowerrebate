@@ -116,6 +116,8 @@ def page(slug, r):
 
 def main():
     for slug, r in REGIONS.items():
+        if slug == "san-francisco":
+            continue  # built by build_ca_sf.py
         f = ROOT / r.get("dir", f"us/ca/{slug}") / "index.html"
         f.write_text(page(slug, r), encoding="utf-8")
         print("Wrote", f.relative_to(ROOT))

@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 199,
+ "count": 221,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -33,7 +33,8 @@
     "/us/ca/sacramento/ev-charger/",
     "/us/ca/sacramento/heat-pump/",
     "/us/ca/sacramento/insulation/",
-    "/us/ca/sacramento/water-heater/"
+    "/us/ca/sacramento/water-heater/",
+    "/us/ca/san-bernardino/"
    ],
    "last_read": ""
   },
@@ -332,6 +333,8 @@
    ],
    "used_by_pages": [
     "/us/ca/long-beach/",
+    "/us/ca/ontario/",
+    "/us/ca/san-bernardino/",
     "/us/ca/santa-monica/"
    ],
    "last_read": "2026-10-02"
@@ -346,6 +349,9 @@
    ],
    "used_by_pages": [
     "/us/ca/long-beach/",
+    "/us/ca/moreno-valley/",
+    "/us/ca/ontario/",
+    "/us/ca/san-bernardino/",
     "/us/ca/santa-monica/"
    ],
    "last_read": "2026-10-02"
@@ -358,7 +364,13 @@
    "facts": [
     "us-ca-24-sdge-retail-coupons"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/us/ca/chula-vista/",
+    "/us/ca/escondido/",
+    "/us/ca/san-diego/",
+    "/us/ca/san-diego/ev-charger/",
+    "/us/ca/san-diego/smart-thermostats/"
+   ],
    "last_read": "2026-10-01"
   },
   {
@@ -367,7 +379,10 @@
    "region": "CA-SDGE",
    "check": "SDG&E electrification page",
    "facts": [],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/us/ca/escondido/",
+    "/us/ca/san-diego/solar/"
+   ],
    "last_read": ""
   },
   {
@@ -520,6 +535,7 @@
     "us-ca-29-scaqmd-go-zero"
    ],
    "used_by_pages": [
+    "/us/ca/ontario/",
     "/us/ca/santa-monica/"
    ],
    "last_read": "2026-10-02"
@@ -965,6 +981,17 @@
    "last_read": ""
   },
   {
+   "url": "https://ontarioca.gov/government/community-development/building/apply-residential-solar-permits",
+   "host": "ontarioca.gov",
+   "region": "ca-pages",
+   "check": "City of Ontario residential solar permits",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/ontario/"
+   ],
+   "last_read": ""
+  },
+  {
    "url": "https://pwp.cityofpasadena.net/electricheatpumpwaterheaterrebate/",
    "host": "pwp.cityofpasadena.net",
    "region": "ca-pages",
@@ -972,6 +999,46 @@
    "facts": [],
    "used_by_pages": [
     "/us/ca/pasadena/water-heater/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://riversideca.gov/cedd/building-safety/building-safety-services/permits",
+   "host": "riversideca.gov",
+   "region": "ca-pages",
+   "check": "City of Riverside Building and Safety permits",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/riverside/",
+    "/us/ca/riverside/ev-charger/",
+    "/us/ca/riverside/heat-pump/",
+    "/us/ca/riverside/insulation/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://riversideca.gov/cedd/building-safety/online-permits/solarapp",
+   "host": "riversideca.gov",
+   "region": "ca-pages",
+   "check": "City of Riverside SolarAPP+",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/riverside/battery/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://riversideca.gov/utilities/residents/rebates/energy-rebates",
+   "host": "riversideca.gov",
+   "region": "ca-pages",
+   "check": "Riverside Public Utilities rebates and programs",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/riverside/",
+    "/us/ca/riverside/battery/",
+    "/us/ca/riverside/ev-charger/",
+    "/us/ca/riverside/heat-pump/",
+    "/us/ca/riverside/insulation/"
    ],
    "last_read": ""
   },
@@ -991,6 +1058,53 @@
    "last_read": ""
   },
   {
+   "url": "https://sdcommunitypower.org/rebates-incentives-offers/",
+   "host": "sdcommunitypower.org",
+   "region": "ca-pages",
+   "check": "San Diego Community Power rebates and offers",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/chula-vista/",
+    "/us/ca/san-diego/",
+    "/us/ca/san-diego/smart-thermostats/",
+    "/us/ca/san-diego/solar/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.chulavistaca.gov/departments/development-services/build-green/residential-solar-energy",
+   "host": "www.chulavistaca.gov",
+   "region": "ca-pages",
+   "check": "City of Chula Vista residential solar permits",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/chula-vista/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.chulavistaca.gov/departments/development-services/permit-information/electronic-permit",
+   "host": "www.chulavistaca.gov",
+   "region": "ca-pages",
+   "check": "City of Chula Vista online permits",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/chula-vista/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.escondido.gov/1247/Solar-App-Plus",
+   "host": "www.escondido.gov",
+   "region": "ca-pages",
+   "check": "City of Escondido SolarAPP+",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/escondido/"
+   ],
+   "last_read": ""
+  },
+  {
    "url": "https://www.fremont.gov/government/departments/community-development/planning-building-permit-services/planning-building-permits/permit-types",
    "host": "www.fremont.gov",
    "region": "ca-pages",
@@ -998,6 +1112,28 @@
    "facts": [],
    "used_by_pages": [
     "/us/ca/fremont/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.moval.org/mvu/pdfs/MVU-Residential-Incentives.pdf",
+   "host": "www.moval.org",
+   "region": "ca-pages",
+   "check": "Moreno Valley Utility residential incentives flyer",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/moreno-valley/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.moval.org/mvu/pdfs/res-AC-HPTuneUpRebateApp.pdf",
+   "host": "www.moval.org",
+   "region": "ca-pages",
+   "check": "Moreno Valley Utility AC or heat pump tune-up application",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/moreno-valley/"
    ],
    "last_read": ""
   },
@@ -1032,6 +1168,17 @@
    "used_by_pages": [
     "/us/ca/san-jose/",
     "/us/ca/san-jose/water-heater/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.sbcity.org/1436/Building-Permit",
+   "host": "www.sbcity.org",
+   "region": "ca-pages",
+   "check": "City of San Bernardino building permits",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/san-bernardino/"
    ],
    "last_read": ""
   },
@@ -2102,6 +2249,124 @@
    "last_read": "2026-10-02"
   },
   {
+   "url": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/energy-star",
+   "host": "riversideca.gov",
+   "region": "us-ca",
+   "check": "Riverside Public Utilities ENERGY STAR product rebates",
+   "facts": [
+    "us-ca-44-rpu-energy-star"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/energy-storage-rebate-program",
+   "host": "riversideca.gov",
+   "region": "us-ca",
+   "check": "Riverside Public Utilities Energy Storage Rebate Program",
+   "facts": [
+    "us-ca-46-rpu-energy-storage"
+   ],
+   "used_by_pages": [
+    "/us/ca/riverside/battery/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/heat-pump-and-air-conditioning-rebates",
+   "host": "riversideca.gov",
+   "region": "us-ca",
+   "check": "Riverside Public Utilities heat pump and air conditioning rebates",
+   "facts": [
+    "us-ca-43-rpu-heat-pump-ac"
+   ],
+   "used_by_pages": [
+    "/us/ca/riverside/",
+    "/us/ca/riverside/heat-pump/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/weatherization",
+   "host": "riversideca.gov",
+   "region": "us-ca",
+   "check": "Riverside Public Utilities weatherization rebates",
+   "facts": [
+    "us-ca-45-rpu-weatherization"
+   ],
+   "used_by_pages": [
+    "/us/ca/riverside/insulation/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://riversideca.gov/utilities/residents/rebates/ev-rebates",
+   "host": "riversideca.gov",
+   "region": "us-ca",
+   "check": "Riverside Public Utilities EV rebates",
+   "facts": [
+    "us-ca-47-rpu-ev"
+   ],
+   "used_by_pages": [
+    "/us/ca/riverside/",
+    "/us/ca/riverside/ev-charger/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://sdcommunitypower.org/equitable-building-decarbonization-program/",
+   "host": "sdcommunitypower.org",
+   "region": "us-ca",
+   "check": "Equitable Building Decarbonization Program (San Diego County); San Diego Community Power Equitable Building Decarbonization",
+   "facts": [
+    "us-ca-41-sdcp-ebd"
+   ],
+   "used_by_pages": [
+    "/us/ca/escondido/",
+    "/us/ca/san-diego/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://sdcommunitypower.org/ev-flex-connect/",
+   "host": "sdcommunitypower.org",
+   "region": "us-ca",
+   "check": "San Diego Community Power EV Flex Connect",
+   "facts": [
+    "us-ca-40-sdcp-ev-flex-connect"
+   ],
+   "used_by_pages": [
+    "/us/ca/san-diego/ev-charger/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://sdcommunitypower.org/smart-energy-rewards/",
+   "host": "sdcommunitypower.org",
+   "region": "us-ca",
+   "check": "San Diego Community Power Smart Energy Rewards",
+   "facts": [
+    "us-ca-39-sdcp-smart-energy-rewards"
+   ],
+   "used_by_pages": [
+    "/us/ca/san-diego/smart-thermostats/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://sdcommunitypower.org/solar-battery-savings/",
+   "host": "sdcommunitypower.org",
+   "region": "us-ca",
+   "check": "San Diego Community Power Solar Battery Savings",
+   "facts": [
+    "us-ca-38-sdcp-solar-battery"
+   ],
+   "used_by_pages": [
+    "/us/ca/san-diego/solar/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
    "url": "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/self-generation-incentive-program",
    "host": "www.cpuc.ca.gov",
    "region": "us-ca",
@@ -2218,6 +2483,19 @@
    "last_read": "2026-09-26"
   },
   {
+   "url": "https://www.moval.org/mvu/efficiency-progs.html",
+   "host": "www.moval.org",
+   "region": "us-ca",
+   "check": "Moreno Valley Utility efficiency programs; Moreno Valley Utility residential efficiency programs",
+   "facts": [
+    "us-ca-48-mvu-programs"
+   ],
+   "used_by_pages": [
+    "/us/ca/moreno-valley/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
    "url": "https://www.oaklandca.gov/resources/building-electrification-incentives-and-rebates",
    "host": "www.oaklandca.gov",
    "region": "us-ca",
@@ -2240,6 +2518,20 @@
    ],
    "used_by_pages": [
     "/us/ca/oakland/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://www.sandiego.gov/development-services/permits/plumbing-permit/simple",
+   "host": "www.sandiego.gov",
+   "region": "us-ca",
+   "check": "City of San Diego simple no-plan permits",
+   "facts": [
+    "us-ca-42-san-diego-permits"
+   ],
+   "used_by_pages": [
+    "/us/ca/san-diego/",
+    "/us/ca/san-diego/ev-charger/"
    ],
    "last_read": "2026-10-02"
   },

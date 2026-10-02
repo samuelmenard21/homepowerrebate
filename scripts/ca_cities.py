@@ -79,3 +79,7 @@ CITIES["san-jose"] = dict(area="bay-area", area_name="Bay Area", name="San Jose"
 for slug, n in (("oakland", "Oakland"), ("berkeley", "Berkeley"), ("fremont", "Fremont")):
     CITIES[slug] = dict(area="bay-area", area_name="Bay Area", name=n, utility="ava", utility_name="Ava Community Energy",
                         intro=f"{n}'s electricity supplier is Ava Community Energy.", offers={})
+
+for slug, n in (("riverside", "Riverside"), ("san-bernardino", "San Bernardino"), ("moreno-valley", "Moreno Valley"), ("ontario", "Ontario")):
+    CITIES[slug] = dict(area="inland-empire", area_name="Inland Empire", name=n, utility="rpu" if slug == "riverside" else "sce",
+                        utility_name="Riverside Public Utilities" if slug == "riverside" else "Southern California Edison", intro=f"{n} home energy programs.", offers={})

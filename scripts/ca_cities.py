@@ -75,3 +75,7 @@ CITIES["san-jose"] = dict(area="bay-area", area_name="Bay Area", name="San Jose"
     "ev-charger": ("$500", "$500 for EV circuit prewiring and $1,000 for a panel upgrade. You must also install a heat pump HVAC or water heater.", [S + "22-sjce-ecohome-prewiring-panel"], None),
     "appliances": ("$500", "$500 for dryer or cooking circuit prewiring, when you also install a heat pump HVAC or water heater.", [S + "22-sjce-ecohome-prewiring-panel"], None),
     "battery": ("Closed", "SJCE's battery rebate ($125 per kWh up to $3,250) is closed to new applications.", [S + "23-sjce-ecohome-battery"], None)})
+
+for slug, n in (("oakland", "Oakland"), ("berkeley", "Berkeley"), ("fremont", "Fremont")):
+    CITIES[slug] = dict(area="bay-area", area_name="Bay Area", name=n, utility="ava", utility_name="Ava Community Energy",
+                        intro=f"{n}'s electricity supplier is Ava Community Energy.", offers={})

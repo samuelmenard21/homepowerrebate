@@ -123,7 +123,7 @@ def page(slug, r):
 
 def main():
     for slug, r in REGIONS.items():
-        if slug in ("san-francisco", "san-jose"):
+        if slug in ("san-francisco", "san-jose") or (ROOT / "data/ca/pages" / slug).exists():
             continue  # built by build_ca_sf.py / build_ca_sj.py
         f = ROOT / r.get("dir", f"us/ca/{slug}") / "index.html"
         f.write_text(page(slug, r), encoding="utf-8")

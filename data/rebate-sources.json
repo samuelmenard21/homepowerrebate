@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 194,
+ "count": 199,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -21,6 +21,7 @@
    "check": "State incentive lookup",
    "facts": [],
    "used_by_pages": [
+    "/us/ca/berkeley/",
     "/us/ca/burbank/",
     "/us/ca/burbank/heat-pump/",
     "/us/ca/glendale/",
@@ -42,7 +43,11 @@
    "region": "CA-Ava",
    "check": "Ava incentive finder (needs household inputs; amounts not on the page)",
    "facts": [],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/us/ca/berkeley/",
+    "/us/ca/fremont/",
+    "/us/ca/oakland/"
+   ],
    "last_read": ""
   },
   {
@@ -112,6 +117,9 @@
     "us-ca-19-bayren-ease-home"
    ],
    "used_by_pages": [
+    "/us/ca/berkeley/",
+    "/us/ca/fremont/",
+    "/us/ca/oakland/",
     "/us/ca/san-francisco/",
     "/us/ca/san-francisco/heat-pump/",
     "/us/ca/san-francisco/water-heater/",
@@ -979,6 +987,17 @@
     "/us/ca/san-jose/heat-pump/",
     "/us/ca/san-jose/insulation/",
     "/us/ca/san-jose/water-heater/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.fremont.gov/government/departments/community-development/planning-building-permit-services/planning-building-permits/permit-types",
+   "host": "www.fremont.gov",
+   "region": "ca-pages",
+   "check": "City of Fremont permit types",
+   "facts": [],
+   "used_by_pages": [
+    "/us/ca/fremont/"
    ],
    "last_read": ""
   },
@@ -2026,6 +2045,19 @@
    "last_read": "2026-09-29"
   },
   {
+   "url": "https://berkeleyca.gov/construction-development/green-building/building-electrification",
+   "host": "berkeleyca.gov",
+   "region": "us-ca",
+   "check": "City of Berkeley building electrification; City of Berkeley building electrification resources",
+   "facts": [
+    "us-ca-36-berkeley-building-electrification"
+   ],
+   "used_by_pages": [
+    "/us/ca/berkeley/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
    "url": "https://cleanpowersf.org/electrify-your-home",
    "host": "cleanpowersf.org",
    "region": "us-ca",
@@ -2106,6 +2138,19 @@
    "last_read": "2026-09-28"
   },
   {
+   "url": "https://www.fremont.gov/about/sustainability/energy/energy-project-financing",
+   "host": "www.fremont.gov",
+   "region": "us-ca",
+   "check": "City of Fremont energy project financing; City of Fremont residential permits and energy project financing",
+   "facts": [
+    "us-ca-37-fremont-permits-financing"
+   ],
+   "used_by_pages": [
+    "/us/ca/fremont/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
    "url": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit",
    "host": "www.irs.gov",
    "region": "us-ca",
@@ -2171,6 +2216,32 @@
    ],
    "used_by_pages": [],
    "last_read": "2026-09-26"
+  },
+  {
+   "url": "https://www.oaklandca.gov/resources/building-electrification-incentives-and-rebates",
+   "host": "www.oaklandca.gov",
+   "region": "us-ca",
+   "check": "City of Oakland building electrification incentives; City of Oakland building electrification incentives list",
+   "facts": [
+    "us-ca-34-oakland-electrification-incentives"
+   ],
+   "used_by_pages": [
+    "/us/ca/oakland/"
+   ],
+   "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://www.oaklandca.gov/services/apply-for-mechanical-electrical-and-plumbing-mep-permits",
+   "host": "www.oaklandca.gov",
+   "region": "us-ca",
+   "check": "City of Oakland MEP permits; City of Oakland residential mechanical, electrical and plumbing permits",
+   "facts": [
+    "us-ca-35-oakland-mep-permits"
+   ],
+   "used_by_pages": [
+    "/us/ca/oakland/"
+   ],
+   "last_read": "2026-10-02"
   },
   {
    "url": "https://www.sf.gov/apply-plumbing-and-mechanical-permit",

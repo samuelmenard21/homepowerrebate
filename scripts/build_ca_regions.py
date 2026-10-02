@@ -89,6 +89,13 @@ def page(slug, r):
         lead = "California's statewide programs are full. Here is exactly where each stands, and what we could not confirm."
         secs.append("<h2>What we could not confirm</h2><p>Utility rebates from PG&amp;E, Southern California Edison and SDG&amp;E. Quoted amounts on other sites do not match a program page we could read, so we leave them out. "
                     "Ask your utility before you buy, and tell us at <a href='mailto:hello@homepowerrebate.com'>hello@homepowerrebate.com</a> if you find a current one.</p>")
+    if slug in ("berkeley", "fremont", "oakland", "san-jose", "san-francisco"):
+        bf = FACTS["us-ca-19-bayren-ease-home"]
+        secs.append("<h2>BayREN EASE Home (income-qualified)</h2><p>BayREN pays 80% of the cost of weatherization work such as insulation, air sealing and duct sealing, and up to $2,000 toward replacing old knob-and-tube wiring (a limited-time offer). "
+                    "You must own a single-family home of four units or fewer built before 2010, be a PG&amp;E customer, have household income at or under 120% of your county's area median, and include at least one weatherization measure. "
+                    "BayREN helps you apply for heat pump and water heater rebates but does not pay for that equipment. "
+                    f"<a href='{e(bf['source_url'])}' rel='nofollow noopener' target='_blank'>Source</a> <span class='small'>(checked {e(bf['verified_on'])})</span></p>"
+                    "<p>Your local power provider may also run its own rebates (for example Ava Community Energy in Oakland, Berkeley and Fremont, or San Jose Clean Energy). We have not been able to confirm those amounts from the programs' own pages, so we show none.</p>")
     state = table(STATEWIDE)
     cities = "".join(f"<li><a href='/us/ca/{slug}/{c}/'>{e(CITY_LABEL.get(c, c.replace('-', ' ').title()))}</a></li>" if (ROOT / "us" / "ca" / slug / c / "index.html").exists() and not r.get("path") else
                      f"<li>{e(CITY_LABEL.get(c, c.replace('-', ' ').title()))}</li>" for c in r["cities"])

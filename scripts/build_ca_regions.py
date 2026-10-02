@@ -37,6 +37,11 @@ REGIONS = {
                   "unconfirmed": ("<h2>What we could not confirm</h2><p>The City of Roseville's electric rebates. Its pages for the <a href='https://www.roseville.ca.us/government/departments/electric_utility/rebates_and_energy_savings/heat_pump_water_heater_archived' rel='nofollow noopener' target='_blank'>heat pump water heater</a> "
                                   "and <a href='https://www.roseville.ca.us/government/departments/electric_utility/rebates_and_energy_savings/h_v_a_c_heat_pump_rebate_archived' rel='nofollow noopener' target='_blank'>heat pump HVAC</a> rebates are marked archived (read October 1, 2026). "
                                   "Ask Roseville Electric whether any rebate is open before you buy, and tell us at <a href='mailto:hello@homepowerrebate.com'>hello@homepowerrebate.com</a> if you find a current one.</p>")},
+    "berkeley": {"name": "Berkeley", "utils": [], "path": "/us/ca/bay-area/berkeley/", "dir": "us/ca/bay-area/berkeley", "parent": ("Bay Area", "/us/ca/bay-area/"), "cities": ["berkeley"]},
+    "fremont": {"name": "Fremont", "utils": [], "path": "/us/ca/bay-area/fremont/", "dir": "us/ca/bay-area/fremont", "parent": ("Bay Area", "/us/ca/bay-area/"), "cities": ["fremont"]},
+    "oakland": {"name": "Oakland", "utils": [], "path": "/us/ca/bay-area/oakland/", "dir": "us/ca/bay-area/oakland", "parent": ("Bay Area", "/us/ca/bay-area/"), "cities": ["oakland"]},
+    "san-francisco": {"name": "San Francisco", "utils": [], "path": "/us/ca/bay-area/san-francisco/", "dir": "us/ca/bay-area/san-francisco", "parent": ("Bay Area", "/us/ca/bay-area/"), "cities": ["san-francisco"]},
+    "san-jose": {"name": "San Jose", "utils": [], "path": "/us/ca/bay-area/san-jose/", "dir": "us/ca/bay-area/san-jose", "parent": ("Bay Area", "/us/ca/bay-area/"), "cities": ["san-jose"]},
     "bay-area": {"name": "Bay Area", "utils": [], "intro": "", "cities": ["berkeley", "fremont", "oakland", "san-francisco", "san-jose"]},
     "inland-empire": {"name": "Inland Empire", "utils": [], "intro": "", "cities": ["riverside", "san-bernardino", "moreno-valley", "ontario"]},
     "bakersfield": {"name": "Bakersfield", "utils": [], "intro": "", "cities": ["bakersfield"]},

@@ -97,7 +97,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <div id="result-hp" class="calc-result">
           <div class="rebate-amount" id="amount-hp">{{HP_REBATE}}</div>
           <div class="rebate-details" id="details-hp">Typical cost: {{HP_COST}} | Annual savings: {{HP_SAVINGS}} | Payback: {{HP_PAYBACK}}</div>
-          <a href="/retrofit-assessment/?city={{CITY_SLUG}}" class="calc-cta">Get Your Quote →</a>
+          <a href="/get-quotes/?city={{CITY_SLUG}}" class="calc-cta">Get Your Quote →</a>
         </div>
         <div id="prompt-hp" class="calc-prompt">↑ Choose your system size</div>
       </div>
@@ -118,7 +118,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <div id="result-solar" class="calc-result">
           <div class="rebate-amount" id="amount-solar">{{SOLAR_REBATE}}</div>
           <div class="rebate-details" id="details-solar">Typical cost: {{SOLAR_COST}} | Annual production value: {{SOLAR_VALUE}} | Payback: {{SOLAR_PAYBACK}}</div>
-          <a href="/retrofit-assessment/?city={{CITY_SLUG}}" class="calc-cta">Get Your Quote →</a>
+          <a href="/get-quotes/?city={{CITY_SLUG}}" class="calc-cta">Get Your Quote →</a>
         </div>
         <div id="prompt-solar" class="calc-prompt">↑ Choose your system size</div>
       </div>
@@ -138,7 +138,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <div id="result-battery" class="calc-result">
           <div class="rebate-amount" id="amount-battery">{{BATTERY_REBATE}}</div>
           <div class="rebate-details" id="details-battery">Typical cost: {{BATTERY_COST}} | Annual value: {{BATTERY_VALUE}} | Payback: {{BATTERY_PAYBACK}}</div>
-          <a href="/retrofit-assessment/?city={{CITY_SLUG}}" class="calc-cta">Get Your Quote →</a>
+          <a href="/get-quotes/?city={{CITY_SLUG}}" class="calc-cta">Get Your Quote →</a>
         </div>
         <div id="prompt-battery" class="calc-prompt">↑ Choose your battery size</div>
       </div>
@@ -151,7 +151,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <div style="background: var(--paper); padding: 16px; border-radius: 8px; border-left: 4px solid var(--amber);">
           <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 2px;">Rebate Available:</div>
           <div style="font-size: 20px; font-weight: 700; color: var(--amber);">{{INSULATION_REBATE}}</div>
-          <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">{{INSULATION_NOTES}} <a href="/retrofit-assessment/?city={{CITY_SLUG}}" style="color: var(--teal); font-weight: 600;">Check eligibility →</a></p>
+          <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">{{INSULATION_NOTES}} <a href="/get-quotes/?city={{CITY_SLUG}}" style="color: var(--teal); font-weight: 600;">Check eligibility →</a></p>
         </div>
       </div>
       {{/IF_INSULATION}}
@@ -170,7 +170,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <div id="result-wh" class="calc-result">
           <div class="rebate-amount" id="amount-wh">{{WH_REBATE}}</div>
           <div class="rebate-details" id="details-wh">Typical cost: {{WH_COST}} | Annual savings: {{WH_SAVINGS}} | Payback: {{WH_PAYBACK}}</div>
-          <a href="/retrofit-assessment/?city={{CITY_SLUG}}" class="calc-cta">Get Your Quote →</a>
+          <a href="/get-quotes/?city={{CITY_SLUG}}" class="calc-cta">Get Your Quote →</a>
         </div>
         <div id="prompt-wh" class="calc-prompt">↑ Choose your water heater type</div>
       </div>
@@ -183,7 +183,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <div style="background: var(--paper); padding: 16px; border-radius: 8px; border-left: 4px solid var(--amber);">
           <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 2px;">Rebate Available:</div>
           <div style="font-size: 20px; font-weight: 700; color: var(--amber);">{{WINDOWS_REBATE}}</div>
-          <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">{{WINDOWS_NOTES}} <a href="/retrofit-assessment/?city={{CITY_SLUG}}" style="color: var(--teal); font-weight: 600;">Get quote →</a></p>
+          <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">{{WINDOWS_NOTES}} <a href="/get-quotes/?city={{CITY_SLUG}}" style="color: var(--teal); font-weight: 600;">Get quote →</a></p>
         </div>
       </div>
       {{/IF_WINDOWS}}
@@ -195,7 +195,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <div style="background: var(--paper); padding: 16px; border-radius: 8px; border-left: 4px solid var(--amber);">
           <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 2px;">Rebate Available:</div>
           <div style="font-size: 20px; font-weight: 700; color: var(--amber);">{{EV_REBATE}}</div>
-          <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">{{EV_NOTES}} <a href="/retrofit-assessment/?city={{CITY_SLUG}}" style="color: var(--teal); font-weight: 600;">Get charger quote →</a></p>
+          <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">{{EV_NOTES}} <a href="/get-quotes/?city={{CITY_SLUG}}" style="color: var(--teal); font-weight: 600;">Get charger quote →</a></p>
         </div>
       </div>
       {{/IF_EV_CHARGER}}
@@ -207,7 +207,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
         <div style="background: var(--paper); padding: 16px; border-radius: 8px; border-left: 4px solid var(--amber);">
           <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 2px;">Rebate Available:</div>
           <div style="font-size: 20px; font-weight: 700; color: var(--amber);">{{THERMOSTAT_REBATE}}</div>
-          <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">{{THERMOSTAT_NOTES}} <a href="/retrofit-assessment/?city={{CITY_SLUG}}" style="color: var(--teal); font-weight: 600;">Get thermostat quote →</a></p>
+          <p style="font-size: 13px; color: var(--ink-soft); margin-top: 8px;">{{THERMOSTAT_NOTES}} <a href="/get-quotes/?city={{CITY_SLUG}}" style="color: var(--teal); font-weight: 600;">Get thermostat quote →</a></p>
         </div>
       </div>
       {{/IF_THERMOSTAT}}

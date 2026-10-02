@@ -36,8 +36,15 @@ for f in subprocess.run(["git", "ls-files", "*.html"], cwd=ROOT, capture_output=
         elif not exists(h) and not re.search(r"\.(css|js|json|xml|txt|svg|png|jpg|webp|pdf|ico)$", h) and not h.startswith(("/cdn-cgi", "//")):
             missing[h] += 1
             src.setdefault(h, f)
-for name, c in (("redirected", redirected), ("missing", missing)):
+shadowed = Counter()
+for t in tracked:
+    if t.endswith("/index.html") and not t.startswith(("_partials/", "calculator/embed/", "scripts/", "data/")):
+        u = "/" + t[: -len("/index.html")]
+        if u in red:
+            shadowed[u] = 1
+            src[u] = t
+for name, c in (("redirected", redirected), ("missing", missing), ("page exists but is also redirected (the redirect wins)", shadowed)):
     print(f"{name}: {sum(c.values())} links, {len(c)} distinct")
     for h, n in c.most_common(8):
         print(f"  {n:4} {h}   e.g. {src[h]}")
-sys.exit(1 if redirected or missing else 0)
+sys.exit(1 if redirected or missing or shadowed else 0)

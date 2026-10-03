@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 234,
+ "count": 235,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -61,6 +61,7 @@
     "us-ca-la-munis-13-bwp-electrification-other"
    ],
    "used_by_pages": [
+    "/programs/burbank-water-and-power-rebates/",
     "/us/ca/burbank/",
     "/us/ca/burbank/appliances/",
     "/us/ca/burbank/ev-charger/",
@@ -80,6 +81,7 @@
     "us-ca-la-munis-14-bwp-ev-charger-rebate"
    ],
    "used_by_pages": [
+    "/programs/burbank-water-and-power-rebates/",
     "/us/ca/burbank/",
     "/us/ca/burbank/appliances/",
     "/us/ca/burbank/ev-charger/",
@@ -99,6 +101,7 @@
     "us-ca-la-munis-15-bwp-efficiency-rebates"
    ],
    "used_by_pages": [
+    "/programs/burbank-water-and-power-rebates/",
     "/us/ca/burbank/",
     "/us/ca/burbank/appliances/",
     "/us/ca/burbank/ev-charger/",
@@ -118,6 +121,7 @@
     "us-ca-19-bayren-ease-home"
    ],
    "used_by_pages": [
+    "/programs/cleanpowersf-rebates/",
     "/us/ca/berkeley/",
     "/us/ca/fremont/",
     "/us/ca/oakland/",
@@ -208,6 +212,7 @@
     "us-ca-26-ladwp-ev-charger"
    ],
    "used_by_pages": [
+    "/programs/ladwp-rebates/",
     "/us/ca/los-angeles/ev-charger/"
    ],
    "last_read": "2026-10-02"
@@ -332,6 +337,7 @@
     "us-ca-28-sce-ev-charge-smart"
    ],
    "used_by_pages": [
+    "/programs/sce-rebates/",
     "/us/ca/long-beach/",
     "/us/ca/ontario/",
     "/us/ca/san-bernardino/",
@@ -348,6 +354,7 @@
     "us-ca-30-sce-marketplace-golden-state"
    ],
    "used_by_pages": [
+    "/programs/sce-rebates/",
     "/us/ca/long-beach/",
     "/us/ca/moreno-valley/",
     "/us/ca/ontario/",
@@ -403,6 +410,7 @@
     "us-ca-10-smud-my-energy-optimizer-partner-battery-enrollmen"
    ],
    "used_by_pages": [
+    "/programs/smud-rebates/",
     "/us/ca/sacramento/",
     "/us/ca/sacramento/battery/"
    ],
@@ -442,6 +450,7 @@
     "us-ca-7-smud-go-electric-bonus"
    ],
    "used_by_pages": [
+    "/programs/smud-rebates/",
     "/us/ca/sacramento/",
     "/us/ca/sacramento/appliances/",
     "/us/ca/sacramento/heat-pump/",
@@ -460,6 +469,7 @@
     "us-ca-9-smud-smart-thermostat-induction"
    ],
    "used_by_pages": [
+    "/programs/smud-rebates/",
     "/us/ca/folsom/",
     "/us/ca/rancho-cordova/",
     "/us/ca/sacramento/",
@@ -482,6 +492,7 @@
     "us-ca-4-smud-heat-pump-hvac-rebate"
    ],
    "used_by_pages": [
+    "/programs/smud-rebates/",
     "/us/ca/folsom/",
     "/us/ca/rancho-cordova/",
     "/us/ca/sacramento/",
@@ -518,6 +529,7 @@
     "us-ca-23-sjce-ecohome-battery"
    ],
    "used_by_pages": [
+    "/programs/san-jose-clean-energy-rebates/",
     "/us/ca/san-jose/",
     "/us/ca/san-jose/ev-charger/",
     "/us/ca/san-jose/heat-pump/",
@@ -783,7 +795,8 @@
     "/ca/bc/kelowna/windows/",
     "/ca/bc/penticton/insulation/",
     "/ca/bc/penticton/water-heater/",
-    "/ca/bc/penticton/windows/"
+    "/ca/bc/penticton/windows/",
+    "/programs/fortisbc-rebates/"
    ],
    "last_read": "2026-09-26"
   },
@@ -795,18 +808,22 @@
    "facts": [
     "bc-blog-22-fortisbc-electric-heat-pump-rebate"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/fortisbc-rebates/"
+   ],
    "last_read": "2026-09-26"
   },
   {
    "url": "https://www.fortisbc.com/rebates/detail/free-home-energy-evaluation-and-upgrades",
    "host": "www.fortisbc.com",
    "region": "bc-blog",
-   "check": "BC Hydro / FortisBC ECAP",
+   "check": "BC Hydro / FortisBC ECAP; FortisBC free home evaluation and upgrades",
    "facts": [
     "bc-blog-16-bc-hydro-fortisbc-ecap"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/fortisbc-rebates/"
+   ],
    "last_read": "2026-09-26"
   },
   {
@@ -817,7 +834,9 @@
    "facts": [
     "bc-blog-23-fortisbc-income-qualified-heat-pump"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/fortisbc-rebates/"
+   ],
    "last_read": "2026-09-26"
   },
   {
@@ -1579,11 +1598,16 @@
    "url": "https://techcleanca.com/incentives/",
    "host": "techcleanca.com",
    "region": "general",
-   "check": "TECH Clean California",
+   "check": "TECH Clean California; TECH Clean California incentives",
    "facts": [
     "general-18-tech-clean-california"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/cleanpowersf-rebates/",
+    "/programs/glendale-water-and-power-rebates/",
+    "/programs/pge-rebates/",
+    "/programs/san-jose-clean-energy-rebates/"
+   ],
    "last_read": "2026-09-26"
   },
   {
@@ -2223,13 +2247,17 @@
    "url": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit",
    "host": "www.irs.gov",
    "region": "ny",
-   "check": "Federal 25C / 25D tax credits; US federal 25C / 25D tax credits",
+   "check": "Federal 25C / 25D tax credits; IRS energy-efficient home improvement credit; US federal 25C / 25D tax credits",
    "facts": [
     "general-8-us-federal-25c-25d-tax-credits",
     "ma-15-federal-25c-25d-tax-credits",
     "ny-20-federal-25c-25d-tax-credits"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/cleanpowersf-rebates/",
+    "/programs/glendale-water-and-power-rebates/",
+    "/programs/san-jose-clean-energy-rebates/"
+   ],
    "last_read": "2026-09-26"
   },
   {
@@ -2546,13 +2574,14 @@
    "url": "https://cleanpowersf.org/electrify-your-home",
    "host": "cleanpowersf.org",
    "region": "us-ca",
-   "check": "CleanPowerSF Electrify Your Home; CleanPowerSF electric cooking, dryer and gas meter removal credits; CleanPowerSF heat pump heating bill credit; CleanPowerSF heat pump water heater bill credit",
+   "check": "CleanPowerSF Electrify Your Home; CleanPowerSF electric cooking, dryer and gas meter removal credits; CleanPowerSF electrify your home; CleanPowerSF heat pump heating bill credit; CleanPowerSF heat pu",
    "facts": [
     "us-ca-15-cleanpowersf-hpwh-credit",
     "us-ca-16-cleanpowersf-hp-heating-credit",
     "us-ca-17-cleanpowersf-cooking-dryer-meter"
    ],
    "used_by_pages": [
+    "/programs/cleanpowersf-rebates/",
     "/us/ca/san-francisco/",
     "/us/ca/san-francisco/appliances/",
     "/us/ca/san-francisco/heat-pump/",
@@ -2614,11 +2643,12 @@
    "url": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/energy-storage-rebate-program",
    "host": "riversideca.gov",
    "region": "us-ca",
-   "check": "Riverside Public Utilities Energy Storage Rebate Program",
+   "check": "RPU energy storage rebate; Riverside Public Utilities Energy Storage Rebate Program",
    "facts": [
     "us-ca-46-rpu-energy-storage"
    ],
    "used_by_pages": [
+    "/programs/riverside-public-utilities-rebates/",
     "/us/ca/riverside/battery/"
    ],
    "last_read": "2026-10-02"
@@ -2627,11 +2657,12 @@
    "url": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/heat-pump-and-air-conditioning-rebates",
    "host": "riversideca.gov",
    "region": "us-ca",
-   "check": "Riverside Public Utilities heat pump and air conditioning rebates",
+   "check": "RPU heat pump and air conditioning rebates; Riverside Public Utilities heat pump and air conditioning rebates",
    "facts": [
     "us-ca-43-rpu-heat-pump-ac"
    ],
    "used_by_pages": [
+    "/programs/riverside-public-utilities-rebates/",
     "/us/ca/riverside/",
     "/us/ca/riverside/heat-pump/"
    ],
@@ -2641,11 +2672,12 @@
    "url": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/weatherization",
    "host": "riversideca.gov",
    "region": "us-ca",
-   "check": "Riverside Public Utilities weatherization rebates",
+   "check": "RPU weatherization rebates; Riverside Public Utilities weatherization rebates",
    "facts": [
     "us-ca-45-rpu-weatherization"
    ],
    "used_by_pages": [
+    "/programs/riverside-public-utilities-rebates/",
     "/us/ca/riverside/insulation/"
    ],
    "last_read": "2026-10-02"
@@ -2654,11 +2686,12 @@
    "url": "https://riversideca.gov/utilities/residents/rebates/ev-rebates",
    "host": "riversideca.gov",
    "region": "us-ca",
-   "check": "Riverside Public Utilities EV rebates",
+   "check": "RPU EV rebates; Riverside Public Utilities EV rebates",
    "facts": [
     "us-ca-47-rpu-ev"
    ],
    "used_by_pages": [
+    "/programs/riverside-public-utilities-rebates/",
     "/us/ca/riverside/",
     "/us/ca/riverside/ev-charger/"
    ],
@@ -2668,11 +2701,12 @@
    "url": "https://sdcommunitypower.org/equitable-building-decarbonization-program/",
    "host": "sdcommunitypower.org",
    "region": "us-ca",
-   "check": "Equitable Building Decarbonization Program (San Diego County); San Diego Community Power Equitable Building Decarbonization",
+   "check": "Equitable Building Decarbonization Program; Equitable Building Decarbonization Program (San Diego County); San Diego Community Power Equitable Building Decarbonization",
    "facts": [
     "us-ca-41-sdcp-ebd"
    ],
    "used_by_pages": [
+    "/programs/san-diego-community-power-rebates/",
     "/us/ca/escondido/",
     "/us/ca/san-diego/"
    ],
@@ -2682,11 +2716,12 @@
    "url": "https://sdcommunitypower.org/ev-flex-connect/",
    "host": "sdcommunitypower.org",
    "region": "us-ca",
-   "check": "San Diego Community Power EV Flex Connect",
+   "check": "SDCP EV Flex Connect; San Diego Community Power EV Flex Connect",
    "facts": [
     "us-ca-40-sdcp-ev-flex-connect"
    ],
    "used_by_pages": [
+    "/programs/san-diego-community-power-rebates/",
     "/us/ca/san-diego/ev-charger/"
    ],
    "last_read": "2026-10-02"
@@ -2695,11 +2730,12 @@
    "url": "https://sdcommunitypower.org/smart-energy-rewards/",
    "host": "sdcommunitypower.org",
    "region": "us-ca",
-   "check": "San Diego Community Power Smart Energy Rewards",
+   "check": "SDCP Smart Energy Rewards; San Diego Community Power Smart Energy Rewards",
    "facts": [
     "us-ca-39-sdcp-smart-energy-rewards"
    ],
    "used_by_pages": [
+    "/programs/san-diego-community-power-rebates/",
     "/us/ca/san-diego/smart-thermostats/"
    ],
    "last_read": "2026-10-02"
@@ -2708,11 +2744,12 @@
    "url": "https://sdcommunitypower.org/solar-battery-savings/",
    "host": "sdcommunitypower.org",
    "region": "us-ca",
-   "check": "San Diego Community Power Solar Battery Savings",
+   "check": "SDCP solar battery savings; San Diego Community Power Solar Battery Savings",
    "facts": [
     "us-ca-38-sdcp-solar-battery"
    ],
    "used_by_pages": [
+    "/programs/san-diego-community-power-rebates/",
     "/us/ca/san-diego/solar/"
    ],
    "last_read": "2026-10-02"
@@ -2788,6 +2825,7 @@
     "us-ca-11-ladwp-consumer-rebate-program"
    ],
    "used_by_pages": [
+    "/programs/ladwp-rebates/",
     "/us/ca/los-angeles/",
     "/us/ca/los-angeles/heat-pump/",
     "/us/ca/los-angeles/water-heater/",
@@ -2799,11 +2837,12 @@
    "url": "https://www.ladwp.com/residential-services/programs-and-rebates-residential/attic-insulation-rebate-program",
    "host": "www.ladwp.com",
    "region": "us-ca",
-   "check": "LADWP Attic Insulation Rebate Program",
+   "check": "LADWP Attic Insulation Rebate Program; LADWP attic insulation rebate",
    "facts": [
     "us-ca-25-ladwp-attic-insulation"
    ],
    "used_by_pages": [
+    "/programs/ladwp-rebates/",
     "/us/ca/los-angeles/",
     "/us/ca/los-angeles/insulation/"
    ],
@@ -2813,11 +2852,12 @@
    "url": "https://www.ladwp.com/residential-services/programs-and-rebates-residential/demand-response-%E2%80%93-power-savers",
    "host": "www.ladwp.com",
    "region": "us-ca",
-   "check": "LADWP Power Savers demand response",
+   "check": "LADWP Power Savers; LADWP Power Savers demand response",
    "facts": [
     "us-ca-27-ladwp-power-savers"
    ],
    "used_by_pages": [
+    "/programs/ladwp-rebates/",
     "/us/ca/los-angeles/smart-thermostats/"
    ],
    "last_read": "2026-10-02"
@@ -2881,6 +2921,7 @@
     "us-ca-51-pge-electrification"
    ],
    "used_by_pages": [
+    "/programs/pge-rebates/",
     "/us/ca/bakersfield/",
     "/us/ca/fresno/"
    ],
@@ -2890,11 +2931,12 @@
    "url": "https://www.pge.com/en/clean-energy/electric-vehicles/getting-started-with-electric-vehicles/residential-charging-solutions-rebate.html",
    "host": "www.pge.com",
    "region": "us-ca",
-   "check": "PG&E Residential EV Charging rebate",
+   "check": "PG&E Residential EV Charging rebate; PG&E residential EV charging rebate",
    "facts": [
     "us-ca-49-pge-ev-charging-rebate"
    ],
    "used_by_pages": [
+    "/programs/pge-rebates/",
     "/us/ca/fresno/ev-charger/"
    ],
    "last_read": "2026-10-02"
@@ -2908,6 +2950,7 @@
     "us-ca-50-pge-esa"
    ],
    "used_by_pages": [
+    "/programs/pge-rebates/",
     "/us/ca/bakersfield/",
     "/us/ca/fresno/"
    ],
@@ -2964,6 +3007,7 @@
     "us-ca-la-munis-4-pwp-ceiling-insulation-rebate"
    ],
    "used_by_pages": [
+    "/programs/pasadena-water-and-power-rebates/",
     "/us/ca/pasadena/insulation/"
    ],
    "last_read": "2026-09-28"
@@ -2977,6 +3021,7 @@
     "us-ca-la-munis-0-pwp-heat-pump-rebate"
    ],
    "used_by_pages": [
+    "/programs/pasadena-water-and-power-rebates/",
     "/us/ca/pasadena/",
     "/us/ca/pasadena/heat-pump/"
    ],
@@ -2991,6 +3036,7 @@
     "us-ca-la-munis-5-pwp-solar-and-battery-rebate-pilot"
    ],
    "used_by_pages": [
+    "/programs/pasadena-water-and-power-rebates/",
     "/us/ca/pasadena/",
     "/us/ca/pasadena/solar/"
    ],
@@ -3005,6 +3051,7 @@
     "us-ca-la-munis-2-pwp-ev-charger-rebate"
    ],
    "used_by_pages": [
+    "/programs/pasadena-water-and-power-rebates/",
     "/us/ca/pasadena/ev-charger/"
    ],
    "last_read": "2026-09-28"
@@ -3046,6 +3093,7 @@
     "us-ca-la-munis-9-gwp-heat-pump-water-heater"
    ],
    "used_by_pages": [
+    "/programs/glendale-water-and-power-rebates/",
     "/us/ca/glendale/",
     "/us/ca/glendale/appliances/",
     "/us/ca/glendale/heat-pump/",
@@ -3061,19 +3109,34 @@
    "facts": [
     "us-ca-la-munis-17-sce-smart-energy-program"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/sce-rebates/"
+   ],
    "last_read": "2026-10-02"
   },
   {
    "url": "https://www.sce.com/save-money/income-qualified-programs/energy-savings-assistance-program",
    "host": "www.sce.com",
    "region": "us-ca-la-munis",
-   "check": "SCE Energy Savings Assistance (ESA)",
+   "check": "SCE Energy Savings Assistance; SCE Energy Savings Assistance (ESA)",
    "facts": [
     "us-ca-la-munis-18-sce-energy-savings-assistance-esa"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/sce-rebates/"
+   ],
    "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://sanjosecleanenergy.org/",
+   "host": "sanjosecleanenergy.org",
+   "region": "utility-pages",
+   "check": "San Jose Clean Energy",
+   "facts": [],
+   "used_by_pages": [
+    "/programs/san-jose-clean-energy-rebates/"
+   ],
+   "last_read": ""
   },
   {
    "url": "https://greenmountainpower.com/heat-pump-rebate/",

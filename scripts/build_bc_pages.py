@@ -90,7 +90,7 @@ def build(slug, cat):
 {faq}
 <h2>What to do next</h2>
 {d['next']}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {sources}. <a href="{hub}">All {e(name)} rebates &rarr;</a></p>"""
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {sources}. <a href="{hub}">All {e(name)} rebates &rarr;</a> <a href="/programs/{"fortisbc-rebates" if slug in ("kelowna", "penticton") else "bc-hydro-rebates"}/">Every {"FortisBC" if slug in ("kelowna", "penticton") else "BC Hydro"} rebate &rarr;</a></p>"""
     w = ca.words(article)
     ext = {m for m in re.findall(r'href="(https?://[^"]+)"', article)}
     problems = []

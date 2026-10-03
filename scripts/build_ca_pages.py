@@ -24,6 +24,10 @@ TEMPLATE = (ROOT / "ca/on/kitchener/heat-pump/index.html").read_text(encoding="u
 CSS = "".join(re.findall(r"<style[\s\S]*?</style>", TEMPLATE))
 LABEL = {"heat-pump": "Heat Pump", "water-heater": "Water Heater", "solar": "Solar", "battery": "Battery Storage", "ev-charger": "EV Charger", "insulation": "Insulation",
          "smart-thermostats": "Smart Thermostat", "appliances": "Appliance", "windows-doors": "Windows & Doors", "hrv": "HRV & Ventilation"}
+UTILITY_PAGE = {"ladwp": ("ladwp-rebates", "LADWP"), "smud": ("smud-rebates", "SMUD"), "sce": ("sce-rebates", "Southern California Edison"), "pwp": ("pasadena-water-and-power-rebates", "Pasadena Water and Power"),
+                "gwp": ("glendale-water-and-power-rebates", "Glendale Water and Power"), "bwp": ("burbank-water-and-power-rebates", "Burbank Water and Power"), "rpu": ("riverside-public-utilities-rebates", "Riverside Public Utilities"),
+                "sjce": ("san-jose-clean-energy-rebates", "San Jose Clean Energy"), "cleanpowersf": ("cleanpowersf-rebates", "CleanPowerSF"), "sdge": ("san-diego-community-power-rebates", "San Diego Community Power"),
+                "pge": ("pge-rebates", "PG&E"), "ava": ("pge-rebates", "PG&E")}
 INSTALLER_SET = {"heat-pump": "hvac", "water-heater": "hvac", "hrv": "hvac", "smart-thermostats": "hvac", "solar": "solar", "battery": "solar"}
 PILL = {"active": ("status-open", "Open"), "check": ("status-limited", "Check first"), "closed": ("status-closed", "Closed"), "waitlist": ("status-limited", "On hold"),
         "upcoming": ("status-limited", "Coming"), "paused": ("status-limited", "Paused"), "info": ("status-open", "Info")}
@@ -88,6 +92,8 @@ def build(slug, cat):
     claim = f"<h2>{d['claim_heading']}</h2>\n<ol>\n{steps}</ol>" if steps else ""
     faq = "".join(f'<div class="faq-item"><h3>{e(q)}</h3><p>{a}</p></div>\n' for q, a in d["faq"])
     sources = " ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>' + ("," if i < len(d["refs"]) - 1 else "") for i, (t, u) in enumerate(d["refs"]))
+    up = UTILITY_PAGE.get(c["utility"])
+    util = f' <a href="/programs/{up[0]}/">Every {e(up[1])} rebate &rarr;</a>' if up and (name, c["utility"]) not in {("Escondido", "sdge")} else ""
     article = f"""<h2>{d['cards_heading']}</h2>
 {d['cards_intro']}
 <div class="rebate-grid">
@@ -102,7 +108,7 @@ def build(slug, cat):
 {faq}
 <h2>What to do next</h2>
 {d['next']}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {sources}. <a href="{hub}">All {e(name)} rebates &rarr;</a></p>"""
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {sources}. <a href="{hub}">All {e(name)} rebates &rarr;</a>{util}</p>"""
     # quality gate
     w = words(article)
     ext = {m for m in re.findall(r'href="(https?://[^"]+)"', article)}

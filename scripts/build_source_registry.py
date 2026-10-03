@@ -80,6 +80,13 @@ for f in sorted((ROOT / "data" / "bc" / "pages").glob("*/*.json")):
         r["used_by"].add(f"/ca/bc/{f.parent.name}/{f.stem}/")
         r["titles"].add(t)
         r.setdefault("region", "bc-pages")
+for f in sorted((ROOT / "data" / "utilities").glob("*.json")):
+    d = json.loads(f.read_text())
+    for t, u in d.get("refs", []):
+        r = REG[u]
+        r["used_by"].add(f"/programs/{f.stem}/")
+        r["titles"].add(t)
+        r.setdefault("region", "utility-pages")
 for u, region, what in EXTRA:
     r = REG[u]
     r["region"] = region

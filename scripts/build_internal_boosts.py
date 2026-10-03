@@ -276,6 +276,16 @@ JOBS += [
 ]
 
 
+BCH_FREE_THERMO = "/programs/bc-hydro-free-smart-thermostats/"
+JOBS += [
+    ("BCH-FREE-THERMO-LINK", f'<b>Baseboard heat on BC Hydro?</b> See <a href="{BCH_FREE_THERMO}">how to get up to 5 free Mysa or Sinopé smart thermostats this fall</a>, plus $50 a winter from Peak Saver.',
+     sorted(str(p.relative_to(ROOT)) for p in ROOT.glob("ca/bc/*/smart-thermostats/index.html"))
+     + ["smart-thermostats/index.html", "programs/bc-hydro-peak-saver/index.html", "programs/bc-hydro-rebates/index.html",
+        "blog/smart-thermostat-comparison-nest-ecobee-honeywell-mysa/index.html", "blog/bc-hydro-peak-saver-explained/index.html",
+        "blog/smart-thermostat-peak-saver-optimization/index.html", "blog/bc-hydro-product-rebates-appliances/index.html"]),
+]
+
+
 def main():
     n = greener_section() + attic_section() + ottawa_eap() + peak_section() + rvalue_section()
     for marker, html, pages in JOBS:

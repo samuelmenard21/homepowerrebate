@@ -72,7 +72,6 @@ NOT_VERIFIED = [("Massachusetts", "/us/ma/"), ("Colorado", "/us/co/"), ("Pennsyl
 
 ARTICLES = [
     ("/blog/smart-thermostat-comparison-nest-ecobee-honeywell-mysa/", "Mysa vs Ecobee vs Nest: which thermostat fits your heat"),
-    ("/blog/mysa-vs-ecobee-thermostat/", "Mysa vs Ecobee: baseboards vs furnaces"),
     ("/blog/ontario-smart-thermostats-100-rebate-compared/", "Ontario's $125 rebate: 7 eligible thermostats compared"),
     ("/blog/smart-thermostat-buying-guide-on/", "Smart thermostat buying guide for Ontario"),
     ("/blog/smart-thermostat-buying-guide-ma/", "Smart thermostat buying guide for Massachusetts"),

@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 242,
+ "count": 245,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -569,7 +569,9 @@
    "region": "NS",
    "check": "HARP amount and 2026-27 intake",
    "facts": [],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/nova-scotia-heating-assistance-rebate-harp/"
+   ],
    "last_read": ""
   },
   {
@@ -2039,17 +2041,6 @@
    "last_read": "2026-09-26"
   },
   {
-   "url": "https://news.novascotia.ca/en/2025/09/26/heating-assistance-rebate-program-opens-october-1",
-   "host": "news.novascotia.ca",
-   "region": "ns",
-   "check": "Heating Assistance Rebate Program (HARP), Province of Nova Scotia",
-   "facts": [
-    "ns-16-heating-assistance-rebate-program-harp-province-of"
-   ],
-   "used_by_pages": [],
-   "last_read": "2026-09-26"
-  },
-  {
    "url": "https://www.efficiencyns.ca/programs-rebates",
    "host": "www.efficiencyns.ca",
    "region": "ns",
@@ -2158,6 +2149,19 @@
    ],
    "used_by_pages": [],
    "last_read": "2026-09-26"
+  },
+  {
+   "url": "https://www.novascotia.ca/apply-heating-assistance-rebate-heating-assistance-rebate-program",
+   "host": "www.novascotia.ca",
+   "region": "ns",
+   "check": "Apply for HARP (Province of Nova Scotia); Heating Assistance Rebate Program (HARP), Province of Nova Scotia",
+   "facts": [
+    "ns-16-heating-assistance-rebate-program-harp-province-of"
+   ],
+   "used_by_pages": [
+    "/programs/nova-scotia-heating-assistance-rebate-harp/"
+   ],
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.nspower.ca/your-home/residential-rates/standard-residential-service-rate",
@@ -2376,7 +2380,7 @@
     "on-9-hrs-gas-furnaces"
    ],
    "used_by_pages": [],
-   "last_read": "2026-09-26"
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://homerenovationsavings.ca/heat-pumps",
@@ -2389,7 +2393,7 @@
     "on-2-home-renovation-savings-hrs-heat-pumps"
    ],
    "used_by_pages": [],
-   "last_read": "2026-09-26"
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://homerenovationsavings.ca/with-assessment",
@@ -2457,6 +2461,17 @@
    ],
    "used_by_pages": [],
    "last_read": "2026-09-26"
+  },
+  {
+   "url": "https://www.homerenovationsavings.ca/heat-pumps",
+   "host": "www.homerenovationsavings.ca",
+   "region": "on",
+   "check": "Home Renovation Savings heat pump rules",
+   "facts": [
+    "on-18-hrs-heat-pump-rules"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.homerenovationsavings.ca/without-assessment/solar",
@@ -3212,6 +3227,28 @@
    "facts": [],
    "used_by_pages": [
     "/programs/efficiency-vermont-rebates/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-23600-net-income-before-adjustments.html",
+   "host": "www.canada.ca",
+   "region": "utility-pages",
+   "check": "CRA line 23600, net income",
+   "facts": [],
+   "used_by_pages": [
+    "/programs/nova-scotia-heating-assistance-rebate-harp/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.novascotia.ca/check-status-your-heating-assistance-rebate-application-heating-assistance-rebate-program",
+   "host": "www.novascotia.ca",
+   "region": "utility-pages",
+   "check": "Check your HARP status",
+   "facts": [],
+   "used_by_pages": [
+    "/programs/nova-scotia-heating-assistance-rebate-harp/"
    ],
    "last_read": ""
   },

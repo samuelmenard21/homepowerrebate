@@ -67,11 +67,11 @@ LOCAL = {
    faq=('Is Rochester served by National Grid or RG&E?', 'The City of Rochester is served by RG&E (Rochester Gas and Electric). RG&E runs NYS Clean Heat here, paying up to $10,000 for a whole-home switch. A few outlying towns are on National Grid, so check your bill.')),
  'central-hudson/poughkeepsie': dict(
    more=['Poughkeepsie mixes older city homes near downtown and the waterfront with post-war suburbs in the Town of Poughkeepsie. City homes often have radiators and no ducts; suburban homes more often have ducts that can be reused.',
-         'Oil and propane are still common in the area, and those homes see the biggest bill drop after switching. Removing the old system is what moves you from Central Hudson&rsquo;s $5,000 tier to the $8,000 tier.',
+         'Oil and propane are still common in the area, and those homes see the biggest bill drop after switching. Removing the old system is what moves you from Central Hudson&rsquo;s $4,000 tier to the $7,000 tier ($8,000 to $12,000 in the Weatherized Tier).',
          'Central Hudson supplies both gas and electricity here, so gas homes can switch too, though savings versus gas are usually smaller than versus oil.'],
    steps=['If you heat with oil or propane, ask for a quote that removes the old system &mdash; it earns the higher tier.',
           'Ask whether your ducts can be reused before you choose ductless.'],
-   faq=('How do I get the $8,000 Central Hudson rebate instead of $5,000?', 'The $8,000 tier is for a whole-home heat pump where the old fossil heating system is removed (decommissioned). If you keep the old system as backup, the amount is lower.')),
+   faq=('How do I get the $7,000 Central Hudson rebate instead of $4,000?', 'The $7,000 tier is for a whole-home heat pump where the old fossil heating system is removed (decommissioned). If you keep the old system as backup, the amount is lower. The Weatherized Tier raises $4,000 to $8,000 and $7,000 to $12,000.')),
  'central-hudson/beacon': dict(
    more=['Beacon&rsquo;s older homes near Main Street are often narrow lots with little room for outdoor equipment, so ask about wall brackets or roof mounts early.',
          'Many homes here were built long before insulation codes, so a Comfort Home seal-and-insulate package is often the best first step before sizing a heat pump.'],
@@ -95,7 +95,7 @@ LOCAL = {
          'Long electrical runs and older panels are common in rural homes, so ask your contractor to check your service size early.'],
    steps=['Have an electrician check your panel and service size first.',
           'If you heat with oil or propane, get a quote that removes the old system.'],
-   faq=('Can I get the Central Hudson rebate on a rural Saugerties home with no gas?', 'Yes. Oil and propane homes qualify, and removing that old system earns Central Hudson\'s higher $8,000 tier for a single-family home.')),
+   faq=('Can I get the Central Hudson rebate on a rural Saugerties home with no gas?', 'Yes. Oil and propane homes qualify, and removing that old system earns Central Hudson\'s higher $7,000 tier for a single-family home ($12,000 in the Weatherized Tier).')),
  'pseg/brookhaven': dict(
    more=['Brookhaven covers a huge area, from dense neighbourhoods near the LIRR to rural areas out east. Homes west of the town often have gas; many further east heat with oil.',
          'The Town of Brookhaven has run a Long Island Green Homes program for income-eligible residents; check with the town for what is open now before counting on it.',

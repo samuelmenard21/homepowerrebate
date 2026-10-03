@@ -256,6 +256,26 @@ HUB_INDEXES = {f"{r}/index.html" for r in ("ca/bc", "ca/on", "ca/ab", "ca/ns", "
 HUB_SKIP = {"NET-METERING-LINK", "GREENER-LINK", "INSULATION-HUB-LINK", "BCH-REBATES-LINK"}  # these live in the hub "Explore more" row now
 
 
+# Oct 2026 GSC (last 24h): /ca/ns/ took 342 of 830 impressions for HARP status and payment-date queries; Ontario furnace queries rank 28-57;
+# thermostat comparison and Bosch vs Mitsubishi rank 7-24 with few inbound links.
+HARP = "/programs/nova-scotia-heating-assistance-rebate-harp/"
+THERMO = "/blog/smart-thermostat-comparison-nest-ecobee-honeywell-mysa/"
+BRANDS = "/blog/heat-pump-brands-comparison-mitsubishi-daikin-bosch/"
+FURN_ON = "/furnace-rebates/ontario/"
+JOBS += [
+    ("HARP-LINK", f'<b>Need help with this winter\'s heating bill?</b> The <a href="{HARP}">Nova Scotia Heating Assistance Rebate (HARP) pays $400 for 2026-27: who qualifies, how to check your status and when it pays</a>.',
+     sorted(str(p.relative_to(ROOT)) for p in ROOT.glob("ca/ns/*/index.html")) + sorted(str(p.relative_to(ROOT)) for p in ROOT.glob("ca/ns/*/*/index.html"))
+     + ["blog/water-heater-buying-guide-ns/index.html", "programs/efficiency-nova-scotia/index.html", "rebate-tracker/index.html"]),
+    ("THERMO-COMPARE-LINK", f'<b>Mysa, Ecobee or Nest?</b> See <a href="{THERMO}">which smart thermostat fits your heating (baseboards, furnace or mini-split)</a> before you buy.',
+     sorted(str(p.relative_to(ROOT)) for p in ROOT.glob("ca/*/*/smart-thermostats/index.html"))
+     + ["smart-thermostats/index.html", "blog/ontario-smart-thermostats-100-rebate-compared/index.html"]),
+    ("BRANDS-COMPARE-LINK", f'<b>Choosing a brand?</b> Compare <a href="{BRANDS}">Bosch vs Mitsubishi vs Daikin cold-climate heat pumps</a>: winter specs, warranties and rebates.',
+     sorted(str(p.relative_to(ROOT)) for p in ROOT.glob("ca/*/*/heat-pump/index.html"))),
+    ("FURNACE-ON-LINK", f'<b>Replacing a gas furnace?</b> There is no Ontario rebate for a new furnace in 2026. See <a href="{FURN_ON}">what a heat pump gets instead: $500 per ton for Enbridge gas homes, up to $7,500 for oil, propane and electric</a>.',
+     sorted(str(p.relative_to(ROOT)) for p in ROOT.glob("ca/on/*/heat-pump/index.html")) + sorted(str(p.relative_to(ROOT)) for p in ROOT.glob("ca/on/*/index.html"))),
+]
+
+
 def main():
     n = greener_section() + attic_section() + ottawa_eap() + peak_section() + rvalue_section()
     for marker, html, pages in JOBS:

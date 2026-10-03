@@ -16,8 +16,8 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import apply_canonical_nav_footer as navfooter  # noqa: E402
 from build_installer_rankings import BASE, CSS  # noqa: E402
 
-CHECKED = "September 28, 2026"
-ISO = "2026-09-28"
+CHECKED = "October 3, 2026"
+ISO = "2026-10-03"
 AUTHOR = {"@type": "Person", "name": "Sam Menard", "url": f"{BASE}/about"}
 
 REGIONS = {
@@ -63,7 +63,7 @@ REGIONS = {
     },
     "ontario": {
         "slug": "ontario", "nav": "on", "name": "Ontario", "long": "Ontario", "rank_region": "on",
-        "title": "Ontario New Furnace Rebate 2026: The Honest Answer",
+        "title": "Ontario Furnace Rebate 2026: Gas Furnace vs Heat Pump",
         "desc": "There's no Ontario rebate for a new gas furnace in 2026. Heat pumps get up to $2,000 for Enbridge gas homes, or $7,500 if you heat with electric, oil or propane.",
         "h1": "Is There an Ontario Rebate for a New Furnace? (2026)",
         "short": "<b>No. There is no Ontario rebate for a new gas furnace in 2026.</b> The Home Renovation Savings Program (run by Enbridge Gas and Save on Energy) pays for cold-climate heat pumps instead. "
@@ -74,7 +74,8 @@ REGIONS = {
             ("New central air conditioner", "Home Renovation Savings", "None for a plain AC."),
             ("Cold-climate heat pump, gas-heated home", "Home Renovation Savings (Enbridge customers)", "$500/ton, up to $2,000. Pre-approval required."),
             ("Cold-climate heat pump, electric/oil/propane/wood home", "Home Renovation Savings", "$1,250/ton, up to $7,500. Pre-approval required."),
-            ("Ground source heat pump", "Home Renovation Savings", "Up to $12,000 (non-gas homes) or up to $3,000 (gas homes)."),
+            ("Ground source heat pump", "Home Renovation Savings", "$2,000/ton up to $12,000 (non-gas homes), or $3,000 (Enbridge gas homes)."),
+            ("Rented heat pump", "Home Renovation Savings", "$500/ton, up to $2,000 (air source) or $3,000 (ground source), whatever you heat with now."),
             ("Smart thermostat", "Home Renovation Savings", "$125."),
             ("Free upgrades", "Energy Affordability Program", "Free for income-qualified homes, including cold-climate heat pumps for oil-heated homes."),
             ("Low-interest loans", "Toronto HELP, Better Homes Ottawa", "Up to $125,000, repaid on your property tax bill."),
@@ -91,6 +92,8 @@ REGIONS = {
             ("How much is the Ontario heat pump rebate if I have a gas furnace?", "$500 per ton, up to $2,000, for a cold-climate air source heat pump if you're an Enbridge Gas customer. Pre-approval is required."),
             ("How much is it if I heat with oil, propane or electricity?", "$1,250 per ton, up to $7,500, for a cold-climate air source heat pump. Ground source can get up to $12,000."),
             ("Can I keep my furnace and add a heat pump?", "Yes. Many Ontario homes keep the gas furnace as backup and let the heat pump do most of the heating and all of the cooling."),
+            ("Is there a rebate for a high-efficiency gas furnace in Ontario?", "No. Home Renovation Savings pays $0 for any gas furnace, even a high-efficiency one. Only heat pumps, insulation, windows, thermostats and some appliances get rebates."),
+            ("Can I get a rebate for a rented heat pump?", "Yes. A rented cold-climate heat pump gets $500 per ton, up to $2,000, whatever fuel you heat with now."),
             ("Is Enbridge still giving furnace rebates?", "Not for gas furnaces. Enbridge's rebates now run through the Home Renovation Savings Program, which covers heat pumps, insulation, windows and thermostats."),
         ],
         "sources": [
@@ -100,6 +103,31 @@ REGIONS = {
             ("Toronto HELP loan", "https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/"),
             ("Better Homes Ottawa Loan", "https://ottawa.ca/en/city-hall/budget-finance-and-corporate-planning/funding/environmental-funding/better-homes-ottawa/better-homes-ottawa-loan-program"),
         ],
+        "extra": (
+            "<h2>Why there's no furnace rebate anymore</h2>"
+            "<p>Ontario's home rebates used to include high-efficiency gas furnaces. They don't now. Enbridge Gas and Save on Energy merged their offers into one program, Home Renovation Savings, and it pays $0 for a gas furnace, new or replacement. "
+            "The money moved to cold-climate heat pumps, insulation, windows and smart thermostats. A heat pump heats and cools, so it can replace both a furnace and an air conditioner. "
+            "If a contractor quotes you an \"Enbridge furnace rebate\" in 2026, ask them to show you the program page. It is most likely an old offer or a store discount.</p>"
+            "<h2>Gas furnace vs heat pump: what the rebate changes</h2>"
+            "<p>Say your home heats with Enbridge gas and you need about 3 tons of heating. A new furnace gets no rebate. A cold-climate heat pump gets $500 per ton, so $1,500, and a 4-ton system reaches the $2,000 cap. "
+            "If you heat with oil, propane or baseboard heaters, the same 3-ton heat pump gets $1,250 per ton, or $3,750, and a 6-ton system reaches the $7,500 cap. "
+            "That is why the honest answer depends on your fuel. For gas homes the rebate helps, but it may not close the price gap on its own. For oil, propane and electric homes it usually does.</p>"
+            "<p>Many gas homes split the difference. They keep a working furnace as backup and add a heat pump that does the cooling and most of the heating. You still get the $500 per ton.</p>"
+            "<h2>Rules that trip people up</h2>"
+            "<ul><li><b>Pre-approval is required.</b> Your contractor sends the first application before the install. A heat pump put in before approval gets nothing.</li>"
+            "<li><b>Use a participating contractor.</b> Fill in the program's short form and it sends you the list.</li>"
+            "<li><b>The model must be on the list.</b> Air source units must be on Natural Resources Canada's cold-climate qualified products list.</li>"
+            "<li><b>The owner applies.</b> Landlords apply for rental homes. New homes lived in for six months or less don't qualify.</li>"
+            "<li><b>Cornwall Electric customers</b> are not eligible unless they heat with Enbridge gas.</li>"
+            "<li><b>Payment:</b> after the post-install application is approved, the cheque comes by mail within 60 days.</li></ul>"
+            "<h2>Toronto, Markham, Brampton and Vaughan</h2>"
+            "<p>The rebate amounts are the same across Ontario. What changes by city is the extra help. "
+            "<b>Toronto</b> homeowners can add the city's Home Energy Loan Program (HELP), repaid on the property tax bill, to cover what the rebate doesn't. "
+            "<b>Ottawa</b> has the Better Homes Ottawa Loan, which works the same way. "
+            "In <b>Markham, Brampton and Vaughan</b>, the Home Renovation Savings rebate is the main help, and each city page lists anything local we have verified. "
+            "See our city pages for local installers: <a href='/ca/on/toronto/heat-pump/'>Toronto</a>, <a href='/ca/on/markham/heat-pump/'>Markham</a>, "
+            "<a href='/ca/on/brampton/heat-pump/'>Brampton</a>, <a href='/ca/on/vaughan/heat-pump/'>Vaughan</a>, <a href='/ca/on/ottawa/heat-pump/'>Ottawa</a>.</p>"
+        ),
         "links": [("/ca/on/", "Ontario rebates by city"), ("/blog/ontario-home-renovation-savings-program-explained/", "Home Renovation Savings explained"), ("/blog/furnace-buying-guide/", "Furnace buying guide")],
     },
     "california": {
@@ -224,6 +252,7 @@ def page(r):
 <h2>Should you replace your furnace or switch to a heat pump?</h2>
 <p>It depends on your furnace's age, your fuel, and your income. Find the row that sounds like you:</p>
 <div style="overflow-x:auto;"><table><thead><tr><th>If&hellip;</th><th>Our honest advice</th></tr></thead><tbody>{decide}</tbody></table></div>
+{r.get('extra', '')}
 <h2>Before you sign a quote</h2>
 <ul><li>Get at least two written quotes, and ask each installer to quote both a furnace and a heat pump.</li>
 <li>Ask how they sized the system. A good installer does a heat-loss calculation, not a rule of thumb.</li>

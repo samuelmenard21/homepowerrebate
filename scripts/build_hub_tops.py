@@ -92,7 +92,7 @@ def load_data_hubs():
         verified = max(facts[r["fact"]]["verified_on"] for r in spec["rows"])
         key = next(k for k, v in HUBS.items() if v["code"] == spec["code"])
         HUBS[key].update(name=spec["name"], short=spec["short"], rows=rows, top_only=True, eyebrow=spec["eyebrow"],
-                         row_status=status, verified=verified)
+                         row_status=status, verified=verified, row_pages=[r.get("page") for r in spec["rows"]])
 
 
 load_data_hubs()
@@ -146,8 +146,9 @@ def status_pill(st):
 
 def top_block(cfg):
     sts = cfg.get("row_status") or ["active"] * len(cfg["rows"])
-    rows = "".join(f'<tr><td><b>{e(w)}</b></td><td>{e(p)}</td><td>{e(a)}{status_pill(st)}</td><td>{e(n)} <a href="{e(s)}" rel="nofollow noopener" target="_blank">Source</a></td></tr>'
-                   for (w, p, a, n, s), st in zip(cfg["rows"], sts))
+    pages = cfg.get("row_pages") or [None] * len(cfg["rows"])
+    rows = "".join(f'<tr><td><b>{e(w)}</b></td><td>{f'<a href="{e(pg)}">{e(p)}</a>' if pg else e(p)}</td><td>{e(a)}{status_pill(st)}</td><td>{e(n)} <a href="{e(s)}" rel="nofollow noopener" target="_blank">Source</a></td></tr>'
+                   for (w, p, a, n, s), st, pg in zip(cfg["rows"], sts, pages))
     vdate = fmt(cfg["verified"]) if cfg.get("verified") else CHECKED_H
     return (f'{TOP_S}<section style="max-width:880px;margin:24px auto;padding:0 20px;">'
             f'<div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> {e(cfg["short"])}</p>'

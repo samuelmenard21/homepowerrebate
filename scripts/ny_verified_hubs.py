@@ -16,9 +16,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ny_local_notes import LOCAL
 
 ROOT = Path(__file__).resolve().parent.parent
-TODAY = '2026-09-26'
-CHECKED = 'September 26, 2026'
-MANUAL = 'https://cleanheat.ny.gov/assets/pdf/NYS%20Clean%20Heat%20Program%20Manual%202025_v2.pdf'
+TODAY = '2026-10-03'
+CHECKED = 'October 3, 2026'
+MANUAL = 'https://visionelements.customerapplication.com/Framework/Ny_statewide/NYS-Clean-Heat-Program-Manual.Pdf'
 EMPOWER = 'https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program'
 COMFORT = 'https://www.nyserda.ny.gov/All-Programs/Comfort-Home-Program'
 DACMAP = 'https://www.nyserda.ny.gov/ny/Disadvantaged-Communities'
@@ -29,48 +29,54 @@ U = {
  'con-edison': dict(
    name='Con Edison', short='Con Edison', program='NYS Clean Heat (run by Con Edison)',
    src=('Con Edison air-source heat pump incentives', 'https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-heating-and-cooling-technology-for-renters-homeowners/save-on-a-central-air-source-heat-pump'),
-   headline='up to $10,000 ($11,000 in a Disadvantaged Community)',
-   rows=[('Whole-home air-source heat pump, standard tier', '$7,000', '$8,000'),
-         ('Whole-home air-source heat pump, weatherized tier', '$10,000', '$11,000'),
-         ('Partial system (heat pump covers part of the home)', '$2,500', '$4,500'),
-         ('Apartment, whole-home', '$3,500&ndash;$5,000', '$4,000&ndash;$5,500'),
-         ('Ground-source (geothermal), whole 1&ndash;4 unit building', '$30,000', '$40,000'),
-         ('Heat pump water heater', '$1,000', '$1,000')],
+   headline='up to $11,000 (Disadvantaged Community, Weatherized Tier, old system removed)',
+   rows=[('Air-source, Category 2a with integrated controls (no Weatherized Tier)', '$2,500', '$4,500'),
+         ('Air-source, Category 2b, old system decommissioned', '$7,000', '$8,000'),
+         ('Air-source, Category 2b, Weatherized Tier', '$10,000', '$11,000'),
+         ('Partial to full load, single-family (apartment $1,500)', '$4,000', '$4,000'),
+         ('Ground-source, whole 1&ndash;4 unit building (Weatherized Tier $30,000 / $40,000)', '$25,000', '$35,000'),
+         ('Heat pump water heater ($1,500 for applications Sept 1&ndash;Nov 30, 2026)', '$1,300', '$1,300')],
    note='Con Edison takes the incentive off your contractor&rsquo;s invoice, so you never wait for a cheque. Your home must pass a &ldquo;service adequate&rdquo; check first.',
    ev=('Con Edison has no rebate for buying a home charger. Its <a href="/us/ny/con-edison/new-york-city/ev-charger/">SmartCharge New York</a> program pays about $400 a year on average for charging off-peak. PowerReady stopped taking new Level 2 applications on April 22, 2026.'),
    clean_heat=True),
  'national-grid': dict(
    name='National Grid', short='National Grid', program='NYS Clean Heat (run by National Grid)',
-   src=('NYS Clean Heat Program Manual v2 (Mar 5, 2026), Table 8', MANUAL),
-   headline='up to $10,000 ($12,000 in a Disadvantaged Community)',
-   rows=[('Whole-home cold-climate air-source heat pump', '$6,000', '$8,000'),
-         ('Whole-home air-source + removing the old system', '$10,000', '$12,000'),
-         ('Partial load (heat pump covers part of the home)', '$4,000', '$4,000'),
-         ('Ground-source (geothermal) retrofit', '$20,000', '$25,000'),
-         ('Heat pump water heater', '$1,250', '$1,250')],
-   note='Apartments and homes under 1,000 sq ft get about half these amounts. Your participating contractor applies for you.',
+   src=('NYS Clean Heat Program Manual v3', MANUAL),
+   headline='up to $14,000 (Disadvantaged Community, Weatherized Tier, old system removed)',
+   rows=[('Category 2 air-source, no decommissioning', '$4,000', '$6,000'),
+         ('Category 2 air-source, Weatherized Tier', '$8,000', '$10,000'),
+         ('Category 2b, old system removed', '$7,000', '$9,000'),
+         ('Category 2b, Weatherized Tier', '$12,000', '$14,000'),
+         ('Partial to full load', '$4,000', '$4,000'),
+         ('Ground-source retrofit (Weatherized Tier $23,000 / $28,000)', '$18,000', '$23,000'),
+         ('Heat pump water heater (retail)', '$1,250', '$1,250')],
+   note='Apartments and homes under 1,000 sq ft get about half these amounts. The Weatherized Tier (from September 1, 2026) applies to homes built after 2010, homes that took part in an approved weatherization program, or homes that pass a heating-load test. National Grid&rsquo;s own web page still showed the older &ldquo;up to $12,000&rdquo; on October 3, 2026. Your participating contractor applies for you.',
    ev='', clean_heat=True),
  'rge': dict(
    name='RG&amp;E', short='RG&amp;E', program='NYS Clean Heat (run by RG&amp;E)',
-   src=('NYS Clean Heat Program Manual v2 (Mar 5, 2026), Table 12', MANUAL),
-   headline='up to $10,000',
-   rows=[('Whole-home cold-climate air-source heat pump', '$6,000', '$6,000'),
-         ('Whole-home air-source + removing the old system', '$10,000', '$10,000'),
-         ('Partial load (heat pump covers part of the home)', '$3,000', '$3,000'),
-         ('Ground-source (geothermal) retrofit', '$17,000', '$18,000'),
+   src=('NYS Clean Heat Program Manual v3', MANUAL),
+   headline='up to $13,000 (Disadvantaged Community, Weatherized Tier, old system removed)',
+   rows=[('Category 2 air-source, no decommissioning', '$4,000', '$5,000'),
+         ('Category 2 air-source, Weatherized Tier', '$8,000', '$9,000'),
+         ('Category 2b, old system removed', '$7,000', '$8,000'),
+         ('Category 2b, Weatherized Tier', '$12,000', '$13,000'),
+         ('Partial to full load', '$3,000', '$3,000'),
+         ('Ground-source retrofit (Weatherized Tier $20,000 / $21,000)', '$15,000', '$16,000'),
          ('Heat pump water heater', '$1,250', '$1,250')],
-   note='Apartments and homes under 1,000 sq ft get less. Your participating contractor applies for you.',
+   note='NYSEG and RG&amp;E share this table. Apartments and homes under 1,000 sq ft get about half. The Weatherized Tier (from September 1, 2026) applies to homes built after 2010, homes that took part in an approved weatherization program, or homes that pass a heating-load test. Your participating contractor applies for you.',
    ev='', clean_heat=True),
  'central-hudson': dict(
    name='Central Hudson', short='Central Hudson', program='NYS Clean Heat (run by Central Hudson)',
-   src=('NYS Clean Heat Program Manual v2 (Mar 5, 2026), Table 3', MANUAL),
-   headline='up to $8,000',
-   rows=[('Whole-home cold-climate air-source heat pump', '$5,000', '&mdash;'),
-         ('Whole-home air-source + removing the old system', '$8,000', '&mdash;'),
-         ('Partial load (heat pump covers part of the home)', '$3,000', '&mdash;'),
-         ('Ground-source (geothermal) retrofit', '$18,000', '&mdash;'),
+   src=('NYS Clean Heat Program Manual v3', MANUAL),
+   headline='up to $12,000 (Weatherized Tier, old system removed)',
+   rows=[('Category 2 air-source, no decommissioning', '$4,000', '&mdash;'),
+         ('Category 2 air-source, Weatherized Tier', '$8,000', '&mdash;'),
+         ('Category 2b, old system removed', '$7,000', '&mdash;'),
+         ('Category 2b, Weatherized Tier', '$12,000', '&mdash;'),
+         ('Partial to full load', '$3,000', '&mdash;'),
+         ('Ground-source retrofit (Weatherized Tier $20,000)', '$15,000', '&mdash;'),
          ('Heat pump water heater', '$1,250', '&mdash;')],
-   note='These are single-family amounts. Apartments and homes under 1,000 sq ft get less ($3,000 / $5,000 / $1,000). Central Hudson&rsquo;s table does not list a separate DAC column.',
+   note='These are single-family amounts. Apartments and homes under 1,000 sq ft get about half ($2,000 / $3,500 / $1,000, or $4,000 / $6,000 in the Weatherized Tier). Central Hudson&rsquo;s table does not list a separate DAC column, and its cap is 85% of cost.',
    ev='', clean_heat=True),
  'pseg': dict(
    name='PSEG Long Island', short='PSEG Long Island', program='PSEG Long Island&rsquo;s heat pump rebate',
@@ -114,16 +120,16 @@ C = {
    local='Important: the City of Rochester is served by <strong>RG&amp;E (Rochester Gas and Electric)</strong>, not National Grid. RG&amp;E runs NYS Clean Heat here, so the amounts in the table are RG&amp;E&rsquo;s. (This page sits in our National Grid section only for historical reasons.) A few outlying towns in Monroe County are on National Grid, so check the name on your electric bill.',
    q='heat pump rebate in Rochester'),
  'central-hudson/poughkeepsie': dict(u='central-hudson', city='Poughkeepsie', short='Poughkeepsie', slug='poughkeepsie',
-   local='Central Hudson supplies electricity and gas in Poughkeepsie and across the mid-Hudson Valley. Many homes here heat with oil or propane, and replacing those with a whole-home heat pump is what unlocks Central Hudson&rsquo;s larger $8,000 tier.',
+   local='Central Hudson supplies electricity and gas in Poughkeepsie and across the mid-Hudson Valley. Many homes here heat with oil or propane, and replacing those with a whole-home heat pump is what unlocks Central Hudson&rsquo;s larger $7,000 tier ($12,000 in the Weatherized Tier).',
    q='Central Hudson heat pump rebate in Poughkeepsie'),
  'central-hudson/beacon': dict(u='central-hudson', city='Beacon', short='Beacon', slug='beacon',
    local='Beacon is a Dutchess County city on the Hudson, served by Central Hudson for electricity and gas. Many homes are 19th- and early-20th-century houses with little wall insulation, so air sealing and attic insulation before a heat pump usually lets you buy a smaller, cheaper system.',
    q='Central Hudson heat pump rebate in Beacon'),
  'central-hudson/kingston': dict(u='central-hudson', city='Kingston', short='Kingston', slug='kingston',
-   local='Kingston is the Ulster County seat and is served by Central Hudson. Outside the gas lines, a lot of homes heat with oil or propane &mdash; replacing that system entirely is what earns Central Hudson&rsquo;s top $8,000 tier.',
+   local='Kingston is the Ulster County seat and is served by Central Hudson. Outside the gas lines, a lot of homes heat with oil or propane &mdash; replacing that system entirely is what earns Central Hudson&rsquo;s larger $7,000 tier ($12,000 in the Weatherized Tier).',
    q='Central Hudson heat pump rebate in Kingston'),
  'central-hudson/newburgh': dict(u='central-hudson', city='Newburgh', short='Newburgh', slug='newburgh',
-   local='The City of Newburgh is served by Central Hudson, even though much of the rest of Orange County is on Orange &amp; Rockland. If your bill says O&amp;R, your Clean Heat amounts are O&amp;R&rsquo;s instead (up to $9,000, or $10,000 in a DAC). Parts of Newburgh are mapped as Disadvantaged Communities, which also matters for EmPower+ outreach.',
+   local='The City of Newburgh is served by Central Hudson, even though much of the rest of Orange County is on Orange &amp; Rockland. If your bill says O&amp;R, your Clean Heat amounts are O&amp;R&rsquo;s instead (up to $12,000, or $14,000 in a DAC). Parts of Newburgh are mapped as Disadvantaged Communities, which also matters for EmPower+ outreach.',
    q='Central Hudson heat pump rebate in Newburgh'),
  'central-hudson/saugerties': dict(u='central-hudson', city='Saugerties', short='Saugerties', slug='saugerties',
    local='Saugerties is a rural Ulster County town served by Central Hudson for electricity. Many homes have no gas line and heat with oil or propane, which are the most expensive fuels to keep &mdash; that makes a whole-home heat pump with the old system removed the best-paying option here.',
@@ -228,7 +234,7 @@ def sources(u):
     d = U[u]
     s = [d['src'], ('NYSERDA EmPower+', EMPOWER), ('NYSERDA Comfort Home', COMFORT), ('NYS Disadvantaged Communities map', DACMAP), ('IRS: 25C credit', IRS25C)]
     if u != 'pseg' and d['src'][1] != MANUAL:
-        s.insert(1, ('NYS Clean Heat Program Manual v2', MANUAL))
+        s.insert(1, ('NYS Clean Heat Program Manual v3 (effective Sept 1, 2026)', MANUAL))
     return '<p class="src">Sources, checked ' + CHECKED + ': ' + ', '.join(f'<a href="{b}" rel="noopener">{a}</a>' for a, b in s) + '.</p>'
 
 
@@ -319,7 +325,7 @@ def hub_body(slug, h):
     extra = ''
     if slug == 'national-grid':
         extra = ('<p><strong>Rochester note:</strong> the City of Rochester is served by RG&amp;E, not National Grid. RG&amp;E&rsquo;s Clean Heat amounts are a little different '
-                 '(up to $10,000 for a whole-home switch). See our <a href="/us/ny/national-grid/rochester/">Rochester page</a>.</p>')
+                 '(up to $13,000 for a whole-home switch). See our <a href="/us/ny/national-grid/rochester/">Rochester page</a>.</p>')
     ev = f'<h2>EV chargers</h2><p>{d["ev"]}</p>' if d['ev'] else ''
     faqs = [
       (f'How much is the {html.unescape(d["short"])} heat pump rebate?',

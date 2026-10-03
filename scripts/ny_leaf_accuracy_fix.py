@@ -34,7 +34,7 @@ FIXED = [
  ('Mount Vernon households that qualify by income can layer on the federal HEAR rebate and a Disadvantaged Community (DAC) bonus alongside New York State\'s Clean Heat financing — worth asking your contractor to check your address against the DAC map before assuming you don\'t qualify.',
   'Parts of Mount Vernon are Disadvantaged Communities, where Con Edison\'s Clean Heat amount is higher — ask your contractor to check your address against the DAC map. Income-qualified households can also use EmPower+.'),
  ('National Grid utility rebate ($1,500&ndash;$4,000) + NYS Clean Heat ($6,000&ndash;$10,000, income-qualified) + federal HEAR ($4,000&ndash;$8,000, income-qualified).',
-  'One rebate: NYS Clean Heat, paid through your utility &mdash; up to $10,000 for a whole-home switch. Income-qualified households can add EmPower+.'),
+  'One rebate: NYS Clean Heat, paid through your utility &mdash; $4,000 to $14,000 for a whole-home switch depending on utility, tier and income. Income-qualified households can add EmPower+.'),
  ('New Rochelle homeowners can build on the $10,000 Con Edison base with New York State\'s Clean Heat financing, and income-qualified households may also add the federal HEAR rebate and a Disadvantaged Community bonus.',
   'The Con Edison amount already is the NYS Clean Heat rebate, so there\'s nothing to add on top of it. Income-qualified New Rochelle households can also use EmPower+.'),
  ('New York State Clean Heat financing stacks with the Con Edison incentive, and income-qualified New York City households in Disadvantaged Community-designated areas can add a DAC bonus and the federal HEAR rebate.',

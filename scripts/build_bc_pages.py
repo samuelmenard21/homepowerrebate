@@ -23,6 +23,7 @@ FACTS = ca.FACTS
 LABEL = {"insulation": "Insulation", "windows": "Windows & Doors", "water-heater": "Water Heater", "heat-pump": "Heat Pump", "solar": "Solar", "battery": "Battery Storage",
          "ev-charger": "EV Charger", "smart-thermostats": "Smart Thermostat", "appliances": "Appliance", "hrv": "HRV & Ventilation"}
 BUILT = ["insulation", "windows", "water-heater"]
+HUB = ["index"]
 NAMES = {"abbotsford": "Abbotsford", "burnaby": "Burnaby", "chilliwack": "Chilliwack", "coquitlam": "Coquitlam", "fort-st-john": "Fort St. John", "kamloops": "Kamloops",
          "kelowna": "Kelowna", "langley": "Langley", "maple-ridge": "Maple Ridge", "nanaimo": "Nanaimo", "penticton": "Penticton", "prince-george": "Prince George",
          "richmond": "Richmond", "squamish": "Squamish", "surrey": "Surrey", "vancouver": "Vancouver", "vernon": "Vernon", "victoria": "Victoria"}
@@ -30,7 +31,10 @@ INSULATION_ROWS = [r for r in rank.load_rows() if r["region"] == "bc" and r["ser
 
 
 def installers(slug, cat):
-    if cat == "insulation":
+    if cat == "index":
+        p = ROOT / "installers/json" / f"{slug}.json"
+        rows = [r for r in json.loads(p.read_text()) if r.get("rating") and r.get("reviews", 0) >= 10] if p.exists() else []
+    elif cat == "insulation":
         rows = [r for r in INSULATION_ROWS if rank.slugify(r["city"]) == slug and r["reviews"] >= 5]
     elif cat == "water-heater":
         p = ROOT / "installers/json" / f"{slug}.json"
@@ -62,7 +66,8 @@ def build(slug, cat):
         return None
     d = json.loads(pj.read_text())
     hub = f"/ca/bc/{slug}/"
-    path = f"{hub}{cat}/"
+    is_hub = cat == "index"
+    path = hub if is_hub else f"{hub}{cat}/"
     fids = [i for cd in d["cards"] for i in cd.get("facts", [])] + d.get("facts", [])
     for i in fids:
         assert i in FACTS, f"unknown fact {i}"
@@ -70,6 +75,7 @@ def build(slug, cat):
     when = date.fromisoformat(checked).strftime("%B %-d, %Y")
     sibs = [k for k in LABEL if k != cat and (ROOT / f"ca/bc/{slug}/{k}/index.html").exists()]
     sib = "".join(f'<span style="margin-right:14px;"><a href="{hub}{k}/">{LABEL[k]} Rebates in {e(name)}</a></span>\n' for k in sibs)
+    guides = ("<h2>Every rebate guide for " + e(name) + "</h2><ul>" + "".join(f'<li><a href="{hub}{k}/">{LABEL[k]} rebates in {e(name)}</a></li>' for k in sibs) + "</ul>") if is_hub else ""
     cards = "".join(ca.card(x) for x in d["cards"])
     inst = "" if d.get("no_installers") else installer_html(slug, name, cat, d.get("installers_intro", ""))
     steps = "".join(f"<li>{s}</li>\n" for s in d.get("claim_steps", []))
@@ -83,6 +89,7 @@ def build(slug, cat):
 </div>
 {d.get('after_cards', '')}
 {''.join(f"<h2>{h}</h2>{b}" for h, b in d['sections'])}
+{guides}
 {inst}
 {claim}
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/bc/" style="color:var(--teal,#0d4f5c); font-weight:600;">BC rebate calculator</a>, or <a href="/get-quotes/?province=bc&amp;city={slug}" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in {e(name)}</a>.</div>
@@ -115,7 +122,7 @@ def build(slug, cat):
            "datePublished": checked, "dateModified": checked, "mainEntityOfPage": BASE + path},
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE}, {"@type": "ListItem", "position": 2, "name": "British Columbia", "item": BASE + "/ca/bc/"},
-              {"@type": "ListItem", "position": 3, "name": name, "item": BASE + hub}, {"@type": "ListItem", "position": 4, "name": LABEL[cat], "item": BASE + path}]}, faq_ld]
+              {"@type": "ListItem", "position": 3, "name": name, "item": BASE + hub}] + ([] if is_hub else [{"@type": "ListItem", "position": 4, "name": LABEL[cat], "item": BASE + path}])}, faq_ld]
     lds = "".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in ld)
     page = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -130,11 +137,10 @@ def build(slug, cat):
 {ca.CSS}
 {lds}</head><body>
 {navfooter.render_nav("bc", slug)}
-<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/bc/">British Columbia</a></li><li><a href="{hub}">{e(name)}</a></li><li aria-current="page">{LABEL[cat]}</li></ol></nav>
+<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/bc/">British Columbia</a></li>{"" if is_hub else f'<li><a href="{hub}">{e(name)}</a></li>'}<li aria-current="page">{e(name) if is_hub else LABEL[cat]}</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">{e(d['badge'])}</div><h1>{e(d['h1'])}</h1><p>{d['lead']}</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
-<span style="margin-right:14px;"><a href="{hub}">&larr; Back to {e(name)} rebate hub</a></span>
-{sib}</div></section>
+{"" if is_hub else f'<span style="margin-right:14px;"><a href="{hub}">&larr; Back to {e(name)} rebate hub</a></span>' + chr(10) + sib}</div></section>
 <article class="article"><div class="wrap">
 {article}
 </div></article>
@@ -147,11 +153,11 @@ def build(slug, cat):
 
 
 if __name__ == "__main__":
-    only = set(sys.argv[1:])
+    only = {a for a in sys.argv[1:] if not a.startswith("--")}
     for slug in NAMES:
         if only and slug not in only:
             continue
-        for cat in BUILT:
+        for cat in (HUB if "--hubs" in sys.argv else BUILT):
             r = build(slug, cat)
             if r:
                 print("built", r[0], r[1], "words")

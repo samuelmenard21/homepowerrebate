@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 235,
+ "count": 242,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -2171,23 +2171,15 @@
    "last_read": "2026-09-26"
   },
   {
-   "url": "https://cleanheat.ny.gov/",
-   "host": "cleanheat.ny.gov",
+   "url": "https://visionelements.customerapplication.com/Framework/Ny_statewide/NYS-Clean-Heat-Program-Manual.Pdf",
+   "host": "visionelements.customerapplication.com",
    "region": "ny",
-   "check": "NYS Clean Heat (how it works)",
+   "check": "Central Hudson Clean Heat; Clean Heat heat pump water heaters; Con Edison Clean Heat (air-source); Con Edison Clean Heat (ground-source); NYS Clean Heat (how it works); NYS Clean Heat Program Manual, ",
    "facts": [
-    "ny-0-nys-clean-heat-how-it-works"
-   ],
-   "used_by_pages": [],
-   "last_read": "2026-09-26"
-  },
-  {
-   "url": "https://cleanheat.ny.gov/assets/pdf/NYS%20Clean%20Heat%20Program%20Manual%202025_v2.pdf",
-   "host": "cleanheat.ny.gov",
-   "region": "ny",
-   "check": "Central Hudson Clean Heat; Clean Heat heat pump water heaters; Con Edison Clean Heat (ground-source); NYS Clean Heat caps; NYSEG Clean Heat; National Grid Clean Heat (upstate); Orange & Rockland Clean",
-   "facts": [
+    "ny-0-nys-clean-heat-how-it-works",
     "ny-1-nys-clean-heat-caps",
+    "ny-2-con-edison-clean-heat-air-source",
+    "ny-21-nys-clean-heat-weatherized-tier",
     "ny-3-con-edison-clean-heat-ground-source",
     "ny-4-national-grid-clean-heat-upstate",
     "ny-5-rg-e-clean-heat-rochester",
@@ -2196,8 +2188,14 @@
     "ny-8-orange-rockland-clean-heat",
     "ny-9-clean-heat-heat-pump-water-heaters"
    ],
-   "used_by_pages": [],
-   "last_read": "2026-09-26"
+   "used_by_pages": [
+    "/programs/central-hudson-rebates/",
+    "/programs/con-edison-rebates/",
+    "/programs/national-grid-rebates/",
+    "/programs/nyseg-and-rge-rebates/",
+    "/programs/orange-and-rockland-rebates/"
+   ],
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.coned.com/en/our-energy-future/electric-vehicles/power-ready-program",
@@ -2214,12 +2212,14 @@
    "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-heating-and-cooling-technology-for-renters-homeowners/save-on-a-central-air-source-heat-pump",
    "host": "www.coned.com",
    "region": "ny",
-   "check": "Con Edison Clean Heat (air-source)",
+   "check": "Con Edison Steady Use Rate; Con Edison, central air-source heat pump incentive",
    "facts": [
-    "ny-2-con-edison-clean-heat-air-source"
+    "ny-23-con-edison-steady-use-rate"
    ],
-   "used_by_pages": [],
-   "last_read": "2026-09-26"
+   "used_by_pages": [
+    "/programs/con-edison-rebates/"
+   ],
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-vehicle-rewards",
@@ -2261,6 +2261,19 @@
    "last_read": "2026-09-26"
   },
   {
+   "url": "https://www.nationalgridus.com/Whole-Home-Electrification-Program",
+   "host": "www.nationalgridus.com",
+   "region": "ny",
+   "check": "National Grid Whole Home Electrification Program; National Grid, Whole Home Electrification Program",
+   "facts": [
+    "ny-22-national-grid-whole-home-electrification"
+   ],
+   "used_by_pages": [
+    "/programs/national-grid-rebates/"
+   ],
+   "last_read": "2026-10-03"
+  },
+  {
    "url": "https://www.nyserda.ny.gov/About/Newsroom/2024-Announcements/2024-11-21-Saving-Families-Money-Governor-Hochul-Announces-Retail-Rebates",
    "host": "www.nyserda.ny.gov",
    "region": "ny",
@@ -2275,22 +2288,32 @@
    "url": "https://www.nyserda.ny.gov/All-Programs/Comfort-Home-Program",
    "host": "www.nyserda.ny.gov",
    "region": "ny",
-   "check": "Comfort Home (NYSERDA)",
+   "check": "Comfort Home (NYSERDA); NYSERDA Comfort Home",
    "facts": [
     "ny-13-comfort-home-nyserda"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/central-hudson-rebates/",
+    "/programs/national-grid-rebates/",
+    "/programs/orange-and-rockland-rebates/"
+   ],
    "last_read": "2026-09-26"
   },
   {
    "url": "https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program",
    "host": "www.nyserda.ny.gov",
    "region": "ny",
-   "check": "EmPower+ (NYSERDA)",
+   "check": "EmPower+ (NYSERDA); NYSERDA EmPower+",
    "facts": [
     "ny-11-empower-nyserda"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/central-hudson-rebates/",
+    "/programs/con-edison-rebates/",
+    "/programs/nyseg-and-rge-rebates/",
+    "/programs/orange-and-rockland-rebates/",
+    "/programs/pseg-long-island-rebates/"
+   ],
    "last_read": "2026-09-26"
   },
   {
@@ -2308,33 +2331,39 @@
    "url": "https://www.nyserda.ny.gov/All-Programs/NY-Sun/Contractors/Dashboards-and-incentives",
    "host": "www.nyserda.ny.gov",
    "region": "ny",
-   "check": "NY-Sun",
+   "check": "NY-Sun; NYSERDA NY-Sun incentives",
    "facts": [
     "ny-14-ny-sun"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/pseg-long-island-rebates/"
+   ],
    "last_read": "2026-09-26"
   },
   {
    "url": "https://www.psegliny.com/en/saveenergyandmoney/homeefficiency/HomeComfort/HeatPumps/Rebates",
    "host": "www.psegliny.com",
    "region": "ny",
-   "check": "PSEG Long Island heat pump rebates (not NYS Clean Heat)",
+   "check": "PSEG Long Island heat pump rebates; PSEG Long Island heat pump rebates (not NYS Clean Heat)",
    "facts": [
     "ny-10-pseg-long-island-heat-pump-rebates-not-nys-clean-h"
    ],
-   "used_by_pages": [],
-   "last_read": "2026-09-26"
+   "used_by_pages": [
+    "/programs/pseg-long-island-rebates/"
+   ],
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.psegliny.com/saveenergyandmoney/energystarrebates",
    "host": "www.psegliny.com",
    "region": "ny",
-   "check": "PSEG Long Island heat pump water heater",
+   "check": "PSEG Long Island ENERGY STAR rebates; PSEG Long Island heat pump water heater",
    "facts": [
     "ny-18-pseg-long-island-heat-pump-water-heater"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/pseg-long-island-rebates/"
+   ],
    "last_read": "2026-09-26"
   },
   {
@@ -3128,6 +3157,43 @@
    "last_read": "2026-10-02"
   },
   {
+   "url": "https://cleanheat.ny.gov/",
+   "host": "cleanheat.ny.gov",
+   "region": "utility-pages",
+   "check": "NYS Clean Heat; NYS Clean Heat, program overview",
+   "facts": [],
+   "used_by_pages": [
+    "/programs/central-hudson-rebates/",
+    "/programs/con-edison-rebates/",
+    "/programs/national-grid-rebates/",
+    "/programs/nyseg-and-rge-rebates/",
+    "/programs/orange-and-rockland-rebates/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://greenmountainpower.com/rebates-programs/home-and-yard/heat-pump-water-heater/",
+   "host": "greenmountainpower.com",
+   "region": "utility-pages",
+   "check": "Green Mountain Power heat pump water heater",
+   "facts": [],
+   "used_by_pages": [
+    "/programs/green-mountain-power-rebates/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://greenmountainpower.com/rebates-programs/home-heating-cooling/",
+   "host": "greenmountainpower.com",
+   "region": "utility-pages",
+   "check": "Green Mountain Power home heating and cooling",
+   "facts": [],
+   "used_by_pages": [
+    "/programs/green-mountain-power-rebates/"
+   ],
+   "last_read": ""
+  },
+  {
    "url": "https://sanjosecleanenergy.org/",
    "host": "sanjosecleanenergy.org",
    "region": "utility-pages",
@@ -3139,15 +3205,26 @@
    "last_read": ""
   },
   {
-   "url": "https://greenmountainpower.com/heat-pump-rebate/",
-   "host": "greenmountainpower.com",
-   "region": "vt",
-   "check": "Green Mountain Power income-eligible heat pump rebate",
-   "facts": [
-    "vt-2-green-mountain-power-income-eligible-heat-pump-reb"
+   "url": "https://www.burlingtonelectric.com/heatpumps/",
+   "host": "www.burlingtonelectric.com",
+   "region": "utility-pages",
+   "check": "Burlington Electric heat pumps",
+   "facts": [],
+   "used_by_pages": [
+    "/programs/efficiency-vermont-rebates/"
    ],
-   "used_by_pages": [],
-   "last_read": "2026-09-28"
+   "last_read": ""
+  },
+  {
+   "url": "https://www.nyserda.ny.gov/ny/Disadvantaged-Communities",
+   "host": "www.nyserda.ny.gov",
+   "region": "utility-pages",
+   "check": "NYSERDA disadvantaged communities",
+   "facts": [],
+   "used_by_pages": [
+    "/programs/nyseg-and-rge-rebates/"
+   ],
+   "last_read": ""
   },
   {
    "url": "https://greenmountainpower.com/rebates-programs/",
@@ -3158,18 +3235,20 @@
     "vt-5-electric-utility-by-city"
    ],
    "used_by_pages": [],
-   "last_read": "2026-09-28"
+   "last_read": "2026-10-03"
   },
   {
-   "url": "https://www.efficiencyvermont.com/news-blog/news/efficiency-vermont-announces-2026-rebates-to-help-vermonters-achieve-their-home-energy-goals-in-the-new-year",
-   "host": "www.efficiencyvermont.com",
+   "url": "https://greenmountainpower.com/rebates-programs/home-and-yard/heat-pump/",
+   "host": "greenmountainpower.com",
    "region": "vt",
-   "check": "Efficiency Vermont home weatherization",
+   "check": "Green Mountain Power heat pump rebate; Green Mountain Power income-eligible heat pump rebate",
    "facts": [
-    "vt-4-efficiency-vermont-home-weatherization"
+    "vt-2-green-mountain-power-income-eligible-heat-pump-reb"
    ],
-   "used_by_pages": [],
-   "last_read": "2026-09-28"
+   "used_by_pages": [
+    "/programs/green-mountain-power-rebates/"
+   ],
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.efficiencyvermont.com/rebates/list/centrally-ducted-heat-pumps",
@@ -3180,18 +3259,36 @@
     "vt-1-efficiency-vermont-income-bonus-heat-pumps"
    ],
    "used_by_pages": [],
-   "last_read": "2026-09-28"
+   "last_read": "2026-10-03"
+  },
+  {
+   "url": "https://www.efficiencyvermont.com/rebates/list/ground-source-heat-pumps",
+   "host": "www.efficiencyvermont.com",
+   "region": "vt",
+   "check": "Efficiency Vermont ground source heat pumps",
+   "facts": [
+    "vt-8-efficiency-vermont-ground-source"
+   ],
+   "used_by_pages": [
+    "/programs/efficiency-vermont-rebates/"
+   ],
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system",
    "host": "www.efficiencyvermont.com",
    "region": "vt",
-   "check": "Efficiency Vermont heat pump rebates",
+   "check": "Burlington Electric Department heat pump offers; Efficiency Vermont ductless heat pumps; Efficiency Vermont heat pump rebates; Other Vermont utility partner offers",
    "facts": [
-    "vt-0-efficiency-vermont-heat-pump-rebates"
+    "vt-0-efficiency-vermont-heat-pump-rebates",
+    "vt-6-burlington-electric-heat-pump-offers",
+    "vt-7-vermont-utility-partner-offers"
    ],
-   "used_by_pages": [],
-   "last_read": "2026-09-28"
+   "used_by_pages": [
+    "/programs/efficiency-vermont-rebates/",
+    "/programs/green-mountain-power-rebates/"
+   ],
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.efficiencyvermont.com/rebates/list/heat-pump-water-heaters",
@@ -3202,7 +3299,31 @@
     "vt-3-efficiency-vermont-heat-pump-water-heater"
    ],
    "used_by_pages": [],
-   "last_read": "2026-09-28"
+   "last_read": "2026-10-03"
+  },
+  {
+   "url": "https://www.efficiencyvermont.com/rebates/list/home-performance-with-energy-star",
+   "host": "www.efficiencyvermont.com",
+   "region": "vt",
+   "check": "Efficiency Vermont Home Performance with ENERGY STAR; Efficiency Vermont Home Performance with ENERGY STAR (weatherization)",
+   "facts": [
+    "vt-4-efficiency-vermont-home-weatherization"
+   ],
+   "used_by_pages": [
+    "/programs/efficiency-vermont-rebates/"
+   ],
+   "last_read": "2026-10-03"
+  },
+  {
+   "url": "https://www.efficiencyvermont.com/rebates/list?type=res",
+   "host": "www.efficiencyvermont.com",
+   "region": "vt",
+   "check": "Efficiency Vermont smart thermostat and appliance rebates",
+   "facts": [
+    "vt-9-efficiency-vermont-small-appliances"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-03"
   }
  ]
 }

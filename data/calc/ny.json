@@ -11,11 +11,11 @@
  "h1": "New York Rebate Calculator 2026: What Your Utility Pays",
  "desc": "Free New York rebate calculator. NYS Clean Heat heat pump rebates by utility, heat pump water heaters and free income-based upgrades, with the official source for every amount.",
  "intro": "Answer a few questions and see which New York rebates fit your home, with a source for every number.",
- "short": "New York's heat pump rebate is NYS Clean Heat, paid through your electric utility: about $5,000 to $7,000 for a full system (more in a disadvantaged community, and up to $10,000 or more with the old system removed). Long Island is separate, through PSEG Long Island. Clean Heat and your utility's rebate are the same money, so they do not stack.",
+ "short": "New York's heat pump rebate is NYS Clean Heat, paid through your electric utility. For a single-family full system it is $4,000 to $7,000 with a standard home, and $8,000 to $14,000 for a weatherized home that removes its old heating system, depending on your utility and whether you are in a disadvantaged community. Long Island is separate, through PSEG Long Island. Clean Heat and your utility's rebate are the same money, so they do not stack.",
  "faq": [
   [
    "How much is the New York heat pump rebate in 2026?",
-   "It depends on your utility. For a single-family full-system replacement, Con Edison pays $7,000, National Grid, NYSEG and RG&E pay $6,000, and Central Hudson and Orange & Rockland pay $5,000. Disadvantaged communities get more. With the old system removed, the top tier reaches $10,000 in several areas. PSEG Long Island pays $4,000 to $7,500."
+   "It depends on your utility and your home. For a single-family full system that keeps the old heat as a backup, Con Edison pays $2,500, National Grid, NYSEG, RG&E, Central Hudson and Orange & Rockland pay $4,000. Removing the old system raises that to $7,000 outside a disadvantaged community. Since September 1, 2026 a weatherized home gets more, up to $12,000 outside a disadvantaged community and $14,000 inside one with National Grid and Orange & Rockland. PSEG Long Island pays $4,000 to $7,500."
   ],
   [
    "Does NYS Clean Heat stack with my utility rebate?",
@@ -218,6 +218,33 @@
    ]
   },
   {
+   "id": "hp_path",
+   "label": "Will you remove your old heating system, and is your home weatherized?",
+   "type": "select",
+   "options": [
+    {
+     "value": "keep",
+     "label": "Keep my old system as a backup (standard home)"
+    },
+    {
+     "value": "keep_wx",
+     "label": "Keep my old system as a backup (weatherized home)"
+    },
+    {
+     "value": "remove",
+     "label": "Remove or disable my old system (standard home)"
+    },
+    {
+     "value": "remove_wx",
+     "label": "Remove or disable my old system (weatherized home)"
+    }
+   ],
+   "help": "From September 1, 2026 a higher Weatherized Tier applies if the home was built after 2010, took part in an approved utility or NYSERDA weatherization program, or passes a heating-load test. Your contractor confirms this.",
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
    "id": "dac",
    "label": "Is your home in a disadvantaged community?",
    "type": "select",
@@ -257,32 +284,9 @@
  ],
  "programs": [
   {
-   "id": "coned-full",
+   "id": "coned-keep",
    "fact": "ny-2-con-edison-clean-heat-air-source",
-   "name": "Con Edison Clean Heat: full system",
-   "upgrade": "heat-pump",
-   "amount": {
-    "by": "dac",
-    "values": {
-     "no": 7000,
-     "yes": 8000
-    }
-   },
-   "rules": "Single-family home in NYC or Westchester, approved contractor, home must be service adequate. The discount comes off your contractor's invoice. A higher weatherized tier pays $10,000 ($11,000 in a disadvantaged community).",
-   "when": {
-    "utility": [
-     "coned"
-    ],
-    "hp_scope": [
-     "full"
-    ]
-   },
-   "group": "hp"
-  },
-  {
-   "id": "coned-partial",
-   "fact": "ny-2-con-edison-clean-heat-air-source",
-   "name": "Con Edison Clean Heat: partial system",
+   "name": "Con Edison Clean Heat: full system, keep old system",
    "upgrade": "heat-pump",
    "amount": {
     "by": "dac",
@@ -291,7 +295,111 @@
      "yes": 4500
     }
    },
-   "rules": "Single-family home, approved contractor.",
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required. Uses integrated controls (Category 2a).",
+   "when": {
+    "utility": [
+     "coned"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "keep"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "coned-keep_wx",
+   "fact": "ny-2-con-edison-clean-heat-air-source",
+   "name": "Con Edison Clean Heat: full system, keep old system, Weatherized Tier",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 2500,
+     "yes": 4500
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required. Con Edison pays no Weatherized Tier when the project uses integrated controls.",
+   "when": {
+    "utility": [
+     "coned"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "keep_wx"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "coned-remove",
+   "fact": "ny-2-con-edison-clean-heat-air-source",
+   "name": "Con Edison Clean Heat: full system, remove old system",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 7000,
+     "yes": 8000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "coned"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "remove"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "coned-remove_wx",
+   "fact": "ny-2-con-edison-clean-heat-air-source",
+   "name": "Con Edison Clean Heat: full system, remove old system, Weatherized Tier",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 10000,
+     "yes": 11000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required. Con Edison pays no Weatherized Tier when the project uses integrated controls.",
+   "when": {
+    "utility": [
+     "coned"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "remove_wx"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "coned-partial",
+   "fact": "ny-2-con-edison-clean-heat-air-source",
+   "name": "Con Edison Clean Heat: adding to a partial system",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 4000,
+     "yes": 4000
+    }
+   },
+   "rules": "For homes that already have a partial-load cold-climate heat pump and are adding to reach a full system.",
    "when": {
     "utility": [
      "coned"
@@ -303,24 +411,105 @@
    "group": "hp"
   },
   {
-   "id": "ng-full",
+   "id": "ng-keep",
    "fact": "ny-4-national-grid-clean-heat-upstate",
-   "name": "National Grid Clean Heat: full system",
+   "name": "National Grid Clean Heat: full system, keep old system",
    "upgrade": "heat-pump",
    "amount": {
     "by": "dac",
     "values": {
-     "no": 6000,
-     "yes": 8000
+     "no": 4000,
+     "yes": 6000
     }
    },
-   "rules": "Upstate National Grid electric customer, participating contractor. Removing the old system raises it to $10,000 ($12,000 in a disadvantaged community).",
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
    "when": {
     "utility": [
      "ng"
     ],
     "hp_scope": [
      "full"
+    ],
+    "hp_path": [
+     "keep"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ng-keep_wx",
+   "fact": "ny-4-national-grid-clean-heat-upstate",
+   "name": "National Grid Clean Heat: full system, keep old system, Weatherized Tier",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 8000,
+     "yes": 10000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "ng"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "keep_wx"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ng-remove",
+   "fact": "ny-4-national-grid-clean-heat-upstate",
+   "name": "National Grid Clean Heat: full system, remove old system",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 7000,
+     "yes": 9000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "ng"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "remove"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ng-remove_wx",
+   "fact": "ny-4-national-grid-clean-heat-upstate",
+   "name": "National Grid Clean Heat: full system, remove old system, Weatherized Tier",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 12000,
+     "yes": 14000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "ng"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "remove_wx"
     ]
    },
    "group": "hp"
@@ -328,7 +517,7 @@
   {
    "id": "ng-partial",
    "fact": "ny-4-national-grid-clean-heat-upstate",
-   "name": "National Grid Clean Heat: partial system",
+   "name": "National Grid Clean Heat: adding to a partial system",
    "upgrade": "heat-pump",
    "amount": {
     "by": "dac",
@@ -337,7 +526,7 @@
      "yes": 4000
     }
    },
-   "rules": "Upstate National Grid electric customer, participating contractor.",
+   "rules": "For homes that already have a partial-load cold-climate heat pump and are adding to reach a full system.",
    "when": {
     "utility": [
      "ng"
@@ -349,24 +538,105 @@
    "group": "hp"
   },
   {
-   "id": "rge-full",
+   "id": "rge-keep",
    "fact": "ny-5-rg-e-clean-heat-rochester",
-   "name": "RG&E Clean Heat: full system",
+   "name": "RG&E Clean Heat: full system, keep old system",
    "upgrade": "heat-pump",
    "amount": {
     "by": "dac",
     "values": {
-     "no": 6000,
-     "yes": 6000
+     "no": 4000,
+     "yes": 5000
     }
    },
-   "rules": "RG&E electric customers, including the City of Rochester. Removing the old system raises it to $10,000.",
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
    "when": {
     "utility": [
      "rge"
     ],
     "hp_scope": [
      "full"
+    ],
+    "hp_path": [
+     "keep"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "rge-keep_wx",
+   "fact": "ny-5-rg-e-clean-heat-rochester",
+   "name": "RG&E Clean Heat: full system, keep old system, Weatherized Tier",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 8000,
+     "yes": 9000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "rge"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "keep_wx"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "rge-remove",
+   "fact": "ny-5-rg-e-clean-heat-rochester",
+   "name": "RG&E Clean Heat: full system, remove old system",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 7000,
+     "yes": 8000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "rge"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "remove"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "rge-remove_wx",
+   "fact": "ny-5-rg-e-clean-heat-rochester",
+   "name": "RG&E Clean Heat: full system, remove old system, Weatherized Tier",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 12000,
+     "yes": 13000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "rge"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "remove_wx"
     ]
    },
    "group": "hp"
@@ -374,7 +644,7 @@
   {
    "id": "rge-partial",
    "fact": "ny-5-rg-e-clean-heat-rochester",
-   "name": "RG&E Clean Heat: partial system",
+   "name": "RG&E Clean Heat: adding to a partial system",
    "upgrade": "heat-pump",
    "amount": {
     "by": "dac",
@@ -383,7 +653,7 @@
      "yes": 3000
     }
    },
-   "rules": "RG&E electric customers, participating contractor.",
+   "rules": "For homes that already have a partial-load cold-climate heat pump and are adding to reach a full system.",
    "when": {
     "utility": [
      "rge"
@@ -395,24 +665,105 @@
    "group": "hp"
   },
   {
-   "id": "nyseg-full",
+   "id": "nyseg-keep",
    "fact": "ny-6-nyseg-clean-heat",
-   "name": "NYSEG Clean Heat: full system",
+   "name": "NYSEG Clean Heat: full system, keep old system",
    "upgrade": "heat-pump",
    "amount": {
     "by": "dac",
     "values": {
-     "no": 6000,
-     "yes": 7000
+     "no": 4000,
+     "yes": 5000
     }
    },
-   "rules": "NYSEG electric customers. Removing the old system raises it to $10,000 ($11,000 in a disadvantaged community).",
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
    "when": {
     "utility": [
      "nyseg"
     ],
     "hp_scope": [
      "full"
+    ],
+    "hp_path": [
+     "keep"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "nyseg-keep_wx",
+   "fact": "ny-6-nyseg-clean-heat",
+   "name": "NYSEG Clean Heat: full system, keep old system, Weatherized Tier",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 8000,
+     "yes": 9000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "nyseg"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "keep_wx"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "nyseg-remove",
+   "fact": "ny-6-nyseg-clean-heat",
+   "name": "NYSEG Clean Heat: full system, remove old system",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 7000,
+     "yes": 8000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "nyseg"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "remove"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "nyseg-remove_wx",
+   "fact": "ny-6-nyseg-clean-heat",
+   "name": "NYSEG Clean Heat: full system, remove old system, Weatherized Tier",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 12000,
+     "yes": 13000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "nyseg"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "remove_wx"
     ]
    },
    "group": "hp"
@@ -420,7 +771,7 @@
   {
    "id": "nyseg-partial",
    "fact": "ny-6-nyseg-clean-heat",
-   "name": "NYSEG Clean Heat: partial system",
+   "name": "NYSEG Clean Heat: adding to a partial system",
    "upgrade": "heat-pump",
    "amount": {
     "by": "dac",
@@ -429,7 +780,7 @@
      "yes": 3000
     }
    },
-   "rules": "NYSEG electric customers, participating contractor.",
+   "rules": "For homes that already have a partial-load cold-climate heat pump and are adding to reach a full system.",
    "when": {
     "utility": [
      "nyseg"
@@ -441,24 +792,105 @@
    "group": "hp"
   },
   {
-   "id": "ch-full",
+   "id": "ch-keep",
    "fact": "ny-7-central-hudson-clean-heat",
-   "name": "Central Hudson Clean Heat: full system",
+   "name": "Central Hudson Clean Heat: full system, keep old system",
    "upgrade": "heat-pump",
    "amount": {
     "by": "dac",
     "values": {
-     "no": 5000,
-     "yes": 5000
+     "no": 4000,
+     "yes": 4000
     }
    },
-   "rules": "Central Hudson electric customers, single-family home. Removing the old system raises it to $8,000. Apartments and homes under 1,000 sq ft get less.",
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
    "when": {
     "utility": [
      "ch"
     ],
     "hp_scope": [
      "full"
+    ],
+    "hp_path": [
+     "keep"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ch-keep_wx",
+   "fact": "ny-7-central-hudson-clean-heat",
+   "name": "Central Hudson Clean Heat: full system, keep old system, Weatherized Tier",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 8000,
+     "yes": 8000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "ch"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "keep_wx"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ch-remove",
+   "fact": "ny-7-central-hudson-clean-heat",
+   "name": "Central Hudson Clean Heat: full system, remove old system",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 7000,
+     "yes": 7000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "ch"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "remove"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ch-remove_wx",
+   "fact": "ny-7-central-hudson-clean-heat",
+   "name": "Central Hudson Clean Heat: full system, remove old system, Weatherized Tier",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 12000,
+     "yes": 12000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "ch"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "remove_wx"
     ]
    },
    "group": "hp"
@@ -466,7 +898,7 @@
   {
    "id": "ch-partial",
    "fact": "ny-7-central-hudson-clean-heat",
-   "name": "Central Hudson Clean Heat: partial system",
+   "name": "Central Hudson Clean Heat: adding to a partial system",
    "upgrade": "heat-pump",
    "amount": {
     "by": "dac",
@@ -475,7 +907,7 @@
      "yes": 3000
     }
    },
-   "rules": "Central Hudson electric customers, single-family home.",
+   "rules": "For homes that already have a partial-load cold-climate heat pump and are adding to reach a full system.",
    "when": {
     "utility": [
      "ch"
@@ -487,24 +919,105 @@
    "group": "hp"
   },
   {
-   "id": "or-full",
+   "id": "or-keep",
    "fact": "ny-8-orange-rockland-clean-heat",
-   "name": "Orange & Rockland Clean Heat: full system",
+   "name": "Orange & Rockland Clean Heat: full system, keep old system",
    "upgrade": "heat-pump",
    "amount": {
     "by": "dac",
     "values": {
-     "no": 5000,
+     "no": 4000,
      "yes": 6000
     }
    },
-   "rules": "O&R electric customers. Removing the old system raises it to $9,000 ($10,000 in a disadvantaged community).",
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
    "when": {
     "utility": [
      "or"
     ],
     "hp_scope": [
      "full"
+    ],
+    "hp_path": [
+     "keep"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "or-keep_wx",
+   "fact": "ny-8-orange-rockland-clean-heat",
+   "name": "Orange & Rockland Clean Heat: full system, keep old system, Weatherized Tier",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 8000,
+     "yes": 10000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "or"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "keep_wx"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "or-remove",
+   "fact": "ny-8-orange-rockland-clean-heat",
+   "name": "Orange & Rockland Clean Heat: full system, remove old system",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 7000,
+     "yes": 9000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "or"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "remove"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "or-remove_wx",
+   "fact": "ny-8-orange-rockland-clean-heat",
+   "name": "Orange & Rockland Clean Heat: full system, remove old system, Weatherized Tier",
+   "upgrade": "heat-pump",
+   "amount": {
+    "by": "dac",
+    "values": {
+     "no": 12000,
+     "yes": 14000
+    }
+   },
+   "rules": "Single-family home. Apartments and homes under 1,000 sq ft get about half. Participating contractor required.",
+   "when": {
+    "utility": [
+     "or"
+    ],
+    "hp_scope": [
+     "full"
+    ],
+    "hp_path": [
+     "remove_wx"
     ]
    },
    "group": "hp"
@@ -512,16 +1025,16 @@
   {
    "id": "or-partial",
    "fact": "ny-8-orange-rockland-clean-heat",
-   "name": "Orange & Rockland Clean Heat: partial system",
+   "name": "Orange & Rockland Clean Heat: adding to a partial system",
    "upgrade": "heat-pump",
    "amount": {
     "by": "dac",
     "values": {
-     "no": 3000,
-     "yes": 3000
+     "no": 4000,
+     "yes": 4000
     }
    },
-   "rules": "O&R electric customers, participating contractor.",
+   "rules": "For homes that already have a partial-load cold-climate heat pump and are adding to reach a full system.",
    "when": {
     "utility": [
      "or"
@@ -563,7 +1076,7 @@
    "amount": {
     "by": "utility",
     "values": {
-     "coned": 1000,
+     "coned": 1300,
      "ng": 1250,
      "rge": 1250,
      "nyseg": 1250,
@@ -571,7 +1084,7 @@
      "or": 1250
     }
    },
-   "rules": "Electric customers of the utility. Con Edison pays $1,000, the others $1,250.",
+   "rules": "Electric customers of the utility. Con Edison pays $1,000, the others $1,250. Con Edison runs a limited-time $1,500 offer for applications submitted September 1 to November 30, 2026.",
    "when": {
     "utility": [
      "coned",

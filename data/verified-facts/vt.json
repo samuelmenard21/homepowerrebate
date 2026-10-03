@@ -1,77 +1,125 @@
 {
- "checked": "2026-09-28",
- "facts": [
-  {
-   "id": "vt-0-efficiency-vermont-heat-pump-rebates",
-   "program": "Efficiency Vermont heat pump rebates",
-   "status": "active",
-   "verified_on": "2026-09-28",
-   "claim": "Up to $475 on a ductless (mini-split) heat pump; up to $2,200 on a ducted heat pump. Distributor discounts start at $375 (ductless) and $1,200 (ducted). Extra $600 for integrated controls with a ductless heat pump.",
-   "amount": "up to $475 ductless / up to $2,200 ducted",
-   "eligibility": "Vermont electric customers; qualifying cold-climate equipment",
-   "dates": "2026",
-   "source_url": "https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system",
-   "notes": "Pages return 403 to automated fetch; figures taken from efficiencyvermont.com search excerpts (ductless, ducted and 2026 announcement pages)."
-  },
-  {
-   "id": "vt-1-efficiency-vermont-income-bonus-heat-pumps",
-   "program": "Efficiency Vermont income bonus (heat pumps)",
-   "status": "active",
-   "verified_on": "2026-09-28",
-   "claim": "Households at or below low- or moderate-income guidelines get a $200-$2,200 bonus rebate depending on utility and income level. 2026 income limits effective July 1, 2026.",
-   "amount": "$200-$2,200 bonus",
-   "eligibility": "Low/moderate income per Efficiency Vermont guidelines",
-   "dates": "Income limits effective July 1, 2026",
-   "source_url": "https://www.efficiencyvermont.com/rebates/list/centrally-ducted-heat-pumps",
-   "notes": "The '$7,950' heat pump figure previously shown on Barre/Montpelier/Rutland/South Burlington came from Burlington Electric Department content copied over by the generator; no primary source supports $7,950 for Green Mountain Power customers."
-  },
-  {
-   "id": "vt-2-green-mountain-power-income-eligible-heat-pump-reb",
-   "program": "Green Mountain Power income-eligible heat pump rebate",
-   "status": "active",
-   "verified_on": "2026-09-28",
-   "claim": "GMP enhanced post-purchase heat pump rebate of $2,000 for customers at or below 80% AMI, applied together with the Efficiency Vermont rebate.",
-   "amount": "$2,000",
-   "eligibility": "GMP customers at or below 80% AMI",
-   "dates": "Announced 2024; still listed on GMP site",
-   "source_url": "https://greenmountainpower.com/heat-pump-rebate/",
-   "notes": "Confirm current status before quoting on-page; not used in hero strips."
-  },
-  {
-   "id": "vt-3-efficiency-vermont-heat-pump-water-heater",
-   "program": "Efficiency Vermont heat pump water heater",
-   "status": "active",
-   "verified_on": "2026-09-28",
-   "claim": "$600 discount on a heat pump water heater; additional $400 for low/moderate-income households.",
-   "amount": "$600 (up to $1,000 income-eligible)",
-   "eligibility": "Vermont homeowners",
-   "dates": "2026",
-   "source_url": "https://www.efficiencyvermont.com/rebates/list/heat-pump-water-heaters",
-   "notes": ""
-  },
-  {
-   "id": "vt-4-efficiency-vermont-home-weatherization",
-   "program": "Efficiency Vermont home weatherization",
-   "status": "active",
-   "verified_on": "2026-09-28",
-   "claim": "75% of weatherization project cost back, up to $4,000; moderate-income households 75% up to $9,500.",
-   "amount": "up to $4,000 ($9,500 moderate income)",
-   "eligibility": "Vermont homeowners using an Efficiency Excellence Network contractor",
-   "dates": "2026",
-   "source_url": "https://www.efficiencyvermont.com/news-blog/news/efficiency-vermont-announces-2026-rebates-to-help-vermonters-achieve-their-home-energy-goals-in-the-new-year",
-   "notes": "Hero strips previously showed an unsupported '$7,000' insulation figure."
-  },
-  {
-   "id": "vt-5-electric-utility-by-city",
-   "program": "Electric utility by city",
-   "status": "active",
-   "verified_on": "2026-09-28",
-   "claim": "Barre, Montpelier, Rutland and South Burlington hubs are Green Mountain Power territory; Burlington is Burlington Electric Department.",
-   "amount": "",
-   "eligibility": "",
-   "dates": "",
-   "source_url": "https://greenmountainpower.com/rebates-programs/",
-   "notes": "Per the pre-clobber hub pages and city-rebate-lookup.json."
-  }
- ]
+  "checked": "2026-10-03",
+  "facts": [
+    {
+      "id": "vt-0-efficiency-vermont-heat-pump-rebates",
+      "program": "Efficiency Vermont heat pump rebates",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Ductless heat pump: $375 off up to 2 tons, $475 off over 2 tons (instant discount, effective Jan 1, 2026), plus up to $600 for integrated controls. Ducted heat pump: $1,200 off up to 2 tons, $1,700 over 2 and under 4 tons, $2,200 at 4 tons or more (effective April 1, 2025).",
+      "amount": "$375-$475 ductless; $1,200-$2,200 ducted; +$600 integrated controls",
+      "eligibility": "Vermont electric customers; qualifying cold-climate equipment",
+      "dates": "2026",
+      "source_url": "https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system",
+      "notes": "Read on efficiencyvermont.com ductless, ducted and integrated-controls pages 2026-10-03."
+    },
+    {
+      "id": "vt-1-efficiency-vermont-income-bonus-heat-pumps",
+      "program": "Efficiency Vermont income bonus (heat pumps)",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Income bonus on heat pumps, $200 to $2,200 depending on utility and income level: Green Mountain Power low-income $2,200; VPPSA municipal utilities moderate or low income $1,000; all other utilities $200. Rental property owners and Burlington Electric customers are not eligible for this bonus. 2026 income limits effective July 1, 2026.",
+      "amount": "$200-$2,200 bonus",
+      "eligibility": "Low/moderate income per Efficiency Vermont guidelines",
+      "dates": "Income limits effective July 1, 2026",
+      "source_url": "https://www.efficiencyvermont.com/rebates/list/centrally-ducted-heat-pumps",
+      "notes": "Read 2026-10-03. The '$7,950' figure once shown on GMP-territory city pages came from Burlington Electric content; no source supports it for Green Mountain Power customers."
+    },
+    {
+      "id": "vt-2-green-mountain-power-income-eligible-heat-pump-reb",
+      "program": "Green Mountain Power income-eligible heat pump rebate",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "GMP pays an income-eligible heat pump rebate of $2,000 per condenser to customers at or below 80% of area median income, combined with the Efficiency Vermont rebate in one application made through Efficiency Vermont's site. 2026 80% AMI limits for a household of four: $92,150 Addison County, $99,750 Chittenden, Franklin and Grand Isle, $91,200 Washington, $89,200 other counties.",
+      "amount": "$2,000",
+      "eligibility": "GMP customers at or below 80% AMI",
+      "dates": "2026 AMI table",
+      "source_url": "https://greenmountainpower.com/rebates-programs/home-and-yard/heat-pump/",
+      "notes": "Old URL greenmountainpower.com/heat-pump-rebate/ is gone (404); current page read 2026-10-03."
+    },
+    {
+      "id": "vt-3-efficiency-vermont-heat-pump-water-heater",
+      "program": "Efficiency Vermont heat pump water heater",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Heat pump water heater: $600 discount or rebate, plus $400 more for income-eligible households, up to $1,000 (effective Aug 16, 2025). GMP's own page points to Efficiency Vermont for up to $600.",
+      "amount": "$600 (up to $1,000 income-eligible)",
+      "eligibility": "Vermont homeowners",
+      "dates": "2026",
+      "source_url": "https://www.efficiencyvermont.com/rebates/list/heat-pump-water-heaters",
+      "notes": "Read 2026-10-03."
+    },
+    {
+      "id": "vt-4-efficiency-vermont-home-weatherization",
+      "program": "Efficiency Vermont Home Performance with ENERGY STAR (weatherization)",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "75% of qualifying insulation and air-sealing project cost, up to $3,000; up to $7,000 for low and moderate income households whose property is their primary residence (effective July 1, 2026, while funding lasts). Needs an Efficiency Excellence Network contractor and at least a 10% blower-door air leakage reduction. Burlington Electric and Vermont Gas customers are paid by their own utility, up to $9,500 for a single-family home.",
+      "amount": "up to $3,000 ($7,000 income-eligible)",
+      "eligibility": "Existing 1 to 4 unit Vermont homes; Efficiency Excellence Network contractor",
+      "dates": "Effective July 1, 2026, while funding lasts",
+      "source_url": "https://www.efficiencyvermont.com/rebates/list/home-performance-with-energy-star",
+      "notes": "Replaces the earlier $4,000/$9,500 figure, which came from the January 2026 announcement and is out of date. The $9,500 figure now applies to Burlington Electric and Vermont Gas customers."
+    },
+    {
+      "id": "vt-5-electric-utility-by-city",
+      "program": "Electric utility by city",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Barre, Montpelier, Rutland and South Burlington are Green Mountain Power territory; Burlington is Burlington Electric Department.",
+      "amount": "",
+      "eligibility": "",
+      "dates": "",
+      "source_url": "https://greenmountainpower.com/rebates-programs/",
+      "notes": "Per the pre-clobber hub pages and city-rebate-lookup.json."
+    },
+    {
+      "id": "vt-6-burlington-electric-heat-pump-offers",
+      "program": "Burlington Electric Department heat pump offers",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Burlington Electric customers: up to $2,900 on a ductless heat pump and up to $8,750 on a ducted system as a post-purchase rebate, plus discounts of $350 to $450 (ductless) and $1,000 to $2,000 (ducted) and up to $1,200 on a heat pump water heater, listed as partner offers on the Efficiency Vermont pages.",
+      "amount": "up to $2,900 ductless / $8,750 ducted",
+      "eligibility": "Burlington Electric Department customers",
+      "dates": "2026",
+      "source_url": "https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system",
+      "notes": "Read 2026-10-03 under Partner Offers on the ductless and ducted pages."
+    },
+    {
+      "id": "vt-7-vermont-utility-partner-offers",
+      "program": "Other Vermont utility partner offers",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Stowe Electric $250 and Vermont Electric Co-op $150 thermal bonus on ductless heat pumps; VPPSA municipal utilities $200 weatherization rebate and $200 on heat pump water heaters.",
+      "amount": "$150-$250 ductless; $200 weatherization/HPWH",
+      "eligibility": "Customers of those utilities",
+      "dates": "2026",
+      "source_url": "https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system",
+      "notes": "Read 2026-10-03 on the Efficiency Vermont ductless and water heater pages."
+    },
+    {
+      "id": "vt-8-efficiency-vermont-ground-source",
+      "program": "Efficiency Vermont ground source heat pumps",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Up to $2,100 per ton cash back on qualifying ground source heat pumps, plus a $500 bonus for income-eligible Vermonters. New systems up to 10 tons; wood-heating customers not eligible; Efficiency Excellence Network contractor.",
+      "amount": "up to $2,100 per ton (+$500 income-eligible)",
+      "eligibility": "Vermont electric customers; Hyde Park Electric customers may not get the full amount",
+      "dates": "Offer subject to change",
+      "source_url": "https://www.efficiencyvermont.com/rebates/list/ground-source-heat-pumps",
+      "notes": "Read 2026-10-03."
+    },
+    {
+      "id": "vt-9-efficiency-vermont-small-appliances",
+      "program": "Efficiency Vermont smart thermostat and appliance rebates",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Smart thermostat up to $100; clothes dryer up to $400 (washer-dryer combination $400); window air conditioner $150; wood or pellet stove $400 at purchase; dehumidifier from $25; Home Energy Loan from 0% interest; free products for income-qualified Vermonters.",
+      "amount": "$25-$400 by product",
+      "eligibility": "Vermont residents",
+      "dates": "2026",
+      "source_url": "https://www.efficiencyvermont.com/rebates/list?type=res",
+      "notes": "Residential list read 2026-10-03."
+    }
+  ]
 }

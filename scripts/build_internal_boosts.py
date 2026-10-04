@@ -286,6 +286,26 @@ JOBS += [
 ]
 
 
+# Oct 2026: one state-level page per topic where every city has the same answer (city URLs 301 here).
+def _hub_and_cities(region):
+    base = ROOT / region
+    return [f"{region}/index.html"] + sorted(str(p.relative_to(ROOT)) for p in base.glob("*/index.html")) + sorted(str(p.relative_to(ROOT)) for p in base.glob("*/*/index.html") if p.parent.parent.name not in ("battery", "ev-charger"))
+
+
+STATE_TOPICS = [
+    ("us/ma", "/us/ma/battery/", "Massachusetts home battery rebates and incentives"),
+    ("us/pa", "/us/pa/battery/", "Pennsylvania home battery rebates and incentives"),
+    ("us/co", "/us/co/battery/", "Colorado home battery rebates and incentives"),
+    ("us/ny", "/us/ny/battery/", "New York home battery rebates and incentives"),
+    ("us/ma", "/us/ma/ev-charger/", "Massachusetts home EV charger rebates"),
+    ("ca/ab", "/ca/ab/ev-charger/", "Alberta home EV charger rebates"),
+]
+for region, url, label in STATE_TOPICS:
+    marker = "STATE-" + url.strip("/").replace("/", "-").upper() + "-LINK"
+    pages = [p for p in (_hub_and_cities(region) if region != "us/ny" else [f"{region}/index.html"] + sorted(str(p.relative_to(ROOT)) for p in (ROOT / region).glob("*/*/index.html"))) if not p.startswith(url.strip("/"))]
+    JOBS.append((marker, f'<b>Statewide answer:</b> see <a href="{url}">{label}</a>, with what is open, what has closed and the dates to watch.', pages))
+
+
 def main():
     n = greener_section() + attic_section() + ottawa_eap() + peak_section() + rvalue_section()
     for marker, html, pages in JOBS:

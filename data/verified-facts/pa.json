@@ -1,5 +1,5 @@
 {
- "checked": "2026-09-29",
+ "checked": "2026-10-03",
  "notes": "PECO and PPL amounts come from the utilities' own rebate pages as captured in /programs/peco-rebates/ and /programs/ppl-electric-rebates/. Not verified: Penelec (FirstEnergy) and Duquesne Light Phase V amounts (their portals were not readable on 2026-09-29), PECO income-eligible amounts, Philadelphia Energy Authority solar rebate status for 2026. Do not state those as verified.",
  "facts": [
   {
@@ -11,7 +11,8 @@
    "amount": "$200 or $300",
    "eligibility": "PECO electric customers; 11.0 EER2 and 7.8 HSPF2 minimum",
    "dates": "Apply within 90 days of purchase",
-   "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-rebates"
+   "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-rebates",
+   "notes": "Not re-read 2026-10-03 (peco.com blocked fetchers); verified 2026-09-29."
   },
   {
    "id": "pa-1-peco-ductless-mini-split-heat-pump",
@@ -22,7 +23,8 @@
    "amount": "$150 or $300",
    "eligibility": "Same as above",
    "dates": "Apply within 90 days",
-   "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-rebates"
+   "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-rebates",
+   "notes": "Not re-read 2026-10-03 (peco.com blocked fetchers); verified 2026-09-29."
   },
   {
    "id": "pa-2-peco-heat-pump-water-heater",
@@ -33,7 +35,8 @@
    "amount": "$350",
    "eligibility": "ENERGY STAR certified, electric",
    "dates": "Apply within 90 days",
-   "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/appliance-rebates"
+   "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/appliance-rebates",
+   "notes": "Not re-read 2026-10-03 (peco.com blocked fetchers); verified 2026-09-29."
   },
   {
    "id": "pa-3-peco-smart-thermostat",
@@ -44,24 +47,26 @@
    "amount": "$25 to $50",
    "eligibility": "PECO customers",
    "dates": "2026",
-   "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/appliance-rebates"
+   "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts/appliance-rebates",
+   "notes": "Not re-read 2026-10-03 (peco.com blocked fetchers); verified 2026-09-29."
   },
   {
    "id": "pa-4-ppl-electric-heat-pumps",
    "program": "PPL Electric heat pumps",
-   "status": "check",
-   "verified_on": "2026-09-29",
+   "status": "active",
+   "verified_on": "2026-10-03",
    "claim": "Air source $225 or $325; mini-split $225; ground source $500",
    "amount": "$225 to $500",
    "eligibility": "PPL Electric customers; amount depends on your offer",
    "dates": "Equipment installed on or before May 31, 2026 no longer eligible; applications generally within 180 days",
-   "source_url": "https://ppl.clearesult.com/rebates"
+   "source_url": "https://ppl.clearesult.com/rebates",
+   "notes": "Re-read 2026-10-03: PPL rebate store lists ENERGY STAR air-source $225 or $325, mini-split $225, ground-source $500, each with Apply for Rebate."
   },
   {
    "id": "pa-5-ppl-electric-heat-pump-water-heater",
    "program": "PPL Electric heat pump water heater",
    "status": "active",
-   "verified_on": "2026-09-29",
+   "verified_on": "2026-10-03",
    "claim": "$400",
    "amount": "$400",
    "eligibility": "ENERGY STAR certified",
@@ -72,7 +77,7 @@
    "id": "pa-6-ppl-electric-smart-thermostat",
    "program": "PPL Electric smart thermostat",
    "status": "active",
-   "verified_on": "2026-09-29",
+   "verified_on": "2026-10-03",
    "claim": "$50 or $100",
    "amount": "$50 to $100",
    "eligibility": "ENERGY STAR certified",
@@ -83,12 +88,13 @@
    "id": "pa-7-ppl-electric-insulation-and-air-sealing",
    "program": "PPL Electric insulation and air sealing",
    "status": "active",
-   "verified_on": "2026-09-29",
-   "claim": "Insulation up to $200 or $500; air sealing up to $150",
+   "verified_on": "2026-10-03",
+   "claim": "Attic, exterior wall and rim joist insulation each up to $200 or $500; air sealing up to $150",
    "amount": "up to $500",
    "eligibility": "Amount depends on your offer",
    "dates": "2026",
-   "source_url": "https://ppl.clearesult.com/rebates"
+   "source_url": "https://ppl.clearesult.com/rebates",
+   "notes": "Re-read 2026-10-03. The higher amount applies to customers who qualify for enhanced, income-based offers (PPL Check Best Offers)."
   },
   {
    "id": "pa-8-pa-sunshine-solar-program",
@@ -123,7 +129,8 @@
    "amount": "$0 now",
    "eligibility": "PECO customers",
    "dates": "Closed April 2026",
-   "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts"
+   "source_url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts",
+   "notes": "Not re-read 2026-10-03 (peco.com blocked fetchers); verified 2026-09-29."
   }
  ]
 }

@@ -22,7 +22,7 @@ BASE = ca.BASE
 FACTS = ca.FACTS
 LABEL = {"insulation": "Insulation", "windows-doors": "Windows & Doors", "water-heater": "Water Heater", "heat-pump": "Heat Pump", "solar": "Solar", "battery": "Battery Storage",
          "ev-charger": "EV Charger", "smart-thermostats": "Smart Thermostat", "appliances": "Appliance", "hrv": "HRV & Ventilation"}
-BUILT = ["windows-doors", "insulation", "heat-pump", "water-heater", "solar"]
+BUILT = ["windows-doors", "insulation", "heat-pump", "water-heater", "solar", "battery"]
 HUB = ["index"]
 NAMES = {"barrie": "Barrie", "brampton": "Brampton", "burlington": "Burlington", "cambridge": "Cambridge", "greater-sudbury": "Greater Sudbury", "guelph": "Guelph", "hamilton": "Hamilton", "kingston": "Kingston", "kitchener": "Kitchener", "london": "London", "markham": "Markham", "mississauga": "Mississauga", "niagara-falls": "Niagara Falls", "oakville": "Oakville", "oshawa": "Oshawa", "ottawa": "Ottawa", "peterborough": "Peterborough", "richmond-hill": "Richmond Hill", "sault-ste-marie": "Sault Ste. Marie", "thunder-bay": "Thunder Bay", "timmins": "Timmins", "toronto": "Toronto", "vaughan": "Vaughan", "whitby": "Whitby", "windsor": "Windsor"}
 

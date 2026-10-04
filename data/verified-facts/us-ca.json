@@ -649,6 +649,114 @@
       "dates": "Ongoing",
       "source_url": "https://energy.capk.org/weatherization-and-energy-efficiency/",
       "notes": "Seen in search results 2026-10-02; page not read in full."
+    },
+    {
+      "id": "us-ca-54-reu-heat-pump-hvac",
+      "program": "Roseville Electric HVAC heat pump rebate",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Two-stage heat pump gas to electric $1,500; variable-stage gas to electric $2,500; two-stage electric to electric $600; variable-stage electric to electric $1,600. Limit two systems per household. Minimum split 16 SEER/8.2 HSPF, packaged 15 SEER/8.0 HSPF; ducts must pass Title 24 via HERS CF3R; City building permit and paid invoice required.",
+      "amount": "$600 to $2,500",
+      "eligibility": "Roseville Electric Utility residential customers",
+      "dates": "2026",
+      "source_url": "https://www.roseville.ca.gov/catalogue/HVAC-heat-pump-711.php",
+      "notes": "Read via the catalogue JSON (catalogue/711.php?display=json); the rebates page loads it with JavaScript."
+    },
+    {
+      "id": "us-ca-55-reu-heat-pump-water-heater",
+      "program": "Roseville Electric heat pump water heater rebate",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "$1,000 electric to electric; $2,500 gas to electric. Must be NEEA Tier 3 or 4. Spec sheet with UEF, paid invoice, signed application and City permit required.",
+      "amount": "$1,000 / $2,500",
+      "eligibility": "Roseville Electric residential customers",
+      "dates": "2026",
+      "source_url": "https://www.roseville.ca.gov/catalogue/Heat-pump-water-heater-716.php",
+      "notes": ""
+    },
+    {
+      "id": "us-ca-56-reu-panel-replacement",
+      "program": "Roseville Electric panel replacement rebate",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Up to $1,000 for an electrical panel replacement that includes dedicated circuits for a Level 2 EV charger, heat pump water heater, heat pump HVAC, induction cooktop or heat pump dryer. Final building permit required; covers labor and material.",
+      "amount": "Up to $1,000",
+      "eligibility": "Roseville Electric residential customers",
+      "dates": "2026",
+      "source_url": "https://www.roseville.ca.gov/catalogue/Panel-replacement-728.php",
+      "notes": ""
+    },
+    {
+      "id": "us-ca-57-reu-induction-dryer",
+      "program": "Roseville Electric induction cooktop and heat pump dryer rebates",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Induction cooktop up to $600 (30 inch or larger, not portable, before and after photos, City final permit). ENERGY STAR heat pump clothes dryer up to $200.",
+      "amount": "Up to $600 / up to $200",
+      "eligibility": "Roseville Electric residential customers",
+      "dates": "2026",
+      "source_url": "https://www.roseville.ca.gov/catalogue/Induction-stove-718.php",
+      "notes": "Dryer: https://www.roseville.ca.gov/catalogue/Heat-pump-dryer-714.php"
+    },
+    {
+      "id": "us-ca-58-reu-smart-thermostat-power-flex",
+      "program": "Roseville Electric smart thermostat rebate and Power Flex",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Smart thermostat rebate up to $100 (Wi-Fi, ENERGY STAR). Power Flex (with EnergyHub): $25 bill credit on enrollment and $25 each year enrolled; limited, first come first served.",
+      "amount": "Up to $100 + $25/yr",
+      "eligibility": "Roseville Electric customers with service in their name",
+      "dates": "2026",
+      "source_url": "https://www.roseville.ca.gov/catalogue/Smart-thermostat-838.php",
+      "notes": "Power Flex: https://www.roseville.ca.gov/electric_utility/power_flex/index.php"
+    },
+    {
+      "id": "us-ca-59-reu-whole-house-fan-pool-tree-tuneup",
+      "program": "Roseville Electric whole house fan, pool pump, shade tree and HVAC tune-up rebates",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "Whole house fan $600 (2,000 CFM min, central AC, retrofit, up to two). Variable speed pool pump up to $200 (in-ground, one per residence). Shade tree $80 each, up to 6, south/east/west side. HVAC tune-up $50, April 1 to October 1 only, once per system per 12 months. All apply within 90 days.",
+      "amount": "$600 / $200 / $80 / $50",
+      "eligibility": "Single-family homes served by Roseville Electric",
+      "dates": "2026; tune-up April 1 - October 1",
+      "source_url": "https://www.roseville.ca.gov/catalogue/Whole-house-fan-871.php",
+      "notes": "Pool: 740, tree: 742, tune-up: 709 in the same catalogue. Tune-up season ends October 1, 2026."
+    },
+    {
+      "id": "us-ca-60-reu-ev-charger",
+      "program": "Roseville Electric Level 2 EV charger rebate",
+      "status": "check",
+      "verified_on": "2026-10-03",
+      "claim": "Rebate for a new UL or ETL listed, 32 amp minimum Level 2 charger with 15 foot cable; one per household per calendar year; apply within 90 days (120 days for the income-qualified version, which needs URAP or Medical Rate enrollment and has a limited budget). Funded through California's Low Carbon Fuel Standard. E-bike rebates also listed.",
+      "amount": "Amount not shown on the page",
+      "eligibility": "Roseville Electric residential accounts",
+      "dates": "2026",
+      "source_url": "https://www.roseville.ca.gov/catalogue/EV-level-2-charger-923.php",
+      "notes": "The dollar amount is not on the program page (only in the online application portal); do not quote one."
+    },
+    {
+      "id": "us-ca-61-reu-rate-assistance",
+      "program": "Roseville Utility Rate Assistance Program and Medical Rate",
+      "status": "active",
+      "verified_on": "2026-10-03",
+      "claim": "URAP: 20% off the standard residential electric rate, $15 off the electric base charge, up to 20% off the water base charge. Medical rate: 50% off the first 500 kWh and 20% off other kWh for qualifying income and medical device use.",
+      "amount": "20% discount",
+      "eligibility": "Income-qualified Roseville utility customers",
+      "dates": "2026",
+      "source_url": "https://www.roseville.ca.gov/catalogue/Utility-Rate-Assistance-Program-888.php",
+      "notes": "Medical: https://www.roseville.ca.gov/catalogue/Medical-Electric-rate-assistance-890.php. HEAP via Project GO 1-888-524-5705."
+    },
+    {
+      "id": "us-ca-62-reu-solar-interconnection",
+      "program": "Roseville Electric solar interconnection rules",
+      "status": "info",
+      "verified_on": "2026-10-03",
+      "claim": "Residential PV size is capped at 100% of the last 12 months of usage (or 3 kWh per sq ft of conditioned space without history; not for new construction under Title 24). Contractor emails the Residential Interconnection Application to solar@roseville.ca.gov. The residential rebate page lists no solar or battery cash rebate.",
+      "amount": "No solar rebate found",
+      "eligibility": "Roseville Electric customers",
+      "dates": "2026",
+      "source_url": "https://www.roseville.ca.gov/electric_utility/rebates_and_energy_savings/your_trusted_solar_advisor/the_interconnection_process.php",
+      "notes": "Roseville runs Roseville Solar 2.0 under its municipal code; export rate not read."
     }
   ]
 }

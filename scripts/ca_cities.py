@@ -86,3 +86,5 @@ for slug, n in (("riverside", "Riverside"), ("san-bernardino", "San Bernardino")
 
 CITIES["fresno"] = dict(area="fresno", area_name="Fresno", name="Fresno", utility="pge", utility_name="PG&E", hub="/us/ca/fresno/", intro="Fresno's electricity and gas come from PG&E.", offers={})
 CITIES["bakersfield"] = dict(area="bakersfield", area_name="Bakersfield", name="Bakersfield", utility="pge", utility_name="PG&E", hub="/us/ca/bakersfield/", intro="Bakersfield's electricity comes from PG&E and its gas from SoCalGas.", offers={})
+CITIES["roseville"] = dict(area="sacramento", area_name="Sacramento area", name="Roseville", utility="reu", utility_name="Roseville Electric Utility",
+                           intro="Roseville has its own city-owned electric utility, Roseville Electric Utility, not SMUD.", offers={})

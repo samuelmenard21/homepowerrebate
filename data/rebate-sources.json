@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 250,
+ "count": 257,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -715,29 +715,72 @@
    "facts": [
     "bc-blog-11-bc-hydro-solar-and-battery-rebate-terms"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/ca/bc/abbotsford/solar/",
+    "/ca/bc/burnaby/solar/",
+    "/ca/bc/chilliwack/solar/",
+    "/ca/bc/coquitlam/solar/",
+    "/ca/bc/fort-st-john/solar/",
+    "/ca/bc/kamloops/solar/",
+    "/ca/bc/kelowna/solar/",
+    "/ca/bc/langley/solar/",
+    "/ca/bc/maple-ridge/solar/",
+    "/ca/bc/nanaimo/solar/",
+    "/ca/bc/penticton/solar/",
+    "/ca/bc/prince-george/solar/",
+    "/ca/bc/richmond/solar/",
+    "/ca/bc/squamish/solar/",
+    "/ca/bc/surrey/solar/",
+    "/ca/bc/vancouver/solar/",
+    "/ca/bc/vernon/solar/",
+    "/ca/bc/victoria/solar/"
+   ],
    "last_read": "2026-09-26"
   },
   {
    "url": "https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/local-rebate-top-ups.html",
    "host": "www.bchydro.com",
    "region": "bc-blog",
-   "check": "BC Hydro EV charger local top-ups",
+   "check": "BC Hydro EV charger local top-ups; BC Hydro local rebate top-ups",
    "facts": [
     "bc-blog-15-bc-hydro-ev-charger-local-top-ups"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/ca/bc/kamloops/ev-charger/",
+    "/ca/bc/squamish/ev-charger/"
+   ],
    "last_read": "2026-10-03"
   },
   {
    "url": "https://www.bchydro.com/powersmart/ineligible-product-information.html",
    "host": "www.bchydro.com",
    "region": "bc-blog",
-   "check": "Tesla ineligibility",
+   "check": "BC Hydro ineligible products; BC Hydro ineligible products (Tesla); Tesla ineligibility",
    "facts": [
     "bc-blog-12-tesla-ineligibility"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/ca/bc/abbotsford/solar/",
+    "/ca/bc/burnaby/solar/",
+    "/ca/bc/chilliwack/solar/",
+    "/ca/bc/coquitlam/solar/",
+    "/ca/bc/fort-st-john/solar/",
+    "/ca/bc/kamloops/ev-charger/",
+    "/ca/bc/kamloops/solar/",
+    "/ca/bc/kelowna/solar/",
+    "/ca/bc/langley/solar/",
+    "/ca/bc/maple-ridge/solar/",
+    "/ca/bc/nanaimo/solar/",
+    "/ca/bc/penticton/solar/",
+    "/ca/bc/prince-george/solar/",
+    "/ca/bc/richmond/solar/",
+    "/ca/bc/squamish/ev-charger/",
+    "/ca/bc/squamish/solar/",
+    "/ca/bc/surrey/solar/",
+    "/ca/bc/vancouver/solar/",
+    "/ca/bc/vernon/solar/",
+    "/ca/bc/victoria/solar/"
+   ],
    "last_read": "2026-09-26"
   },
   {
@@ -748,7 +791,26 @@
    "facts": [
     "bc-blog-7-bc-hydro-peak-saver"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/ca/bc/abbotsford/solar/",
+    "/ca/bc/burnaby/solar/",
+    "/ca/bc/chilliwack/solar/",
+    "/ca/bc/coquitlam/solar/",
+    "/ca/bc/fort-st-john/solar/",
+    "/ca/bc/kamloops/solar/",
+    "/ca/bc/kelowna/solar/",
+    "/ca/bc/langley/solar/",
+    "/ca/bc/maple-ridge/solar/",
+    "/ca/bc/nanaimo/solar/",
+    "/ca/bc/penticton/solar/",
+    "/ca/bc/prince-george/solar/",
+    "/ca/bc/richmond/solar/",
+    "/ca/bc/squamish/solar/",
+    "/ca/bc/surrey/solar/",
+    "/ca/bc/vancouver/solar/",
+    "/ca/bc/vernon/solar/",
+    "/ca/bc/victoria/solar/"
+   ],
    "last_read": "2026-09-26"
   },
   {
@@ -826,11 +888,13 @@
    "url": "https://www.fortisbc.com/rebates/detail/air-source-heat-pump-rebate",
    "host": "www.fortisbc.com",
    "region": "bc-blog",
-   "check": "FortisBC electric heat pump rebate",
+   "check": "FortisBC electric heat pump rebate; FortisBC heat pump rebate",
    "facts": [
     "bc-blog-22-fortisbc-electric-heat-pump-rebate"
    ],
    "used_by_pages": [
+    "/ca/bc/kelowna/heat-pump/",
+    "/ca/bc/penticton/heat-pump/",
     "/programs/fortisbc-rebates/"
    ],
    "last_read": "2026-10-03"
@@ -852,11 +916,13 @@
    "url": "https://www.fortisbc.com/rebates/detail/iqheatpump",
    "host": "www.fortisbc.com",
    "region": "bc-blog",
-   "check": "FortisBC income-qualified heat pump",
+   "check": "FortisBC income-qualified heat pump; FortisBC income-qualified heat pump rebate",
    "facts": [
     "bc-blog-23-fortisbc-income-qualified-heat-pump"
    ],
    "used_by_pages": [
+    "/ca/bc/kelowna/heat-pump/",
+    "/ca/bc/penticton/heat-pump/",
     "/programs/fortisbc-rebates/"
    ],
    "last_read": "2026-09-26"
@@ -865,12 +931,14 @@
    "url": "https://www.nanaimo.ca/NewsReleases/NR260901ApplicationsOpeningForCityOfNanaimoZeroInterestHomeRetrofitLoans.html",
    "host": "www.nanaimo.ca",
    "region": "bc-blog",
-   "check": "City of Nanaimo Home Energy Retrofit Financing; City of Nanaimo retrofit loans",
+   "check": "City of Nanaimo Home Energy Retrofit Financing; City of Nanaimo retrofit loans; City of Nanaimo zero-interest retrofit loans",
    "facts": [
     "bc-blog-26-city-of-nanaimo-home-energy-retrofit-financing"
    ],
    "used_by_pages": [
+    "/ca/bc/nanaimo/heat-pump/",
     "/ca/bc/nanaimo/insulation/",
+    "/ca/bc/nanaimo/solar/",
     "/ca/bc/nanaimo/water-heater/",
     "/ca/bc/nanaimo/windows/"
    ],
@@ -891,6 +959,52 @@
    "last_read": "2026-10-03"
   },
   {
+   "url": "https://open-meteo.com/en/docs/historical-weather-api",
+   "host": "open-meteo.com",
+   "region": "bc-pages",
+   "check": "Solar radiation, Open-Meteo historical archive 2020 to 2024; Winter temperatures, Open-Meteo historical archive 2015 to 2024",
+   "facts": [],
+   "used_by_pages": [
+    "/ca/bc/abbotsford/heat-pump/",
+    "/ca/bc/abbotsford/solar/",
+    "/ca/bc/burnaby/heat-pump/",
+    "/ca/bc/burnaby/solar/",
+    "/ca/bc/chilliwack/heat-pump/",
+    "/ca/bc/chilliwack/solar/",
+    "/ca/bc/coquitlam/heat-pump/",
+    "/ca/bc/coquitlam/solar/",
+    "/ca/bc/fort-st-john/heat-pump/",
+    "/ca/bc/fort-st-john/solar/",
+    "/ca/bc/kamloops/heat-pump/",
+    "/ca/bc/kamloops/solar/",
+    "/ca/bc/kelowna/heat-pump/",
+    "/ca/bc/kelowna/solar/",
+    "/ca/bc/langley/heat-pump/",
+    "/ca/bc/langley/solar/",
+    "/ca/bc/maple-ridge/heat-pump/",
+    "/ca/bc/maple-ridge/solar/",
+    "/ca/bc/nanaimo/heat-pump/",
+    "/ca/bc/nanaimo/solar/",
+    "/ca/bc/penticton/heat-pump/",
+    "/ca/bc/penticton/solar/",
+    "/ca/bc/prince-george/heat-pump/",
+    "/ca/bc/prince-george/solar/",
+    "/ca/bc/richmond/heat-pump/",
+    "/ca/bc/richmond/solar/",
+    "/ca/bc/squamish/heat-pump/",
+    "/ca/bc/squamish/solar/",
+    "/ca/bc/surrey/heat-pump/",
+    "/ca/bc/surrey/solar/",
+    "/ca/bc/vancouver/heat-pump/",
+    "/ca/bc/vancouver/solar/",
+    "/ca/bc/vernon/heat-pump/",
+    "/ca/bc/vernon/solar/",
+    "/ca/bc/victoria/heat-pump/",
+    "/ca/bc/victoria/solar/"
+   ],
+   "last_read": ""
+  },
+  {
    "url": "https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/corporate/safety/bchydro-service-area-map.pdf",
    "host": "www.bchydro.com",
    "region": "bc-pages",
@@ -905,12 +1019,15 @@
    "url": "https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/rebates-home-chargers.html",
    "host": "www.bchydro.com",
    "region": "bc-pages",
-   "check": "BC Hydro EV charger rebate",
+   "check": "BC Hydro EV charger rebate; BC Hydro home charger rebates",
    "facts": [
     "bc-blog-14-bc-hydro-ev-charger-rebate",
     "bc-pages-13-bc-hydro-ev-charger-rebate"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/ca/bc/kamloops/ev-charger/",
+    "/ca/bc/squamish/ev-charger/"
+   ],
    "last_read": "2026-10-03"
   },
   {
@@ -922,43 +1039,59 @@
     "bc-pages-21-bc-hydro-home-renovation-eligibility"
    ],
    "used_by_pages": [
+    "/ca/bc/abbotsford/heat-pump/",
     "/ca/bc/abbotsford/insulation/",
     "/ca/bc/abbotsford/water-heater/",
     "/ca/bc/abbotsford/windows/",
+    "/ca/bc/burnaby/heat-pump/",
     "/ca/bc/burnaby/water-heater/",
     "/ca/bc/burnaby/windows/",
+    "/ca/bc/chilliwack/heat-pump/",
     "/ca/bc/chilliwack/insulation/",
     "/ca/bc/chilliwack/water-heater/",
     "/ca/bc/chilliwack/windows/",
+    "/ca/bc/coquitlam/heat-pump/",
     "/ca/bc/coquitlam/insulation/",
     "/ca/bc/coquitlam/water-heater/",
     "/ca/bc/coquitlam/windows/",
+    "/ca/bc/fort-st-john/heat-pump/",
     "/ca/bc/fort-st-john/insulation/",
     "/ca/bc/fort-st-john/water-heater/",
     "/ca/bc/fort-st-john/windows/",
+    "/ca/bc/kamloops/heat-pump/",
     "/ca/bc/kamloops/insulation/",
     "/ca/bc/kamloops/water-heater/",
     "/ca/bc/kamloops/windows/",
+    "/ca/bc/langley/heat-pump/",
     "/ca/bc/langley/insulation/",
     "/ca/bc/langley/water-heater/",
     "/ca/bc/langley/windows/",
+    "/ca/bc/maple-ridge/heat-pump/",
     "/ca/bc/maple-ridge/insulation/",
     "/ca/bc/maple-ridge/water-heater/",
     "/ca/bc/maple-ridge/windows/",
+    "/ca/bc/nanaimo/heat-pump/",
+    "/ca/bc/prince-george/heat-pump/",
     "/ca/bc/prince-george/water-heater/",
     "/ca/bc/prince-george/windows/",
+    "/ca/bc/richmond/heat-pump/",
     "/ca/bc/richmond/water-heater/",
     "/ca/bc/richmond/windows/",
+    "/ca/bc/squamish/heat-pump/",
     "/ca/bc/squamish/insulation/",
     "/ca/bc/squamish/water-heater/",
     "/ca/bc/squamish/windows/",
+    "/ca/bc/surrey/heat-pump/",
     "/ca/bc/surrey/water-heater/",
     "/ca/bc/surrey/windows/",
+    "/ca/bc/vancouver/heat-pump/",
     "/ca/bc/vancouver/water-heater/",
     "/ca/bc/vancouver/windows/",
+    "/ca/bc/vernon/heat-pump/",
     "/ca/bc/vernon/insulation/",
     "/ca/bc/vernon/water-heater/",
     "/ca/bc/vernon/windows/",
+    "/ca/bc/victoria/heat-pump/",
     "/ca/bc/victoria/water-heater/",
     "/ca/bc/victoria/windows/"
    ],
@@ -1117,76 +1250,114 @@
    "check": "Statistics Canada 2021 Census, table 98-10-0233-01",
    "facts": [],
    "used_by_pages": [
+    "/ca/bc/abbotsford/heat-pump/",
     "/ca/bc/abbotsford/index/",
     "/ca/bc/abbotsford/insulation/",
+    "/ca/bc/abbotsford/solar/",
     "/ca/bc/abbotsford/water-heater/",
     "/ca/bc/abbotsford/windows/",
+    "/ca/bc/burnaby/heat-pump/",
     "/ca/bc/burnaby/index/",
     "/ca/bc/burnaby/insulation/",
+    "/ca/bc/burnaby/solar/",
     "/ca/bc/burnaby/water-heater/",
     "/ca/bc/burnaby/windows/",
+    "/ca/bc/chilliwack/heat-pump/",
     "/ca/bc/chilliwack/index/",
     "/ca/bc/chilliwack/insulation/",
+    "/ca/bc/chilliwack/solar/",
     "/ca/bc/chilliwack/water-heater/",
     "/ca/bc/chilliwack/windows/",
+    "/ca/bc/coquitlam/heat-pump/",
     "/ca/bc/coquitlam/index/",
     "/ca/bc/coquitlam/insulation/",
+    "/ca/bc/coquitlam/solar/",
     "/ca/bc/coquitlam/water-heater/",
     "/ca/bc/coquitlam/windows/",
+    "/ca/bc/fort-st-john/heat-pump/",
     "/ca/bc/fort-st-john/index/",
     "/ca/bc/fort-st-john/insulation/",
+    "/ca/bc/fort-st-john/solar/",
     "/ca/bc/fort-st-john/water-heater/",
     "/ca/bc/fort-st-john/windows/",
+    "/ca/bc/kamloops/ev-charger/",
+    "/ca/bc/kamloops/heat-pump/",
     "/ca/bc/kamloops/index/",
     "/ca/bc/kamloops/insulation/",
+    "/ca/bc/kamloops/solar/",
     "/ca/bc/kamloops/water-heater/",
     "/ca/bc/kamloops/windows/",
+    "/ca/bc/kelowna/heat-pump/",
     "/ca/bc/kelowna/index/",
     "/ca/bc/kelowna/insulation/",
+    "/ca/bc/kelowna/solar/",
     "/ca/bc/kelowna/water-heater/",
     "/ca/bc/kelowna/windows/",
+    "/ca/bc/langley/heat-pump/",
     "/ca/bc/langley/index/",
     "/ca/bc/langley/insulation/",
+    "/ca/bc/langley/solar/",
     "/ca/bc/langley/water-heater/",
     "/ca/bc/langley/windows/",
+    "/ca/bc/maple-ridge/heat-pump/",
     "/ca/bc/maple-ridge/index/",
     "/ca/bc/maple-ridge/insulation/",
+    "/ca/bc/maple-ridge/solar/",
     "/ca/bc/maple-ridge/water-heater/",
     "/ca/bc/maple-ridge/windows/",
+    "/ca/bc/nanaimo/heat-pump/",
     "/ca/bc/nanaimo/index/",
     "/ca/bc/nanaimo/insulation/",
+    "/ca/bc/nanaimo/solar/",
     "/ca/bc/nanaimo/water-heater/",
     "/ca/bc/nanaimo/windows/",
+    "/ca/bc/penticton/heat-pump/",
     "/ca/bc/penticton/index/",
     "/ca/bc/penticton/insulation/",
+    "/ca/bc/penticton/solar/",
     "/ca/bc/penticton/water-heater/",
     "/ca/bc/penticton/windows/",
+    "/ca/bc/prince-george/heat-pump/",
     "/ca/bc/prince-george/index/",
     "/ca/bc/prince-george/insulation/",
+    "/ca/bc/prince-george/solar/",
     "/ca/bc/prince-george/water-heater/",
     "/ca/bc/prince-george/windows/",
+    "/ca/bc/richmond/heat-pump/",
     "/ca/bc/richmond/index/",
     "/ca/bc/richmond/insulation/",
+    "/ca/bc/richmond/solar/",
     "/ca/bc/richmond/water-heater/",
     "/ca/bc/richmond/windows/",
+    "/ca/bc/squamish/ev-charger/",
+    "/ca/bc/squamish/heat-pump/",
     "/ca/bc/squamish/index/",
     "/ca/bc/squamish/insulation/",
+    "/ca/bc/squamish/solar/",
     "/ca/bc/squamish/water-heater/",
     "/ca/bc/squamish/windows/",
+    "/ca/bc/surrey/heat-pump/",
     "/ca/bc/surrey/index/",
     "/ca/bc/surrey/insulation/",
+    "/ca/bc/surrey/solar/",
     "/ca/bc/surrey/water-heater/",
     "/ca/bc/surrey/windows/",
+    "/ca/bc/vancouver/heat-pump/",
     "/ca/bc/vancouver/index/",
     "/ca/bc/vancouver/insulation/",
+    "/ca/bc/vancouver/solar/",
     "/ca/bc/vancouver/water-heater/",
     "/ca/bc/vancouver/windows/",
+    "/ca/bc/vernon/heat-pump/",
     "/ca/bc/vernon/index/",
     "/ca/bc/vernon/insulation/",
+    "/ca/bc/vernon/solar/",
     "/ca/bc/vernon/water-heater/",
     "/ca/bc/vernon/windows/",
+    "/ca/bc/victoria/heat-pump/",
     "/ca/bc/victoria/index/",
     "/ca/bc/victoria/insulation/",
+    "/ca/bc/victoria/solar/",
     "/ca/bc/victoria/water-heater/",
     "/ca/bc/victoria/windows/",
     "/ca/on/barrie/heat-pump/",
@@ -1653,7 +1824,7 @@
    "url": "https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html",
    "host": "app.bchydro.com",
    "region": "general",
-   "check": "BC Hydro battery rebate; BC Hydro solar rebate",
+   "check": "BC Hydro battery rebate; BC Hydro solar and battery rebates; BC Hydro solar rebate",
    "facts": [
     "bc-blog-10-bc-hydro-battery-rebate",
     "bc-blog-9-bc-hydro-solar-rebate",
@@ -1662,7 +1833,26 @@
     "general-3-bc-hydro-solar-rebate",
     "general-4-bc-hydro-battery-rebate"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/ca/bc/abbotsford/solar/",
+    "/ca/bc/burnaby/solar/",
+    "/ca/bc/chilliwack/solar/",
+    "/ca/bc/coquitlam/solar/",
+    "/ca/bc/fort-st-john/solar/",
+    "/ca/bc/kamloops/solar/",
+    "/ca/bc/kelowna/solar/",
+    "/ca/bc/langley/solar/",
+    "/ca/bc/maple-ridge/solar/",
+    "/ca/bc/nanaimo/solar/",
+    "/ca/bc/penticton/solar/",
+    "/ca/bc/prince-george/solar/",
+    "/ca/bc/richmond/solar/",
+    "/ca/bc/squamish/solar/",
+    "/ca/bc/surrey/solar/",
+    "/ca/bc/vancouver/solar/",
+    "/ca/bc/vernon/solar/",
+    "/ca/bc/victoria/solar/"
+   ],
    "last_read": "2026-10-03"
   },
   {
@@ -1696,39 +1886,57 @@
     "general-16-cleanbc-energy-savings-program-ventilation"
    ],
    "used_by_pages": [
+    "/ca/bc/abbotsford/heat-pump/",
     "/ca/bc/abbotsford/index/",
     "/ca/bc/abbotsford/water-heater/",
+    "/ca/bc/burnaby/heat-pump/",
     "/ca/bc/burnaby/index/",
     "/ca/bc/burnaby/water-heater/",
+    "/ca/bc/chilliwack/heat-pump/",
     "/ca/bc/chilliwack/index/",
     "/ca/bc/chilliwack/water-heater/",
+    "/ca/bc/coquitlam/heat-pump/",
     "/ca/bc/coquitlam/index/",
     "/ca/bc/coquitlam/water-heater/",
+    "/ca/bc/fort-st-john/heat-pump/",
     "/ca/bc/fort-st-john/index/",
     "/ca/bc/fort-st-john/water-heater/",
+    "/ca/bc/kamloops/heat-pump/",
     "/ca/bc/kamloops/index/",
     "/ca/bc/kamloops/water-heater/",
+    "/ca/bc/kelowna/heat-pump/",
     "/ca/bc/kelowna/index/",
     "/ca/bc/kelowna/water-heater/",
+    "/ca/bc/langley/heat-pump/",
     "/ca/bc/langley/index/",
     "/ca/bc/langley/water-heater/",
+    "/ca/bc/maple-ridge/heat-pump/",
     "/ca/bc/maple-ridge/index/",
     "/ca/bc/maple-ridge/water-heater/",
+    "/ca/bc/nanaimo/heat-pump/",
     "/ca/bc/nanaimo/index/",
+    "/ca/bc/penticton/heat-pump/",
     "/ca/bc/penticton/index/",
     "/ca/bc/penticton/water-heater/",
+    "/ca/bc/prince-george/heat-pump/",
     "/ca/bc/prince-george/index/",
     "/ca/bc/prince-george/water-heater/",
+    "/ca/bc/richmond/heat-pump/",
     "/ca/bc/richmond/index/",
     "/ca/bc/richmond/water-heater/",
+    "/ca/bc/squamish/heat-pump/",
     "/ca/bc/squamish/index/",
     "/ca/bc/squamish/water-heater/",
+    "/ca/bc/surrey/heat-pump/",
     "/ca/bc/surrey/index/",
     "/ca/bc/surrey/water-heater/",
+    "/ca/bc/vancouver/heat-pump/",
     "/ca/bc/vancouver/index/",
     "/ca/bc/vancouver/water-heater/",
+    "/ca/bc/vernon/heat-pump/",
     "/ca/bc/vernon/index/",
     "/ca/bc/vernon/water-heater/",
+    "/ca/bc/victoria/heat-pump/",
     "/ca/bc/victoria/index/",
     "/ca/bc/victoria/water-heater/"
    ],
@@ -1753,7 +1961,26 @@
    "facts": [
     "general-10-nrcan-cold-climate-heat-pump-field-test"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/ca/bc/abbotsford/heat-pump/",
+    "/ca/bc/burnaby/heat-pump/",
+    "/ca/bc/chilliwack/heat-pump/",
+    "/ca/bc/coquitlam/heat-pump/",
+    "/ca/bc/fort-st-john/heat-pump/",
+    "/ca/bc/kamloops/heat-pump/",
+    "/ca/bc/kelowna/heat-pump/",
+    "/ca/bc/langley/heat-pump/",
+    "/ca/bc/maple-ridge/heat-pump/",
+    "/ca/bc/nanaimo/heat-pump/",
+    "/ca/bc/penticton/heat-pump/",
+    "/ca/bc/prince-george/heat-pump/",
+    "/ca/bc/richmond/heat-pump/",
+    "/ca/bc/squamish/heat-pump/",
+    "/ca/bc/surrey/heat-pump/",
+    "/ca/bc/vancouver/heat-pump/",
+    "/ca/bc/vernon/heat-pump/",
+    "/ca/bc/victoria/heat-pump/"
+   ],
    "last_read": "2026-09-26"
   },
   {
@@ -1824,17 +2051,33 @@
    "url": "https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/finding-qualified-contractors-and-advisors.html",
    "host": "www.bchydro.com",
    "region": "general",
-   "check": "BC Hydro qualified contractors; HPCN (Home Performance Contractor Network)",
+   "check": "BC Hydro qualified contractors; Find an HPCN contractor; HPCN (Home Performance Contractor Network)",
    "facts": [
     "general-17-hpcn-home-performance-contractor-network"
    ],
    "used_by_pages": [
+    "/ca/bc/abbotsford/heat-pump/",
+    "/ca/bc/burnaby/heat-pump/",
+    "/ca/bc/chilliwack/heat-pump/",
     "/ca/bc/chilliwack/insulation/",
+    "/ca/bc/coquitlam/heat-pump/",
     "/ca/bc/coquitlam/insulation/",
+    "/ca/bc/fort-st-john/heat-pump/",
     "/ca/bc/fort-st-john/insulation/",
+    "/ca/bc/kamloops/heat-pump/",
+    "/ca/bc/langley/heat-pump/",
+    "/ca/bc/maple-ridge/heat-pump/",
     "/ca/bc/maple-ridge/insulation/",
+    "/ca/bc/nanaimo/heat-pump/",
+    "/ca/bc/prince-george/heat-pump/",
     "/ca/bc/prince-george/insulation/",
-    "/ca/bc/squamish/insulation/"
+    "/ca/bc/richmond/heat-pump/",
+    "/ca/bc/squamish/heat-pump/",
+    "/ca/bc/squamish/insulation/",
+    "/ca/bc/surrey/heat-pump/",
+    "/ca/bc/vancouver/heat-pump/",
+    "/ca/bc/vernon/heat-pump/",
+    "/ca/bc/victoria/heat-pump/"
    ],
    "last_read": "2026-09-26"
   },
@@ -1842,7 +2085,7 @@
    "url": "https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html",
    "host": "www.bchydro.com",
    "region": "general",
-   "check": "BC Hydro heat pump bonus; BC Hydro heat pump rebate; BC Hydro heat pump rebate (Home Renovation Rebate)",
+   "check": "BC Hydro heat pump bonus; BC Hydro heat pump rebate; BC Hydro heat pump rebate (Home Renovation Rebate); BC Hydro heat pump rebates",
    "facts": [
     "bc-blog-0-bc-hydro-heat-pump-rebate",
     "bc-blog-1-bc-hydro-heat-pump-rebate",
@@ -1853,7 +2096,24 @@
     "general-0-bc-hydro-heat-pump-rebate",
     "general-1-bc-hydro-heat-pump-bonus"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/ca/bc/abbotsford/heat-pump/",
+    "/ca/bc/burnaby/heat-pump/",
+    "/ca/bc/chilliwack/heat-pump/",
+    "/ca/bc/coquitlam/heat-pump/",
+    "/ca/bc/fort-st-john/heat-pump/",
+    "/ca/bc/kamloops/heat-pump/",
+    "/ca/bc/langley/heat-pump/",
+    "/ca/bc/maple-ridge/heat-pump/",
+    "/ca/bc/nanaimo/heat-pump/",
+    "/ca/bc/prince-george/heat-pump/",
+    "/ca/bc/richmond/heat-pump/",
+    "/ca/bc/squamish/heat-pump/",
+    "/ca/bc/surrey/heat-pump/",
+    "/ca/bc/vancouver/heat-pump/",
+    "/ca/bc/vernon/heat-pump/",
+    "/ca/bc/victoria/heat-pump/"
+   ],
    "last_read": "2026-10-03"
   },
   {
@@ -2404,6 +2664,17 @@
    "last_read": "2026-09-26"
   },
   {
+   "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/bring-your-thermostat-and-get-85",
+   "host": "www.coned.com",
+   "region": "ny",
+   "check": "Con Edison Smart Thermostat Program",
+   "facts": [
+    "ny-25-con-edison-smart-thermostat"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-03"
+  },
+  {
    "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-heating-and-cooling-technology-for-renters-homeowners/save-on-a-central-air-source-heat-pump",
    "host": "www.coned.com",
    "region": "ny",
@@ -2425,7 +2696,18 @@
     "ny-15-con-edison-smartcharge-new-york"
    ],
    "used_by_pages": [],
-   "last_read": "2026-09-26"
+   "last_read": "2026-10-03"
+  },
+  {
+   "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/savings-to-weatherize-your-home",
+   "host": "www.coned.com",
+   "region": "ny",
+   "check": "Con Edison Weather Ready (insulation and air sealing)",
+   "facts": [
+    "ny-26-con-edison-weather-ready"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit",
@@ -2454,6 +2736,28 @@
     "/programs/san-jose-clean-energy-rebates/"
    ],
    "last_read": "2026-09-26"
+  },
+  {
+   "url": "https://www.nationalgridus.com/Upstate-NY-Home/Energy-Saving-Programs/Gas-Heating-Water-Heating",
+   "host": "www.nationalgridus.com",
+   "region": "ny",
+   "check": "National Grid upstate gas rebates (HEHE) and midstream",
+   "facts": [
+    "ny-28-national-grid-gas-prescriptive-closed"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-03"
+  },
+  {
+   "url": "https://www.nationalgridus.com/Upstate-NY-Home/Energy-Saving-Programs/Weatherization-Program",
+   "host": "www.nationalgridus.com",
+   "region": "ny",
+   "check": "National Grid Weatherization Health and Safety Program (upstate NY)",
+   "facts": [
+    "ny-27-national-grid-weatherization-health-safety"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.nationalgridus.com/Whole-Home-Electrification-Program",
@@ -2492,7 +2796,7 @@
     "/programs/national-grid-rebates/",
     "/programs/orange-and-rockland-rebates/"
    ],
-   "last_read": "2026-09-26"
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program",
@@ -2509,7 +2813,7 @@
     "/programs/orange-and-rockland-rebates/",
     "/programs/pseg-long-island-rebates/"
    ],
-   "last_read": "2026-09-26"
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.nyserda.ny.gov/All-Programs/Energy-Storage-Program/Energy-Storage-for-Your-Home/Incentives-for-Long-Island-Residents",
@@ -2520,7 +2824,18 @@
     "ny-19-nyserda-storage-incentive-long-island"
    ],
    "used_by_pages": [],
-   "last_read": "2026-09-26"
+   "last_read": "2026-10-03"
+  },
+  {
+   "url": "https://www.nyserda.ny.gov/All-Programs/Energy-Storage-Program/Home-Energy-Storage/Residential-Energy-Storage-Incentives",
+   "host": "www.nyserda.ny.gov",
+   "region": "ny",
+   "check": "NYSERDA Residential Energy Storage Program (outside Long Island)",
+   "facts": [
+    "ny-24-nyserda-residential-energy-storage"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.nyserda.ny.gov/All-Programs/NY-Sun/Contractors/Dashboards-and-incentives",
@@ -2534,6 +2849,17 @@
     "/programs/pseg-long-island-rebates/"
    ],
    "last_read": "2026-09-26"
+  },
+  {
+   "url": "https://www.nyserda.ny.gov/All-Programs/NY-Sun/On-site-Solar/Homes/Paying-for-Solar",
+   "host": "www.nyserda.ny.gov",
+   "region": "ny",
+   "check": "NY-Sun incentive, NY solar tax credit and property tax exemption",
+   "facts": [
+    "ny-29-ny-sun-paying-for-solar"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.psegliny.com/en/saveenergyandmoney/homeefficiency/HomeComfort/HeatPumps/Rebates",
@@ -2552,14 +2878,15 @@
    "url": "https://www.psegliny.com/saveenergyandmoney/energystarrebates",
    "host": "www.psegliny.com",
    "region": "ny",
-   "check": "PSEG Long Island ENERGY STAR rebates; PSEG Long Island heat pump water heater",
+   "check": "PSEG Long Island ENERGY STAR rebates; PSEG Long Island heat pump water heater; PSEG Long Island smart thermostat rebates",
    "facts": [
-    "ny-18-pseg-long-island-heat-pump-water-heater"
+    "ny-18-pseg-long-island-heat-pump-water-heater",
+    "ny-30-pseg-long-island-smart-thermostat"
    ],
    "used_by_pages": [
     "/programs/pseg-long-island-rebates/"
    ],
-   "last_read": "2026-09-26"
+   "last_read": "2026-10-03"
   },
   {
    "url": "https://homerenovationsavings.ca/",

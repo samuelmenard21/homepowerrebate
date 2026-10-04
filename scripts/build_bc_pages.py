@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""BC city category pages (insulation, windows, water-heater) in the shared layout used for California and Ontario.
+"""BC city category pages (insulation, windows, water-heater, heat-pump, solar, battery, ev-charger) in the shared layout used for California and Ontario.
 Prose is hand-written per page in data/bc/pages/<city>/<category>.json (hpr-category-page-localization bans fill-in-the-blank templates).
 Local facts come from data/bc-housing-census2021.json (Statistics Canada 2021 Census, table 98-10-0233-01) and city-climate-data.json.
 Same quality gate as scripts/build_ca_pages.py. A page with no JSON file is left as it is.
@@ -22,20 +22,21 @@ BASE = ca.BASE
 FACTS = ca.FACTS
 LABEL = {"insulation": "Insulation", "windows": "Windows & Doors", "water-heater": "Water Heater", "heat-pump": "Heat Pump", "solar": "Solar", "battery": "Battery Storage",
          "ev-charger": "EV Charger", "smart-thermostats": "Smart Thermostat", "appliances": "Appliance", "hrv": "HRV & Ventilation"}
-BUILT = ["insulation", "windows", "water-heater"]
+BUILT = ["insulation", "windows", "water-heater", "heat-pump", "solar", "battery", "ev-charger"]
 HUB = ["index"]
 NAMES = {"abbotsford": "Abbotsford", "burnaby": "Burnaby", "chilliwack": "Chilliwack", "coquitlam": "Coquitlam", "fort-st-john": "Fort St. John", "kamloops": "Kamloops",
          "kelowna": "Kelowna", "langley": "Langley", "maple-ridge": "Maple Ridge", "nanaimo": "Nanaimo", "penticton": "Penticton", "prince-george": "Prince George",
          "richmond": "Richmond", "squamish": "Squamish", "surrey": "Surrey", "vancouver": "Vancouver", "vernon": "Vernon", "victoria": "Victoria"}
-INSULATION_ROWS = [r for r in rank.load_rows() if r["region"] == "bc" and r["service"] == "insulation"]
+BC_ROWS = [r for r in rank.load_rows() if r["region"] == "bc"]
+INSULATION_ROWS = [r for r in BC_ROWS if r["service"] == "insulation"]
 
 
 def installers(slug, cat):
     if cat == "index":
         p = ROOT / "installers/json" / f"{slug}.json"
         rows = [r for r in json.loads(p.read_text()) if r.get("rating") and r.get("reviews", 0) >= 10] if p.exists() else []
-    elif cat == "insulation":
-        rows = [r for r in INSULATION_ROWS if rank.slugify(r["city"]) == slug and r["reviews"] >= 5]
+    elif cat in ("insulation", "heat-pump", "solar", "battery"):
+        rows = [r for r in BC_ROWS if r["service"] == cat if rank.slugify(r["city"]) == slug and r["reviews"] >= 5]
     elif cat == "water-heater":
         p = ROOT / "installers/json" / f"{slug}.json"
         rows = [r for r in json.loads(p.read_text()) if r.get("rating") and r.get("reviews", 0) >= 10] if p.exists() else []
@@ -54,7 +55,7 @@ def installer_html(slug, name, cat, intro):
         site = re.sub(r"[?&]utm_[^&]*", "", r.get("website") or "").rstrip("?")
         link = f'<a class="site-link" href="{e(site)}" target="_blank" rel="noopener">Visit site &rarr;</a>' if site else ""
         cards += f'<div class="installer-card"><div><div class="name">{e(r["name"])}</div><div class="stars">&#9733; {r["rating"]:.1f} ({r["reviews"]:,} Google reviews)</div></div>{link}</div>\n'
-    kind = "insulation" if cat == "insulation" else "heat-pump"
+    kind = cat if cat in ("insulation", "heat-pump", "solar", "battery") else "heat-pump"
     more = f'<p style="margin-top:8px;"><a href="/installers/bc/{slug}/{kind}/">See all {e(name)} installers &rarr;</a></p>' if (ROOT / f"installers/bc/{slug}/{kind}/index.html").exists() else ""
     return f"<h2>Top-rated installers in {e(name)}</h2><p>{intro}</p>\n{cards}{more}"
 

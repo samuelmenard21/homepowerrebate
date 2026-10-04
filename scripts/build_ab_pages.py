@@ -23,7 +23,7 @@ BASE = ca.BASE
 FACTS = ca.FACTS
 LABEL = {"insulation": "Insulation", "windows": "Windows & Doors", "water-heater": "Water Heater", "heat-pump": "Heat Pump", "solar": "Solar", "battery": "Battery Storage",
          "ev-charger": "EV Charger", "smart-thermostats": "Smart Thermostat", "appliances": "Appliance", "hrv": "HRV & Ventilation"}
-BUILT = ["heat-pump", "insulation", "smart-thermostats"]
+BUILT = ["heat-pump", "insulation", "smart-thermostats", "ev-charger"]
 HUB = ["index"]
 NAMES = {"calgary": "Calgary", "edmonton": "Edmonton", "lethbridge": "Lethbridge", "red-deer": "Red Deer", "st-albert": "St. Albert", "fort-mcmurray": "Fort McMurray"}
 AB_ROWS = [r for r in rank.load_rows() if r["region"] == "ab"]

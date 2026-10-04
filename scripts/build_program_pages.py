@@ -74,7 +74,7 @@ PROGRAMS = {
         "title": "Home Renovation Savings Program 2026: Ontario Rebates Explained",
         "desc": "Ontario's Home Renovation Savings Program in 2026: heat pumps up to $12,000, solar and battery up to $10,000, insulation up to $7,700, $125 thermostats. What it pays and how to apply.",
         "h1": "Ontario Home Renovation Savings Program 2026",
-        "short": "The Home Renovation Savings Program is Ontario's main home energy rebate. It pays $1,250 to $2,000 per ton for a heat pump (up to $12,000), up to $5,000 each for solar and a battery, up to $7,700 for insulation with an energy assessment, and $125 for a smart thermostat. Some rebates need an assessment before and after the work.",
+        "short": "The Home Renovation Savings Program is Ontario's main home energy rebate. It pays $1,250 per ton, up to $7,500, for an air-source heat pump in an electric, oil, propane or wood home ($500 per ton, up to $2,000, on Enbridge gas), and up to $12,000 for ground-source, up to $5,000 each for solar and a battery, up to $7,700 for insulation with an energy assessment, and $125 for a smart thermostat. Some rebates need an assessment before and after the work.",
         "rows": [
             ("Heat pump", "$1,250 to $2,000 per ton, up to $12,000", "Amount depends on your home and track.", "https://homerenovationsavings.ca/heat-pumps"),
             ("Heat pump, Enbridge gas customers", "$500 per ton, up to $2,000", "Active Enbridge Gas account.", "https://homerenovationsavings.ca/heat-pumps"),

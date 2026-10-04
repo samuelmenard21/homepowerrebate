@@ -23,7 +23,7 @@ BASE = ca.BASE
 FACTS = ca.FACTS
 LABEL = {"insulation": "Insulation", "windows-doors": "Windows & Doors", "water-heater": "Water Heater", "heat-pump": "Heat Pump", "solar": "Solar", "battery": "Battery Storage",
          "ev-charger": "EV Charger", "smart-thermostats": "Smart Thermostat", "appliances": "Appliance", "hrv": "HRV & Ventilation"}
-BUILT = ["heat-pump", "water-heater", "insulation", "windows", "smart-thermostats", "solar"]
+BUILT = ["heat-pump", "water-heater", "insulation", "windows", "smart-thermostats", "solar", "ev-charger"]
 HUB = ["index"]
 NAMES = {"boston": "Boston", "brockton": "Brockton", "cambridge": "Cambridge", "fall-river": "Fall River", "lawrence": "Lawrence", "lowell": "Lowell",
          "lynn": "Lynn", "new-bedford": "New Bedford", "newton": "Newton", "quincy": "Quincy", "somerville": "Somerville", "springfield": "Springfield", "worcester": "Worcester"}

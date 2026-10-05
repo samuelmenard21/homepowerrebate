@@ -298,6 +298,8 @@ STATE_TOPICS = [
     ("us/co", "/us/co/battery/", "Colorado home battery rebates and incentives"),
     ("us/ny", "/us/ny/battery/", "New York home battery rebates and incentives"),
     ("us/ma", "/us/ma/ev-charger/", "Massachusetts home EV charger rebates"),
+    ("us/ma", "/us/ma/hrv/", "Massachusetts HRV and ERV rebates"),
+    ("us/ma", "/us/ma/appliances/", "Massachusetts appliance rebates"),
     ("ca/ab", "/ca/ab/ev-charger/", "Alberta home EV charger rebates"),
     ("ca/on", "/ca/on/ev-charger/", "Ontario home EV charger rebates"),
     ("ca/on", "/ca/on/hrv/", "Ontario HRV and ERV rebates"),

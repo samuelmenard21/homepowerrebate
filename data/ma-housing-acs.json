@@ -8,7 +8,7 @@
    "B25034": "Year Structure Built",
    "B25040": "House Heating Fuel"
   },
-  "api": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B25001,B25003,B25024,B25034,B25040&geo_ids=16000US2507000,16000US2509000,16000US2511000,16000US2523000,16000US2534550,16000US2537000,16000US2537490,16000US2545000,16000US2545560,16000US2555745,16000US2562535,16000US2567000,16000US2582000",
+  "api": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B25001,B25003,B25024,B25034,B25040&geo_ids=16000US2507000,16000US2509000,16000US2511000,16000US2523000,16000US2534550,16000US2537000,16000US2537490,16000US2545000,16000US2545560,16000US2555745,16000US2562535,16000US2567000,16000US2582000,16000US2559105,05000US25001",
   "via": "Census Reporter API (republishes Census Bureau ACS tables)",
   "table_url": "https://data.census.gov/table/ACSDT5Y2024.B25040"
  },
@@ -220,6 +220,38 @@
    "pct_heat_bottled_gas": 3.6,
    "pct_heat_electricity": 28.7,
    "pct_heat_fuel_oil": 14.0
+  },
+  "salem": {
+   "name": "Salem, MA",
+   "housing_units": 21492,
+   "occupied_units": 20267,
+   "pct_owner": 49.7,
+   "pct_renter": 50.3,
+   "pct_single_detached": 23.9,
+   "pct_two_to_four_units": 38.0,
+   "pct_built_before_1980": 76.4,
+   "pct_built_1939_earlier": 51.0,
+   "pct_built_2000_later": 11.2,
+   "pct_heat_utility_gas": 54.9,
+   "pct_heat_bottled_gas": 1.2,
+   "pct_heat_electricity": 25.1,
+   "pct_heat_fuel_oil": 16.7
+  },
+  "cape-cod": {
+   "name": "Barnstable County, MA",
+   "housing_units": 166215,
+   "occupied_units": 105777,
+   "pct_owner": 81.1,
+   "pct_renter": 18.9,
+   "pct_single_detached": 81.6,
+   "pct_two_to_four_units": 5.7,
+   "pct_built_before_1980": 56.4,
+   "pct_built_1939_earlier": 11.4,
+   "pct_built_2000_later": 13.3,
+   "pct_heat_utility_gas": 61.3,
+   "pct_heat_bottled_gas": 4.6,
+   "pct_heat_electricity": 12.9,
+   "pct_heat_fuel_oil": 18.9
   }
  }
 }

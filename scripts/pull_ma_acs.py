@@ -10,7 +10,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 RELEASE = "acs2024_5yr"
 PLACES = {"boston": "07000", "brockton": "09000", "cambridge": "11000", "fall-river": "23000", "lawrence": "34550", "lowell": "37000",
-          "lynn": "37490", "new-bedford": "45000", "newton": "45560", "quincy": "55745", "somerville": "62535", "springfield": "67000", "worcester": "82000"}
+          "lynn": "37490", "new-bedford": "45000", "newton": "45560", "quincy": "55745", "somerville": "62535", "springfield": "67000", "worcester": "82000", "salem": "59105"}
+COUNTIES = {"cape-cod": "001"}  # Barnstable County
 TABLES = ["B25001", "B25003", "B25024", "B25034", "B25040"]
 
 
@@ -19,7 +20,7 @@ def pct(a, b):
 
 
 def main():
-    geos = ",".join(f"16000US25{v}" for v in PLACES.values())
+    geos = ",".join([f"16000US25{v}" for v in PLACES.values()] + [f"05000US25{v}" for v in COUNTIES.values()])
     url = f"https://api.censusreporter.org/1.0/data/show/{RELEASE}?table_ids={','.join(TABLES)}&geo_ids={geos}"
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (HomePowerRebate data pull)"})
     d = json.load(urllib.request.urlopen(req, timeout=90))
@@ -27,8 +28,7 @@ def main():
                        "tables": {"B25001": "Housing Units", "B25003": "Tenure", "B25024": "Units in Structure", "B25034": "Year Structure Built", "B25040": "House Heating Fuel"},
                        "api": url, "via": "Census Reporter API (republishes Census Bureau ACS tables)",
                        "table_url": "https://data.census.gov/table/ACSDT5Y2024.B25040"}, "cities": {}}
-    for slug, fips in PLACES.items():
-        g = f"16000US25{fips}"
+    for slug, g in [(k, f"16000US25{v}") for k, v in PLACES.items()] + [(k, f"05000US25{v}") for k, v in COUNTIES.items()]:
         t = {k: v["estimate"] for k, v in d["data"][g].items()}
         e = lambda tab, n: t[tab][f"{tab}{n:03d}"]
         yb = e("B25034", 1)

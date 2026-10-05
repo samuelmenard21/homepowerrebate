@@ -26,7 +26,7 @@ LABEL = {"insulation": "Insulation", "windows-doors": "Windows & Doors", "water-
 BUILT = ["heat-pump", "water-heater", "insulation", "windows", "smart-thermostats", "solar", "ev-charger"]
 HUB = ["index"]
 NAMES = {"boston": "Boston", "brockton": "Brockton", "cambridge": "Cambridge", "fall-river": "Fall River", "lawrence": "Lawrence", "lowell": "Lowell",
-         "lynn": "Lynn", "new-bedford": "New Bedford", "newton": "Newton", "quincy": "Quincy", "somerville": "Somerville", "springfield": "Springfield", "worcester": "Worcester"}
+         "lynn": "Lynn", "new-bedford": "New Bedford", "newton": "Newton", "quincy": "Quincy", "somerville": "Somerville", "springfield": "Springfield", "worcester": "Worcester", "salem": "Salem", "cape-cod": "Cape Cod"}
 ROWS = [r for r in rank.load_rows() if r["region"] == "ma"]
 
 
@@ -67,7 +67,7 @@ def build(slug, cat):
     when = date.fromisoformat(checked).strftime("%B %-d, %Y")
     sibs = [k for k in LABEL if k != cat and (ROOT / f"us/ma/{slug}/{k}/index.html").exists()]
     sib = "".join(f'<span style="margin-right:14px;"><a href="{hub}{k}/">{LABEL[k]} Rebates in {e(name)}</a></span>\n' for k in sibs)
-    guides = ("<h2>Every rebate guide for " + e(name) + "</h2><ul>" + "".join(f'<li><a href="{hub}{k}/">{LABEL[k]} rebates in {e(name)}</a></li>' for k in sibs) + "</ul>") if is_hub else ""
+    guides = ("<h2>Every rebate guide for " + e(name) + "</h2><ul>" + "".join(f'<li><a href="{hub}{k}/">{LABEL[k]} rebates in {e(name)}</a></li>' for k in sibs) + "</ul>") if is_hub and sibs else ""
     cards = "".join(ca.card(x) for x in d["cards"])
     inst = "" if d.get("no_installers") else installer_html(slug, name, cat, d.get("installers_intro", ""))
     steps = "".join(f"<li>{s}</li>\n" for s in d.get("claim_steps", []))

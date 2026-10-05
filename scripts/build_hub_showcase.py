@@ -85,8 +85,12 @@ def showcase_block(reg, rs, country, label):
             body = f'up to <b>{money(v["dollar_value"], country)}</b><small>best in {e(best["label"])} · open in {n_open} of {len(rs)} cities</small>'
             href = cat_page(best["url"], c)
         else:
-            body = f'<b>No amount listed</b><small>see city pages for local programs</small>'
-            href = best["url"]
+            if (ROOT / reg / c / "index.html").exists():
+                body = '<b>No amount listed</b><small>see what is and is not open</small>'
+                href = f"/{reg}/{c}/"
+            else:
+                body = f'<b>No amount listed</b><small>see city pages for local programs</small>'
+                href = best["url"]
         tiles.append(f'<a class="hs-tile" href="{href}"><span class="hs-ti">{ICON[c]}</span><span class="hs-tt"><em>{e(LABELS[c])}</em>{body}</span></a>')
     links = [(f"/programs/{s}/", n) for s, n in PROGRAMS.get(reg, [])]
     if reg.startswith("ca/"):

@@ -103,6 +103,12 @@ LOCAL = {
    steps=['Check if your home is on gas or oil &mdash; oil homes save the most.',
           'Ask the Town of Brookhaven if its Green Homes program is taking applications.'],
    faq=('Does Brookhaven have its own energy program?', 'The Town of Brookhaven has run a Long Island Green Homes program for income-eligible residents. Ask the town what is open now; the PSEG Long Island heat pump rebate applies either way.')),
+ 'pseg/babylon': dict(
+   more=['Babylon&rsquo;s south-shore neighbourhoods are on the Great South Bay, so homes in a flood zone should have outdoor units raised on stands.',
+         'Parts of the town may be mapped as Disadvantaged Communities. On Long Island that moves a market-rate home from $4,000 to $5,000, so check your exact address against the state map.'],
+   steps=['If you are near the bay, ask for raised outdoor units.',
+          'Check your address against the state Disadvantaged Communities map.'],
+   faq=('Does living near the Great South Bay change my heat pump install?', 'It does not change the PSEG rebate, but homes in flood zones should raise outdoor units above expected flood levels. Ask your installer to include it in the quote.')),
  'pseg/islip': dict(
    more=['Islip&rsquo;s south-shore neighbourhoods are close to the Great South Bay, so homes in flood zones should have outdoor units raised on stands.',
          'Many homes have forced-air systems with existing ducts, which can make a ducted heat pump simpler than a ductless one.',

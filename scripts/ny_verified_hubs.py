@@ -149,6 +149,9 @@ C = {
  'pseg/brookhaven': dict(u='pseg', city='Brookhaven', short='Brookhaven', slug='brookhaven',
    local='Brookhaven is Long Island&rsquo;s largest town, in Suffolk County. PSEG Long Island supplies electricity (for LIPA) and National Grid supplies gas where there are gas lines &mdash; but many homes in eastern Brookhaven heat with oil, which is where a heat pump saves the most.',
    q='PSEG Long Island heat pump rebate in Brookhaven'),
+ 'pseg/babylon': dict(u='pseg', city='Babylon', short='Babylon', slug='babylon',
+   local='Babylon is a Suffolk County town on the south shore of Long Island, served by PSEG Long Island for electricity. Gas comes from National Grid where there are gas lines, and homes without a gas main heat with oil or electricity, which is where a heat pump replaces the most expensive fuel.',
+   q='PSEG Long Island heat pump rebate in Babylon'),
  'pseg/islip': dict(u='pseg', city='Islip', short='Islip', slug='islip',
    local='Islip is a Suffolk County town served by PSEG Long Island for electricity and National Grid for gas. Its many 1950s&ndash;70s ranch and Cape homes are a good fit for ducted or ductless whole-home heat pumps.',
    q='PSEG Long Island heat pump rebate in Islip'),
@@ -406,14 +409,15 @@ def main():
         if '<!-- ny-verified:start -->' in t:
             header = '<!-- ny-verified:start -->\n<header>' in t
         else:
-            header = '<article class="article">' not in t
+            header = '<article class="article">' not in t and '<section class="hero">' not in t
         c['key'] = key
         body = city_body(key, c, header)
         faqs = faq_ld(faqs_city(c))
         if '<!-- ny-verified:start -->' not in t:
             t = drop_old_crumb(t)
             if not header:
-                a = t.index('<section class="hero">'); b = t.index('</article>', a) + len('</article>')
+                a = t.index('<section class="hero">')
+                b = (t.index('</article>', a) + len('</article>')) if '</article>' in t[a:] else t.index('<section>\n<h2>Category Deep Dives</h2>', a)
             else:
                 a = t.index('<header>'); b = t.index('<section>\n<h2>Category Deep Dives</h2>', a)
             t = t[:a] + '<!-- ny-verified:start -->\n<!-- ny-verified:end -->\n' + t[b:]

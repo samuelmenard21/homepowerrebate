@@ -51,7 +51,7 @@ OT = "/ca/on/ottawa/smart-thermostats/"
 JOBS += [
     ("OTTAWA-THERMOSTAT-LINK", f'<b>Looking for a free thermostat in Ottawa?</b> See <a href="{OT}">who qualifies for a free smart thermostat and how to get the $125 rebate</a>.',
      ["ca/on/ottawa/index.html", "ca/on/ottawa/appliances/index.html", "ca/on/ottawa/heat-pump/index.html", "ca/on/ottawa/insulation/index.html",
-      "ca/on/ottawa/windows-doors/index.html", "ca/on/ottawa/water-heater/index.html", "ca/on/ottawa/hrv/index.html",
+      "ca/on/ottawa/windows-doors/index.html", "ca/on/ottawa/water-heater/index.html",
       "ca/on/ottawa/solar/index.html", "ca/on/ottawa/battery/index.html"]),
 ]
 PSV = "/blog/bc-hydro-peak-saver-explained/"
@@ -300,6 +300,7 @@ STATE_TOPICS = [
     ("us/ma", "/us/ma/ev-charger/", "Massachusetts home EV charger rebates"),
     ("ca/ab", "/ca/ab/ev-charger/", "Alberta home EV charger rebates"),
     ("ca/on", "/ca/on/ev-charger/", "Ontario home EV charger rebates"),
+    ("ca/on", "/ca/on/hrv/", "Ontario HRV and ERV rebates"),
 ]
 for region, url, label in STATE_TOPICS:
     marker = "STATE-" + url.strip("/").replace("/", "-").upper() + "-LINK"

@@ -108,7 +108,7 @@ REGIONS = {
             "<h2>Ontario gas furnace rebate: why there isn't one anymore</h2>"
             "<p>Ontario's home rebates used to include high-efficiency gas furnaces. They don't now. Enbridge Gas and Save on Energy merged their offers into one program, Home Renovation Savings, and it pays $0 for a gas furnace, new or replacement. "
             "The money moved to cold-climate heat pumps, insulation, windows and smart thermostats. A heat pump heats and cools, so it can replace both a furnace and an air conditioner. "
-            "We read the program's heat pump page and its full list of upgrades on October 6, 2026. A furnace is not on either one. "
+            "We read the program's heat pump page and its full list of upgrades on October 6, 2026. A furnace is not on either one (see <a href=\"/programs/home-renovation-savings/\">every Home Renovation Savings rebate</a> and <a href=\"/programs/enbridge-gas-rebates/\">Enbridge Gas rebates</a>). "
             "If a contractor quotes you an \"Enbridge furnace rebate\" in 2026, ask them to show you the program page. It is most likely an old offer or a store discount.</p>"
             "<h2>Gas furnace vs heat pump: what the rebate changes</h2>"
             "<p>Say your home heats with Enbridge gas and you need about 3 tons of heating. A new furnace gets no rebate. A cold-climate heat pump gets $500 per ton, so $1,500, and a 4-ton system reaches the $2,000 cap. "

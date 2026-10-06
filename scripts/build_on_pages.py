@@ -83,7 +83,7 @@ def build(slug, cat):
 {faq}
 <h2>What to do next</h2>
 {d['next']}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {sources}. <a href="{hub}">All {e(name)} rebates &rarr;</a> <a href="/programs/home-renovation-savings/">Every Home Renovation Savings rebate &rarr;</a></p>"""
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {sources}. <a href="{hub}">All {e(name)} rebates &rarr;</a> <a href="/programs/home-renovation-savings/">Every Home Renovation Savings rebate &rarr;</a>{' <a href="/programs/enbridge-gas-rebates/">All Enbridge Gas rebates &rarr;</a>' if cat == "smart-thermostats" else ""}</p>"""
     w = ca.words(article)
     ext = {m for m in re.findall(r'href="(https?://[^"]+)"', article)}
     problems = []

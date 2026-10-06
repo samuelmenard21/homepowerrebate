@@ -413,14 +413,26 @@
   {
    "id": "ma-34-mass-save-hrv-erv-instant-discount",
    "program": "Mass Save instant discount on residential HRV and ERV equipment",
-   "status": "check",
+   "status": "active",
    "verified_on": "2026-10-05",
-   "claim": "A Mass Save page for contractors, 'Instant Discounts on Qualified Residential HVAC Equipment', is reported in search results to offer a $500 instant discount on qualified heat and energy recovery ventilators (HRV/ERV) for retrofit projects. Not read directly: masssave.com blocked automated readers and showed a bot-verification screen on 2026-10-05.",
-   "amount": "up to $500 (unconfirmed)",
-   "eligibility": "Retrofit projects, through a Mass Save contractor, qualified equipment only (not confirmed)",
-   "dates": "Unknown",
+   "claim": "Mass Save gives an instant $500 discount on qualifying residential heat recovery ventilators (HRV) and energy recovery ventilators (ERV) in retrofit projects; new construction is not eligible. The home must be a residentially metered premise in Massachusetts heated by oil, natural gas or propane (electric heat is generally excluded). Equipment must come from Mass Save's qualified list and be installed by a licensed contractor, who supplies the site address, customer name and phone at the point of sale; projects with three or more units may need prior utility approval.",
+   "amount": "$500 instant discount",
+   "eligibility": "Retrofit only; oil, gas or propane heated residential premise; qualified equipment; licensed contractor",
+   "dates": "2026",
    "source_url": "https://masssave.com/trade-partners/instant-discount-on-qualified-electronically-commutated-motor",
-   "notes": "Search excerpt only. The earlier city pages also claimed $400 to $800 when installed with weatherization; no source was found for that and it was removed. Read the page in a normal browser and confirm before stating the amount without a caveat."
+   "notes": "Amount confirmed by the site owner on 2026-10-05. The detailed rules come from text the site owner supplied from Mass Save's instant-discount page; masssave.com blocks automated readers so this session did not read the page itself. Re-read in a normal browser at the next monthly check."
+  },
+  {
+   "id": "ma-35-mass-save-decarbonization-consultation",
+   "program": "Mass Save decarbonization consultation and Heating Comparison Calculator",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "Mass Save offers a no-cost virtual consultation with a Decarbonization Specialist for guidance on where to start, and a Heating Comparison Calculator that compares the annual costs and savings of different heating systems.",
+   "amount": "Free",
+   "eligibility": "",
+   "dates": "",
+   "source_url": "https://www.masssave.com/en/residential/rebates-offers-services/decarbonization-consultations",
+   "notes": "Text supplied by the site owner from the Mass Save page on 2026-10-05; page not read directly (bot verification)."
   }
  ]
 }

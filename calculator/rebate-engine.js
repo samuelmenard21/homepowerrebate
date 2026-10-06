@@ -305,6 +305,16 @@
         ib.appendChild(iul);
         out.appendChild(ib);
       }
+      if (plan.some(function (u) { return u.indexOf("solar") === 0; })) {
+        var rb = el("div", "rc-inst");
+        rb.appendChild(el("h3", "rc-h", "See it on your own roof"));
+        rb.appendChild(el("p", "rc-help", "Type your address in our free Solar Roof Check to see how many panels fit and what the verified solar rebates come to for your roof."));
+        var ra = el("a", null, "Open the Solar Roof Check");
+        ra.href = "/roof-check/?country=" + (String(region.country || "").toLowerCase() === "ca" ? "CA" : "US");
+        if (opts.embed) { ra.target = "_blank"; ra.rel = "noopener"; }
+        rb.appendChild(ra);
+        out.appendChild(rb);
+      }
       var links = el("p", "rc-links");
       var a1 = el("a", null, "See installers ranked by Google reviews");
       a1.href = region.installers || "/installers/";

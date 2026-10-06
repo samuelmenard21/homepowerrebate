@@ -452,6 +452,7 @@ function srcHtml(ss){return (ss||[]).map(function(s){var dt=new Date(s.d+'T12:00
 function show(h){$('rc-out').innerHTML=h;$('rc-out').scrollIntoView({behavior:'smooth',block:'start'})}
 function msg(t){show('<div class="rc-card"><p>'+t+'</p></div>')}
 var form=$('rc-form');
+var qs=new URLSearchParams(location.search);if(qs.get('country')==='CA'||qs.get('country')==='US')$('rc-country').value=qs.get('country');
 if(!W){form.style.display='none';return}
 form.addEventListener('submit',function(ev){
   ev.preventDefault();

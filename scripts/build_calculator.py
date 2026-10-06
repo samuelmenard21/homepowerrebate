@@ -147,6 +147,7 @@ def region_page(spec, facts):
 <section class="body"><div class="wrap rc-wrap">
 <div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;"><b>Short answer:</b> {e(spec['short'])}</p></div>
 <div id="rc-mount"><noscript><p>The calculator needs JavaScript. The full list of programs is in the table below.</p></noscript></div>
+<div style="background:#fff;border:1px solid #e5dccb;border-radius:10px;padding:14px 18px;margin-top:18px;"><p style="margin:0;"><b>Planning solar?</b> Try our free <a href="/roof-check/?country={"CA" if spec["country"] == "ca" else "US"}">Solar Roof Check</a>: type your address to see how many panels fit your roof and which verified solar rebates apply.</p></div>
 <h2>How we work it out</h2>
 <ul><li>Every amount comes from the program's own page, linked on each result.</li>
 <li>We count only programs that are open today. Programs that start later or have a waitlist are listed but not added.</li>

@@ -63,8 +63,8 @@ REGIONS = {
     },
     "ontario": {
         "slug": "ontario", "nav": "on", "name": "Ontario", "long": "Ontario", "rank_region": "on",
-        "title": "Ontario Furnace Rebate 2026: Gas Furnace vs Heat Pump",
-        "desc": "There's no Ontario rebate for a new gas furnace in 2026. Heat pumps get up to $2,000 for Enbridge gas homes, or $7,500 if you heat with electric, oil or propane.",
+        "title": "Ontario New Furnace Rebate 2026: $0 Gas, Heat Pump to $7,500",
+        "desc": "Is there a new furnace rebate in Ontario? Not for gas furnaces in 2026. Heat pumps get up to $2,000 for Enbridge gas homes, or $7,500 with electric, oil or propane.",
         "h1": "Is There an Ontario Rebate for a New Furnace? (2026)",
         "short": "<b>No. There is no Ontario rebate for a new gas furnace in 2026.</b> The Home Renovation Savings Program (run by Enbridge Gas and Save on Energy) pays for cold-climate heat pumps instead. "
                  "If your home heats with Enbridge gas, you can get $500 per ton, up to $2,000. If you heat with electricity, oil, propane or wood, it's $1,250 per ton, up to $7,500. "
@@ -94,6 +94,7 @@ REGIONS = {
             ("Can I keep my furnace and add a heat pump?", "Yes. Many Ontario homes keep the gas furnace as backup and let the heat pump do most of the heating and all of the cooling."),
             ("Is there a rebate for a high-efficiency gas furnace in Ontario?", "No. Home Renovation Savings pays $0 for any gas furnace, even a high-efficiency one. Only heat pumps, insulation, windows, thermostats and some appliances get rebates."),
             ("Can I get a rebate for a rented heat pump?", "Yes. A rented cold-climate heat pump gets $500 per ton, up to $2,000, whatever fuel you heat with now."),
+            ("Is there a Markham furnace rebate?", "Not for a furnace. The Home Renovation Savings rebates are the same in Markham as in the rest of Ontario: heat pumps, insulation, windows and thermostats. We have not verified a Markham city program for furnaces."),
             ("Is Enbridge still giving furnace rebates?", "Not for gas furnaces. Enbridge's rebates now run through the Home Renovation Savings Program, which covers heat pumps, insulation, windows and thermostats."),
         ],
         "sources": [
@@ -104,9 +105,10 @@ REGIONS = {
             ("Better Homes Ottawa Loan", "https://ottawa.ca/en/city-hall/budget-finance-and-corporate-planning/funding/environmental-funding/better-homes-ottawa/better-homes-ottawa-loan-program"),
         ],
         "extra": (
-            "<h2>Why there's no furnace rebate anymore</h2>"
+            "<h2>Ontario gas furnace rebate: why there isn't one anymore</h2>"
             "<p>Ontario's home rebates used to include high-efficiency gas furnaces. They don't now. Enbridge Gas and Save on Energy merged their offers into one program, Home Renovation Savings, and it pays $0 for a gas furnace, new or replacement. "
             "The money moved to cold-climate heat pumps, insulation, windows and smart thermostats. A heat pump heats and cools, so it can replace both a furnace and an air conditioner. "
+            "We read the program's heat pump page and its full list of upgrades on October 6, 2026. A furnace is not on either one. "
             "If a contractor quotes you an \"Enbridge furnace rebate\" in 2026, ask them to show you the program page. It is most likely an old offer or a store discount.</p>"
             "<h2>Gas furnace vs heat pump: what the rebate changes</h2>"
             "<p>Say your home heats with Enbridge gas and you need about 3 tons of heating. A new furnace gets no rebate. A cold-climate heat pump gets $500 per ton, so $1,500, and a 4-ton system reaches the $2,000 cap. "
@@ -120,8 +122,8 @@ REGIONS = {
             "<li><b>The owner applies.</b> Landlords apply for rental homes. New homes lived in for six months or less don't qualify.</li>"
             "<li><b>Cornwall Electric customers</b> are not eligible unless they heat with Enbridge gas.</li>"
             "<li><b>Payment:</b> after the post-install application is approved, the cheque comes by mail within 60 days.</li></ul>"
-            "<h2>Toronto, Markham, Brampton and Vaughan</h2>"
-            "<p>The rebate amounts are the same across Ontario. What changes by city is the extra help. "
+            "<h2>Furnace rebate in Markham, Toronto, Brampton and Vaughan</h2>"
+            "<p>There is no Markham furnace rebate, and none in Toronto, Brampton or Vaughan either. The program's amounts are the same across Ontario. What changes by city is the extra help. "
             "<b>Toronto</b> homeowners can add the city's Home Energy Loan Program (HELP), repaid on the property tax bill, to cover what the rebate doesn't. "
             "<b>Ottawa</b> has the Better Homes Ottawa Loan, which works the same way. "
             "In <b>Markham, Brampton and Vaughan</b>, the Home Renovation Savings rebate is the main help, and each city page lists anything local we have verified. "

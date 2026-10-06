@@ -25,7 +25,7 @@ PUBLIC_FILES = {"robots.txt", "llms.txt", "_redirects", "_headers", "form-handle
                 "form-handlers-with-installer-select.js", "128e460777465d0f18b1a1d82780a08b.txt"}
 PUBLIC_PREFIXES = ("installers/json/", "rebate-tracker/changes.json")
 PRIVATE_DIRS = {"scripts", "data", "reports", ".claude", ".github", "node_modules", "_partials", "dist",
-                "meta-worker", "pinterest-worker", "powerscore-history"}
+                "meta-worker", "pinterest-worker", "roof-check-worker", "powerscore-history"}
 # Dev/template pages that are real .html files but never meant to be public.
 PRIVATE_HTML = {"og-image.html", "CITY_PAGE_TEMPLATE_OPTIMIZED.html", "ONTARIO_CITY_PAGE_TEMPLATE.html",
                 "city-page-template-with-carousel.html", "installer-carousel-component.html", "installer-carousel.html",

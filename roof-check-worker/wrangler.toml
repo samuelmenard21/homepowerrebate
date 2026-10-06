@@ -1,0 +1,16 @@
+name = "homepowerrebate-roof-check"
+main = "index.js"
+compatibility_date = "2026-07-01"
+
+# Custom domain creates the DNS record. The page calls https://roof.homepowerrebate.com/check
+routes = [
+  { pattern = "roof.homepowerrebate.com", custom_domain = true }
+]
+
+[vars]
+MONTHLY_CAP = "8000"   # lookups per month; each uses 1 Geocoding + 1 Solar request, free allowance is 10,000 each
+IP_HOURLY = "6"
+
+[[kv_namespaces]]
+binding = "USAGE"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"   # npx wrangler kv namespace create USAGE

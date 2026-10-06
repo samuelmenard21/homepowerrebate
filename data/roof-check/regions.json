@@ -1,0 +1,164 @@
+{
+ "assumptions": {
+  "ac_factor": 0.85,
+  "ac_note": "Google reports yearly output as DC energy. We multiply by 0.85 as a typical allowance for inverter and wiring losses. This is our assumption, not Google's or a program's number; an installer's design will differ."
+ },
+ "federal": {
+  "US": {
+   "text": "The federal 25D residential solar credit applies only to systems installed through December 31, 2025, so it does not apply to a 2026 install.",
+   "facts": [
+    "us-ca-0-federal-25c-25d-tax-credits"
+   ]
+  },
+  "CA": {
+   "text": "The federal Canada Greener Homes Loan is closed to new applicants, so there is no federal home solar program to count on.",
+   "facts": [
+    "on-12-canada-greener-homes-loan"
+   ]
+  }
+ },
+ "regions": {
+  "CA-ON": {
+   "name": "Ontario",
+   "page": "/ca/on/toronto/solar/",
+   "size_to_usage": true,
+   "programs": [
+    {
+     "kind": "per_kw",
+     "name": "Home Renovation Savings solar",
+     "rate": 1000,
+     "cap": 5000,
+     "note": "$1,000 per kW DC, up to $5,000, and never more than 50% of eligible cost. The system must be sized to your own use (no net metering), on the roof, and a first-time install.",
+     "facts": [
+      "on-25-hrs-solar-storage-rules",
+      "on-4-home-renovation-savings-hrs-solar-and-battery"
+     ]
+    }
+   ]
+  },
+  "CA-BC": {
+   "name": "British Columbia",
+   "page": "/ca/bc/vancouver/solar/",
+   "programs": [
+    {
+     "kind": "per_kw",
+     "name": "BC Hydro solar rebate",
+     "rate": 1000,
+     "cap": 5000,
+     "note": "$1,000 per kW DC, up to $5,000, and never more than 50% of installed cost.",
+     "facts": [
+      "bc-pages-11-bc-hydro-solar-rebate"
+     ]
+    },
+    {
+     "kind": "info",
+     "name": "Selling power back",
+     "note": "Net metering is closed to new BC Hydro customers. The new self-generation rate pays 10 cents per kWh for exports.",
+     "facts": [
+      "bc-blog-13-bc-hydro-self-generation-rate"
+     ]
+    }
+   ]
+  },
+  "US-MA": {
+   "name": "Massachusetts",
+   "page": "/us/ma/",
+   "programs": [
+    {
+     "kind": "per_kwh",
+     "name": "SMART 3.0",
+     "rate": 0.03,
+     "note": "A flat $0.03 per kWh generated (low-income customers $0.06) for systems up to 25 kW, in National Grid, Eversource and Unitil territory. Municipal light plant towns are not covered. The payment term is not confirmed on the page we read.",
+     "facts": [
+      "ma-20-smart-3-0-small-residential"
+     ]
+    },
+    {
+     "kind": "pct_cap",
+     "name": "State solar tax credit",
+     "pct": 15,
+     "cap": 1000,
+     "note": "15% of the system cost, up to $1,000.",
+     "facts": [
+      "ma-12-ma-state-solar-tax-credit"
+     ]
+    }
+   ]
+  },
+  "US-NY": {
+   "name": "New York",
+   "page": "/us/ny/",
+   "programs": [
+    {
+     "kind": "info",
+     "name": "NY-Sun and state tax credit",
+     "note": "NY-Sun incentives come through a participating contractor, depend on project size and location and phase down over time. New York also has a 25% state personal tax credit for panels at your residence. We do not compute these because the per-watt amount changes by block.",
+     "facts": [
+      "ny-29-ny-sun-paying-for-solar"
+     ]
+    }
+   ]
+  },
+  "US-CO": {
+   "name": "Colorado",
+   "page": "/us/co/",
+   "programs": [
+    {
+     "kind": "per_kw_cond",
+     "name": "Xcel Solar*Rewards",
+     "rate": 1000,
+     "maxkw": 10,
+     "note": "In 2026 the upfront $1 per watt, up to 10 kW, is only for income-qualified and Disproportionately Impacted Community households. Everyone else gets net metering only.",
+     "facts": [
+      "co-7-xcel-energy-solar-rewards-residential-2026"
+     ]
+    }
+   ]
+  },
+  "US-PA": {
+   "name": "Pennsylvania",
+   "page": "/us/pa/",
+   "programs": [
+    {
+     "kind": "info",
+     "name": "No open solar rebate",
+     "note": "The state Sunshine program stopped taking applications in 2013 and the PECO solar rebate window closed.",
+     "facts": [
+      "pa-8-pa-sunshine-solar-program",
+      "pa-10-peco-act-129-solar-rebate"
+     ]
+    }
+   ]
+  },
+  "CA-NS": {
+   "name": "Nova Scotia",
+   "page": "/ca/ns/",
+   "programs": [
+    {
+     "kind": "info",
+     "name": "Closed to homeowners",
+     "note": "The SolarHomes rebate stopped taking applications in April 2025. Halifax offers Solar City financing, which is a loan, not a rebate.",
+     "facts": [
+      "ns-8-solarhomes-residential",
+      "ns-10-halifax-solar-city"
+     ]
+    }
+   ]
+  },
+  "US-CA": {
+   "name": "California",
+   "page": "/us/ca/",
+   "programs": [
+    {
+     "kind": "info",
+     "name": "Net billing",
+     "note": "Customers of PG&E, SCE and SDG&E who apply for new solar are on the Net Billing Tariff, which pays less for exports than the old net metering. Several municipal utilities have their own rebates, so check your utility.",
+     "facts": [
+      "us-ca-14-net-billing-tariff-nem-3-0"
+     ]
+    }
+   ]
+  }
+ },
+ "unverified": "We have not verified solar incentives for {region} yet, so we do not show a rebate. Your roof numbers above are still real."
+}

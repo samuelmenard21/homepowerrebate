@@ -2,8 +2,8 @@
 """Pennsylvania city category pages (Philadelphia/PECO, Allentown/PPL) in the shared layout used for California, BC, Ontario and Nova Scotia.
 Copied from scripts/build_ns_pages.py. Prose is hand-written per page in data/pa/pages/<city>/<category>.json.
 Local facts come from data/pa-housing-acs.json (US Census ACS 5-year 2020-2024 via scripts/pull_pa_acs.py) and city-climate-data.json.
-Amounts come only from data/verified-facts/pa.json. Erie (Penelec) and Pittsburgh (Duquesne Light) have no verified utility amounts yet,
-so their category pages redirect to the city hub (see _redirects), as do categories with no open program. Same quality gate as build_ca_pages.py.
+Amounts come only from data/verified-facts/pa.json. Erie (Penelec) and Pittsburgh (Duquesne Light) have no readable utility amounts as of 2026-10-05 (pa-20, pa-26),
+so only their hubs are built and their category pages redirect to the city hub (see _redirects), as do categories with no open program. Same quality gate as build_ca_pages.py.
 Usage: python3 scripts/build_pa_pages.py [city ...]"""
 import html
 import json
@@ -25,8 +25,9 @@ LABEL = {"insulation": "Insulation", "windows-doors": "Windows & Doors", "water-
          "ev-charger": "EV Charger", "smart-thermostats": "Smart Thermostat", "appliances": "Appliance", "hrv": "HRV & Ventilation"}
 BUILT = ["heat-pump", "water-heater", "insulation", "windows", "smart-thermostats", "solar"]
 HUB = ["index"]
-NAMES = {"philadelphia": "Philadelphia", "allentown": "Allentown"}
-UTILITY = {"philadelphia": ("/programs/peco-rebates/", "PECO"), "allentown": ("/programs/ppl-electric-rebates/", "PPL Electric")}
+NAMES = {"philadelphia": "Philadelphia", "pittsburgh": "Pittsburgh", "allentown": "Allentown", "erie": "Erie"}
+UTILITY = {"philadelphia": ("/programs/peco-rebates/", "PECO"), "allentown": ("/programs/ppl-electric-rebates/", "PPL Electric"),
+           "pittsburgh": ("/us/pa/", "Pennsylvania"), "erie": ("/us/pa/", "Pennsylvania")}
 HP_ROWS = [r for r in rank.load_rows() if r["region"] == "pa" and r["service"] == "heat-pump"]
 
 

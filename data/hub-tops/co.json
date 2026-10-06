@@ -1,7 +1,7 @@
 {
  "name": "Colorado",
  "code": "CO",
- "short": "Xcel Energy pays $750 per heating ton for a cold-climate heat pump, and $1,500 per ton for homes heated with Xcel gas from October 1, 2026. A heat pump water heater gets $750 or $1,500, a smart thermostat $50 and a home EV charger up to $500. Solar has no upfront rebate for most homes in 2026, and the federal credits ended after 2025. Colorado Springs and Fort Collins have their own utilities with different programs that we are still checking.",
+ "short": "Xcel Energy pays $750 per heating ton for a cold-climate heat pump, and $1,500 per ton for homes heated with Xcel gas from October 1, 2026, which we could not yet confirm is live. A heat pump water heater gets $750 or $1,500, a smart thermostat $50 and a home EV charger up to $500. Colorado Springs Utilities pays $1,500 to $3,000 for a heat pump, and Fort Collins Utilities pays $500 per ton up to $3,000. Solar has no upfront rebate for most homes in 2026, and the federal credits ended after 2025.",
  "rows": [
   {
    "upgrade": "Heat pump",
@@ -51,6 +51,20 @@
    "amount": "$1 per watt, income-qualified only",
    "rules": "Everyone else gets net metering credit only.",
    "fact": "Xcel Energy Solar*Rewards (residential, 2026)"
+  },
+  {
+   "upgrade": "Heat pump",
+   "program": "Colorado Springs Utilities",
+   "amount": "$1,500 to $3,000",
+   "rules": "Electric and gas customers; read the page before combining with the bill credit.",
+   "fact": "Colorado Springs Utilities heat pump rebates"
+  },
+  {
+   "upgrade": "Heat pump",
+   "program": "Efficiency Works (Fort Collins Utilities)",
+   "amount": "$500 per ton, up to $3,000",
+   "rules": "Bonuses available for bundling and rentals.",
+   "fact": "Efficiency Works heat pump rebates (Fort Collins Utilities)"
   }
  ],
  "eyebrow": "Xcel Energy · Colorado Springs · Fort Collins"

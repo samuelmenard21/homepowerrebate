@@ -303,6 +303,12 @@ STATE_TOPICS = [
     ("ca/ab", "/ca/ab/ev-charger/", "Alberta home EV charger rebates"),
     ("ca/on", "/ca/on/ev-charger/", "Ontario home EV charger rebates"),
     ("ca/on", "/ca/on/hrv/", "Ontario HRV and ERV rebates"),
+    ("us/co", "/us/co/solar/", "Colorado home solar rebates"),
+    ("us/co", "/us/co/ev-charger/", "Colorado home EV charger rebates"),
+    ("us/pa", "/us/pa/solar/", "Pennsylvania home solar rebates"),
+    ("us/vt", "/us/vt/solar/", "Vermont home solar rebates"),
+    ("us/vt", "/us/vt/ev-charger/", "Vermont home EV charger rebates"),
+    ("ca/ns", "/ca/ns/hrv/", "Nova Scotia HRV and ERV rebates"),
 ]
 for region, url, label in STATE_TOPICS:
     marker = "STATE-" + url.strip("/").replace("/", "-").upper() + "-LINK"

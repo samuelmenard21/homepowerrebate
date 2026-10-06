@@ -1,6 +1,6 @@
 {
- "checked": "2026-09-29",
- "notes": "Xcel facts read on 2026-09-29 from Xcel's own pages and its 2026 Rebate Summary PDF (effective Oct 1, 2026). Not yet verified from a primary source: Fort Collins Efficiency Works amounts, Colorado Springs Utilities amounts, Boulder EnergySmart, DRCOG Power Ahead Colorado, Colorado state tax credits. Do not state those as verified.",
+ "checked": "2026-10-05",
+ "notes": "Xcel facts read on 2026-09-29 from Xcel's own pages and its 2026 Rebate Summary PDF (effective Oct 1, 2026). Not yet verified from a primary source: Fort Collins Efficiency Works amounts, Colorado Springs Utilities amounts, Boulder EnergySmart, DRCOG Power Ahead Colorado, Colorado state tax credits. Do not state those as verified. Added 2026-10-05: state heat pump tax credit, Colorado Energy Office HEAR, Power Ahead Colorado, Colorado Springs Utilities, Efficiency Works (Fort Collins), Boulder County EnergySmart. Denver and Aurora city programs could not be confirmed (status check). Xcel pages load by JavaScript and could not be re-read after Oct 1, 2026.",
  "facts": [
   {
    "id": "co-0-xcel-energy-cold-climate-air-source-heat-pump",
@@ -107,6 +107,208 @@
    "dates": "Ended Dec 31, 2025",
    "source_url": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit",
    "notes": "Applies to every state; do not show a 30% federal credit on 2026 installs."
+  },
+  {
+   "id": "co-9-colorado-heat-pump-tax-credit-2026",
+   "program": "Colorado heat pump tax credit (upfront customer discount)",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "2026 installs: air-source heat pump tax credit $1,000, of which the customer must get at least $333 off at install; ground, water or combined source $2,000 ($667 minimum discount); heat pump water heater $250 ($83 minimum discount)",
+   "amount": "$333 / $667 / $83 minimum discount",
+   "eligibility": "Any Colorado installation by a contractor registered with the Colorado Energy Office; ENERGY STAR; AHRI matched; space heat pumps designed to meet at least 80% of annual heating needs; no paperwork for the customer",
+   "dates": "Installed on or after Jan 1, 2026; amounts drop again in tax year 2029",
+   "source_url": "https://energyoffice.colorado.gov/hptc",
+   "notes": "The 2024-2025 amounts ($1,500 air-source, $499.95 minimum discount) have expired. Contractors may keep up to two-thirds of the credit, so the customer discount can be larger than the minimum. Read in the browser pane 2026-10-05."
+  },
+  {
+   "id": "co-10-colorado-home-energy-rebates-hear-single-family",
+   "program": "Colorado Home Energy Rebate Program (HEAR single-family)",
+   "status": "closed",
+   "verified_on": "2026-10-05",
+   "claim": "HEAR single-family program (Region 1 Front Range and Region 2) is closed. Amounts when open: up to $8,000 cold-climate heat pump, $3,000 other heat pump, $1,750 heat pump water heater, $1,600 insulation and air sealing, $4,000 panel, $2,500 wiring, $840 electric stove, $14,000 total per household; 100% of cost below 80% AMI, 50% of cost at 80%-150% AMI",
+   "amount": "Closed (was up to $14,000)",
+   "eligibility": "Income at or below 150% of county AMI, through a registered contractor",
+   "dates": "Closed; applications after Aug 1, 2026 not reviewed for Region 2 (updated Aug 2026); small multifamily HEAR and manufactured-home and large multifamily HER planned for 2026",
+   "source_url": "https://energyoffice.colorado.gov/home-energy-rebates",
+   "notes": "Counties in Region 1 include Adams, Arapahoe, Boulder, Denver, El Paso and Larimer. Page says the Colorado Home Energy Rebates Dashboard shows funding left. Read in the browser pane 2026-10-05."
+  },
+  {
+   "id": "co-11-power-ahead-colorado-heat-pump-rebate",
+   "program": "Power Ahead Colorado heat pump rebate (DRCOG)",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "$1,500 rebate on an ENERGY STAR certified cold-climate air-source heat pump installed in an existing building by a verified Power Ahead Colorado contractor, preapproved before work begins",
+   "amount": "$1,500",
+   "eligibility": "Project in a municipality or county that participates in DRCOG (Adams, Arapahoe, Boulder, Broomfield, Denver, Clear Creek, Douglas, Gilpin, Jefferson and part of Weld); retrofit only, new construction not eligible; single-family, multifamily or commercial; can be combined with other rebates",
+   "dates": "Launched July 15, 2026 (CPR News); no end date or remaining budget stated on the program page",
+   "source_url": "https://poweraheadcolorado.org/resources/rebate-program-overview",
+   "notes": "Ground-source and other heat pump types are not yet covered; the program page says later phases will expand. We did not confirm that every town in those counties participates; the page asks you to check with the program."
+  },
+  {
+   "id": "co-12-colorado-springs-utilities-heat-pump-rebates",
+   "program": "Colorado Springs Utilities heat pump rebates",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "ENERGY STAR heat pump $1,500; cold-climate air-source heat pump under 3 tons $1,500; 3 tons and over $3,000; air-to-water heat pump $3,000; electric customers approved for a heat pump under 3 tons also get a $1,500 electric bill credit starting Jan 1, 2026",
+   "amount": "$1,500 to $3,000",
+   "eligibility": "Colorado Springs Utilities electric and/or gas customer; retrofit; NEEP-listed for cold-climate; permit and final inspection with Pikes Peak Regional Building Department; two rebates per service address every three years; ductless systems pay by outdoor unit",
+   "dates": "Equipment bought and installed Jan 1 to Dec 31, 2026; application postmarked by Jan 31, 2027; first come, first served",
+   "source_url": "https://www.csu.org/rebates-incentives/residential-hvac",
+   "notes": "Amounts from the 2026 rebate application (version 1.2026) and the HVAC page. The page banner says the $1,500 bill credit applies to customers approved for heat pump rebates under three tons; we did not find how it combines with the $1,500 rebate, so we do not add the two. Rules read at csu.org/rebates-incentives/residential-rules."
+  },
+  {
+   "id": "co-13-colorado-springs-utilities-heat-pump-water-heater",
+   "program": "Colorado Springs Utilities heat pump water heater rebate",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "$750 for an ENERGY STAR heat pump water heater; natural gas storage water heater $300; natural gas boiler $1,200; natural gas condensing furnace $900",
+   "amount": "$750 (electric customers)",
+   "eligibility": "Heat pump water heater: Utilities electric customer; retrofit; final inspection with Pikes Peak Regional Building Department; two rebates per address every three years",
+   "dates": "Installed Jan 1 to Dec 31, 2026; application postmarked by Jan 31, 2027",
+   "source_url": "https://www.csu.org/rebates-incentives/residential-water-heater",
+   "notes": "Rules at csu.org/rebates-incentives/residential-rules. Paid as a credit on the utility account, up to eight weeks."
+  },
+  {
+   "id": "co-14-colorado-springs-utilities-insulation",
+   "program": "Colorado Springs Utilities insulation rebates",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "Attic (R-49 with bypass air sealing), wall (R-13 cavity) and crawl space (R-15 continuous) insulation: 40% of total cost, up to $1,250 each",
+   "amount": "up to $1,250 each",
+   "eligibility": "Utilities electric and/or gas customer; licensed Colorado contractor (do-it-yourself does not qualify); living space only; total insulation must meet Department of Energy recommendations; homes of four or fewer units, three stories or under",
+   "dates": "Installed Jan 1 to Dec 31, 2026; application postmarked by Jan 31, 2027",
+   "source_url": "https://www.csu.org/rebates-incentives/residential-rules",
+   "notes": "The 40% and $1,250 figures are from the attic and wall rules text; the application form lists the same $1,250 for crawl space."
+  },
+  {
+   "id": "co-15-colorado-springs-utilities-smart-thermostat-peak-energy-rewards",
+   "program": "Colorado Springs Utilities smart thermostat and Peak Energy Rewards",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "Smart thermostat rebate up to $50 (not more than the thermostat cost before tax); Peak Energy Rewards pays $50 the first year and $25 each year after a full cooling season",
+   "amount": "up to $50, then $25 a year",
+   "eligibility": "ENERGY STAR thermostat; Utilities electric and/or gas customer; Peak Energy Rewards needs an electric account and a thermostat that controls a central air conditioner",
+   "dates": "Cooling season May to September; events 1 to 9 p.m. weekdays, up to four hours, no more than 15 a season",
+   "source_url": "https://www.csu.org/rebates-incentives/residential-rules",
+   "notes": "Two thermostat rebates per address every three years."
+  },
+  {
+   "id": "co-16-efficiency-works-heat-pump-fort-collins",
+   "program": "Efficiency Works heat pump rebates (Fort Collins Utilities)",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "Ducted air-source heat pump Tier 1 $1,500 per unit and Tier 2 (cold climate, 8.1 HSPF2) $2,000 per unit; non-ducted $500 per ton, or $1,000 per ton replacing electric baseboard; ground-source $3,000 per unit",
+   "amount": "$500 per ton to $3,000",
+   "eligibility": "Residential electric customers of Fort Collins Utilities (also Estes Park, Longmont, Loveland); installed by an Efficiency Works listed provider; home at least one year old; apply within 45 days; incentives over $2,500 need pre-approval or are capped at $2,500",
+   "dates": "Air-source tiers effective Oct 1, 2026; other measures effective Jan 1, 2026; funding limited",
+   "source_url": "https://efficiencyworks.org/wp-content/uploads/2025/02/EW_HVAC-Incentives.pdf",
+   "notes": "Revised table read 2026-10-05. Total in the sheet's 2-ton example is for illustration only. Rebates plus bonus cannot exceed project cost."
+  },
+  {
+   "id": "co-17-efficiency-works-heat-pump-water-heater",
+   "program": "Efficiency Works heat pump water heater rebate (Fort Collins Utilities)",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "$600 replacing an electric or propane water heater; $400 replacing natural gas; ENERGY STAR certified",
+   "amount": "$400 to $600",
+   "eligibility": "Fort Collins Utilities residential electric customer; retail purchase application within 45 days",
+   "dates": "Effective Jan 1, 2026",
+   "source_url": "https://efficiencyworks.org/wp-content/uploads/2025/02/Retail-Products-Electric-Rebates.pdf",
+   "notes": "The retrofit sheet lists $600 and $400 as 'per unit'; the retail sheet says 'up to'."
+  },
+  {
+   "id": "co-18-efficiency-works-bonuses",
+   "program": "Efficiency Works bundling and rental bonuses (Fort Collins Utilities)",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "$2,000 bundling bonus for a heat pump plus an envelope measure (air sealing, windows, doors) within six months, not counting heat pump water heaters; rental properties served by Fort Collins Utilities get double the standard retrofit rebate with a 12-month lease and preapproval",
+   "amount": "$2,000 bonus; 2x for rentals",
+   "eligibility": "Retrofit Rebate program only; rental bonus does not double the bundling bonus; rebates plus bonus cannot exceed project cost",
+   "dates": "2026; funding limited and subject to change",
+   "source_url": "https://efficiencyworks.org/for-your-home-rebates-and-incentives/"
+  },
+  {
+   "id": "co-19-efficiency-works-insulation-air-sealing",
+   "program": "Efficiency Works insulation and air sealing (Fort Collins Utilities)",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "Walls, basement walls, floors, crawl space, cathedral ceilings $1.16 per square foot; flat attic $0.77 per square foot; air sealing $310 / $460 / $620 / $770 per home by tiers of air-leak reduction (over 15%, 25%, 33%, 50%)",
+   "amount": "$0.77 to $1.16 per sq ft",
+   "eligibility": "Efficiency Works assessment first; listed service provider; pre and post blower-door tests and combustion safety test; home at least one year old; over $2,500 needs preapproval",
+   "dates": "Effective Jan 1, 2026",
+   "source_url": "https://efficiencyworks.org/wp-content/uploads/2025/02/EW_Insulation-Air-Sealing-Incentives.pdf",
+   "notes": "The sheet's own example (2,000 sq ft attic at $1.16 plus Xcel $1,250 for $3,570) adds an Xcel figure that does not apply to Fort Collins Utilities homes, and uses $1.16 where the flat-attic rate is $0.77, so we do not repeat it."
+  },
+  {
+   "id": "co-20-efficiency-works-windows-doors",
+   "program": "Efficiency Works windows and doors (Fort Collins Utilities)",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "Windows and sliding glass doors: ENERGY STAR version 6 $3.75 per square foot, version 7 $5.00 per square foot; exterior doors $3.75 per square foot",
+   "amount": "$3.75 to $5.00 per sq ft",
+   "eligibility": "Listed service provider; home at least one year old; ENERGY STAR Northern climate zone; combustion safety test required",
+   "dates": "Effective Jan 1, 2026",
+   "source_url": "https://efficiencyworks.org/wp-content/uploads/2025/02/EW_Windows-Incentives.pdf",
+   "notes": "The sheet's example is 20 windows of 20 square feet: $1,500 at Tier 1 and $2,000 at Tier 2."
+  },
+  {
+   "id": "co-21-efficiency-works-retail-appliances-thermostats",
+   "program": "Efficiency Works retail rebates: thermostats, induction, dryers (Fort Collins Utilities)",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "Smart thermostat up to $50 (central AC or heat pump) or up to $75 for electric baseboard thermostats (minimum two); induction range or cooktop up to $350 replacing gas, up to $50 replacing electric; heat pump dryer up to $50 compact or $100 standard; clothes washer up to $50",
+   "amount": "up to $350 induction",
+   "eligibility": "Fort Collins Utilities customer; apply within 45 days of purchase; new equipment only; photo of the old gas range required for the $350",
+   "dates": "Revised January 2026",
+   "source_url": "https://efficiencyworks.org/wp-content/uploads/2025/02/Retail-Products-Electric-Rebates.pdf",
+   "notes": "The retrofit HVAC sheet lists smart thermostats at $35 per unit, $70 maximum per home; the retail sheet says up to $50. We quote the retail sheet as up to $50 and tell readers to confirm."
+  },
+  {
+   "id": "co-22-efficiency-works-panel-upgrade",
+   "program": "Efficiency Works electric panel upgrade and load sharing device (Fort Collins Utilities)",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "200-amp or larger panel upgrade $500; load sharing device $250; only with an induction range, Level 2 EV charger, heat pump, heat pump water heater, solar or battery project",
+   "amount": "$500 / $250",
+   "eligibility": "Licensed electrician; documentation of the paired upgrade",
+   "dates": "Effective Jan 1, 2026",
+   "source_url": "https://efficiencyworks.org/wp-content/uploads/2025/02/EW_HVAC-Incentives.pdf"
+  },
+  {
+   "id": "co-23-boulder-county-energysmart-income-qualified",
+   "program": "Boulder County EnergySmart income-qualified rebates",
+   "status": "active",
+   "verified_on": "2026-10-05",
+   "claim": "50% of project cost up to $2,000 per year for households at or below 100% of area median income: insulation, air sealing, heat pumps, heat pump water heaters, induction cooktops; also electric panel upgrades and cellular shades. Standard (non income-qualified) rebates were retired in late 2025.",
+   "amount": "up to $2,000 a year",
+   "eligibility": "Boulder County residents at or below 100% of AMI; site-built and manufactured homes",
+   "dates": "Work completed and invoiced Jan 1 to Dec 31, 2026; first come, first served",
+   "source_url": "https://energysmartyes.com/rebates/",
+   "notes": "Boulder County also lists Xcel Energy, Longmont, Lyons, Erie, PVREA, United Power and the Colorado RENU loan as other sources."
+  },
+  {
+   "id": "co-24-denver-home-heat-pump-rebate-status",
+   "program": "City and County of Denver homeowner heat pump rebate",
+   "status": "check",
+   "verified_on": "2026-10-05",
+   "claim": "Denver's current homeowner page lists a Switch Together group buy (savings up to 10% off average install cost) and links to Xcel, the Colorado Energy Office and Power Ahead Colorado; no Denver-funded homeowner heat pump rebate amount is listed there",
+   "amount": "not stated",
+   "eligibility": "",
+   "dates": "Group-buy page read 2026-10-05",
+   "source_url": "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Take-Action/Individual/Group-Buy",
+   "notes": "Search results mention a Denver Climate Action Rebates program that opened Jan 9 and a 2025 notice that the residential heat pump rebate was fully subscribed; we could not open a current Denver page with amounts, so we state no Denver amount."
+  },
+  {
+   "id": "co-25-aurora-city-rebates-status",
+   "program": "City of Aurora homeowner energy rebates",
+   "status": "check",
+   "verified_on": "2026-10-05",
+   "claim": "No City of Aurora homeowner heat pump or insulation rebate could be confirmed from an auroragov.org page",
+   "amount": "not stated",
+   "eligibility": "",
+   "dates": "Searched 2026-10-05",
+   "source_url": "https://www.auroragov.org/residents/environmental_resources/energy_action_plan",
+   "notes": "Third-party sites list an Aurora heat pump rebate of $250 to $500; we could not read an Aurora page that confirms it, so we do not state it."
   }
  ]
 }

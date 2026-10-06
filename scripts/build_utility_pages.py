@@ -18,8 +18,8 @@ import build_ca_pages as ca  # noqa: E402
 e = html.escape
 BASE = ca.BASE
 FACTS = ca.FACTS
-CALC = {"ca": ("/calculator/ca/", "California"), "bc": ("/calculator/bc/", "BC"), "ny": ("/calculator/ny/", "New York"), "vt": ("/calculator/vt/", "Vermont"), "ns": ("/calculator/ns/", "Nova Scotia")}
-HOME = {"ca": "California", "bc": "British Columbia"}
+CALC = {"on": ("/calculator/on/", "Ontario"), "ca": ("/calculator/ca/", "California"), "bc": ("/calculator/bc/", "BC"), "ny": ("/calculator/ny/", "New York"), "vt": ("/calculator/vt/", "Vermont"), "ns": ("/calculator/ns/", "Nova Scotia")}
+HOME = {"ca": "California", "bc": "British Columbia", "on": "Ontario"}
 
 
 def build(slug):
@@ -113,6 +113,8 @@ def index():
     items = []
     for f in sorted((ROOT / "programs").glob("*/index.html")):
         slug = f.parent.name
+        if slug == "utility-comparison":
+            continue
         j = ROOT / "data/utilities" / f"{slug}.json"
         if j.exists():
             d = json.loads(j.read_text())
@@ -123,7 +125,7 @@ def index():
     groups = {}
     for g, n, u, desc in items:
         groups.setdefault(g, []).append((n, u, desc))
-    body = ""
+    body = '<p style="background:#f5efe5;border-left:4px solid #d4751c;padding:14px 18px;"><b>Compare them:</b> see <a href="/programs/utility-comparison/">25 utilities side by side</a>, with a 3-ton heat pump example and the status of every program.</p>\n'
     for g in sorted(groups):
         body += f"<h2>{e(g)}</h2><ul>" + "".join(f'<li><a href="{u}">{e(n)}</a>: {e(dsc)}</li>' for n, u, dsc in sorted(groups[g])) + "</ul>\n"
     path = "/programs/"

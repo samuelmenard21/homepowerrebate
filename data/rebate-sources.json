@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 288,
+ "count": 297,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -123,6 +123,7 @@
     "us-ca-19-bayren-ease-home"
    ],
    "used_by_pages": [
+    "/programs/ava-community-energy-rebates/",
     "/programs/cleanpowersf-rebates/",
     "/us/ca/berkeley/",
     "/us/ca/fremont/",
@@ -374,13 +375,14 @@
     "us-ca-24-sdge-retail-coupons"
    ],
    "used_by_pages": [
+    "/programs/sdge-rebates/",
     "/us/ca/chula-vista/",
     "/us/ca/escondido/",
     "/us/ca/san-diego/",
     "/us/ca/san-diego/ev-charger/",
     "/us/ca/san-diego/smart-thermostats/"
    ],
-   "last_read": "2026-10-01"
+   "last_read": "2026-10-05"
   },
   {
    "url": "https://www.sdge.com/residential/savings-center/tips/home-electrification",
@@ -609,7 +611,8 @@
     "/ca/on/toronto/smart-thermostats/",
     "/ca/on/vaughan/smart-thermostats/",
     "/ca/on/whitby/smart-thermostats/",
-    "/ca/on/windsor/smart-thermostats/"
+    "/ca/on/windsor/smart-thermostats/",
+    "/programs/enbridge-gas-rebates/"
    ],
    "last_read": "2026-10-04"
   },
@@ -3174,11 +3177,13 @@
    "url": "https://homerenovationsavings.ca/",
    "host": "homerenovationsavings.ca",
    "region": "on",
-   "check": "HRS - gas furnaces",
+   "check": "HRS - gas furnaces; Home Renovation Savings: heat pumps",
    "facts": [
     "on-9-hrs-gas-furnaces"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/enbridge-gas-rebates/"
+   ],
    "last_read": "2026-10-03"
   },
   {
@@ -3294,7 +3299,8 @@
     "/ca/on/whitby/appliances/",
     "/ca/on/whitby/smart-thermostats/",
     "/ca/on/windsor/appliances/",
-    "/ca/on/windsor/smart-thermostats/"
+    "/ca/on/windsor/smart-thermostats/",
+    "/programs/save-on-energy-rebates/"
    ],
    "last_read": "2026-10-04"
   },
@@ -3331,7 +3337,8 @@
     "/ca/on/toronto/smart-thermostats/",
     "/ca/on/vaughan/smart-thermostats/",
     "/ca/on/whitby/smart-thermostats/",
-    "/ca/on/windsor/smart-thermostats/"
+    "/ca/on/windsor/smart-thermostats/",
+    "/programs/save-on-energy-rebates/"
    ],
    "last_read": "2026-10-05"
   },
@@ -3339,11 +3346,13 @@
    "url": "https://saveonenergy.ca/en/For-Your-Home",
    "host": "saveonenergy.ca",
    "region": "on",
-   "check": "Ontario home EV charger incentives",
+   "check": "Ontario home EV charger incentives; Save on Energy: For Your Home",
    "facts": [
     "on-26-no-home-ev-charger-rebate"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/save-on-energy-rebates/"
+   ],
    "last_read": "2026-10-04"
   },
   {
@@ -3367,6 +3376,19 @@
    ],
    "used_by_pages": [],
    "last_read": "2026-10-04"
+  },
+  {
+   "url": "https://www.enbridgegas.com/residential/rebates-energy-conservation",
+   "host": "www.enbridgegas.com",
+   "region": "on",
+   "check": "Enbridge Gas: residential rebates; Enbridge Home Winterproofing and the HRS partnership",
+   "facts": [
+    "on-32-enbridge-winterproofing"
+   ],
+   "used_by_pages": [
+    "/programs/enbridge-gas-rebates/"
+   ],
+   "last_read": "2026-10-05"
   },
   {
    "url": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Assessment-Additional-Program-Eligibility-Requirements.pdf",
@@ -3957,7 +3979,9 @@
     "/ca/on/windsor/heat-pump/",
     "/ca/on/windsor/solar/",
     "/ca/on/windsor/water-heater/",
-    "/ca/on/windsor/windows-doors/"
+    "/ca/on/windsor/windows-doors/",
+    "/programs/enbridge-gas-rebates/",
+    "/programs/save-on-energy-rebates/"
    ],
    "last_read": ""
   },
@@ -4169,6 +4193,19 @@
    "last_read": "2026-09-29"
   },
   {
+   "url": "https://avaenergy.org/",
+   "host": "avaenergy.org",
+   "region": "us-ca",
+   "check": "Ava Community Energy",
+   "facts": [
+    "us-ca-65-ava-overview"
+   ],
+   "used_by_pages": [
+    "/programs/ava-community-energy-rebates/"
+   ],
+   "last_read": "2026-10-05"
+  },
+  {
    "url": "https://berkeleyca.gov/construction-development/green-building/building-electrification",
    "host": "berkeleyca.gov",
    "region": "us-ca",
@@ -4193,6 +4230,32 @@
     "/us/ca/fresno/"
    ],
    "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://cherpsd.com/",
+   "host": "cherpsd.com",
+   "region": "us-ca",
+   "check": "CHERP: Customer Home Electrification Readiness Program; SDG&E Customer Home Electrification Readiness Program (CHERP)",
+   "facts": [
+    "us-ca-63-sdge-cherp"
+   ],
+   "used_by_pages": [
+    "/programs/sdge-rebates/"
+   ],
+   "last_read": "2026-10-05"
+  },
+  {
+   "url": "https://ci.moreno-valley.ca.us/mvu/ev-incentives.html",
+   "host": "ci.moreno-valley.ca.us",
+   "region": "us-ca",
+   "check": "MVU EV incentives; Moreno Valley Utility 5-5-5 EV Residential Incentive",
+   "facts": [
+    "us-ca-66-mvu-ev-555"
+   ],
+   "used_by_pages": [
+    "/programs/moreno-valley-utility-rebates/"
+   ],
+   "last_read": "2026-10-05"
   },
   {
    "url": "https://cleanpowersf.org/electrify-your-home",
@@ -4251,6 +4314,32 @@
     "/us/ca/bakersfield/"
    ],
    "last_read": "2026-10-02"
+  },
+  {
+   "url": "https://moval.gov/mvu/pdfs/MVU-Residential-Incentives.pdf",
+   "host": "moval.gov",
+   "region": "us-ca",
+   "check": "MVU residential incentives flyer; Moreno Valley Utility income-based rate discount",
+   "facts": [
+    "us-ca-68-mvu-rate-discount"
+   ],
+   "used_by_pages": [
+    "/programs/moreno-valley-utility-rebates/"
+   ],
+   "last_read": "2026-10-05"
+  },
+  {
+   "url": "https://moval.gov/mvu/pdfs/ResidentialApplianceRebateApplication.pdf",
+   "host": "moval.gov",
+   "region": "us-ca",
+   "check": "MVU residential appliance rebate application; Moreno Valley Utility residential appliance and HVAC rebates (application form)",
+   "facts": [
+    "us-ca-67-mvu-hvac-appliances"
+   ],
+   "used_by_pages": [
+    "/programs/moreno-valley-utility-rebates/"
+   ],
+   "last_read": "2026-10-05"
   },
   {
    "url": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/energy-star",
@@ -4393,12 +4482,15 @@
    "url": "https://www.cpuc.ca.gov/nbt",
    "host": "www.cpuc.ca.gov",
    "region": "us-ca",
-   "check": "Net Billing Tariff; Net Billing Tariff (NEM 3.0)",
+   "check": "CPUC: Net Billing Tariff; Net Billing Tariff; Net Billing Tariff (NEM 3.0)",
    "facts": [
     "us-ca-14-net-billing-tariff-nem-3-0",
     "us-ca-la-munis-21-net-billing-tariff"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "/programs/ava-community-energy-rebates/",
+    "/programs/sdge-rebates/"
+   ],
    "last_read": "2026-09-28"
   },
   {
@@ -4706,6 +4798,19 @@
    "last_read": "2026-10-02"
   },
   {
+   "url": "https://www.sdge.com/residential/pay-bill/get-payment-bill-assistance/assistance-programs/no-cost-energy-efficient-home-improvements",
+   "host": "www.sdge.com",
+   "region": "us-ca",
+   "check": "SDG&E Energy Savings Assistance; SDG&E Energy Savings Assistance (ESA)",
+   "facts": [
+    "us-ca-64-sdge-esa"
+   ],
+   "used_by_pages": [
+    "/programs/sdge-rebates/"
+   ],
+   "last_read": "2026-10-05"
+  },
+  {
    "url": "https://www.sf.gov/apply-plumbing-and-mechanical-permit",
    "host": "www.sf.gov",
    "region": "us-ca",
@@ -4863,6 +4968,17 @@
    "last_read": "2026-10-02"
   },
   {
+   "url": "https://avaenergy.org/go-electric/water-heaters/",
+   "host": "avaenergy.org",
+   "region": "utility-pages",
+   "check": "Ava: heat pump water heaters",
+   "facts": [],
+   "used_by_pages": [
+    "/programs/ava-community-energy-rebates/"
+   ],
+   "last_read": ""
+  },
+  {
    "url": "https://cleanheat.ny.gov/",
    "host": "cleanheat.ny.gov",
    "region": "utility-pages",
@@ -4896,6 +5012,17 @@
    "facts": [],
    "used_by_pages": [
     "/programs/green-mountain-power-rebates/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://moval.gov/mvu/efficiency-progs.html",
+   "host": "moval.gov",
+   "region": "utility-pages",
+   "check": "MVU efficiency programs",
+   "facts": [],
+   "used_by_pages": [
+    "/programs/moreno-valley-utility-rebates/"
    ],
    "last_read": ""
   },

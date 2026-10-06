@@ -280,6 +280,15 @@ def article_ld(headline, desc, url):
             'publisher': {'@type': 'Organization', 'name': 'HomePowerRebate'}, 'mainEntityOfPage': url}
 
 
+def summary_card(u):
+    """One machine-readable card so PowerScore and the hub tiles can read the heat pump amount (the table above is not markup they parse)."""
+    d = U[u]
+    nums = [int(x.replace(',', '')) for x in re.findall(r'\$([\d,]+)', re.sub(r'<[^>]+>', '', d['headline']))]
+    amt = f'${max(nums):,}' if nums else ''
+    return (f'<div class="rebate-card"><span class="program-status status-open">Open</span><h4>Heat pump: {d["program"]}</h4>'
+            f'<div class="amount">Up to {amt}</div><p style="font-size:14px;margin:8px 0 0;">Best case for a whole-home system; most homes get less, as the table shows.</p></div>')
+
+
 def city_body(key, c, header=False):
     u = c['u']; d = U[u]; city = c['city']
     cat = f'/us/ny/{key}/'
@@ -305,6 +314,7 @@ def city_body(key, c, header=False):
 <div class="rebate-grid">
 <p>Amounts for a single-family home. You get one line from this table, not several.</p>
 {rate_table(u)}
+{summary_card(u)}
 </div>
 <h2>What makes {city} different</h2>
 {local_ps}

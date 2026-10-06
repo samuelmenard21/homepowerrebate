@@ -314,6 +314,19 @@ ROOF_PAGES = sorted(str(p.relative_to(ROOT)) for pat in ("ca/on/*/solar/index.ht
 JOBS.append(("ROOF-CHECK-LINK", '<b>See your own roof:</b> try the free <a href="/roof-check/">Solar Roof Check</a>. Type your address to see how many panels fit and which verified solar rebates apply.', ROOF_PAGES))
 
 
+UT_JOBS = [
+    ("UTILITY-SDGE-LINK", '<b>On SDG&E power?</b> See <a href="/programs/sdge-rebates/">what SDG&E customers can claim: free upgrades for income-eligible homes, coaching for gas homes and what has ended</a>.',
+     ["us/ca/san-diego/index.html", "us/ca/san-diego/chula-vista/index.html", "us/ca/san-diego/escondido/index.html", "us/ca/san-diego/san-diego/index.html"]),
+    ("UTILITY-AVA-LINK", '<b>Buying power from Ava?</b> See <a href="/programs/ava-community-energy-rebates/">what Ava Community Energy offers and where heat pump money comes from</a>.',
+     ["us/ca/bay-area/oakland/index.html", "us/ca/bay-area/berkeley/index.html", "us/ca/bay-area/fremont/index.html"]),
+    ("UTILITY-MVU-LINK", '<b>On Moreno Valley Utility?</b> See <a href="/programs/moreno-valley-utility-rebates/">MVU rebates: $140 to $160 per ton for AC and heat pumps, the EV incentive and the rate discount</a>.',
+     ["us/ca/inland-empire/moreno-valley/index.html"]),
+    ("UTILITY-SOE-LINK", '<b>All Ontario programs in one place:</b> see <a href="/programs/save-on-energy-rebates/">what Save on Energy pays</a>, and <a href="/programs/enbridge-gas-rebates/">what Enbridge gas customers get</a>.',
+     ["ca/on/index.html"] + sorted(str(p.relative_to(ROOT)) for p in (ROOT / "ca/on").glob("*/index.html"))),
+]
+JOBS += UT_JOBS
+
+
 def main():
     n = greener_section() + attic_section() + ottawa_eap() + peak_section() + rvalue_section()
     for marker, html, pages in JOBS:

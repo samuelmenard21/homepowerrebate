@@ -169,6 +169,37 @@ def last_changed():
     return dates
 
 
+def content_dates(entries, git_dates):
+    """lastmod from the page's visible text, not from commits. Site-wide restamps (menu, footer, link checks) touch thousands of files and would date them all today,
+    which teaches Google to ignore lastmod. State is kept in data/sitemap-lastmod.json (git add -f); a page with no state yet starts from its git date."""
+    import hashlib, json, re
+    sp = os.path.join(ROOT, "data", "sitemap-lastmod.json")
+    try:
+        state = json.load(open(sp))
+    except Exception:
+        state = {}
+    out, new_state = {}, {}
+    for _, _, _, rel_file in entries:
+        try:
+            h = open(os.path.join(ROOT, rel_file), encoding="utf-8", errors="ignore").read()
+        except OSError:
+            continue
+        h = re.sub(r"<script.*?</script>|<style.*?</style>|<nav.*?</nav>|<footer.*?</footer>|<!--.*?-->", " ", h, flags=re.S)
+        h = re.sub(r"<[^>]+>", " ", h)
+        digest = hashlib.sha1(re.sub(r"\s+", " ", h).strip().encode("utf-8")).hexdigest()[:16]
+        prev = state.get(rel_file)
+        if prev and prev["h"] == digest:
+            d = prev["d"]
+        elif prev:
+            d = TODAY
+        else:
+            d = git_dates.get(rel_file, TODAY)
+        out[rel_file] = d
+        new_state[rel_file] = {"h": digest, "d": d}
+    json.dump(new_state, open(sp, "w"), indent=0, sort_keys=True)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
@@ -201,6 +232,7 @@ def main():
         return
 
     changed = last_changed()
+    changed = content_dates(entries, changed)
     lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for rel_url, priority, changefreq, rel_file in entries:
         loc = BASE_URL + rel_url

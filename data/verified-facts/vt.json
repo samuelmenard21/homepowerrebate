@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-03",
+  "checked": "2026-10-05",
   "facts": [
     {
       "id": "vt-0-efficiency-vermont-heat-pump-rebates",
@@ -120,6 +120,210 @@
       "dates": "2026",
       "source_url": "https://www.efficiencyvermont.com/rebates/list?type=res",
       "notes": "Residential list read 2026-10-03."
+    },
+    {
+      "id": "vt-10-gmp-byod-battery",
+      "program": "Green Mountain Power Bring Your Own Device (home battery)",
+      "status": "active",
+      "verified_on": "2026-10-05",
+      "claim": "GMP pays $850 per kW of storage enrolled for a three-hour battery discharge or $950 per kW for four hours, set by how much stored energy you agree to share during peaks (a few times a month). Retrofitting an existing solar system in an area where storage helps most earns an extra $100 per kW. Listed batteries: Duracell, Eguana, Emporia, Enphase IQ, Fortress, FranklinWH, NeoVolta, Savant 20 and 50, SolarEdge StorEdge compatible systems, Tesla Powerwall 2 and 3. GMP also lists a Lease Energy Storage option whose terms were not read.",
+      "amount": "$850-$950 per kW (+$100 per kW retrofit)",
+      "eligibility": "Green Mountain Power customers with a listed battery",
+      "dates": "2026",
+      "source_url": "https://greenmountainpower.com/rebates-programs/home-energy-storage/bring-your-own-device/",
+      "notes": "Read in browser pane 2026-10-05. Enrollment caps and end date not stated on the page text read (\"See All Details & Requirements\" not opened). Lease program page could not be read, so no lease terms are used."
+    },
+    {
+      "id": "vt-11-gmp-ev-rebate",
+      "program": "Green Mountain Power electric vehicle rebates",
+      "status": "active",
+      "verified_on": "2026-10-05",
+      "claim": "All-electric vehicle: new purchase $1,500, new lease $1,000, used purchase or lease $1,000. Plug-in hybrid: new purchase $1,000, new lease $750, used $750. Income-eligible customers (80% of Vermont statewide median income; $94,672 for four people) get an extra $1,000 on an all-electric vehicle, up to $2,500 total. Valid for qualifying vehicles purchased or leased through December 31, 2026. Some dealers apply it as a discount; rebates may be taxable income.",
+      "amount": "Up to $2,500",
+      "eligibility": "Green Mountain Power customers",
+      "dates": "Through 2026-12-31",
+      "source_url": "https://greenmountainpower.com/rebates-programs/electric-vehicles/ev-rebate/",
+      "notes": "Read 2026-10-05. 80% SMI limits 1 person $66,255 through 8 people $124,970."
+    },
+    {
+      "id": "vt-12-gmp-home-charger",
+      "program": "Green Mountain Power home Level 2 charger program",
+      "status": "active",
+      "verified_on": "2026-10-05",
+      "claim": "Buy or lease an EV in 2026 and get a check up to $500 toward charger installation once the GMP charger is connected and enrolled in a discount charging rate (cannot exceed the installation receipt), plus $150 off the install through Treehouse. GMP page headline: installation incentives up to $650. Needs an EV registered at the GMP account address, a smart meter, reliable wifi, and home ownership or landlord approval.",
+      "amount": "Up to $650",
+      "eligibility": "Green Mountain Power customers with an EV",
+      "dates": "2026",
+      "source_url": "https://greenmountainpower.com/rebates-programs/electric-vehicles/in-home-ev-charger/",
+      "notes": "Read 2026-10-05. The electric-vehicles landing page says the charger itself is free while in the Home Charging program; the charger page does not state that, so we do not repeat it."
+    },
+    {
+      "id": "vt-13-bed-ev-rebates",
+      "program": "Burlington Electric Department electric vehicle rebates",
+      "status": "active",
+      "verified_on": "2026-10-05",
+      "claim": "New or leased electric vehicle $5,000; new plug-in hybrid $2,000; used or pre-owned EV or plug-in hybrid $1,300; income-qualified customers get an additional amount (gross income limit $99,750 for a household of four; $69,850 for one). Separate programs exist for high-mileage drivers (17,600 miles a year or more).",
+      "amount": "Up to $5,000 (new EV)",
+      "eligibility": "Burlington Electric customers",
+      "dates": "2026",
+      "source_url": "https://www.burlingtonelectric.com/evrebates",
+      "notes": "Read 2026-10-05. Extra income-qualified amount is on BED rebate form, not read."
+    },
+    {
+      "id": "vt-14-bed-ev-charger-and-rate",
+      "program": "Burlington Electric home EV charger rebate and EV rate",
+      "status": "active",
+      "verified_on": "2026-10-05",
+      "claim": "Rebate of up to $900 for a home charger, set by the EV purchased; currently only the ChargePoint Home Flex charger qualifies. EV Rate credit of 8.7894 cents per kWh lowers charging to 9.95 cents per kWh (about 75 cents a gallon by BED math, 45% savings); charging only between 10 pm and noon on the Fixed Schedule option or in hours BED announces on the Flexible Load option, or the month credit is lost. Multi-family properties get $1,000 per qualifying charger setup; workplaces $2,500 per port up to 75% of cost.",
+      "amount": "Up to $900 charger",
+      "eligibility": "Burlington Electric Residential Service customers with wifi and a qualifying charger",
+      "dates": "2026",
+      "source_url": "https://www.burlingtonelectric.com/evchargers",
+      "notes": "Read 2026-10-05, with the EV rate page https://www.burlingtonelectric.com/evrate. The rate page also mentions a refund of up to $1,000 on charger and installation; the charger page says $900, so we use $900."
+    },
+    {
+      "id": "vt-15-gmp-appliance-rebates",
+      "program": "Green Mountain Power appliance and yard rebates",
+      "status": "active",
+      "verified_on": "2026-10-05",
+      "claim": "Induction cooktop or range $200 (installed, not portable; purchases through December 31, 2026; one per account); electric lawn tractor $100, push mower $50, electric trimmers, leaf blowers and chainsaws $25; heat pump water heater up to $600 through Efficiency Vermont.",
+      "amount": "$25-$200 by product",
+      "eligibility": "Green Mountain Power customers",
+      "dates": "Induction through 2026-12-31",
+      "source_url": "https://greenmountainpower.com/rebates-programs/home-and-yard/",
+      "notes": "Read 2026-10-05 on the landing page and the induction cooktop and heat pump water heater pages. Lawn and yard amounts from the landing page text."
+    },
+    {
+      "id": "vt-16-gmp-net-metering",
+      "program": "Green Mountain Power net metering",
+      "status": "info",
+      "verified_on": "2026-10-05",
+      "claim": "Net metering lets Vermonters send unused solar power to the grid and pay only for the difference; surplus in a month becomes a credit toward the next bill; credits more than one year old expire; net metering is meant to cover a customer's own use, not exceed it.",
+      "amount": "",
+      "eligibility": "GMP customers with a grid-tied system",
+      "dates": "",
+      "source_url": "https://greenmountainpower.com/help/what-is-net-metering/",
+      "notes": "Read 2026-10-05. A web-search summary of GMP tariffs quoted per-kWh solar credit rates, but we did not read the tariff itself, so no rate is used."
+    },
+    {
+      "id": "vt-17-bed-solar-net-metering",
+      "program": "Burlington Electric solar and net metering rules",
+      "status": "info",
+      "verified_on": "2026-10-05",
+      "claim": "BED says solar systems run $3 to $7 per watt and an average BED residential customer's system makes 35% to 50% of annual use; net metering needs a grid connection and a separate generation meter (about $150 residential) installed by BED; systems over 15 kW need BED interconnection approval before the state Certificate of Public Good registration; city permits and a Department of Public Works electrical inspection are required before BED energizes it.",
+      "amount": "",
+      "eligibility": "Burlington Electric customers",
+      "dates": "Rule 5.100 effective 2024-03-01",
+      "source_url": "https://www.burlingtonelectric.com/solar",
+      "notes": "Read 2026-10-05. No BED solar rebate is listed on this page or the rebates page."
+    },
+    {
+      "id": "vt-18-vgs-weatherization-rebates",
+      "program": "Vermont Gas weatherization rebates",
+      "status": "active",
+      "verified_on": "2026-10-05",
+      "claim": "Single-family homes: market-rate households 50% of project up to $4,000; moderate income 75% up to $7,000; low income 90% up to $9,500. Townhouse and condo 75% up to $1,000 per unit; multi-family 50% up to $10,000 (75% when tenants pay the gas bill); manufactured homes 75% up to $4,875 or $2,850 depending on scope. Needs a BPI-certified contractor and at least a 10% air leakage reduction; projects complete by December 31, 2026.",
+      "amount": "$4,000-$9,500 single-family",
+      "eligibility": "Vermont Gas customers (Burlington and South Burlington gas heat)",
+      "dates": "Through 2026-12-31",
+      "source_url": "https://vgsvt.com/energy-efficiency/residential-services/rebates-financing/",
+      "notes": "Read 2026-10-05. Vermont Gas, not Efficiency Vermont, pays for gas-heated homes. BED says gas customers should call VGS."
+    },
+    {
+      "id": "vt-19-vgs-financing",
+      "program": "Vermont Gas weatherization financing and WRAP",
+      "status": "active",
+      "verified_on": "2026-10-05",
+      "claim": "Green Mountain Credit Union loans up to $20,000 over 5 years: 0% APR on weatherization projects; 5.99% APR when the project includes heat pumps. The Weatherization Repayment Assistance Program (WRAP) lets eligible customers repay through the VGS bill, and repayment stays with the gas meter if the home is sold.",
+      "amount": "0% APR up to $20,000",
+      "eligibility": "Vermont Gas customers; subject to credit union approval",
+      "dates": "Offers good through 2026-12-31",
+      "source_url": "https://vgsvt.com/energy-efficiency/residential-services/rebates-financing/",
+      "notes": "Read 2026-10-05. BED also lists WRAP for homeowners and renters on its weatherization page."
+    },
+    {
+      "id": "vt-20-bed-heat-pump-tables",
+      "program": "Burlington Electric heat pump rebate tables",
+      "status": "active",
+      "verified_on": "2026-10-05",
+      "claim": "BED says its rebates cover up to 75% of installed cost. Centrally ducted standard systems: contractor point-of-sale discount $1,000 (up to 2 tons), $1,500 (over 2 to 4 tons), $2,000 (over 4 tons), plus a $500 BED bonus per condenser for qualifying customers. High performance ducted systems on the NEEP cold-climate list add a BED online rebate of $1,350, $3,950 or $5,450 by size. Air-to-water heat pump incentives total up to $12,400. BED warns that homes heated with natural gas might not save money with an air-source heat pump.",
+      "amount": "Up to $5,450 plus $1,000-$2,000 discount (ducted)",
+      "eligibility": "Burlington Electric customers",
+      "dates": "2026",
+      "source_url": "https://www.burlingtonelectric.com/heatpumps",
+      "notes": "Read 2026-10-05. Efficiency Vermont lists the ductless offers (vt-6). Figures are BED's own; the $12,400 air-to-water figure is a total BED states without a table."
+    },
+    {
+      "id": "vt-21-bed-water-heater-page",
+      "program": "Burlington Electric water heater offers",
+      "status": "active",
+      "verified_on": "2026-10-05",
+      "claim": "BED gives free tank wraps and low-flow showerheads to electric resistance water heater owners (saves up to $75 a year by BED), and tells heat pump water heater buyers to ask contractors about the $600 statewide discount. BED's rebate page lists contractor midstream heat pump water heater cash back up to $800 at HVAC distributors.",
+      "amount": "$600 statewide discount; up to $800 midstream",
+      "eligibility": "Burlington Electric customers",
+      "dates": "2026",
+      "source_url": "https://www.burlingtonelectric.com/waterheaters",
+      "notes": "Read 2026-10-05 with https://www.burlingtonelectric.com/rebates. Efficiency Vermont lists up to $1,200 for BED customers under partner offers (vt-6); BED's own pages do not state $1,200, so check with BED."
+    },
+    {
+      "id": "vt-22-vt-no-window-rebate",
+      "program": "Windows and doors in Vermont programs",
+      "status": "info",
+      "verified_on": "2026-10-05",
+      "claim": "Efficiency Vermont's residential rebate list read on 2026-10-05 has no window or door replacement rebate. Vermont Gas weatherization rebates have an FAQ about windows and doors that was not opened. BED advises talking to Energy Services before large window replacement and suggests storm windows, shrink kits and cellular shades first.",
+      "amount": "",
+      "eligibility": "",
+      "dates": "",
+      "source_url": "https://www.efficiencyvermont.com/rebates/list?type=res",
+      "notes": "Absence checked against the full residential list; the Vermont Gas FAQ answer was not read, so we do not say Vermont Gas pays for windows or not."
+    },
+    {
+      "id": "vt-23-efficiency-vermont-income-free",
+      "program": "Efficiency Vermont free and low-cost income-qualified offers",
+      "status": "active",
+      "verified_on": "2026-10-05",
+      "claim": "The residential list shows free appliances, products and services for income-qualified Vermonters, the free Income Qualified Weatherization Assistance Program (through a partner), a free Virtual Home Energy Visit, and $100 cash back for DIY weatherization (BED: three DIY projects).",
+      "amount": "Free / $100",
+      "eligibility": "Income-qualified Vermonters; DIY for residents",
+      "dates": "2026",
+      "source_url": "https://www.efficiencyvermont.com/rebates/list?type=res",
+      "notes": "Read 2026-10-05. Detail tabs not opened; income limits not stated here."
+    },
+    {
+      "id": "vt-24-efficiency-vermont-ev-partner",
+      "program": "Efficiency Vermont EV incentive listing",
+      "status": "info",
+      "verified_on": "2026-10-05",
+      "claim": "Efficiency Vermont lists electric vehicle incentives of up to $5,700 and EV charging offers, both delivered through partner utilities; requirements differ by program and utility, and many dealers pass the incentive through at purchase.",
+      "amount": "Up to $5,700 (listing)",
+      "eligibility": "Varies by utility",
+      "dates": "2026",
+      "source_url": "https://www.efficiencyvermont.com/rebates/list/electric-vehicles",
+      "notes": "Read 2026-10-05. The $5,700 is the listing headline for the largest utility offer, not a statewide amount; read each utility page for its own figures."
+    },
+    {
+      "id": "vt-25-vgs-clover-heat-pumps",
+      "program": "Vermont Gas Clover Energy heat pump offers",
+      "status": "info",
+      "verified_on": "2026-10-05",
+      "claim": "Clover Energy by VGS offers heat pump lease and purchase, a Green Mountain Credit Union heat pump loan application, service plans and a coverage-area map. It installs ductless mini-splits, heat pump water heaters, and centrally ducted systems only for customers with a natural gas furnace (hybrid systems with a backup heat source).",
+      "amount": "",
+      "eligibility": "Vermont Gas customers inside the Clover coverage area",
+      "dates": "",
+      "source_url": "https://vgsvt.com/clover-energy/heat-pumps/",
+      "notes": "Read 2026-10-05. No prices were on the page; the pricing sheet was not opened."
+    },
+    {
+      "id": "vt-26-efficiency-vermont-solar-listing",
+      "program": "Efficiency Vermont solar PV listing",
+      "status": "info",
+      "verified_on": "2026-10-05",
+      "claim": "Efficiency Vermont lists Solar Photovoltaic (PV) among its residential rebates pages but gives no dollar amount: the page has a Contact Us button and related articles on renewable energy, smart homes and net zero homes.",
+      "amount": "",
+      "eligibility": "",
+      "dates": "",
+      "source_url": "https://www.efficiencyvermont.com/rebates/list/solar-photovoltaic-solar-pv",
+      "notes": "Read 2026-10-05. The Eligibility tab content did not load in the text view, so a dollar amount hidden there cannot be ruled out; call Efficiency Vermont to confirm."
     }
   ]
 }

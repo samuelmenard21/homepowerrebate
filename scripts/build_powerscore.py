@@ -123,6 +123,15 @@ def split_cards(html: str):
 
 def detect_status(html: str, has_amount: bool):
     low = html.lower()
+    # Pages built with status pills (program-status status-open / status-closed ...) list live and ended
+    # programs together; a closed card must not turn the whole category closed.
+    pills = re.findall(r'program-status status-([a-z]+)', low)
+    if pills:
+        if "open" in pills and has_amount:
+            return "open"
+        if any(p in ("limited", "check", "upcoming", "waitlist", "paused") for p in pills):
+            return "limited"
+        return "closed"
     if 'status status-closed' in low or '"status-closed"' in low:
         return "closed"
     if 'status status-limited' in low or '"status-limited"' in low:

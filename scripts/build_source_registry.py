@@ -94,6 +94,30 @@ for f in sorted((ROOT / "data" / "utilities").glob("*.json")):
         r["used_by"].add(f"/programs/{f.stem}/")
         r["titles"].add(t)
         r.setdefault("region", "utility-pages")
+# Every other region and page family that carries hand-written refs: any data/<region>/pages/<city>/<page>.json
+# (ab, co, il, mi, mn, nj, ns, ny, pa, vt, wa, ma, ...), data/state-topics, data/blog-new, data/blog-refresh.
+# Regions handled above are skipped so nothing is counted twice.
+_DONE = {"ca", "bc", "on"}
+def _add_refs(f, used_by, region):
+    try:
+        d = json.loads(f.read_text())
+    except Exception:
+        return
+    for ref in d.get("refs", []):
+        if isinstance(ref, (list, tuple)) and len(ref) == 2 and str(ref[1]).startswith("http"):
+            r = REG[ref[1]]
+            r["used_by"].add(used_by)
+            r["titles"].add(ref[0])
+            r.setdefault("region", region)
+for pages in sorted((ROOT / "data").glob("*/pages")):
+    reg = pages.parent.name
+    if reg in _DONE:
+        continue
+    for f in sorted(pages.glob("*/*.json")):
+        _add_refs(f, f"/{reg}/{f.parent.name}/" + ("" if f.stem == "index" else f.stem + "/"), f"{reg}-pages")
+for sub, label in (("state-topics", "state-topics"), ("blog-new", "blog"), ("blog-refresh", "blog")):
+    for f in sorted((ROOT / "data" / sub).glob("*.json")):
+        _add_refs(f, f"{sub}/{f.stem}", label)
 for u, region, what in EXTRA:
     r = REG[u]
     r["region"] = region

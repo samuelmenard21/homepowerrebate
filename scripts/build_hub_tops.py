@@ -76,7 +76,7 @@ HUBS = {
     # Other hubs: "What changed" box only.
     "ca/ab": {"code": "AB", "name": "Alberta"}, "ca/ns": {"code": "NS", "name": "Nova Scotia"},
     "us/ny": {"code": "NY", "name": "New York"}, "us/ma": {"code": "MA", "name": "Massachusetts"},
-    "us/pa": {"code": "PA", "name": "Pennsylvania"}, "us/co": {"code": "CO", "name": "Colorado"}, "us/vt": {"code": "VT", "name": "Vermont"},
+    "us/pa": {"code": "PA", "name": "Pennsylvania"}, "us/co": {"code": "CO", "name": "Colorado"}, "us/vt": {"code": "VT", "name": "Vermont"}, "us/nj": {"code": "NJ", "name": "New Jersey"},
 }
 FED = {"ca": "CA-FED", "us": "US"}
 

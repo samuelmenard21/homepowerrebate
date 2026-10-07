@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-HUBS = ["ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt"]
+HUBS = ["ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt", "us/nj"]
 CITY_H = re.compile(r"Cities We Cover|Where HomePowerRebate operates", re.I)
 FOLD = [(re.compile(r"rebate finder|rebate program", re.I), "Open the full rebate list"),
         (re.compile(r"common questions|quick questions|what you should know", re.I), "Read the questions and answers"),

@@ -1,0 +1,274 @@
+{
+ "code": "nj",
+ "name": "New Jersey",
+ "country": "us",
+ "currency": "USD",
+ "hub": "/us/nj/",
+ "installers": "/installers/",
+ "city_page": "us/nj/{c}",
+ "title": "New Jersey Rebate Calculator 2026: PSE&G, JCP&L and Atlantic City Electric Heat Pump Rebates",
+ "h1": "New Jersey Rebate Calculator 2026: What Your Utility Pays",
+ "desc": "Free New Jersey rebate calculator for PSE&G, JCP&L and Atlantic City Electric customers. Heat pump, water heater, thermostat, battery and EV rebates, with the official source for every amount.",
+ "intro": "New Jersey rebates come from your electric utility and from a few state programs. This calculator shows what PSE&G, JCP&L and Atlantic City Electric pay today.",
+ "short": "New Jersey has no one statewide heat pump rebate. Your electric utility pays it. PSE&G, JCP&L and Atlantic City Electric each pay up to $10,000 when a cold climate heat pump replaces a gas, oil or propane heating system, and smaller amounts for a standard heat pump, a heat pump water heater and a smart thermostat. PSE&G also pays up to $5,000 for a home battery. The federal tax credits ended after 2025.",
+ "faq": [
+  [
+   "Is there a heat pump rebate in New Jersey?",
+   "Yes, from your electric utility. PSE&G, JCP&L and Atlantic City Electric all pay up to $10,000 (more for income-qualified homes) when a cold climate heat pump replaces gas, oil or propane heat. A standard heat pump earns $300 to $1,000 depending on the utility and efficiency."
+  ],
+  [
+   "Which utility serves my home?",
+   "Look at the top of your electric bill. PSE&G serves much of northern and central New Jersey, including Newark and Jersey City. JCP&L serves much of the central and shore area, including Toms River. Atlantic City Electric serves the southern part of the state, including Atlantic City."
+  ],
+  [
+   "Is there a New Jersey solar rebate?",
+   "There is no cash rebate. New Jersey pays solar owners credits for the power they make (about $77 per megawatt-hour for registrations from July 27, 2026), plus net metering and a property tax exemption."
+  ],
+  [
+   "Are the federal tax credits still available?",
+   "No. The 25C and 25D credits ended for spending after December 31, 2025."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "utility",
+   "label": "Who supplies your electricity?",
+   "type": "select",
+   "options": [
+    {"value": "pseg", "label": "PSE&G"},
+    {"value": "jcpl", "label": "JCP&L"},
+    {"value": "ace", "label": "Atlantic City Electric"},
+    {"value": "other", "label": "Another utility (Rockland Electric, a municipal utility, or not sure)"}
+   ]
+  },
+  {
+   "id": "heating",
+   "label": "What heats your home now?",
+   "type": "select",
+   "options": [
+    {"value": "gas", "label": "Natural gas"},
+    {"value": "delivered", "label": "Oil or propane"},
+    {"value": "electric", "label": "Electric heat"}
+   ]
+  },
+  {
+   "id": "income",
+   "label": "Is your household income at or below 400% of the federal poverty level, or do you live in a moderate-income area?",
+   "type": "select",
+   "options": [
+    {"value": "no", "label": "No or not sure"},
+    {"value": "yes", "label": "Yes"}
+   ],
+   "help": "Income-qualified homes get higher amounts from each utility. Each program checks income its own way."
+  },
+  {
+   "id": "city",
+   "label": "Which city is closest to your home?",
+   "type": "select",
+   "optional": true,
+   "help": "Used to link our city guide.",
+   "options": [
+    {"value": "atlantic-city", "label": "Atlantic City"},
+    {"value": "jersey-city", "label": "Jersey City"},
+    {"value": "newark", "label": "Newark"},
+    {"value": "toms-river", "label": "Toms River"}
+   ]
+  }
+ ],
+ "upgrades": [
+  {"id": "heat-pump", "label": "Heat pump"},
+  {"id": "water-heater", "label": "Heat pump water heater"},
+  {"id": "insulation", "label": "Insulation and air sealing"},
+  {"id": "thermostat", "label": "Smart thermostat"},
+  {"id": "battery", "label": "Home battery"},
+  {"id": "ev", "label": "EV or EV charger"},
+  {"id": "solar", "label": "Rooftop solar"}
+ ],
+ "programs": [
+  {
+   "id": "pseg-hp",
+   "fact": "nj-0-pseg-air-source-heat-pump-instant-rebate",
+   "name": "PSE&G air source heat pump instant rebate",
+   "upgrade": "heat-pump",
+   "amount": {"max": 600, "label": "$300 to $600"},
+   "rules": "$300 or $450 by efficiency tier, $600 for a cold climate model. Participating contractor puts it on your invoice.",
+   "when": {"utility": ["pseg"]},
+   "group": "hp"
+  },
+  {
+   "id": "pseg-clean-heat",
+   "fact": "nj-1-pseg-clean-heat-full-displacement",
+   "name": "PSE&G Clean Heat (replace gas, oil or propane heat)",
+   "upgrade": "heat-pump",
+   "amount": {"by": "income", "values": {"no": 10000, "yes": 12000}},
+   "rules": "Lesser of $10,000 or 50% of the project ($12,000 or 60% if income-qualified). Cold climate heat pump sized for the whole home. Extra for decommissioning and re-ducting.",
+   "when": {"utility": ["pseg"], "heating": ["gas", "delivered"]},
+   "group": "hp"
+  },
+  {
+   "id": "pseg-hpwh",
+   "fact": "nj-4-pseg-heat-pump-water-heater",
+   "name": "PSE&G heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {"by": "heating", "values": {"gas": 750, "delivered": 750, "electric": 450}},
+   "rules": "$750 when it replaces a gas or oil water heater, $450 on the standard HVAC list. Ask your contractor which line applies.",
+   "when": {"utility": ["pseg"]}
+  },
+  {
+   "id": "pseg-tstat",
+   "fact": "nj-6-pseg-smart-thermostat",
+   "name": "PSE&G smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {"max": 100, "label": "$60 to $100, or free"},
+   "rules": "Up to $100 after purchase, or free from a Whole Home Energy Assessment.",
+   "when": {"utility": ["pseg"]}
+  },
+  {
+   "id": "pseg-battery",
+   "fact": "nj-9-pseg-gridsmart-battery",
+   "name": "PSE&G GridSmart Battery",
+   "upgrade": "battery",
+   "amount": {"max": 5000},
+   "rules": "Tesla Powerwall 3, Enphase 10C or Enphase 5P only. New installs, no leases. You let PSE&G use the battery up to 100 times a year.",
+   "when": {"utility": ["pseg"]}
+  },
+  {
+   "id": "pseg-ev",
+   "fact": "nj-12-pseg-ev-home-charger",
+   "name": "PSE&G EV home charger",
+   "upgrade": "ev",
+   "amount": {"max": 1500, "label": "Up to $1,500 plus utility-side help"},
+   "rules": "ENERGY STAR Level 2 smart charger. Up to $5,000 more can reduce a required deposit for utility work.",
+   "when": {"utility": ["pseg"]}
+  },
+  {
+   "id": "pseg-weatherization",
+   "fact": "nj-11-pseg-home-weatherization",
+   "name": "PSE&G Home Weatherization",
+   "upgrade": "insulation",
+   "amount": {"label": "Free for qualifying homes", "max": 0},
+   "rules": "Income between 250% and 400% of poverty, a moderate-income area, NJ SHARES or an overburdened community. Insulation, air sealing and more at no cost.",
+   "when": {"utility": ["pseg"], "income": ["yes"]}
+  },
+  {
+   "id": "jcpl-hp",
+   "fact": "nj-14-jcpl-hvac-rebates",
+   "name": "JCP&L air source heat pump",
+   "upgrade": "heat-pump",
+   "amount": {"max": 1000, "label": "Up to $1,000"},
+   "rules": "ENERGY STAR heat pump installed as a matched set. Apply within 120 days of purchase.",
+   "when": {"utility": ["jcpl"]},
+   "group": "hp"
+  },
+  {
+   "id": "jcpl-clean-comfort",
+   "fact": "nj-13-jcpl-clean-comfort",
+   "name": "JCP&L Clean Comfort (replace gas, oil or propane heat)",
+   "upgrade": "heat-pump",
+   "amount": {"by": "income", "values": {"no": 10000, "yes": 12000}},
+   "rules": "Lesser of $10,000 or 50% of the project ($12,000 or 60% for moderate income). Existing single-family homes. Installed from February 1, 2026 through June 30, 2027.",
+   "when": {"utility": ["jcpl"], "heating": ["gas", "delivered"]},
+   "group": "hp"
+  },
+  {
+   "id": "jcpl-hpwh",
+   "fact": "nj-15-jcpl-appliance-rebates",
+   "name": "JCP&L heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {"max": 750},
+   "rules": "ENERGY STAR certified. Apply within 120 days of purchase.",
+   "when": {"utility": ["jcpl"]}
+  },
+  {
+   "id": "jcpl-tstat",
+   "fact": "nj-14-jcpl-hvac-rebates",
+   "name": "JCP&L smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {"max": 100},
+   "rules": "ENERGY STAR smart thermostat, $100 per unit.",
+   "when": {"utility": ["jcpl"]}
+  },
+  {
+   "id": "jcpl-whes",
+   "fact": "nj-16-jcpl-whole-home-energy-solutions",
+   "name": "JCP&L Whole Home Energy Solutions",
+   "upgrade": "insulation",
+   "amount": {"max": 7500},
+   "rules": "$2,000 plus $200 for each point of modeled savings above 5%, up to $7,500 and 50% of cost. Air sealing before insulation.",
+   "when": {"utility": ["jcpl"]}
+  },
+  {
+   "id": "ace-hp",
+   "fact": "nj-18-ace-hvac-efficiency",
+   "name": "Atlantic City Electric heat pump",
+   "upgrade": "heat-pump",
+   "amount": {"max": 2000, "label": "$500 to $2,000"},
+   "rules": "$500 or $750 by tier, $750 for a ductless mini-split, $2,000 for a cold climate model (limited time through June 30, 2027). Extra $300 for low- to moderate-income homes.",
+   "when": {"utility": ["ace"]},
+   "group": "hp"
+  },
+  {
+   "id": "ace-electrification",
+   "fact": "nj-19-ace-electrification",
+   "name": "Atlantic City Electric electrification (replace gas, oil or propane heat)",
+   "upgrade": "heat-pump",
+   "amount": {"max": 10000},
+   "rules": "Up to $10,000 or 50% of project costs for a full switch with a cold climate heat pump. Contractor applies within 90 days of purchase.",
+   "when": {"utility": ["ace"], "heating": ["gas", "delivered"]},
+   "group": "hp"
+  },
+  {
+   "id": "ace-hpwh",
+   "fact": "nj-18-ace-hvac-efficiency",
+   "name": "Atlantic City Electric heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {"max": 750},
+   "rules": "ENERGY STAR certified heat pump water heater.",
+   "when": {"utility": ["ace"]}
+  },
+  {
+   "id": "ace-tstat",
+   "fact": "nj-18-ace-hvac-efficiency",
+   "name": "Atlantic City Electric smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {"max": 150},
+   "rules": "$150 for an ENERGY STAR smart thermostat installed with an HVAC job (limited time through June 30, 2027). Energy Wise Rewards adds up to $100.",
+   "when": {"utility": ["ace"]}
+  },
+  {
+   "id": "nj-comfort-partners",
+   "fact": "nj-22-nj-comfort-partners",
+   "name": "Comfort Partners (free upgrades)",
+   "upgrade": "insulation",
+   "amount": {"label": "Free for qualifying homes", "max": 0},
+   "rules": "Income at or below 250% of poverty, or TANF, Section 8, SNAP, SSI or General Assistance. Buildings of 14 or fewer units.",
+   "when": {"income": ["yes"]}
+  },
+  {
+   "id": "nj-charge-up",
+   "fact": "nj-23-charge-up-new-jersey",
+   "name": "Charge Up New Jersey",
+   "upgrade": "ev",
+   "amount": {"by": "income", "values": {"no": 1500, "yes": 4000}},
+   "rules": "For a new eligible electric vehicle at an eligible dealer. Up to $250 more for a Level 2 home charger. Funds are limited.",
+   "when": {}
+  },
+  {
+   "id": "nj-solar-adi",
+   "fact": "nj-24-nj-successor-solar-incentive",
+   "name": "Successor Solar Incentive (SREC-II credits)",
+   "upgrade": "solar",
+   "amount": {"label": "$77 per megawatt-hour of power made", "max": 0},
+   "rules": "Paid on the power your system makes, not up front. Your solar contractor registers the project.",
+   "when": {}
+  }
+ ],
+ "closed_facts": [
+  "nj-28-federal-residential-clean-energy-credits-25c-25d",
+  "nj-29-nj-home-energy-rebates-hear-homes"
+ ],
+ "notes": [
+  "We have not read the rebate tables of Elizabethtown Gas, New Jersey Natural Gas or South Jersey Gas, so they are not in this calculator.",
+  "Amounts are the most a program pays. Your rebate depends on the equipment, your final invoice and funds still available."
+ ]
+}

@@ -19,13 +19,13 @@ ICON = {"heat-pump": "🔥", "insulation": "🌡️", "solar": "☀️", "batter
         "smart-thermostats": "🎛️", "ev-charger": "🚗", "windows-doors": "🪟"}
 e = html.escape
 
-HUBS = ["ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt"]
+HUBS = ["ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt", "us/nj"]
 PROGRAMS = {"ca/bc": [("bc-hydro-rebates", "BC Hydro rebates"), ("cleanbc-rebates", "CleanBC rebates"), ("bc-hydro-peak-saver", "Peak Saver")],
             "ca/on": [("home-renovation-savings", "Home Renovation Savings")], "ca/ab": [("alberta-energy-rebates", "Alberta rebates guide")],
             "ca/ns": [("efficiency-nova-scotia", "Efficiency Nova Scotia")], "us/ma": [("mass-save", "Mass Save")],
             "us/ny": [("nys-clean-heat", "NYS Clean Heat")], "us/pa": [("peco-rebates", "PECO rebates"), ("ppl-electric-rebates", "PPL Electric rebates")],
-            "us/co": [("xcel-energy-colorado-rebates", "Xcel Energy rebates")], "us/ca": [], "us/vt": []}
-VERIFIED = {"ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/vt"}
+            "us/co": [("xcel-energy-colorado-rebates", "Xcel Energy rebates")], "us/ca": [], "us/vt": [], "us/nj": [("pseg-rebates", "PSE&G rebates"), ("jcpl-rebates", "JCP&L rebates"), ("atlantic-city-electric-rebates", "Atlantic City Electric rebates")]}
+VERIFIED = {"ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/vt", "us/nj"}
 
 
 def money(v, country):

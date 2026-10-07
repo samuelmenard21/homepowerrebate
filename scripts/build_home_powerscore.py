@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 S, E = "<!-- POWERSCORE-SPOTLIGHT-START -->", "<!-- POWERSCORE-SPOTLIGHT-END -->"
 OLD = "<!-- POWERSCORE SPOTLIGHT -->"
-NAMES = {"ca/bc": "BC", "ca/on": "ON", "ca/ab": "AB", "ca/ns": "NS", "us/ma": "MA", "us/ny": "NY", "us/ca": "CA", "us/pa": "PA", "us/co": "CO", "us/vt": "VT"}
+NAMES = {"ca/bc": "BC", "ca/on": "ON", "ca/ab": "AB", "ca/ns": "NS", "us/ma": "MA", "us/ny": "NY", "us/ca": "CA", "us/pa": "PA", "us/co": "CO", "us/vt": "VT", "us/mi": "MI"}
 
 
 def card(c, first):

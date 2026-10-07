@@ -1,0 +1,85 @@
+{
+ "_source": {
+  "dataset": "US Census Bureau, American Community Survey 5-year estimates 2020-2024",
+  "tables": {
+   "B25001": "Housing Units",
+   "B25003": "Tenure",
+   "B25024": "Units in Structure",
+   "B25034": "Year Structure Built",
+   "B25040": "House Heating Fuel"
+  },
+  "api": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B25001,B25003,B25024,B25034,B25040&geo_ids=16000US2622000,16000US2634000,16000US2603000,16000US2646000",
+  "via": "Census Reporter API (republishes Census Bureau ACS tables)",
+  "table_url": "https://data.census.gov/table/ACSDT5Y2024.B25040"
+ },
+ "cities": {
+  "detroit": {
+   "name": "Detroit, MI",
+   "housing_units": 329393,
+   "occupied_units": 257998,
+   "pct_owner": 50.3,
+   "pct_renter": 49.7,
+   "pct_single_detached": 64.3,
+   "pct_single_attached": 7.1,
+   "pct_two_to_four_units": 8.9,
+   "pct_built_before_1980": 90.3,
+   "pct_built_1939_earlier": 36.3,
+   "pct_built_2000_later": 4.5,
+   "pct_heat_utility_gas": 80.5,
+   "pct_heat_bottled_gas": 1.1,
+   "pct_heat_electricity": 16.7,
+   "pct_heat_fuel_oil": 0.1
+  },
+  "grand-rapids": {
+   "name": "Grand Rapids, MI",
+   "housing_units": 84894,
+   "occupied_units": 80222,
+   "pct_owner": 54.0,
+   "pct_renter": 46.0,
+   "pct_single_detached": 56.2,
+   "pct_single_attached": 5.3,
+   "pct_two_to_four_units": 16.1,
+   "pct_built_before_1980": 75.7,
+   "pct_built_1939_earlier": 37.5,
+   "pct_built_2000_later": 11.0,
+   "pct_heat_utility_gas": 82.5,
+   "pct_heat_bottled_gas": 1.5,
+   "pct_heat_electricity": 15.3,
+   "pct_heat_fuel_oil": 0.0
+  },
+  "ann-arbor": {
+   "name": "Ann Arbor, MI",
+   "housing_units": 54399,
+   "occupied_units": 50499,
+   "pct_owner": 45.5,
+   "pct_renter": 54.5,
+   "pct_single_detached": 41.6,
+   "pct_single_attached": 12.3,
+   "pct_two_to_four_units": 8.8,
+   "pct_built_before_1980": 63.4,
+   "pct_built_1939_earlier": 14.8,
+   "pct_built_2000_later": 15.9,
+   "pct_heat_utility_gas": 70.7,
+   "pct_heat_bottled_gas": 1.8,
+   "pct_heat_electricity": 26.1,
+   "pct_heat_fuel_oil": 0.1
+  },
+  "lansing": {
+   "name": "Lansing, MI",
+   "housing_units": 55943,
+   "occupied_units": 51588,
+   "pct_owner": 53.8,
+   "pct_renter": 46.2,
+   "pct_single_detached": 61.9,
+   "pct_single_attached": 4.2,
+   "pct_two_to_four_units": 7.5,
+   "pct_built_before_1980": 79.5,
+   "pct_built_1939_earlier": 24.5,
+   "pct_built_2000_later": 7.6,
+   "pct_heat_utility_gas": 74.6,
+   "pct_heat_bottled_gas": 2.1,
+   "pct_heat_electricity": 21.0,
+   "pct_heat_fuel_oil": 0.2
+  }
+ }
+}

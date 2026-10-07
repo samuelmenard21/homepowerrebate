@@ -192,7 +192,7 @@ def embed_page(spec, pub):
 
 
 COMING = [("Ontario", "/ca/on/"), ("Alberta", "/ca/ab/"), ("Nova Scotia", "/ca/ns/"), ("California", "/us/ca/"), ("Colorado", "/us/co/"),
-          ("Massachusetts", "/us/ma/"), ("New York", "/us/ny/"), ("Pennsylvania", "/us/pa/"), ("Vermont", "/us/vt/")]
+          ("Massachusetts", "/us/ma/"), ("New York", "/us/ny/"), ("Pennsylvania", "/us/pa/"), ("Vermont", "/us/vt/"), ("Michigan", "/us/mi/")]
 
 
 def picker(specs):

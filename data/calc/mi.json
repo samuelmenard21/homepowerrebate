@@ -1,0 +1,418 @@
+{
+ "code": "mi",
+ "name": "Michigan",
+ "country": "us",
+ "currency": "USD",
+ "hub": "/us/mi/",
+ "installers": "/installers/",
+ "installers_dir": "mi",
+ "city_page": "us/mi/{c}",
+ "title": "Michigan Rebate Calculator 2026: DTE, Consumers, Lansing BWL and Ann Arbor Rebates",
+ "h1": "Michigan Rebate Calculator 2026: What Your City and Utility Pay",
+ "desc": "Free Michigan rebate calculator for Detroit, Grand Rapids, Ann Arbor and Lansing. Heat pump, furnace, insulation, water heater and thermostat rebates, with the official source for every amount.",
+ "intro": "Michigan rebates depend on your city and your utility. Pick your city and what heats your home, and this calculator shows what is open today.",
+ "short": "Michigan has no single statewide utility rebate. Ann Arbor pays $4,000 for a heat pump. Lansing's Board of Water and Light pays $4,000 to $5,000 when a heat pump replaces a gas furnace. DTE pays $100 to $400 for a gas furnace and up to $600 for attic insulation. Consumers Energy pays $100 to $300 for a furnace and up to $475 for insulation. The state's MiHER rebates are paused for new income-qualified applications in five districts, and the federal tax credits ended after 2025.",
+ "faq": [
+  [
+   "Is there a heat pump rebate in Michigan?",
+   "Only locally. Ann Arbor pays $4,000, or $5,500 for lower incomes. Lansing's Board of Water and Light pays $4,000 to $5,000 for a heat pump that replaces a gas furnace. DTE pays $150 to $1,200 for electric customers replacing electric heat. Consumers Energy pays $200 to $350 for replacements only."
+  ],
+  [
+   "Why is my total small for a gas home?",
+   "Most Michigan rebates for gas homes are for furnaces and insulation, not heat pumps. A gas home that switches to a heat pump usually gets no utility heat pump rebate, except in Ann Arbor and Lansing."
+  ],
+  [
+   "Is the state MiHER program open?",
+   "New income-qualified applications are paused in the Detroit, Warren, Grand Rapids, Lansing and Kalamazoo districts. Check the state page for updates."
+  ],
+  [
+   "Is the federal heat pump tax credit still available?",
+   "No. The 25C and 25D credits ended for work finished after December 31, 2025."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "city",
+   "label": "Which city is your home in?",
+   "type": "select",
+   "options": [
+    {
+     "value": "detroit",
+     "label": "Detroit",
+     "set": {
+      "utility": "dte",
+      "gas": "dte",
+      "a2": "no"
+     }
+    },
+    {
+     "value": "ann-arbor",
+     "label": "Ann Arbor",
+     "set": {
+      "utility": "dte",
+      "gas": "dte",
+      "a2": "yes"
+     }
+    },
+    {
+     "value": "grand-rapids",
+     "label": "Grand Rapids",
+     "set": {
+      "utility": "consumers",
+      "gas": "consumers",
+      "a2": "no"
+     }
+    },
+    {
+     "value": "lansing",
+     "label": "Lansing",
+     "set": {
+      "utility": "bwl",
+      "gas": "consumers",
+      "a2": "no"
+     }
+    },
+    {
+     "value": "other",
+     "label": "Another Michigan city",
+     "set": {
+      "utility": "other",
+      "gas": "other",
+      "a2": "no"
+     }
+    }
+   ],
+   "help": "We use your city to find your electric and gas company. Check your bill to confirm."
+  },
+  {
+   "id": "heating",
+   "label": "What heats your home now?",
+   "type": "select",
+   "options": [
+    {
+     "value": "gas",
+     "label": "Natural gas"
+    },
+    {
+     "value": "electric",
+     "label": "Electric heat"
+    },
+    {
+     "value": "other",
+     "label": "Something else"
+    }
+   ]
+  }
+ ],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump"
+  },
+  {
+   "id": "furnace",
+   "label": "High efficiency gas furnace"
+  },
+  {
+   "id": "water-heater",
+   "label": "Water heater"
+  },
+  {
+   "id": "insulation",
+   "label": "Insulation and air sealing"
+  },
+  {
+   "id": "thermostat",
+   "label": "Smart thermostat"
+  }
+ ],
+ "programs": [
+  {
+   "id": "a2-hp",
+   "fact": "mi-14-ann-arbor-a2zero",
+   "name": "Ann Arbor A2ZERO cold climate heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 4000,
+    "label": "$4,000 ($5,500 lower income)"
+   },
+   "rules": "Ann Arbor homes only. Cold climate model on the NEEP list, 15.2+ SEER2 and 8+ HSPF2. Reserve funds first. The rebate cannot exceed 90% of the cost.",
+   "when": {
+    "a2": [
+     "yes"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "a2-hpwh",
+   "fact": "mi-14-ann-arbor-a2zero",
+   "name": "Ann Arbor A2ZERO heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 1000,
+    "label": "$1,000 ($2,000 lower income)"
+   },
+   "rules": "Needs a UEF rating of 2.0 or higher and contractor installation.",
+   "when": {
+    "a2": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "a2-ins",
+   "fact": "mi-14-ann-arbor-a2zero",
+   "name": "Ann Arbor A2ZERO insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 500,
+    "label": "$500 per measure ($1,000 lower income)"
+   },
+   "rules": "Contractor installation. Air sealing needs blower door tests with at least 20% less leakage.",
+   "when": {
+    "a2": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "dte-hp",
+   "fact": "mi-0-dte-heat-pumps",
+   "name": "DTE Energy heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 1200,
+    "label": "$150 to $1,200"
+   },
+   "rules": "Only for DTE electric customers replacing electric heating. Funds are first come, first served.",
+   "when": {
+    "utility": [
+     "dte"
+    ],
+    "heating": [
+     "electric"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "dte-furnace",
+   "fact": "mi-2-dte-furnaces",
+   "name": "DTE Energy gas furnace",
+   "upgrade": "furnace",
+   "amount": {
+    "max": 400,
+    "label": "$100 to $400, plus $300 bonus"
+   },
+   "rules": "DTE gas customers. The $300 bonus is for qualified installs October 1 to December 15, 2026 and is not in the total.",
+   "when": {
+    "gas": [
+     "dte"
+    ],
+    "heating": [
+     "gas"
+    ]
+   }
+  },
+  {
+   "id": "dte-ins",
+   "fact": "mi-4-dte-insulation-windows",
+   "name": "DTE Energy attic insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 600,
+    "label": "$600, plus $250 bonus"
+   },
+   "rules": "DTE gas customers, single-family home, 500 square feet or more. The $250 bonus needs a second measure and is not in the total.",
+   "when": {
+    "gas": [
+     "dte"
+    ],
+    "heating": [
+     "gas"
+    ]
+   }
+  },
+  {
+   "id": "dte-tstat",
+   "fact": "mi-3-dte-wi-fi-thermostats",
+   "name": "DTE Energy Wi-Fi thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 50
+   },
+   "rules": "One per household. Apply within six months and by December 31, 2026.",
+   "when": {
+    "utility": [
+     "dte"
+    ]
+   }
+  },
+  {
+   "id": "dte-hpwh",
+   "fact": "mi-1-dte-water-heaters",
+   "name": "DTE Energy water heater instant discount",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 0,
+    "label": "Instant discount, amount not posted"
+   },
+   "rules": "DTE's page lists no dollar amount, so it is not added to your total.",
+   "when": {
+    "utility": [
+     "dte"
+    ]
+   }
+  },
+  {
+   "id": "ce-hp",
+   "fact": "mi-7-consumers-heat-pumps",
+   "name": "Consumers Energy heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 350,
+    "label": "$200 to $350"
+   },
+   "rules": "Air source and ground source only replace an existing heat pump. A mini-split must replace a primary electric heat system.",
+   "when": {
+    "utility": [
+     "consumers"
+    ],
+    "heating": [
+     "electric"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "ce-furnace",
+   "fact": "mi-7-consumers-heat-pumps",
+   "name": "Consumers Energy gas furnace",
+   "upgrade": "furnace",
+   "amount": {
+    "max": 300,
+    "label": "$100 or $300"
+   },
+   "rules": "$100 for 95% to 96.99% efficiency and $300 for 97% or better. Participating contractor.",
+   "when": {
+    "gas": [
+     "consumers"
+    ],
+    "heating": [
+     "gas"
+    ]
+   }
+  },
+  {
+   "id": "ce-ins",
+   "fact": "mi-8-consumers-insulation-windows",
+   "name": "Consumers Energy insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 475,
+    "label": "Up to $475"
+   },
+   "rules": "Attic $125 to $200 by R-value, walls $125, basement walls and rim joist $50, for gas and combination customers. Deadline December 31.",
+   "when": {
+    "gas": [
+     "consumers"
+    ],
+    "heating": [
+     "gas"
+    ]
+   }
+  },
+  {
+   "id": "ce-tstat",
+   "fact": "mi-9-consumers-thermostats",
+   "name": "Consumers Energy Wi-Fi thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 0,
+    "label": "$50 to $100 (pages disagree)"
+   },
+   "rules": "Consumers' pages give different amounts, so it is not added to your total. Confirm before you buy.",
+   "when": {
+    "utility": [
+     "consumers"
+    ]
+   }
+  },
+  {
+   "id": "bwl-hp",
+   "fact": "mi-12-lansing-bwl-electrification",
+   "name": "Lansing BWL heat pump replacing a gas furnace",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 4000,
+    "label": "$4,000 or $5,000"
+   },
+   "rules": "$4,000 replacing a gas furnace and central air conditioner, $5,000 replacing a gas furnace only. Manual J report and pre-inspection required. BWL electric customers.",
+   "when": {
+    "utility": [
+     "bwl"
+    ],
+    "heating": [
+     "gas"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "bwl-hpwh",
+   "fact": "mi-12-lansing-bwl-electrification",
+   "name": "Lansing BWL heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 500,
+    "label": "$500 to $1,000"
+   },
+   "rules": "BWL's electrification page says $1,000 and its 2026 form says $500. The total counts $500. Confirm with BWL.",
+   "when": {
+    "utility": [
+     "bwl"
+    ]
+   }
+  },
+  {
+   "id": "bwl-tstat",
+   "fact": "mi-13-lansing-bwl-2026-rebates",
+   "name": "Lansing BWL smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 50
+   },
+   "rules": "One per account. Needs central air or electric heat.",
+   "when": {
+    "utility": [
+     "bwl"
+    ]
+   }
+  },
+  {
+   "id": "bwl-ins",
+   "fact": "mi-13-lansing-bwl-2026-rebates",
+   "name": "Lansing BWL insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 100,
+    "label": "$100 per measure"
+   },
+   "rules": "Attic, wall or basement wall, with minimum R-values and area. Needs central air or electric heat.",
+   "when": {
+    "utility": [
+     "bwl"
+    ]
+   }
+  }
+ ],
+ "closed_facts": [
+  "mi-15-miher-paused-districts",
+  "mi-19-federal-residential-clean-energy-credits-25c-25d"
+ ],
+ "notes": [
+  "We have not verified DTE or Consumers water heater instant discount amounts, either company's income-qualified heat pump amounts, or rooftop solar rules. We list only what we have read on a program's own page.",
+  "Amounts are the most a program pays. Your rebate depends on the equipment, your account type and your final invoice. Bonuses with a date window are listed but not added to the total."
+ ]
+}

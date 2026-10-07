@@ -39,12 +39,12 @@ EXCLUDE_FILES = {
     "pinterest-pin-templates.html", "preview.html",
 }
 
-PROV_CODES = {"on", "bc", "ab", "ns", "ma", "ca", "ny", "pa", "co", "vt"}
+PROV_CODES = {"on", "bc", "ab", "ns", "ma", "ca", "ny", "pa", "co", "vt", "mi"}
 # ca/<x> or us/<x> path prefix -> province-tab code
 REGION_PREFIX_TO_CODE = {
     ("ca", "bc"): "bc", ("ca", "on"): "on", ("ca", "ab"): "ab", ("ca", "ns"): "ns",
     ("us", "ma"): "ma", ("us", "ny"): "ny", ("us", "ca"): "ca",
-    ("us", "pa"): "pa", ("us", "co"): "co", ("us", "vt"): "vt",
+    ("us", "pa"): "pa", ("us", "co"): "co", ("us", "vt"): "vt", ("us", "mi"): "mi",
 }
 CATEGORY_NAMES = {
     "heat-pump", "insulation", "solar", "battery", "water-heater",
@@ -60,7 +60,7 @@ def load_city_labels():
     region_key_to_code = {
         "ca/bc": "bc", "ca/on": "on", "ca/ab": "ab", "ca/ns": "ns",
         "us/ma": "ma", "us/ny": "ny", "us/ca": "ca",
-        "us/pa": "pa", "us/co": "co", "us/vt": "vt",
+        "us/pa": "pa", "us/co": "co", "us/vt": "vt", "us/mi": "mi",
     }
     for region_key, region in data["regions"].items():
         code = region_key_to_code.get(region_key)

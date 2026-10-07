@@ -32,12 +32,12 @@ EXCLUDE_DIRS = {".git", "node_modules", "scripts", ".claude", "_partials"}
 REGION_PREFIX_TO_CODE = {
     ("ca", "bc"): "bc", ("ca", "on"): "on", ("ca", "ab"): "ab", ("ca", "ns"): "ns",
     ("us", "ma"): "ma", ("us", "ny"): "ny", ("us", "ca"): "ca",
-    ("us", "pa"): "pa", ("us", "co"): "co", ("us", "vt"): "vt",
+    ("us", "pa"): "pa", ("us", "co"): "co", ("us", "vt"): "vt", ("us", "mi"): "mi",
 }
 REGION_KEY_BY_CODE = {
     "bc": "ca/bc", "on": "ca/on", "ab": "ca/ab", "ns": "ca/ns",
     "ma": "us/ma", "ny": "us/ny", "ca": "us/ca",
-    "pa": "us/pa", "co": "us/co", "vt": "us/vt",
+    "pa": "us/pa", "co": "us/co", "vt": "us/vt", "mi": "us/mi",
 }
 CATEGORY_NAMES = {
     "heat-pump", "insulation", "solar", "battery", "water-heater",

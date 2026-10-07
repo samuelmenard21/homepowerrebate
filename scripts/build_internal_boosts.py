@@ -316,7 +316,7 @@ for region, url, label in STATE_TOPICS:
     JOBS.append((marker, f'<b>Statewide answer:</b> see <a href="{url}">{label}</a>, with what is open, what has closed and the dates to watch.', pages))
 
 
-ROOF_PAGES = sorted(str(p.relative_to(ROOT)) for pat in ("ca/on/*/solar/index.html", "ca/bc/*/solar/index.html", "us/ma/*/index.html") for p in ROOT.glob(pat)) + ["us/ma/index.html", "solar-quote-checker/index.html"]
+ROOF_PAGES = sorted(str(p.relative_to(ROOT)) for pat in ("ca/on/*/solar/index.html", "ca/bc/*/solar/index.html", "us/ma/*/index.html") for p in ROOT.glob(pat)) + sorted(str(p.relative_to(ROOT)) for pat in ("us/ny/**/solar/index.html", "us/ca/**/solar/index.html", "ca/ns/*/solar/index.html", "us/pa/solar/index.html", "us/co/solar/index.html") for p in ROOT.glob(pat)) + ["us/ma/index.html", "solar-quote-checker/index.html"]
 JOBS.append(("ROOF-CHECK-LINK", '<b>See your own roof:</b> try the free <a href="/roof-check/">Solar Roof Check</a>. Type your address to see how many panels fit and which verified solar rebates apply.', ROOF_PAGES))
 
 

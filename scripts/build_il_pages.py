@@ -149,6 +149,7 @@ def build(slug, cat):
 </body></html>
 """
     out = ROOT / path.strip("/") / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(navfooter.ensure_shared_assets(page), encoding="utf-8")
     return path, w
 

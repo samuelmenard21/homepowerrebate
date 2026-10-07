@@ -294,6 +294,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
         <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Pennsylvania</button>
         <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Colorado</button>
         <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Vermont</button>
+        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Michigan</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -326,6 +327,9 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     </div>
     <div id="province-cities-vt" style="display:none; gap:8px;">
       <a href="/us/vt/burlington/">Burlington</a><a href="/us/vt/south-burlington/">South Burlington</a><a href="/us/vt/rutland/">Rutland</a><a href="/us/vt/barre/">Barre</a><a href="/us/vt/montpelier/">Montpelier</a>
+    </div>
+    <div id="province-cities-mi" style="display:none; gap:8px;">
+      <a href="/us/mi/detroit/">Detroit</a><a href="/us/mi/grand-rapids/">Grand Rapids</a><a href="/us/mi/ann-arbor/">Ann Arbor</a><a href="/us/mi/lansing/">Lansing</a>
     </div>
     </div>
   </div>
@@ -419,6 +423,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
           <li><a href="/us/pa/">Pennsylvania</a></li>
           <li><a href="/us/co/">Colorado</a></li>
           <li><a href="/us/vt/">Vermont</a></li>
+          <li><a href="/us/mi/">Michigan</a></li>
         </ul>
       </div>
       <div>
@@ -467,7 +472,7 @@ function toggleCityDropdown() {
   if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny', 'pa', 'co', 'vt'];
+  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny', 'pa', 'co', 'vt', 'mi'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

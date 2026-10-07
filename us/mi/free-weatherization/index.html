@@ -257,13 +257,13 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?city=&province=mi" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Get my plan</a>
+      <a href="/get-quotes/?city=free-weatherization&province=mi" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Get my plan</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
       <a href="/search/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Search</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?city=&province=mi" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Get my plan</a>
+      <a href="/get-quotes/?city=free-weatherization&province=mi" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Get my plan</a>
     </div>
     <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
       Pick your city
@@ -374,7 +374,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.michigan.gov/en/mdhhs/assistance-programs/emergency-relief/energyweatherization" target="_blank" rel="noopener">Michigan weatherization assistance</a>, <a href="https://www.dteenergy.com/us/en/residential/save-money-energy/get-started-with/limited-income-assistance.html" target="_blank" rel="noopener">DTE Energy: limited income assistance</a>, <a href="https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs" target="_blank" rel="noopener">Michigan EGLE: Home Energy Rebates</a>, <a href="https://michigansaves.org/home-energy-improvements/" target="_blank" rel="noopener">Michigan Saves home energy loans</a>.</p>
 </div></article>
 <!-- CANONICAL-FOOTER-START -->
-<!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
+<!-- Newsletter — every page, parameterize city dropdown default to Free Weatherization where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div class="wrap" style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">
     <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
@@ -382,7 +382,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Once a month: new and changing rebate programs across every province and state we cover, plus what's new in heat pumps, solar and batteries. Short, sourced, no marketing.</p>
     <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
       <input type="email" id="newsletter-email" placeholder="your@email.com" required aria-label="Your email address" autocomplete="email" style="min-height: 46px; padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 16px; background: #fff; color: var(--ink);">
-      <input type="hidden" id="newsletter-city" value="">
+      <input type="hidden" id="newsletter-city" value="Free Weatherization">
       <input type="hidden" id="newsletter-page" value="/us/mi/free-weatherization/">
       <button type="submit" style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 15px; min-height: 46px; cursor: pointer; font-family: 'Inter Tight', sans-serif;">Subscribe</button>
       <p style="font-size: 13px; color: rgba(250, 247, 242, 0.78); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
@@ -430,7 +430,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/search/">Search the Site</a></li>
           <li><a href="/get-quotes/">Get Quotes</a></li>
-          <li><a href="/get-quotes/?city=&province={{CURRENT_PROVINCE}}">Get My Plan</a></li>
+          <li><a href="/get-quotes/?city=free-weatherization&province={{CURRENT_PROVINCE}}">Get My Plan</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>

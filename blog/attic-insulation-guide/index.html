@@ -360,6 +360,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
         <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Pennsylvania</button>
         <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Colorado</button>
         <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Vermont</button>
+        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Michigan</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -392,6 +393,9 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     </div>
     <div id="province-cities-vt" style="display:none; gap:8px;">
       <a href="/us/vt/burlington/">Burlington</a><a href="/us/vt/south-burlington/">South Burlington</a><a href="/us/vt/rutland/">Rutland</a><a href="/us/vt/barre/">Barre</a><a href="/us/vt/montpelier/">Montpelier</a>
+    </div>
+    <div id="province-cities-mi" style="display:none; gap:8px;">
+      <a href="/us/mi/detroit/">Detroit</a><a href="/us/mi/grand-rapids/">Grand Rapids</a><a href="/us/mi/ann-arbor/">Ann Arbor</a><a href="/us/mi/lansing/">Lansing</a>
     </div>
     </div>
   </div>
@@ -444,7 +448,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 <tr><td style="padding:8px;border-top:1px solid #d9d0c1;">6</td><td style="padding:8px;border-top:1px solid #d9d0c1;">4,000 to 4,999</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Prince George, Cranbrook, Whistler</td><td style="padding:8px;border-top:1px solid #d9d0c1;"><b>R-60</b> (RSI 10.6)</td></tr>
 <tr><td style="padding:8px;border-top:1px solid #d9d0c1;">7a to 8</td><td style="padding:8px;border-top:1px solid #d9d0c1;">5,000 and above</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Fort St. John, Dawson Creek, Fort Nelson</td><td style="padding:8px;border-top:1px solid #d9d0c1;"><b>R-80</b> (RSI 14.1)</td></tr>
 </table></div>
-<p style="font-size:13.5px;color:#6b8e7f;">Sources: <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-2-your-house-works" rel="nofollow noopener" target="_blank">Natural Resources Canada, Table 2-1</a> · <a href="https://betterhomesbc.ca/definitions/climate-zones/" rel="nofollow noopener" target="_blank">Better Homes BC climate zones</a>. Checked September 29, 2026. These are guidelines, not code.</p>
+<p style="font-size:13.5px;color:#6b8e7f;">Sources: <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-2-your-house-works" rel="noopener" target="_blank">Natural Resources Canada, Table 2-1</a> · <a href="https://betterhomesbc.ca/definitions/climate-zones/" rel="noopener" target="_blank">Better Homes BC climate zones</a>. Checked September 29, 2026. These are guidelines, not code.</p>
 <ul>
 <li><b>Rebates may stop short of the guideline.</b> Ontario's and Nova Scotia's attic rebates are for insulating up to R-50, which is below the guideline for zones 5 and up. You can add more at your own cost.</li>
 <li><b>Adding over old insulation with a plastic vapour barrier?</b> Natural Resources Canada says to put at least twice the insulating value above the barrier as below it (its example: R-12 below means at least R-24 on top). That keeps moisture from getting trapped.</li>
@@ -592,6 +596,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
           <li><a href="/us/pa/">Pennsylvania</a></li>
           <li><a href="/us/co/">Colorado</a></li>
           <li><a href="/us/vt/">Vermont</a></li>
+          <li><a href="/us/mi/">Michigan</a></li>
         </ul>
       </div>
       <div>
@@ -641,7 +646,7 @@ function toggleCityDropdown() {
   if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny', 'pa', 'co', 'vt'];
+  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny', 'pa', 'co', 'vt', 'mi'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

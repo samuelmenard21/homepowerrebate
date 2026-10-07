@@ -19,12 +19,12 @@ ICON = {"heat-pump": "🔥", "insulation": "🌡️", "solar": "☀️", "batter
         "smart-thermostats": "🎛️", "ev-charger": "🚗", "windows-doors": "🪟"}
 e = html.escape
 
-HUBS = ["ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt"]
+HUBS = ["ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt", "us/il"]
 PROGRAMS = {"ca/bc": [("bc-hydro-rebates", "BC Hydro rebates"), ("cleanbc-rebates", "CleanBC rebates"), ("bc-hydro-peak-saver", "Peak Saver")],
             "ca/on": [("home-renovation-savings", "Home Renovation Savings")], "ca/ab": [("alberta-energy-rebates", "Alberta rebates guide")],
             "ca/ns": [("efficiency-nova-scotia", "Efficiency Nova Scotia")], "us/ma": [("mass-save", "Mass Save")],
             "us/ny": [("nys-clean-heat", "NYS Clean Heat")], "us/pa": [("peco-rebates", "PECO rebates"), ("ppl-electric-rebates", "PPL Electric rebates")],
-            "us/co": [("xcel-energy-colorado-rebates", "Xcel Energy rebates")], "us/ca": [], "us/vt": []}
+            "us/co": [("xcel-energy-colorado-rebates", "Xcel Energy rebates")], "us/ca": [], "us/vt": [], "us/il": [("comed-rebates", "ComEd rebates"), ("nicor-gas-rebates", "Nicor Gas rebates")]}
 VERIFIED = {"ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/vt"}
 
 

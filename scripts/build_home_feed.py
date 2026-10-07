@@ -12,7 +12,7 @@ PILL = {"coming": ("Coming up", "#fdeccf", "#8a4a06"), "new": ("New", "#e3f1e8",
         "changed": ("Changed", "#e8e8e8", "#444"), "cut": ("Cut", "#f3dcdc", "#8a2b2b"), "paused": ("Paused", "#fdeccf", "#8a4a06"), "ended": ("Ended", "#f3dcdc", "#8a2b2b")}
 REGION = {"BC": "British Columbia", "ON": "Ontario", "AB": "Alberta", "NS": "Nova Scotia", "MA": "Massachusetts", "NY": "New York", "CA": "California",
           "PA": "Pennsylvania", "CO": "Colorado", "VT": "Vermont", "US": "United States", "CA-FED": "Canada"}
-HUB = {"BC": "/ca/bc/", "ON": "/ca/on/", "AB": "/ca/ab/", "NS": "/ca/ns/", "MA": "/us/ma/", "NY": "/us/ny/", "CA": "/us/ca/", "PA": "/us/pa/", "CO": "/us/co/", "VT": "/us/vt/"}
+HUB = {"BC": "/ca/bc/", "ON": "/ca/on/", "AB": "/ca/ab/", "NS": "/ca/ns/", "MA": "/us/ma/", "NY": "/us/ny/", "CA": "/us/ca/", "PA": "/us/pa/", "CO": "/us/co/", "VT": "/us/vt/", "IL": "/us/il/"}
 
 
 def item(x):

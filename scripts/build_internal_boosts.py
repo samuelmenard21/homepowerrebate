@@ -252,7 +252,7 @@ def greener_section():
     return 0
 
 
-HUB_INDEXES = {f"{r}/index.html" for r in ("ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt")}
+HUB_INDEXES = {f"{r}/index.html" for r in ("ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt", "us/il")}
 HUB_SKIP = {"NET-METERING-LINK", "GREENER-LINK", "INSULATION-HUB-LINK", "BCH-REBATES-LINK"}  # these live in the hub "Explore more" row now
 
 

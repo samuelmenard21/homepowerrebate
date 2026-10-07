@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SKIP = ("_partials/", "scripts/", "claude/", "calculator/embed/", "data/", "ONTARIO_", "CITY_", "city-page", "installer-", "pinterest", "unified", "solar-carousel", "og-image", "preview", "nav-footer", "node_modules")
-REGION = {"ca/on": "ON", "ca/bc": "BC", "ca/ab": "AB", "ca/ns": "NS", "us/ny": "NY", "us/vt": "VT", "us/ma": "MA", "us/pa": "PA", "us/co": "CO", "us/ca": "CA"}
+REGION = {"ca/on": "ON", "ca/bc": "BC", "ca/ab": "AB", "ca/ns": "NS", "us/ny": "NY", "us/vt": "VT", "us/ma": "MA", "us/pa": "PA", "us/co": "CO", "us/ca": "CA", "us/il": "IL"}
 AUTHOR = '"author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}'
 AUTHOR_RE = re.compile(r'"author":\s*\{\s*"@type":\s*"Organization",\s*"name":\s*"HomePowerRebate"(?:,\s*"url":\s*"[^"]*")?\s*\}')
 RATING_RE = re.compile(r',?\s*"aggregateRating":\s*\{[^{}]*\}|,?\s*"AggregateRating":\s*\{[^{}]*\}', re.I)
@@ -71,7 +71,7 @@ for t, fs in titles.items():
         parts = f.split("/")
         city = parts[parts.index(next(p for p in parts if p == "index.html")) - 1] if parts[-1] == "index.html" else parts[-2]
         s = pages[f]
-        cands = [p for p in parts[:-1] if p not in ("ca", "us", "on", "ny", "vt", "ma", "pa", "co", "bc", "ab", "ns", "stacking-calculator")]
+        cands = [p for p in parts[:-1] if p not in ("ca", "us", "on", "ny", "vt", "il", "ma", "pa", "co", "bc", "ab", "ns", "stacking-calculator")]
         name = next((p.replace("-", " ").title() for p in cands if p.replace("-", " ").title() in t), None)
         if name:
             nt = t.replace(name, f"{name}, {reg}", 1)

@@ -26,7 +26,7 @@ LABEL = {"insulation": "Insulation", "windows-doors": "Windows & Doors", "water-
 BUILT = ["heat-pump", "water-heater", "insulation", "windows-doors"]
 STATE = {"battery": "Battery", "solar": "Solar", "ev-charger": "EV Charger", "smart-thermostats": "Smart Thermostat"}
 HUB = ["index"]
-NAMES = {"denver": "Denver", "colorado-springs": "Washington Springs", "aurora": "Aurora", "fort-collins": "Fort Collins", "boulder": "Boulder"}
+NAMES = {"seattle": "Seattle", "spokane": "Spokane", "tacoma": "Tacoma", "vancouver": "Vancouver", "bellevue": "Bellevue"}
 ROWS = [r for r in rank.load_rows() if r["region"] == "wa"]
 
 

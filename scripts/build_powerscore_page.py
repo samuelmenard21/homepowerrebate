@@ -110,7 +110,7 @@ def gauge_style(score):
 
 # ---------- data reliability ----------
 VERIFIED_FILES = {"ca/bc": ["bc-pages", "bc-blog"], "ca/on": ["on"], "ca/ab": ["ab"], "ca/ns": ["ns"], "us/ma": ["ma"],
-                  "us/ny": ["ny"], "us/ca": ["us-ca"], "us/vt": ["vt"]}
+                  "us/ny": ["ny"], "us/ca": ["us-ca"], "us/vt": ["vt"], "us/wa": ["wa"]}
 
 
 def region_verified(reg):
@@ -593,6 +593,10 @@ table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; mi
         <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Colorado</button>
         <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Vermont</button>
       </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Washington</button>
+        <span style="flex:1;"></span>
+      </div>
     </div>
     <div style="padding:0 16px 16px;">
     <div id="province-cities-on" style="display:grid; gap:8px;">
@@ -624,6 +628,9 @@ table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; mi
     </div>
     <div id="province-cities-vt" style="display:none; gap:8px;">
       <a href="/us/vt/burlington/">Burlington</a><a href="/us/vt/south-burlington/">South Burlington</a><a href="/us/vt/rutland/">Rutland</a><a href="/us/vt/barre/">Barre</a><a href="/us/vt/montpelier/">Montpelier</a>
+    </div>
+    <div id="province-cities-wa" style="display:none; gap:8px;">
+      <a href="/us/wa/seattle/">Seattle</a><a href="/us/wa/spokane/">Spokane</a><a href="/us/wa/tacoma/">Tacoma</a><a href="/us/wa/vancouver/">Vancouver</a><a href="/us/wa/bellevue/">Bellevue</a>
     </div>
     </div>
   </div>
@@ -841,7 +848,7 @@ function toggleCityDropdown() {{
   if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }}
 function showProvinceCities(prov) {{
-  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny', 'pa', 'co', 'vt'];
+  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny', 'pa', 'co', 'vt', 'wa'];
   regions.forEach(function(r) {{
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

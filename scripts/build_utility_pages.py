@@ -18,7 +18,7 @@ import build_ca_pages as ca  # noqa: E402
 e = html.escape
 BASE = ca.BASE
 FACTS = ca.FACTS
-CALC = {"on": ("/calculator/on/", "Ontario"), "ca": ("/calculator/ca/", "California"), "bc": ("/calculator/bc/", "BC"), "ny": ("/calculator/ny/", "New York"), "vt": ("/calculator/vt/", "Vermont"), "ns": ("/calculator/ns/", "Nova Scotia")}
+CALC = {"on": ("/calculator/on/", "Ontario"), "ca": ("/calculator/ca/", "California"), "bc": ("/calculator/bc/", "BC"), "ny": ("/calculator/ny/", "New York"), "vt": ("/calculator/vt/", "Vermont"), "ns": ("/calculator/ns/", "Nova Scotia"), "mn": ("/calculator/mn/", "Minnesota")}
 HOME = {"ca": "California", "bc": "British Columbia", "on": "Ontario"}
 
 

@@ -12,7 +12,7 @@ BOX = '<section style="max-width:880px;margin:24px auto;padding:0 20px;"><p styl
 JOBS = [
     ("blog/index.html", "ORPHAN-LINKS", '<b>More guides:</b> <a href="/blog/heat-pump-or-solar-california/">Heat pump or solar first? The California decision guide</a>.'),
     ("questions/index.html", "ORPHAN-LINKS", '<b>Popular questions:</b> <a href="/questions/kelowna-heat_pump/">Is Kelowna eligible for a heat pump rebate?</a> · <a href="/questions/victoria-heat_pump/">Is Victoria eligible for a heat pump rebate?</a>'),
-    ("ca/bc/index.html", "ORPHAN-LINKS", '<b>More BC pages:</b> <a href="/ca/bc/fraser-valley/">Fraser Valley rebates</a> · <a href="/solar-battery">BC solar and battery rebates</a>.'),
+    ("ca/bc/index.html", "ORPHAN-LINKS", '<b>More BC pages:</b> <a href="/ca/bc/heat-pump/">BC heat pump rebates for 2026</a> · <a href="/ca/bc/fraser-valley/">Fraser Valley rebates</a> · <a href="/solar-battery">BC solar and battery rebates</a>.'),
 ]
 for rel, marker, html in JOBS:
     p = ROOT / rel

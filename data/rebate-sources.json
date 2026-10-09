@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 531,
+ "count": 530,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -1097,14 +1097,15 @@
    "url": "https://www.fortisbc.com/rebates/detail/air-source-heat-pump-rebate",
    "host": "www.fortisbc.com",
    "region": "bc-blog",
-   "check": "FortisBC electric heat pump rebate; FortisBC heat pump rebate",
+   "check": "FortisBC electric heat pump rebate; FortisBC heat pump rebate; FortisBC: air source heat pump rebate",
    "facts": [
     "bc-blog-22-fortisbc-electric-heat-pump-rebate"
    ],
    "used_by_pages": [
     "/ca/bc/kelowna/heat-pump/",
     "/ca/bc/penticton/heat-pump/",
-    "/programs/fortisbc-rebates/"
+    "/programs/fortisbc-rebates/",
+    "state-topics/bc-heat-pump"
    ],
    "last_read": "2026-10-03"
   },
@@ -1125,14 +1126,15 @@
    "url": "https://www.fortisbc.com/rebates/detail/iqheatpump",
    "host": "www.fortisbc.com",
    "region": "bc-blog",
-   "check": "FortisBC income-qualified heat pump; FortisBC income-qualified heat pump rebate",
+   "check": "FortisBC income-qualified heat pump; FortisBC income-qualified heat pump rebate; FortisBC: income-qualified heat pump rebate",
    "facts": [
     "bc-blog-23-fortisbc-income-qualified-heat-pump"
    ],
    "used_by_pages": [
     "/ca/bc/kelowna/heat-pump/",
     "/ca/bc/penticton/heat-pump/",
-    "/programs/fortisbc-rebates/"
+    "/programs/fortisbc-rebates/",
+    "state-topics/bc-heat-pump"
    ],
    "last_read": "2026-09-26"
   },
@@ -1244,7 +1246,7 @@
    "url": "https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/eligibility.html",
    "host": "www.bchydro.com",
    "region": "bc-pages",
-   "check": "BC Hydro Home Renovation Rebate eligibility; BC Hydro program eligibility",
+   "check": "BC Hydro Home Renovation Rebate eligibility; BC Hydro program eligibility; BC Hydro: Home Renovation program eligibility",
    "facts": [
     "bc-pages-21-bc-hydro-home-renovation-eligibility"
    ],
@@ -1303,9 +1305,10 @@
     "/ca/bc/vernon/windows/",
     "/ca/bc/victoria/heat-pump/",
     "/ca/bc/victoria/water-heater/",
-    "/ca/bc/victoria/windows/"
+    "/ca/bc/victoria/windows/",
+    "state-topics/bc-heat-pump"
    ],
-   "last_read": "2026-10-02"
+   "last_read": "2026-10-09"
   },
   {
    "url": "https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-windows-and-doors.html",
@@ -2516,55 +2519,47 @@
    "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-affordability-program",
    "host": "natural-resources.canada.ca",
    "region": "federal",
-   "check": "Canada Greener Homes Affordability Program; Canada Greener Homes Affordability Program (CGHAP); Natural Resources Canada: Greener Homes Affordability Program",
+   "check": "Canada Greener Homes Affordability Program; Canada Greener Homes Affordability Program (CGHAP)",
    "facts": [
     "ab-8-canada-greener-homes-affordability-program-cghap",
     "federal-4-greener-homes-affordability"
    ],
-   "used_by_pages": [
-    "/programs/national-heat-pump-rebate/"
-   ],
+   "used_by_pages": [],
    "last_read": "2026-10-09"
   },
   {
    "url": "https://www.canada.ca/en/environment-climate-change/news/2026/10/prime-minister-carney-announces-landmark-investment-to-retrofit-one-million-homes-cutting-energy-costs-and-emissions.html",
    "host": "www.canada.ca",
    "region": "federal",
-   "check": "Environment and Climate Change Canada: news release; Federal apartment and rental retrofit programs; National Heat Pump Rebate; National Heat Pump Rebate process",
+   "check": "Federal apartment and rental retrofit programs; National Heat Pump Rebate; National Heat Pump Rebate process",
    "facts": [
     "federal-0-national-heat-pump-rebate",
     "federal-2-how-it-works",
     "federal-5-multi-unit"
    ],
-   "used_by_pages": [
-    "/programs/national-heat-pump-rebate/"
-   ],
+   "used_by_pages": [],
    "last_read": "2026-10-09"
   },
   {
    "url": "https://www.cbc.ca/news/canada/canada-heat-pump-retrofit-faq-9.7374613",
    "host": "www.cbc.ca",
    "region": "federal",
-   "check": "CBC News: what we know about the $2B rebate plan; National Heat Pump Rebate timing",
+   "check": "National Heat Pump Rebate timing",
    "facts": [
     "federal-1-launch-and-retroactivity"
    ],
-   "used_by_pages": [
-    "/programs/national-heat-pump-rebate/"
-   ],
+   "used_by_pages": [],
    "last_read": "2026-10-09"
   },
   {
    "url": "https://www.pm.gc.ca/en/news/news-releases/2026/10/08/prime-minister-carney-announces-landmark-investment-retrofit-one",
    "host": "www.pm.gc.ca",
    "region": "federal",
-   "check": "National Heat Pump Rebate stacking; Prime Minister of Canada: news release, October 8, 2026",
+   "check": "National Heat Pump Rebate stacking",
    "facts": [
     "federal-3-stacking"
    ],
-   "used_by_pages": [
-    "/programs/national-heat-pump-rebate/"
-   ],
+   "used_by_pages": [],
    "last_read": "2026-10-09"
   },
   {
@@ -2606,12 +2601,15 @@
    "url": "https://betterhomesbc.ca/learn-about-programs/energy-savings-program/",
    "host": "betterhomesbc.ca",
    "region": "general",
-   "check": "CleanBC Energy Savings Program (income-qualified)",
+   "check": "Better Homes BC: Energy Savings Program; CleanBC Energy Savings Program (ESP) income limits; CleanBC Energy Savings Program (income-qualified)",
    "facts": [
+    "bc-pages-30-cleanbc-esp-income-limits",
     "general-2-cleanbc-energy-savings-program-income-qualified"
    ],
-   "used_by_pages": [],
-   "last_read": "2026-09-26"
+   "used_by_pages": [
+    "state-topics/bc-heat-pump"
+   ],
+   "last_read": "2026-10-09"
   },
   {
    "url": "https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf",
@@ -2832,7 +2830,7 @@
    "url": "https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html",
    "host": "www.bchydro.com",
    "region": "general",
-   "check": "BC Hydro heat pump bonus; BC Hydro heat pump rebate; BC Hydro heat pump rebate (Home Renovation Rebate); BC Hydro heat pump rebates",
+   "check": "BC Hydro Home Renovation multi-upgrade bonus; BC Hydro heat pump bonus; BC Hydro heat pump rebate; BC Hydro heat pump rebate (Home Renovation Rebate); BC Hydro heat pump rebates; BC Hydro: heat pump r",
    "facts": [
     "bc-blog-0-bc-hydro-heat-pump-rebate",
     "bc-blog-1-bc-hydro-heat-pump-rebate",
@@ -2840,6 +2838,7 @@
     "bc-pages-0-bc-hydro-heat-pump-rebate-home-renovation-rebate",
     "bc-pages-1-bc-hydro-heat-pump-rebate",
     "bc-pages-2-bc-hydro-heat-pump-bonus",
+    "bc-pages-31-bc-hydro-multi-upgrade-bonus",
     "general-0-bc-hydro-heat-pump-rebate",
     "general-1-bc-hydro-heat-pump-bonus"
    ],
@@ -2859,9 +2858,10 @@
     "/ca/bc/surrey/heat-pump/",
     "/ca/bc/vancouver/heat-pump/",
     "/ca/bc/vernon/heat-pump/",
-    "/ca/bc/victoria/heat-pump/"
+    "/ca/bc/victoria/heat-pump/",
+    "state-topics/bc-heat-pump"
    ],
-   "last_read": "2026-10-03"
+   "last_read": "2026-10-09"
   },
   {
    "url": "https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-insulation.html",
@@ -6734,6 +6734,17 @@
    "last_read": ""
   },
   {
+   "url": "https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html",
+   "host": "www.canada.ca",
+   "region": "state-topics",
+   "check": "Government of Canada: one million home retrofits announcement",
+   "facts": [],
+   "used_by_pages": [
+    "state-topics/bc-heat-pump"
+   ],
+   "last_read": ""
+  },
+  {
    "url": "https://www.efficiencyvermont.com/rebates/list/smart-thermostats",
    "host": "www.efficiencyvermont.com",
    "region": "state-topics",
@@ -7847,17 +7858,6 @@
    "last_read": ""
   },
   {
-   "url": "https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html",
-   "host": "www.canada.ca",
-   "region": "utility-pages",
-   "check": "Canada.ca: One million home energy retrofits",
-   "facts": [],
-   "used_by_pages": [
-    "/programs/national-heat-pump-rebate/"
-   ],
-   "last_read": ""
-  },
-  {
    "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-23600-net-income-before-adjustments.html",
    "host": "www.canada.ca",
    "region": "utility-pages",
@@ -7878,17 +7878,6 @@
     "/mi/grand-rapids/",
     "/mi/grand-rapids/heat-pump/",
     "/programs/consumers-energy-rebates/"
-   ],
-   "last_read": ""
-  },
-  {
-   "url": "https://www.ctvnews.ca/politics/article/2b-heat-pump-rebate-program-unveiled-by-federal-government/",
-   "host": "www.ctvnews.ca",
-   "region": "utility-pages",
-   "check": "CTV News: $2B heat pump rebate program unveiled",
-   "facts": [],
-   "used_by_pages": [
-    "/programs/national-heat-pump-rebate/"
    ],
    "last_read": ""
   },

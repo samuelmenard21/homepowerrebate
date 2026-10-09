@@ -1,0 +1,399 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Washington rebate calculator</title><meta name="robots" content="noindex, follow"><link rel="canonical" href="https://homepowerrebate.com/calculator/wa/">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;padding:12px;font-family:'Inter Tight',system-ui,sans-serif;color:#0a2a2e;background:#faf7f2}a{color:#0d4f5c}
+.rc-wrap{max-width:820px;margin:0 auto;padding:0 20px 8px}
+.rc-form{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;background:#fff;border:1px solid #d9d0c1;border-radius:12px;padding:20px;margin:18px 0}
+.rc-field label{display:block;font-weight:600;font-size:15px;margin-bottom:5px}
+.rc-field select,.rc-field input{width:100%;min-height:44px;padding:8px 10px;border:1px solid #b9ae9c;border-radius:8px;font:inherit;background:#fff}
+.rc-field:first-child{grid-column:1/-1}
+.rc-help{font-size:13px;color:#4a5f5b;margin:4px 0 0}
+.rc-total{background:#0d4f5c;color:#fff;border-radius:12px;padding:20px;margin:8px 0 16px}
+.rc-total-label{font-size:14px;opacity:.9}.rc-total-num{font-family:Fraunces,Georgia,serif;font-size:44px;font-weight:600;line-height:1.1;margin:2px 0 6px}
+.rc-total,.rc-wrap .rc-total div,.rc-wrap .rc-total p{color:#fff}.rc-total-sub{font-size:13px;margin:0;opacity:.95}
+.rc-h{font-family:Fraunces,Georgia,serif;font-size:22px;margin:24px 0 8px}
+.rc-card{background:#fff;border:1px solid #d9d0c1;border-left:4px solid #2d6a4f;border-radius:10px;padding:14px 16px;margin:10px 0}
+.rc-card.rc-muted{border-left-color:#b9ae9c;background:#faf7f2}
+.rc-card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.rc-card h4{margin:0;font-size:16px}.rc-amt{font-weight:700;color:#2d6a4f;white-space:nowrap}
+.rc-meta{margin:6px 0 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rc-rules{margin:8px 0 4px;font-size:14.5px;line-height:1.5}.rc-src{margin:0;font-size:13px;color:#4a5f5b}
+.rc-note{font-size:12.5px;color:#8a4a06}
+.rc-pill{display:inline-block;padding:1px 9px;border-radius:99px;font-size:12px;font-weight:600}
+.rc-active{background:#e3f1e8;color:#1f5a3d}.rc-upcoming,.rc-waitlist{background:#fdeccf;color:#8a4a06}
+.rc-paused,.rc-closed{background:#f3dcdc;color:#8a2b2b}.rc-check,.rc-info{background:#e8e8e8;color:#444}
+.rc-hint,.rc-empty{background:#f5efe5;border-radius:8px;padding:12px 14px;font-size:15px}
+.rc-closed{padding-left:18px}.rc-notes{font-size:13.5px;color:#4a5f5b;padding-left:18px}
+.rc-save{background:#f5efe5;border-radius:12px;padding:6px 18px 16px;margin:20px 0}
+.rc-save input{min-height:44px;padding:8px 10px;border:1px solid #b9ae9c;border-radius:8px;font:inherit;width:min(320px,100%)}
+.rc-save button{min-height:44px;margin-left:8px;padding:0 18px;border:0;border-radius:8px;background:#d4751c;color:#fff;font-weight:700;cursor:pointer}
+.rc-links{font-size:15px}
+.rc-inst{background:#fff;border:1px solid #d9d0c1;border-radius:12px;padding:4px 18px 12px;margin:20px 0}.rc-inst-list{margin:6px 0 0;padding-left:20px;line-height:1.9}
+.rc-plan{grid-column:1/-1;border:0;padding:0;margin:0}.rc-plan legend{font-weight:600;font-size:15px;margin-bottom:6px;padding:0}
+.rc-check{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin:0 14px 4px 0;font-size:15px}.rc-check input{width:20px;height:20px}
+.rc-more{margin:18px 0}.rc-more summary{cursor:pointer;font-weight:600;padding:8px 0}
+@media(max-width:600px){.rc-form{grid-template-columns:1fr}.rc-total-num{font-size:38px}.rc-card-top{flex-direction:column;gap:2px}}
+
+.rc-form{margin-top:0}.rc-by{font-size:13px;margin:14px 0 0;text-align:center}</style></head><body>
+<div id="rc-mount"></div>
+<p class="rc-by"><a href="https://homepowerrebate.com/calculator/wa/" target="_blank" rel="noopener">Washington rebate calculator by HomePowerRebate</a></p>
+<script>/* HomePowerRebate rebate engine. One engine for every province and state.
+   A region is data only: /calculator/data/<code>.json (built by scripts/build_calculator.py from data/calc + data/verified-facts).
+   Nothing in this file names a region, program or dollar amount. */
+(function (root) {
+  "use strict";
+
+  var STATUS_LABEL = { active: "Open", upcoming: "Starts soon", waitlist: "Waitlist", paused: "Paused", closed: "Closed", check: "Confirm status", info: "Note" };
+  var COUNTED = { active: true };
+
+  function money(n, cur) {
+    return "$" + Math.round(n).toLocaleString("en-CA") + (cur && cur !== "USD" ? "" : "");
+  }
+
+  function values(region, a) {
+    var v = {}, k;
+    for (k in a) v[k] = a[k];
+    var cq = region.questions.filter(function (q) { return q.id === "city"; })[0];
+    if (cq && a.city) {
+      var opt = cq.options.filter(function (o) { return o.value === a.city; })[0];
+      if (opt && opt.set) for (k in opt.set) v[k] = opt.set[k];
+    }
+    var d = region.derived && region.derived.income_level;
+    if (d) {
+      var inc = parseFloat(String(a.income || "").replace(/[^0-9.]/g, ""));
+      var hh = parseInt(a.household, 10);
+      v.income_level = "unknown";
+      if (inc > 0 && hh > 0) {
+        var i = Math.min(hh, 7) - 1;
+        v.income_level = "none";
+        ["L1", "L2", "L3"].some(function (L) {
+          if (inc <= d.limits[L][i]) { v.income_level = L; return true; }
+          return false;
+        });
+      }
+    }
+    return v;
+  }
+
+  function match(p, v) {
+    var k;
+    if (p.when) for (k in p.when) if (p.when[k].indexOf(v[k]) < 0) return false;
+    if (p.when_any) {
+      var ok = p.when_any.some(function (w) {
+        for (var key in w) if (w[key].indexOf(v[key]) < 0) return false;
+        return true;
+      });
+      if (!ok) return false;
+    }
+    return true;
+  }
+
+  function dictMatch(w, v) {
+    for (var k in w) if (w[k].indexOf(v[k]) < 0) return false;
+    return true;
+  }
+
+  /* Amount models: {max}, {by: question, values: {answer: amount}}, or {per: {unit, rate, bonus_rate, bonus_when, question, cap}} for per-ton / per-kW programs. */
+  function amountOf(p, v) {
+    var a = p.amount;
+    if (a.by) return a.values[v[a.by]] || 0;
+    if (a.per) {
+      var n = parseFloat(v[a.per.question]);
+      if (!(n > 0)) return 0;
+      var rate = a.per.bonus_when && dictMatch(a.per.bonus_when, v) ? a.per.bonus_rate : a.per.rate;
+      var t = rate * n;
+      return a.per.cap ? Math.min(t, a.per.cap) : t;
+    }
+    return a.max || 0;
+  }
+
+  function labelOf(p, v, amount) {
+    var a = p.amount;
+    if (a.label) return a.label;
+    if (!a.per) return null;
+    var rate = a.per.bonus_when && dictMatch(a.per.bonus_when, v) ? a.per.bonus_rate : a.per.rate;
+    var base = "$" + Math.round(rate).toLocaleString("en-CA") + " per " + a.per.unit;
+    if (amount > 0) return "$" + Math.round(amount).toLocaleString("en-CA") + " (" + base + ")";
+    return a.per.cap ? base + ", up to $" + Math.round(a.per.cap).toLocaleString("en-CA") : base;
+  }
+
+  /* Returns {items, total, unknownIncome}. items carry counted=true when they add to the total. */
+  function evaluate(region, a, plan) {
+    var v = values(region, a);
+    var matched = region.programs.filter(function (p) { return match(p, v); });
+    var others = matched.filter(function (p) { return plan.indexOf(p.upgrade) < 0; });
+    var hit = matched.filter(function (p) { return plan.indexOf(p.upgrade) >= 0; });
+    var changed = true;
+    while (changed) {
+      changed = false;
+      var ids = hit.map(function (p) { return p.id; });
+      hit = hit.filter(function (p) {
+        if (p.requires && ids.indexOf(p.requires) < 0) { changed = true; return false; }
+        return true;
+      });
+    }
+    var items = hit.map(function (p) {
+      return { id: p.id, name: p.name, upgrade: p.upgrade, group: p.group || null, amount: amountOf(p, v), label: labelOf(p, v, amountOf(p, v)),
+               status: p.status, requires: p.requires || null, pool: p.pool || null, verified_on: p.verified_on, source_url: p.source_url, rules: p.rules, counted: false, covered: false };
+    });
+    var best = {};
+    items.forEach(function (it) {
+      if (!COUNTED[it.status] || !it.group) return;
+      if (!best[it.group] || it.amount > best[it.group].amount) best[it.group] = it;
+    });
+    var total = 0, byId = {};
+    items.forEach(function (it) { byId[it.id] = it; });
+    items.forEach(function (it) {
+      if (!COUNTED[it.status] || it.requires) return;
+      if (it.group) {
+        if (best[it.group] === it) { it.counted = true; total += it.amount; } else it.covered = true;
+      } else { it.counted = true; total += it.amount; }
+    });
+    /* Add-ons (bonus, top-up) count only when the offer they build on is the one counted. */
+    items.forEach(function (it) {
+      if (!it.requires || !COUNTED[it.status]) return;
+      if (byId[it.requires] && byId[it.requires].counted) { it.counted = true; total += it.amount; } else it.covered = true;
+    });
+    var capNotes = [];
+    (region.pools || []).forEach(function (pl) {
+      var sum = 0;
+      items.forEach(function (it) { if (it.counted && it.pool === pl.id) sum += it.amount; });
+      if (sum > pl.max) { total -= sum - pl.max; capNotes.push(pl.label); }
+    });
+    return { capNotes: capNotes, items: items, others: others.map(function (p) { return { id: p.id, name: p.name, upgrade: p.upgrade, amount: amountOf(p, v), label: labelOf(p, v, amountOf(p, v)), status: p.status, verified_on: p.verified_on, source_url: p.source_url, rules: p.rules, counted: false, covered: false }; }), total: total, incomeUnknown: v.income_level === "unknown", incomeLevel: v.income_level };
+  }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function pill(status) {
+    return el("span", "rc-pill rc-" + status, STATUS_LABEL[status] || status);
+  }
+
+  function fmtDate(iso) {
+    var m = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var p = iso.split("-");
+    return m[parseInt(p[1], 10) - 1] + " " + parseInt(p[2], 10) + ", " + p[0];
+  }
+
+  function card(it, region) {
+    var c = el("div", "rc-card" + (it.counted ? "" : " rc-muted"));
+    var top = el("div", "rc-card-top");
+    top.appendChild(el("h4", null, it.name));
+    var amt = it.label ? it.label : (it.amount ? "Up to " + money(it.amount, region.currency) : "See program");
+    top.appendChild(el("div", "rc-amt", amt));
+    c.appendChild(top);
+    var meta = el("div", "rc-meta");
+    meta.appendChild(pill(it.status));
+    if (it.covered) meta.appendChild(el("span", "rc-note", "Not added: a larger offer covers the same upgrade"));
+    c.appendChild(meta);
+    c.appendChild(el("p", "rc-rules", it.rules));
+    var f = el("p", "rc-src");
+    var a = el("a", null, "Official source");
+    a.href = it.source_url; a.rel = "nofollow noopener"; a.target = "_blank";
+    f.appendChild(a);
+    f.appendChild(document.createTextNode(" · Last verified " + fmtDate(it.verified_on)));
+    c.appendChild(f);
+    return c;
+  }
+
+  function mount(host, region, opts) {
+    opts = opts || {};
+    host.textContent = "";
+    var form = el("form", "rc-form");
+    form.setAttribute("novalidate", "");
+    var answers = {};
+    var params = new URLSearchParams(location.search);
+    var fields = {};
+    region.questions.forEach(function (q) {
+      var wrap = el("div", "rc-field");
+      fields[q.id] = wrap;
+      var label = el("label", null, q.label);
+      label.setAttribute("for", "rc-" + q.id);
+      wrap.appendChild(label);
+      var input;
+      if (q.type === "select") {
+        input = el("select");
+        var ph = el("option", null, q.placeholder || (q.optional ? "Skip" : "Choose one"));
+        ph.value = "";
+        input.appendChild(ph);
+        q.options.forEach(function (o) { var op = el("option", null, o.label); op.value = o.value; input.appendChild(op); });
+      } else {
+        input = el("input");
+        input.type = "text"; input.inputMode = "numeric"; input.placeholder = "for example 85000"; input.autocomplete = "off";
+      }
+      input.id = "rc-" + q.id; input.name = q.id;
+      var pre = params.get(q.id) || (opts.defaults && opts.defaults[q.id]);
+      if (pre) { input.value = pre; answers[q.id] = pre; }
+      input.addEventListener("input", function () { answers[q.id] = input.value; render(); });
+      wrap.appendChild(input);
+      if (q.help) wrap.appendChild(el("p", "rc-help", q.help));
+      form.appendChild(wrap);
+    });
+    var plan = params.get("plan") ? params.get("plan").split(",") : [];
+    var fs = el("fieldset", "rc-plan");
+    fs.appendChild(el("legend", null, "Which upgrades are you planning?"));
+    region.upgrades.forEach(function (u) {
+      var lab = el("label", "rc-check");
+      var cb = el("input"); cb.type = "checkbox"; cb.value = u.id; cb.checked = plan.indexOf(u.id) >= 0;
+      cb.addEventListener("change", function () {
+        plan = region.upgrades.map(function (x) { return x.id; }).filter(function (id) { return form.querySelector('.rc-plan input[value="' + id + '"]').checked; });
+        render();
+      });
+      lab.appendChild(cb); lab.appendChild(document.createTextNode(" " + u.label));
+      fs.appendChild(lab);
+    });
+    form.appendChild(fs);
+    host.appendChild(form);
+    var out = el("div", "rc-out");
+    out.setAttribute("aria-live", "polite");
+    host.appendChild(out);
+
+    function shown(q) {
+      return !q.for || q.for.some(function (u) { return plan.indexOf(u) >= 0; });
+    }
+    function ready() {
+      return plan.length > 0 && region.questions.every(function (q) { return q.optional || !shown(q) || answers[q.id]; });
+    }
+
+    function render() {
+      out.textContent = "";
+      region.questions.forEach(function (q) { fields[q.id].style.display = shown(q) ? "" : "none"; });
+      var q = new URLSearchParams();
+      for (var k in answers) if (answers[k] && k !== "income" && k !== "household") q.set(k, answers[k]);
+      if (plan.length) q.set("plan", plan.join(","));
+      try { history.replaceState(null, "", location.pathname + (q.toString() ? "?" + q.toString() : "")); } catch (e) { /* embedded */ }
+      if (!ready()) {
+        out.appendChild(el("p", "rc-empty", "Answer the questions and pick at least one upgrade. Your rebates appear here."));
+        return;
+      }
+      var live = {};
+      region.questions.forEach(function (q) { if (shown(q) && answers[q.id]) live[q.id] = answers[q.id]; });
+      var r = evaluate(region, live, plan);
+      var box = el("div", "rc-total");
+      box.appendChild(el("div", "rc-total-label", "Most you could get for the upgrades you picked"));
+      box.appendChild(el("div", "rc-total-num", money(r.total, region.currency)));
+      box.appendChild(el("p", "rc-total-sub", "Adds the biggest open offer for each upgrade you picked. Only programs open today are counted."));
+      out.appendChild(box);
+      r.capNotes.forEach(function (n) { out.appendChild(el("p", "rc-hint", n)); });
+      if (r.incomeUnknown) out.appendChild(el("p", "rc-hint", "Add your household size and income to check income-qualified programs. They pay the most."));
+      else if (r.incomeLevel === "none") out.appendChild(el("p", "rc-hint", "Your income is above the income-qualified limits, so only the general programs apply."));
+      var groups = {}, order = [];
+      var open = r.items.filter(function (it) { return it.status === "active"; });
+      var later = r.items.filter(function (it) { return it.status !== "active"; });
+      var label = {}; region.upgrades.forEach(function (u) { label[u.id] = u.label; });
+      open.forEach(function (it) { if (!groups[it.upgrade]) { groups[it.upgrade] = []; order.push(it.upgrade); } groups[it.upgrade].push(it); });
+      order.forEach(function (m) {
+        out.appendChild(el("h3", "rc-h", label[m]));
+        groups[m].forEach(function (it) { out.appendChild(card(it, region)); });
+      });
+      if (!open.length) out.appendChild(el("p", "rc-empty", "We found no open program for these answers. Check your inputs or see the programs below."));
+      if (later.length) {
+        out.appendChild(el("h3", "rc-h", "Not open yet, or waiting"));
+        later.forEach(function (it) { out.appendChild(card(it, region)); });
+      }
+      var more = r.others.filter(function (it) { return it.status === "active"; });
+      if (more.length) {
+        var det = el("details", "rc-more");
+        det.appendChild(el("summary", null, "Other rebates that fit your home (" + more.length + ", not in your total)"));
+        more.forEach(function (it) { det.appendChild(card(it, region)); });
+        out.appendChild(det);
+      }
+      if (region.closed && region.closed.length) {
+        out.appendChild(el("h3", "rc-h", "Ended programs (don't count on these)"));
+        var ul = el("ul", "rc-closed");
+        region.closed.forEach(function (c) {
+          var li = el("li");
+          li.appendChild(document.createTextNode(c.name + ". "));
+          li.appendChild(pill(c.status));
+          li.appendChild(document.createTextNode(" "));
+          var a = el("a", null, "Source");
+          a.href = c.source_url; a.rel = "nofollow noopener"; a.target = "_blank";
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        out.appendChild(ul);
+      }
+      if (region.notes) {
+        var nl = el("ul", "rc-notes");
+        region.notes.forEach(function (n) { nl.appendChild(el("li", null, n)); });
+        out.appendChild(nl);
+      }
+      if (!opts.embed) out.appendChild(savePlan(region, answers));
+      var cq = region.questions.filter(function (q) { return q.id === "city"; })[0];
+      var copt = cq && answers.city ? cq.options.filter(function (o) { return o.value === answers.city; })[0] : null;
+      if (copt && copt.installers) {
+        var upl = {}; region.upgrades.forEach(function (u) { upl[u.id] = u.label; });
+        var want = plan.filter(function (u) { return copt.installers[u]; });
+        if (!want.length) want = Object.keys(copt.installers);
+        var ib = el("div", "rc-inst");
+        ib.appendChild(el("h3", "rc-h", "Top-rated installers in " + copt.label));
+        ib.appendChild(el("p", "rc-help", "Ranked by Google reviews. Nobody pays to be listed, and we do not sell your details."));
+        var iul = el("ul", "rc-inst-list");
+        want.forEach(function (u) {
+          var li = el("li"); var ia = el("a", null, (upl[u] || u) + " installers in " + copt.label);
+          ia.href = copt.installers[u]; li.appendChild(ia); iul.appendChild(li);
+        });
+        if (copt.page) {
+          var li2 = el("li"); var pa = el("a", null, copt.label + " rebate guide"); pa.href = copt.page; li2.appendChild(pa); iul.appendChild(li2);
+        }
+        ib.appendChild(iul);
+        out.appendChild(ib);
+      }
+      if (plan.some(function (u) { return u.indexOf("solar") === 0; })) {
+        var rb = el("div", "rc-inst");
+        rb.appendChild(el("h3", "rc-h", "See it on your own roof"));
+        rb.appendChild(el("p", "rc-help", "Type your address in our free Solar Roof Check to see how many panels fit and what the verified solar rebates come to for your roof."));
+        var ra = el("a", null, "Open the Solar Roof Check");
+        ra.href = "/roof-check/?country=" + (String(region.country || "").toLowerCase() === "ca" ? "CA" : "US");
+        if (opts.embed) { ra.target = "_blank"; ra.rel = "noopener"; }
+        rb.appendChild(ra);
+        out.appendChild(rb);
+      }
+      var links = el("p", "rc-links");
+      var a1 = el("a", null, "See installers ranked by Google reviews");
+      a1.href = region.installers || "/installers/";
+      links.appendChild(a1);
+      links.appendChild(document.createTextNode(" · "));
+      var a2 = el("a", null, region.name + " rebate guide");
+      a2.href = region.hub;
+      links.appendChild(a2);
+      out.appendChild(links);
+    }
+    render();
+  }
+
+  function savePlan(region, answers) {
+    var f = el("form", "rc-save");
+    f.appendChild(el("h3", "rc-h", "Email me when something changes"));
+    f.appendChild(el("p", "rc-help", "One short email when a program in " + region.name + " opens, closes or changes. No installer will call you."));
+    var i = el("input"); i.type = "email"; i.required = true; i.placeholder = "you@example.com"; i.setAttribute("aria-label", "Email address");
+    var b = el("button", null, "Notify me"); b.type = "submit";
+    var msg = el("p", "rc-help");
+    f.appendChild(i); f.appendChild(b); f.appendChild(msg);
+    f.addEventListener("submit", function (e) {
+      e.preventDefault();
+      b.disabled = true;
+      fetch("https://leads.homepowerrebate.com/newsletter", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: i.value, city: answers.city || "", page: location.pathname, province: region.code.toUpperCase() })
+      }).then(function (r) {
+        if (!r.ok) throw new Error("bad");
+        f.textContent = "";
+        f.appendChild(el("p", "rc-help", "You're in. Check your inbox for a welcome email."));
+      }).catch(function () { b.disabled = false; msg.textContent = "Something went wrong. Please try again."; });
+    });
+    return f;
+  }
+
+  root.HPRCalc = { evaluate: evaluate, values: values, mount: mount };
+  if (typeof module !== "undefined") module.exports = root.HPRCalc;
+})(typeof window !== "undefined" ? window : globalThis);
+</script>
+<script>HPRCalc.mount(document.getElementById("rc-mount"),{"code":"wa","name":"Washington","country":"us","currency":"USD","hub":"/us/wa/","installers":"/installers/","questions":[{"id":"city","label":"Which city is closest to your home?","type":"select","optional":true,"help":"Used to link to your city guide.","options":[{"value":"bellevue","label":"Bellevue","page":"/us/wa/bellevue/"},{"value":"seattle","label":"Seattle","page":"/us/wa/seattle/"},{"value":"spokane","label":"Spokane","page":"/us/wa/spokane/"},{"value":"tacoma","label":"Tacoma","page":"/us/wa/tacoma/"},{"value":"vancouver","label":"Vancouver, Washington","page":"/us/wa/vancouver/"}]},{"id":"utility","label":"Who supplies your electricity?","type":"select","options":[{"value":"pse","label":"Puget Sound Energy (PSE)"},{"value":"scl","label":"Seattle City Light"},{"value":"avista","label":"Avista"},{"value":"tacoma","label":"Tacoma Power"},{"value":"clark","label":"Clark Public Utilities"},{"value":"other","label":"Another utility"}]},{"id":"heating","label":"What heats your home now?","type":"select","options":[{"value":"electric","label":"Electric heat (baseboards, furnace or heat pump)"},{"value":"gas","label":"Natural gas"},{"value":"oil","label":"Heating oil"},{"value":"other","label":"Something else"}]}],"upgrades":[{"id":"heat-pump","label":"Heat pump"},{"id":"water-heater","label":"Heat pump water heater"},{"id":"insulation","label":"Insulation"},{"id":"windows","label":"Windows"},{"id":"thermostat","label":"Smart thermostat"},{"id":"ev","label":"EV charger"},{"id":"battery","label":"Home battery"}],"programs":[{"id":"pse-hp","name":"PSE heat pump (electric heat to heat pump)","upgrade":"heat-pump","amount":{"max":1500},"rules":"For electric resistance heat. $2,400 for income-qualified households. PSE contractor required.","when":{"utility":["pse"],"heating":["electric"]},"group":"hp","status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/heating/electric-resistance-to-air-source-heat-pump-conversion-rebate"},{"id":"pse-hybrid","name":"PSE hybrid heat pump (with a gas furnace)","upgrade":"heat-pump","amount":{"max":1500},"rules":"For homes with a PSE natural gas furnace. Ducted heat pump only. $2,400 for income-qualified households.","when":{"utility":["pse"],"heating":["gas"]},"group":"hp","status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/heating/hybrid-heat-pump"},{"id":"pse-hpwh","name":"PSE heat pump water heater","upgrade":"water-heater","amount":{"max":1000},"rules":"Tier 3 or Tier 4 model installed on or after January 1, 2026. Apply within 30 days. $1,100 for income-qualified households.","when":{"utility":["pse"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/water-heating/heat-pump-water-heater-rebate"},{"id":"pse-insul","name":"PSE insulation and air sealing","upgrade":"insulation","amount":{"max":5000,"label":"Up to $5,000 per wall or floor area"},"rules":"Attic $1.75 per sq ft up to $3,500; walls and floors $2.50 per sq ft up to $5,000 each. PSE contractor takes it off the invoice.","when":{"utility":["pse"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/insulation"},{"id":"pse-win","name":"PSE windows","upgrade":"windows","amount":{"max":0,"label":"Up to $100 per window"},"rules":"$200 per window for income-qualified households. Buy and install by December 31, 2026.","when":{"utility":["pse"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/windows-rebates"},{"id":"pse-tstat","name":"PSE smart thermostat","upgrade":"thermostat","amount":{"max":75},"rules":"$175 or $130 for income-qualified households. Buy and install by December 31, 2026.","when":{"utility":["pse"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/smart-thermostat"},{"id":"pse-ev","name":"PSE EV home charger","upgrade":"ev","amount":{"max":300},"rules":"ENERGY STAR smart Level 2 charger. Up to $600 plus $2,000 for installation if income-qualified.","when":{"utility":["pse"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/ev-home-charger"},{"id":"pse-flex","name":"PSE Flex Batteries","upgrade":"battery","amount":{"max":1000,"label":"Up to $1,000 plus $500 a year"},"rules":"Enrollment incentive depends on battery size and taking part in Flex events.","when":{"utility":["pse"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/PSE-flex/flex-batteries"},{"id":"scl-hp","name":"Seattle City Light heat pump contractor discount","upgrade":"heat-pump","amount":{"max":600,"label":"$300 to $600"},"rules":"Through a participating contractor and supplier. By efficiency rating. No do-it-yourself installs.","when":{"utility":["scl"]},"group":"hp","status":"active","verified_on":"2026-10-06","source_url":"https://www.seattle.gov/city-light/residential-services/home-energy-solutions/heating-and-cooling-your-home"},{"id":"scl-oil","name":"Seattle oil-to-electric rebate","upgrade":"heat-pump","amount":{"max":2000},"rules":"For Seattle homes heating with oil that switch to a qualified heat pump through a participating contractor. We have not confirmed it adds to the contractor discount, so only the larger counts.","when":{"utility":["scl"],"heating":["oil"]},"group":"hp","status":"active","verified_on":"2026-10-06","source_url":"https://www.seattle.gov/city-light/residential-services/home-energy-solutions/heating-and-cooling-your-home"},{"id":"scl-hpwh","name":"Seattle City Light heat pump water heater","upgrade":"water-heater","amount":{"max":750},"rules":"ENERGY STAR Tier 3 or Tier 4. Contractor, store coupon or online rebate; the coupon and the online rebate cannot be combined.","when":{"utility":["scl"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.seattle.gov/city-light/residential-services/home-energy-solutions/heating-and-cooling-your-home"},{"id":"scl-tstat","name":"Seattle City Light smart thermostat","upgrade":"thermostat","amount":{"max":50},"rules":"Instant discount on Mysa and Sinope thermostats bought from the maker's City Light page.","when":{"utility":["scl"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.seattle.gov/city-light/residential-services/home-energy-solutions/heating-and-cooling-your-home"},{"id":"avista-hp","name":"Avista heat pump contractor discount","upgrade":"heat-pump","amount":{"max":600,"label":"$300 to $600"},"rules":"Per outdoor system, by efficiency rating. Goes to your contractor, who may pass it on.","when":{"utility":["avista"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.myavista.com/energy-savings/rebates-washington/hvac-and-water-heating-discounts"},{"id":"avista-hpwh","name":"Avista heat pump water heater discount","upgrade":"water-heater","amount":{"max":500},"rules":"Retrofit unit under 120 gallons, rating of 2.1 or higher. Contractor discount.","when":{"utility":["avista"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.myavista.com/energy-savings/rebates-washington/hvac-and-water-heating-discounts"},{"id":"avista-insul","name":"Avista Home Insulation Program","upgrade":"insulation","amount":{"max":0,"label":"$1.75 per square foot"},"rules":"Attics, floors and walls that start thin. Free assessment from an approved installer. No income test.","when":{"utility":["avista"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.myavista.com/energy-savings/rebate-overview/home-insulation-program"},{"id":"avista-win","name":"Avista windows and sliding glass doors","upgrade":"windows","amount":{"max":0,"label":"Up to $225 per window"},"rules":"$180 or $225 per window with a contractor, by U-factor. Apply within 120 days.","when":{"utility":["avista"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington/windows"},{"id":"tp-hp","name":"Tacoma Power heat pump","upgrade":"heat-pump","amount":{"by":"heating","values":{"electric":2000,"gas":1000,"oil":1000,"other":1000},"label":"$1,000 to $2,000"},"rules":"$2,000 for a variable-speed heat pump replacing an electric forced-air furnace; $1,000 in several other cases. Participating contractor required.","when":{"utility":["tacoma"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/heat-pump/"},{"id":"tp-hpwh","name":"Tacoma Power electric hybrid water heater","upgrade":"water-heater","amount":{"max":500},"rules":"Replacing a standard electric tank with a Tier 3 or Tier 4 model.","when":{"utility":["tacoma"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.mytpu.org/ways-to-save/for-my-home/hybrid-water-heater/"},{"id":"tp-insul","name":"Tacoma Power insulation","upgrade":"insulation","amount":{"max":2250},"rules":"$750 each for the attic, walls and crawlspace. Electric main heat and thin starting insulation.","when":{"utility":["tacoma"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/insulation/"},{"id":"tp-win","name":"Tacoma Power windows","upgrade":"windows","amount":{"max":0,"label":"$50 to $100 per window"},"rules":"Replacing single-pane or double-pane metal-framed windows. Participating contractor.","when":{"utility":["tacoma"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/windows/"},{"id":"tp-tstat","name":"Tacoma Power smart thermostat","upgrade":"thermostat","amount":{"max":75},"rules":"Electric forced-air furnace or central heat pump. Up to two rebates.","when":{"utility":["tacoma"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/thermostats/"},{"id":"tp-ev","name":"Tacoma Power EV charging credits","upgrade":"ev","amount":{"max":600},"rules":"$400 credits for a charger, splitter, electrical work or outlet, $600 maximum.","when":{"utility":["tacoma"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.mytpu.org/ways-to-save/for-my-home/ev-charging/"},{"id":"clark-hp","name":"Clark Public Utilities heat pump","upgrade":"heat-pump","amount":{"max":1250,"label":"$500 to $1,250; $900 ductless"},"rules":"Electrically heated home. Contractor Network installer required.","when":{"utility":["clark"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/heat-pump-program/"},{"id":"clark-hpwh","name":"Clark Public Utilities heat pump water heater","upgrade":"water-heater","amount":{"max":1500},"rules":"Tier 3 or Tier 4, replacing an electric storage water heater. An Oregon store markdown cancels the rebate.","when":{"utility":["clark"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/heat-pump-water-heater-program/"},{"id":"clark-insul","name":"Clark Public Utilities insulation","upgrade":"insulation","amount":{"max":0,"label":"$0.75 to $1.20 per square foot"},"rules":"Electrically heated homes with thin insulation.","when":{"utility":["clark"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/weatherization-program/"},{"id":"clark-win","name":"Clark Public Utilities windows","upgrade":"windows","amount":{"max":0,"label":"$6 to $10 per square foot"},"rules":"By window rating and old frame type. Electrically heated homes.","when":{"utility":["clark"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/weatherization-program/"},{"id":"clark-tstat","name":"Clark Public Utilities smart thermostat","upgrade":"thermostat","amount":{"max":140},"rules":"Instant rebate at the utility's online marketplace for an electric furnace or heat pump.","when":{"utility":["clark"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/"}],"notes":["Solar: Washington exempts solar equipment and installation from sales tax through 2029, but there is no verified upfront rebate, so solar is not in this calculator.","Amounts are the most a program pays. Income-qualified households may get more from PSE's Efficiency Boost or from local partners of the state program."],"closed":[{"name":"Federal Residential Clean Energy Credit (25D) and Energy Efficient Home Improvement Credit (25C)","status":"closed","source_url":"https://www.irs.gov/credits-deductions/residential-clean-energy-credit"}],"income_source":null,"verified_on":"2026-10-06"},{embed:true});</script>
+<script>function h(){parent.postMessage({hprCalcHeight:document.documentElement.scrollHeight},"*")}new ResizeObserver(h).observe(document.body);h();</script>
+</body></html>

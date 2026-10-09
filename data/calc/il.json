@@ -1,0 +1,395 @@
+{
+ "code": "il",
+ "name": "Illinois",
+ "country": "us",
+ "currency": "USD",
+ "hub": "/us/il/",
+ "installers": "/installers/",
+ "installers_dir": "il",
+ "city_page": "us/il/{c}",
+ "title": "Illinois Rebate Calculator 2026: ComEd, Nicor Gas, Peoples Gas and Naperville Rebates",
+ "h1": "Illinois Rebate Calculator 2026: What Your Utilities Pay",
+ "desc": "Free Illinois rebate calculator for ComEd, Naperville Electric, Nicor Gas and Peoples Gas customers. Heat pump, water heater, thermostat, furnace and insulation rebates, with the official source for every amount.",
+ "intro": "Illinois rebates come from your electric and gas companies. Pick yours and this calculator adds up what each pays today.",
+ "short": "Illinois has no open statewide heat pump rebate in 2026. ComEd takes up to $2,000 off a heat pump and up to $750 off a heat pump water heater. Naperville's city electric utility pays up to $1,800 for a heat pump. Nicor Gas and Peoples Gas pay for gas furnaces, water heaters, thermostats and weatherization. Ameren Illinois amounts could not be confirmed.",
+ "faq": [
+  [
+   "Is there a statewide heat pump rebate in Illinois?",
+   "Not yet. The state's HOMES and HEAR rebates have not launched. Your electric utility is the main source: ComEd pays up to $900 to $2,000 and Naperville Electric pays $900 to $1,800."
+  ],
+  [
+   "Why does the calculator ask for my gas company?",
+   "Gas companies pay rebates for furnaces, boilers, water heaters, thermostats and insulation that the electric company does not."
+  ],
+  [
+   "Why does Ameren Illinois show no amount?",
+   "We could not read Ameren Illinois's rebate page, so we show no amount rather than guess."
+  ],
+  [
+   "Is the federal tax credit still available?",
+   "No. The 25C and 25D credits ended after December 31, 2025."
+  ],
+  [
+   "Can I add all the rebates together?",
+   "The total adds programs that pay for different upgrades. Check each program's rules, since a few cannot be combined."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "electric",
+   "label": "Who delivers your electricity?",
+   "type": "select",
+   "options": [
+    {
+     "value": "comed",
+     "label": "ComEd"
+    },
+    {
+     "value": "naperville",
+     "label": "City of Naperville Electric"
+    },
+    {
+     "value": "ameren",
+     "label": "Ameren Illinois"
+    },
+    {
+     "value": "other",
+     "label": "Another utility"
+    }
+   ]
+  },
+  {
+   "id": "gas",
+   "label": "Who delivers your gas?",
+   "type": "select",
+   "options": [
+    {
+     "value": "peoples",
+     "label": "Peoples Gas (Chicago)"
+    },
+    {
+     "value": "nicor",
+     "label": "Nicor Gas"
+    },
+    {
+     "value": "ameren",
+     "label": "Ameren Illinois"
+    },
+    {
+     "value": "other",
+     "label": "Another gas utility or no gas"
+    }
+   ]
+  },
+  {
+   "id": "city",
+   "label": "Which city is closest to your home?",
+   "type": "select",
+   "options": [
+    {
+     "value": "aurora",
+     "label": "Aurora"
+    },
+    {
+     "value": "chicago",
+     "label": "Chicago"
+    },
+    {
+     "value": "naperville",
+     "label": "Naperville"
+    },
+    {
+     "value": "peoria",
+     "label": "Peoria"
+    }
+   ],
+   "optional": true,
+   "help": "Used to link to your city guide."
+  }
+ ],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump"
+  },
+  {
+   "id": "water-heater",
+   "label": "Heat pump water heater"
+  },
+  {
+   "id": "furnace",
+   "label": "New gas furnace"
+  },
+  {
+   "id": "insulation",
+   "label": "Insulation and air sealing"
+  },
+  {
+   "id": "thermostat",
+   "label": "Smart thermostat"
+  }
+ ],
+ "programs": [
+  {
+   "id": "comed-hp",
+   "fact": "il-0-comed-air-source-heat-pump",
+   "name": "ComEd ducted heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 2000,
+    "label": "Up to $900 to $2,000"
+   },
+   "rules": "Instant discount from a ComEd heat pump-trained contractor, by size and efficiency tier.",
+   "when": {
+    "electric": [
+     "comed"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "comed-mini",
+   "fact": "il-1-comed-ductless-mini-split-heat-pump",
+   "name": "ComEd ductless mini-split",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 1000,
+    "label": "Up to $500 or $1,000"
+   },
+   "rules": "Under 1.5 tons up to $500, 1.5 tons or more up to $1,000.",
+   "when": {
+    "electric": [
+     "comed"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "nap-hp",
+   "fact": "il-21-naperville-electric-air-source-heat-pump",
+   "name": "Naperville Electric heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 1800,
+    "label": "$900, $1,400 or $1,800"
+   },
+   "rules": "Replacement air source heat pump. Apply within 120 days. Ends when funding is allocated.",
+   "when": {
+    "electric": [
+     "naperville"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "comed-hpwh",
+   "fact": "il-3-comed-heat-pump-water-heater",
+   "name": "ComEd heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 750,
+    "label": "Up to $750"
+   },
+   "rules": "ENERGY STAR model with the required efficiency score. Confirm with ComEd before you buy.",
+   "when": {
+    "electric": [
+     "comed"
+    ]
+   }
+  },
+  {
+   "id": "peoples-wh",
+   "fact": "il-11-peoples-gas-equipment-rebates",
+   "name": "Peoples Gas tankless or indirect water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 150
+   },
+   "rules": "Gas tankless 0.95 UEF or better, or indirect 88% AFUE or better. Apply within 30 days.",
+   "when": {
+    "gas": [
+     "peoples"
+    ]
+   }
+  },
+  {
+   "id": "nicor-wh",
+   "fact": "il-9-nicor-gas-boiler-and-water-heater",
+   "name": "Nicor Gas water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 150
+   },
+   "rules": "Gas tankless or condensing or power-vented tank, replacing a gas unit.",
+   "when": {
+    "gas": [
+     "nicor"
+    ]
+   }
+  },
+  {
+   "id": "peoples-furnace",
+   "fact": "il-11-peoples-gas-equipment-rebates",
+   "name": "Peoples Gas furnace",
+   "upgrade": "furnace",
+   "amount": {
+    "max": 225,
+    "label": "$200 or $225"
+   },
+   "rules": "95% or 97% efficient gas furnace. Apply within 30 days.",
+   "when": {
+    "gas": [
+     "peoples"
+    ]
+   }
+  },
+  {
+   "id": "nicor-furnace",
+   "fact": "il-8-nicor-gas-furnace-and-smart-thermostat",
+   "name": "Nicor Gas furnace",
+   "upgrade": "furnace",
+   "amount": {
+    "max": 225,
+    "label": "$150 or $225"
+   },
+   "rules": "95% or 97% efficient gas furnace replacing a gas furnace.",
+   "when": {
+    "gas": [
+     "nicor"
+    ]
+   }
+  },
+  {
+   "id": "peoples-weather",
+   "fact": "il-12-peoples-gas-weatherization-rebates",
+   "name": "Peoples Gas weatherization",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 1200,
+    "label": "Up to $1,200"
+   },
+   "rules": "Air sealing, attic, wall and duct work by an approved contractor. Insulation must be bundled with air sealing.",
+   "when": {
+    "gas": [
+     "peoples"
+    ]
+   },
+   "group": "wx"
+  },
+  {
+   "id": "nicor-weather",
+   "fact": "il-10-nicor-gas-weatherization-rebates",
+   "name": "Nicor Gas weatherization",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 1850,
+    "label": "$150 to $600 per measure"
+   },
+   "rules": "Air sealing $500, attic $400, wall $150, foundation wall $200, duct sealing $600. The total shown adds all five caps.",
+   "when": {
+    "gas": [
+     "nicor"
+    ]
+   },
+   "group": "wx"
+  },
+  {
+   "id": "ihwap",
+   "fact": "il-17-illinois-home-weatherization-assistance-program",
+   "name": "Illinois Home Weatherization Assistance Program",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 0,
+    "label": "Free if you qualify by income"
+   },
+   "rules": "Households at or below 200% of the federal poverty level. Not added to your total."
+  },
+  {
+   "id": "comed-tstat",
+   "fact": "il-4-comed-smart-thermostat",
+   "name": "ComEd smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 75
+   },
+   "rules": "One per account each year. Extra $75 if installed with a heat pump.",
+   "when": {
+    "electric": [
+     "comed"
+    ]
+   }
+  },
+  {
+   "id": "nap-tstat",
+   "fact": "il-22-naperville-electric-smart-thermostat",
+   "name": "Naperville Electric smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 150,
+    "label": "$75 each, up to two"
+   },
+   "rules": "Any Wi-Fi smart thermostat. Apply within 120 days.",
+   "when": {
+    "electric": [
+     "naperville"
+    ]
+   }
+  },
+  {
+   "id": "nicor-tstat",
+   "fact": "il-8-nicor-gas-furnace-and-smart-thermostat",
+   "name": "Nicor Gas smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 25
+   },
+   "rules": "One per household on a gas-heated home.",
+   "when": {
+    "gas": [
+     "nicor"
+    ]
+   }
+  },
+  {
+   "id": "peoples-tstat",
+   "fact": "il-11-peoples-gas-equipment-rebates",
+   "name": "Peoples Gas smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 25
+   },
+   "rules": "Smart thermostat on a home heated with Peoples Gas.",
+   "when": {
+    "gas": [
+     "peoples"
+    ]
+   }
+  },
+  {
+   "id": "ameren",
+   "fact": "il-18-ameren-illinois-residential-rebates",
+   "name": "Ameren Illinois rebates",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 0,
+    "label": "Not confirmed"
+   },
+   "rules": "We could not read Ameren Illinois's rebate page. Call Ameren Illinois before you buy.",
+   "when": {
+    "electric": [
+     "ameren"
+    ]
+   }
+  }
+ ],
+ "closed_facts": [
+  "il-6-comed-whole-home-electric",
+  "il-23-naperville-electric-insulation-window-and-solar-",
+  "il-16-illinois-homes-and-hear-home-energy-rebates",
+  "general-8-us-federal-25c-25d-tax-credits"
+ ],
+ "notes": [
+  "We have not verified Ameren Illinois amounts, Illinois net metering rules, battery rebates or electric car charger rebates. We list only what we read on a program's own page.",
+  "Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."
+ ]
+}

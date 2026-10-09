@@ -125,6 +125,7 @@ def build(slug, cat):
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE}, {"@type": "ListItem", "position": 2, "name": "Illinois", "item": BASE + "/us/il/"},
               ] + ([] if state else [{"@type": "ListItem", "position": 3, "name": name, "item": BASE + hub}]) + ([] if is_hub else [{"@type": "ListItem", "position": 4, "name": LABEL[cat], "item": BASE + path}])}, faq_ld]
     lds = "".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in ld)
+    hero_open, hero_close = ('<header class="hero">', "</header>") if state else ('<section class="hero">', "</section>")
     page = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{e(title)}</title>
@@ -139,7 +140,7 @@ def build(slug, cat):
 {lds}</head><body>
 {navfooter.render_nav("il", "" if state else slug)}
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li>{"" if state else "<li><a href=\"/us/il/\">Illinois</a></li>"}{"" if is_hub else f'<li><a href="{hub}">{e(name)}</a></li>'}<li aria-current="page">{e(name) if is_hub else LABEL[cat]}</li></ol></nav>
-<section class="hero"><div class="wrap"><div class="amount-badge">{e(d['badge'])}</div><h1>{e(d['h1'])}</h1><p>{d['lead']}</p></div></section>
+{hero_open}<div class="wrap"><div class="amount-badge">{e(d['badge'])}</div><h1>{e(d['h1'])}</h1><p>{d['lead']}</p></div>{hero_close}
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
 {"" if is_hub else f'<span style="margin-right:14px;"><a href="{hub}">&larr; Back to {e(name)} rebate hub</a></span>' + chr(10) + sib}</div></section>
 <article class="article"><div class="wrap">

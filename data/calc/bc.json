@@ -1,832 +1,843 @@
 {
- "code": "bc",
- "name": "British Columbia",
- "country": "ca",
- "currency": "CAD",
- "hub": "/ca/bc/",
- "installers": "/installers/",
- "intro": "Answer a few questions and see which BC rebates fit your home, with a source for every number.",
- "questions": [
-  {
-   "id": "city",
-   "label": "Where is your home?",
-   "type": "select",
-   "options": [
+  "code": "bc",
+  "name": "British Columbia",
+  "country": "ca",
+  "currency": "CAD",
+  "hub": "/ca/bc/",
+  "installers": "/installers/",
+  "intro": "Answer a few questions and see which BC rebates fit your home, with a source for every number.",
+  "questions": [
     {
-     "value": "abbotsford",
-     "label": "Abbotsford",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/abbotsford/"
+      "id": "city",
+      "label": "Where is your home?",
+      "type": "select",
+      "options": [
+        {
+          "value": "abbotsford",
+          "label": "Abbotsford",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/abbotsford/"
+        },
+        {
+          "value": "burnaby",
+          "label": "Burnaby",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/burnaby/"
+        },
+        {
+          "value": "chilliwack",
+          "label": "Chilliwack",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/chilliwack/"
+        },
+        {
+          "value": "coquitlam",
+          "label": "Coquitlam",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/coquitlam/"
+        },
+        {
+          "value": "fort-st-john",
+          "label": "Fort St. John",
+          "set": {
+            "utility": "bchydro",
+            "north": "yes",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/fort-st-john/"
+        },
+        {
+          "value": "kamloops",
+          "label": "Kamloops",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/kamloops/"
+        },
+        {
+          "value": "kelowna",
+          "label": "Kelowna",
+          "set": {
+            "utility": "fortis_electric",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/kelowna/"
+        },
+        {
+          "value": "langley",
+          "label": "Langley",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/langley/"
+        },
+        {
+          "value": "maple-ridge",
+          "label": "Maple Ridge",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/maple-ridge/"
+        },
+        {
+          "value": "nanaimo",
+          "label": "Nanaimo",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/nanaimo/"
+        },
+        {
+          "value": "penticton",
+          "label": "Penticton",
+          "set": {
+            "utility": "fortis_electric",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/penticton/"
+        },
+        {
+          "value": "prince-george",
+          "label": "Prince George",
+          "set": {
+            "utility": "bchydro",
+            "north": "yes",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/prince-george/"
+        },
+        {
+          "value": "richmond",
+          "label": "Richmond",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/richmond/"
+        },
+        {
+          "value": "squamish",
+          "label": "Squamish",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/squamish/"
+        },
+        {
+          "value": "surrey",
+          "label": "Surrey",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/surrey/"
+        },
+        {
+          "value": "vancouver",
+          "label": "Vancouver",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "yes"
+          },
+          "page": "/ca/bc/vancouver/"
+        },
+        {
+          "value": "vernon",
+          "label": "Vernon",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/vernon/"
+        },
+        {
+          "value": "victoria",
+          "label": "Victoria",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          },
+          "page": "/ca/bc/victoria/"
+        },
+        {
+          "value": "other-bch",
+          "label": "Somewhere else in BC (BC Hydro electricity)",
+          "set": {
+            "utility": "bchydro",
+            "north": "no",
+            "vancouver": "no"
+          }
+        },
+        {
+          "value": "other-north",
+          "label": "Somewhere else in BC, at or north of 100 Mile House (BC Hydro)",
+          "set": {
+            "utility": "bchydro",
+            "north": "yes",
+            "vancouver": "no"
+          }
+        },
+        {
+          "value": "other-fortis",
+          "label": "Somewhere else in BC (FortisBC electricity)",
+          "set": {
+            "utility": "fortis_electric",
+            "north": "no",
+            "vancouver": "no"
+          }
+        }
+      ],
+      "placeholder": "Choose your city"
     },
     {
-     "value": "burnaby",
-     "label": "Burnaby",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/burnaby/"
+      "id": "heating",
+      "label": "What heats your home now?",
+      "type": "select",
+      "options": [
+        {
+          "value": "electric",
+          "label": "Electric baseboards or electric furnace"
+        },
+        {
+          "value": "gas",
+          "label": "Natural gas"
+        },
+        {
+          "value": "oil_propane",
+          "label": "Oil or propane"
+        },
+        {
+          "value": "other",
+          "label": "A heat pump, wood or something else"
+        }
+      ]
     },
     {
-     "value": "chilliwack",
-     "label": "Chilliwack",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/chilliwack/"
+      "id": "water_heater",
+      "label": "What heats your water?",
+      "type": "select",
+      "options": [
+        {
+          "value": "electric",
+          "label": "Electric tank"
+        },
+        {
+          "value": "fossil",
+          "label": "Gas, oil or propane"
+        },
+        {
+          "value": "other",
+          "label": "Something else"
+        }
+      ]
     },
     {
-     "value": "coquitlam",
-     "label": "Coquitlam",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/coquitlam/"
+      "id": "home_value",
+      "label": "What is your home's assessed value?",
+      "type": "select",
+      "options": [
+        {
+          "value": "under_1_2m",
+          "label": "Under $1.2 million"
+        },
+        {
+          "value": "mid",
+          "label": "$1.2 million to $1.82 million"
+        },
+        {
+          "value": "over",
+          "label": "Over $1.82 million"
+        }
+      ]
     },
     {
-     "value": "fort-st-john",
-     "label": "Fort St. John",
-     "set": {
-      "utility": "bchydro",
-      "north": "yes",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/fort-st-john/"
+      "id": "household",
+      "label": "How many people live in your home?",
+      "type": "select",
+      "optional": true,
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        },
+        {
+          "value": "7",
+          "label": "7 or more"
+        }
+      ]
     },
     {
-     "value": "kamloops",
-     "label": "Kamloops",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/kamloops/"
-    },
-    {
-     "value": "kelowna",
-     "label": "Kelowna",
-     "set": {
-      "utility": "fortis_electric",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/kelowna/"
-    },
-    {
-     "value": "langley",
-     "label": "Langley",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/langley/"
-    },
-    {
-     "value": "maple-ridge",
-     "label": "Maple Ridge",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/maple-ridge/"
-    },
-    {
-     "value": "nanaimo",
-     "label": "Nanaimo",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/nanaimo/"
-    },
-    {
-     "value": "penticton",
-     "label": "Penticton",
-     "set": {
-      "utility": "fortis_electric",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/penticton/"
-    },
-    {
-     "value": "prince-george",
-     "label": "Prince George",
-     "set": {
-      "utility": "bchydro",
-      "north": "yes",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/prince-george/"
-    },
-    {
-     "value": "richmond",
-     "label": "Richmond",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/richmond/"
-    },
-    {
-     "value": "squamish",
-     "label": "Squamish",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/squamish/"
-    },
-    {
-     "value": "surrey",
-     "label": "Surrey",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/surrey/"
-    },
-    {
-     "value": "vancouver",
-     "label": "Vancouver",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "yes"
-     },
-     "page": "/ca/bc/vancouver/"
-    },
-    {
-     "value": "vernon",
-     "label": "Vernon",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/vernon/"
-    },
-    {
-     "value": "victoria",
-     "label": "Victoria",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     },
-     "page": "/ca/bc/victoria/"
-    },
-    {
-     "value": "other-bch",
-     "label": "Somewhere else in BC (BC Hydro electricity)",
-     "set": {
-      "utility": "bchydro",
-      "north": "no",
-      "vancouver": "no"
-     }
-    },
-    {
-     "value": "other-north",
-     "label": "Somewhere else in BC, at or north of 100 Mile House (BC Hydro)",
-     "set": {
-      "utility": "bchydro",
-      "north": "yes",
-      "vancouver": "no"
-     }
-    },
-    {
-     "value": "other-fortis",
-     "label": "Somewhere else in BC (FortisBC electricity)",
-     "set": {
-      "utility": "fortis_electric",
-      "north": "no",
-      "vancouver": "no"
-     }
+      "id": "income",
+      "label": "Combined household income before tax (optional)",
+      "type": "money",
+      "optional": true,
+      "help": "Only used to check income-qualified programs. It never leaves your device."
     }
-   ],
-   "placeholder": "Choose your city"
-  },
-  {
-   "id": "heating",
-   "label": "What heats your home now?",
-   "type": "select",
-   "options": [
-    {
-     "value": "electric",
-     "label": "Electric baseboards or electric furnace"
-    },
-    {
-     "value": "gas",
-     "label": "Natural gas"
-    },
-    {
-     "value": "oil_propane",
-     "label": "Oil or propane"
-    },
-    {
-     "value": "other",
-     "label": "A heat pump, wood or something else"
-    }
-   ]
-  },
-  {
-   "id": "water_heater",
-   "label": "What heats your water?",
-   "type": "select",
-   "options": [
-    {
-     "value": "electric",
-     "label": "Electric tank"
-    },
-    {
-     "value": "fossil",
-     "label": "Gas, oil or propane"
-    },
-    {
-     "value": "other",
-     "label": "Something else"
-    }
-   ]
-  },
-  {
-   "id": "home_value",
-   "label": "What is your home's assessed value?",
-   "type": "select",
-   "options": [
-    {
-     "value": "under_1_2m",
-     "label": "Under $1.2 million"
-    },
-    {
-     "value": "mid",
-     "label": "$1.2 million to $1.82 million"
-    },
-    {
-     "value": "over",
-     "label": "Over $1.82 million"
-    }
-   ]
-  },
-  {
-   "id": "household",
-   "label": "How many people live in your home?",
-   "type": "select",
-   "optional": true,
-   "options": [
-    {
-     "value": "1",
-     "label": "1"
-    },
-    {
-     "value": "2",
-     "label": "2"
-    },
-    {
-     "value": "3",
-     "label": "3"
-    },
-    {
-     "value": "4",
-     "label": "4"
-    },
-    {
-     "value": "5",
-     "label": "5"
-    },
-    {
-     "value": "6",
-     "label": "6"
-    },
-    {
-     "value": "7",
-     "label": "7 or more"
-    }
-   ]
-  },
-  {
-   "id": "income",
-   "label": "Combined household income before tax (optional)",
-   "type": "money",
-   "optional": true,
-   "help": "Only used to check income-qualified programs. It never leaves your device."
-  }
- ],
- "derived": {
-  "income_level": {
-   "from": [
-    "household",
-    "income"
-   ],
-   "limits": {
-    "L1": [
-     51100,
-     63600,
-     78200,
-     94900,
-     107600,
-     121400,
-     135100
-    ],
-    "L2": [
-     63900,
-     79500,
-     97700,
-     118600,
-     134500,
-     151700,
-     168900
-    ],
-    "L3": [
-     102100,
-     127200,
-     156300,
-     189800,
-     215200,
-     242700,
-     270200
-    ]
-   },
-   "source_fact": "bc-blog-20-cleanbc-esp"
-  }
- },
- "programs": [
-  {
-   "id": "bchydro-hp-whole",
-   "fact": "bc-pages-0-bc-hydro-heat-pump-rebate-home-renovation-rebate",
-   "name": "BC Hydro heat pump rebate",
-   "group": "hp",
-   "when": {
-    "utility": [
-     "bchydro"
-    ],
-    "heating": [
-     "electric"
-    ]
-   },
-   "amount": {
-    "max": 4000
-   },
-   "rules": "Replaces electric heat (baseboards or electric furnace). The heat pump must cover all of your heating at -5°C. HPCN installer and an eligible model. Covering half your heating pays $1,500.",
-   "upgrade": "heat-pump"
-  },
-  {
-   "id": "bchydro-hp-bonus",
-   "fact": "bc-pages-2-bc-hydro-heat-pump-bonus",
-   "name": "BC Hydro heat pump bonus",
-   "requires": "bchydro-hp-whole",
-   "when": {
-    "utility": [
-     "bchydro"
-    ],
-    "heating": [
-     "electric"
-    ]
-   },
-   "amount": {
-    "max": 1000
-   },
-   "rules": "Extra rebate for installs finished between Aug 1 and Oct 31, 2026. First come, first served.",
-   "upgrade": "heat-pump"
-  },
-  {
-   "id": "esp-fossil-hp",
-   "fact": "bc-pages-3-cleanbc-energy-savings-program-esp-income-qualifie",
-   "name": "CleanBC Energy Savings Program: gas, oil or propane to heat pump",
-   "group": "hp",
-   "when": {
-    "heating": [
-     "gas",
-     "oil_propane"
-    ]
-   },
-   "when_any": [
-    {
-     "income_level": [
-      "L1",
-      "L2"
-     ],
-     "home_value": [
-      "under_1_2m"
-     ]
-    },
-    {
-     "income_level": [
-      "L3"
-     ],
-     "home_value": [
-      "under_1_2m",
-      "mid"
-     ]
-    }
-   ],
-   "amount": {
-    "by": "income_level",
-    "values": {
-     "L1": 13000,
-     "L2": 7000,
-     "L3": 3500
-    }
-   },
-   "rules": "For a central ducted or 3+ head heat pump. Smaller systems pay less. Register before work starts and use an ESP registered contractor.",
-   "upgrade": "heat-pump"
-  },
-  {
-   "id": "esp-north",
-   "fact": "bc-pages-4-cleanbc-esp-northern-top-up",
-   "name": "CleanBC northern top-up",
-   "requires": "esp-fossil-hp",
-   "when": {
-    "north": [
-     "yes"
-    ],
-    "utility": [
-     "bchydro"
-    ],
-    "income_level": [
-     "L1",
-     "L2"
-    ]
-   },
-   "amount": {
-    "max": 3000
-   },
-   "rules": "Extra $3,000 for a ducted or multi-head system, $1,500 for a single head. Home at or north of 100 Mile House with BC Hydro electricity.",
-   "upgrade": "heat-pump"
-  },
-  {
-   "id": "esp-electric-hp",
-   "fact": "bc-pages-5-cleanbc-esp-electric-to-heat-pump",
-   "name": "CleanBC Energy Savings Program: electric heat to heat pump",
-   "group": "hp",
-   "when": {
-    "heating": [
-     "electric"
-    ],
-    "income_level": [
-     "L1"
-    ],
-    "home_value": [
-     "under_1_2m"
-    ]
-   },
-   "amount": {
-    "max": 5000
-   },
-   "rules": "Income Level 1 only. Register before work starts and use an ESP registered contractor.",
-   "upgrade": "heat-pump"
-  },
-  {
-   "id": "fortis-hp",
-   "fact": "bc-blog-22-fortisbc-electric-heat-pump-rebate",
-   "name": "FortisBC electric heat pump rebate",
-   "group": "hp",
-   "when": {
-    "utility": [
-     "fortis_electric"
-    ],
-    "heating": [
-     "electric"
-    ]
-   },
-   "amount": {
-    "max": 4000
-   },
-   "rules": "Replaces electric heat. Cold-climate certified model. Mini-splits only in homes of 1,200 sq ft or less. Partial-home installs get $1,500.",
-   "upgrade": "heat-pump"
-  },
-  {
-   "id": "fortis-iq-hp",
-   "fact": "bc-blog-23-fortisbc-income-qualified-heat-pump",
-   "name": "FortisBC income-qualified heat pump rebate",
-   "group": "hp",
-   "when": {
-    "utility": [
-     "fortis_electric"
-    ],
-    "heating": [
-     "electric"
-    ],
-    "income_level": [
-     "L1"
-    ]
-   },
-   "amount": {
-    "max": 12000
-   },
-   "rules": "Central ducted whole-home system. Mini or multi-split whole home pays $9,000. Same income limit as CleanBC Level 1.",
-   "upgrade": "heat-pump"
-  },
-  {
-   "id": "esp-panel",
-   "fact": "bc-pages-7-cleanbc-esp-other-upgrades",
-   "name": "CleanBC electrical service upgrade",
-   "requires": "esp-fossil-hp",
-   "when": {
-    "income_level": [
-     "L1",
-     "L2",
-     "L3"
-    ]
-   },
-   "amount": {
-    "by": "income_level",
-    "values": {
-     "L1": 5000,
-     "L2": 3500,
-     "L3": 1500
-    }
-   },
-   "rules": "Only when you switch from gas, oil or propane to a heat pump and the panel needs upgrading.",
-   "upgrade": "heat-pump"
-  },
-  {
-   "id": "esp-hpwh-fossil",
-   "fact": "bc-blog-21-cleanbc-esp",
-   "name": "CleanBC heat pump water heater (from gas, oil or propane)",
-   "group": "hpwh",
-   "when": {
-    "water_heater": [
-     "fossil"
-    ]
-   },
-   "when_any": [
-    {
-     "income_level": [
-      "L1",
-      "L2"
-     ],
-     "home_value": [
-      "under_1_2m"
-     ]
-    },
-    {
-     "income_level": [
-      "L3"
-     ],
-     "home_value": [
-      "under_1_2m",
-      "mid"
-     ]
-    }
-   ],
-   "amount": {
-    "by": "income_level",
-    "values": {
-     "L1": 3500,
-     "L2": 3500,
-     "L3": 3500
-    }
-   },
-   "rules": "Income-qualified. Use an ESP registered contractor.",
-   "upgrade": "water-heater"
-  },
-  {
-   "id": "esp-hpwh-electric",
-   "fact": "bc-blog-21-cleanbc-esp",
-   "name": "CleanBC heat pump water heater (from electric)",
-   "group": "hpwh",
-   "when": {
-    "water_heater": [
-     "electric"
-    ],
-    "income_level": [
-     "L1",
-     "L2"
-    ],
-    "home_value": [
-     "under_1_2m"
-    ]
-   },
-   "amount": {
-    "by": "income_level",
-    "values": {
-     "L1": 3500,
-     "L2": 2800
-    }
-   },
-   "rules": "Income Level 1 or 2. Use an ESP registered contractor.",
-   "upgrade": "water-heater"
-  },
-  {
-   "id": "bchydro-hpwh",
-   "fact": "bc-pages-10-bc-hydro-heat-pump-water-heater-rebate",
-   "name": "BC Hydro heat pump water heater rebate",
-   "group": "hpwh",
-   "when": {
-    "utility": [
-     "bchydro"
-    ],
-    "water_heater": [
-     "electric"
-    ]
-   },
-   "amount": {
-    "max": 1000
-   },
-   "rules": "Replaces an electric primary water heater. NEEA Tier 2 or higher model and a licensed contractor.",
-   "upgrade": "water-heater"
-  },
-  {
-   "id": "bchydro-insulation",
-   "fact": "bc-pages-8-bc-hydro-insulation-rebate",
-   "name": "BC Hydro insulation rebate",
-   "when": {
-    "utility": [
-     "bchydro"
-    ],
-    "heating": [
-     "electric"
-    ]
-   },
-   "amount": {
-    "max": 5500
-   },
-   "rules": "Electrically heated home. HPCN contractor and minimum R-values. Attic pays up to $900, walls or basement up to $1,200 each.",
-   "upgrade": "insulation"
-  },
-  {
-   "id": "bchydro-windows",
-   "fact": "bc-pages-9-bc-hydro-windows-and-doors-rebate",
-   "name": "BC Hydro windows and doors rebate",
-   "when": {
-    "utility": [
-     "bchydro"
-    ],
-    "heating": [
-     "electric"
-    ],
-    "vancouver": [
-     "no"
-    ]
-   },
-   "amount": {
-    "max": 2000
-   },
-   "rules": "$100 per window or door, replacing existing units. U-factor 1.22 or better and a licensed contractor.",
-   "upgrade": "insulation"
-  },
-  {
-   "id": "bchydro-solar",
-   "fact": "bc-pages-11-bc-hydro-solar-rebate",
-   "name": "BC Hydro solar rebate",
-   "when": {
-    "utility": [
-     "bchydro"
-    ]
-   },
-   "amount": {
-    "max": 5000
-   },
-   "rules": "$1,000 per kW, up to half the install cost. Get technical acceptance from BC Hydro before you install.",
-   "upgrade": "solar"
-  },
-  {
-   "id": "bchydro-battery",
-   "fact": "bc-pages-12-bc-hydro-battery-rebate",
-   "name": "BC Hydro battery rebate",
-   "when": {
-    "utility": [
-     "bchydro"
-    ]
-   },
-   "amount": {
-    "max": 5000
-   },
-   "rules": "$500 per kWh, up to half the cost. Up to $5,000 if you join Peak Saver within 14 days of install; $1,500 with solar and no Peak Saver. Not for Tesla.",
-   "upgrade": "battery"
-  },
-  {
-   "id": "bchydro-ev",
-   "fact": "bc-pages-13-bc-hydro-ev-charger-rebate",
-   "name": "BC Hydro EV charger rebate",
-   "when": {
-    "utility": [
-     "bchydro"
-    ]
-   },
-   "amount": {
-    "max": 550
-   },
-   "rules": "Half the cost up to $350, plus $200 for a power-management device. Single-family, row home or duplex. Not for Tesla chargers.",
-   "upgrade": "ev"
-  },
-  {
-   "id": "bchydro-ev-local",
-   "fact": "bc-blog-15-bc-hydro-ev-charger-local-top-ups",
-   "name": "Local EV charger top-up",
-   "requires": "bchydro-ev",
-   "when": {
-    "city": [
-     "kamloops",
-     "squamish"
-    ]
-   },
-   "amount": {
-    "max": 150
-   },
-   "rules": "Added automatically for Kamloops and Squamish homes.",
-   "upgrade": "ev"
-  },
-  {
-   "id": "bchydro-thermostats",
-   "fact": "bc-pages-15-free-smart-thermostats-bc-hydro-province",
-   "name": "Free smart thermostats",
-   "when": {
-    "utility": [
-     "bchydro"
-    ],
-    "heating": [
-     "electric"
-    ]
-   },
-   "amount": {
-    "max": 0,
-    "label": "Free, up to 5"
-   },
-   "rules": "For baseboard-heated homes enrolled in Peak Saver. Starts in October 2026.",
-   "upgrade": "thermostat"
-  }
- ],
- "closed_facts": [
-  "general-7-canada-greener-homes-grant-loan"
- ],
- "notes": [
-  "Peak Saver pays bill credits ($500 one time for a battery, then about $250 each winter). They are not rebates, so they are not in the total.",
-  "Where two offers cover the same upgrade, we count the larger one. Ask the program if you can combine them.",
-  "Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."
- ],
- "title": "BC Rebate Calculator 2026: Heat Pump, Solar, Battery and More",
- "h1": "BC Rebate Calculator 2026: What Can You Get for Your Home?",
- "desc": "Free BC rebate calculator. Pick your city, heating and income to see BC Hydro, FortisBC and CleanBC rebates you can claim, with the official source for every amount.",
- "short": "A BC home can get up to $4,000 from BC Hydro for a heat pump that replaces electric heat, and income-qualified households can get up to $13,000 from CleanBC to switch from gas, oil or propane. Your amount depends on your city, what heats your home now and your household income.",
- "faq": [
-  [
-   "Can I get a rebate in BC if I replace electric baseboards with a heat pump?",
-   "Yes. BC Hydro pays up to $4,000 when the heat pump covers all of your heating at -5°C, or $1,500 when it covers at least half. You need a BC Hydro electric account, an HPCN installer and an eligible model. Income Level 1 households can get up to $5,000 from CleanBC instead."
   ],
-  [
-   "What are the CleanBC income limits for 2026?",
-   "For a household of four, combined income before tax must be at most $94,900 for Level 1, $118,600 for Level 2 or $189,800 for Level 3. Limits change with household size, and the calculator checks them for you."
+  "derived": {
+    "income_level": {
+      "from": [
+        "household",
+        "income"
+      ],
+      "limits": {
+        "L1": [
+          51100,
+          63600,
+          78200,
+          94900,
+          107600,
+          121400,
+          135100
+        ],
+        "L2": [
+          63900,
+          79500,
+          97700,
+          118600,
+          134500,
+          151700,
+          168900
+        ],
+        "L3": [
+          102100,
+          127200,
+          156300,
+          189800,
+          215200,
+          242700,
+          270200
+        ]
+      },
+      "source_fact": "bc-blog-20-cleanbc-esp"
+    }
+  },
+  "programs": [
+    {
+      "id": "bchydro-hp-whole",
+      "fact": "bc-pages-0-bc-hydro-heat-pump-rebate-home-renovation-rebate",
+      "name": "BC Hydro heat pump rebate",
+      "group": "hp",
+      "when": {
+        "utility": [
+          "bchydro"
+        ],
+        "heating": [
+          "electric"
+        ]
+      },
+      "amount": {
+        "max": 4000
+      },
+      "rules": "Replaces electric heat (baseboards or electric furnace). The heat pump must cover all of your heating at -5°C. HPCN installer and an eligible model. Covering half your heating pays $1,500.",
+      "upgrade": "heat-pump"
+    },
+    {
+      "id": "bchydro-hp-bonus",
+      "fact": "bc-pages-2-bc-hydro-heat-pump-bonus",
+      "name": "BC Hydro heat pump bonus",
+      "requires": "bchydro-hp-whole",
+      "when": {
+        "utility": [
+          "bchydro"
+        ],
+        "heating": [
+          "electric"
+        ]
+      },
+      "amount": {
+        "max": 1000
+      },
+      "rules": "Extra rebate for installs finished between Aug 1 and Oct 31, 2026. First come, first served.",
+      "upgrade": "heat-pump"
+    },
+    {
+      "id": "esp-fossil-hp",
+      "fact": "bc-pages-3-cleanbc-energy-savings-program-esp-income-qualifie",
+      "name": "CleanBC Energy Savings Program: gas, oil or propane to heat pump",
+      "group": "hp",
+      "when": {
+        "heating": [
+          "gas",
+          "oil_propane"
+        ]
+      },
+      "when_any": [
+        {
+          "income_level": [
+            "L1",
+            "L2"
+          ],
+          "home_value": [
+            "under_1_2m"
+          ]
+        },
+        {
+          "income_level": [
+            "L3"
+          ],
+          "home_value": [
+            "under_1_2m",
+            "mid"
+          ]
+        }
+      ],
+      "amount": {
+        "by": "income_level",
+        "values": {
+          "L1": 13000,
+          "L2": 7000,
+          "L3": 3500
+        }
+      },
+      "rules": "For a central ducted or 3+ head heat pump. Smaller systems pay less. Register before work starts and use an ESP registered contractor.",
+      "upgrade": "heat-pump"
+    },
+    {
+      "id": "esp-north",
+      "fact": "bc-pages-4-cleanbc-esp-northern-top-up",
+      "name": "CleanBC northern top-up",
+      "requires": "esp-fossil-hp",
+      "when": {
+        "north": [
+          "yes"
+        ],
+        "utility": [
+          "bchydro"
+        ],
+        "income_level": [
+          "L1",
+          "L2"
+        ]
+      },
+      "amount": {
+        "max": 3000
+      },
+      "rules": "Extra $3,000 for a ducted or multi-head system, $1,500 for a single head. Home at or north of 100 Mile House with BC Hydro electricity.",
+      "upgrade": "heat-pump"
+    },
+    {
+      "id": "esp-electric-hp",
+      "fact": "bc-pages-5-cleanbc-esp-electric-to-heat-pump",
+      "name": "CleanBC Energy Savings Program: electric heat to heat pump",
+      "group": "hp",
+      "when": {
+        "heating": [
+          "electric"
+        ],
+        "income_level": [
+          "L1"
+        ],
+        "home_value": [
+          "under_1_2m"
+        ]
+      },
+      "amount": {
+        "max": 5000
+      },
+      "rules": "Income Level 1 only. Register before work starts and use an ESP registered contractor.",
+      "upgrade": "heat-pump"
+    },
+    {
+      "id": "fortis-hp",
+      "fact": "bc-blog-22-fortisbc-electric-heat-pump-rebate",
+      "name": "FortisBC electric heat pump rebate",
+      "group": "hp",
+      "when": {
+        "utility": [
+          "fortis_electric"
+        ],
+        "heating": [
+          "electric"
+        ]
+      },
+      "amount": {
+        "max": 4000
+      },
+      "rules": "Replaces electric heat. Cold-climate certified model. Mini-splits only in homes of 1,200 sq ft or less. Partial-home installs get $1,500.",
+      "upgrade": "heat-pump"
+    },
+    {
+      "id": "fortis-iq-hp",
+      "fact": "bc-blog-23-fortisbc-income-qualified-heat-pump",
+      "name": "FortisBC income-qualified heat pump rebate",
+      "group": "hp",
+      "when": {
+        "utility": [
+          "fortis_electric"
+        ],
+        "heating": [
+          "electric"
+        ],
+        "income_level": [
+          "L1"
+        ]
+      },
+      "amount": {
+        "max": 12000
+      },
+      "rules": "Central ducted whole-home system. Mini or multi-split whole home pays $9,000. Same income limit as CleanBC Level 1.",
+      "upgrade": "heat-pump"
+    },
+    {
+      "id": "esp-panel",
+      "fact": "bc-pages-7-cleanbc-esp-other-upgrades",
+      "name": "CleanBC electrical service upgrade",
+      "requires": "esp-fossil-hp",
+      "when": {
+        "income_level": [
+          "L1",
+          "L2",
+          "L3"
+        ]
+      },
+      "amount": {
+        "by": "income_level",
+        "values": {
+          "L1": 5000,
+          "L2": 3500,
+          "L3": 1500
+        }
+      },
+      "rules": "Only when you switch from gas, oil or propane to a heat pump and the panel needs upgrading.",
+      "upgrade": "heat-pump"
+    },
+    {
+      "id": "esp-hpwh-fossil",
+      "fact": "bc-blog-21-cleanbc-esp",
+      "name": "CleanBC heat pump water heater (from gas, oil or propane)",
+      "group": "hpwh",
+      "when": {
+        "water_heater": [
+          "fossil"
+        ]
+      },
+      "when_any": [
+        {
+          "income_level": [
+            "L1",
+            "L2"
+          ],
+          "home_value": [
+            "under_1_2m"
+          ]
+        },
+        {
+          "income_level": [
+            "L3"
+          ],
+          "home_value": [
+            "under_1_2m",
+            "mid"
+          ]
+        }
+      ],
+      "amount": {
+        "by": "income_level",
+        "values": {
+          "L1": 3500,
+          "L2": 3500,
+          "L3": 3500
+        }
+      },
+      "rules": "Income-qualified. Use an ESP registered contractor.",
+      "upgrade": "water-heater"
+    },
+    {
+      "id": "esp-hpwh-electric",
+      "fact": "bc-blog-21-cleanbc-esp",
+      "name": "CleanBC heat pump water heater (from electric)",
+      "group": "hpwh",
+      "when": {
+        "water_heater": [
+          "electric"
+        ],
+        "income_level": [
+          "L1",
+          "L2"
+        ],
+        "home_value": [
+          "under_1_2m"
+        ]
+      },
+      "amount": {
+        "by": "income_level",
+        "values": {
+          "L1": 3500,
+          "L2": 2800
+        }
+      },
+      "rules": "Income Level 1 or 2. Use an ESP registered contractor.",
+      "upgrade": "water-heater"
+    },
+    {
+      "id": "bchydro-hpwh",
+      "fact": "bc-pages-10-bc-hydro-heat-pump-water-heater-rebate",
+      "name": "BC Hydro heat pump water heater rebate",
+      "group": "hpwh",
+      "when": {
+        "utility": [
+          "bchydro"
+        ],
+        "water_heater": [
+          "electric"
+        ]
+      },
+      "amount": {
+        "max": 1000
+      },
+      "rules": "Replaces an electric primary water heater. NEEA Tier 2 or higher model and a licensed contractor.",
+      "upgrade": "water-heater"
+    },
+    {
+      "id": "bchydro-insulation",
+      "fact": "bc-pages-8-bc-hydro-insulation-rebate",
+      "name": "BC Hydro insulation rebate",
+      "when": {
+        "utility": [
+          "bchydro"
+        ],
+        "heating": [
+          "electric"
+        ]
+      },
+      "amount": {
+        "max": 5500
+      },
+      "rules": "Electrically heated home. HPCN contractor and minimum R-values. Attic pays up to $900, walls or basement up to $1,200 each.",
+      "upgrade": "insulation"
+    },
+    {
+      "id": "bchydro-windows",
+      "fact": "bc-pages-9-bc-hydro-windows-and-doors-rebate",
+      "name": "BC Hydro windows and doors rebate",
+      "when": {
+        "utility": [
+          "bchydro"
+        ],
+        "heating": [
+          "electric"
+        ],
+        "vancouver": [
+          "no"
+        ]
+      },
+      "amount": {
+        "max": 2000
+      },
+      "rules": "$100 per window or door, replacing existing units. U-factor 1.22 or better and a licensed contractor.",
+      "upgrade": "insulation"
+    },
+    {
+      "id": "bchydro-solar",
+      "fact": "bc-pages-11-bc-hydro-solar-rebate",
+      "name": "BC Hydro solar rebate",
+      "when": {
+        "utility": [
+          "bchydro"
+        ]
+      },
+      "amount": {
+        "max": 5000
+      },
+      "rules": "$1,000 per kW, up to half the install cost. Get technical acceptance from BC Hydro before you install.",
+      "upgrade": "solar"
+    },
+    {
+      "id": "bchydro-battery",
+      "fact": "bc-pages-12-bc-hydro-battery-rebate",
+      "name": "BC Hydro battery rebate",
+      "when": {
+        "utility": [
+          "bchydro"
+        ]
+      },
+      "amount": {
+        "max": 5000
+      },
+      "rules": "$500 per kWh, up to half the cost. Up to $5,000 if you join Peak Saver within 14 days of install; $1,500 with solar and no Peak Saver. Not for Tesla.",
+      "upgrade": "battery"
+    },
+    {
+      "id": "bchydro-ev",
+      "fact": "bc-pages-13-bc-hydro-ev-charger-rebate",
+      "name": "BC Hydro EV charger rebate",
+      "when": {
+        "utility": [
+          "bchydro"
+        ]
+      },
+      "amount": {
+        "max": 550
+      },
+      "rules": "Half the cost up to $350, plus $200 for a power-management device. Single-family, row home or duplex. Not for Tesla chargers.",
+      "upgrade": "ev"
+    },
+    {
+      "id": "bchydro-ev-local",
+      "fact": "bc-blog-15-bc-hydro-ev-charger-local-top-ups",
+      "name": "Local EV charger top-up",
+      "requires": "bchydro-ev",
+      "when": {
+        "city": [
+          "kamloops",
+          "squamish"
+        ]
+      },
+      "amount": {
+        "max": 150
+      },
+      "rules": "Added automatically for Kamloops and Squamish homes.",
+      "upgrade": "ev"
+    },
+    {
+      "id": "bchydro-thermostats",
+      "fact": "bc-pages-15-free-smart-thermostats-bc-hydro-province",
+      "name": "Free smart thermostats",
+      "when": {
+        "utility": [
+          "bchydro"
+        ],
+        "heating": [
+          "electric"
+        ]
+      },
+      "amount": {
+        "max": 0,
+        "label": "Free, up to 5"
+      },
+      "rules": "For baseboard-heated homes enrolled in Peak Saver. Starts in October 2026.",
+      "upgrade": "thermostat"
+    },
+    {
+      "id": "fed-hp",
+      "fact": "federal-0-national-heat-pump-rebate",
+      "name": "National Heat Pump Rebate (federal, not open yet)",
+      "upgrade": "heat-pump",
+      "amount": {
+        "label": "Up to $10,000 or $2,000",
+        "max": 0
+      },
+      "rules": "Announced October 8, 2026 and expected to launch in early 2027. $10,000 is for households below the median income and $2,000 for other eligible homeowners. The income line and eligible homes are not published, so this is shown but not added to your total."
+    }
   ],
-  [
-   "How much does CleanBC pay to switch from gas, oil or propane?",
-   "Up to $13,000 at Level 1, $7,000 at Level 2 and $3,500 at Level 3 for a central ducted or 3+ head heat pump. Homes north of 100 Mile House with BC Hydro electricity can add up to $3,000 at Levels 1 and 2."
+  "closed_facts": [
+    "general-7-canada-greener-homes-grant-loan"
   ],
-  [
-   "Can I use BC Hydro rebates if FortisBC supplies my electricity?",
-   "No. FortisBC electric customers use FortisBC rebates, which pay up to $4,000 for a heat pump replacing electric heat. Kelowna and Penticton electricity is not BC Hydro."
+  "notes": [
+    "Peak Saver pays bill credits ($500 one time for a battery, then about $250 each winter). They are not rebates, so they are not in the total.",
+    "Where two offers cover the same upgrade, we count the larger one. Ask the program if you can combine them.",
+    "Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."
   ],
-  [
-   "Does the calculator include the federal Greener Homes grant?",
-   "No. The Canada Greener Homes grant and loan have closed, so we do not count them."
-  ]
- ],
- "upgrades": [
-  {
-   "id": "heat-pump",
-   "label": "Heat pump"
-  },
-  {
-   "id": "water-heater",
-   "label": "Heat pump water heater"
-  },
-  {
-   "id": "insulation",
-   "label": "Insulation or windows"
-  },
-  {
-   "id": "solar",
-   "label": "Solar panels"
-  },
-  {
-   "id": "battery",
-   "label": "Home battery"
-  },
-  {
-   "id": "ev",
-   "label": "EV charger"
-  },
-  {
-   "id": "thermostat",
-   "label": "Smart thermostats"
-  }
- ],
- "installers_dir": "bc",
- "city_page": "ca/bc/{c}"
+  "title": "BC Rebate Calculator 2026: Heat Pump, Solar, Battery and More",
+  "h1": "BC Rebate Calculator 2026: What Can You Get for Your Home?",
+  "desc": "Free BC rebate calculator. Pick your city, heating and income to see BC Hydro, FortisBC and CleanBC rebates you can claim, with the official source for every amount.",
+  "short": "A BC home can get up to $4,000 from BC Hydro for a heat pump that replaces electric heat, and income-qualified households can get up to $13,000 from CleanBC to switch from gas, oil or propane. Your amount depends on your city, what heats your home now and your household income.",
+  "faq": [
+    [
+      "Can I get a rebate in BC if I replace electric baseboards with a heat pump?",
+      "Yes. BC Hydro pays up to $4,000 when the heat pump covers all of your heating at -5°C, or $1,500 when it covers at least half. You need a BC Hydro electric account, an HPCN installer and an eligible model. Income Level 1 households can get up to $5,000 from CleanBC instead."
+    ],
+    [
+      "What are the CleanBC income limits for 2026?",
+      "For a household of four, combined income before tax must be at most $94,900 for Level 1, $118,600 for Level 2 or $189,800 for Level 3. Limits change with household size, and the calculator checks them for you."
+    ],
+    [
+      "How much does CleanBC pay to switch from gas, oil or propane?",
+      "Up to $13,000 at Level 1, $7,000 at Level 2 and $3,500 at Level 3 for a central ducted or 3+ head heat pump. Homes north of 100 Mile House with BC Hydro electricity can add up to $3,000 at Levels 1 and 2."
+    ],
+    [
+      "Can I use BC Hydro rebates if FortisBC supplies my electricity?",
+      "No. FortisBC electric customers use FortisBC rebates, which pay up to $4,000 for a heat pump replacing electric heat. Kelowna and Penticton electricity is not BC Hydro."
+    ],
+    [
+      "Does the calculator include the federal Greener Homes grant?",
+      "No. The Canada Greener Homes grant and loan have closed, so we do not count them."
+    ]
+  ],
+  "upgrades": [
+    {
+      "id": "heat-pump",
+      "label": "Heat pump"
+    },
+    {
+      "id": "water-heater",
+      "label": "Heat pump water heater"
+    },
+    {
+      "id": "insulation",
+      "label": "Insulation or windows"
+    },
+    {
+      "id": "solar",
+      "label": "Solar panels"
+    },
+    {
+      "id": "battery",
+      "label": "Home battery"
+    },
+    {
+      "id": "ev",
+      "label": "EV charger"
+    },
+    {
+      "id": "thermostat",
+      "label": "Smart thermostats"
+    }
+  ],
+  "installers_dir": "bc",
+  "city_page": "ca/bc/{c}"
 }

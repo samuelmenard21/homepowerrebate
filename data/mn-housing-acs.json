@@ -1,0 +1,81 @@
+{
+ "_source": {
+  "dataset": "US Census Bureau, American Community Survey 5-year estimates 2020-2024",
+  "tables": {
+   "B25001": "Housing Units",
+   "B25003": "Tenure",
+   "B25024": "Units in Structure",
+   "B25034": "Year Structure Built",
+   "B25040": "House Heating Fuel"
+  },
+  "api": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B25001,B25003,B25024,B25034,B25040&geo_ids=16000US2743000,16000US2758000,16000US2754880,16000US2717000",
+  "via": "Census Reporter API (republishes Census Bureau ACS tables)",
+  "table_url": "https://data.census.gov/table/ACSDT5Y2024.B25040"
+ },
+ "cities": {
+  "minneapolis": {
+   "name": "Minneapolis, MN",
+   "housing_units": 209080,
+   "occupied_units": 192734,
+   "pct_owner": 47.7,
+   "pct_renter": 52.3,
+   "pct_single_detached": 40.2,
+   "pct_two_to_four_units": 11.7,
+   "pct_built_before_1980": 72.2,
+   "pct_built_1939_earlier": 42.8,
+   "pct_built_2000_later": 17.6,
+   "pct_heat_utility_gas": 70.3,
+   "pct_heat_bottled_gas": 1.8,
+   "pct_heat_electricity": 25.0,
+   "pct_heat_fuel_oil": 0.3
+  },
+  "saint-paul": {
+   "name": "St. Paul, MN",
+   "housing_units": 133051,
+   "occupied_units": 125249,
+   "pct_owner": 52.9,
+   "pct_renter": 47.1,
+   "pct_single_detached": 48.5,
+   "pct_two_to_four_units": 10.4,
+   "pct_built_before_1980": 77.6,
+   "pct_built_1939_earlier": 41.6,
+   "pct_built_2000_later": 11.4,
+   "pct_heat_utility_gas": 66.9,
+   "pct_heat_bottled_gas": 1.4,
+   "pct_heat_electricity": 28.5,
+   "pct_heat_fuel_oil": 0.4
+  },
+  "rochester": {
+   "name": "Rochester, MN",
+   "housing_units": 54492,
+   "occupied_units": 51131,
+   "pct_owner": 65.1,
+   "pct_renter": 34.9,
+   "pct_single_detached": 58.5,
+   "pct_two_to_four_units": 7.0,
+   "pct_built_before_1980": 40.8,
+   "pct_built_1939_earlier": 7.7,
+   "pct_built_2000_later": 35.1,
+   "pct_heat_utility_gas": 75.4,
+   "pct_heat_bottled_gas": 1.8,
+   "pct_heat_electricity": 20.8,
+   "pct_heat_fuel_oil": 0.1
+  },
+  "duluth": {
+   "name": "Duluth, MN",
+   "housing_units": 39978,
+   "occupied_units": 37447,
+   "pct_owner": 59.4,
+   "pct_renter": 40.6,
+   "pct_single_detached": 59.6,
+   "pct_two_to_four_units": 13.4,
+   "pct_built_before_1980": 77.8,
+   "pct_built_1939_earlier": 42.8,
+   "pct_built_2000_later": 12.3,
+   "pct_heat_utility_gas": 71.8,
+   "pct_heat_bottled_gas": 2.9,
+   "pct_heat_electricity": 18.5,
+   "pct_heat_fuel_oil": 3.9
+  }
+ }
+}

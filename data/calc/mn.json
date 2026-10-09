@@ -1,0 +1,400 @@
+{
+ "code": "mn",
+ "name": "Minnesota",
+ "country": "us",
+ "currency": "USD",
+ "hub": "/us/mn/",
+ "installers": "/installers/",
+ "title": "Minnesota Rebate Calculator 2026: Xcel, CenterPoint, Minnesota Power and Rochester",
+ "h1": "Minnesota Rebate Calculator 2026: What Your Utilities Pay for Your Home",
+ "desc": "Free Minnesota rebate calculator. See heat pump, water heater, insulation, panel and thermostat rebates from Xcel Energy, CenterPoint Energy, Minnesota Power, Rochester Public Utilities and Minneapolis.",
+ "intro": "Tell us which companies send your bills and see the rebates that fit your home, with a source for every number.",
+ "short": "Minnesota rebates come from your gas and electric companies. CenterPoint pays $1,100 for a hybrid heat pump, Minnesota Power pays $1,000 for a cold-climate heat pump, Rochester Public Utilities pays up to $2,200, Xcel Energy pays up to $3,000 for insulation, and Minneapolis adds up to $5,000. The state's federal rebates have not launched, so they are not counted.",
+ "faq": [
+  [
+   "Which rebates does the calculator add up?",
+   "Only rebates that are open and that we confirmed on the program's own page. Xcel's heat pump and thermostat amounts are shown but not counted, because we could not confirm them on a current page."
+  ],
+  [
+   "Why does it ask who sends my gas and electric bills?",
+   "Minnesota has no single statewide utility rebate. Each company has its own program, and some pay for different things, so the same upgrade can earn money from two companies."
+  ],
+  [
+   "Is the state HOMES or HEAR rebate included?",
+   "No. The state says that program has not launched and has no launch date."
+  ],
+  [
+   "Are federal tax credits included?",
+   "No. We could not confirm that any federal home credit is open for 2026 installs."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "city",
+   "label": "Which city is closest to your home?",
+   "type": "select",
+   "optional": true,
+   "help": "Minneapolis homes can also use the city rebate.",
+   "options": [
+    {
+     "value": "minneapolis",
+     "label": "Minneapolis"
+    },
+    {
+     "value": "saint-paul",
+     "label": "Saint Paul"
+    },
+    {
+     "value": "rochester",
+     "label": "Rochester"
+    },
+    {
+     "value": "duluth",
+     "label": "Duluth"
+    }
+   ]
+  },
+  {
+   "id": "electric",
+   "label": "Who sends your electric bill?",
+   "type": "select",
+   "options": [
+    {
+     "value": "xcel",
+     "label": "Xcel Energy"
+    },
+    {
+     "value": "mnpower",
+     "label": "Minnesota Power"
+    },
+    {
+     "value": "rpu",
+     "label": "Rochester Public Utilities"
+    },
+    {
+     "value": "other",
+     "label": "Another company or co-op"
+    }
+   ]
+  },
+  {
+   "id": "gas",
+   "label": "Who sends your natural gas bill?",
+   "type": "select",
+   "options": [
+    {
+     "value": "xcel",
+     "label": "Xcel Energy"
+    },
+    {
+     "value": "centerpoint",
+     "label": "CenterPoint Energy"
+    },
+    {
+     "value": "other",
+     "label": "Another company, or no gas"
+    }
+   ]
+  }
+ ],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump and panel"
+  },
+  {
+   "id": "water-heater",
+   "label": "Water heater"
+  },
+  {
+   "id": "insulation",
+   "label": "Insulation and air sealing"
+  },
+  {
+   "id": "thermostat",
+   "label": "Smart thermostat"
+  }
+ ],
+ "programs": [
+  {
+   "id": "xcel-hp",
+   "fact": "mn-0-xcel-energy-cold-climate-heat-pump",
+   "name": "Xcel Energy cold-climate heat pump",
+   "upgrade": "heat-pump",
+   "when_any": [
+    {
+     "electric": [
+      "xcel"
+     ]
+    },
+    {
+     "gas": [
+      "xcel"
+     ]
+    }
+   ],
+   "amount": {
+    "max": 0,
+    "label": "Likely $1,500 to $2,000 (confirm on your quote)"
+   },
+   "rules": "Xcel's live page shows no amount. Its 2024 to 2026 rebate sheet lists $2,000 with Xcel gas and $1,500 with Xcel electric only. Participating contractor. Work invoiced by December 31, 2026."
+  },
+  {
+   "id": "cnp-hybrid",
+   "fact": "mn-14-centerpoint-minnesota-ducted-heat-pump",
+   "name": "CenterPoint hybrid heat pump",
+   "upgrade": "heat-pump",
+   "when": {
+    "gas": [
+     "centerpoint"
+    ]
+   },
+   "amount": {
+    "max": 1100
+   },
+   "rules": "Ducted heat pump added to a home with a gas furnace rated 92 percent or better. $400 in new construction."
+  },
+  {
+   "id": "mp-hp",
+   "fact": "mn-19-minnesota-power-air-source-heat-pump",
+   "name": "Minnesota Power cold-climate heat pump",
+   "upgrade": "heat-pump",
+   "when": {
+    "electric": [
+     "mnpower"
+    ]
+   },
+   "amount": {
+    "max": 1000
+   },
+   "rules": "$1,000 for a cold-climate ducted or ductless system, $400 for a standard one. Participating contractor."
+  },
+  {
+   "id": "rpu-hp",
+   "fact": "mn-25-rpu-air-source-heat-pump-schedule",
+   "name": "Rochester Public Utilities heat pump",
+   "upgrade": "heat-pump",
+   "when": {
+    "electric": [
+     "rpu"
+    ]
+   },
+   "amount": {
+    "max": 2200
+   },
+   "rules": "Up to $2,200 for a large cold-climate unit that replaces working electric heat. $100 to $200 when replacing gas. Not more than half of the equipment cost."
+  },
+  {
+   "id": "mpls-city",
+   "fact": "mn-29-minneapolis-green-cost-share",
+   "name": "Minneapolis Green Cost Share",
+   "upgrade": "heat-pump",
+   "when": {
+    "city": [
+     "minneapolis"
+    ]
+   },
+   "amount": {
+    "max": 5000
+   },
+   "rules": "Up to $5,000 for all projects together, or up to $14,000 in a Green Zone. Single-family homes and buildings of up to four units inside Minneapolis."
+  },
+  {
+   "id": "xcel-panel",
+   "fact": "mn-8-xcel-energy-panel-upgrade",
+   "name": "Xcel Energy electric panel upgrade",
+   "upgrade": "heat-pump",
+   "when": {
+    "electric": [
+     "xcel"
+    ]
+   },
+   "amount": {
+    "max": 1500
+   },
+   "rules": "Covers the full project cost up to $1,500. The new panel must have more amps than the old one."
+  },
+  {
+   "id": "xcel-hpwh",
+   "fact": "mn-4-xcel-energy-heat-pump-water-heater",
+   "name": "Xcel Energy heat pump water heater",
+   "upgrade": "water-heater",
+   "when": {
+    "electric": [
+     "xcel"
+    ]
+   },
+   "amount": {
+    "max": 500
+   },
+   "rules": "$400, or $500 for a smart model that can join demand management. Not for units over 80 gallons."
+  },
+  {
+   "id": "xcel-gas-wh",
+   "fact": "mn-5-xcel-energy-gas-water-heater",
+   "name": "Xcel Energy gas water heater",
+   "upgrade": "water-heater",
+   "when": {
+    "gas": [
+     "xcel"
+    ]
+   },
+   "amount": {
+    "max": 250
+   },
+   "rules": "$75 for a tank, $250 for a tankless unit."
+  },
+  {
+   "id": "cnp-wh",
+   "fact": "mn-16-centerpoint-minnesota-water-heater",
+   "name": "CenterPoint gas water heater",
+   "upgrade": "water-heater",
+   "when": {
+    "gas": [
+     "centerpoint"
+    ]
+   },
+   "amount": {
+    "max": 1000
+   },
+   "rules": "Tank $250, tankless $500, combination unit $1,000, indirect tank $200."
+  },
+  {
+   "id": "mp-hpwh",
+   "fact": "mn-21-minnesota-power-heat-pump-water-heater",
+   "name": "Minnesota Power heat pump water heater",
+   "upgrade": "water-heater",
+   "when": {
+    "electric": [
+     "mnpower"
+    ]
+   },
+   "amount": {
+    "max": 300
+   },
+   "rules": "ENERGY STAR certified model bought in 2026."
+  },
+  {
+   "id": "rpu-hpwh",
+   "fact": "mn-26-rpu-heat-pump-water-heater",
+   "name": "Rochester Public Utilities heat pump water heater",
+   "upgrade": "water-heater",
+   "when": {
+    "electric": [
+     "rpu"
+    ]
+   },
+   "amount": {
+    "max": 400
+   },
+   "rules": "20 to 55 gallon ENERGY STAR model. Not more than half of the cost."
+  },
+  {
+   "id": "xcel-ins",
+   "fact": "mn-7-xcel-energy-insulation-air-sealing",
+   "name": "Xcel Energy insulation and air sealing",
+   "upgrade": "insulation",
+   "when_any": [
+    {
+     "electric": [
+      "xcel"
+     ]
+    },
+    {
+     "gas": [
+      "xcel"
+     ]
+    }
+   ],
+   "amount": {
+    "max": 3000
+   },
+   "rules": "40 percent of cost: air sealing up to $600, attic up to $1,200, walls up to $1,200. Participating contractor and blower door tests."
+  },
+  {
+   "id": "cnp-ins",
+   "fact": "mn-15-centerpoint-minnesota-air-sealing-insulation",
+   "name": "CenterPoint air sealing and insulation",
+   "upgrade": "insulation",
+   "when": {
+    "gas": [
+     "centerpoint"
+    ]
+   },
+   "amount": {
+    "max": 3000
+   },
+   "rules": "Air sealing $750, with attic insulation $1,300, wall insulation $1,500, rim joist $200 as an add-on. Insulation alone earns nothing."
+  },
+  {
+   "id": "xcel-t",
+   "fact": "mn-9-xcel-energy-smart-thermostat",
+   "name": "Xcel Energy smart thermostat",
+   "upgrade": "thermostat",
+   "when": {
+    "electric": [
+     "xcel"
+    ]
+   },
+   "amount": {
+    "max": 0,
+    "label": "Likely $50 (confirm)"
+   },
+   "rules": "For electric customers with central air conditioning. Xcel's page shows no amount, so we do not count it."
+  },
+  {
+   "id": "cnp-t",
+   "fact": "mn-17-centerpoint-minnesota-thermostat",
+   "name": "CenterPoint thermostat",
+   "upgrade": "thermostat",
+   "when": {
+    "gas": [
+     "centerpoint"
+    ]
+   },
+   "amount": {
+    "max": 50
+   },
+   "rules": "$50 for a smart or Wi-Fi model, $10 for a basic programmable one."
+  },
+  {
+   "id": "mp-t",
+   "fact": "mn-22-minnesota-power-smart-thermostat",
+   "name": "Minnesota Power smart thermostat",
+   "upgrade": "thermostat",
+   "when": {
+    "electric": [
+     "mnpower"
+    ]
+   },
+   "amount": {
+    "max": 50
+   },
+   "rules": "Low-voltage Wi-Fi model where electricity is the main heat."
+  },
+  {
+   "id": "rpu-t",
+   "fact": "mn-27-rpu-smart-thermostat",
+   "name": "Rochester Public Utilities smart thermostat",
+   "upgrade": "thermostat",
+   "when": {
+    "electric": [
+     "rpu"
+    ]
+   },
+   "amount": {
+    "max": 100
+   },
+   "rules": "Half the price, up to $100 with electric heat, $50 with a heat pump, $10 with gas."
+  }
+ ],
+ "closed_facts": [
+  "mn-30-save-energy-minnesota-hear-homes"
+ ],
+ "notes": [
+  "Xcel Energy's heat pump and thermostat amounts could not be confirmed on a current page, so they are shown but never added to your total.",
+  "Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice. Solar is not included: Xcel's Solar*Rewards pays per kilowatt hour and we could not confirm its budget."
+ ],
+ "installers_dir": "mn",
+ "city_page": "us/mn/{c}"
+}

@@ -155,6 +155,7 @@ section.body li{margin-bottom:7px}
 section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;text-decoration-color:var(--amber);text-underline-offset:2px}
 .callout{background:var(--paper-warm);border:1px solid var(--rule);border-left:4px solid var(--green-money);border-radius:8px;padding:16px 18px;margin:4px 0 22px}
 .callout p{margin:0}
+.faq-item{border-top:1px solid var(--rule);padding:14px 0}.faq-item h3{font-size:18px;margin:0 0 6px}.faq-item p{margin:0}
 .rank-list{list-style:none;margin:0 0 10px!important;padding:0}
 .rank{background:#fff;border:1px solid var(--rule);border-radius:14px;padding:16px 16px 14px;margin-bottom:12px!important;display:grid;grid-template-columns:36px 1fr;gap:6px 12px;box-shadow:0 1px 2px rgba(10,42,46,.04)}
 .rank.top{border-left:4px solid var(--green-money)}
@@ -419,6 +420,73 @@ def cost_box(region, service, city_label, hub):
     return f'<h2>What a {SERVICES[service]["lower"]} costs in {esc(city_label)}</h2><div class="cb">{"".join(rows)}</div>{src}'
 
 
+def _plain(s):
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", s))).strip()
+
+
+def faq_items(region, service, city_label, hub, ranked, n, total_reviews, avg, most_reviewed, upd_h, top_line, reg_used, reg_count):
+    """Visible FAQ (and FAQPage markup) for a ranking page. Every answer is built from this page's own data."""
+    svc = SERVICES[service]
+    low = svc["lower"]
+    plural = {"heat-pump": "heat pumps", "solar": "solar panels", "battery": "home batteries", "insulation": "insulation"}[service]
+    art = "an" if low[0] in "aeiou" else "a"
+    items = [(f"Who is the best {low} installer in {city_label}?",
+              f"Based on Google reviews, the top-rated {low} installers in {city_label} are {top_line}. "
+              f"We rank by a review-weighted score, so companies with many strong reviews rank above those with only a few.")]
+    items.append((f"How are the {low} installers in {city_label} ranked?",
+                  f"We list {n} {low} {'company' if n == 1 else 'companies'} in {city_label}, ranked by Google rating weighted by review count. "
+                  f"Together they have {total_reviews:,} Google reviews and average {avg:.1f} stars, collected {upd_h}. "
+                  f"{most_reviewed['name']} has the most reviews ({most_reviewed['reviews']:,}). No company pays to be listed or ranked."))
+    # cost and rebates (same logic and sources as the cost box on the page)
+    us = REGIONS[region][0] == "us"
+    price = (US_HP_COST if us else CA_HP_COST) if service == "heat-pump" else (US_SOLAR_COST if us and service == "solar" else None)
+    if price:
+        cost_a = (f"For {_plain(price[1])}, the installed price is typically {price[0]}, according to {_plain(price[2])}. "
+                  f"Your home may cost more or less, so get at least two quotes for the same work.")
+    elif service == "insulation":
+        cost_a = ("Insulation prices depend on which areas you insulate (attic, walls, basement) and how much air sealing is needed. "
+                  "Ask each company for a price per area and the R-value you end up with, so quotes are easy to compare.")
+    elif service == "battery":
+        cost_a = ("Battery prices depend on the brand, how much storage you want, and whether you need a panel upgrade. "
+                  "Ask for the price per usable kWh so quotes are easy to compare.")
+    else:
+        cost_a = ("Canada has no public solar price survey, so we do not quote a typical price. Get two or three quotes for the same size "
+                  "system and compare the price per watt.")
+    cost_q = {"heat-pump": "a heat pump installation", "solar": "solar installation", "battery": "a home battery installation", "insulation": "insulation"}[service]
+    items.append((f"How much does {cost_q} cost in {city_label}?", cost_a))
+    city = PS_CITIES.get(hub["url"]) if hub else None
+    cats = {"heat-pump": ["heat-pump"], "solar": ["solar", "battery"], "insulation": ["insulation"], "battery": ["battery"]}[service]
+    names = {"heat-pump": "heat pump", "solar": "solar", "battery": "battery", "insulation": "insulation"}
+    reb = [(c, d["dollar_value"]) for c in cats
+           for d in [((city or {}).get("categories", {}) or {}).get(c)] if d and d.get("status") == "open" and d.get("dollar_value")]
+    if reb:
+        parts = ", ".join(f"{names[c]} rebates up to ${v:,.0f}" for c, v in reb)
+        reb_a = (f"Yes. Our verified program data shows {parts} open in {city_label}. Most rebates have rules, such as income, your current "
+                 f"heating, a registered contractor, or approval before work starts, so check the rebate page before you sign.")
+    else:
+        reb_a = (f"We have no confirmed open {low} rebate for {city_label} right now. Financing or future programs may still help, "
+                 f"so check the rebate page before you sign.")
+    items.append((f"Are there rebates for {plural} in {city_label}?", reb_a))
+    if reg_count:
+        progs = " and ".join(sorted(p["name"] for p in reg_used.values()))
+        items.append((f"Do I need a registered contractor to get the {low} rebate?",
+                      f"Most rebate programs require one. {reg_count} of the {n} {low} companies listed here appear on the official contractor list for {progs}. "
+                      f"Confirm that your installer is registered before you sign."))
+    # city climate or sun data
+    sec = climate_section(region, service, city_label)
+    ps = re.findall(r"<p>(.*?)</p>", sec, re.S)
+    if sec and ps:
+        if service == "heat-pump":
+            items.append((f"Is {city_label} too cold for a heat pump?", _plain(ps[0])))
+        elif service == "insulation":
+            items.append((f"Is insulation worth it in {city_label}?", _plain(" ".join(ps[:2]))))
+        elif service == "solar":
+            items.append((f"How much power do solar panels make in {city_label}?", _plain(ps[0])))
+    tips = hire_tips(region, service)
+    items.append((f"What should I ask {art} {low} installer before I hire?", " ".join(_plain(x) for x in tips[:3])))
+    return items
+
+
 def best_for(ranked, other_names):
     """Up to 2 data-backed labels per company: most reviews, top rating (50+ reviews), does both services."""
     labels = {}
@@ -514,11 +582,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 
     vet_line = ('<p>Full checklist: <a href="/guides/installer-vetting-checklist/">how to vet an HPCN installer in BC</a>.</p>'
                 if region == "bc" and service == "heat-pump" else "")
-    faqs = [
-        (f"Who is the best {svc['lower']} installer in {city_label}?",
-         f"Based on Google reviews, the top-rated {svc['lower']} installers in {city_label} are {top_line}. "
-         f"We rank by a review-weighted score, so companies with many strong reviews rank above those with only a few."),
-    ]
+    faqs = faq_items(region, service, city_label, hub, ranked, n, total_reviews, avg, most_reviewed, upd_h, top_line, reg_used, reg_count)
 
     crumbs = [("Home", "/"), ("Installers", "/installers/")]
     if city_hub_url:
@@ -537,6 +601,10 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
               **({"url": BASE + profile_url(region, r["city"], r["name"])} if profile_url(region, r["city"], r["name"]) else {})}
              for i, r in enumerate(ranked, 1)]},
     ]
+    ld.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faqs]})
+    faq_html = (f'<h2 id="faq">Questions about {svc["lower"]} installers in {esc(city_label)}</h2><div class="faq">'
+                + "".join(f'<div class="faq-item"><h3>{esc(q)}</h3><p>{esc(a)}</p></div>' for q, a in faqs) + "</div>")
     ld_html = "\n".join(f'<script type="application/ld+json">\n{json.dumps(o, ensure_ascii=False, indent=1)}\n</script>' for o in ld)
 
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol>{crumb_html}</ol></nav>
@@ -573,6 +641,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 {chr(10).join('<li>' + esc(t) + '</li>' for t in hire_tips(region, service))}
 </ol>
 {vet_line}
+{faq_html}
 {rebate_line}
 {other_line}
 

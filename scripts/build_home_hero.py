@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_get_quotes import REG, OV  # noqa: E402
+from build_get_quotes import REG, OV, city_slugs  # noqa: E402
 
 S, E = "<!-- HOME-HERO-START -->", "<!-- HOME-HERO-END -->"
 
@@ -32,8 +32,7 @@ def main():
     s = f.read_text(encoding="utf-8")
     data = []
     for code, name, prov, _ in REG:
-        base = ROOT / "installers" / code
-        cities = sorted(p.name for p in base.iterdir() if p.is_dir()) if base.exists() else []
+        cities = city_slugs(code)
         data.append({"c": code, "n": name, "k": [[c, OV.get(c, c.replace("-", " ").title())] for c in cities]})
     if S in s:
         a = s.index('<div class="quick-answer">', s.index(S))

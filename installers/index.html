@@ -2497,40 +2497,37 @@ function citySlug(city) {
   return city.toLowerCase().replace(/ /g, '-').replace(/\./g, '');
 }
 
-async function loadInstallers() {
-  try {
-    // Load every city's installer JSON — BC files live at /installers/json/,
-    // Ontario's at /installers/json/on/ (province-prefixed, mirrors the
-    // /installers/profiles/on/ URL split for the profile pages themselves).
-    const provinces = REGIONS.filter(r => r.ready);
+// Installer JSON is fetched per region, only when a visitor picks that region (about 50 small files at most),
+// instead of every region up front (over 230 requests). Results are cached for the page visit.
+const loadedRegions = new Set();
 
-    for (const prov of provinces) {
-      const heatPumpPromises = prov.cities.map(city =>
-        fetch(`${prov.jsonBase}/${citySlug(city)}.json`).then(r => r.json()).catch(() => []));
-      const solarPromises = prov.cities.map(city =>
-        fetch(`${prov.jsonBase}/solar/${citySlug(city)}.json`).then(r => r.json()).catch(() => []));
+async function loadRegion(code) {
+  if (loadedRegions.has(code)) return;
+  const prov = REGIONS.find(r => r.code === code && r.ready);
+  if (!prov) return;
+  // BC files live at /installers/json/, other regions at /installers/json/<region>/ (mirrors the profile URL split).
+  const heatPumpPromises = prov.cities.map(city =>
+    fetch(`${prov.jsonBase}/${citySlug(city)}.json`).then(r => r.json()).catch(() => []));
+  const solarPromises = prov.cities.map(city =>
+    fetch(`${prov.jsonBase}/solar/${citySlug(city)}.json`).then(r => r.json()).catch(() => []));
+  const [heatPumpResults, solarResults] = await Promise.all([Promise.all(heatPumpPromises), Promise.all(solarPromises)]);
+  const seen = new Set();
+  prov.cities.forEach((city, idx) => {
+    const slug = citySlug(city);
+    [...(heatPumpResults[idx] || []), ...(solarResults[idx] || [])].forEach(installer => {
+      const key = `${prov.code}-${installer.name}-${city}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        allInstallers.push({ ...installer, city, slug, region: prov.code });
+      }
+    });
+  });
+  loadedRegions.add(code);
+}
 
-      const heatPumpResults = await Promise.all(heatPumpPromises);
-      const solarResults = await Promise.all(solarPromises);
-
-      const seen = new Set();
-      prov.cities.forEach((city, idx) => {
-        const slug = citySlug(city);
-        [...(heatPumpResults[idx] || []), ...(solarResults[idx] || [])].forEach(installer => {
-          const key = `${prov.code}-${installer.name}-${city}`;
-          if (!seen.has(key)) {
-            seen.add(key);
-            allInstallers.push({ ...installer, city, slug, region: prov.code });
-          }
-        });
-      });
-    }
-
-    renderRegionGrid();
-    render();
-  } catch (error) {
-    console.error('Failed to load installers:', error);
-  }
+function loadInstallers() {
+  renderRegionGrid();
+  render();
 }
 
 function renderRegionGrid() {
@@ -2546,7 +2543,7 @@ function renderRegionGrid() {
 
   container.querySelectorAll('.region-card').forEach(btn => {
     if (btn.disabled) return;
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       const code = btn.dataset.region;
       currentRegion = code;
       currentCity = 'all';
@@ -2555,6 +2552,14 @@ function renderRegionGrid() {
       document.getElementById('city-select-section').style.display = 'block';
       renderCityTabs();
       renderProgramFilters();
+      if (!loadedRegions.has(code)) {
+        const es = document.getElementById('empty-state');
+        document.getElementById('installers-container').innerHTML = '';
+        es.querySelector('p').textContent = 'Loading installers...';
+        es.style.display = 'block';
+        await loadRegion(code);
+        if (currentRegion !== code) return;
+      }
       render();
     });
   });

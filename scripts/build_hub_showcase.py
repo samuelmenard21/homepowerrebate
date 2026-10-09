@@ -11,6 +11,9 @@ import json
 import re
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
 D = json.loads((ROOT / "powerscore-data.json").read_text())
 LABELS = D["category_labels"]
@@ -19,13 +22,9 @@ ICON = {"heat-pump": "🔥", "insulation": "🌡️", "solar": "☀️", "batter
         "smart-thermostats": "🎛️", "ev-charger": "🚗", "windows-doors": "🪟"}
 e = html.escape
 
-HUBS = ["ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt", "us/mi"]
-PROGRAMS = {"ca/bc": [("bc-hydro-rebates", "BC Hydro rebates"), ("cleanbc-rebates", "CleanBC rebates"), ("bc-hydro-peak-saver", "Peak Saver")],
-            "ca/on": [("home-renovation-savings", "Home Renovation Savings")], "ca/ab": [("alberta-energy-rebates", "Alberta rebates guide")],
-            "ca/ns": [("efficiency-nova-scotia", "Efficiency Nova Scotia")], "us/ma": [("mass-save", "Mass Save")],
-            "us/ny": [("nys-clean-heat", "NYS Clean Heat")], "us/pa": [("peco-rebates", "PECO rebates"), ("ppl-electric-rebates", "PPL Electric rebates")],
-            "us/co": [("xcel-energy-colorado-rebates", "Xcel Energy rebates")], "us/ca": [], "us/vt": [], "us/mi": [("dte-energy-rebates", "DTE Energy rebates"), ("consumers-energy-rebates", "Consumers Energy rebates")]}
-VERIFIED = {"ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/vt", "us/mi"}
+HUBS = regions.HUBS
+PROGRAMS = regions.PROGRAMS
+VERIFIED = regions.VERIFIED
 
 
 def money(v, country):

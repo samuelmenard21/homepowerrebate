@@ -9,6 +9,9 @@ import html
 import json
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
 DATA = json.loads((ROOT / "powerscore-data.json").read_text())
 
@@ -109,8 +112,7 @@ def gauge_style(score):
 
 
 # ---------- data reliability ----------
-VERIFIED_FILES = {"ca/bc": ["bc-pages", "bc-blog"], "ca/on": ["on"], "ca/ab": ["ab"], "ca/ns": ["ns"], "us/ma": ["ma"],
-                  "us/ny": ["ny"], "us/ca": ["us-ca"], "us/vt": ["vt"]}
+VERIFIED_FILES = regions.FACTS_FILES
 
 
 def region_verified(reg):
@@ -929,5 +931,6 @@ function showCategory(cat) {{
 '''
 
 out_path = ROOT / "powerscore" / "index.html"
+page = re.sub(r"const regions = \[[^\]]*\];", "const regions = " + regions.codes_js() + ";", page)
 out_path.write_text(page)
 print(f"Wrote {out_path} ({len(page):,} bytes)")

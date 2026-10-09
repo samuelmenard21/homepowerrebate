@@ -9,6 +9,9 @@ import re
 import sys
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 from apply_canonical_nav_footer import content_insert_point  # noqa: E402
@@ -252,7 +255,7 @@ def greener_section():
     return 0
 
 
-HUB_INDEXES = {f"{r}/index.html" for r in ("ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt", "us/mi")}
+HUB_INDEXES = {f"{r}/index.html" for r in regions.HUBS}
 HUB_SKIP = {"NET-METERING-LINK", "GREENER-LINK", "INSULATION-HUB-LINK", "BCH-REBATES-LINK"}  # these live in the hub "Explore more" row now
 
 

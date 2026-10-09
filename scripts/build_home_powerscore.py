@@ -6,10 +6,13 @@ import json
 import re
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
 S, E = "<!-- POWERSCORE-SPOTLIGHT-START -->", "<!-- POWERSCORE-SPOTLIGHT-END -->"
 OLD = "<!-- POWERSCORE SPOTLIGHT -->"
-NAMES = {"ca/bc": "BC", "ca/on": "ON", "ca/ab": "AB", "ca/ns": "NS", "us/ma": "MA", "us/ny": "NY", "us/ca": "CA", "us/pa": "PA", "us/co": "CO", "us/vt": "VT", "us/mi": "MI"}
+NAMES = regions.ABBR_BY_PATH
 
 
 def card(c, first):

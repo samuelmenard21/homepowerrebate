@@ -18,6 +18,9 @@ import sys
 from datetime import date
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 from build_furnace_pages import shell, AUTHOR, BASE  # noqa: E402
@@ -191,8 +194,7 @@ def embed_page(spec, pub):
 </body></html>"""
 
 
-COMING = [("Ontario", "/ca/on/"), ("Alberta", "/ca/ab/"), ("Nova Scotia", "/ca/ns/"), ("California", "/us/ca/"), ("Colorado", "/us/co/"),
-          ("Massachusetts", "/us/ma/"), ("New York", "/us/ny/"), ("Pennsylvania", "/us/pa/"), ("Vermont", "/us/vt/"), ("Michigan", "/us/mi/")]
+COMING = [(r["name"], f"/{r['path']}/") for r in regions.REGIONS if r["code"] != "bc"]
 
 
 def picker(specs):

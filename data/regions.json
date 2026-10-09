@@ -1,0 +1,646 @@
+{
+ "_note": "Single list of launched regions. Add a region here and run scripts/apply_canonical_nav_footer.py; nav, footer, hub lists, get-quotes, feeds and checks read this file via scripts/regions.py.",
+ "regions": [
+  {
+   "code": "on",
+   "abbr": "ON",
+   "name": "Ontario",
+   "country": "ca",
+   "path": "ca/on",
+   "tab_label": "Ontario",
+   "installers_dir": "on",
+   "programs": [
+    [
+     "home-renovation-savings",
+     "Home Renovation Savings"
+    ]
+   ],
+   "hub_verified": true,
+   "calc_label": "Ontario",
+   "cities": [
+    [
+     "/ca/on/toronto/",
+     "Toronto"
+    ],
+    [
+     "/ca/on/ottawa/",
+     "Ottawa"
+    ],
+    [
+     "/ca/on/mississauga/",
+     "Mississauga"
+    ],
+    [
+     "/ca/on/brampton/",
+     "Brampton"
+    ],
+    [
+     "/ca/on/hamilton/",
+     "Hamilton"
+    ],
+    [
+     "/ca/on/markham/",
+     "Markham"
+    ],
+    [
+     "/ca/on/vaughan/",
+     "Vaughan"
+    ],
+    [
+     "/ca/on/richmond-hill/",
+     "Richmond Hill"
+    ],
+    [
+     "/ca/on/barrie/",
+     "Barrie"
+    ],
+    [
+     "/ca/on/london/",
+     "London"
+    ],
+    [
+     "/ca/on/kitchener/",
+     "Kitchener"
+    ],
+    [
+     "/ca/on/windsor/",
+     "Windsor"
+    ],
+    [
+     "/ca/on/oakville/",
+     "Oakville"
+    ],
+    [
+     "/ca/on/oshawa/",
+     "Oshawa"
+    ],
+    [
+     "/ca/on/whitby/",
+     "Whitby"
+    ],
+    [
+     "/ca/on/burlington/",
+     "Burlington"
+    ],
+    [
+     "/ca/on/cambridge/",
+     "Cambridge"
+    ],
+    [
+     "/ca/on/greater-sudbury/",
+     "Greater Sudbury"
+    ]
+   ],
+   "facts_files": [
+    "on"
+   ]
+  },
+  {
+   "code": "bc",
+   "abbr": "BC",
+   "name": "British Columbia",
+   "country": "ca",
+   "path": "ca/bc",
+   "tab_label": "British Columbia",
+   "installers_dir": "bc",
+   "programs": [
+    [
+     "bc-hydro-rebates",
+     "BC Hydro rebates"
+    ],
+    [
+     "cleanbc-rebates",
+     "CleanBC rebates"
+    ],
+    [
+     "bc-hydro-peak-saver",
+     "Peak Saver"
+    ]
+   ],
+   "hub_verified": true,
+   "calc_label": "BC",
+   "cities": [
+    [
+     "/ca/bc/abbotsford/",
+     "Abbotsford"
+    ],
+    [
+     "/ca/bc/burnaby/",
+     "Burnaby"
+    ],
+    [
+     "/ca/bc/chilliwack/",
+     "Chilliwack"
+    ],
+    [
+     "/ca/bc/coquitlam/",
+     "Coquitlam"
+    ],
+    [
+     "/ca/bc/fort-st-john/",
+     "Fort St. John"
+    ],
+    [
+     "/ca/bc/kamloops/",
+     "Kamloops"
+    ],
+    [
+     "/ca/bc/kelowna/",
+     "Kelowna"
+    ],
+    [
+     "/ca/bc/langley/",
+     "Langley"
+    ],
+    [
+     "/ca/bc/maple-ridge/",
+     "Maple Ridge"
+    ],
+    [
+     "/ca/bc/nanaimo/",
+     "Nanaimo"
+    ],
+    [
+     "/ca/bc/penticton/",
+     "Penticton"
+    ],
+    [
+     "/ca/bc/prince-george/",
+     "Prince George"
+    ],
+    [
+     "/ca/bc/richmond/",
+     "Richmond"
+    ],
+    [
+     "/ca/bc/squamish/",
+     "Squamish"
+    ],
+    [
+     "/ca/bc/surrey/",
+     "Surrey"
+    ],
+    [
+     "/ca/bc/vancouver/",
+     "Vancouver"
+    ],
+    [
+     "/ca/bc/vernon/",
+     "Vernon"
+    ],
+    [
+     "/ca/bc/victoria/",
+     "Victoria"
+    ]
+   ],
+   "facts_files": [
+    "bc-pages",
+    "bc-blog"
+   ]
+  },
+  {
+   "code": "ca",
+   "abbr": "CA",
+   "name": "California",
+   "country": "us",
+   "path": "us/ca",
+   "tab_label": "California (US)",
+   "installers_dir": "ca",
+   "programs": [],
+   "hub_verified": true,
+   "calc_label": "California",
+   "cities": [
+    [
+     "/us/ca/los-angeles/",
+     "Los Angeles"
+    ],
+    [
+     "/us/ca/sacramento/",
+     "Sacramento"
+    ],
+    [
+     "/us/ca/bay-area/",
+     "Bay Area"
+    ],
+    [
+     "/us/ca/san-diego/",
+     "San Diego"
+    ],
+    [
+     "/us/ca/inland-empire/",
+     "Inland Empire"
+    ]
+   ],
+   "facts_files": [
+    "us-ca"
+   ]
+  },
+  {
+   "code": "ab",
+   "abbr": "AB",
+   "name": "Alberta",
+   "country": "ca",
+   "path": "ca/ab",
+   "tab_label": "Alberta",
+   "installers_dir": "ab",
+   "programs": [
+    [
+     "alberta-energy-rebates",
+     "Alberta rebates guide"
+    ]
+   ],
+   "hub_verified": true,
+   "calc_label": "",
+   "cities": [
+    [
+     "/ca/ab/calgary/",
+     "Calgary"
+    ],
+    [
+     "/ca/ab/edmonton/",
+     "Edmonton"
+    ],
+    [
+     "/ca/ab/red-deer/",
+     "Red Deer"
+    ],
+    [
+     "/ca/ab/lethbridge/",
+     "Lethbridge"
+    ],
+    [
+     "/ca/ab/st-albert/",
+     "St. Albert"
+    ]
+   ],
+   "facts_files": [
+    "ab"
+   ]
+  },
+  {
+   "code": "ns",
+   "abbr": "NS",
+   "name": "Nova Scotia",
+   "country": "ca",
+   "path": "ca/ns",
+   "tab_label": "Nova Scotia",
+   "installers_dir": "ns",
+   "programs": [
+    [
+     "efficiency-nova-scotia",
+     "Efficiency Nova Scotia"
+    ]
+   ],
+   "hub_verified": true,
+   "calc_label": "Nova Scotia",
+   "cities": [
+    [
+     "/ca/ns/halifax/",
+     "Halifax"
+    ]
+   ],
+   "facts_files": [
+    "ns"
+   ]
+  },
+  {
+   "code": "ma",
+   "abbr": "MA",
+   "name": "Massachusetts",
+   "country": "us",
+   "path": "us/ma",
+   "tab_label": "Massachusetts",
+   "installers_dir": "ma",
+   "programs": [
+    [
+     "mass-save",
+     "Mass Save"
+    ]
+   ],
+   "hub_verified": true,
+   "calc_label": "",
+   "cities": [
+    [
+     "/us/ma/boston/",
+     "Boston"
+    ],
+    [
+     "/us/ma/worcester/",
+     "Worcester"
+    ],
+    [
+     "/us/ma/springfield/",
+     "Springfield"
+    ],
+    [
+     "/us/ma/cambridge/",
+     "Cambridge"
+    ],
+    [
+     "/us/ma/lowell/",
+     "Lowell"
+    ],
+    [
+     "/us/ma/brockton/",
+     "Brockton"
+    ],
+    [
+     "/us/ma/new-bedford/",
+     "New Bedford"
+    ],
+    [
+     "/us/ma/quincy/",
+     "Quincy"
+    ],
+    [
+     "/us/ma/lynn/",
+     "Lynn"
+    ],
+    [
+     "/us/ma/fall-river/",
+     "Fall River"
+    ],
+    [
+     "/us/ma/newton/",
+     "Newton"
+    ],
+    [
+     "/us/ma/somerville/",
+     "Somerville"
+    ]
+   ],
+   "facts_files": [
+    "ma"
+   ]
+  },
+  {
+   "code": "ny",
+   "abbr": "NY",
+   "name": "New York",
+   "country": "us",
+   "path": "us/ny",
+   "tab_label": "New York",
+   "installers_dir": "ny",
+   "programs": [
+    [
+     "nys-clean-heat",
+     "NYS Clean Heat"
+    ]
+   ],
+   "hub_verified": true,
+   "calc_label": "New York",
+   "cities": [
+    [
+     "/us/ny/con-edison/new-york-city/",
+     "New York City"
+    ],
+    [
+     "/us/ny/con-edison/yonkers/",
+     "Yonkers"
+    ],
+    [
+     "/us/ny/con-edison/mount-vernon/",
+     "Mount Vernon"
+    ],
+    [
+     "/us/ny/con-edison/new-rochelle/",
+     "New Rochelle"
+    ],
+    [
+     "/us/ny/con-edison/white-plains/",
+     "White Plains"
+    ],
+    [
+     "/us/ny/pseg/brookhaven/",
+     "Brookhaven"
+    ],
+    [
+     "/us/ny/pseg/islip/",
+     "Islip"
+    ],
+    [
+     "/us/ny/pseg/babylon/",
+     "Babylon"
+    ],
+    [
+     "/us/ny/pseg/huntington/",
+     "Huntington"
+    ],
+    [
+     "/us/ny/pseg/smithtown/",
+     "Smithtown"
+    ],
+    [
+     "/us/ny/pseg/oyster-bay/",
+     "Oyster Bay"
+    ],
+    [
+     "/us/ny/pseg/southampton/",
+     "Southampton"
+    ],
+    [
+     "/us/ny/central-hudson/poughkeepsie/",
+     "Poughkeepsie"
+    ],
+    [
+     "/us/ny/central-hudson/newburgh/",
+     "Newburgh"
+    ],
+    [
+     "/us/ny/central-hudson/kingston/",
+     "Kingston"
+    ],
+    [
+     "/us/ny/central-hudson/beacon/",
+     "Beacon"
+    ],
+    [
+     "/us/ny/central-hudson/saugerties/",
+     "Saugerties"
+    ],
+    [
+     "/us/ny/national-grid/albany/",
+     "Albany"
+    ],
+    [
+     "/us/ny/national-grid/buffalo/",
+     "Buffalo"
+    ],
+    [
+     "/us/ny/national-grid/rochester/",
+     "Rochester"
+    ],
+    [
+     "/us/ny/national-grid/syracuse/",
+     "Syracuse"
+    ]
+   ],
+   "facts_files": [
+    "ny"
+   ]
+  },
+  {
+   "code": "pa",
+   "abbr": "PA",
+   "name": "Pennsylvania",
+   "country": "us",
+   "path": "us/pa",
+   "tab_label": "Pennsylvania",
+   "installers_dir": "pa",
+   "programs": [
+    [
+     "peco-rebates",
+     "PECO rebates"
+    ],
+    [
+     "ppl-electric-rebates",
+     "PPL Electric rebates"
+    ]
+   ],
+   "hub_verified": false,
+   "calc_label": "",
+   "cities": [
+    [
+     "/us/pa/philadelphia/",
+     "Philadelphia"
+    ],
+    [
+     "/us/pa/pittsburgh/",
+     "Pittsburgh"
+    ],
+    [
+     "/us/pa/allentown/",
+     "Allentown"
+    ],
+    [
+     "/us/pa/erie/",
+     "Erie"
+    ]
+   ],
+   "facts_files": [
+    "pa"
+   ]
+  },
+  {
+   "code": "co",
+   "abbr": "CO",
+   "name": "Colorado",
+   "country": "us",
+   "path": "us/co",
+   "tab_label": "Colorado",
+   "installers_dir": "co",
+   "programs": [
+    [
+     "xcel-energy-colorado-rebates",
+     "Xcel Energy rebates"
+    ]
+   ],
+   "hub_verified": false,
+   "calc_label": "",
+   "cities": [
+    [
+     "/us/co/denver/",
+     "Denver"
+    ],
+    [
+     "/us/co/colorado-springs/",
+     "Colorado Springs"
+    ],
+    [
+     "/us/co/aurora/",
+     "Aurora"
+    ],
+    [
+     "/us/co/fort-collins/",
+     "Fort Collins"
+    ],
+    [
+     "/us/co/boulder/",
+     "Boulder"
+    ]
+   ],
+   "facts_files": [
+    "co"
+   ]
+  },
+  {
+   "code": "vt",
+   "abbr": "VT",
+   "name": "Vermont",
+   "country": "us",
+   "path": "us/vt",
+   "tab_label": "Vermont",
+   "installers_dir": "vt",
+   "programs": [],
+   "hub_verified": true,
+   "calc_label": "Vermont",
+   "cities": [
+    [
+     "/us/vt/burlington/",
+     "Burlington"
+    ],
+    [
+     "/us/vt/south-burlington/",
+     "South Burlington"
+    ],
+    [
+     "/us/vt/rutland/",
+     "Rutland"
+    ],
+    [
+     "/us/vt/barre/",
+     "Barre"
+    ],
+    [
+     "/us/vt/montpelier/",
+     "Montpelier"
+    ]
+   ],
+   "facts_files": [
+    "vt"
+   ]
+  },
+  {
+   "code": "mi",
+   "abbr": "MI",
+   "name": "Michigan",
+   "country": "us",
+   "path": "us/mi",
+   "tab_label": "Michigan",
+   "installers_dir": "mi",
+   "programs": [
+    [
+     "dte-energy-rebates",
+     "DTE Energy rebates"
+    ],
+    [
+     "consumers-energy-rebates",
+     "Consumers Energy rebates"
+    ]
+   ],
+   "hub_verified": true,
+   "calc_label": "Michigan",
+   "cities": [
+    [
+     "/us/mi/detroit/",
+     "Detroit"
+    ],
+    [
+     "/us/mi/grand-rapids/",
+     "Grand Rapids"
+    ],
+    [
+     "/us/mi/ann-arbor/",
+     "Ann Arbor"
+    ],
+    [
+     "/us/mi/lansing/",
+     "Lansing"
+    ]
+   ],
+   "facts_files": [
+    "mi"
+   ]
+  }
+ ]
+}

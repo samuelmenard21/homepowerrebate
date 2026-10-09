@@ -25,6 +25,9 @@ import json
 import re
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
 
 # Approximate exchange rate used only to put Canadian and US rebate amounts on one scale.
@@ -52,19 +55,7 @@ CATEGORY_ALIASES = {
     "windows-doors": ["windows-doors", "windows"],
 }
 
-REGIONS = {
-    "ca/bc": ("Canada", "British Columbia"),
-    "ca/on": ("Canada", "Ontario"),
-    "ca/ab": ("Canada", "Alberta"),
-    "ca/ns": ("Canada", "Nova Scotia"),
-    "us/ma": ("United States", "Massachusetts"),
-    "us/ny": ("United States", "New York"),
-    "us/ca": ("United States", "California"),
-    "us/pa": ("United States", "Pennsylvania"),
-    "us/co": ("United States", "Colorado"),
-    "us/vt": ("United States", "Vermont"),
-    "us/mi": ("United States", "Michigan"),
-}
+REGIONS = dict(regions.COUNTRY_NAME_BY_PATH)
 
 STATUS_KEYWORDS_CLOSED = ["program closed", "no longer accepting", "fully subscribed", "rebate-card none", "class=\"amount none\""]
 STATUS_KEYWORDS_LIMITED = ["funding limited", "limited funding", "waitlist", "unclear", "may be paused", "subject to available funding"]

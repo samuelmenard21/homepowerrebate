@@ -8,8 +8,11 @@ import re
 import sys
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
-HUBS = ["ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt", "us/mi"]
+HUBS = regions.HUBS
 ORDER = ["HUB-STATS", "HUB-TOP", "HUB-CHANGES", "HUB-SHOWCASE", "HUB-TOC"]
 
 

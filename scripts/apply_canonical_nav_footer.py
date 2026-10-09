@@ -27,6 +27,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+import regions
 PARTIAL = ROOT / "_partials" / "nav-footer.html"
 POWERSCORE_DATA = ROOT / "powerscore-data.json"
 
@@ -39,13 +42,9 @@ EXCLUDE_FILES = {
     "pinterest-pin-templates.html", "preview.html",
 }
 
-PROV_CODES = {"on", "bc", "ab", "ns", "ma", "ca", "ny", "pa", "co", "vt", "mi"}
+PROV_CODES = set(regions.CODES)
 # ca/<x> or us/<x> path prefix -> province-tab code
-REGION_PREFIX_TO_CODE = {
-    ("ca", "bc"): "bc", ("ca", "on"): "on", ("ca", "ab"): "ab", ("ca", "ns"): "ns",
-    ("us", "ma"): "ma", ("us", "ny"): "ny", ("us", "ca"): "ca",
-    ("us", "pa"): "pa", ("us", "co"): "co", ("us", "vt"): "vt", ("us", "mi"): "mi",
-}
+REGION_PREFIX_TO_CODE = dict(regions.CODE_BY_PREFIX)
 CATEGORY_NAMES = {
     "heat-pump", "insulation", "solar", "battery", "water-heater",
     "smart-thermostats", "ev-charger", "windows-doors", "windows", "appliances", "hrv",
@@ -57,11 +56,7 @@ def load_city_labels():
     which already enumerates every real city page with a clean label."""
     data = json.loads(POWERSCORE_DATA.read_text())
     out = {}
-    region_key_to_code = {
-        "ca/bc": "bc", "ca/on": "on", "ca/ab": "ab", "ca/ns": "ns",
-        "us/ma": "ma", "us/ny": "ny", "us/ca": "ca",
-        "us/pa": "pa", "us/co": "co", "us/vt": "vt", "us/mi": "mi",
-    }
+    region_key_to_code = dict(regions.CODE_BY_PATH)
     for region_key, region in data["regions"].items():
         code = region_key_to_code.get(region_key)
         if not code:
@@ -139,7 +134,7 @@ def get_context(rel_path: Path, content: str):
 
 
 def parse_partial():
-    text = PARTIAL.read_text()
+    text = regions.expand_tokens(PARTIAL.read_text())
 
     def block(start_marker, end_marker):
         s = text.index(start_marker) + len(start_marker)

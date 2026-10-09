@@ -14,6 +14,9 @@ import sys
 from datetime import date
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 from build_furnace_pages import AUTHOR  # noqa: E402
@@ -73,10 +76,8 @@ HUBS = {
                   ("Free upgrades", "SCE Energy Savings Assistance", "No cost", "Income-qualified SCE customers.", "https://www.sce.com/save-money/income-qualified-programs/energy-savings-assistance-program"),
                   ("Panel upgrade for EV charging", "SCE Charge Ready Home", "Up to $4,200", "SCE customers.", "https://evhome.sce.com/"),
               ]},
-    # Other hubs: "What changed" box only.
-    "ca/ab": {"code": "AB", "name": "Alberta"}, "ca/ns": {"code": "NS", "name": "Nova Scotia"},
-    "us/ny": {"code": "NY", "name": "New York"}, "us/ma": {"code": "MA", "name": "Massachusetts"},
-    "us/pa": {"code": "PA", "name": "Pennsylvania"}, "us/co": {"code": "CO", "name": "Colorado"}, "us/vt": {"code": "VT", "name": "Vermont"}, "us/mi": {"code": "MI", "name": "Michigan"},
+    # Other hubs ("What changed" box only): every other region in data/regions.json.
+    **{p: v for p, v in regions.TOP_NAMES.items() if p not in ("ca/bc", "ca/on", "us/ca")},
 }
 FED = {"ca": "CA-FED", "us": "US"}
 

@@ -10,6 +10,9 @@ import sys
 from datetime import date
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import apply_canonical_nav_footer as navfooter  # noqa: E402
@@ -18,7 +21,7 @@ import build_ca_pages as ca  # noqa: E402
 e = html.escape
 BASE = ca.BASE
 FACTS = ca.FACTS
-CALC = {"on": ("/calculator/on/", "Ontario"), "ca": ("/calculator/ca/", "California"), "bc": ("/calculator/bc/", "BC"), "ny": ("/calculator/ny/", "New York"), "vt": ("/calculator/vt/", "Vermont"), "ns": ("/calculator/ns/", "Nova Scotia"), "mi": ("/calculator/mi/", "Michigan")}
+CALC = regions.CALC
 HOME = {"ca": "California", "bc": "British Columbia", "on": "Ontario"}
 
 

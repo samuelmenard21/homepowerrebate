@@ -7,11 +7,12 @@ import os
 import re
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
 S, E = "<!-- GQ-START -->", "<!-- GQ-END -->"
-REG = [("bc", "British Columbia", "BC", ""), ("on", "Ontario", "ON", "on"), ("ab", "Alberta", "AB", "ab"), ("ns", "Nova Scotia", "NS", "ns"),
-       ("ma", "Massachusetts", "MA", "ma"), ("ny", "New York", "NY", "ny"), ("ca", "California", "CA", "ca"), ("pa", "Pennsylvania", "PA", "pa"),
-       ("co", "Colorado", "CO", "co"), ("vt", "Vermont", "VT", "vt"), ("mi", "Michigan", "MI", "mi")]
+REG = [(r["code"], r["name"], r["abbr"], "" if r["code"] == "bc" else r["code"]) for r in regions.REGIONS]
 OV = {"st-albert": "St. Albert", "fort-st-john": "Fort St. John", "fort-mcmurray": "Fort McMurray", "sault-ste-marie": "Sault Ste. Marie"}
 CSS = """
 .gq{max-width:820px;margin:0 auto;padding:0 20px}
@@ -111,7 +112,7 @@ def main():
     for code, name, prov, jdir in REG:
         base = ROOT / "installers" / code
         cities = sorted(p.name for p in base.iterdir() if p.is_dir()) if base.exists() else []
-        hub = {"bc": "/ca/bc/", "on": "/ca/on/", "ab": "/ca/ab/", "ns": "/ca/ns/", "ma": "/us/ma/", "ny": "/us/ny/", "ca": "/us/ca/", "pa": "/us/pa/", "co": "/us/co/", "vt": "/us/vt/", "mi": "/us/mi/"}[code]
+        hub = regions.HUB_URL_BY_CODE[code]
         cp = {}
         for c in cities:
             hits = glob.glob(str(ROOT / hub.strip("/") / "**" / c / "index.html"), recursive=True)

@@ -6,8 +6,11 @@ Run after build_hub_showcase.py; safe to re-run.   python3 scripts/build_hub_tid
 import re
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
-HUBS = ["ca/bc", "ca/on", "ca/ab", "ca/ns", "us/ma", "us/ny", "us/ca", "us/pa", "us/co", "us/vt", "us/mi"]
+HUBS = regions.HUBS
 CITY_H = re.compile(r"Cities We Cover|Where HomePowerRebate operates", re.I)
 FOLD = [(re.compile(r"rebate finder|rebate program", re.I), "Open the full rebate list"),
         (re.compile(r"common questions|quick questions|what you should know", re.I), "Read the questions and answers"),

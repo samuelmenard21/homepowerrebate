@@ -23,6 +23,9 @@ import json
 import re
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
 DATA = json.loads((ROOT / "powerscore-data.json").read_text())
 
@@ -886,6 +889,7 @@ for c in cities:
     url, page = build_city_page(c)
     out_path = ROOT / ("stacking-calculator/" + "/".join(url.strip("/").split("/")[1:]))
     out_path.mkdir(parents=True, exist_ok=True)
+    page = re.sub(r"const regions = \[[^\]]*\];", "const regions = " + regions.codes_js() + ";", page)
     (out_path / "index.html").write_text(page)
     written_paths.append(url)
     avail = available_cats(c)

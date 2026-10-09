@@ -375,14 +375,14 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
       <div style="display:flex; gap:6px; margin-bottom:12px;">
         <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Alberta</button>
         <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Nova Scotia</button>
-      </div>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
         <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Massachusetts</button>
-        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New York</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New York</button>
         <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Pennsylvania</button>
         <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Colorado</button>
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
         <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Vermont</button>
         <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Michigan</button>
       </div>
@@ -394,6 +394,9 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     <div id="province-cities-bc" style="display:none; gap:8px;">
       <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
     </div>
+    <div id="province-cities-ca" style="display:none; gap:8px;">
+      <a href="/us/ca/los-angeles/">Los Angeles</a><a href="/us/ca/sacramento/">Sacramento</a><a href="/us/ca/bay-area/">Bay Area</a><a href="/us/ca/san-diego/">San Diego</a><a href="/us/ca/inland-empire/">Inland Empire</a>
+    </div>
     <div id="province-cities-ab" style="display:none; gap:8px;">
       <a href="/ca/ab/calgary/">Calgary</a><a href="/ca/ab/edmonton/">Edmonton</a><a href="/ca/ab/red-deer/">Red Deer</a><a href="/ca/ab/lethbridge/">Lethbridge</a><a href="/ca/ab/st-albert/">St. Albert</a>
     </div>
@@ -402,9 +405,6 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     </div>
     <div id="province-cities-ma" style="display:none; gap:8px;">
       <a href="/us/ma/boston/">Boston</a><a href="/us/ma/worcester/">Worcester</a><a href="/us/ma/springfield/">Springfield</a><a href="/us/ma/cambridge/">Cambridge</a><a href="/us/ma/lowell/">Lowell</a><a href="/us/ma/brockton/">Brockton</a><a href="/us/ma/new-bedford/">New Bedford</a><a href="/us/ma/quincy/">Quincy</a><a href="/us/ma/lynn/">Lynn</a><a href="/us/ma/fall-river/">Fall River</a><a href="/us/ma/newton/">Newton</a><a href="/us/ma/somerville/">Somerville</a>
-    </div>
-    <div id="province-cities-ca" style="display:none; gap:8px;">
-      <a href="/us/ca/los-angeles/">Los Angeles</a><a href="/us/ca/sacramento/">Sacramento</a><a href="/us/ca/bay-area/">Bay Area</a><a href="/us/ca/san-diego/">San Diego</a><a href="/us/ca/inland-empire/">Inland Empire</a>
     </div>
     <div id="province-cities-ny" style="display:none; gap:8px;">
       <a href="/us/ny/con-edison/new-york-city/">New York City</a><a href="/us/ny/con-edison/yonkers/">Yonkers</a><a href="/us/ny/con-edison/mount-vernon/">Mount Vernon</a><a href="/us/ny/con-edison/new-rochelle/">New Rochelle</a><a href="/us/ny/con-edison/white-plains/">White Plains</a><a href="/us/ny/pseg/brookhaven/">Brookhaven</a><a href="/us/ny/pseg/islip/">Islip</a><a href="/us/ny/pseg/babylon/">Babylon</a><a href="/us/ny/pseg/huntington/">Huntington</a><a href="/us/ny/pseg/smithtown/">Smithtown</a><a href="/us/ny/pseg/oyster-bay/">Oyster Bay</a><a href="/us/ny/pseg/southampton/">Southampton</a><a href="/us/ny/central-hudson/poughkeepsie/">Poughkeepsie</a><a href="/us/ny/central-hudson/newburgh/">Newburgh</a><a href="/us/ny/central-hudson/kingston/">Kingston</a><a href="/us/ny/central-hudson/beacon/">Beacon</a><a href="/us/ny/central-hudson/saugerties/">Saugerties</a><a href="/us/ny/national-grid/albany/">Albany</a><a href="/us/ny/national-grid/buffalo/">Buffalo</a><a href="/us/ny/national-grid/rochester/">Rochester</a><a href="/us/ny/national-grid/syracuse/">Syracuse</a>
@@ -3153,7 +3153,21 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 <!-- ============================ FOOTER ============================= -->
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
-
+<section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
+  <div class="wrap" style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">
+    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
+    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get the monthly rebate update</h2>
+    <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Once a month: new and changing rebate programs across every province and state we cover, plus what's new in heat pumps, solar and batteries. Short, sourced, no marketing.</p>
+    <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
+      <input type="email" id="newsletter-email" placeholder="your@email.com" required aria-label="Your email address" autocomplete="email" style="min-height: 46px; padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 16px; background: #fff; color: var(--ink);">
+      <input type="hidden" id="newsletter-city" value="">
+      <input type="hidden" id="newsletter-page" value="/powerscore/">
+      <button type="submit" style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 15px; min-height: 46px; cursor: pointer; font-family: 'Inter Tight', sans-serif;">Subscribe</button>
+      <p style="font-size: 13px; color: rgba(250, 247, 242, 0.78); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
+    </form>
+    <div id="newsletter-response" style="display: none; margin-top: 12px; padding: 12px; background: rgba(45, 106, 79, 0.2); border-radius: 6px; border: 1px solid rgba(45, 106, 79, 0.4); font-size: 13px;"></div>
+  </div>
+</section>
 
 <footer class="footer">
   <div class="footer-inner">
@@ -3166,8 +3180,8 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
         <div class="footer-col-title">Canada</div>
         <ul class="footer-col-links">
           <li><a href="/ca/">All Provinces</a></li>
-          <li><a href="/ca/bc/">British Columbia</a></li>
           <li><a href="/ca/on/">Ontario</a></li>
+          <li><a href="/ca/bc/">British Columbia</a></li>
           <li><a href="/ca/ab/">Alberta</a></li>
           <li><a href="/ca/ns/">Nova Scotia</a></li>
         </ul>
@@ -3177,8 +3191,8 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
         <ul class="footer-col-links">
           <li><a href="/us/">All States</a></li>
           <li><a href="/us/ca/">California</a></li>
-          <li><a href="/us/ny/">New York</a></li>
           <li><a href="/us/ma/">Massachusetts</a></li>
+          <li><a href="/us/ny/">New York</a></li>
           <li><a href="/us/pa/">Pennsylvania</a></li>
           <li><a href="/us/co/">Colorado</a></li>
           <li><a href="/us/vt/">Vermont</a></li>
@@ -3345,7 +3359,7 @@ function toggleCityDropdown() {
   if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ab', 'ns', 'ma', 'ca', 'ny', 'pa', 'co', 'vt', 'mi'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'ma', 'ny', 'pa', 'co', 'vt', 'mi'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

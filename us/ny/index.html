@@ -406,6 +406,12 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
       <div style="display:flex; gap:6px; margin-bottom:12px;">
         <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Vermont</button>
         <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Michigan</button>
+        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New Jersey</button>
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Illinois</button>
+        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Washington</button>
+        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Minnesota</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -442,6 +448,18 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     <div id="province-cities-mi" style="display:none; gap:8px;">
       <a href="/us/mi/detroit/">Detroit</a><a href="/us/mi/grand-rapids/">Grand Rapids</a><a href="/us/mi/ann-arbor/">Ann Arbor</a><a href="/us/mi/lansing/">Lansing</a>
     </div>
+    <div id="province-cities-nj" style="display:none; gap:8px;">
+      <a href="/us/nj/newark/">Newark</a><a href="/us/nj/jersey-city/">Jersey City</a><a href="/us/nj/toms-river/">Toms River</a><a href="/us/nj/atlantic-city/">Atlantic City</a>
+    </div>
+    <div id="province-cities-il" style="display:none; gap:8px;">
+      <a href="/us/il/chicago/">Chicago</a><a href="/us/il/aurora/">Aurora</a><a href="/us/il/naperville/">Naperville</a><a href="/us/il/peoria/">Peoria</a>
+    </div>
+    <div id="province-cities-wa" style="display:none; gap:8px;">
+      <a href="/us/wa/seattle/">Seattle</a><a href="/us/wa/spokane/">Spokane</a><a href="/us/wa/tacoma/">Tacoma</a><a href="/us/wa/vancouver/">Vancouver</a><a href="/us/wa/bellevue/">Bellevue</a>
+    </div>
+    <div id="province-cities-mn" style="display:none; gap:8px;">
+      <a href="/us/mn/minneapolis/">Minneapolis</a><a href="/us/mn/saint-paul/">Saint Paul</a><a href="/us/mn/rochester/">Rochester</a><a href="/us/mn/duluth/">Duluth</a>
+    </div>
     </div>
   </div>
 </nav>
@@ -451,7 +469,8 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 <!-- CANONICAL-BREADCRUMB-END -->
 
 <header class="hero hub-hero"><div class="wrap"><div class="eyebrow">NYS Clean Heat · NYSERDA · Your utility</div><h1>New York State Energy Rebates 2026</h1><p class="sub">Heat pump, insulation, water heater, solar and EV rebates for New York homeowners &mdash; checked against NYSERDA and each utility on September 26, 2026.</p><div class="cta-row"><a href="#find-city" class="btn">Find your city →</a><a href="/programs/" class="btn btn-secondary">See all programs</a></div></div></header>
-<!-- HUB-STATS-START --><div class="hs-wrap"><div class="hs-stats"><div class="hs-stat"><b>6</b><span>cities covered</span></div><div class="hs-stat"><b>18</b><span>average PowerScore</span></div><div class="hs-stat"><b>$14,000<small>Insulation</small></b><span>biggest single rebate</span></div><div class="hs-stat"><b>4 of 8</b><span>upgrade types with an open rebate</span></div></div></div><!-- HUB-STATS-END -->
+<!-- HUB-STATS-START --><div class="hs-wrap"><div class="hs-stats"><div class="hs-stat"><b>6</b><span>cities covered</span></div><div class="hs-stat"><b>17</b><span>average PowerScore</span></div><div class="hs-stat"><b>$14,000<small>Insulation</small></b><span>biggest single rebate</span></div><div class="hs-stat"><b>4 of 8</b><span>upgrade types with an open rebate</span></div></div></div><!-- HUB-STATS-END -->
+
 
 
 
@@ -513,7 +532,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 <h2 class="hs-h">Find your city in New York</h2>
 <p class="hs-sub">Each ring is the city's PowerScore out of 100. Tap a city for its full rebate guide and top-rated installers.</p>
 <div class="hs-ctl"><input type="search" id="hs-q" placeholder="Search 6 cities" aria-label="Search cities in New York"><button type="button" class="hs-sort on" data-s="score">Top score</button><button type="button" class="hs-sort" data-s="az">A to Z</button></div>
-<div class="hs-grid" id="hs-grid"><a class="hs-city" href="/us/ny/con-edison/new-york-city/" data-name="new york city" data-score="36.5" data-order="0"><span class="hs-ring" style="--d:131deg"><b>36</b></span><span class="hs-cn"><b>New York City</b><small>Open rebates worth up to $26,585</small><small>4 of 8 upgrades open · 36 installers ranked</small></span></a><a class="hs-city" href="/us/ny/national-grid/rochester/" data-name="rochester" data-score="16.8" data-order="1"><span class="hs-ring" style="--d:60deg"><b>17</b></span><span class="hs-cn"><b>Rochester</b><small>Open rebates worth up to $25,000</small><small>2 of 8 upgrades open · 29 installers ranked</small></span></a><a class="hs-city" href="/us/ny/pseg/brookhaven/" data-name="brookhaven" data-score="16.2" data-order="2"><span class="hs-ring" style="--d:58deg"><b>16</b></span><span class="hs-cn"><b>Brookhaven</b><small>Open rebates worth up to $8,700</small><small>2 of 8 upgrades open · 15 installers ranked</small></span></a><a class="hs-city" href="/us/ny/national-grid/buffalo/" data-name="buffalo" data-score="13.7" data-order="3"><span class="hs-ring" style="--d:49deg"><b>14</b></span><span class="hs-cn"><b>Buffalo</b><small>Open rebates worth up to $26,000</small><small>2 of 8 upgrades open · 19 installers ranked</small></span></a><a class="hs-city" href="/us/ny/national-grid/syracuse/" data-name="syracuse" data-score="13.7" data-order="4"><span class="hs-ring" style="--d:49deg"><b>14</b></span><span class="hs-cn"><b>Syracuse</b><small>Open rebates worth up to $26,000</small><small>2 of 8 upgrades open · 31 installers ranked</small></span></a><a class="hs-city" href="/us/ny/central-hudson/newburgh/" data-name="newburgh" data-score="8.6" data-order="5"><span class="hs-ring" style="--d:31deg"><b>9</b></span><span class="hs-cn"><b>Newburgh</b><small>Open rebates worth up to $12,000</small><small>1 of 8 upgrades open · 9 installers ranked</small></span></a></div>
+<div class="hs-grid" id="hs-grid"><a class="hs-city" href="/us/ny/con-edison/new-york-city/" data-name="new york city" data-score="35.6" data-order="0"><span class="hs-ring" style="--d:128deg"><b>36</b></span><span class="hs-cn"><b>New York City</b><small>Open rebates worth up to $26,585</small><small>4 of 8 upgrades open · 36 installers ranked</small></span></a><a class="hs-city" href="/us/ny/national-grid/rochester/" data-name="rochester" data-score="16.8" data-order="1"><span class="hs-ring" style="--d:60deg"><b>17</b></span><span class="hs-cn"><b>Rochester</b><small>Open rebates worth up to $25,000</small><small>2 of 8 upgrades open · 29 installers ranked</small></span></a><a class="hs-city" href="/us/ny/pseg/brookhaven/" data-name="brookhaven" data-score="16.2" data-order="2"><span class="hs-ring" style="--d:58deg"><b>16</b></span><span class="hs-cn"><b>Brookhaven</b><small>Open rebates worth up to $8,700</small><small>2 of 8 upgrades open · 15 installers ranked</small></span></a><a class="hs-city" href="/us/ny/national-grid/buffalo/" data-name="buffalo" data-score="13.7" data-order="3"><span class="hs-ring" style="--d:49deg"><b>14</b></span><span class="hs-cn"><b>Buffalo</b><small>Open rebates worth up to $26,000</small><small>2 of 8 upgrades open · 19 installers ranked</small></span></a><a class="hs-city" href="/us/ny/national-grid/syracuse/" data-name="syracuse" data-score="13.7" data-order="4"><span class="hs-ring" style="--d:49deg"><b>14</b></span><span class="hs-cn"><b>Syracuse</b><small>Open rebates worth up to $26,000</small><small>2 of 8 upgrades open · 31 installers ranked</small></span></a><a class="hs-city" href="/us/ny/central-hudson/newburgh/" data-name="newburgh" data-score="8.6" data-order="5"><span class="hs-ring" style="--d:31deg"><b>9</b></span><span class="hs-cn"><b>Newburgh</b><small>Open rebates worth up to $12,000</small><small>1 of 8 upgrades open · 9 installers ranked</small></span></a></div>
 <h2 class="hs-h" style="margin-top:34px;">Biggest rebates by upgrade</h2>
 <p class="hs-sub">The largest amount found in New York for each type of upgrade, and where.</p>
 <div class="hs-tiles"><a class="hs-tile" href="/us/ny/national-grid/buffalo/"><span class="hs-ti">🔥</span><span class="hs-tt"><em>Heat Pump</em>up to <b>$14,000</b><small>best in Buffalo · open in 6 of 6 cities</small></span></a><a class="hs-tile" href="/us/ny/con-edison/new-york-city/insulation/"><span class="hs-ti">🌡️</span><span class="hs-tt"><em>Insulation</em>up to <b>$14,000</b><small>best in New York City · open in 4 of 6 cities</small></span></a><a class="hs-tile" href="/us/ny/con-edison/new-york-city/"><span class="hs-ti">☀️</span><span class="hs-tt"><em>Solar</em><b>No amount listed</b><small>see city pages for local programs</small></span></a><a class="hs-tile" href="/us/ny/battery/"><span class="hs-ti">🔋</span><span class="hs-tt"><em>Battery Storage</em><b>No amount listed</b><small>see what is and is not open</small></span></a><a class="hs-tile" href="/us/ny/con-edison/new-york-city/water-heater/"><span class="hs-ti">💧</span><span class="hs-tt"><em>Water Heater</em>up to <b>$1,500</b><small>best in New York City · open in 2 of 6 cities</small></span></a><a class="hs-tile" href="/us/ny/con-edison/new-york-city/smart-thermostats/"><span class="hs-ti">🎛️</span><span class="hs-tt"><em>Smart Thermostat</em>up to <b>$85</b><small>best in New York City · open in 1 of 6 cities</small></span></a><a class="hs-tile" href="/us/ny/con-edison/new-york-city/"><span class="hs-ti">🚗</span><span class="hs-tt"><em>EV Charger</em><b>No amount listed</b><small>see city pages for local programs</small></span></a><a class="hs-tile" href="/us/ny/con-edison/new-york-city/"><span class="hs-ti">🪟</span><span class="hs-tt"><em>Windows &amp; Doors</em><b>No amount listed</b><small>see city pages for local programs</small></span></a></div>
@@ -945,6 +964,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
           <li><a href="/us/co/">Colorado</a></li>
           <li><a href="/us/vt/">Vermont</a></li>
           <li><a href="/us/mi/">Michigan</a></li>
+          <li><a href="/us/nj/">New Jersey</a></li>
+          <li><a href="/us/il/">Illinois</a></li>
+          <li><a href="/us/wa/">Washington</a></li>
+          <li><a href="/us/mn/">Minnesota</a></li>
         </ul>
       </div>
       <div>
@@ -1028,7 +1051,7 @@ function toggleCityDropdown() {
   if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'ma', 'ny', 'pa', 'co', 'vt', 'mi'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

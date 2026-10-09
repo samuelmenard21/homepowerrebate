@@ -6,6 +6,7 @@ renders a static, data-driven leaderboard page using the site's existing
 nav/footer partial, palette, and typography.
 """
 import html
+import re
 import json
 from pathlib import Path
 

@@ -297,6 +297,12 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
       <div style="display:flex; gap:6px; margin-bottom:12px;">
         <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Vermont</button>
         <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Michigan</button>
+        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New Jersey</button>
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Illinois</button>
+        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Washington</button>
+        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Minnesota</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -332,6 +338,18 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     </div>
     <div id="province-cities-mi" style="display:none; gap:8px;">
       <a href="/us/mi/detroit/">Detroit</a><a href="/us/mi/grand-rapids/">Grand Rapids</a><a href="/us/mi/ann-arbor/">Ann Arbor</a><a href="/us/mi/lansing/">Lansing</a>
+    </div>
+    <div id="province-cities-nj" style="display:none; gap:8px;">
+      <a href="/us/nj/newark/">Newark</a><a href="/us/nj/jersey-city/">Jersey City</a><a href="/us/nj/toms-river/">Toms River</a><a href="/us/nj/atlantic-city/">Atlantic City</a>
+    </div>
+    <div id="province-cities-il" style="display:none; gap:8px;">
+      <a href="/us/il/chicago/">Chicago</a><a href="/us/il/aurora/">Aurora</a><a href="/us/il/naperville/">Naperville</a><a href="/us/il/peoria/">Peoria</a>
+    </div>
+    <div id="province-cities-wa" style="display:none; gap:8px;">
+      <a href="/us/wa/seattle/">Seattle</a><a href="/us/wa/spokane/">Spokane</a><a href="/us/wa/tacoma/">Tacoma</a><a href="/us/wa/vancouver/">Vancouver</a><a href="/us/wa/bellevue/">Bellevue</a>
+    </div>
+    <div id="province-cities-mn" style="display:none; gap:8px;">
+      <a href="/us/mn/minneapolis/">Minneapolis</a><a href="/us/mn/saint-paul/">Saint Paul</a><a href="/us/mn/rochester/">Rochester</a><a href="/us/mn/duluth/">Duluth</a>
     </div>
     </div>
   </div>
@@ -443,6 +461,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
           <li><a href="/us/co/">Colorado</a></li>
           <li><a href="/us/vt/">Vermont</a></li>
           <li><a href="/us/mi/">Michigan</a></li>
+          <li><a href="/us/nj/">New Jersey</a></li>
+          <li><a href="/us/il/">Illinois</a></li>
+          <li><a href="/us/wa/">Washington</a></li>
+          <li><a href="/us/mn/">Minnesota</a></li>
         </ul>
       </div>
       <div>
@@ -492,7 +514,7 @@ function toggleCityDropdown() {
   if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'ma', 'ny', 'pa', 'co', 'vt', 'mi'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

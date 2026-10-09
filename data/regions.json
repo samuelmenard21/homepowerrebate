@@ -640,7 +640,314 @@
    ],
    "facts_files": [
     "mi"
-   ]
+   ],
+   "geo": {
+    "Detroit": {
+     "lat": 42.3314,
+     "lng": -83.0458
+    },
+    "Grand Rapids": {
+     "lat": 42.9634,
+     "lng": -85.6681
+    },
+    "Ann Arbor": {
+     "lat": 42.2808,
+     "lng": -83.743
+    },
+    "Lansing": {
+     "lat": 42.7325,
+     "lng": -84.5555
+    }
+   },
+   "home_blurb": "DTE and Consumers Energy rebates, plus free weatherization for income-qualified homes."
+  },
+  {
+   "code": "nj",
+   "abbr": "NJ",
+   "name": "New Jersey",
+   "country": "us",
+   "path": "us/nj",
+   "tab_label": "New Jersey",
+   "installers_dir": "nj",
+   "programs": [
+    [
+     "pseg-rebates",
+     "PSE&G rebates"
+    ],
+    [
+     "jcpl-rebates",
+     "JCP&L rebates"
+    ],
+    [
+     "atlantic-city-electric-rebates",
+     "Atlantic City Electric rebates"
+    ],
+    [
+     "nj-clean-energy-program",
+     "NJ Clean Energy Program"
+    ]
+   ],
+   "hub_verified": true,
+   "calc_label": "New Jersey",
+   "facts_files": [
+    "nj"
+   ],
+   "cities": [
+    [
+     "/us/nj/newark/",
+     "Newark"
+    ],
+    [
+     "/us/nj/jersey-city/",
+     "Jersey City"
+    ],
+    [
+     "/us/nj/toms-river/",
+     "Toms River"
+    ],
+    [
+     "/us/nj/atlantic-city/",
+     "Atlantic City"
+    ]
+   ],
+   "geo": {
+    "Newark": {
+     "lat": 40.7357,
+     "lng": -74.1724
+    },
+    "Jersey City": {
+     "lat": 40.7178,
+     "lng": -74.0431
+    },
+    "Toms River": {
+     "lat": 39.9537,
+     "lng": -74.1979
+    },
+    "Atlantic City": {
+     "lat": 39.3643,
+     "lng": -74.4229
+    }
+   },
+   "home_blurb": "PSE&amp;G, JCP&amp;L and Atlantic City Electric programs, plus the New Jersey Clean Energy Program."
+  },
+  {
+   "code": "il",
+   "abbr": "IL",
+   "name": "Illinois",
+   "country": "us",
+   "path": "us/il",
+   "tab_label": "Illinois",
+   "installers_dir": "il",
+   "programs": [
+    [
+     "comed-rebates",
+     "ComEd rebates"
+    ],
+    [
+     "nicor-gas-rebates",
+     "Nicor Gas rebates"
+    ],
+    [
+     "ameren-illinois-rebates",
+     "Ameren Illinois rebates"
+    ],
+    [
+     "illinois-shines-rebates",
+     "Illinois Shines"
+    ]
+   ],
+   "hub_verified": true,
+   "calc_label": "Illinois",
+   "facts_files": [
+    "il"
+   ],
+   "cities": [
+    [
+     "/us/il/chicago/",
+     "Chicago"
+    ],
+    [
+     "/us/il/aurora/",
+     "Aurora"
+    ],
+    [
+     "/us/il/naperville/",
+     "Naperville"
+    ],
+    [
+     "/us/il/peoria/",
+     "Peoria"
+    ]
+   ],
+   "geo": {
+    "Chicago": {
+     "lat": 41.8781,
+     "lng": -87.6298
+    },
+    "Aurora": {
+     "lat": 41.7606,
+     "lng": -88.3201
+    },
+    "Naperville": {
+     "lat": 41.7508,
+     "lng": -88.1535
+    },
+    "Peoria": {
+     "lat": 40.6936,
+     "lng": -89.589
+    }
+   },
+   "home_blurb": "ComEd, Nicor Gas, Peoples Gas and Ameren Illinois programs, plus Illinois Shines for solar."
+  },
+  {
+   "code": "wa",
+   "abbr": "WA",
+   "name": "Washington",
+   "country": "us",
+   "path": "us/wa",
+   "tab_label": "Washington",
+   "installers_dir": "wa",
+   "programs": [
+    [
+     "puget-sound-energy-rebates",
+     "Puget Sound Energy rebates"
+    ],
+    [
+     "seattle-city-light-rebates",
+     "Seattle City Light rebates"
+    ],
+    [
+     "avista-washington-rebates",
+     "Avista rebates"
+    ],
+    [
+     "tacoma-power-rebates",
+     "Tacoma Power rebates"
+    ],
+    [
+     "clark-public-utilities-rebates",
+     "Clark Public Utilities rebates"
+    ]
+   ],
+   "hub_verified": true,
+   "calc_label": "Washington",
+   "facts_files": [
+    "wa"
+   ],
+   "cities": [
+    [
+     "/us/wa/seattle/",
+     "Seattle"
+    ],
+    [
+     "/us/wa/spokane/",
+     "Spokane"
+    ],
+    [
+     "/us/wa/tacoma/",
+     "Tacoma"
+    ],
+    [
+     "/us/wa/vancouver/",
+     "Vancouver"
+    ],
+    [
+     "/us/wa/bellevue/",
+     "Bellevue"
+    ]
+   ],
+   "geo": {
+    "Seattle": {
+     "lat": 47.6062,
+     "lng": -122.3321
+    },
+    "Spokane": {
+     "lat": 47.6588,
+     "lng": -117.426
+    },
+    "Tacoma": {
+     "lat": 47.2529,
+     "lng": -122.4443
+    },
+    "Vancouver": {
+     "lat": 45.6387,
+     "lng": -122.6615
+    },
+    "Bellevue": {
+     "lat": 47.6101,
+     "lng": -122.2015
+    }
+   },
+   "home_blurb": "Puget Sound Energy, Seattle City Light, Avista, Tacoma Power and Clark Public Utilities programs."
+  },
+  {
+   "code": "mn",
+   "abbr": "MN",
+   "name": "Minnesota",
+   "country": "us",
+   "path": "us/mn",
+   "tab_label": "Minnesota",
+   "installers_dir": "mn",
+   "programs": [
+    [
+     "xcel-energy-minnesota-rebates",
+     "Xcel Energy rebates"
+    ],
+    [
+     "centerpoint-energy-minnesota-rebates",
+     "CenterPoint Energy rebates"
+    ],
+    [
+     "minnesota-power-rebates",
+     "Minnesota Power rebates"
+    ],
+    [
+     "save-energy-minnesota",
+     "Save Energy Minnesota"
+    ]
+   ],
+   "hub_verified": true,
+   "calc_label": "Minnesota",
+   "facts_files": [
+    "mn"
+   ],
+   "cities": [
+    [
+     "/us/mn/minneapolis/",
+     "Minneapolis"
+    ],
+    [
+     "/us/mn/saint-paul/",
+     "Saint Paul"
+    ],
+    [
+     "/us/mn/rochester/",
+     "Rochester"
+    ],
+    [
+     "/us/mn/duluth/",
+     "Duluth"
+    ]
+   ],
+   "geo": {
+    "Minneapolis": {
+     "lat": 44.9778,
+     "lng": -93.265
+    },
+    "Saint Paul": {
+     "lat": 44.9537,
+     "lng": -93.09
+    },
+    "Rochester": {
+     "lat": 44.0121,
+     "lng": -92.4802
+    },
+    "Duluth": {
+     "lat": 46.7867,
+     "lng": -92.1005
+    }
+   },
+   "home_blurb": "Xcel Energy, CenterPoint Energy and Minnesota Power programs, plus Save Energy Minnesota."
   }
  ]
 }

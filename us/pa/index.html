@@ -342,6 +342,12 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
       <div style="display:flex; gap:6px; margin-bottom:12px;">
         <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Vermont</button>
         <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Michigan</button>
+        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New Jersey</button>
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Illinois</button>
+        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Washington</button>
+        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Minnesota</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -378,6 +384,18 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
     <div id="province-cities-mi" style="display:none; gap:8px;">
       <a href="/us/mi/detroit/">Detroit</a><a href="/us/mi/grand-rapids/">Grand Rapids</a><a href="/us/mi/ann-arbor/">Ann Arbor</a><a href="/us/mi/lansing/">Lansing</a>
     </div>
+    <div id="province-cities-nj" style="display:none; gap:8px;">
+      <a href="/us/nj/newark/">Newark</a><a href="/us/nj/jersey-city/">Jersey City</a><a href="/us/nj/toms-river/">Toms River</a><a href="/us/nj/atlantic-city/">Atlantic City</a>
+    </div>
+    <div id="province-cities-il" style="display:none; gap:8px;">
+      <a href="/us/il/chicago/">Chicago</a><a href="/us/il/aurora/">Aurora</a><a href="/us/il/naperville/">Naperville</a><a href="/us/il/peoria/">Peoria</a>
+    </div>
+    <div id="province-cities-wa" style="display:none; gap:8px;">
+      <a href="/us/wa/seattle/">Seattle</a><a href="/us/wa/spokane/">Spokane</a><a href="/us/wa/tacoma/">Tacoma</a><a href="/us/wa/vancouver/">Vancouver</a><a href="/us/wa/bellevue/">Bellevue</a>
+    </div>
+    <div id="province-cities-mn" style="display:none; gap:8px;">
+      <a href="/us/mn/minneapolis/">Minneapolis</a><a href="/us/mn/saint-paul/">Saint Paul</a><a href="/us/mn/rochester/">Rochester</a><a href="/us/mn/duluth/">Duluth</a>
+    </div>
     </div>
   </div>
 </nav>
@@ -388,6 +406,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 
 <header class="hero hub-hero"><div class="wrap"><div class="eyebrow">PECO · PPL · Duquesne · Penelec</div><h1>Find Your Pennsylvania Energy Rebate</h1><p class="sub">Rebate amounts in Pennsylvania depend heavily on your electric utility. Pick your utility below to see what heat pumps, insulation, solar, and more actually cost after rebates.</p><div class="cta-row"><a href="#find-city" class="btn">Find your city →</a><a href="/programs/" class="btn btn-secondary">See all programs</a></div></div></header>
 <!-- HUB-STATS-START --><div class="hs-wrap"><div class="hs-stats"><div class="hs-stat"><b>2</b><span>cities covered</span></div><div class="hs-stat"><b>2</b><span>utility program guides</span></div><div class="hs-stat"><b>Being checked</b><span>city-page amounts vs official pages</span></div></div></div><!-- HUB-STATS-END -->
+
 
 
 
@@ -450,7 +469,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 <h2 class="hs-h">Find your city in Pennsylvania</h2>
 <p class="hs-sub">Each ring is the city's PowerScore out of 100. Tap a city for its full rebate guide and top-rated installers.</p>
 <div class="hs-ctl"><input type="search" id="hs-q" placeholder="Search 2 cities" aria-label="Search cities in Pennsylvania"><button type="button" class="hs-sort on" data-s="score">Top score</button><button type="button" class="hs-sort" data-s="az">A to Z</button></div>
-<div class="hs-grid" id="hs-grid"><a class="hs-city" href="/us/pa/philadelphia/" data-name="philadelphia" data-score="28.1" data-order="0"><span class="hs-ring" style="--d:101deg"><b>28</b></span><span class="hs-cn"><b>Philadelphia</b><small>Open rebates worth up to $1,221</small><small>5 of 8 upgrades open · 24 installers ranked</small></span></a><a class="hs-city" href="/us/pa/allentown/" data-name="allentown" data-score="27.0" data-order="1"><span class="hs-ring" style="--d:97deg"><b>27</b></span><span class="hs-cn"><b>Allentown</b><small>Open rebates worth up to $1,500</small><small>4 of 8 upgrades open · 26 installers ranked</small></span></a></div>
+<div class="hs-grid" id="hs-grid"><a class="hs-city" href="/us/pa/philadelphia/" data-name="philadelphia" data-score="27.4" data-order="0"><span class="hs-ring" style="--d:99deg"><b>27</b></span><span class="hs-cn"><b>Philadelphia</b><small>Open rebates worth up to $1,221</small><small>5 of 8 upgrades open · 24 installers ranked</small></span></a><a class="hs-city" href="/us/pa/allentown/" data-name="allentown" data-score="25.9" data-order="1"><span class="hs-ring" style="--d:93deg"><b>26</b></span><span class="hs-cn"><b>Allentown</b><small>Open rebates worth up to $1,500</small><small>4 of 8 upgrades open · 26 installers ranked</small></span></a></div>
 <h2 class="hs-h" style="margin-top:34px;">Biggest rebates by upgrade</h2>
 <p class="hs-sub">The largest amount found in Pennsylvania for each type of upgrade, and where.</p>
 <div class="hs-tiles"><a class="hs-tile" href="/us/pa/allentown/heat-pump/"><span class="hs-ti">🔥</span><span class="hs-tt"><em>Heat Pump</em>up to <b>$500</b><small>best in Allentown · open in 2 of 2 cities</small></span></a><a class="hs-tile" href="/us/pa/allentown/insulation/"><span class="hs-ti">🌡️</span><span class="hs-tt"><em>Insulation</em>up to <b>$500</b><small>best in Allentown · open in 2 of 2 cities</small></span></a><a class="hs-tile" href="/us/pa/philadelphia/"><span class="hs-ti">☀️</span><span class="hs-tt"><em>Solar</em>up to <b>$500</b><small>best in Philadelphia · open in 1 of 2 cities</small></span></a><a class="hs-tile" href="/us/pa/battery/"><span class="hs-ti">🔋</span><span class="hs-tt"><em>Battery Storage</em><b>No amount listed</b><small>see what is and is not open</small></span></a><a class="hs-tile" href="/us/pa/allentown/water-heater/"><span class="hs-ti">💧</span><span class="hs-tt"><em>Water Heater</em>up to <b>$400</b><small>best in Allentown · open in 2 of 2 cities</small></span></a><a class="hs-tile" href="/us/pa/allentown/smart-thermostats/"><span class="hs-ti">🎛️</span><span class="hs-tt"><em>Smart Thermostat</em>up to <b>$100</b><small>best in Allentown · open in 2 of 2 cities</small></span></a><a class="hs-tile" href="/us/pa/ev-charger/"><span class="hs-ti">🚗</span><span class="hs-tt"><em>EV Charger</em><b>No amount listed</b><small>see what is and is not open</small></span></a><a class="hs-tile" href="/us/pa/philadelphia/"><span class="hs-ti">🪟</span><span class="hs-tt"><em>Windows &amp; Doors</em><b>No amount listed</b><small>see city pages for local programs</small></span></a></div><p class="hs-note">Heads up: we have not yet checked every program in this region against its official page, so treat the amounts as a guide.</p>
@@ -664,6 +683,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
           <li><a href="/us/co/">Colorado</a></li>
           <li><a href="/us/vt/">Vermont</a></li>
           <li><a href="/us/mi/">Michigan</a></li>
+          <li><a href="/us/nj/">New Jersey</a></li>
+          <li><a href="/us/il/">Illinois</a></li>
+          <li><a href="/us/wa/">Washington</a></li>
+          <li><a href="/us/mn/">Minnesota</a></li>
         </ul>
       </div>
       <div>
@@ -738,7 +761,7 @@ function toggleCityDropdown() {
   if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'ma', 'ny', 'pa', 'co', 'vt', 'mi'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

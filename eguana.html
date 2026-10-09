@@ -240,6 +240,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -338,11 +342,19 @@ h1, h2 { text-wrap: balance; }
 }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Eguana Evolve: The BC-Approved Home Battery, Explained | Hom", "url": "https://homepowerrebate.com/eguana", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
+<!-- AEO-FAQ-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does the Evolve qualify for the BC Hydro rebate?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — the Evolve LFP and LFP Max are on BC Hydro's approved battery list. Paired with solar you can get up to $1,500; enrolled in Peak Saver, up to $5,000. Your contractor applies for the rebate."}}, {"@type": "Question", "name": "Will it work with my existing solar?", "acceptedAnswer": {"@type": "Answer", "text": "Usually yes. Evolve is AC-coupled, so it adds onto a home with existing solar without replacing your inverter. If you're installing solar and the battery together, that works too. Your installer confirms compatibility for your setup."}}, {"@type": "Question", "name": "How long will it power my home in an outage?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on your battery size and what you run. Backing up essentials (fridge, lights, internet, a heat-pump circuit) stretches much further than running the whole house. A 14 kWh Evolve can typically cover critical loads for a day or more, and solar recharges it when the sun's out."}}, {"@type": "Question", "name": "How does it handle BC cold?", "acceptedAnswer": {"@type": "Answer", "text": "LFP chemistry is well suited to a cold climate, and Eguana designs for Canadian conditions. Like all lithium batteries, very low temperatures reduce how fast it can charge, so units are typically installed in a garage, basement, or a rated enclosure rather than fully exposed. Ask your installer where they'll mount it."}}, {"@type": "Question", "name": "Is a battery worth it purely for savings?", "acceptedAnswer": {"@type": "Answer", "text": "Honestly, on bill savings alone, usually not yet — batteries don't pay back on arbitrage in BC. The case for one is resilience (backup during outages) plus the rebate and Peak Saver rewards that offset a big chunk of the cost. If reliable backup matters to you, it's worth it; if you only care about ROI, solar and a heat pump come first."}}, {"@type": "Question", "name": "Eguana vs other approved brands?", "acceptedAnswer": {"@type": "Answer", "text": "Several brands are on BC Hydro's approved list and all get you to the same rebate. Evolve's case is LFP chemistry, AC-coupled flexibility, a Canadian manufacturer, and tight Peak Saver integration. Compare warranty terms and installer support across your options — a good installer will show you more than one."}}]}</script>
+<!-- AEO-FAQ-END -->
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -446,6 +458,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 
 <section class="hero">
   <div class="wrap">
@@ -587,6 +600,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </section>
 
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

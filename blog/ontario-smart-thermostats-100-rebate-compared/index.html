@@ -241,6 +241,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -353,11 +357,16 @@ h1, h2 { text-wrap: balance; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much is the smart thermostat rebate in Ontario?", "acceptedAnswer": {"@type": "Answer", "text": "$125 through the Home Renovation Savings program, on eligible models from ecobee, Google Nest, Honeywell Home, Copeland Sensi, Mysa and Sinopé. It does not change with the brand you pick."}}, {"@type": "Question", "name": "Who qualifies for the Ontario smart thermostat rebate?", "acceptedAnswer": {"@type": "Answer", "text": "You qualify if you are an Enbridge Gas customer who heats mainly with a natural gas furnace or boiler, or if you are connected to the Ontario electricity grid and heat or cool your home electrically. You must live in a single or semi-detached home, a row house or townhome, or a mobile home on a permanent foundation. Cornwall Electric customers are excluded, and you cannot have received a thermostat rebate, discount or device from Enbridge Gas, Save on Energy or the program before."}}, {"@type": "Question", "name": "Is the smart thermostat free in Ontario?", "acceptedAnswer": {"@type": "Answer", "text": "No. The program takes $125 off the price, so the thermostat is only free if it costs $125 or less. Ask for a code before you shop so the discount comes off at checkout."}}, {"@type": "Question", "name": "Do I claim before or after I buy?", "acceptedAnswer": {"@type": "Answer", "text": "Either. Before you buy, request a $125 code on the program site and use it at The Home Depot, Best Buy, or the ecobee, Copeland Sensi or Mysa website. After you buy, upload your receipt within 60 days to get the $125 back."}}, {"@type": "Question", "name": "Can I also get paid for joining Peak Perks?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Once your thermostat is installed, Peak Perks pays $75 when you sign up and $20 each year after, in return for small scheduled temperature changes during peak demand from June to September."}}, {"@type": "Question", "name": "Does Mysa qualify for the Ontario rebate?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mysa is on the program's eligible list. Check the compatibility notes first, because Mysa's baseboard models are for electric baseboard heaters and its central model is for furnaces."}}]}</script>
 <style>.faq-item{border-bottom:1px solid #d9d0c1;padding:14px 0}.faq-item h3{margin:0 0 6px;font-size:18px}.faq-item p{margin:0}</style>
+<meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Ontario Smart Thermostat Rebate 2026: $125 on ecobee, Nest, Mysa & More", "url": "https://homepowerrebate.com/blog/ontario-smart-thermostats-100-rebate-compared/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -461,6 +470,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">7 smart thermostats eligible for Ontario&#x27;s $125 rebate</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -564,6 +574,7 @@ h1, h2 { text-wrap: balance; }
 </article>
 
 <!-- THERMO-COMPARE-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Mysa, Ecobee or Nest?</b> See <a href="/blog/smart-thermostat-comparison-nest-ecobee-honeywell-mysa/">which smart thermostat fits your heating (baseboards, furnace or mini-split)</a> before you buy.</p></section><!-- THERMO-COMPARE-LINK-END -->
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

@@ -209,6 +209,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -307,9 +311,14 @@ h1, h2 { text-wrap: balance; }
 }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Insulation Rebates 2026: Amounts by Province and State", "url": "https://homepowerrebate.com/insulation-rebates/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
 </head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -413,6 +422,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Insulation rebates</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>Insulation Rebates by Province and State (2026)</h1>
 <p>What each program pays for attic, wall and basement insulation, who qualifies, and the rules that catch people out. Amounts checked 2026-09-29.</p><p class="meta">By Sam Menard</p></div></header>
@@ -451,6 +461,7 @@ a.addEventListener('input',u);r.addEventListener('input',u);u();})();</script>
 <h3>How much is the insulation rebate?</h3><p>It depends where you live. In BC an attic rebate is $0.02 per sq ft for each R-value added, up to $900. In Ontario it is up to $1,250 without an assessment. In Nova Scotia an attic to R-50 gets up to $750. Massachusetts pays 75% to 100% of insulation and air sealing.</p><h3>Do I need an energy assessment first?</h3><p>In Ontario the bigger rebates need a home energy assessment before and after the work. In Nova Scotia the rebates go through a Home Energy Assessment. In Massachusetts the free assessment is the first step. BC Hydro&#x27;s rebate does not need one.</p><h3>Can I install the insulation myself and still get a rebate?</h3><p>Usually not. BC Hydro requires a Home Performance Contractor Network member, so DIY work does not qualify. Check the rules before you buy materials.</p><h3>Does the US federal tax credit still cover insulation?</h3><p>No. The 25C credit ended for anything installed after December 31, 2025. State and utility programs still pay, as listed on this page.</p>
 <p class="small">Something out of date? Email <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a> and we'll check it within a week.</p>
 </div></section>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

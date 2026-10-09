@@ -246,6 +246,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -345,9 +349,11 @@ h1, h2 { text-wrap: balance; }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
 <!-- BREADCRUMB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com/"}, {"@type": "ListItem", "position": 2, "name": "Furnace and AC Rebates by Province and State", "item": "https://homepowerrebate.com/furnace-rebates/"}]}</script><!-- BREADCRUMB-LD-END -->
+<meta name="theme-color" content="#faf7f2">
 </head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -451,6 +457,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Furnace rebates</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>Furnace and AC Rebates by Province and State (2026)</h1>
 <p>Updated October 3, 2026.</p></div></header>
@@ -459,6 +466,7 @@ h1, h2 { text-wrap: balance; }
 <ul style="line-height:1.9;"><li><a href="/furnace-rebates/bc/"><b>British Columbia</b></a>: BC Hydro has no furnace or AC rebate in 2026. Here&#x27;s what is available: FortisBC gas furnace offers, heat pump rebates up to $4,000, and CleanBC up to $13,000.</li><li><a href="/furnace-rebates/ontario/"><b>Ontario</b></a>: There&#x27;s no Ontario rebate for a new gas furnace in 2026. Heat pumps get up to $2,000 for Enbridge gas homes, or $7,500 if you heat with electric, oil or propane.</li><li><a href="/furnace-rebates/california/"><b>California</b></a>: PG&amp;E has no furnace or AC rebate for most homes in 2026, and TECH and HEEHRA heat pump funds are full. What&#x27;s left: SMUD up to $5,000 and free ESA repairs.</li><li><a href="/furnace-rebates/alberta/"><b>Alberta</b></a>: Alberta has no provincial or utility furnace or AC rebate in 2026. Here&#x27;s what&#x27;s left: free upgrades for low-income Calgarians and CEIP financing where it&#x27;s open.</li></ul>
 <p>Not sure which system fits? Read <a href="/blog/heat-pump-vs-air-conditioner-furnace/">furnace and AC vs heat pump</a>.</p>
 </div></section>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

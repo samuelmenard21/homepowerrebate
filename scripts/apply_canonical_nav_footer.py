@@ -259,6 +259,52 @@ def content_loss(before: str, after: str) -> list:
     return sorted(visible_words(before) - visible_words(after))[:20]
 
 
+VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+_TAG_RE = re.compile(r"<(/?)([a-zA-Z][\w-]*)([^<>]*?)(/?)>")
+
+
+def balanced(fragment: str) -> bool:
+    """True when every tag opened in the fragment is closed inside it (script/style/comments ignored)."""
+    frag = re.sub(r"<(script|style)\b.*?</\1>|<!--.*?-->", "", fragment, flags=re.S | re.I)
+    stack = []
+    for m in _TAG_RE.finditer(frag):
+        close, name, _, selfclose = m.groups()
+        name = name.lower()
+        if name in VOID or selfclose:
+            continue
+        if not close:
+            stack.append(name)
+        else:
+            if name not in stack:
+                return False
+            while stack and stack[-1] != name:
+                stack.pop()  # implied end tags (li, p, td) are tolerated
+            stack.pop()
+    return all(n in ("li", "p", "td", "tr", "th", "dd", "dt", "option", "tbody", "thead") for n in stack)
+
+
+def ensure_landmarks(content: str) -> str:
+    """Skip link, <main id="main"> between the canonical nav and footer, and theme-color. Idempotent."""
+    if 'name="theme-color"' not in content and "</head>" in content:
+        content = content.replace("</head>", '<meta name="theme-color" content="#faf7f2">\n</head>', 1)
+    has_main = re.search(r"<main\b", content, re.I)
+    if has_main:
+        if not re.search(r"<main\b[^>]*\bid=", content, re.I):
+            content = re.sub(r"<main\b", '<main id="main"', content, count=1, flags=re.I)
+    else:
+        a = content.find(NAV_MARKER_END)
+        b = content.find(FOOTER_MARKER_START)
+        if a == -1 or b == -1 or b < a:
+            return content
+        a += len(NAV_MARKER_END)
+        if not balanced(content[a:b]):
+            return content
+        content = content[:a] + '\n<main id="main" tabindex="-1">' + content[a:b] + "</main>\n" + content[b:]
+    if 'class="skip-link"' not in content and 'id="main"' in content:
+        content = re.sub(r"(<body[^>]*>)", lambda m: m.group(1) + '\n<a class="skip-link" href="#main">Skip to main content</a>', content, count=1)
+    return content
+
+
 def process_file(path: Path, dry_run: bool):
     rel = path.relative_to(ROOT)
     content = path.read_text(errors="ignore")
@@ -312,6 +358,7 @@ def process_file(path: Path, dry_run: bool):
         action.append("footer:inserted")
 
     content = ensure_shared_assets(content)
+    content = ensure_landmarks(content)
 
     # Safety net (added 2026-09-28): some pages had real content (e.g. "Learn more about
     # <city> rebates" guide cards) sitting between the old footer markers, and a restamp

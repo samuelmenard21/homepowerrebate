@@ -145,6 +145,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -243,10 +247,12 @@ h1, h2 { text-wrap: balance; }
 }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<meta name="theme-color" content="#faf7f2">
 </head>
 <body bgcolor="#f5efe5" style="margin:0;padding:0;background:#f5efe5;">
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -350,6 +356,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#f5efe5" style="background:#f5efe5;"><tr><td align="center" style="padding:20px 12px;">
 <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:#0a2a2e;">
 <tr><td bgcolor="#08363f" style="background:#08363f;padding:26px 24px;border-radius:14px 14px 0 0;">
@@ -404,7 +411,8 @@ h1, h2 { text-wrap: balance; }
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;"><tr><td bgcolor="#ffffff" style="background:#ffffff;border:2px solid #08363f;border-radius:8px;text-align:center;"><a href="https://homepowerrebate.com/installers/" style="display:block;padding:12px 20px;color:#08363f;text-decoration:none;font-weight:700;font-size:16px;">See top-rated installers in your city &rarr;</a></td></tr></table>
 <p style="font-size:13px;line-height:1.5;color:#5a6b6e;margin:12px 0 0;">Installers are ranked by Google reviews. Nobody pays to be listed.</p>
 <p style="margin:24px 0 0;font-size:12px;color:#5a6b6e;text-align:center;">HomePowerRebate &middot; Independent guide<br><a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#5a6b6e;">Unsubscribe</a></p>
-</td></tr></table></td></tr></table><!-- CANONICAL-FOOTER-START -->
+</td></tr></table></td></tr></table></main>
+<!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div class="wrap" style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">

@@ -198,6 +198,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -344,9 +348,14 @@ h1, h2 { text-wrap: balance; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Water Heater Rebates in Timmins 2026: $500 in Ontario's Coldest Winters", "description": "Timmins heat pump water heater rebate for 2026: $500 under Home Renovation Savings, with an assessment and a second upgrade, in a city averaging -18.6C in January.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-03", "dateModified": "2026-10-03", "mainEntityOfPage": "https://homepowerrebate.com/ca/on/timmins/water-heater/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Ontario", "item": "https://homepowerrebate.com/ca/on/"}, {"@type": "ListItem", "position": 3, "name": "Timmins", "item": "https://homepowerrebate.com/ca/on/timmins/"}, {"@type": "ListItem", "position": 4, "name": "Water Heater", "item": "https://homepowerrebate.com/ca/on/timmins/water-heater/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Timmins the coldest city here?", "acceptedAnswer": {"@type": "Answer", "text": "The January average low is -18.6 degrees Celsius, the coldest in our Ontario data."}}, {"@type": "Question", "name": "Who is the utility?", "acceptedAnswer": {"@type": "Answer", "text": "Hydro One."}}, {"@type": "Question", "name": "Is the rebate $500?", "acceptedAnswer": {"@type": "Answer", "text": "Yes."}}, {"@type": "Question", "name": "Do I need a second upgrade?", "acceptedAnswer": {"@type": "Answer", "text": "Yes."}}]}</script></head><body>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Water Heater Rebates in Timmins 2026: $500 in Ontario's Coldest Winters", "description": "Timmins heat pump water heater rebate for 2026: $500 under Home Renovation Savings, with an assessment and a second upgrade, in a city averaging -18.6C in January.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-03", "dateModified": "2026-10-03", "mainEntityOfPage": "https://homepowerrebate.com/ca/on/timmins/water-heater/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Ontario", "item": "https://homepowerrebate.com/ca/on/"}, {"@type": "ListItem", "position": 3, "name": "Timmins", "item": "https://homepowerrebate.com/ca/on/timmins/"}, {"@type": "ListItem", "position": 4, "name": "Water Heater", "item": "https://homepowerrebate.com/ca/on/timmins/water-heater/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Timmins the coldest city here?", "acceptedAnswer": {"@type": "Answer", "text": "The January average low is -18.6 degrees Celsius, the coldest in our Ontario data."}}, {"@type": "Question", "name": "Who is the utility?", "acceptedAnswer": {"@type": "Answer", "text": "Hydro One."}}, {"@type": "Question", "name": "Is the rebate $500?", "acceptedAnswer": {"@type": "Answer", "text": "Yes."}}, {"@type": "Question", "name": "Do I need a second upgrade?", "acceptedAnswer": {"@type": "Answer", "text": "Yes."}}]}</script><meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Water Heater Rebates in Timmins 2026: $500 in Ontario's Coldest Winters", "url": "https://homepowerrebate.com/ca/on/timmins/water-heater/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
+</head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -450,6 +459,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/on/">Ontario</a></li><li><a href="/ca/on/timmins/">Timmins</a></li><li aria-current="page">Water Heater</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$500 inside the assessment stream</div><h1>Water Heater Rebates in Timmins</h1><p>Timmins has the coldest January in our Ontario data (-18.6&deg;C). The $500 water heater rebate needs an assessment and a second upgrade, and the unit's location matters.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -493,6 +503,7 @@ h1, h2 { text-wrap: balance; }
 </div></article>
 <!-- STATE-CA-ON-EV-CHARGER-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/ca/on/ev-charger/">Ontario home EV charger rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-CA-ON-EV-CHARGER-LINK-END -->
 <!-- STATE-CA-ON-HRV-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/ca/on/hrv/">Ontario HRV and ERV rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-CA-ON-HRV-LINK-END -->
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Timmins where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

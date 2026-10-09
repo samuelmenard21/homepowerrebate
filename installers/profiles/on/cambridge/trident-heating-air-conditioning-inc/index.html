@@ -305,6 +305,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -403,10 +407,12 @@ h1, h2 { text-wrap: balance; }
 }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<meta name="theme-color" content="#faf7f2">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -510,6 +516,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <div class="ip-wrap">
   <p class="ip-breadcrumb"><a href="/">HomePowerRebate</a> / <a href="/ca/on/cambridge/">Cambridge</a> / Trident Heating &amp; Air Conditioning Inc.</p>
 
@@ -585,9 +592,9 @@ h1, h2 { text-wrap: balance; }
     <h2>Get a Quote From Trident Heating &amp; Air Conditioning Inc.</h2>
     <p>We'll pass your details along and follow up with your ON rebate breakdown.</p>
     <form class="ip-quote-form" id="ip-quote-form">
-      <input type="text" id="ip-name" placeholder="First name" required>
-      <input type="email" id="ip-email" placeholder="your@email.com" required>
-      <input type="tel" id="ip-phone" placeholder="Phone number" required>
+      <input type="text" id="ip-name" placeholder="First name" aria-label="First name" autocomplete="given-name" required>
+      <input type="email" id="ip-email" placeholder="your@email.com" aria-label="Email address" autocomplete="email" inputmode="email" required>
+      <input type="tel" id="ip-phone" placeholder="Phone number" aria-label="Phone number" autocomplete="tel" inputmode="tel" required>
       <input type="text" id="ip-hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
       <button type="submit" id="ip-quote-btn">Request a Quote &rarr;</button>
     </form>
@@ -626,6 +633,7 @@ h1, h2 { text-wrap: balance; }
   });
 })();
 </script>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Cambridge where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

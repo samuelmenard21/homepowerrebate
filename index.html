@@ -1019,6 +1019,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -1117,11 +1121,105 @@ h1, h2 { text-wrap: balance; }
 }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<style>
+/* EXTRACTED-INLINE-START */
+body .is-022e8bb5.is-022e8bb5.is-022e8bb5 { font-family:'Fraunces',serif; font-size:clamp(28px,5vw,42px); font-weight:500; line-height:1.2; color:#111; margin:0 0 16px; }
+body .is-036913c4.is-036913c4.is-036913c4 { display:none; gap:8px; }
+body .is-043eb68f.is-043eb68f.is-043eb68f { font-size: 13px !important; color: #b45309; margin-top: 12px; }
+body .is-0a990d7e.is-0a990d7e.is-0a990d7e { border:none; cursor:pointer; }
+body .is-0cde321b.is-0cde321b.is-0cde321b { font-family:'Fraunces',Georgia,serif; font-size:clamp(28px,4vw,36px); margin:0 0 6px; color:var(--ink); }
+body .is-15ade639.is-15ade639.is-15ade639 { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #15803d; }
+body .is-18ad0489.is-18ad0489.is-18ad0489 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; contain: layout; }
+body .is-1b0f4999.is-1b0f4999.is-1b0f4999 { margin-top:16px; }
+body .is-1b92777c.is-1b92777c.is-1b92777c { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #111; }
+body .is-1c9c449e.is-1c9c449e.is-1c9c449e { color:inherit; }
+body .is-1cafff85.is-1cafff85.is-1cafff85 { font-size:14px; color:var(--ink-soft); margin-bottom:12px; }
+body .is-1d025f42.is-1d025f42.is-1d025f42 { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #be123c; }
+body .is-1f3bab59.is-1f3bab59.is-1f3bab59 { font-size: 13px !important; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color: #a4540a !important; margin-bottom:8px; }
+body .is-24497659.is-24497659.is-24497659 { font-size: 24px; font-weight: 700; color: #d4751c; margin-bottom: 6px; }
+body .is-26757191.is-26757191.is-26757191 { font-size:14px; color:var(--ink-soft); }
+body .is-2813698b.is-2813698b.is-2813698b { padding:0 16px 16px; }
+body .is-296fe222.is-296fe222.is-296fe222 { color: #b45309; font-weight: 600; text-decoration: none; }
+body .is-2a1f67ee.is-2a1f67ee.is-2a1f67ee { opacity:.7; }
+body .is-2ade8be4.is-2ade8be4.is-2ade8be4 { background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 24px; contain: content; }
+body .is-2b160b85.is-2b160b85.is-2b160b85 { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; }
+body .is-2ec5f42e.is-2ec5f42e.is-2ec5f42e { text-align:center; margin-top:32px; font-size:15px; color:var(--ink-soft); }
+body .is-31692f93.is-31692f93.is-31692f93 { background:#f3dcdc; color:#8a2b2b; }
+body .is-327ad703.is-327ad703.is-327ad703 { font-size: 13px; color: #b45309; margin-bottom: 8px; }
+body .is-4260ebea.is-4260ebea.is-4260ebea { padding-top:0; }
+body .is-441e7a69.is-441e7a69.is-441e7a69 { background: #fef3e6; border: 2px solid #fde68a; border-radius: 12px; padding: 24px; contain: content; }
+body .is-445553f5.is-445553f5.is-445553f5 { max-width:600px; margin:12px auto 0; color:var(--ink-soft); font-size:16px; }
+body .is-48711be5.is-48711be5.is-48711be5 { color:inherit; text-decoration:none; }
+body .is-5506133a.is-5506133a.is-5506133a { display:flex; gap:6px; margin-bottom:12px; }
+body .is-5694966f.is-5694966f.is-5694966f { font-size:13px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:#d4751c; margin:0 0 8px; }
+body .is-5e451d7d.is-5e451d7d.is-5e451d7d { font-size:13px; color:var(--ink-soft); }
+body .is-60e32dcb.is-60e32dcb.is-60e32dcb { display:inline-block; }
+body .is-61f619c8.is-61f619c8.is-61f619c8 { font-size:24px; margin-bottom:8px; }
+body .is-6292f4da.is-6292f4da.is-6292f4da { font-size: 13px !important; color: #be185d; margin-top: 12px; }
+body .is-640fce8e.is-640fce8e.is-640fce8e { color:var(--teal-deep); font-weight:600; border-bottom:1px solid var(--amber); text-decoration:none; }
+body .is-654dbb30.is-654dbb30.is-654dbb30 { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; margin-bottom:12px; border-radius:8px; background:linear-gradient(135deg, var(--teal-deep), #08363f); color:#fff; text-decoration:none; font-weight:700; font-size:13px; font-family:'Inter Tight',sans-serif; }
+body .is-674471e9.is-674471e9.is-674471e9 { display:flex; align-items:center; gap:16px; }
+body .is-68f0e454.is-68f0e454.is-68f0e454 { font-size: 13px; color: #be185d; margin-bottom: 8px; }
+body .is-7602045f.is-7602045f.is-7602045f { font-size:13px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:#d4751c; margin:0 0 10px; }
+body .is-8290863c.is-8290863c.is-8290863c { font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--teal-deep); margin-bottom:4px; }
+body .is-83c08b16.is-83c08b16.is-83c08b16 { padding:56px 28px 60px; max-width:1100px; margin:0 auto; }
+body .is-84db4a6c.is-84db4a6c.is-84db4a6c { display:none; align-items:center; gap:12px; }
+body .is-8545cf06.is-8545cf06.is-8545cf06 { font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111; }
+body .is-8ac01658.is-8ac01658.is-8ac01658 { padding:16px 16px 0; }
+body .is-8ad76216.is-8ad76216.is-8ad76216 { font-size: 13px; color: #b45309; }
+body .is-8c92175d.is-8c92175d.is-8c92175d { margin-bottom:40px; }
+body .is-8dbc78d4.is-8dbc78d4.is-8dbc78d4 { color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none; }
+body .is-8e1a34c6.is-8e1a34c6.is-8e1a34c6 { font-size: 13px !important; color: #15803d; margin-top: 12px; }
+body .is-8f057828.is-8f057828.is-8f057828 { font-size: 13px; color: #be185d; }
+body .is-91a87015.is-91a87015.is-91a87015 { text-align:center; }
+body .is-a0a74463.is-a0a74463.is-a0a74463 { font-family:'Fraunces',Georgia,serif; font-size:22px; margin:36px 0 6px; color:var(--ink); }
+body .is-a0ea9386.is-a0ea9386.is-a0ea9386 { background:#fdeccf; color:#8a4a06; }
+body .is-a2597964.is-a2597964.is-a2597964 { color:#4a5f5b; margin:0 0 12px; font-size:15px; }
+body .is-a8fef75d.is-a8fef75d.is-a8fef75d { display:inline-block; background:var(--amber,#d4751c); color:#fff; padding:13px 26px; border-radius:999px; text-decoration:none; font-weight:600; }
+body .is-a986eed1.is-a986eed1.is-a986eed1 { color: #be185d; font-weight: 600; text-decoration: none; }
+body .is-ab1b25e3.is-ab1b25e3.is-ab1b25e3 { font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px; }
+body .is-ab59634f.is-ab59634f.is-ab59634f { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; contain: layout; }
+body .is-b2661a19.is-b2661a19.is-b2661a19 { font-size: 13px; color: #166534; }
+body .is-b5d4358c.is-b5d4358c.is-b5d4358c { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #92400e; }
+body .is-b866acf1.is-b866acf1.is-b866acf1 { font-size: 13px; color: #666; }
+body .is-baea027e.is-baea027e.is-baea027e { text-align:center; margin-top:32px; }
+body .is-bb8b38b7.is-bb8b38b7.is-bb8b38b7 { display:flex; justify-content:space-between; align-items:center; }
+body .is-c0839a60.is-c0839a60.is-c0839a60 { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px; }
+body .is-c16ac2f4.is-c16ac2f4.is-c16ac2f4 { max-width:800px; margin:0 auto; padding:64px 24px; }
+body .is-c17af62b.is-c17af62b.is-c17af62b { margin-bottom:32px; }
+body .is-c1c036be.is-c1c036be.is-c1c036be { text-align:center; margin-bottom:40px; }
+body .is-c5f03454.is-c5f03454.is-c5f03454 { display:inline-block; background:#0d4f5c; color:white; padding:14px 32px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px; }
+body .is-cb2eb446.is-cb2eb446.is-cb2eb446 { font-size: 13px !important; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color: #a4540a !important; display:block; margin-bottom:10px; }
+body .is-cb490f39.is-cb490f39.is-cb490f39 { max-width:1100px; margin:0 auto; padding:0 24px; }
+body .is-ce93dbf3.is-ce93dbf3.is-ce93dbf3 { font-size: 13px; color: #666; margin-top: 28px; background: #f0fdf4; padding: 16px 20px; border-radius: 10px; border-left: 4px solid #15803d; }
+body .is-cf54ff28.is-cf54ff28.is-cf54ff28 { background: #fce7f3; border: 2px solid #fbcfe8; border-radius: 12px; padding: 24px; contain: content; }
+body .is-d164e115.is-d164e115.is-d164e115 { font-size: 15px; color: #666; margin-bottom: 32px; }
+body .is-d3c1be7a.is-d3c1be7a.is-d3c1be7a { color:#4a5f5b; margin:0 0 14px; }
+body .is-d51bfbd8.is-d51bfbd8.is-d51bfbd8 { color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none; }
+body .is-d5f01cd0.is-d5f01cd0.is-d5f01cd0 { font-size: 13px; color: #166534; margin-bottom: 8px; }
+body .is-db8baeb9.is-db8baeb9.is-db8baeb9 { max-width: 1180px; margin: 72px auto 0; padding: 0 28px; }
+body .is-e1c13d85.is-e1c13d85.is-e1c13d85 { display:block; font-family:'Fraunces', Georgia, serif; font-size:19px; margin-bottom:8px; line-height:1.3; }
+body .is-e1d223f3.is-e1d223f3.is-e1d223f3 { color: #15803d; font-weight: 600; text-decoration: none; }
+body .is-e526ae97.is-e526ae97.is-e526ae97 { color:#0d4f5c; font-weight:600; }
+body .is-ea853cbd.is-ea853cbd.is-ea853cbd { font-size: 28px; margin-bottom: 8px; }
+body .is-eb30e3d5.is-eb30e3d5.is-eb30e3d5 { max-width: 1100px; margin: 60px auto 40px; padding: 0 28px; }
+body .is-ee57073a.is-ee57073a.is-ee57073a { background:#e3f1e8; color:#1f5a3d; }
+body .is-f1e97509.is-f1e97509.is-f1e97509 { display:flex; flex-wrap:wrap; gap:6px; }
+body .is-f49524ac.is-f49524ac.is-f49524ac { font-size:16px; color:#666; margin:0 auto; max-width:640px; }
+body .is-f6ff5be9.is-f6ff5be9.is-f6ff5be9 { padding:0; margin:0; }
+body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
+/* EXTRACTED-INLINE-END */
+</style>
+<meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Home Power Rebates 2026: Find Every Rebate | HomePowerRebate", "url": "https://homepowerrebate.com/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -1225,6 +1323,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 
 <!-- HERO -->
 <!-- HOME-HERO-START -->
@@ -1273,19 +1372,19 @@ var r=D.filter(function(x){return x.c===p.value})[0];if(r)r.k.forEach(function(k
 .ps-first{background:linear-gradient(135deg,#0d4f5c,#08363f);border:0;color:#fff}
 .ps-num{font-family:'Fraunces',serif;font-size:38px;line-height:1.1}.ps-lab{font-size:12px;opacity:.65;margin-bottom:8px}
 .ps-city{font-size:16px}.ps-sub{font-size:13px;opacity:.75}.ps-tag{position:absolute;top:12px;right:16px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.7}</style>
-<div style="padding:56px 28px 60px;max-width:1100px;margin:0 auto;">
-  <div style="text-align:center;margin-bottom:40px;">
-    <p style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:#d4751c;margin:0 0 10px;">PowerScore</p>
-    <h2 style="font-family:'Fraunces',serif;font-size:clamp(28px,5vw,42px);font-weight:500;line-height:1.2;color:#111;margin:0 0 16px;">How does your city stack up?</h2>
-    <p style="font-size:16px;color:#666;margin:0 auto;max-width:640px;">We scored 109 cities, 0 to 100, on how much rebate money is open today: dollar value, program status and how many programs stack. Here is the top city in each of our 15 regions.</p>
+<div class="is-83c08b16">
+  <div class="is-c1c036be">
+    <p class="is-7602045f">PowerScore</p>
+    <h2 class="is-022e8bb5">How does your city stack up?</h2>
+    <p class="is-f49524ac">We scored 109 cities, 0 to 100, on how much rebate money is open today: dollar value, program status and how many programs stack. Here is the top city in each of our 15 regions.</p>
   </div>
   <div class="ps-grid"><a href="/ca/bc/kamloops/" class="ps-card ps-first"><span class="ps-tag">#1 overall</span><b class="ps-num">67</b><span class="ps-lab">PowerScore</span><b class="ps-city">Kamloops, BC</b><span class="ps-sub">British Columbia's top city</span></a><a href="/ca/on/toronto/" class="ps-card"><b class="ps-num">57</b><span class="ps-lab">PowerScore</span><b class="ps-city">Toronto, ON</b><span class="ps-sub">Ontario's top city</span></a><a href="/us/ma/worcester/" class="ps-card"><b class="ps-num">54</b><span class="ps-lab">PowerScore</span><b class="ps-city">Worcester, MA</b><span class="ps-sub">Massachusetts's top city</span></a><a href="/us/ca/sacramento/sacramento/" class="ps-card"><b class="ps-num">51</b><span class="ps-lab">PowerScore</span><b class="ps-city">Sacramento, CA</b><span class="ps-sub">California's top city</span></a><a href="/us/co/boulder/" class="ps-card"><b class="ps-num">43</b><span class="ps-lab">PowerScore</span><b class="ps-city">Boulder, CO</b><span class="ps-sub">Colorado's top city</span></a><a href="/ca/ns/halifax/" class="ps-card"><b class="ps-num">43</b><span class="ps-lab">PowerScore</span><b class="ps-city">Halifax, NS</b><span class="ps-sub">Nova Scotia's top city</span></a><a href="/us/wa/tacoma/" class="ps-card"><b class="ps-num">43</b><span class="ps-lab">PowerScore</span><b class="ps-city">Tacoma, WA</b><span class="ps-sub">Washington's top city</span></a><a href="/ca/ab/calgary/" class="ps-card"><b class="ps-num">42</b><span class="ps-lab">PowerScore</span><b class="ps-city">Calgary, AB</b><span class="ps-sub">Alberta's top city</span></a><a href="/us/vt/burlington/" class="ps-card"><b class="ps-num">36</b><span class="ps-lab">PowerScore</span><b class="ps-city">Burlington, VT</b><span class="ps-sub">Vermont's top city</span></a><a href="/us/ny/con-edison/new-york-city/" class="ps-card"><b class="ps-num">36</b><span class="ps-lab">PowerScore</span><b class="ps-city">New York City, NY</b><span class="ps-sub">New York's top city</span></a><a href="/us/mi/ann-arbor/" class="ps-card"><b class="ps-num">35</b><span class="ps-lab">PowerScore</span><b class="ps-city">Ann Arbor, MI</b><span class="ps-sub">Michigan's top city</span></a><a href="/us/il/chicago/" class="ps-card"><b class="ps-num">34</b><span class="ps-lab">PowerScore</span><b class="ps-city">Chicago, IL</b><span class="ps-sub">Illinois's top city</span></a><a href="/us/nj/newark/" class="ps-card"><b class="ps-num">29</b><span class="ps-lab">PowerScore</span><b class="ps-city">Newark, NJ</b><span class="ps-sub">New Jersey's top city</span></a><a href="/us/pa/philadelphia/" class="ps-card"><b class="ps-num">27</b><span class="ps-lab">PowerScore</span><b class="ps-city">Philadelphia, PA</b><span class="ps-sub">Pennsylvania's top city</span></a><a href="/us/mn/rochester/" class="ps-card"><b class="ps-num">25</b><span class="ps-lab">PowerScore</span><b class="ps-city">Rochester, MN</b><span class="ps-sub">Minnesota's top city</span></a></div>
-  <div style="text-align:center;"><a href="/powerscore/" style="display:inline-block;background:#0d4f5c;color:white;padding:14px 32px;border-radius:999px;text-decoration:none;font-weight:700;font-size:15px;">See the full leaderboard &rarr;</a></div>
+  <div class="is-91a87015"><a href="/powerscore/" class="is-c5f03454">See the full leaderboard &rarr;</a></div>
 </div>
 <!-- POWERSCORE-SPOTLIGHT-END -->
 
 
-<div class="section" id="categories" style="padding-top:0;">
+<div class="section is-4260ebea" id="categories">
   <div class="section-header center">
     <div class="section-eyebrow">Start with what you're considering</div>
     <h2 class="section-h2">Pick a category to see real numbers</h2>
@@ -1293,89 +1392,89 @@ var r=D.filter(function(x){return x.c===p.value})[0];if(r)r.k.forEach(function(k
   </div>
   <div class="what-grid what-grid-4">
     <a href="#city-picker" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:14px; padding:22px; text-decoration:none;">
-      <div style="font-size:24px; margin-bottom:8px;">&#128293;</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--teal-deep); margin-bottom:4px;">Heat Pump</h3>
-      <p style="font-size:13px; color:var(--ink-soft);">Replaces your furnace, adds cooling.</p>
+      <div class="is-61f619c8">&#128293;</div>
+      <h3 class="is-8290863c">Heat Pump</h3>
+      <p class="is-5e451d7d">Replaces your furnace, adds cooling.</p>
     </a>
     <a href="#city-picker" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:14px; padding:22px; text-decoration:none;">
-      <div style="font-size:24px; margin-bottom:8px;">&#9728;&#65039;</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--teal-deep); margin-bottom:4px;">Solar</h3>
-      <p style="font-size:13px; color:var(--ink-soft);">Generate your own power year-round.</p>
+      <div class="is-61f619c8">&#9728;&#65039;</div>
+      <h3 class="is-8290863c">Solar</h3>
+      <p class="is-5e451d7d">Generate your own power year-round.</p>
     </a>
     <a href="#city-picker" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:14px; padding:22px; text-decoration:none;">
-      <div style="font-size:24px; margin-bottom:8px;">&#128267;</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--teal-deep); margin-bottom:4px;">Battery</h3>
-      <p style="font-size:13px; color:var(--ink-soft);">Store solar power, use it at night.</p>
+      <div class="is-61f619c8">&#128267;</div>
+      <h3 class="is-8290863c">Battery</h3>
+      <p class="is-5e451d7d">Store solar power, use it at night.</p>
     </a>
     <a href="#city-picker" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:14px; padding:22px; text-decoration:none;">
-      <div style="font-size:24px; margin-bottom:8px;">&#127978;</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--teal-deep); margin-bottom:4px;">Insulation</h3>
-      <p style="font-size:13px; color:var(--ink-soft);">Stop losing heat through walls and attics.</p>
+      <div class="is-61f619c8">&#127978;</div>
+      <h3 class="is-8290863c">Insulation</h3>
+      <p class="is-5e451d7d">Stop losing heat through walls and attics.</p>
     </a>
     <a href="#city-picker" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:14px; padding:22px; text-decoration:none;">
-      <div style="font-size:24px; margin-bottom:8px;">&#128167;</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--teal-deep); margin-bottom:4px;">Water Heater</h3>
-      <p style="font-size:13px; color:var(--ink-soft);">Heat pump water heaters cut standby losses.</p>
+      <div class="is-61f619c8">&#128167;</div>
+      <h3 class="is-8290863c">Water Heater</h3>
+      <p class="is-5e451d7d">Heat pump water heaters cut standby losses.</p>
     </a>
     <a href="#city-picker" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:14px; padding:22px; text-decoration:none;">
-      <div style="font-size:24px; margin-bottom:8px;">&#129749;</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--teal-deep); margin-bottom:4px;">Windows</h3>
-      <p style="font-size:13px; color:var(--ink-soft);">Double- and triple-pane upgrades.</p>
+      <div class="is-61f619c8">&#129749;</div>
+      <h3 class="is-8290863c">Windows</h3>
+      <p class="is-5e451d7d">Double- and triple-pane upgrades.</p>
     </a>
     <a href="#city-picker" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:14px; padding:22px; text-decoration:none;">
-      <div style="font-size:24px; margin-bottom:8px;">&#128663;</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--teal-deep); margin-bottom:4px;">EV Charger</h3>
-      <p style="font-size:13px; color:var(--ink-soft);">Level 2 home charging installs.</p>
+      <div class="is-61f619c8">&#128663;</div>
+      <h3 class="is-8290863c">EV Charger</h3>
+      <p class="is-5e451d7d">Level 2 home charging installs.</p>
     </a>
     <a href="#city-picker" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:14px; padding:22px; text-decoration:none;">
-      <div style="font-size:24px; margin-bottom:8px;">&#128241;</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--teal-deep); margin-bottom:4px;">Smart Thermostat</h3>
-      <p style="font-size:13px; color:var(--ink-soft);">Often free through utility programs.</p>
+      <div class="is-61f619c8">&#128241;</div>
+      <h3 class="is-8290863c">Smart Thermostat</h3>
+      <p class="is-5e451d7d">Often free through utility programs.</p>
     </a>
   </div>
-  <p style="text-align:center; margin-top:32px; font-size:15px; color:var(--ink-soft);">
-    Ready to install? <a href="/installers/" style="color:var(--teal-deep); font-weight:600; border-bottom:1px solid var(--amber); text-decoration:none;">Browse our directory of 660+ verified installers →</a>
+  <p class="is-2ec5f42e">
+    Ready to install? <a href="/installers/" class="is-640fce8e">Browse our directory of 660+ verified installers →</a>
   </p>
 </div>
 
 <!-- CHOOSE YOUR REGION -->
-<div id="city-picker" style="max-width: 1180px; margin: 72px auto 0; padding: 0 28px;">
-  <div class="section-header center" style="margin-bottom:40px;">
+<div id="city-picker" class="is-db8baeb9">
+  <div class="section-header center is-8c92175d">
     <div class="section-eyebrow">Start with where you live</div>
     <h2 class="section-h2">Choose your region</h2>
     <p class="section-lede">Every province, state, and utility territory has its own rebate stack. Pick yours to see real numbers, not averages.</p>
   </div>
-  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px;">
+  <div class="is-c0839a60">
 
     <a href="/ca/bc/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">Canada &middot; 18 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">British Columbia</h3>
-      <p style="font-size:14px; color:var(--ink-soft);">Cash rebates by cheque &mdash; up to $13K on an income-qualified heat pump.</p>
+      <div class="is-1f3bab59">Canada &middot; 18 cities</div>
+      <h3 class="is-ab1b25e3">British Columbia</h3>
+      <p class="is-26757191">Cash rebates by cheque &mdash; up to $13K on an income-qualified heat pump.</p>
     </a>
 
     <a href="/ca/on/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">Canada &middot; 18 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Ontario</h3>
-      <p style="font-size:14px; color:var(--ink-soft);">Up to $12,000 for a heat pump &mdash; sized by fuel type, no income test.</p>
+      <div class="is-1f3bab59">Canada &middot; 18 cities</div>
+      <h3 class="is-ab1b25e3">Ontario</h3>
+      <p class="is-26757191">Up to $12,000 for a heat pump &mdash; sized by fuel type, no income test.</p>
     </a>
 
     <a href="/ca/ab/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">Canada &middot; 5 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Alberta</h3>
-      <p style="font-size:14px; color:var(--ink-soft);">Fragmented by utility &mdash; we show you what's actually real.</p>
+      <div class="is-1f3bab59">Canada &middot; 5 cities</div>
+      <h3 class="is-ab1b25e3">Alberta</h3>
+      <p class="is-26757191">Fragmented by utility &mdash; we show you what's actually real.</p>
     </a>
 
     <a href="/ca/ns/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">Canada &middot; Halifax</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Nova Scotia</h3>
-      <p style="font-size:14px; color:var(--ink-soft);">Heat pump program still live in 2026, scaled back from 2025.</p>
+      <div class="is-1f3bab59">Canada &middot; Halifax</div>
+      <h3 class="is-ab1b25e3">Nova Scotia</h3>
+      <p class="is-26757191">Heat pump program still live in 2026, scaled back from 2025.</p>
     </a>
 
     <div style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; transition:all .2s; box-shadow:var(--shadow); cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'" onclick="window.location.href='/us/ny/'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 21 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;"><a href="/us/ny/" style="color:inherit; text-decoration:none;">New York</a></h3>
-      <p style="font-size:14px; color:var(--ink-soft); margin-bottom:12px;">Federal HEAR + state Clean Heat + utility rebates stack to $14K&ndash;$28K+. Four utilities (Con Edison, National Grid, PSEG, Central Hudson), four different rates.</p>
-      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+      <div class="is-1f3bab59">United States &middot; 21 cities</div>
+      <h3 class="is-ab1b25e3"><a href="/us/ny/" class="is-48711be5">New York</a></h3>
+      <p class="is-1cafff85">Federal HEAR + state Clean Heat + utility rebates stack to $14K&ndash;$28K+. Four utilities (Con Edison, National Grid, PSEG, Central Hudson), four different rates.</p>
+      <div class="is-f1e97509">
         <a href="/us/ny/con-edison/new-york-city/" onclick="event.stopPropagation()" style="font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;">New York City</a>
         <a href="/us/ny/national-grid/buffalo/" onclick="event.stopPropagation()" style="font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;">Buffalo</a>
         <a href="/us/ny/national-grid/rochester/" onclick="event.stopPropagation()" style="font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;">Rochester</a>
@@ -1385,10 +1484,10 @@ var r=D.filter(function(x){return x.c===p.value})[0];if(r)r.k.forEach(function(k
     </div>
 
     <div style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; transition:all .2s; box-shadow:var(--shadow); cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'" onclick="window.location.href='/us/ca/'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 7 regions</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;"><a href="/us/ca/" style="color:inherit; text-decoration:none;">California</a></h3>
-      <p style="font-size:14px; color:var(--ink-soft); margin-bottom:12px;">Federal ITC expired &mdash; state &amp; utility rebates still stack.</p>
-      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+      <div class="is-1f3bab59">United States &middot; 7 regions</div>
+      <h3 class="is-ab1b25e3"><a href="/us/ca/" class="is-48711be5">California</a></h3>
+      <p class="is-1cafff85">Federal ITC expired &mdash; state &amp; utility rebates still stack.</p>
+      <div class="is-f1e97509">
         <a href="/us/ca/los-angeles/" onclick="event.stopPropagation()" style="font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;">Los Angeles</a>
         <a href="/us/ca/san-diego/" onclick="event.stopPropagation()" style="font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;">San Diego</a>
         <a href="/us/ca/sacramento/" onclick="event.stopPropagation()" style="font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;">Sacramento</a>
@@ -1398,16 +1497,16 @@ var r=D.filter(function(x){return x.c===p.value})[0];if(r)r.k.forEach(function(k
     </div>
 
     <a href="/us/ma/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 13 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Massachusetts</h3>
-      <p style="font-size:14px; color:var(--ink-soft);">Mass Save pays the installer directly &mdash; no cheque to you. 41 towns are excluded.</p>
+      <div class="is-1f3bab59">United States &middot; 13 cities</div>
+      <h3 class="is-ab1b25e3">Massachusetts</h3>
+      <p class="is-26757191">Mass Save pays the installer directly &mdash; no cheque to you. 41 towns are excluded.</p>
     </a>
 
     <div style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; transition:all .2s; box-shadow:var(--shadow); cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'" onclick="window.location.href='/us/pa/'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 4 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;"><a href="/us/pa/" style="color:inherit; text-decoration:none;">Pennsylvania</a></h3>
-      <p style="font-size:14px; color:var(--ink-soft); margin-bottom:12px;">Utility Act 129 rebates vary by territory &mdash; PECO, Duquesne, PPL &amp; FirstEnergy.</p>
-      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+      <div class="is-1f3bab59">United States &middot; 4 cities</div>
+      <h3 class="is-ab1b25e3"><a href="/us/pa/" class="is-48711be5">Pennsylvania</a></h3>
+      <p class="is-1cafff85">Utility Act 129 rebates vary by territory &mdash; PECO, Duquesne, PPL &amp; FirstEnergy.</p>
+      <div class="is-f1e97509">
         <a href="/us/pa/philadelphia/" onclick="event.stopPropagation()" style="font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;">Philadelphia</a>
         <a href="/us/pa/pittsburgh/" onclick="event.stopPropagation()" style="font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;">Pittsburgh</a>
         <a href="/us/pa/allentown/" onclick="event.stopPropagation()" style="font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;">Allentown</a>
@@ -1416,10 +1515,10 @@ var r=D.filter(function(x){return x.c===p.value})[0];if(r)r.k.forEach(function(k
     </div>
 
     <div style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; transition:all .2s; box-shadow:var(--shadow); cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'" onclick="window.location.href='/us/co/'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 5 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;"><a href="/us/co/" style="color:inherit; text-decoration:none;">Colorado</a></h3>
-      <p style="font-size:14px; color:var(--ink-soft); margin-bottom:12px;">Xcel Energy plus municipal utilities like Fort Collins &amp; Colorado Springs.</p>
-      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+      <div class="is-1f3bab59">United States &middot; 5 cities</div>
+      <h3 class="is-ab1b25e3"><a href="/us/co/" class="is-48711be5">Colorado</a></h3>
+      <p class="is-1cafff85">Xcel Energy plus municipal utilities like Fort Collins &amp; Colorado Springs.</p>
+      <div class="is-f1e97509">
         <a href="/us/co/denver/" onclick="event.stopPropagation()" style="font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;">Denver</a>
         <a href="/us/co/colorado-springs/" onclick="event.stopPropagation()" style="font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;">Colorado Springs</a>
         <a href="/us/co/aurora/" onclick="event.stopPropagation()" style="font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;">Aurora</a>
@@ -1428,43 +1527,44 @@ var r=D.filter(function(x){return x.c===p.value})[0];if(r)r.k.forEach(function(k
     </div>
 
     <a href="/us/vt/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 5 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Vermont</h3>
-      <p style="font-size:14px; color:var(--ink-soft);">Efficiency Vermont &mdash; some of the most generous heat pump rebates in the US.</p>
+      <div class="is-1f3bab59">United States &middot; 5 cities</div>
+      <h3 class="is-ab1b25e3">Vermont</h3>
+      <p class="is-26757191">Efficiency Vermont &mdash; some of the most generous heat pump rebates in the US.</p>
     </a>
+
 
 
 
 
 <!-- HOME-REGION-CARDS-START -->
     <a href="/us/mi/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 4 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Michigan</h3>
-      <p style="font-size:14px; color:var(--ink-soft);">DTE and Consumers Energy rebates, plus free weatherization for income-qualified homes.</p>
+      <div class="is-1f3bab59">United States &middot; 4 cities</div>
+      <h3 class="is-ab1b25e3">Michigan</h3>
+      <p class="is-26757191">DTE and Consumers Energy rebates, plus free weatherization for income-qualified homes.</p>
     </a>
 
     <a href="/us/nj/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 4 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">New Jersey</h3>
-      <p style="font-size:14px; color:var(--ink-soft);">PSE&amp;G, JCP&amp;L and Atlantic City Electric programs, plus the New Jersey Clean Energy Program.</p>
+      <div class="is-1f3bab59">United States &middot; 4 cities</div>
+      <h3 class="is-ab1b25e3">New Jersey</h3>
+      <p class="is-26757191">PSE&amp;G, JCP&amp;L and Atlantic City Electric programs, plus the New Jersey Clean Energy Program.</p>
     </a>
 
     <a href="/us/il/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 4 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Illinois</h3>
-      <p style="font-size:14px; color:var(--ink-soft);">ComEd, Nicor Gas, Peoples Gas and Ameren Illinois programs, plus Illinois Shines for solar.</p>
+      <div class="is-1f3bab59">United States &middot; 4 cities</div>
+      <h3 class="is-ab1b25e3">Illinois</h3>
+      <p class="is-26757191">ComEd, Nicor Gas, Peoples Gas and Ameren Illinois programs, plus Illinois Shines for solar.</p>
     </a>
 
     <a href="/us/wa/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 5 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Washington</h3>
-      <p style="font-size:14px; color:var(--ink-soft);">Puget Sound Energy, Seattle City Light, Avista, Tacoma Power and Clark Public Utilities programs.</p>
+      <div class="is-1f3bab59">United States &middot; 5 cities</div>
+      <h3 class="is-ab1b25e3">Washington</h3>
+      <p class="is-26757191">Puget Sound Energy, Seattle City Light, Avista, Tacoma Power and Clark Public Utilities programs.</p>
     </a>
 
     <a href="/us/mn/" style="display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; transition:all .2s; box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">United States &middot; 4 cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">Minnesota</h3>
-      <p style="font-size:14px; color:var(--ink-soft);">Xcel Energy, CenterPoint Energy and Minnesota Power programs, plus Save Energy Minnesota.</p>
+      <div class="is-1f3bab59">United States &middot; 4 cities</div>
+      <h3 class="is-ab1b25e3">Minnesota</h3>
+      <p class="is-26757191">Xcel Energy, CenterPoint Energy and Minnesota Power programs, plus Save Energy Minnesota.</p>
     </a>
 <!-- HOME-REGION-CARDS-END -->
 
@@ -1472,133 +1572,133 @@ var r=D.filter(function(x){return x.c===p.value})[0];if(r)r.k.forEach(function(k
 </div>
 
 <!-- REBATE BREAKDOWN: WHAT YOU CAN GET -->
-<div style="max-width: 1100px; margin: 60px auto 40px; padding: 0 28px;">
-  <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">What you can typically get, across every region</h2>
-  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">You don't have to qualify for everything, but you probably qualify for more than you think. Exact numbers depend on your region and household income &mdash; pick your region above for precise figures. Heat pump alone? Rebates range from about $1,500 to $13,000, and the biggest amounts go to income-qualified households. Add solar or insulation? You can stack them.</p>
+<div class="is-eb30e3d5">
+  <h2 class="is-8545cf06">What you can typically get, across every region</h2>
+  <p class="is-d164e115">You don't have to qualify for everything, but you probably qualify for more than you think. Exact numbers depend on your region and household income &mdash; pick your region above for precise figures. Heat pump alone? Rebates range from about $1,500 to $13,000, and the biggest amounts go to income-qualified households. Add solar or insulation? You can stack them.</p>
 
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; contain: layout;">
+  <div class="is-ab59634f">
 
-    <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <div style="font-size: 28px; margin-bottom: 8px;">🔥</div>
-      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #111;">Heat Pump</h3>
-      <p style="font-size: 24px; font-weight: 700; color: #d4751c; margin-bottom: 6px;">Up to $13K</p>
-      <p style="font-size: 13px; color: #666;">Replaces your furnace or baseboards, adds cooling. Top amounts are income-qualified.</p>
+    <div class="is-2b160b85">
+      <div class="is-ea853cbd">🔥</div>
+      <h3 class="is-1b92777c">Heat Pump</h3>
+      <p class="is-24497659">Up to $13K</p>
+      <p class="is-b866acf1">Replaces your furnace or baseboards, adds cooling. Top amounts are income-qualified.</p>
     </div>
 
-    <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <div style="font-size: 28px; margin-bottom: 8px;">☀️</div>
-      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #111;">Solar Panels</h3>
-      <p style="font-size: 24px; font-weight: 700; color: #d4751c; margin-bottom: 6px;">$5K</p>
-      <p style="font-size: 13px; color: #666;">Generate your own power year-round.</p>
+    <div class="is-2b160b85">
+      <div class="is-ea853cbd">☀️</div>
+      <h3 class="is-1b92777c">Solar Panels</h3>
+      <p class="is-24497659">$5K</p>
+      <p class="is-b866acf1">Generate your own power year-round.</p>
     </div>
 
-    <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <div style="font-size: 28px; margin-bottom: 8px;">🔋</div>
-      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #111;">Battery Storage</h3>
-      <p style="font-size: 24px; font-weight: 700; color: #d4751c; margin-bottom: 6px;">$1.5K–$5K</p>
-      <p style="font-size: 13px; color: #666;">Store solar power. Use it at night.</p>
+    <div class="is-2b160b85">
+      <div class="is-ea853cbd">🔋</div>
+      <h3 class="is-1b92777c">Battery Storage</h3>
+      <p class="is-24497659">$1.5K–$5K</p>
+      <p class="is-b866acf1">Store solar power. Use it at night.</p>
     </div>
 
-    <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <div style="font-size: 28px; margin-bottom: 8px;">🪟</div>
-      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #111;">Insulation & Air Sealing</h3>
-      <p style="font-size: 24px; font-weight: 700; color: #d4751c; margin-bottom: 6px;">Up to $5.5K</p>
-      <p style="font-size: 13px; color: #666;">Stop losing heat. Lower your bills.</p>
+    <div class="is-2b160b85">
+      <div class="is-ea853cbd">🪟</div>
+      <h3 class="is-1b92777c">Insulation & Air Sealing</h3>
+      <p class="is-24497659">Up to $5.5K</p>
+      <p class="is-b866acf1">Stop losing heat. Lower your bills.</p>
     </div>
 
-    <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <div style="font-size: 28px; margin-bottom: 8px;">💧</div>
-      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #111;">Water Heater</h3>
-      <p style="font-size: 24px; font-weight: 700; color: #d4751c; margin-bottom: 6px;">$1K–$3K</p>
-      <p style="font-size: 13px; color: #666;">Heat pump water heaters are efficient.</p>
+    <div class="is-2b160b85">
+      <div class="is-ea853cbd">💧</div>
+      <h3 class="is-1b92777c">Water Heater</h3>
+      <p class="is-24497659">$1K–$3K</p>
+      <p class="is-b866acf1">Heat pump water heaters are efficient.</p>
     </div>
 
-    <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <div style="font-size: 28px; margin-bottom: 8px;">📱</div>
-      <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #111;">Smart Devices</h3>
-      <p style="font-size: 24px; font-weight: 700; color: #d4751c; margin-bottom: 6px;">Free–$200</p>
-      <p style="font-size: 13px; color: #666;">Thermostats, EV chargers, more.</p>
+    <div class="is-2b160b85">
+      <div class="is-ea853cbd">📱</div>
+      <h3 class="is-1b92777c">Smart Devices</h3>
+      <p class="is-24497659">Free–$200</p>
+      <p class="is-b866acf1">Thermostats, EV chargers, more.</p>
     </div>
 
   </div>
 
-  <p style="font-size: 13px; color: #666; margin-top: 28px; background: #f0fdf4; padding: 16px 20px; border-radius: 10px; border-left: 4px solid #15803d;">
+  <p class="is-ce93dbf3">
     <strong>Income-qualified households get even more:</strong> If you earn under $110K, add another $2K–$5K on top. If you're under $55K, the government sometimes covers 100% of the cost.
   </p>
 </div>
 
 <!-- QUICK WINS: FREE OFFERINGS -->
-<div style="max-width: 1100px; margin: 60px auto 40px; padding: 0 28px;">
-  <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Don't want to wait for a big project? Get free money now</h2>
-  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">Most regions have at least one program like this &mdash; free devices or upgrades that don't need a big renovation or an income test to claim. Pick your region to see what's actually live where you are: <a href="#city-picker" style="color:#0d4f5c; font-weight:600;">See your region's quick wins →</a></p>
+<div class="is-eb30e3d5">
+  <h2 class="is-8545cf06">Don't want to wait for a big project? Get free money now</h2>
+  <p class="is-d164e115">Most regions have at least one program like this &mdash; free devices or upgrades that don't need a big renovation or an income test to claim. Pick your region to see what's actually live where you are: <a href="#city-picker" class="is-e526ae97">See your region's quick wins →</a></p>
 
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; contain: layout;">
+  <div class="is-18ad0489">
 
     <!-- Free Thermostats -->
-    <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 24px; contain: content;">
-      <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #15803d;">Free Smart Thermostats</h3>
-      <p style="font-size: 13px; color: #166534; margin-bottom: 8px;"><strong>Available in several regions</strong></p>
-      <p style="font-size: 13px; color: #166534;">If you heat with electric baseboards, some utilities will mail you free smart thermostats plus an ongoing seasonal reward for letting them manage peak demand.</p>
-      <p style="font-size: 12px; color: #15803d; margin-top: 12px;"><a href="#city-picker" style="color: #15803d; font-weight: 600; text-decoration: none;">Check your region →</a></p>
+    <div class="is-2ade8be4">
+      <h3 class="is-15ade639">Free Smart Thermostats</h3>
+      <p class="is-d5f01cd0"><strong>Available in several regions</strong></p>
+      <p class="is-b2661a19">If you heat with electric baseboards, some utilities will mail you free smart thermostats plus an ongoing seasonal reward for letting them manage peak demand.</p>
+      <p class="is-8e1a34c6"><a href="#city-picker" class="is-e1d223f3">Check your region →</a></p>
     </div>
 
     <!-- Free Energy Kit -->
-    <div style="background: #fef3e6; border: 2px solid #fde68a; border-radius: 12px; padding: 24px; contain: content;">
-      <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #92400e;">Free Energy Saving Kit</h3>
-      <p style="font-size: 13px; color: #b45309; margin-bottom: 8px;"><strong>Income-qualified</strong></p>
-      <p style="font-size: 13px; color: #b45309;">LED bulbs, weather stripping, high-efficiency showerheads, tap aerators, and more. Free shipping in the regions that offer it.</p>
-      <p style="font-size: 12px; color: #b45309; margin-top: 12px;"><a href="#city-picker" style="color: #b45309; font-weight: 600; text-decoration: none;">Check your region →</a></p>
+    <div class="is-441e7a69">
+      <h3 class="is-b5d4358c">Free Energy Saving Kit</h3>
+      <p class="is-327ad703"><strong>Income-qualified</strong></p>
+      <p class="is-8ad76216">LED bulbs, weather stripping, high-efficiency showerheads, tap aerators, and more. Free shipping in the regions that offer it.</p>
+      <p class="is-043eb68f"><a href="#city-picker" class="is-296fe222">Check your region →</a></p>
     </div>
 
     <!-- Free Retrofit -->
-    <div style="background: #fce7f3; border: 2px solid #fbcfe8; border-radius: 12px; padding: 24px; contain: content;">
-      <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #be123c;">Free Full Retrofit</h3>
-      <p style="font-size: 13px; color: #be185d; margin-bottom: 8px;"><strong>Low-income households only</strong></p>
-      <p style="font-size: 13px; color: #be185d;">Several regions cover a full heat pump, insulation, and weatherization install at no cost for qualifying low-income homes and renters.</p>
-      <p style="font-size: 12px; color: #be185d; margin-top: 12px;"><a href="#city-picker" style="color: #be185d; font-weight: 600; text-decoration: none;">Check your region →</a></p>
+    <div class="is-cf54ff28">
+      <h3 class="is-1d025f42">Free Full Retrofit</h3>
+      <p class="is-68f0e454"><strong>Low-income households only</strong></p>
+      <p class="is-8f057828">Several regions cover a full heat pump, insulation, and weatherization install at no cost for qualifying low-income homes and renters.</p>
+      <p class="is-6292f4da"><a href="#city-picker" class="is-a986eed1">Check your region →</a></p>
     </div>
   </div>
 </div>
 
 <!-- SHARE YOUR OUTCOME -->
-<div style="max-width: 1100px; margin: 60px auto 40px; padding: 0 28px;">
-  <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Real numbers from real homeowners</h2>
-  <p style="font-size: 15px; color: #666; margin-bottom: 32px;">We don't publish testimonials we can't back up. Homeowners across every region we cover submit their actual rebate totals and monthly savings through our <a href="/share-your-cost/" style="color:#0d4f5c; font-weight:600;">Share Your Cost</a> tool, so the numbers you see are real, not made up for the page.</p>
-  <a href="/share-your-cost/" style="display:inline-block; background:var(--amber,#d4751c); color:#fff; padding:13px 26px; border-radius:999px; text-decoration:none; font-weight:600;">Share your own numbers →</a>
+<div class="is-eb30e3d5">
+  <h2 class="is-8545cf06">Real numbers from real homeowners</h2>
+  <p class="is-d164e115">We don't publish testimonials we can't back up. Homeowners across every region we cover submit their actual rebate totals and monthly savings through our <a href="/share-your-cost/" class="is-e526ae97">Share Your Cost</a> tool, so the numbers you see are real, not made up for the page.</p>
+  <a href="/share-your-cost/" class="is-a8fef75d">Share your own numbers →</a>
 </div>
 
 
 <section class="section" id="blog-preview">
-  <div style="max-width:1100px; margin:0 auto; padding:0 24px;">
-    <div class="section-header center" style="margin-bottom:32px;">
+  <div class="is-cb490f39">
+    <div class="section-header center is-c17af62b">
       <div class="section-eyebrow">From the blog</div>
       <h2 class="section-h2">Honest answers before you sign anything.</h2>
-      <p style="max-width:600px; margin:12px auto 0; color:var(--ink-soft); font-size:16px;">No sales pitch. Real numbers, common mistakes, and what to check before you commit.</p>
+      <p class="is-445553f5">No sales pitch. Real numbers, common mistakes, and what to check before you commit.</p>
     </div>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px;">
+    <div class="is-c0839a60">
       <a href="/blog/heat-pump-vs-air-conditioner-furnace/" style="display:block; background:#fff; border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; color:inherit; transition:all .2s;">
-        <span style="font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--amber); display:block; margin-bottom:10px;">Cost comparison</span>
-        <strong style="display:block; font-family:'Fraunces', Georgia, serif; font-size:19px; margin-bottom:8px; line-height:1.3;">Heat Pump vs AC: Cost, Rebates & Savings</strong>
-        <span style="font-size:14px; color:var(--ink-soft);">Compare upfront costs, annual savings, typical rebates (varies by region and income), and true 10-year ROI.</span>
+        <span class="is-cb2eb446">Cost comparison</span>
+        <strong class="is-e1c13d85">Heat Pump vs AC: Cost, Rebates & Savings</strong>
+        <span class="is-26757191">Compare upfront costs, annual savings, typical rebates (varies by region and income), and true 10-year ROI.</span>
       </a>
       <a href="/blog/heat-pump-vs-air-conditioner-furnace/" style="display:block; background:#fff; border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; color:inherit; transition:all .2s;">
-        <span style="font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--amber); display:block; margin-bottom:10px;">Heating decision</span>
-        <strong style="display:block; font-family:'Fraunces', Georgia, serif; font-size:19px; margin-bottom:8px; line-height:1.3;">Furnace vs Heat Pump: Which Gets Rebates?</strong>
-        <span style="font-size:14px; color:var(--ink-soft);">Most regions only rebate heat pumps, not furnaces. See why, and when it makes financial sense to switch.</span>
+        <span class="is-cb2eb446">Heating decision</span>
+        <strong class="is-e1c13d85">Furnace vs Heat Pump: Which Gets Rebates?</strong>
+        <span class="is-26757191">Most regions only rebate heat pumps, not furnaces. See why, and when it makes financial sense to switch.</span>
       </a>
       <a href="/blog/greener-homes-grant-explained/" style="display:block; background:#fff; border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; color:inherit; transition:all .2s;">
-        <span style="font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--amber); display:block; margin-bottom:10px;">Federal programs</span>
-        <strong style="display:block; font-family:'Fraunces', Georgia, serif; font-size:19px; margin-bottom:8px; line-height:1.3;">The Greener Homes Grant Has Closed — What Replaced It</strong>
-        <span style="font-size:14px; color:var(--ink-soft);">The $40K federal grant and loan are both gone. Here's where the money actually is.</span>
+        <span class="is-cb2eb446">Federal programs</span>
+        <strong class="is-e1c13d85">The Greener Homes Grant Has Closed — What Replaced It</strong>
+        <span class="is-26757191">The $40K federal grant and loan are both gone. Here's where the money actually is.</span>
       </a>
       <a href="/blog/why-insulation-first-energy-retrofit/" style="display:block; background:#fff; border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; color:inherit; transition:all .2s;">
-        <span style="font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--amber); display:block; margin-bottom:10px;">Strategy guide</span>
-        <strong style="display:block; font-family:'Fraunces', Georgia, serif; font-size:19px; margin-bottom:8px; line-height:1.3;">Why Insulation First? Save 30–50%</strong>
-        <span style="font-size:14px; color:var(--ink-soft);">Right retrofit sequence cuts costs dramatically. Here's the data.</span>
+        <span class="is-cb2eb446">Strategy guide</span>
+        <strong class="is-e1c13d85">Why Insulation First? Save 30–50%</strong>
+        <span class="is-26757191">Right retrofit sequence cuts costs dramatically. Here's the data.</span>
       </a>
     </div>
-    <div style="text-align:center; margin-top:32px;">
-      <a href="/blog/" class="btn-secondary" style="display:inline-block;">Read all articles &rarr;</a>
+    <div class="is-baea027e">
+      <a href="/blog/" class="btn-secondary is-60e32dcb">Read all articles &rarr;</a>
     </div>
   </div>
 </section>
@@ -1613,16 +1713,16 @@ var r=D.filter(function(x){return x.c===p.value})[0];if(r)r.k.forEach(function(k
 .hf-strip a{display:block;text-decoration:none;background:#fff;border:1px solid #d9d0c1;border-radius:12px;padding:18px;color:#0a2a2e}
 .hf-strip b{display:block;font-family:'Fraunces',Georgia,serif;font-size:19px;margin-bottom:4px}
 @media(max-width:600px){.hf-i{flex-direction:column;gap:6px}.hf-m{white-space:normal}}</style>
-<section style="max-width:800px;margin:0 auto;padding:64px 24px;">
-  <p style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:#d4751c;margin:0 0 8px;">What changed</p>
-  <h2 style="font-family:'Fraunces',Georgia,serif;font-size:clamp(28px,4vw,36px);margin:0 0 6px;color:var(--ink);">Rebates are opening and closing</h2>
+<section class="is-c16ac2f4">
+  <p class="is-5694966f">What changed</p>
+  <h2 class="is-0cde321b">Rebates are opening and closing</h2>
   <div class="hf-close" data-deadline="2026-10-31"><b>Closing soon:</b> BC Hydro heat pump bonus ends <span class="hf-when">2026-10-31</span>. <a href="/ca/bc/">Details</a></div>
-  <p style="color:#4a5f5b;margin:0 0 14px;">Every item is checked against the program's own page. Last checked 2026-10-01.</p>
-  <ul style="padding:0;margin:0;"><li class="hf-i"><span class="hf-pill" style="background:#fdeccf;color:#8a4a06">Coming up</span><div><b>Nova Scotia Heating Assistance Rebate (HARP)</b> <span class="hf-m"><a href="/ca/ns/">Nova Scotia</a> &middot; 2026-10-01</span><p>HARP helps lower-income households with winter heating bills. It paid $400 last winter and has opened on October 1 in past years. Confirm the 2026-27 date and amount with the Province.</p></div></li><li class="hf-i"><span class="hf-pill" style="background:#fdeccf;color:#8a4a06">Coming up</span><div><b>BC Hydro heat pump bonus</b> <span class="hf-m"><a href="/ca/bc/">British Columbia</a> &middot; 2026-10-31</span><p>The extra bonus of up to $1,000 on BC Hydro heat pump rebates only covers installs completed by October 31, 2026.</p></div></li><li class="hf-i"><span class="hf-pill" style="background:#e3f1e8;color:#1f5a3d">New</span><div><b>National Heat Pump Rebate</b> <span class="hf-m">Canada &middot; 2026-10-08</span><p>Ottawa announced a $2 billion rebate for electric heat pumps: up to $10,000 for households below the median income and $2,000 for other eligible homeowners. Launch is expected in early 2027. Income line, eligible homes and retroactivity are not published yet.</p></div></li><li class="hf-i"><span class="hf-pill" style="background:#fdeccf;color:#8a4a06">Paused</span><div><b>Calgary Clean Energy Improvement Program (CEIP)</b> <span class="hf-m"><a href="/ca/ab/">Alberta</a> &middot; 2026-09</span><p>Calgary&#x27;s CEIP financing (up to $50,000 repaid on your property tax) is closed to new applications until winter 2026/2027.</p></div></li><li class="hf-i"><span class="hf-pill" style="background:#fdeccf;color:#8a4a06">Paused</span><div><b>Lethbridge and St. Albert CEIP</b> <span class="hf-m"><a href="/ca/ab/">Alberta</a> &middot; 2026-09</span><p>Lethbridge&#x27;s CEIP is at capacity and closed to new pre-qualification. St. Albert is taking waitlist applications only.</p></div></li><li class="hf-i"><span class="hf-pill" style="background:#f3dcdc;color:#8a2b2b">Ended</span><div><b>Federal Oil to Heat Pump Affordability (Alberta)</b> <span class="hf-m"><a href="/ca/ab/">Alberta</a> &middot; 2026-07-31</span><p>The federal grant of up to $10,000 to switch from oil to a heat pump closed to Albertans on July 31, 2026.</p></div></li><li class="hf-i"><span class="hf-pill" style="background:#f3dcdc;color:#8a2b2b">Cut</span><div><b>CleanBC Energy Savings Program (income-qualified)</b> <span class="hf-m"><a href="/ca/bc/">British Columbia</a> &middot; 2026-07-06</span><p>New rules for invoices from July 6, 2026: heat pump rebates for switching from gas, oil or propane are now $13,000, $7,000 or $3,500 by income level, plus a $3,000 northern top-up for levels 1 and 2.</p></div></li></ul>
-  <h3 style="font-family:'Fraunces',Georgia,serif;font-size:22px;margin:36px 0 6px;color:var(--ink);">Biggest single rebate open today</h3>
-  <p style="color:#4a5f5b;margin:0 0 12px;font-size:15px;">The largest amount one open program pays in each region. Most homes get less, and some programs are income-qualified. The calculator shows yours.</p>
+  <p class="is-d3c1be7a">Every item is checked against the program's own page. Last checked 2026-10-01.</p>
+  <ul class="is-f6ff5be9"><li class="hf-i"><span class="hf-pill is-a0ea9386">Coming up</span><div><b>Nova Scotia Heating Assistance Rebate (HARP)</b> <span class="hf-m"><a href="/ca/ns/">Nova Scotia</a> &middot; 2026-10-01</span><p>HARP helps lower-income households with winter heating bills. It paid $400 last winter and has opened on October 1 in past years. Confirm the 2026-27 date and amount with the Province.</p></div></li><li class="hf-i"><span class="hf-pill is-a0ea9386">Coming up</span><div><b>BC Hydro heat pump bonus</b> <span class="hf-m"><a href="/ca/bc/">British Columbia</a> &middot; 2026-10-31</span><p>The extra bonus of up to $1,000 on BC Hydro heat pump rebates only covers installs completed by October 31, 2026.</p></div></li><li class="hf-i"><span class="hf-pill is-ee57073a">New</span><div><b>National Heat Pump Rebate</b> <span class="hf-m">Canada &middot; 2026-10-08</span><p>Ottawa announced a $2 billion rebate for electric heat pumps: up to $10,000 for households below the median income and $2,000 for other eligible homeowners. Launch is expected in early 2027. Income line, eligible homes and retroactivity are not published yet.</p></div></li><li class="hf-i"><span class="hf-pill is-a0ea9386">Paused</span><div><b>Calgary Clean Energy Improvement Program (CEIP)</b> <span class="hf-m"><a href="/ca/ab/">Alberta</a> &middot; 2026-09</span><p>Calgary&#x27;s CEIP financing (up to $50,000 repaid on your property tax) is closed to new applications until winter 2026/2027.</p></div></li><li class="hf-i"><span class="hf-pill is-a0ea9386">Paused</span><div><b>Lethbridge and St. Albert CEIP</b> <span class="hf-m"><a href="/ca/ab/">Alberta</a> &middot; 2026-09</span><p>Lethbridge&#x27;s CEIP is at capacity and closed to new pre-qualification. St. Albert is taking waitlist applications only.</p></div></li><li class="hf-i"><span class="hf-pill is-31692f93">Ended</span><div><b>Federal Oil to Heat Pump Affordability (Alberta)</b> <span class="hf-m"><a href="/ca/ab/">Alberta</a> &middot; 2026-07-31</span><p>The federal grant of up to $10,000 to switch from oil to a heat pump closed to Albertans on July 31, 2026.</p></div></li><li class="hf-i"><span class="hf-pill is-31692f93">Cut</span><div><b>CleanBC Energy Savings Program (income-qualified)</b> <span class="hf-m"><a href="/ca/bc/">British Columbia</a> &middot; 2026-07-06</span><p>New rules for invoices from July 6, 2026: heat pump rebates for switching from gas, oil or propane are now $13,000, $7,000 or $3,500 by income level, plus a $3,000 northern top-up for levels 1 and 2.</p></div></li></ul>
+  <h3 class="is-a0a74463">Biggest single rebate open today</h3>
+  <p class="is-a2597964">The largest amount one open program pays in each region. Most homes get less, and some programs are income-qualified. The calculator shows yours.</p>
   <div class="hf-strip hf-tops"><a href="/calculator/ma/"><b>Massachusetts: up to $25,000</b>Mass Save Enhanced: geothermal heat pump</a><a href="/calculator/ny/"><b>New York: up to $14,000</b>National Grid Clean Heat: full system, remove old system, Weatherized Tier</a><a href="/calculator/bc/"><b>British Columbia: up to $13,000</b>CleanBC Energy Savings Program: gas, oil or propane to heat pump</a><a href="/calculator/on/"><b>Ontario: up to $12,000</b>Home Renovation Savings: ground-source heat pump</a><a href="/calculator/nj/"><b>New Jersey: up to $12,000</b>PSE&amp;G Clean Heat (replace gas, oil or propane heat)</a><a href="/calculator/vt/"><b>Vermont: up to $7,000</b>Efficiency Vermont: weatherization</a><a href="/calculator/ca/"><b>California: up to $6,000</b>SMUD partner battery enrollment</a><a href="/calculator/wa/"><b>Washington: up to $5,000</b>PSE insulation and air sealing</a><a href="/calculator/mn/"><b>Minnesota: up to $5,000</b>Minneapolis Green Cost Share</a><a href="/calculator/co/"><b>Colorado: up to $5,000</b>Xcel Energy Renewable Battery Connect</a><a href="/calculator/mi/"><b>Michigan: up to $4,000</b>Ann Arbor A2ZERO cold climate heat pump</a><a href="/calculator/ns/"><b>Nova Scotia: up to $3,450</b>Efficiency Nova Scotia: insulation</a><a href="/calculator/il/"><b>Illinois: up to $2,000</b>ComEd ducted heat pump</a><a href="/calculator/pa/"><b>Pennsylvania: up to $500</b>PPL Electric insulation and air sealing</a><a href="/calculator/ab/"><b>Alberta: up to $50</b>Red Deer smart thermostat rebate</a></div>
-  <p style="margin-top:16px;"><a href="/rebate-tracker/"><b>See every change &rarr;</b></a></p>
+  <p class="is-1b0f4999"><a href="/rebate-tracker/"><b>See every change &rarr;</b></a></p>
   <div class="hf-strip">
     <a href="/calculator/"><b>Rebate calculators</b>Pick your province or state and see what you could get back.</a>
     <a href="/powerscore/"><b>PowerScore</b>See how your city ranks on open rebate money.</a>
@@ -1692,6 +1792,7 @@ var r=D.filter(function(x){return x.c===p.value})[0];if(r)r.k.forEach(function(k
 </section>
 
 <!-- FOOTER -->
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 

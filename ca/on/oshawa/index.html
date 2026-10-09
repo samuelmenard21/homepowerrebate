@@ -374,6 +374,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -484,12 +488,17 @@ h1, h2 { text-wrap: balance; }
 @media (max-width: 600px) { .hpr-breadcrumb { padding: 10px 20px; font-size: 12px; } }
 /* CANONICAL-BREADCRUMB-CSS-END */
 </style>
+<meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Oshawa Home Energy Rebates 2026 | HomePowerRebate", "url": "https://homepowerrebate.com/ca/on/oshawa/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- ============================== NAV (canonical, from _partials/nav-footer.html) ============================== -->
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -593,6 +602,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/on/">Ontario</a></li><li aria-current="page">Oshawa</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -964,7 +974,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   <div class="unified-carousel-wrapper" style="display: flex; flex-direction: column;">
     <div class="unified-carousel-flex-row" style="display: flex; align-items: center; gap: 10px;">
       <div class="unified-carousel-container" style="order: 1; flex: 1; min-width: 0; background: #fff; border: 2px solid #d9d0c1; border-radius: 12px; padding: 40px 28px; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between;">
-        <img class="unified-carousel-installer-image" src="" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; background: #f0f0f0;" alt="Installer photo" onerror="this.style.display='none';" onload="this.style.display='block';" />
+        <img class="unified-carousel-installer-image" src="" width="400" height="200" loading="lazy" decoding="async" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; background: #f0f0f0;" alt="Installer photo" onerror="this.style.display='none';" onload="this.style.display='block';" />
         <div style="display: flex; align-items: start; justify-content: space-between; margin-bottom: 20px;">
           <div>
             <h3 class="unified-carousel-installer-name" style="font-size: 24px; font-weight: 700; color: #0a2a2e; margin-bottom: 4px;">Loading...</h3>
@@ -1130,7 +1140,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
           <div style="font-family:'Fraunces',serif;font-size:12px;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Community data</div>
           <h3 style="font-family:'Fraunces',serif;font-size:22px;color:var(--teal-deep);margin:0;">What Oshawa homeowners actually paid</h3>
         </div>
-        <select id="res_oshawa_category" style="font-family:inherit;font-size:14px;padding:10px 14px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);">
+        <select id="res_oshawa_category" aria-label="Filter what homeowners paid by category" style="font-family:inherit;font-size:14px;padding:10px 14px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);">
           <option value="heat-pump">Heat pump</option>
           <option value="solar">Solar panels</option>
           <option value="battery">Home battery</option>
@@ -1246,6 +1256,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 <!-- STATE-CA-ON-EV-CHARGER-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/ca/on/ev-charger/">Ontario home EV charger rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-CA-ON-EV-CHARGER-LINK-END -->
 <!-- STATE-CA-ON-HRV-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/ca/on/hrv/">Ontario HRV and ERV rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-CA-ON-HRV-LINK-END -->
 <!-- UTILITY-SOE-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>All Ontario programs in one place:</b> see <a href="/programs/save-on-energy-rebates/">what Save on Energy pays</a>, and <a href="/programs/enbridge-gas-rebates/">what Enbridge gas customers get</a>.</p></section><!-- UTILITY-SOE-LINK-END -->
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Oshawa where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

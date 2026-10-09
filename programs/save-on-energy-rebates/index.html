@@ -198,6 +198,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -344,9 +348,14 @@ h1, h2 { text-wrap: balance; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Save on Energy Rebates 2026: Every Ontario Program in One Place", "description": "Save on Energy for Ontario homes in 2026: Home Renovation Savings, Peak Perks, the Energy Affordability Program, what each pays and what it does not cover.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-05", "dateModified": "2026-10-05", "mainEntityOfPath": "https://homepowerrebate.com/programs/save-on-energy-rebates/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Rebate programs", "item": "https://homepowerrebate.com/programs/"}, {"@type": "ListItem", "position": 3, "name": "Save on Energy", "item": "https://homepowerrebate.com/programs/save-on-energy-rebates/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Save on Energy?", "acceptedAnswer": {"@type": "Answer", "text": "The brand of the Independent Electricity System Operator for most of Ontario's home energy programs, including Home Renovation Savings with Enbridge Gas."}}, {"@type": "Question", "name": "How much is the heat pump rebate?", "acceptedAnswer": {"@type": "Answer", "text": "$1,250 per ton up to $7,500 for air-source in electric, oil, propane and wood homes, and less for gas homes."}}, {"@type": "Question", "name": "Does Save on Energy pay for an EV charger?", "acceptedAnswer": {"@type": "Answer", "text": "No. None of its five residential programs does."}}, {"@type": "Question", "name": "How much is the smart thermostat rebate?", "acceptedAnswer": {"@type": "Answer", "text": "$125, one per household."}}, {"@type": "Question", "name": "Who gets free upgrades?", "acceptedAnswer": {"@type": "Answer", "text": "Households under the Energy Affordability Program income limits."}}]}</script></head><body>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Save on Energy Rebates 2026: Every Ontario Program in One Place", "description": "Save on Energy for Ontario homes in 2026: Home Renovation Savings, Peak Perks, the Energy Affordability Program, what each pays and what it does not cover.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-05", "dateModified": "2026-10-05", "mainEntityOfPath": "https://homepowerrebate.com/programs/save-on-energy-rebates/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Rebate programs", "item": "https://homepowerrebate.com/programs/"}, {"@type": "ListItem", "position": 3, "name": "Save on Energy", "item": "https://homepowerrebate.com/programs/save-on-energy-rebates/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Save on Energy?", "acceptedAnswer": {"@type": "Answer", "text": "The brand of the Independent Electricity System Operator for most of Ontario's home energy programs, including Home Renovation Savings with Enbridge Gas."}}, {"@type": "Question", "name": "How much is the heat pump rebate?", "acceptedAnswer": {"@type": "Answer", "text": "$1,250 per ton up to $7,500 for air-source in electric, oil, propane and wood homes, and less for gas homes."}}, {"@type": "Question", "name": "Does Save on Energy pay for an EV charger?", "acceptedAnswer": {"@type": "Answer", "text": "No. None of its five residential programs does."}}, {"@type": "Question", "name": "How much is the smart thermostat rebate?", "acceptedAnswer": {"@type": "Answer", "text": "$125, one per household."}}, {"@type": "Question", "name": "Who gets free upgrades?", "acceptedAnswer": {"@type": "Answer", "text": "Households under the Energy Affordability Program income limits."}}]}</script><meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Save on Energy Rebates 2026: Every Ontario Program in One Place", "url": "https://homepowerrebate.com/programs/save-on-energy-rebates/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
+</head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -450,6 +459,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/programs/">Rebate programs</a></li><li aria-current="page">Save on Energy</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Heat pumps up to $7,500, thermostat $125</div><h1>Save on Energy Rebates in 2026</h1><p>Save on Energy is the brand of the Independent Electricity System Operator, the body that runs most of Ontario's home energy programs. It lists five residential programs, and none pays for an EV charger. This page puts the amounts side by side so you can see which one fits your house.</p></div></section>
 <article class="article"><div class="wrap">
@@ -485,6 +495,7 @@ h1, h2 { text-wrap: balance; }
 
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 5, 2026: <a href="https://saveonenergy.ca/en/For-Your-Home" target="_blank" rel="noopener">Save on Energy: For Your Home</a>, <a href="https://saveonenergy.ca/For-Your-Home/Home-Renovation-Savings" target="_blank" rel="noopener">Save on Energy: Home Renovation Savings</a>, <a href="https://saveonenergy.ca/For-Your-Home/Peak-Perks" target="_blank" rel="noopener">Save on Energy: Peak Perks</a>, <a href="https://saveonenergy.ca/For-Your-Home/Energy-Affordability-Program" target="_blank" rel="noopener">Save on Energy: Energy Affordability Program</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

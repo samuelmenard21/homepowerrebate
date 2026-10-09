@@ -246,6 +246,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -344,9 +348,14 @@ h1, h2 { text-wrap: balance; }
 }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "CleanBC Rebates 2026: Heat Pumps up to $13", "url": "https://homepowerrebate.com/programs/cleanbc-rebates/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
 </head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -450,6 +459,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/bc/">BC</a></li><li aria-current="page">CleanBC rebates</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>CleanBC Heat Pump Rebates 2026 (Income-Qualified)</h1>
 <p>Every amount links to the official program. Last checked October 1, 2026.</p><p class="meta">By Sam Menard</p></div></header>
@@ -468,6 +478,7 @@ h1, h2 { text-wrap: balance; }
 <p><b>Other program guides:</b> <a href="/programs/bc-hydro-rebates/">BC Hydro rebates</a> · <a href="/programs/home-renovation-savings/">Home Renovation Savings</a> · <a href="/programs/nys-clean-heat/">NYS Clean Heat</a> · <a href="/programs/mass-save/">Mass Save</a> · <a href="/programs/efficiency-nova-scotia/">Efficiency Nova Scotia rebates</a> · <a href="/programs/bc-hydro-peak-saver/">BC Hydro Peak Saver</a> · <a href="/programs/alberta-energy-rebates/">Alberta energy rebates</a> · <a href="/programs/federal-tax-credits-2026/">Federal tax credits</a> · <a href="/programs/peco-rebates/">PECO rebates</a> · <a href="/programs/ppl-electric-rebates/">PPL Electric rebates</a> · <a href="/programs/xcel-energy-colorado-rebates/">Xcel Energy Colorado rebates</a></p>
 <p class="small">Something out of date? Email <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a> and we'll check it within a week.</p>
 </div></section>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

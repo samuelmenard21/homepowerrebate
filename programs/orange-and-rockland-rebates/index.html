@@ -198,6 +198,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -344,9 +348,14 @@ h1, h2 { text-wrap: balance; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Orange & Rockland Rebates 2026: Clean Heat Heat Pump and Water Heater Amounts", "description": "What Orange & Rockland (O&R) pays for heat pumps, geothermal and water heaters from September 1, 2026, with the disadvantaged-community and Weatherized Tier amounts.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-03", "dateModified": "2026-10-03", "mainEntityOfPath": "https://homepowerrebate.com/programs/orange-and-rockland-rebates/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Rebate programs", "item": "https://homepowerrebate.com/programs/"}, {"@type": "ListItem", "position": 3, "name": "Orange & Rockland", "item": "https://homepowerrebate.com/programs/orange-and-rockland-rebates/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does O&R pay the same as National Grid?", "acceptedAnswer": {"@type": "Answer", "text": "For single-family air-source heat pumps, yes. Ground-source amounts for disadvantaged-community homes differ."}}, {"@type": "Question", "name": "What is the most O&R pays?", "acceptedAnswer": {"@type": "Answer", "text": "$14,000 on air-source and $25,000 on a ground-source retrofit, both for a disadvantaged-community home in the Weatherized Tier."}}, {"@type": "Question", "name": "What is the Sealed Comfort Plan?", "acceptedAnswer": {"@type": "Answer", "text": "An O&R weatherization program that the manual accepts as a route to the Weatherized Tier."}}, {"@type": "Question", "name": "Is there a cap on the incentive?", "acceptedAnswer": {"@type": "Answer", "text": "Yes: 70% of project cost, or 85% in a disadvantaged community."}}, {"@type": "Question", "name": "Can I apply directly?", "acceptedAnswer": {"@type": "Answer", "text": "The contractor applies for the heat pump. Water heaters can be claimed by the homeowner if codes are followed."}}]}</script></head><body>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Orange & Rockland Rebates 2026: Clean Heat Heat Pump and Water Heater Amounts", "description": "What Orange & Rockland (O&R) pays for heat pumps, geothermal and water heaters from September 1, 2026, with the disadvantaged-community and Weatherized Tier amounts.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-03", "dateModified": "2026-10-03", "mainEntityOfPath": "https://homepowerrebate.com/programs/orange-and-rockland-rebates/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Rebate programs", "item": "https://homepowerrebate.com/programs/"}, {"@type": "ListItem", "position": 3, "name": "Orange & Rockland", "item": "https://homepowerrebate.com/programs/orange-and-rockland-rebates/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does O&R pay the same as National Grid?", "acceptedAnswer": {"@type": "Answer", "text": "For single-family air-source heat pumps, yes. Ground-source amounts for disadvantaged-community homes differ."}}, {"@type": "Question", "name": "What is the most O&R pays?", "acceptedAnswer": {"@type": "Answer", "text": "$14,000 on air-source and $25,000 on a ground-source retrofit, both for a disadvantaged-community home in the Weatherized Tier."}}, {"@type": "Question", "name": "What is the Sealed Comfort Plan?", "acceptedAnswer": {"@type": "Answer", "text": "An O&R weatherization program that the manual accepts as a route to the Weatherized Tier."}}, {"@type": "Question", "name": "Is there a cap on the incentive?", "acceptedAnswer": {"@type": "Answer", "text": "Yes: 70% of project cost, or 85% in a disadvantaged community."}}, {"@type": "Question", "name": "Can I apply directly?", "acceptedAnswer": {"@type": "Answer", "text": "The contractor applies for the heat pump. Water heaters can be claimed by the homeowner if codes are followed."}}]}</script><meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Orange & Rockland Rebates 2026: Clean Heat Heat Pump and Water Heater Amounts", "url": "https://homepowerrebate.com/programs/orange-and-rockland-rebates/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
+</head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -450,6 +459,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/programs/">Rebate programs</a></li><li aria-current="page">Orange &amp; Rockland</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Heat pumps up to $14,000</div><h1>Orange &amp; Rockland Home Rebates</h1><p>O&R pays from the statewide Clean Heat table, and its single-family amounts match National Grid's. The difference is on the ground-source side, where a disadvantaged-community home gets $20,000 to $25,000.</p></div></section>
 <article class="article"><div class="wrap">
@@ -482,6 +492,7 @@ h1, h2 { text-wrap: balance; }
 
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://visionelements.customerapplication.com/Framework/Ny_statewide/NYS-Clean-Heat-Program-Manual.Pdf" target="_blank" rel="noopener">NYS Clean Heat Program Manual, version 3</a>, <a href="https://cleanheat.ny.gov/" target="_blank" rel="noopener">NYS Clean Heat</a>, <a href="https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program" target="_blank" rel="noopener">NYSERDA EmPower+</a>, <a href="https://www.nyserda.ny.gov/All-Programs/Comfort-Home-Program" target="_blank" rel="noopener">NYSERDA Comfort Home</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

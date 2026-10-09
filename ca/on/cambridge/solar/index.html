@@ -198,6 +198,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -344,9 +348,14 @@ h1, h2 { text-wrap: balance; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Solar Rebates in Cambridge 2026: Up to $10,000 and a RetrofitWR Loan", "description": "Cambridge solar rebates for 2026 under Home Renovation Savings, with GrandBridge Energy as the utility and a local loan of up to $40,000 at 2.5%.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-03", "dateModified": "2026-10-03", "mainEntityOfPage": "https://homepowerrebate.com/ca/on/cambridge/solar/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Ontario", "item": "https://homepowerrebate.com/ca/on/"}, {"@type": "ListItem", "position": 3, "name": "Cambridge", "item": "https://homepowerrebate.com/ca/on/cambridge/"}, {"@type": "ListItem", "position": 4, "name": "Solar", "item": "https://homepowerrebate.com/ca/on/cambridge/solar/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Who is the utility?", "acceptedAnswer": {"@type": "Answer", "text": "GrandBridge Energy."}}, {"@type": "Question", "name": "Does solar count for the loan's 25% test?", "acceptedAnswer": {"@type": "Answer", "text": "Ask the Region."}}, {"@type": "Question", "name": "Is coaching free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes."}}, {"@type": "Question", "name": "What is the rebate maximum?", "acceptedAnswer": {"@type": "Answer", "text": "$10,000."}}]}</script></head><body>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Solar Rebates in Cambridge 2026: Up to $10,000 and a RetrofitWR Loan", "description": "Cambridge solar rebates for 2026 under Home Renovation Savings, with GrandBridge Energy as the utility and a local loan of up to $40,000 at 2.5%.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-03", "dateModified": "2026-10-03", "mainEntityOfPage": "https://homepowerrebate.com/ca/on/cambridge/solar/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Ontario", "item": "https://homepowerrebate.com/ca/on/"}, {"@type": "ListItem", "position": 3, "name": "Cambridge", "item": "https://homepowerrebate.com/ca/on/cambridge/"}, {"@type": "ListItem", "position": 4, "name": "Solar", "item": "https://homepowerrebate.com/ca/on/cambridge/solar/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Who is the utility?", "acceptedAnswer": {"@type": "Answer", "text": "GrandBridge Energy."}}, {"@type": "Question", "name": "Does solar count for the loan's 25% test?", "acceptedAnswer": {"@type": "Answer", "text": "Ask the Region."}}, {"@type": "Question", "name": "Is coaching free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes."}}, {"@type": "Question", "name": "What is the rebate maximum?", "acceptedAnswer": {"@type": "Answer", "text": "$10,000."}}]}</script><meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Solar Rebates in Cambridge 2026: Up to $10,000 and a RetrofitWR Loan", "url": "https://homepowerrebate.com/ca/on/cambridge/solar/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
+</head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -450,6 +459,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/on/">Ontario</a></li><li><a href="/ca/on/cambridge/">Cambridge</a></li><li aria-current="page">Solar</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $5,000 for solar</div><h1>Solar Rebates in Cambridge</h1><p>Cambridge pairs the provincial solar rebate with RetrofitWR, a loan of up to $40,000 at 2.5% fixed for GrandBridge Energy customers. Confirm whether solar fits the loan's 25% energy-saving test.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -497,6 +507,7 @@ h1, h2 { text-wrap: balance; }
 <!-- RANKINGS-LINK-START -->
 <section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Cambridge</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/on/cambridge/solar/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated solar installers in Cambridge &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">5 local companies ranked by 189 Google reviews. Top picks: Let&#x27;s Go Solar Ltd, Daisy Energy Inc - LED and Smart Energy Solutions, WSN Construction.</span></a></div></section>
 <!-- RANKINGS-LINK-END -->
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Cambridge where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

@@ -198,6 +198,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -344,9 +348,14 @@ h1, h2 { text-wrap: balance; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Fort St. John Home Energy Rebates 2026: Northern Top-Up, Insulation and Heat Pumps", "description": "Fort St. John rebates for 2026 from BC Hydro, FortisBC and CleanBC, with the northern top-up and the highest major-repairs rate among the cities we cover.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-02", "dateModified": "2026-10-02", "mainEntityOfPage": "https://homepowerrebate.com/ca/bc/fort-st-john/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "British Columbia", "item": "https://homepowerrebate.com/ca/bc/"}, {"@type": "ListItem", "position": 3, "name": "Fort St. John", "item": "https://homepowerrebate.com/ca/bc/fort-st-john/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does Fort St. John qualify for the top-up?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, on BC Hydro service."}}, {"@type": "Question", "name": "How cold is it?", "acceptedAnswer": {"@type": "Answer", "text": "The record low in 2015 to 2024 was -42.2 degrees Celsius."}}, {"@type": "Question", "name": "What share of homes need repairs?", "acceptedAnswer": {"@type": "Answer", "text": "7.5% in the 2021 Census."}}, {"@type": "Question", "name": "How big is the town?", "acceptedAnswer": {"@type": "Answer", "text": "8,775 households."}}]}</script></head><body>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Fort St. John Home Energy Rebates 2026: Northern Top-Up, Insulation and Heat Pumps", "description": "Fort St. John rebates for 2026 from BC Hydro, FortisBC and CleanBC, with the northern top-up and the highest major-repairs rate among the cities we cover.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-02", "dateModified": "2026-10-02", "mainEntityOfPage": "https://homepowerrebate.com/ca/bc/fort-st-john/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "British Columbia", "item": "https://homepowerrebate.com/ca/bc/"}, {"@type": "ListItem", "position": 3, "name": "Fort St. John", "item": "https://homepowerrebate.com/ca/bc/fort-st-john/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does Fort St. John qualify for the top-up?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, on BC Hydro service."}}, {"@type": "Question", "name": "How cold is it?", "acceptedAnswer": {"@type": "Answer", "text": "The record low in 2015 to 2024 was -42.2 degrees Celsius."}}, {"@type": "Question", "name": "What share of homes need repairs?", "acceptedAnswer": {"@type": "Answer", "text": "7.5% in the 2021 Census."}}, {"@type": "Question", "name": "How big is the town?", "acceptedAnswer": {"@type": "Answer", "text": "8,775 households."}}]}</script><meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Fort St. John Home Energy Rebates 2026: Northern Top-Up, Insulation and Heat Pumps", "url": "https://homepowerrebate.com/ca/bc/fort-st-john/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
+</head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -450,6 +459,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/bc/">British Columbia</a></li><li aria-current="page">Fort St. John</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">CleanBC up to $16,000 with the northern top-up</div><h1>Fort St. John Home Energy Rebates</h1><p>Fort St. John averages -15.0&deg;C in January and 7.5% of its households report a home needing major repairs, the highest share among the BC cities we cover.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -490,6 +500,7 @@ h1, h2 { text-wrap: balance; }
 <!-- RANKINGS-LINK-START -->
 <section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Fort St. John</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/bc/fort-st-john/solar/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated solar installers in Fort St. John &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">5 local companies ranked by 140 Google reviews. Top picks: FSJ Quality Electric Ltd, Avenir Energy, Techmation Electric &amp; Controls Ltd..</span></a><a href="/installers/bc/fort-st-john/battery/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated home battery installers in Fort St. John &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">5 local companies ranked by 150 Google reviews. Top picks: FSJ Quality Electric Ltd, Avenir Energy, Techmation Electric &amp; Controls Ltd..</span></a></div></section>
 <!-- RANKINGS-LINK-END -->
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Fort St. John where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

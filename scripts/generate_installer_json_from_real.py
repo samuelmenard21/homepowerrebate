@@ -229,7 +229,11 @@ def build(job):
 
 if __name__ == "__main__":
     grand = 0
+    # --only nj,il  limits the run to those regions (always use it for new regions: a full run rewrites every region's curated JSON)
+    only = next((a.split("=", 1)[1].split(",") for a in __import__("sys").argv[1:] if a.startswith("--only=")), None)
     for job in JOBS:
+        if only and not any(os.path.basename(job["csv"]).startswith(f"{c}-") for c in only):
+            continue
         print(f"\n📂 {os.path.basename(job['csv'])}")
         grand += build(job)
     print(f"\n✅ Wrote {grand} installers across all city JSON files")

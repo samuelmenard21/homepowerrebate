@@ -45,6 +45,13 @@ def main():
     ap.add_argument("--address", default="")
     ap.add_argument("--contact", default="", help="Email the installer wrote from (stored as the contact email)")
     ap.add_argument("--place-json", help="Use a saved Places result instead of calling Google (for tests)")
+    ap.add_argument("--rating", type=float, help="Manual entry: rating read on the business's Google Maps page (skips the Places key)")
+    ap.add_argument("--reviews", type=int, help="Manual entry: review count read on Google Maps")
+    ap.add_argument("--phone", default="")
+    ap.add_argument("--website", default="")
+    ap.add_argument("--maps-url", default="", help="The business's Google Maps link")
+    ap.add_argument("--category", default="HVAC contractor", help="Category Google Maps shows (must read as an installer for the service)")
+    ap.add_argument("--rebuild", action="store_true", help="After writing, run the JSON, profile, ranking, quotes and sitemap steps")
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
 
@@ -53,7 +60,12 @@ def main():
         raise SystemExit(f"{a.city} is not in the {a.region} city list in scrape_google_places_installers.py. "
                          f"Rankings exist only for cities with a page; add the city page first, or list the business under a nearby city it serves.")
     geo = prov["cities"][a.city]
-    if a.place_json:
+    if a.rating is not None and a.reviews is not None:
+        # Manual path: numbers were read from the live Google Maps page by a person (or Claude in the browser pane)
+        places = [{"displayName": {"text": a.name}, "formattedAddress": a.address, "nationalPhoneNumber": a.phone, "websiteUri": a.website,
+                   "googleMapsUri": a.maps_url, "rating": a.rating, "userRatingCount": a.reviews,
+                   "primaryType": "hvac_contractor" if "hvac" in a.category.lower() or "heating" in a.category.lower() else a.category.lower().replace(" ", "_")}]
+    elif a.place_json:
         places = json.loads(Path(a.place_json).read_text())
     else:
         key = getpass.getpass("Google Places API key (hidden): ").strip()
@@ -91,6 +103,12 @@ def main():
           "  python3 scripts/generate_installer_json_from_real.py\n  python3 scripts/generate_installer_profiles.py\n"
           "  python3 scripts/build_installer_rankings.py\n  python3 scripts/build_get_quotes.py\n"
           "  python3 scripts/generate_sitemap.py\nthen git add -f data/installer-inquiries.json installers/*.csv")
+    if a.rebuild:
+        import subprocess
+        for step in ("generate_installer_json_from_real", "generate_installer_profiles", "build_installer_rankings", "build_get_quotes",
+                     "apply_canonical_nav_footer", "generate_sitemap"):
+            print("running", step, flush=True)
+            subprocess.run([sys.executable, str(ROOT / "scripts" / f"{step}.py")], check=True, cwd=ROOT)
 
 
 if __name__ == "__main__":

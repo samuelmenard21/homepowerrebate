@@ -1,0 +1,97 @@
+{
+ "_source": {
+  "dataset": "US Census Bureau, American Community Survey 5-year estimates 2020-2024",
+  "tables": {
+   "B25001": "Housing Units",
+   "B25003": "Tenure",
+   "B25024": "Units in Structure",
+   "B25034": "Year Structure Built",
+   "B25040": "House Heating Fuel"
+  },
+  "api": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B25001,B25003,B25024,B25034,B25040&geo_ids=16000US5363000,16000US5367000,16000US5370000,16000US5374060,16000US5305210",
+  "via": "Census Reporter API (republishes Census Bureau ACS tables)",
+  "table_url": "https://data.census.gov/table/ACSDT5Y2024.B25040"
+ },
+ "cities": {
+  "seattle": {
+   "name": "Seattle, WA",
+   "housing_units": 393918,
+   "occupied_units": 363466,
+   "pct_owner": 43.7,
+   "pct_renter": 56.3,
+   "pct_single_detached": 36.8,
+   "pct_two_to_four_units": 5.4,
+   "pct_built_before_1980": 52.8,
+   "pct_built_1939_earlier": 22.8,
+   "pct_built_2000_later": 32.8,
+   "pct_heat_utility_gas": 32.8,
+   "pct_heat_bottled_gas": 0.9,
+   "pct_heat_electricity": 61.1,
+   "pct_heat_fuel_oil": 2.9
+  },
+  "spokane": {
+   "name": "Spokane, WA",
+   "housing_units": 102834,
+   "occupied_units": 97446,
+   "pct_owner": 58.8,
+   "pct_renter": 41.2,
+   "pct_single_detached": 64.2,
+   "pct_two_to_four_units": 7.0,
+   "pct_built_before_1980": 68.4,
+   "pct_built_1939_earlier": 26.2,
+   "pct_built_2000_later": 15.7,
+   "pct_heat_utility_gas": 54.1,
+   "pct_heat_bottled_gas": 0.9,
+   "pct_heat_electricity": 42.0,
+   "pct_heat_fuel_oil": 1.2
+  },
+  "tacoma": {
+   "name": "Tacoma, WA",
+   "housing_units": 97298,
+   "occupied_units": 93033,
+   "pct_owner": 55.8,
+   "pct_renter": 44.2,
+   "pct_single_detached": 60.6,
+   "pct_two_to_four_units": 7.3,
+   "pct_built_before_1980": 64.3,
+   "pct_built_1939_earlier": 26.9,
+   "pct_built_2000_later": 17.9,
+   "pct_heat_utility_gas": 33.0,
+   "pct_heat_bottled_gas": 1.2,
+   "pct_heat_electricity": 62.9,
+   "pct_heat_fuel_oil": 1.1
+  },
+  "vancouver": {
+   "name": "Vancouver, WA",
+   "housing_units": 85421,
+   "occupied_units": 81504,
+   "pct_owner": 50.8,
+   "pct_renter": 49.2,
+   "pct_single_detached": 50.6,
+   "pct_two_to_four_units": 9.9,
+   "pct_built_before_1980": 40.2,
+   "pct_built_1939_earlier": 4.9,
+   "pct_built_2000_later": 27.0,
+   "pct_heat_utility_gas": 28.6,
+   "pct_heat_bottled_gas": 1.0,
+   "pct_heat_electricity": 68.0,
+   "pct_heat_fuel_oil": 0.4
+  },
+  "bellevue": {
+   "name": "Bellevue, WA",
+   "housing_units": 66021,
+   "occupied_units": 61977,
+   "pct_owner": 52.0,
+   "pct_renter": 48.0,
+   "pct_single_detached": 46.4,
+   "pct_two_to_four_units": 5.4,
+   "pct_built_before_1980": 46.7,
+   "pct_built_1939_earlier": 0.8,
+   "pct_built_2000_later": 27.4,
+   "pct_heat_utility_gas": 45.7,
+   "pct_heat_bottled_gas": 0.7,
+   "pct_heat_electricity": 52.0,
+   "pct_heat_fuel_oil": 0.6
+  }
+ }
+}

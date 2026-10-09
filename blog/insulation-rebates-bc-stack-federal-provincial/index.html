@@ -558,22 +558,22 @@ h1, h2 { text-wrap: balance; }
       <p style="color:#c9d8d5; font-size:15px;">Tell us where you need it and we'll show you top-rated local insulation installers, ranked by Google reviews. Free for homeowners.</p>
 
       <form id="insulation-lead-form">
-        <input type="text" name="website" id="il-hp" style="position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
+        <input type="text" name="website" id="il-hp" style="position:absolute; left:-9999px;" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="lead-field">
           <label for="il-name">Your Name *</label>
-          <input type="text" id="il-name" name="firstname" placeholder="Your Name" required>
+          <input type="text" id="il-name" name="firstname" placeholder="Your Name" aria-label="Your name" autocomplete="given-name" required>
         </div>
         <div class="lead-field">
           <label for="il-email">Email Address *</label>
-          <input type="email" id="il-email" name="email" placeholder="Your Email Address" required>
+          <input type="email" id="il-email" name="email" placeholder="Your Email Address" aria-label="Your email address" autocomplete="email" required>
         </div>
         <div class="lead-field">
           <label for="il-phone">Phone *</label>
-          <input type="tel" id="il-phone" name="phone" placeholder="Your Phone Number" required>
+          <input type="tel" id="il-phone" name="phone" placeholder="Your Phone Number" aria-label="Your phone number" autocomplete="tel" required>
         </div>
         <div class="lead-field">
           <label for="il-city">Your City *</label>
-          <select id="il-city" name="city" required>
+          <select id="il-city" name="city" aria-label="Your city" required>
             <option value="">Choose your city&hellip;</option>
             <option value="abbotsford">Abbotsford</option>
             <option value="burnaby">Burnaby</option>

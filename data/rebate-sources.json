@@ -637,7 +637,7 @@
    "url": "https://ceip.abmunis.ca/residential/residential-program-locations/",
    "host": "ceip.abmunis.ca",
    "region": "ab",
-   "check": "Alberta Municipalities: CEIP program locations; CEIP participating municipalities",
+   "check": "Alberta Municipalities: CEIP program locations; Alberta Municipalities: residential CEIP locations; CEIP participating municipalities",
    "facts": [
     "ab-3-ceip-participating-municipalities"
    ],
@@ -652,7 +652,8 @@
     "/ab/red-deer/",
     "/ab/red-deer/smart-thermostats/",
     "/ab/st-albert/",
-    "/ab/st-albert/heat-pump/"
+    "/ab/st-albert/heat-pump/",
+    "state-topics/ab-heat-pump"
    ],
    "last_read": "2026-10-03"
   },
@@ -754,7 +755,7 @@
    "url": "https://www.calgary.ca/environment/programs/clean-energy-improvement-program.html",
    "host": "www.calgary.ca",
    "region": "ab",
-   "check": "Calgary Residential CEIP; City of Calgary: Clean Energy Improvement Program; City of Calgary: Residential Clean Energy Improvement Program",
+   "check": "Calgary Residential CEIP; City of Calgary: Clean Energy Improvement Program; City of Calgary: Residential CEIP; City of Calgary: Residential Clean Energy Improvement Program",
    "facts": [
     "ab-0-calgary-residential-ceip"
    ],
@@ -762,9 +763,10 @@
     "/ab/calgary/",
     "/ab/calgary/heat-pump/",
     "/ab/calgary/insulation/",
-    "/ab/calgary/smart-thermostats/"
+    "/ab/calgary/smart-thermostats/",
+    "state-topics/ab-heat-pump"
    ],
-   "last_read": "2026-10-03"
+   "last_read": "2026-10-09"
   },
   {
    "url": "https://www.cmhc-schl.gc.ca/consumers/home-buying/mortgage-loan-insurance-for-consumers/cmhc-eco-products",
@@ -790,7 +792,8 @@
     "/ab/edmonton/heat-pump/",
     "/ab/edmonton/insulation/",
     "/ab/edmonton/smart-thermostats/",
-    "/ab/st-albert/heat-pump/"
+    "/ab/st-albert/heat-pump/",
+    "state-topics/ab-heat-pump"
    ],
    "last_read": "2026-10-03"
   },
@@ -2519,12 +2522,14 @@
    "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-affordability-program",
    "host": "natural-resources.canada.ca",
    "region": "federal",
-   "check": "Canada Greener Homes Affordability Program; Canada Greener Homes Affordability Program (CGHAP)",
+   "check": "Canada Greener Homes Affordability Program; Canada Greener Homes Affordability Program (CGHAP); Natural Resources Canada: Greener Homes Affordability Program",
    "facts": [
     "ab-8-canada-greener-homes-affordability-program-cghap",
     "federal-4-greener-homes-affordability"
    ],
-   "used_by_pages": [],
+   "used_by_pages": [
+    "state-topics/ab-heat-pump"
+   ],
    "last_read": "2026-10-09"
   },
   {
@@ -6749,6 +6754,7 @@
    "check": "Government of Canada: one million home retrofits announcement",
    "facts": [],
    "used_by_pages": [
+    "state-topics/ab-heat-pump",
     "state-topics/bc-heat-pump",
     "state-topics/ns-heat-pump",
     "state-topics/on-heat-pump"

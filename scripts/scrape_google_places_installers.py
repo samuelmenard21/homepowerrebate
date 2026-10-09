@@ -807,7 +807,7 @@ if __name__ == "__main__":
             province = arg.split("=", 1)[1].lower()
         if arg.startswith("--max="):
             MAX_PER_CITY = int(arg.split("=", 1)[1])
-    provinces = list(PROVINCES) if province == "all" else [province]
+    provinces = list(PROVINCES) if province == "all" else [p for p in province.split(",") if p]  # --province=nj,il,wa runs several with one key entry
     if any(p not in PROVINCES for p in provinces):
         print(f"Unknown province '{province}'. Choices: {list(PROVINCES)} or all")
         sys.exit(1)

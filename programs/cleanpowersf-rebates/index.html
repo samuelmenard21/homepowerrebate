@@ -198,6 +198,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -344,9 +348,11 @@ h1, h2 { text-wrap: balance; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "CleanPowerSF Rebates 2026: Bill Credits for Heat Pumps, Cooking and Dryers", "description": "What CleanPowerSF pays San Francisco homes in 2026: heat pump bill credits up to $1,200, cooking $150, dryer $300, gas meter removal $300, plus BayREN free weatherization.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-02", "dateModified": "2026-10-02", "mainEntityOfPath": "https://homepowerrebate.com/programs/cleanpowersf-rebates/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Rebate programs", "item": "https://homepowerrebate.com/programs/"}, {"@type": "ListItem", "position": 3, "name": "CleanPowerSF", "item": "https://homepowerrebate.com/programs/cleanpowersf-rebates/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is the CleanPowerSF credit paid up front?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is paid monthly, $50 a month for 24 months for the heat pump credits."}}, {"@type": "Question", "name": "Which rate do I need?", "acceptedAnswer": {"@type": "Answer", "text": "An electrification rate such as EV2-A or E-ELEC."}}, {"@type": "Question", "name": "Is the battery program open?", "acceptedAnswer": {"@type": "Answer", "text": "It is marked Coming Soon, so check before you plan around it."}}, {"@type": "Question", "name": "Does CleanPowerSF pay for solar?", "acceptedAnswer": {"@type": "Answer", "text": "GoSolarSF cash incentives remain only for low-income customers."}}, {"@type": "Question", "name": "Can I get free weatherization?", "acceptedAnswer": {"@type": "Answer", "text": "BayREN EASE Home pays 80% of weatherization costs for qualifying PG&E customers with incomes at or under 120% of area median."}}]}</script></head><body>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "CleanPowerSF Rebates 2026: Bill Credits for Heat Pumps, Cooking and Dryers", "description": "What CleanPowerSF pays San Francisco homes in 2026: heat pump bill credits up to $1,200, cooking $150, dryer $300, gas meter removal $300, plus BayREN free weatherization.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-02", "dateModified": "2026-10-02", "mainEntityOfPath": "https://homepowerrebate.com/programs/cleanpowersf-rebates/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Rebate programs", "item": "https://homepowerrebate.com/programs/"}, {"@type": "ListItem", "position": 3, "name": "CleanPowerSF", "item": "https://homepowerrebate.com/programs/cleanpowersf-rebates/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is the CleanPowerSF credit paid up front?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is paid monthly, $50 a month for 24 months for the heat pump credits."}}, {"@type": "Question", "name": "Which rate do I need?", "acceptedAnswer": {"@type": "Answer", "text": "An electrification rate such as EV2-A or E-ELEC."}}, {"@type": "Question", "name": "Is the battery program open?", "acceptedAnswer": {"@type": "Answer", "text": "It is marked Coming Soon, so check before you plan around it."}}, {"@type": "Question", "name": "Does CleanPowerSF pay for solar?", "acceptedAnswer": {"@type": "Answer", "text": "GoSolarSF cash incentives remain only for low-income customers."}}, {"@type": "Question", "name": "Can I get free weatherization?", "acceptedAnswer": {"@type": "Answer", "text": "BayREN EASE Home pays 80% of weatherization costs for qualifying PG&E customers with incomes at or under 120% of area median."}}]}</script><meta name="theme-color" content="#faf7f2">
+</head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -450,6 +456,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/programs/">Rebate programs</a></li><li aria-current="page">CleanPowerSF</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Heat pump credits up to $1,200</div><h1>CleanPowerSF Rebates</h1><p>CleanPowerSF pays San Francisco customers as bill credits over time, not as a lump-sum check. The credits require an electrification rate, and a battery program is marked coming soon. These figures come from CleanPowerSF's pages.</p></div></section>
 <article class="article"><div class="wrap">
@@ -487,6 +494,7 @@ h1, h2 { text-wrap: balance; }
 
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://cleanpowersf.org/electrify-your-home" target="_blank" rel="noopener">CleanPowerSF electrify your home</a>, <a href="https://www.bayren.org/ease-home" target="_blank" rel="noopener">BayREN EASE Home</a>, <a href="https://techcleanca.com/incentives/" target="_blank" rel="noopener">TECH Clean California incentives</a>, <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" target="_blank" rel="noopener">IRS energy-efficient home improvement credit</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

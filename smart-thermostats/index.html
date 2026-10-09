@@ -246,6 +246,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -345,9 +349,11 @@ h1, h2 { text-wrap: balance; }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
 <!-- BREADCRUMB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com/"}, {"@type": "ListItem", "position": 2, "name": "Smart Thermostat Rebates 2026", "item": "https://homepowerrebate.com/smart-thermostats/"}]}</script><!-- BREADCRUMB-LD-END -->
+<meta name="theme-color" content="#faf7f2">
 </head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -451,6 +457,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Smart thermostat rebates</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>Smart Thermostat Rebates 2026: Every Program in Canada and the US</h1>
 <p>15 programs across 6 provinces and states, each linked to its official source. Last checked October 3, 2026.</p>
@@ -486,6 +493,7 @@ h1, h2 { text-wrap: balance; }
 <!-- BCH-REBATES-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>BC Hydro customer?</b> See <a href="/programs/bc-hydro-rebates/">every BC Hydro rebate, with amounts and rules</a>.</p></section><!-- BCH-REBATES-LINK-END -->
 <!-- THERMO-COMPARE-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Mysa, Ecobee or Nest?</b> See <a href="/blog/smart-thermostat-comparison-nest-ecobee-honeywell-mysa/">which smart thermostat fits your heating (baseboards, furnace or mini-split)</a> before you buy.</p></section><!-- THERMO-COMPARE-LINK-END -->
 <!-- BCH-FREE-THERMO-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Baseboard heat on BC Hydro?</b> See <a href="/programs/bc-hydro-free-smart-thermostats/">how to get up to 5 free Mysa or Sinopé smart thermostats this fall</a>, plus $50 a winter from Peak Saver.</p></section><!-- BCH-FREE-THERMO-LINK-END -->
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

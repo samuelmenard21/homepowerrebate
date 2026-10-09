@@ -198,6 +198,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -344,9 +348,11 @@ h1, h2 { text-wrap: balance; }
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Appliance Rebates in Oakville 2026: Up to $200 Per Appliance", "description": "Oakville appliance rebates for 2026: $25 to $200 from Home Renovation Savings, with Oakville Hydro as distributor.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-04", "dateModified": "2026-10-04", "mainEntityOfPage": "https://homepowerrebate.com/ca/on/oakville/appliances/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Ontario", "item": "https://homepowerrebate.com/ca/on/"}, {"@type": "ListItem", "position": 3, "name": "Oakville", "item": "https://homepowerrebate.com/ca/on/oakville/"}, {"@type": "ListItem", "position": 4, "name": "Appliance", "item": "https://homepowerrebate.com/ca/on/oakville/appliances/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does Oakville Hydro give an appliance rebate?", "acceptedAnswer": {"@type": "Answer", "text": "We did not find one."}}, {"@type": "Question", "name": "Can I claim a washer and dryer together?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, as separate claims: $75 and $200."}}, {"@type": "Question", "name": "Can I claim for a dishwasher replacement?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, $25 for an eligible model."}}, {"@type": "Question", "name": "Must I buy in Ontario?", "acceptedAnswer": {"@type": "Answer", "text": "The page says to buy from any retailer. Keep the receipt."}}]}</script></head><body>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Appliance Rebates in Oakville 2026: Up to $200 Per Appliance", "description": "Oakville appliance rebates for 2026: $25 to $200 from Home Renovation Savings, with Oakville Hydro as distributor.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-04", "dateModified": "2026-10-04", "mainEntityOfPage": "https://homepowerrebate.com/ca/on/oakville/appliances/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Ontario", "item": "https://homepowerrebate.com/ca/on/"}, {"@type": "ListItem", "position": 3, "name": "Oakville", "item": "https://homepowerrebate.com/ca/on/oakville/"}, {"@type": "ListItem", "position": 4, "name": "Appliance", "item": "https://homepowerrebate.com/ca/on/oakville/appliances/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does Oakville Hydro give an appliance rebate?", "acceptedAnswer": {"@type": "Answer", "text": "We did not find one."}}, {"@type": "Question", "name": "Can I claim a washer and dryer together?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, as separate claims: $75 and $200."}}, {"@type": "Question", "name": "Can I claim for a dishwasher replacement?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, $25 for an eligible model."}}, {"@type": "Question", "name": "Must I buy in Ontario?", "acceptedAnswer": {"@type": "Answer", "text": "The page says to buy from any retailer. Keep the receipt."}}]}</script><meta name="theme-color" content="#faf7f2">
+</head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -450,6 +456,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/on/">Ontario</a></li><li><a href="/ca/on/oakville/">Oakville</a></li><li aria-current="page">Appliance</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $200 back per appliance</div><h1>Appliance Rebates in Oakville</h1><p>Oakville has 73,560 households, 78% of them owners. Six appliance rebates run from $25 to $200.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -493,6 +500,7 @@ h1, h2 { text-wrap: balance; }
 </div></article>
 <!-- STATE-CA-ON-EV-CHARGER-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/ca/on/ev-charger/">Ontario home EV charger rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-CA-ON-EV-CHARGER-LINK-END -->
 <!-- STATE-CA-ON-HRV-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/ca/on/hrv/">Ontario HRV and ERV rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-CA-ON-HRV-LINK-END -->
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Oakville where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

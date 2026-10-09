@@ -219,6 +219,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -331,11 +335,13 @@ h1, h2 { text-wrap: balance; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Mass Save Home Energy Assessment: What Actually Happens", "description": "The Mass Save Home Energy Assessment is no-cost, in person or virtual. What they check, what it unlocks (75-100% off insulation), and how to book.", "datePublished": "2026-08-13", "dateModified": "2026-09-26", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com/"}, "mainEntityOfPage": "https://homepowerrebate.com/blog/mass-save-home-energy-assessment-explained/"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is the Mass Save home energy assessment really free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mass Save offers no-cost virtual or in-person assessments, plus a no-cost online assessment. You don't have to do the work it recommends."}}, {"@type": "Question", "name": "How do I book a Mass Save home energy assessment?", "acceptedAnswer": {"@type": "Answer", "text": "Book online at masssave.com or call 866-527-7283. You need to be a customer of a Mass Save utility, like Eversource, National Grid, Unitil, Cape Light Compact, Berkshire Gas or Liberty."}}, {"@type": "Question", "name": "What does the assessment unlock?", "acceptedAnswer": {"@type": "Answer", "text": "Most households get 75% off insulation and air sealing, and income-qualified households can get up to 100% off. It also helps you qualify for the whole-home heat pump rebate."}}, {"@type": "Question", "name": "Do I need an assessment for a heat pump water heater rebate?", "acceptedAnswer": {"@type": "Answer", "text": "No. Mass Save's $750 heat pump water heater rebate is an instant rebate and does not need an assessment."}}, {"@type": "Question", "name": "Can renters get an assessment?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mass Save offers assessments for renters and for landlords with 1-4 units or 5+ units."}}]}</script>
+<meta name="theme-color" content="#faf7f2">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -439,6 +445,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">Home Energy Assessment</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -546,6 +553,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </article>
 
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

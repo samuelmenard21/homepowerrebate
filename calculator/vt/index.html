@@ -278,6 +278,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -376,9 +380,11 @@ h1, h2 { text-wrap: balance; }
 }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<meta name="theme-color" content="#faf7f2">
 </head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -482,6 +488,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/calculator/">Calculators</a></li><li aria-current="page">Vermont</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>Vermont Rebate Calculator 2026: What Efficiency Vermont Pays</h1><p>Answer a few questions and see which Vermont rebates fit your home, with a source for every number.</p><p class="meta">By Sam Menard · Rules last verified October 3, 2026</p></div></header>
 <section class="body"><div class="wrap rc-wrap">
@@ -858,6 +865,7 @@ h1, h2 { text-wrap: balance; }
 })(typeof window !== "undefined" ? window : globalThis);
 </script>
 <script>HPRCalc.mount(document.getElementById("rc-mount"),{"code":"vt","name":"Vermont","country":"us","currency":"USD","hub":"/us/vt/","installers":"/installers/","questions":[{"id":"city","label":"Which city is closest to your home?","type":"select","options":[{"value":"barre","label":"Barre","set":{"utility":"gmp"},"installers":{"heat-pump":"/installers/vt/barre/heat-pump/"},"page":"/us/vt/barre/"},{"value":"burlington","label":"Burlington","set":{"utility":"bed"},"installers":{"heat-pump":"/installers/vt/burlington/heat-pump/"},"page":"/us/vt/burlington/"},{"value":"montpelier","label":"Montpelier","set":{"utility":"gmp"},"page":"/us/vt/montpelier/"},{"value":"rutland","label":"Rutland","set":{"utility":"gmp"},"installers":{"heat-pump":"/installers/vt/rutland/heat-pump/"},"page":"/us/vt/rutland/"},{"value":"south-burlington","label":"South Burlington","set":{"utility":"gmp"},"installers":{"heat-pump":"/installers/vt/south-burlington/heat-pump/","solar":"/installers/vt/south-burlington/solar/"},"page":"/us/vt/south-burlington/"},{"value":"other","label":"Another Vermont town","set":{"utility":"other"}}]},{"id":"income","label":"Is your household low or moderate income by Efficiency Vermont's guidelines?","type":"select","options":[{"value":"standard","label":"No or not sure"},{"value":"lowmod","label":"Yes"}],"help":"The 2026 income limits took effect July 1, 2026. Check them on efficiencyvermont.com.","for":["heat-pump","water-heater","insulation"]},{"id":"hp_type","label":"Which kind of heat pump?","type":"select","options":[{"value":"ductless","label":"Ductless mini-split"},{"value":"ducted","label":"Ducted"}],"for":["heat-pump"]}],"upgrades":[{"id":"heat-pump","label":"Heat pump"},{"id":"water-heater","label":"Heat pump water heater"},{"id":"insulation","label":"Weatherization and insulation"}],"programs":[{"id":"ev-ductless","name":"Efficiency Vermont: ductless heat pump","upgrade":"heat-pump","amount":{"max":475},"rules":"Qualifying cold-climate equipment for Vermont electric customers. Distributor discounts start at $375.","when":{"hp_type":["ductless"]},"group":"hp","status":"active","verified_on":"2026-10-03","source_url":"https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system"},{"id":"ev-ducted","name":"Efficiency Vermont: ducted heat pump","upgrade":"heat-pump","amount":{"max":2200},"rules":"Qualifying cold-climate equipment for Vermont electric customers. Distributor discounts start at $1,200.","when":{"hp_type":["ducted"]},"group":"hp","status":"active","verified_on":"2026-10-03","source_url":"https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system"},{"id":"ev-controls","name":"Efficiency Vermont: integrated controls bonus","upgrade":"heat-pump","amount":{"max":600},"rules":"An extra $600 for integrated controls with a ductless heat pump.","when":{"hp_type":["ductless"]},"requires":"ev-ductless","status":"active","verified_on":"2026-10-03","source_url":"https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system"},{"id":"ev-income-hp","name":"Efficiency Vermont: income bonus for heat pumps","upgrade":"heat-pump","amount":{"label":"$200 to $2,200 bonus","max":0},"rules":"The amount depends on your utility and income level. Confirm yours with Efficiency Vermont, so it is not added to your total.","when":{"income":["lowmod"]},"status":"active","verified_on":"2026-10-03","source_url":"https://www.efficiencyvermont.com/rebates/list/centrally-ducted-heat-pumps"},{"id":"gmp-income","name":"Green Mountain Power income-eligible heat pump rebate","upgrade":"heat-pump","amount":{"label":"$2,000","max":0},"rules":"For customers at or below 80% of area median income, paid with the Efficiency Vermont rebate. We have not re-confirmed it is still open, so it is not in your total.","when":{"utility":["gmp"],"income":["lowmod"]},"status":"active","verified_on":"2026-10-03","source_url":"https://greenmountainpower.com/rebates-programs/home-and-yard/heat-pump/"},{"id":"ev-hpwh","name":"Efficiency Vermont: heat pump water heater","upgrade":"water-heater","amount":{"by":"income","values":{"standard":600,"lowmod":1000}},"rules":"$600 discount, plus $400 more for low- and moderate-income households.","status":"active","verified_on":"2026-10-03","source_url":"https://www.efficiencyvermont.com/rebates/list/heat-pump-water-heaters"},{"id":"ev-weather","name":"Efficiency Vermont: weatherization","upgrade":"insulation","amount":{"by":"income","values":{"standard":3000,"lowmod":7000}},"rules":"75% of the project cost back, up to $3,000, or up to $7,000 for low- and moderate-income households. You need an Efficiency Excellence Network contractor and a blower-door test showing at least 10% less air leakage.","status":"active","verified_on":"2026-10-03","source_url":"https://www.efficiencyvermont.com/rebates/list/home-performance-with-energy-star"}],"notes":["Burlington is served by Burlington Electric Department, and Barre, Montpelier, Rutland and South Burlington by Green Mountain Power. Burlington Electric pays its own heat pump and weatherization amounts, listed on our Efficiency Vermont page.","Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."],"closed":[],"income_source":null,"verified_on":"2026-10-03"});</script>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

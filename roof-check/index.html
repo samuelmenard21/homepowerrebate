@@ -197,6 +197,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -353,9 +357,11 @@ h1, h2 { text-wrap: balance; }
 .rc-small{font-size:13px;color:#555}.rc-warn{background:#fff3e0;border-left:4px solid #d4751c;padding:10px 12px}.rc-prog{border-top:1px solid #eee;padding-top:10px;margin-top:10px}.rc-amt{font-size:18px}.rc-attr{font-size:12px;color:#5E5E5E;margin-top:14px}
 .rc-off{background:#fff3e0;border-radius:10px;padding:14px;margin-bottom:16px}
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Where do the roof numbers come from?", "acceptedAnswer": {"@type": "Answer", "text": "From Google's Solar API, which models your roof from aerial imagery: how many panels fit, how much sun each roof section gets and the yearly output of different layouts. Coverage is not complete, and imagery can be a few years old."}}, {"@type": "Question", "name": "Is my address stored?", "acceptedAnswer": {"@type": "Answer", "text": "We do not save your address or your results. The address goes to Google to find your roof. To stop abuse we keep a running count of lookups and a visitor's IP address for up to an hour, nothing more."}}, {"@type": "Question", "name": "Why does Ontario ask for my electricity use?", "acceptedAnswer": {"@type": "Answer", "text": "Ontario's solar rebate does not allow a system under a net metering agreement, so the system must be sized to the electricity you use at home. Without your use we can only show the biggest system your roof could hold, which may be larger than the program allows."}}, {"@type": "Question", "name": "Is this a quote?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is an estimate from satellite data and published program rules. A licensed installer has to measure your roof, check shade and your electrical panel, and design the system."}}, {"@type": "Question", "name": "Why does it sometimes say there is no data?", "acceptedAnswer": {"@type": "Answer", "text": "Google does not have roof data for every address, especially in some smaller communities. In that case the rebate rules for your region are still on our rebate calculator."}}]}</script></head><body>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Where do the roof numbers come from?", "acceptedAnswer": {"@type": "Answer", "text": "From Google's Solar API, which models your roof from aerial imagery: how many panels fit, how much sun each roof section gets and the yearly output of different layouts. Coverage is not complete, and imagery can be a few years old."}}, {"@type": "Question", "name": "Is my address stored?", "acceptedAnswer": {"@type": "Answer", "text": "We do not save your address or your results. The address goes to Google to find your roof. To stop abuse we keep a running count of lookups and a visitor's IP address for up to an hour, nothing more."}}, {"@type": "Question", "name": "Why does Ontario ask for my electricity use?", "acceptedAnswer": {"@type": "Answer", "text": "Ontario's solar rebate does not allow a system under a net metering agreement, so the system must be sized to the electricity you use at home. Without your use we can only show the biggest system your roof could hold, which may be larger than the program allows."}}, {"@type": "Question", "name": "Is this a quote?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is an estimate from satellite data and published program rules. A licensed installer has to measure your roof, check shade and your electrical panel, and design the system."}}, {"@type": "Question", "name": "Why does it sometimes say there is no data?", "acceptedAnswer": {"@type": "Answer", "text": "Google does not have roof data for every address, especially in some smaller communities. In that case the rebate rules for your region are still on our rebate calculator."}}]}</script><meta name="theme-color" content="#faf7f2">
+</head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -460,7 +466,7 @@ h1, h2 { text-wrap: balance; }
 </nav>
 <!-- CANONICAL-NAV-END -->
 <section class="hero"><div class="wrap"><div class="amount-badge">Free, from your address</div><h1>Solar Roof Check</h1><p>Type your address. We find your roof, estimate the panels and yearly power, then apply the solar rebates we have verified for your province or state.</p></div></section>
-<main class="rc-wrap">
+<main id="main" class="rc-wrap">
 
 <form id="rc-form" class="rc-form" autocomplete="on"><div class="rc-row"><div><label for="rc-country">Country</label><select id="rc-country"><option value="US">United States</option><option value="CA">Canada</option></select></div>
 <div><label for="rc-use">Yearly electricity use in kWh (optional)</label><input id="rc-use" type="number" min="0" step="100" placeholder="e.g. 9000" inputmode="numeric"></div></div>

@@ -236,6 +236,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 /* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
 /* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
@@ -348,11 +352,13 @@ h1, h2 { text-wrap: balance; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How long does a Mass Save rebate take?", "acceptedAnswer": {"@type": "Answer", "text": "Mass Save's official processing window is 8 to 12 weeks. In practice it has often been longer. Some homeowners waited close to six months, and at least one case ran past a year."}}, {"@type": "Question", "name": "How do I check my Mass Save rebate status?", "acceptedAnswer": {"@type": "Answer", "text": "Call Mass Save and ask for a specific status update and a reference number for your case. Then confirm with your contractor that the claim was actually submitted, and ask for a copy of the submission confirmation."}}, {"@type": "Question", "name": "Why is my Mass Save rebate delayed?", "acceptedAnswer": {"@type": "Answer", "text": "The usual causes are missing signatures or incomplete contractor paperwork, a mismatch between the assessment record and the installed equipment, a backlog of heat pump and insulation claims, an old certification, or a contractor mistake you only find out about when you call."}}, {"@type": "Question", "name": "Who do I complain to if it has been more than 12 weeks?", "acceptedAnswer": {"@type": "Answer", "text": "Call Mass Save first. If it cannot give you a timeline, file a complaint with the Massachusetts DPU Consumer Division (877-886-5066), then with the Attorney General's consumer protection division (617-727-8400)."}}, {"@type": "Question", "name": "When should I follow up on my rebate?", "acceptedAnswer": {"@type": "Answer", "text": "At the 6-week mark, not the 12-week mark. A paperwork problem is much faster to fix early than after the file has gone quiet."}}, {"@type": "Question", "name": "What should I keep in case I need to escalate?", "acceptedAnswer": {"@type": "Answer", "text": "The contractor's invoice, the assessment report, your rebate application confirmation, and a log of every call with the date, the representative's name and what they said."}}]}</script>
 <style>.faq-item{border-bottom:1px solid #d9d0c1;padding:14px 0}.faq-item h3{margin:0 0 6px;font-size:18px}.faq-item p{margin:0}</style>
+<meta name="theme-color" content="#faf7f2">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -456,6 +462,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">Mass Save Rebate Delayed? What to Do</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -552,6 +559,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </article>
 
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

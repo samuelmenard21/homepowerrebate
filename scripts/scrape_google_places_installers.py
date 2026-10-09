@@ -20,6 +20,7 @@ Notes:
 """
 
 import json
+import re
 import os
 import sys
 import time
@@ -393,6 +394,16 @@ def city_from_address(address, cities):
     return None
 
 
+# Retail and roadside battery shops, blinds and lead-generation sites turned up in the battery lists (2026-10-09).
+# A name that also says solar, energy, power, electric or storage is kept: those are real installers.
+NON_INSTALLER_RE = re.compile(r"batter(?:y|ies)|roadside|phone repair|blinds|solar leads|windows & doors", re.I)
+KEEP_RE = re.compile(r"solar|energy|power|electric|storage|renewable|hvac|heating|insulation", re.I)
+
+
+def is_non_installer_name(name):
+    return bool(NON_INSTALLER_RE.search(name)) and not KEEP_RE.search(name)
+
+
 def is_relevant_installer(name, primary_type, installer_type):
     """
     Decide whether a business is actually an installer for this service.
@@ -400,6 +411,8 @@ def is_relevant_installer(name, primary_type, installer_type):
     restoration, etc.) and requires a positive HVAC/solar signal.
     """
     name_l = name.lower()
+    if is_non_installer_name(name):
+        return False
 
     # Hard reject adjacent trades.
     for bad in BAD_WORDS:

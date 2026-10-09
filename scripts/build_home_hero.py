@@ -8,9 +8,23 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_get_quotes import REG, OV  # noqa: E402
+from build_get_quotes import REG, OV, city_slugs  # noqa: E402
 
 S, E = "<!-- HOME-HERO-START -->", "<!-- HOME-HERO-END -->"
+
+
+NEW_REGIONS = ["Michigan", "New Jersey", "Illinois", "Washington", "Minnesota"]
+
+
+def sync_region_text(s):
+    """Meta descriptions and JSON-LD name every region; keep them in step with data/regions.json (idempotent)."""
+    s = s.replace("Colorado, and Vermont", "Colorado, Vermont, " + ", ".join(NEW_REGIONS[:-1]) + ", and " + NEW_REGIONS[-1])
+    if '"Minnesota, United States"' not in s:
+        add = "".join(f', {{"@type": "AdministrativeArea", "name": "{n}, United States"}}' for n in NEW_REGIONS)
+        s = s.replace('"name": "Vermont, United States"}', '"name": "Vermont, United States"}' + add, 1)
+        add2 = "".join(f',\n   {{ "@type": "AdministrativeArea", "name": "{n}, United States" }}' for n in NEW_REGIONS)
+        s = s.replace('{ "@type": "AdministrativeArea", "name": "Vermont, United States" }', '{ "@type": "AdministrativeArea", "name": "Vermont, United States" }' + add2, 1)
+    return s
 
 
 def main():
@@ -18,8 +32,7 @@ def main():
     s = f.read_text(encoding="utf-8")
     data = []
     for code, name, prov, _ in REG:
-        base = ROOT / "installers" / code
-        cities = sorted(p.name for p in base.iterdir() if p.is_dir()) if base.exists() else []
+        cities = city_slugs(code)
         data.append({"c": code, "n": name, "k": [[c, OV.get(c, c.replace("-", " ").title())] for c in cities]})
     if S in s:
         a = s.index('<div class="quick-answer">', s.index(S))
@@ -38,9 +51,10 @@ def main():
 #hero-find button{{width:100%;margin-top:14px;min-height:50px;border:0;border-radius:999px;background:var(--amber);color:#fff;font-family:'Inter Tight',sans-serif;font-weight:700;font-size:16px;cursor:pointer}}
 #hero-find .hf-note{{font-size:13px;color:var(--ink-soft);margin:10px 0 0;text-align:center}}
 @media(max-width:600px){{#hero-find .hf-row{{grid-template-columns:1fr}}#hero-find{{order:2}}}}
+@media(max-width:600px){{.hero-trust-line{{flex-direction:column;align-items:center;gap:4px;flex-wrap:wrap}}.hero-trust-line span.dot{{display:none}}.hero-trust-line span{{white-space:normal}}}}
 </style>
 <section class="hero">
-  <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Canada &amp; US &middot; 123 cities &middot; Checked monthly</div>
+  <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Canada &amp; US &middot; {sum(len(r["k"]) for r in data)} cities &middot; Checked monthly</div>
   <h1 class="hero-h1">Find every home energy rebate <em>for your city.</em></h1>
   <p class="hero-sub">See what you could get back and who to call. Free, no sales calls.</p>
   <form id="hero-find" action="/get-quotes/" method="get">
@@ -54,7 +68,7 @@ def main():
   {qa.strip()}
   <div class="hero-trust-line"><span>Checked against official program pages</span><span class="dot"></span><span>Installers ranked by Google reviews</span><span class="dot"></span><span>Nobody pays to be listed</span></div>
 </section>
-<script>(function(){{var D={json.dumps(data, separators=(",", ":"))};var p=document.getElementById("hf-prov"),c=document.getElementById("hf-city");
+<script>(function(){{var D=window.HPR_CITIES={json.dumps(data, separators=(",", ":"))};var p=document.getElementById("hf-prov"),c=document.getElementById("hf-city");
 D.forEach(function(r){{var o=document.createElement("option");o.value=r.c;o.textContent=r.n;p.appendChild(o)}});
 p.addEventListener("change",function(){{c.textContent="";var h=document.createElement("option");h.value="";h.textContent="Choose your city";c.appendChild(h);
 var r=D.filter(function(x){{return x.c===p.value}})[0];if(r)r.k.forEach(function(k){{var o=document.createElement("option");o.value=k[0];o.textContent=k[1];c.appendChild(o)}})}});}})();</script>
@@ -70,6 +84,7 @@ var r=D.filter(function(x){{return x.c===p.value}})[0];if(r)r.k.forEach(function
         a = s.rfind("<script>", 0, i)
         b = s.index("</script>", i) + len("</script>")
         s = s[:a] + s[b:]
+    s = sync_region_text(s)
     f.write_text(s, encoding="utf-8")
     print("Homepage hero rebuilt")
 

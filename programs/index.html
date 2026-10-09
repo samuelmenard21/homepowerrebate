@@ -196,6 +196,107 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 .hs-note { margin: 14px 0 0; padding: 10px 14px; background: #fdf2f0; border: 1px solid #efc9c4; border-radius: 10px; font-size: 14px; color: #8a2a1c; }
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
+
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
+/* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
+/* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
+.btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
+a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
+.btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+[style*="color:var(--amber)"], [style*="color: var(--amber)"] { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.src, p.src, p.src a { color: #6b6355 !important; }
+section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
+.finder-cat a, .city-card > a { color: #a4540a; }
+.footer .footer-col-links a { color: rgba(250, 247, 242, 0.8) !important; }
+.footer .footer-bottom, .footer .footer-bottom a, .footer .footer-tagline { color: rgba(250, 247, 242, 0.7) !important; }
+/* readable line length: running text stops at 72 characters */
+main p, article p, .wrap p, section p, .wrap li, article li, main li { max-width: 72ch; }
+.footer p, .footer li, nav p, nav li, table p, table li { max-width: none; }
+/* readable text floor: nothing below 13px */
+[style*="font-size:9px"],
+[style*="font-size: 9px"],
+[style*="font-size:9.5px"],
+[style*="font-size: 9.5px"],
+[style*="font-size:10px"],
+[style*="font-size: 10px"],
+[style*="font-size:10.5px"],
+[style*="font-size: 10.5px"],
+[style*="font-size:11px"],
+[style*="font-size: 11px"],
+[style*="font-size:11.5px"],
+[style*="font-size: 11.5px"],
+[style*="font-size:12px"],
+[style*="font-size: 12px"],
+[style*="font-size:12.5px"],
+[style*="font-size: 12.5px"],
+small,
+.small,
+.finder-cat,
+.finder-source,
+.program-status,
+.rr-eyebrow,
+.tag,
+.region-tag,
+.status-pill,
+.badge,
+.bf,
+.lbl,
+.src,
+.ps-lab,
+.ps-tag,
+.hf-pill,
+.section-eyebrow,
+.quick-answer-label,
+.popular-label,
+.rb-status,
+.region-count,
+.stat span,
+.hs-stat span,
+.installer-note,
+.rg { font-size: 13px !important; }
+ol[class*="crumb"] li, ol[class*="crumb"] a, nav[aria-label*="readcrumb"] li, nav[aria-label*="readcrumb"] a, .breadcrumb, .breadcrumb a, .breadcrumbs, .breadcrumbs a, .crumbs, .crumbs a { font-size: 13px !important; }
+.powerscore-table small, table small { font-size: 12px !important; }
+/* tap targets on phones */
+@media (max-width: 768px) {
+  nav.toc a, .fact-value a, .city-card > a, .hf-close a, h3 > a, h4 > a, ol[class*="crumb"] a, .breadcrumb a, .breadcrumbs a, .crumbs a, .installer-note a, p > a[href]:only-child { display: inline-flex; align-items: center; min-height: 44px; }
+  div > a[style*="border:1px solid var(--rule)"] { display: inline-flex !important; align-items: center; min-height: 40px; padding-top: 6px !important; padding-bottom: 6px !important; }
+  details > summary { padding: 12px 0; min-height: 44px; box-sizing: border-box; }
+}
+/* sibling-page links (builders emit them as inline spans) become tappable chips */
+div[style*="line-height:2.2"] { display: flex !important; flex-wrap: wrap; gap: 8px; line-height: 1.3 !important; }
+div[style*="line-height:2.2"] > span { margin: 0 !important; }
+div[style*="line-height:2.2"] > span > a { display: inline-flex; align-items: center; min-height: 40px; padding: 6px 14px; border: 1px solid var(--rule); border-radius: 999px; background: #fff; text-decoration: none; font-weight: 600; color: var(--teal-deep); }
+div[style*="line-height:2.2"] > span > a:hover { border-color: var(--amber); color: var(--amber); }
+html { scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
+h1, h2 { text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--amber-bright, #e88a2e); outline-offset: 3px; border-radius: 4px; }
+.nav-desktop-only a, .nav-mobile-only a { display: inline-flex; align-items: center; min-height: 44px; }
+.logo { min-height: 44px; }
+.nav-pick { min-height: 44px; }
+@media (max-width: 768px) {
+  .nav-inner { padding: 8px 16px; row-gap: 0; }
+  .nav-mobile-only { gap: 4px; }
+  .nav-mobile-only a { padding: 0 10px; }
+  .nav-pick { font-size: 13px !important; padding: 0 14px !important; }
+}
+.footer-tagline { color: rgba(250, 247, 242, 0.7); font-size: 14px; }
+.footer-col-title { font-size: 13px; color: rgba(250, 247, 242, 0.82); }
+.footer-col-links { gap: 2px; font-size: 15px; }
+.footer-col-links a { color: rgba(250, 247, 242, 0.78); display: inline-block; padding: 7px 0; min-height: 24px; }
+.footer-col-links a:hover { color: var(--amber-bright, #e88a2e); text-decoration: underline; }
+.footer-bottom { font-size: 13px; color: rgba(250, 247, 242, 0.68); }
+.footer-bottom a { color: inherit; text-decoration: underline; }
+@media (max-width: 700px) {
+  :not(.tw) > table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style><style>
 /* CANONICAL-BREADCRUMB-CSS-START */
@@ -246,9 +347,14 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 </style>
+<meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Rebate Programs by Utility and Program (2026)", "url": "https://homepowerrebate.com/programs/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
 </head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -352,6 +458,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <section class="hero"><div class="wrap"><h1>Rebate Programs by Utility and Program</h1><p>Each page lists what the program pays, who qualifies and the date we last read the official page. Amounts come from our verified facts file, so a closed program never shows as open.</p></div></section>
 <article class="article"><div class="wrap">
 <p style="background:#f5efe5;border-left:4px solid #d4751c;padding:14px 18px;"><b>Compare them:</b> see <a href="/programs/utility-comparison/">25 utilities side by side</a>, with a 3-ton heat pump example and the status of every program.</p>
@@ -359,6 +466,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 <h2>Utilities and programs</h2><ul><li><a href="/programs/ameren-illinois-rebates/">Ameren Illinois</a>: Ameren Illinois serves Peoria and much of central and southern Illinois. We could not read its rebate amounts, so we list what is confirmed: free help, solar credits and what is not offered.</li><li><a href="/programs/ann-arbor-a2zero-rebates/">Ann Arbor A2ZERO</a>: Ann Arbor&#x27;s A2ZERO home energy rebates in 2026: heat pump $4,000 ($5,500 lower income), water heater $1,000, panel $1,000, battery $2,000, insulation $500 per measure. Rules and how to reserve.</li><li><a href="/programs/atlantic-city-electric-rebates/">Atlantic City Electric</a>: What Atlantic City Electric pays southern New Jersey homeowners in 2026: heat pump rebates $500 to $2,000, up to $10,000 to leave gas, $750 water heater, $150 thermostat and appliance rebates.</li><li><a href="/programs/ava-community-energy-rebates/">Ava Community Energy</a>: Ava Community Energy rebates and programs for 2026: what the community choice provider offers in Alameda and San Joaquin Counties, what it does not pay for, and where heat pump money comes from.</li><li><a href="/programs/avista-washington-rebates/">Avista (Washington)</a>: What Avista pays Washington homeowners in 2026: $300 to $600 heat pump discounts, $500 water heater discount, $1.75 per square foot for insulation and up to $225 per window.</li><li><a href="/programs/bc-hydro-free-smart-thermostats/">BC Hydro free thermostats</a>: BC Hydro is giving baseboard-heated homes up to 5 free Mysa or Sinopé smart thermostats this fall, worth about $350, plus $50 a winter from Peak Saver. Who qualifies and how.</li><li><a href="/programs/burbank-water-and-power-rebates/">Burbank Water and Power</a>: What Burbank Water and Power pays in 2026: heat pump $1,000 per ton up to $2,500, water heater $1,500, EV charger up to $1,250, thermostat $75. Burbank is not LADWP.</li><li><a href="/programs/centerpoint-energy-minnesota-rebates/">CenterPoint Energy Minnesota</a>: CenterPoint Energy&#x27;s Minnesota gas rebates for 2026: furnaces, boilers, water heaters, hybrid heat pumps, attic and wall insulation, windows and thermostats.</li><li><a href="/programs/central-hudson-rebates/">Central Hudson</a>: Central Hudson&#x27;s Clean Heat amounts for Hudson Valley homeowners, including the Weatherized Tier, the 85% cap and heat pump water heaters.</li><li><a href="/programs/clark-public-utilities-rebates/">Clark Public Utilities</a>: What Clark Public Utilities pays in 2026: $1,500 for a heat pump water heater, up to $1,250 for a central heat pump, $900 ductless, $140 thermostat and per-foot weatherization rebates.</li><li><a href="/programs/cleanpowersf-rebates/">CleanPowerSF</a>: What CleanPowerSF pays San Francisco homes in 2026: heat pump bill credits up to $1,200, cooking $150, dryer $300, gas meter removal $300, plus BayREN free weatherization.</li><li><a href="/programs/comed-rebates/">ComEd</a>: What ComEd pays northern Illinois homes in 2026: up to $2,000 off a heat pump, up to $750 off a heat pump water heater, $75 off a smart thermostat, and free upgrades for income-eligible homes.</li><li><a href="/programs/con-edison-rebates/">Con Edison</a>: What Con Edison pays NYC and Westchester homeowners for heat pumps, geothermal and water heaters from September 1, 2026, and what it does not pay for.</li><li><a href="/programs/consumers-energy-rebates/">Consumers Energy</a>: What Consumers Energy pays homeowners in 2026: gas furnace $100 to $300, insulation up to $475, heat pump $200 to $350 for replacements, and a free home energy analysis.</li><li><a href="/programs/dte-energy-rebates/">DTE Energy</a>: What DTE Energy pays homeowners in 2026: gas furnace $100 to $400 plus a $300 bonus, attic insulation $600, heat pump $150 to $1,200 for electric homes, $50 thermostat, and free help.</li><li><a href="/programs/efficiency-vermont-rebates/">Efficiency Vermont</a>: Efficiency Vermont&#x27;s current heat pump, water heater and weatherization amounts, income bonuses by utility, and what Burlington Electric and other utilities add.</li><li><a href="/programs/enbridge-gas-rebates/">Enbridge Gas</a>: Enbridge Gas rebates in Ontario for 2026: how Home Renovation Savings treats gas homes, the $500 per ton heat pump rate, free Winterproofing for eligible households and what Enbridge does not pay.</li><li><a href="/programs/fortisbc-rebates/">FortisBC</a>: What FortisBC pays gas and electric customers in 2026: heat pump up to $4,000, income-qualified up to $12,000, insulation, windows, water heater. Rules and who applies where.</li><li><a href="/programs/glendale-water-and-power-rebates/">Glendale Water and Power</a>: What Glendale Water and Power pays in 2026: heat pump up to $5,000, heat pump water heater $4,000 replacing gas, panel upgrade $1,000. Rules and what GWP does not pay.</li><li><a href="/programs/green-mountain-power-rebates/">Green Mountain Power</a>: Green Mountain Power&#x27;s income-eligible heat pump rebate, the 2026 income limits by county, and how it combines with Efficiency Vermont&#x27;s amounts.</li><li><a href="/programs/illinois-shines-rebates/">Illinois Shines</a>: Illinois Shines pays for the solar renewable energy credits your home system creates: $70.37 or $80.77 per credit for small systems in 2026-27, plus a $20 adder for customer-owned systems.</li><li><a href="/programs/jcpl-rebates/">JCP&amp;L</a>: What JCP&amp;L pays New Jersey homeowners in 2026: Clean Comfort heat pump rebates up to $10,000, $750 water heater, appliance and thermostat rebates, Whole Home rebates up to $7,500 and free weatherization.</li><li><a href="/programs/ladwp-rebates/">LADWP</a>: What the Los Angeles Department of Water and Power pays in 2026: heat pump tiers, water heater $1,500 to $2,500, windows $2 per sq ft, attic insulation, EV charger up to $1,000.</li><li><a href="/programs/lansing-bwl-rebates/">Lansing Board of Water &amp; Light</a>: What Lansing&#x27;s Board of Water &amp; Light pays in 2026: $4,000 to $5,000 for a heat pump replacing a gas furnace, water heater $500 to $1,000, thermostat $50, insulation and appliances.</li><li><a href="/programs/minnesota-power-rebates/">Minnesota Power</a>: Minnesota Power&#x27;s 2026 rebates for cold-climate heat pumps, ground source heat pumps, heat pump water heaters and smart thermostats, plus its Dual Fuel rate.</li><li><a href="/programs/moreno-valley-utility-rebates/">Moreno Valley Utility</a>: Moreno Valley Utility rebates for 2026: $140 to $160 per ton for efficient central AC and heat pumps, a $75 tune-up, the 5-5-5 EV incentive, and a 23% or 35% rate discount.</li><li><a href="/programs/nj-clean-energy-program/">NJ Clean Energy Program</a>: What New Jersey&#x27;s Clean Energy Program offers homeowners in 2026: free Comfort Partners upgrades, Charge Up electric car incentives of $1,500 to $4,000, solar credits and net metering.</li><li><a href="/programs/nyseg-and-rge-rebates/">NYSEG and RG&amp;E</a>: NYSEG and RG&amp;E share one Clean Heat table. See what each pays for heat pumps and water heaters from September 1, 2026 and why NYSEG&#x27;s page still shows older figures.</li><li><a href="/programs/naperville-electric-rebates/">Naperville Electric</a>: Naperville runs its own electric company, so ComEd rebates do not apply. In 2026 it pays $900 to $1,800 for a heat pump and $75 for a smart thermostat, while attic, window and solar money is used up.</li><li><a href="/programs/national-grid-rebates/">National Grid (upstate NY)</a>: What National Grid pays upstate New York electric customers for heat pumps and water heaters from September 1, 2026, and why its own web page shows an older figure.</li><li><a href="/programs/nicor-gas-rebates/">Nicor Gas</a>: Nicor Gas rebates for 2026: $150 to $225 for a high-efficiency furnace, $25 for a smart thermostat, $400 for attic insulation, $600 for duct sealing and up to $3,000 for windows.</li><li><a href="/programs/nova-scotia-heating-assistance-rebate-harp/">Nova Scotia HARP</a>: Nova Scotia&#x27;s Heating Assistance Rebate pays $400 for winter 2026-27. Apply Oct 1 to Mar 31, check your status online, and see who qualifies and when it pays.</li><li><a href="/programs/orange-and-rockland-rebates/">Orange &amp; Rockland</a>: What Orange &amp; Rockland (O&amp;R) pays for heat pumps, geothermal and water heaters from September 1, 2026, with the disadvantaged-community and Weatherized Tier amounts.</li><li><a href="/programs/pge-rebates/">PG&amp;E</a>: What PG&amp;E pays homeowners in 2026: EV charging rebate up to 50% or $2,000, pre-owned EV up to $4,000, free upgrades for income-qualified homes. We found no PG&amp;E heat pump rebate.</li><li><a href="/programs/pseg-rebates/">PSE&amp;G</a>: What PSE&amp;G pays New Jersey homeowners in 2026: heat pumps up to $10,000, water heater $450 to $750, GridSmart battery up to $5,000, appliance rebates, free assessments and interest-free repayment.</li><li><a href="/programs/pseg-long-island-rebates/">PSEG Long Island</a>: PSEG Long Island&#x27;s own heat pump rebate, $4,000 to $7,500 by income, plus water heaters and thermostats. It is not part of NYS Clean Heat.</li><li><a href="/programs/pasadena-water-and-power-rebates/">Pasadena Water and Power</a>: What Pasadena Water and Power pays in 2026: heat pump $170 per ton, water heater $500, EV charger $600, ceiling insulation per sq ft, and a solar and battery pilot.</li><li><a href="/programs/peoples-gas-rebates/">Peoples Gas</a>: Peoples Gas rebates for Chicago homes in 2026: $200 to $225 for a furnace, $575 to $700 for a gas heat pump, $25 for a smart thermostat, and up to $1,200 for insulation and air sealing.</li><li><a href="/programs/puget-sound-energy-rebates/">Puget Sound Energy</a>: What Puget Sound Energy pays homeowners in 2026: $1,500 for a heat pump, $1,000 for a heat pump water heater, insulation and window rebates, and higher amounts by income.</li><li><a href="/programs/riverside-public-utilities-rebates/">Riverside Public Utilities</a>: What Riverside Public Utilities pays in 2026: heat pump $750 per ton, battery $500 per kWh up to $10,000, EV charger up to $1,500, insulation and windows. Riverside is not SCE.</li><li><a href="/programs/rochester-public-utilities-rebates/">Rochester Public Utilities</a>: Rochester Public Utilities&#x27; 2026 rebates for heat pumps up to $2,200, heat pump water heaters, ground source systems and smart thermostats, with the rules from its form.</li><li><a href="/programs/sdge-rebates/">SDG&amp;E</a>: SDG&amp;E rebates for 2026: the retail coupon program has ended, free upgrades through ESA for income-eligible homes, CHERP coaching for gas homes, and how San Diego Community Power fits in.</li><li><a href="/programs/smud-rebates/">SMUD</a>: Every SMUD home rebate in 2026: heat pump up to $3,000, water heater up to $4,000, Go Electric up to $4,000, EV charger up to $850, battery $300 per kWh. Rules and gaps.</li><li><a href="/programs/san-diego-community-power-rebates/">San Diego Community Power</a>: What San Diego Community Power pays in 2026: battery $250 to $500 per kWh, thermostat and water heater $50 each, EV Flex Connect, plus free upgrades. SDG&amp;E coupons have ended.</li><li><a href="/programs/san-jose-clean-energy-rebates/">San Jose Clean Energy</a>: What San Jose Clean Energy&#x27;s EcoHome program pays in 2026: heat pump water heater $3,000, heat pump HVAC $1,500, insulation and panel add-ons. The battery rebate is closed.</li><li><a href="/programs/save-on-energy-rebates/">Save on Energy</a>: Save on Energy for Ontario homes in 2026: Home Renovation Savings, Peak Perks, the Energy Affordability Program, what each pays and what it does not cover.</li><li><a href="/programs/seattle-city-light-rebates/">Seattle City Light</a>: What Seattle City Light and the City of Seattle pay in 2026: heat pump discounts of $300 to $600, $750 for a water heater, $2,000 to leave oil heat, and solar credits.</li><li><a href="/programs/sce-rebates/">Southern California Edison</a>: What SCE pays homeowners in 2026: EV panel help up to $4,200, Charge Smart $100, thermostat $75, free upgrades. SCE has no heat pump or battery cash rebate.</li><li><a href="/programs/tacoma-power-rebates/">Tacoma Power</a>: What Tacoma Power pays in 2026: up to $2,000 for a heat pump, $2,250 for insulation, $100 per window, $500 for a water heater and 0 percent loans up to $20,000.</li><li><a href="/programs/washington-home-electrification-rebates/">Washington state home rebates</a>: How Washington&#x27;s state home rebates work in 2026: local HEAR administrators, the 150 percent of area income rule, the federal HOMES program that has not launched, and the solar sales tax exemption.</li><li><a href="/programs/xcel-energy-minnesota-rebates/">Xcel Energy Minnesota</a>: What Xcel Energy pays Minnesota homes in 2026 for heat pumps, heat pump water heaters, insulation, panels and thermostats, and what we could not confirm.</li></ul>
 
 </div></article>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
@@ -557,6 +665,8 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 })();
 (function(){function o(){var h=location.hash&&document.getElementById(location.hash.slice(1));if(!h)return;var d=h.closest?h.closest('details.hub-fold'):null;if(d){d.open=true;h.scrollIntoView();}}
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
+(function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

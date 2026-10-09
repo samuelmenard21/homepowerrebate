@@ -107,11 +107,21 @@ show();
 """
 
 
+
+def city_slugs(code):
+    """City slugs for a region: installer folders, else the cities listed in data/regions.json (new regions have no installers yet)."""
+    base = ROOT / "installers" / code
+    found = sorted(p.name for p in base.iterdir() if p.is_dir()) if base.exists() else []
+    if found:
+        return found
+    r = regions.BY_CODE[code]
+    return sorted(h.strip("/").split("/")[-1] for h, _ in r["cities"])
+
+
 def main():
     data = []
     for code, name, prov, jdir in REG:
-        base = ROOT / "installers" / code
-        cities = sorted(p.name for p in base.iterdir() if p.is_dir()) if base.exists() else []
+        cities = city_slugs(code)
         hub = regions.HUB_URL_BY_CODE[code]
         cp = {}
         for c in cities:

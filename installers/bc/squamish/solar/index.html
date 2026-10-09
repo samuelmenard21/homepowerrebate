@@ -13,7 +13,7 @@
 <meta property="og:description" content="The top-rated solar installers in Squamish, BC, ranked by 240 Google reviews. Compare 5 local companies, plus what to ask before you hire.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://homepowerrebate.com/installers/bc/squamish/solar/">
-<meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
+<meta property="og:image" content="https://homepowerrebate.com/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -45,6 +45,7 @@ section.body li{margin-bottom:7px}
 section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;text-decoration-color:var(--amber);text-underline-offset:2px}
 .callout{background:var(--paper-warm);border:1px solid var(--rule);border-left:4px solid var(--green-money);border-radius:8px;padding:16px 18px;margin:4px 0 22px}
 .callout p{margin:0}
+.faq-item{border-top:1px solid var(--rule);padding:14px 0}.faq-item h3{font-size:18px;margin:0 0 6px}.faq-item p{margin:0}
 .rank-list{list-style:none;margin:0 0 10px!important;padding:0}
 .rank{background:#fff;border:1px solid var(--rule);border-radius:14px;padding:16px 16px 14px;margin-bottom:12px!important;display:grid;grid-template-columns:36px 1fr;gap:6px 12px;box-shadow:0 1px 2px rgba(10,42,46,.04)}
 .rank.top{border-left:4px solid var(--green-money)}
@@ -178,6 +179,62 @@ p.small .reg{border:0;padding:0;margin:0;cursor:auto}
    "@type": "ListItem",
    "position": 5,
    "name": "Prowire Electric Ltd"
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Who is the best solar installer in Squamish?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Based on Google reviews, the top-rated solar installers in Squamish are Grand Wall Electric (5.0★, 149 reviews), Cress Electric (5.0★, 20 reviews), S2S ELECTRIC LTD (5.0★, 19 reviews). We rank by a review-weighted score, so companies with many strong reviews rank above those with only a few."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How are the solar installers in Squamish ranked?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "We list 5 solar companies in Squamish, ranked by Google rating weighted by review count. Together they have 240 Google reviews and average 5.0 stars, collected September 2026. Grand Wall Electric has the most reviews (149). No company pays to be listed or ranked."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How much does solar installation cost in Squamish?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Canada has no public solar price survey, so we do not quote a typical price. Get two or three quotes for the same size system and compare the price per watt."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Are there rebates for solar panels in Squamish?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. Our verified program data shows solar rebates up to $10,000, battery rebates up to $5,000 open in Squamish. Most rebates have rules, such as income, your current heating, a registered contractor, or approval before work starts, so check the rebate page before you sign."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How much power do solar panels make in Squamish?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Squamish averages about 3.3 peak sun hours a day, more than 5% of the 123 cities we track. As a rough guide, each kilowatt of panels here makes about 950 kWh a year (after typical system losses). A good installer will give you a roof-specific estimate that accounts for shading and roof angle."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What should I ask a solar installer before I hire?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ask for a production estimate for your roof (kWh per year) and how shading was measured. Ask which panels and inverter they use, and who backs the warranty if the company closes. Ask how your utility credits extra power you send to the grid, and whether a battery makes sense for you."
+   }
   }
  ]
 }
@@ -325,12 +382,115 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 .hs-note { margin: 14px 0 0; padding: 10px 14px; background: #fdf2f0; border: 1px solid #efc9c4; border-radius: 10px; font-size: 14px; color: #8a2a1c; }
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
+
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
+/* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
+/* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
+.btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
+a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
+.btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+[style*="color:var(--amber)"], [style*="color: var(--amber)"] { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.src, p.src, p.src a { color: #6b6355 !important; }
+section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
+.finder-cat a, .city-card > a { color: #a4540a; }
+.footer .footer-col-links a { color: rgba(250, 247, 242, 0.8) !important; }
+.footer .footer-bottom, .footer .footer-bottom a, .footer .footer-tagline { color: rgba(250, 247, 242, 0.7) !important; }
+/* readable line length: running text stops at 72 characters */
+main p, article p, .wrap p, section p, .wrap li, article li, main li { max-width: 72ch; }
+.footer p, .footer li, nav p, nav li, table p, table li { max-width: none; }
+/* readable text floor: nothing below 13px */
+[style*="font-size:9px"],
+[style*="font-size: 9px"],
+[style*="font-size:9.5px"],
+[style*="font-size: 9.5px"],
+[style*="font-size:10px"],
+[style*="font-size: 10px"],
+[style*="font-size:10.5px"],
+[style*="font-size: 10.5px"],
+[style*="font-size:11px"],
+[style*="font-size: 11px"],
+[style*="font-size:11.5px"],
+[style*="font-size: 11.5px"],
+[style*="font-size:12px"],
+[style*="font-size: 12px"],
+[style*="font-size:12.5px"],
+[style*="font-size: 12.5px"],
+small,
+.small,
+.finder-cat,
+.finder-source,
+.program-status,
+.rr-eyebrow,
+.tag,
+.region-tag,
+.status-pill,
+.badge,
+.bf,
+.lbl,
+.src,
+.ps-lab,
+.ps-tag,
+.hf-pill,
+.section-eyebrow,
+.quick-answer-label,
+.popular-label,
+.rb-status,
+.region-count,
+.stat span,
+.hs-stat span,
+.installer-note,
+.rg { font-size: 13px !important; }
+ol[class*="crumb"] li, ol[class*="crumb"] a, nav[aria-label*="readcrumb"] li, nav[aria-label*="readcrumb"] a, .breadcrumb, .breadcrumb a, .breadcrumbs, .breadcrumbs a, .crumbs, .crumbs a { font-size: 13px !important; }
+.powerscore-table small, table small { font-size: 12px !important; }
+/* tap targets on phones */
+@media (max-width: 768px) {
+  nav.toc a, .fact-value a, .city-card > a, .hf-close a, h3 > a, h4 > a, ol[class*="crumb"] a, .breadcrumb a, .breadcrumbs a, .crumbs a, .installer-note a, p > a[href]:only-child { display: inline-flex; align-items: center; min-height: 44px; }
+  div > a[style*="border:1px solid var(--rule)"] { display: inline-flex !important; align-items: center; min-height: 40px; padding-top: 6px !important; padding-bottom: 6px !important; }
+  details > summary { padding: 12px 0; min-height: 44px; box-sizing: border-box; }
+}
+/* sibling-page links (builders emit them as inline spans) become tappable chips */
+div[style*="line-height:2.2"] { display: flex !important; flex-wrap: wrap; gap: 8px; line-height: 1.3 !important; }
+div[style*="line-height:2.2"] > span { margin: 0 !important; }
+div[style*="line-height:2.2"] > span > a { display: inline-flex; align-items: center; min-height: 40px; padding: 6px 14px; border: 1px solid var(--rule); border-radius: 999px; background: #fff; text-decoration: none; font-weight: 600; color: var(--teal-deep); }
+div[style*="line-height:2.2"] > span > a:hover { border-color: var(--amber); color: var(--amber); }
+html { scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
+h1, h2 { text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--amber-bright, #e88a2e); outline-offset: 3px; border-radius: 4px; }
+.nav-desktop-only a, .nav-mobile-only a { display: inline-flex; align-items: center; min-height: 44px; }
+.logo { min-height: 44px; }
+.nav-pick { min-height: 44px; }
+@media (max-width: 768px) {
+  .nav-inner { padding: 8px 16px; row-gap: 0; }
+  .nav-mobile-only { gap: 4px; }
+  .nav-mobile-only a { padding: 0 10px; }
+  .nav-pick { font-size: 13px !important; padding: 0 14px !important; }
+}
+.footer-tagline { color: rgba(250, 247, 242, 0.7); font-size: 14px; }
+.footer-col-title { font-size: 13px; color: rgba(250, 247, 242, 0.82); }
+.footer-col-links { gap: 2px; font-size: 15px; }
+.footer-col-links a { color: rgba(250, 247, 242, 0.78); display: inline-block; padding: 7px 0; min-height: 24px; }
+.footer-col-links a:hover { color: var(--amber-bright, #e88a2e); text-decoration: underline; }
+.footer-bottom { font-size: 13px; color: rgba(250, 247, 242, 0.68); }
+.footer-bottom a { color: inherit; text-decoration: underline; }
+@media (max-width: 700px) {
+  :not(.tw) > table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<meta name="theme-color" content="#faf7f2">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -434,6 +594,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/installers/">Installers</a></li><li><a href="/ca/bc/squamish/">Squamish</a></li><li aria-current="page">Solar installers</li></ol></nav>
 <header class="hero"><div class="wrap">
 <div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></div>
@@ -510,6 +671,7 @@ else{b.disabled=false;m.textContent='Something went wrong. Please try again or e
 <li>Ask how your utility credits extra power you send to the grid, and whether a battery makes sense for you.</li>
 </ol>
 
+<h2 id="faq">Questions about solar installers in Squamish</h2><div class="faq"><div class="faq-item"><h3>Who is the best solar installer in Squamish?</h3><p>Based on Google reviews, the top-rated solar installers in Squamish are Grand Wall Electric (5.0★, 149 reviews), Cress Electric (5.0★, 20 reviews), S2S ELECTRIC LTD (5.0★, 19 reviews). We rank by a review-weighted score, so companies with many strong reviews rank above those with only a few.</p></div><div class="faq-item"><h3>How are the solar installers in Squamish ranked?</h3><p>We list 5 solar companies in Squamish, ranked by Google rating weighted by review count. Together they have 240 Google reviews and average 5.0 stars, collected September 2026. Grand Wall Electric has the most reviews (149). No company pays to be listed or ranked.</p></div><div class="faq-item"><h3>How much does solar installation cost in Squamish?</h3><p>Canada has no public solar price survey, so we do not quote a typical price. Get two or three quotes for the same size system and compare the price per watt.</p></div><div class="faq-item"><h3>Are there rebates for solar panels in Squamish?</h3><p>Yes. Our verified program data shows solar rebates up to $10,000, battery rebates up to $5,000 open in Squamish. Most rebates have rules, such as income, your current heating, a registered contractor, or approval before work starts, so check the rebate page before you sign.</p></div><div class="faq-item"><h3>How much power do solar panels make in Squamish?</h3><p>Squamish averages about 3.3 peak sun hours a day, more than 5% of the 123 cities we track. As a rough guide, each kilowatt of panels here makes about 950 kWh a year (after typical system losses). A good installer will give you a roof-specific estimate that accounts for shading and roof angle.</p></div><div class="faq-item"><h3>What should I ask a solar installer before I hire?</h3><p>Ask for a production estimate for your roof (kWh per year) and how shading was measured. Ask which panels and inverter they use, and who backs the warranty if the company closes. Ask how your utility credits extra power you send to the grid, and whether a battery makes sense for you.</p></div></div>
 <p>Before you call anyone, check <a href="/ca/bc/squamish/solar/">what solar rebates you can get in Squamish</a>. Many programs require approval or a registered contractor <em>before</em> work starts.</p>
 <p>Planning more upgrades? See the top-rated <a href="/installers/bc/squamish/heat-pump/">heat pump installers</a>, <a href="/installers/bc/squamish/battery/">home battery installers</a> in Squamish.</p>
 
@@ -532,6 +694,7 @@ if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es
 setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600);
 })();
 </script>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Squamish where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
@@ -730,6 +893,8 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 })();
 (function(){function o(){var h=location.hash&&document.getElementById(location.hash.slice(1));if(!h)return;var d=h.closest?h.closest('details.hub-fold'):null;if(d){d.open=true;h.scrollIntoView();}}
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
+(function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

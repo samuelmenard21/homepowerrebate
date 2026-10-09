@@ -277,11 +277,117 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 .hs-note { margin: 14px 0 0; padding: 10px 14px; background: #fdf2f0; border: 1px solid #efc9c4; border-radius: 10px; font-size: 14px; color: #8a2a1c; }
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
+
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
+/* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
+/* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
+.btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
+a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
+.btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+[style*="color:var(--amber)"], [style*="color: var(--amber)"] { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.src, p.src, p.src a { color: #6b6355 !important; }
+section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
+.finder-cat a, .city-card > a { color: #a4540a; }
+.footer .footer-col-links a { color: rgba(250, 247, 242, 0.8) !important; }
+.footer .footer-bottom, .footer .footer-bottom a, .footer .footer-tagline { color: rgba(250, 247, 242, 0.7) !important; }
+/* readable line length: running text stops at 72 characters */
+main p, article p, .wrap p, section p, .wrap li, article li, main li { max-width: 72ch; }
+.footer p, .footer li, nav p, nav li, table p, table li { max-width: none; }
+/* readable text floor: nothing below 13px */
+[style*="font-size:9px"],
+[style*="font-size: 9px"],
+[style*="font-size:9.5px"],
+[style*="font-size: 9.5px"],
+[style*="font-size:10px"],
+[style*="font-size: 10px"],
+[style*="font-size:10.5px"],
+[style*="font-size: 10.5px"],
+[style*="font-size:11px"],
+[style*="font-size: 11px"],
+[style*="font-size:11.5px"],
+[style*="font-size: 11.5px"],
+[style*="font-size:12px"],
+[style*="font-size: 12px"],
+[style*="font-size:12.5px"],
+[style*="font-size: 12.5px"],
+small,
+.small,
+.finder-cat,
+.finder-source,
+.program-status,
+.rr-eyebrow,
+.tag,
+.region-tag,
+.status-pill,
+.badge,
+.bf,
+.lbl,
+.src,
+.ps-lab,
+.ps-tag,
+.hf-pill,
+.section-eyebrow,
+.quick-answer-label,
+.popular-label,
+.rb-status,
+.region-count,
+.stat span,
+.hs-stat span,
+.installer-note,
+.rg { font-size: 13px !important; }
+ol[class*="crumb"] li, ol[class*="crumb"] a, nav[aria-label*="readcrumb"] li, nav[aria-label*="readcrumb"] a, .breadcrumb, .breadcrumb a, .breadcrumbs, .breadcrumbs a, .crumbs, .crumbs a { font-size: 13px !important; }
+.powerscore-table small, table small { font-size: 12px !important; }
+/* tap targets on phones */
+@media (max-width: 768px) {
+  nav.toc a, .fact-value a, .city-card > a, .hf-close a, h3 > a, h4 > a, ol[class*="crumb"] a, .breadcrumb a, .breadcrumbs a, .crumbs a, .installer-note a, p > a[href]:only-child { display: inline-flex; align-items: center; min-height: 44px; }
+  div > a[style*="border:1px solid var(--rule)"] { display: inline-flex !important; align-items: center; min-height: 40px; padding-top: 6px !important; padding-bottom: 6px !important; }
+  details > summary { padding: 12px 0; min-height: 44px; box-sizing: border-box; }
+}
+/* sibling-page links (builders emit them as inline spans) become tappable chips */
+div[style*="line-height:2.2"] { display: flex !important; flex-wrap: wrap; gap: 8px; line-height: 1.3 !important; }
+div[style*="line-height:2.2"] > span { margin: 0 !important; }
+div[style*="line-height:2.2"] > span > a { display: inline-flex; align-items: center; min-height: 40px; padding: 6px 14px; border: 1px solid var(--rule); border-radius: 999px; background: #fff; text-decoration: none; font-weight: 600; color: var(--teal-deep); }
+div[style*="line-height:2.2"] > span > a:hover { border-color: var(--amber); color: var(--amber); }
+html { scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
+h1, h2 { text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--amber-bright, #e88a2e); outline-offset: 3px; border-radius: 4px; }
+.nav-desktop-only a, .nav-mobile-only a { display: inline-flex; align-items: center; min-height: 44px; }
+.logo { min-height: 44px; }
+.nav-pick { min-height: 44px; }
+@media (max-width: 768px) {
+  .nav-inner { padding: 8px 16px; row-gap: 0; }
+  .nav-mobile-only { gap: 4px; }
+  .nav-mobile-only a { padding: 0 10px; }
+  .nav-pick { font-size: 13px !important; padding: 0 14px !important; }
+}
+.footer-tagline { color: rgba(250, 247, 242, 0.7); font-size: 14px; }
+.footer-col-title { font-size: 13px; color: rgba(250, 247, 242, 0.82); }
+.footer-col-links { gap: 2px; font-size: 15px; }
+.footer-col-links a { color: rgba(250, 247, 242, 0.78); display: inline-block; padding: 7px 0; min-height: 24px; }
+.footer-col-links a:hover { color: var(--amber-bright, #e88a2e); text-decoration: underline; }
+.footer-bottom { font-size: 13px; color: rgba(250, 247, 242, 0.68); }
+.footer-bottom a { color: inherit; text-decoration: underline; }
+@media (max-width: 700px) {
+  :not(.tw) > table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Washington Rebate Calculator 2026: PSE, Seattle City Light, Avista, Tacoma, Clark | HomePowerRebate", "url": "https://homepowerrebate.com/calculator/wa/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
 </head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -385,6 +491,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/calculator/">Calculators</a></li><li aria-current="page">Washington</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>Washington Rebate Calculator 2026: What Your Utility Pays</h1><p>Pick your utility and what heats your home, and see which Washington utility rebates fit, with a source for every number.</p><p class="meta">By Sam Menard · Rules last verified October 6, 2026</p></div></header>
 <section class="body"><div class="wrap rc-wrap">
@@ -761,6 +868,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 })(typeof window !== "undefined" ? window : globalThis);
 </script>
 <script>HPRCalc.mount(document.getElementById("rc-mount"),{"code":"wa","name":"Washington","country":"us","currency":"USD","hub":"/us/wa/","installers":"/installers/","questions":[{"id":"city","label":"Which city is closest to your home?","type":"select","optional":true,"help":"Used to link to your city guide.","options":[{"value":"bellevue","label":"Bellevue","page":"/us/wa/bellevue/"},{"value":"seattle","label":"Seattle","page":"/us/wa/seattle/"},{"value":"spokane","label":"Spokane","page":"/us/wa/spokane/"},{"value":"tacoma","label":"Tacoma","page":"/us/wa/tacoma/"},{"value":"vancouver","label":"Vancouver, Washington","page":"/us/wa/vancouver/"}]},{"id":"utility","label":"Who supplies your electricity?","type":"select","options":[{"value":"pse","label":"Puget Sound Energy (PSE)"},{"value":"scl","label":"Seattle City Light"},{"value":"avista","label":"Avista"},{"value":"tacoma","label":"Tacoma Power"},{"value":"clark","label":"Clark Public Utilities"},{"value":"other","label":"Another utility"}]},{"id":"heating","label":"What heats your home now?","type":"select","options":[{"value":"electric","label":"Electric heat (baseboards, furnace or heat pump)"},{"value":"gas","label":"Natural gas"},{"value":"oil","label":"Heating oil"},{"value":"other","label":"Something else"}]}],"upgrades":[{"id":"heat-pump","label":"Heat pump"},{"id":"water-heater","label":"Heat pump water heater"},{"id":"insulation","label":"Insulation"},{"id":"windows","label":"Windows"},{"id":"thermostat","label":"Smart thermostat"},{"id":"ev","label":"EV charger"},{"id":"battery","label":"Home battery"}],"programs":[{"id":"pse-hp","name":"PSE heat pump (electric heat to heat pump)","upgrade":"heat-pump","amount":{"max":1500},"rules":"For electric resistance heat. $2,400 for income-qualified households. PSE contractor required.","when":{"utility":["pse"],"heating":["electric"]},"group":"hp","status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/heating/electric-resistance-to-air-source-heat-pump-conversion-rebate"},{"id":"pse-hybrid","name":"PSE hybrid heat pump (with a gas furnace)","upgrade":"heat-pump","amount":{"max":1500},"rules":"For homes with a PSE natural gas furnace. Ducted heat pump only. $2,400 for income-qualified households.","when":{"utility":["pse"],"heating":["gas"]},"group":"hp","status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/heating/hybrid-heat-pump"},{"id":"pse-hpwh","name":"PSE heat pump water heater","upgrade":"water-heater","amount":{"max":1000},"rules":"Tier 3 or Tier 4 model installed on or after January 1, 2026. Apply within 30 days. $1,100 for income-qualified households.","when":{"utility":["pse"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/water-heating/heat-pump-water-heater-rebate"},{"id":"pse-insul","name":"PSE insulation and air sealing","upgrade":"insulation","amount":{"max":5000,"label":"Up to $5,000 per wall or floor area"},"rules":"Attic $1.75 per sq ft up to $3,500; walls and floors $2.50 per sq ft up to $5,000 each. PSE contractor takes it off the invoice.","when":{"utility":["pse"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/insulation"},{"id":"pse-win","name":"PSE windows","upgrade":"windows","amount":{"max":0,"label":"Up to $100 per window"},"rules":"$200 per window for income-qualified households. Buy and install by December 31, 2026.","when":{"utility":["pse"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/windows-rebates"},{"id":"pse-tstat","name":"PSE smart thermostat","upgrade":"thermostat","amount":{"max":75},"rules":"$175 or $130 for income-qualified households. Buy and install by December 31, 2026.","when":{"utility":["pse"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/smart-thermostat"},{"id":"pse-ev","name":"PSE EV home charger","upgrade":"ev","amount":{"max":300},"rules":"ENERGY STAR smart Level 2 charger. Up to $600 plus $2,000 for installation if income-qualified.","when":{"utility":["pse"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/ev-home-charger"},{"id":"pse-flex","name":"PSE Flex Batteries","upgrade":"battery","amount":{"max":1000,"label":"Up to $1,000 plus $500 a year"},"rules":"Enrollment incentive depends on battery size and taking part in Flex events.","when":{"utility":["pse"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.pse.com/en/rebates/PSE-flex/flex-batteries"},{"id":"scl-hp","name":"Seattle City Light heat pump contractor discount","upgrade":"heat-pump","amount":{"max":600,"label":"$300 to $600"},"rules":"Through a participating contractor and supplier. By efficiency rating. No do-it-yourself installs.","when":{"utility":["scl"]},"group":"hp","status":"active","verified_on":"2026-10-06","source_url":"https://www.seattle.gov/city-light/residential-services/home-energy-solutions/heating-and-cooling-your-home"},{"id":"scl-oil","name":"Seattle oil-to-electric rebate","upgrade":"heat-pump","amount":{"max":2000},"rules":"For Seattle homes heating with oil that switch to a qualified heat pump through a participating contractor. We have not confirmed it adds to the contractor discount, so only the larger counts.","when":{"utility":["scl"],"heating":["oil"]},"group":"hp","status":"active","verified_on":"2026-10-06","source_url":"https://www.seattle.gov/city-light/residential-services/home-energy-solutions/heating-and-cooling-your-home"},{"id":"scl-hpwh","name":"Seattle City Light heat pump water heater","upgrade":"water-heater","amount":{"max":750},"rules":"ENERGY STAR Tier 3 or Tier 4. Contractor, store coupon or online rebate; the coupon and the online rebate cannot be combined.","when":{"utility":["scl"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.seattle.gov/city-light/residential-services/home-energy-solutions/heating-and-cooling-your-home"},{"id":"scl-tstat","name":"Seattle City Light smart thermostat","upgrade":"thermostat","amount":{"max":50},"rules":"Instant discount on Mysa and Sinope thermostats bought from the maker's City Light page.","when":{"utility":["scl"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.seattle.gov/city-light/residential-services/home-energy-solutions/heating-and-cooling-your-home"},{"id":"avista-hp","name":"Avista heat pump contractor discount","upgrade":"heat-pump","amount":{"max":600,"label":"$300 to $600"},"rules":"Per outdoor system, by efficiency rating. Goes to your contractor, who may pass it on.","when":{"utility":["avista"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.myavista.com/energy-savings/rebates-washington/hvac-and-water-heating-discounts"},{"id":"avista-hpwh","name":"Avista heat pump water heater discount","upgrade":"water-heater","amount":{"max":500},"rules":"Retrofit unit under 120 gallons, rating of 2.1 or higher. Contractor discount.","when":{"utility":["avista"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.myavista.com/energy-savings/rebates-washington/hvac-and-water-heating-discounts"},{"id":"avista-insul","name":"Avista Home Insulation Program","upgrade":"insulation","amount":{"max":0,"label":"$1.75 per square foot"},"rules":"Attics, floors and walls that start thin. Free assessment from an approved installer. No income test.","when":{"utility":["avista"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.myavista.com/energy-savings/rebate-overview/home-insulation-program"},{"id":"avista-win","name":"Avista windows and sliding glass doors","upgrade":"windows","amount":{"max":0,"label":"Up to $225 per window"},"rules":"$180 or $225 per window with a contractor, by U-factor. Apply within 120 days.","when":{"utility":["avista"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington/windows"},{"id":"tp-hp","name":"Tacoma Power heat pump","upgrade":"heat-pump","amount":{"by":"heating","values":{"electric":2000,"gas":1000,"oil":1000,"other":1000},"label":"$1,000 to $2,000"},"rules":"$2,000 for a variable-speed heat pump replacing an electric forced-air furnace; $1,000 in several other cases. Participating contractor required.","when":{"utility":["tacoma"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/heat-pump/"},{"id":"tp-hpwh","name":"Tacoma Power electric hybrid water heater","upgrade":"water-heater","amount":{"max":500},"rules":"Replacing a standard electric tank with a Tier 3 or Tier 4 model.","when":{"utility":["tacoma"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.mytpu.org/ways-to-save/for-my-home/hybrid-water-heater/"},{"id":"tp-insul","name":"Tacoma Power insulation","upgrade":"insulation","amount":{"max":2250},"rules":"$750 each for the attic, walls and crawlspace. Electric main heat and thin starting insulation.","when":{"utility":["tacoma"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/insulation/"},{"id":"tp-win","name":"Tacoma Power windows","upgrade":"windows","amount":{"max":0,"label":"$50 to $100 per window"},"rules":"Replacing single-pane or double-pane metal-framed windows. Participating contractor.","when":{"utility":["tacoma"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/windows/"},{"id":"tp-tstat","name":"Tacoma Power smart thermostat","upgrade":"thermostat","amount":{"max":75},"rules":"Electric forced-air furnace or central heat pump. Up to two rebates.","when":{"utility":["tacoma"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/thermostats/"},{"id":"tp-ev","name":"Tacoma Power EV charging credits","upgrade":"ev","amount":{"max":600},"rules":"$400 credits for a charger, splitter, electrical work or outlet, $600 maximum.","when":{"utility":["tacoma"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.mytpu.org/ways-to-save/for-my-home/ev-charging/"},{"id":"clark-hp","name":"Clark Public Utilities heat pump","upgrade":"heat-pump","amount":{"max":1250,"label":"$500 to $1,250; $900 ductless"},"rules":"Electrically heated home. Contractor Network installer required.","when":{"utility":["clark"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/heat-pump-program/"},{"id":"clark-hpwh","name":"Clark Public Utilities heat pump water heater","upgrade":"water-heater","amount":{"max":1500},"rules":"Tier 3 or Tier 4, replacing an electric storage water heater. An Oregon store markdown cancels the rebate.","when":{"utility":["clark"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/heat-pump-water-heater-program/"},{"id":"clark-insul","name":"Clark Public Utilities insulation","upgrade":"insulation","amount":{"max":0,"label":"$0.75 to $1.20 per square foot"},"rules":"Electrically heated homes with thin insulation.","when":{"utility":["clark"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/weatherization-program/"},{"id":"clark-win","name":"Clark Public Utilities windows","upgrade":"windows","amount":{"max":0,"label":"$6 to $10 per square foot"},"rules":"By window rating and old frame type. Electrically heated homes.","when":{"utility":["clark"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/weatherization-program/"},{"id":"clark-tstat","name":"Clark Public Utilities smart thermostat","upgrade":"thermostat","amount":{"max":140},"rules":"Instant rebate at the utility's online marketplace for an electric furnace or heat pump.","when":{"utility":["clark"],"heating":["electric"]},"status":"active","verified_on":"2026-10-06","source_url":"https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/"}],"notes":["Solar: Washington exempts solar equipment and installation from sales tax through 2029, but there is no verified upfront rebate, so solar is not in this calculator.","Amounts are the most a program pays. Income-qualified households may get more from PSE's Efficiency Boost or from local partners of the state program."],"closed":[{"name":"Federal Residential Clean Energy Credit (25D) and Energy Efficient Home Improvement Credit (25C)","status":"closed","source_url":"https://www.irs.gov/credits-deductions/residential-clean-energy-credit"}],"income_source":null,"verified_on":"2026-10-06"});</script>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
@@ -959,6 +1067,8 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 })();
 (function(){function o(){var h=location.hash&&document.getElementById(location.hash.slice(1));if(!h)return;var d=h.closest?h.closest('details.hub-fold'):null;if(d){d.open=true;h.scrollIntoView();}}
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
+(function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

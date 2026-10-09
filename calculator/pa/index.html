@@ -277,11 +277,117 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 .hs-note { margin: 14px 0 0; padding: 10px 14px; background: #fdf2f0; border: 1px solid #efc9c4; border-radius: 10px; font-size: 14px; color: #8a2a1c; }
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
+
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
+/* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
+/* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
+.btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
+a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
+.btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+[style*="color:var(--amber)"], [style*="color: var(--amber)"] { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.src, p.src, p.src a { color: #6b6355 !important; }
+section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
+.finder-cat a, .city-card > a { color: #a4540a; }
+.footer .footer-col-links a { color: rgba(250, 247, 242, 0.8) !important; }
+.footer .footer-bottom, .footer .footer-bottom a, .footer .footer-tagline { color: rgba(250, 247, 242, 0.7) !important; }
+/* readable line length: running text stops at 72 characters */
+main p, article p, .wrap p, section p, .wrap li, article li, main li { max-width: 72ch; }
+.footer p, .footer li, nav p, nav li, table p, table li { max-width: none; }
+/* readable text floor: nothing below 13px */
+[style*="font-size:9px"],
+[style*="font-size: 9px"],
+[style*="font-size:9.5px"],
+[style*="font-size: 9.5px"],
+[style*="font-size:10px"],
+[style*="font-size: 10px"],
+[style*="font-size:10.5px"],
+[style*="font-size: 10.5px"],
+[style*="font-size:11px"],
+[style*="font-size: 11px"],
+[style*="font-size:11.5px"],
+[style*="font-size: 11.5px"],
+[style*="font-size:12px"],
+[style*="font-size: 12px"],
+[style*="font-size:12.5px"],
+[style*="font-size: 12.5px"],
+small,
+.small,
+.finder-cat,
+.finder-source,
+.program-status,
+.rr-eyebrow,
+.tag,
+.region-tag,
+.status-pill,
+.badge,
+.bf,
+.lbl,
+.src,
+.ps-lab,
+.ps-tag,
+.hf-pill,
+.section-eyebrow,
+.quick-answer-label,
+.popular-label,
+.rb-status,
+.region-count,
+.stat span,
+.hs-stat span,
+.installer-note,
+.rg { font-size: 13px !important; }
+ol[class*="crumb"] li, ol[class*="crumb"] a, nav[aria-label*="readcrumb"] li, nav[aria-label*="readcrumb"] a, .breadcrumb, .breadcrumb a, .breadcrumbs, .breadcrumbs a, .crumbs, .crumbs a { font-size: 13px !important; }
+.powerscore-table small, table small { font-size: 12px !important; }
+/* tap targets on phones */
+@media (max-width: 768px) {
+  nav.toc a, .fact-value a, .city-card > a, .hf-close a, h3 > a, h4 > a, ol[class*="crumb"] a, .breadcrumb a, .breadcrumbs a, .crumbs a, .installer-note a, p > a[href]:only-child { display: inline-flex; align-items: center; min-height: 44px; }
+  div > a[style*="border:1px solid var(--rule)"] { display: inline-flex !important; align-items: center; min-height: 40px; padding-top: 6px !important; padding-bottom: 6px !important; }
+  details > summary { padding: 12px 0; min-height: 44px; box-sizing: border-box; }
+}
+/* sibling-page links (builders emit them as inline spans) become tappable chips */
+div[style*="line-height:2.2"] { display: flex !important; flex-wrap: wrap; gap: 8px; line-height: 1.3 !important; }
+div[style*="line-height:2.2"] > span { margin: 0 !important; }
+div[style*="line-height:2.2"] > span > a { display: inline-flex; align-items: center; min-height: 40px; padding: 6px 14px; border: 1px solid var(--rule); border-radius: 999px; background: #fff; text-decoration: none; font-weight: 600; color: var(--teal-deep); }
+div[style*="line-height:2.2"] > span > a:hover { border-color: var(--amber); color: var(--amber); }
+html { scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
+h1, h2 { text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--amber-bright, #e88a2e); outline-offset: 3px; border-radius: 4px; }
+.nav-desktop-only a, .nav-mobile-only a { display: inline-flex; align-items: center; min-height: 44px; }
+.logo { min-height: 44px; }
+.nav-pick { min-height: 44px; }
+@media (max-width: 768px) {
+  .nav-inner { padding: 8px 16px; row-gap: 0; }
+  .nav-mobile-only { gap: 4px; }
+  .nav-mobile-only a { padding: 0 10px; }
+  .nav-pick { font-size: 13px !important; padding: 0 14px !important; }
+}
+.footer-tagline { color: rgba(250, 247, 242, 0.7); font-size: 14px; }
+.footer-col-title { font-size: 13px; color: rgba(250, 247, 242, 0.82); }
+.footer-col-links { gap: 2px; font-size: 15px; }
+.footer-col-links a { color: rgba(250, 247, 242, 0.78); display: inline-block; padding: 7px 0; min-height: 24px; }
+.footer-col-links a:hover { color: var(--amber-bright, #e88a2e); text-decoration: underline; }
+.footer-bottom { font-size: 13px; color: rgba(250, 247, 242, 0.68); }
+.footer-bottom a { color: inherit; text-decoration: underline; }
+@media (max-width: 700px) {
+  :not(.tw) > table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Pennsylvania Rebate Calculator 2026: PECO and PPL Electric Heat Pump and Thermostat Rebates | HomePowerRebate", "url": "https://homepowerrebate.com/calculator/pa/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
 </head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
-<nav class="nav">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
     <a href="/" class="logo">
       <span class="logo-mark"></span>
@@ -385,6 +491,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/calculator/">Calculators</a></li><li aria-current="page">Pennsylvania</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>Pennsylvania Rebate Calculator 2026: What Your Utility Pays</h1><p>Pennsylvania rebates are small and come from your electric utility. This calculator shows what PECO and PPL Electric pay today.</p><p class="meta">By Sam Menard · Rules last verified October 6, 2026</p></div></header>
 <section class="body"><div class="wrap rc-wrap">
@@ -761,6 +868,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 })(typeof window !== "undefined" ? window : globalThis);
 </script>
 <script>HPRCalc.mount(document.getElementById("rc-mount"),{"code":"pa","name":"Pennsylvania","country":"us","currency":"USD","hub":"/us/pa/","installers":"/installers/","questions":[{"id":"utility","label":"Who supplies your electricity?","type":"select","options":[{"value":"peco","label":"PECO"},{"value":"ppl","label":"PPL Electric"},{"value":"other","label":"Another utility (Duquesne Light, Penelec and others)"}]},{"id":"city","label":"Which city is closest to your home?","type":"select","options":[{"value":"allentown","label":"Allentown","installers":{"heat-pump":"/installers/pa/allentown/heat-pump/","solar":"/installers/pa/allentown/solar/","battery":"/installers/pa/allentown/battery/","insulation":"/installers/pa/allentown/insulation/"},"page":"/us/pa/allentown/"},{"value":"erie","label":"Erie","installers":{"heat-pump":"/installers/pa/erie/heat-pump/","solar":"/installers/pa/erie/solar/","battery":"/installers/pa/erie/battery/"},"page":"/us/pa/erie/"},{"value":"philadelphia","label":"Philadelphia","installers":{"heat-pump":"/installers/pa/philadelphia/heat-pump/","solar":"/installers/pa/philadelphia/solar/","battery":"/installers/pa/philadelphia/battery/"},"page":"/us/pa/philadelphia/"},{"value":"pittsburgh","label":"Pittsburgh","installers":{"heat-pump":"/installers/pa/pittsburgh/heat-pump/","solar":"/installers/pa/pittsburgh/solar/","battery":"/installers/pa/pittsburgh/battery/","insulation":"/installers/pa/pittsburgh/insulation/"},"page":"/us/pa/pittsburgh/"}],"optional":true,"help":"Used to show top-rated installers near you."}],"upgrades":[{"id":"heat-pump","label":"Heat pump"},{"id":"water-heater","label":"Heat pump water heater"},{"id":"insulation","label":"Insulation and air sealing"},{"id":"thermostat","label":"Smart thermostat"}],"programs":[{"id":"peco-hp","name":"PECO air-source heat pump","upgrade":"heat-pump","amount":{"max":300,"label":"$200 or $300"},"rules":"$200 at 15.2 to 17.0 SEER2, $300 at 17.1 SEER2 or higher. Minimums: 11.0 EER2 and 7.8 HSPF2. Apply within 90 days of purchase.","when":{"utility":["peco"]},"group":"hp","status":"active","verified_on":"2026-10-06","source_url":"https://pecohomerebateprogram.com/heating-cooling-rebates.html"},{"id":"peco-mini","name":"PECO ductless mini-split heat pump","upgrade":"heat-pump","amount":{"max":300,"label":"$150 or $300"},"rules":"$150 or $300 depending on efficiency. Apply within 90 days of purchase.","when":{"utility":["peco"]},"group":"hp","status":"active","verified_on":"2026-10-06","source_url":"https://pecohomerebateprogram.com/heating-cooling-rebates.html"},{"id":"peco-hpwh","name":"PECO heat pump water heater","upgrade":"water-heater","amount":{"max":350},"rules":"ENERGY STAR certified electric model. Apply within 90 days of purchase.","when":{"utility":["peco"]},"status":"active","verified_on":"2026-10-05","source_url":"https://pecohomerebateprogram.com/water-heating-rebates.html"},{"id":"peco-tstat","name":"PECO smart thermostat","upgrade":"thermostat","amount":{"max":50,"label":"$25 to $50"},"rules":"$50 instant, or $25 after install.","when":{"utility":["peco"]},"status":"active","verified_on":"2026-10-05","source_url":"https://pecohomerebateprogram.com/appliance-rebates.html"},{"id":"ppl-hp","name":"PPL Electric heat pump","upgrade":"heat-pump","amount":{"max":0,"label":"$225 to $500"},"rules":"Air source $225 or $325, mini-split $225, ground source $500, depending on your offer. Confirm the current offer with PPL, so it is not added to your total. Equipment installed on or before May 31, 2026 is no longer eligible.","when":{"utility":["ppl"]},"group":"hp","status":"active","verified_on":"2026-10-06","source_url":"https://ppl.clearesult.com/rebates"},{"id":"ppl-hpwh","name":"PPL Electric heat pump water heater","upgrade":"water-heater","amount":{"max":400},"rules":"ENERGY STAR certified.","when":{"utility":["ppl"]},"status":"active","verified_on":"2026-10-06","source_url":"https://ppl.clearesult.com/rebates"},{"id":"ppl-tstat","name":"PPL Electric smart thermostat","upgrade":"thermostat","amount":{"max":100,"label":"$50 or $100"},"rules":"ENERGY STAR certified. The amount depends on your offer.","when":{"utility":["ppl"]},"status":"active","verified_on":"2026-10-06","source_url":"https://ppl.clearesult.com/rebates"},{"id":"ppl-ins","name":"PPL Electric insulation and air sealing","upgrade":"insulation","amount":{"max":500},"rules":"Insulation up to $200 or $500 and air sealing up to $150, depending on your offer.","when":{"utility":["ppl"]},"status":"active","verified_on":"2026-10-06","source_url":"https://ppl.clearesult.com/rebates"}],"notes":["We have not verified Duquesne Light or Penelec amounts, PECO's income-qualified amounts, or the Philadelphia solar rebate. We list only what we have read on a program's own page.","Amounts are the most a program pays. Your rebate depends on the equipment and your final invoice."],"closed":[{"name":"PA Sunshine Solar Program","status":"closed","source_url":"https://www.dep.pa.gov/Business/Energy/OfficeofPollutionPrevention/Pages/default.aspx"},{"name":"Federal residential clean energy credits (25C, 25D)","status":"closed","source_url":"https://www.irs.gov/credits-deductions/residential-clean-energy-credit"},{"name":"PECO Act 129 solar rebate","status":"active","source_url":"https://pecohomerebateprogram.com/solar-rebates.html"}],"income_source":null,"verified_on":"2026-10-06"});</script>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
@@ -959,6 +1067,8 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 })();
 (function(){function o(){var h=location.hash&&document.getElementById(location.hash.slice(1));if(!h)return;var d=h.closest?h.closest('details.hub-fold'):null;if(d){d.open=true;h.scrollIntoView();}}
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
+(function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

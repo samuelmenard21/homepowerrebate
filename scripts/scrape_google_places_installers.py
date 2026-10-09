@@ -1,3 +1,6 @@
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 #!/usr/bin/env python3
 """
 Scrape REAL heat pump (HVAC) and solar installers from Google Places API (NEW v1).
@@ -274,6 +277,11 @@ PROVINCES = {
     "ny": {"cities": NY_CITIES, "abbrev": "NY", "csv_prefix": "ny-"},
     "ca": {"cities": CA_CITIES, "abbrev": "CA", "csv_prefix": "ca-"},
 }
+
+# Regions in data/regions.json that carry a "geo" block (city -> lat/lng) are added here, so a new region needs no edit in this file.
+for _r in regions.REGIONS:
+    if _r.get("geo") and _r["code"] not in PROVINCES:
+        PROVINCES[_r["code"]] = {"cities": _r["geo"], "abbrev": _r["abbr"], "csv_prefix": f"{_r['code']}-"}
 
 
 def search_text(api_key, query, lat, lng, debug=False):

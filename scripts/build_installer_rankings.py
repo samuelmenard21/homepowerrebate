@@ -24,6 +24,9 @@ import sys
 from datetime import date
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import apply_canonical_nav_footer as navfooter  # noqa: E402
@@ -47,6 +50,9 @@ REGIONS = {
     "co": ("us", "co", "CO", "Colorado"),
     "vt": ("us", "vt", "VT", "Vermont"),
 }
+for _r in regions.REGIONS:
+    REGIONS.setdefault(_r["code"], (_r["country"], _r["code"], _r["abbr"], _r["name"]))
+US_REGIONS = tuple(_r["code"] for _r in regions.REGIONS if _r["country"] == "us")
 SERVICES = {
     "heat-pump": {"name": "Heat Pump", "lower": "heat pump", "rebate_cat": "heat-pump"},
     "solar": {"name": "Solar", "lower": "solar", "rebate_cat": "solar"},
@@ -802,7 +808,7 @@ def quote_form(region, service, city_label, ranked):
     route, which emails that installer (Resend) with the homeowner's upgrades, logs the lead and notifies ops.
     The Worker only emails addresses in installers/allowed-installer-emails.json (written by main())."""
     svc = SERVICES[service]
-    us = region in ("ma", "ny", "ca", "co", "pa", "vt")
+    us = region in US_REGIONS
     postal_label, postal_ph = ("ZIP code", "e.g. 02139") if us else ("Postal code", "e.g. M4P 1E2")
     picks = "".join(
         f'<label class="qf-pick"><input type="checkbox" name="pick" value="{i}"{" checked" if i < 3 else ""}> {esc(r["name"])} '

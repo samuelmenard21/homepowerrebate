@@ -16,6 +16,9 @@ import json
 import os
 from collections import defaultdict
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 JOBS = [
@@ -150,6 +153,16 @@ JOBS = [
         "description_tpl": "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.",
     },
 ]
+
+# Every region in data/regions.json gets heat pump and solar jobs unless one is already listed above.
+_have = {os.path.basename(j["csv"]) for j in JOBS}
+for _r in regions.REGIONS:
+    for _svc, _spec, _sub, _tpl in (("heat-pump", "Heat Pump & HVAC Installation", "", "Local heating & cooling pro serving {city}. {rating}★ from {reviews} Google reviews."),
+                                    ("solar", "Solar Installation", "/solar", "Local solar installer serving {city}. {rating}★ from {reviews} Google reviews.")):
+        _name = f"{_r['code']}-{_svc}-installers-real.csv"
+        if _name not in _have:
+            JOBS.append({"csv": os.path.join(ROOT, "installers", _name), "out_dir": os.path.join(ROOT, f"installers/json/{_r['code']}{_sub}"),
+                         "specialty": _spec, "description_tpl": _tpl})
 
 
 def city_slug(city):

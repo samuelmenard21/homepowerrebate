@@ -20,6 +20,9 @@ import re
 import html
 from datetime import date, timedelta
 
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import regions
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REVIEW_SUMMARIES = {}
 _rsf = os.path.join(ROOT, "data", "places-review-summaries.json")
@@ -108,6 +111,20 @@ REGIONS = {
         "program_name": "Efficiency Vermont rebates",
     },
 }
+
+# Every other region in data/regions.json gets the same flat-index profile config (no state-specific licensing claims).
+for _r in regions.REGIONS:
+    if _r["code"] not in REGIONS:
+        REGIONS[_r["code"]] = {
+            "json_dir": os.path.join(ROOT, f"installers/json/{_r['code']}"),
+            "profiles_dir": os.path.join(ROOT, f"installers/profiles/{_r['code']}"),
+            "state": _r["abbr"],
+            "hub_style": "flat-index",  # /<country>/<code>/<city>/
+            "breadcrumb_region_name": _r["name"],
+            "vetting_note": "Confirm current licensing, insurance and program eligibility directly with any installer before you sign.",
+            "verify_links": [],
+            "program_name": (_r["programs"][0][1] if _r.get("programs") else f"{_r['name']} utility rebates"),
+        }
 
 CSS = """:root { --ink:#0a2a2e; --ink-soft:#1a3d42; --paper:#faf7f2; --paper-warm:#f5efe5; --teal:#0d4f5c; --teal-deep:#08363f; --amber:#d4751c; --amber-bright:#e88a2e; --green-money:#2d6a4f; --rule:#d9d0c1; }
 * { box-sizing:border-box; }

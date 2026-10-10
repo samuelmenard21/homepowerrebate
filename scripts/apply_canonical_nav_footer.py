@@ -301,7 +301,23 @@ def add_font_fallbacks(content: str) -> str:
                 break
             s = re.sub(r"""(['"]%s['"])""" % web, lambda x: x.group(1) + ", " + fb, s, count=1)
         return s
-    return _FAMILY_RE.sub(fix, content)
+    # never touch @font-face rules: a face has exactly one family name (the inline latin faces live between the FONT-PRELOAD markers)
+    parts = re.split(r"(<!-- FONT-PRELOAD-START -->.*?<!-- FONT-PRELOAD-END -->)", content, flags=re.S)
+    return "".join(p if i % 2 else _FAMILY_RE.sub(fix, p) for i, p in enumerate(parts))
+
+
+FONT_FILES = ("https://fonts.gstatic.com/s/fraunces/v38/6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeP2Xz5c.woff2",
+              "https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsH8ahuQ2e8.woff2")
+_LATIN = ("U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, "
+          "U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD")
+FONT_HEAD = (
+    "<!-- FONT-PRELOAD-START -->\n"
+    + "".join(f'<link rel="preload" as="font" type="font/woff2" crossorigin href="{u}">\n' for u in FONT_FILES)
+    + "<style>@font-face{font-family:'Fraunces';font-style:normal;font-weight:400 700;font-display:swap;src:url(" + FONT_FILES[0] + ") format('woff2');unicode-range:" + _LATIN + "}"
+    + "@font-face{font-family:'Inter Tight';font-style:normal;font-weight:400 700;font-display:swap;src:url(" + FONT_FILES[1] + ") format('woff2');unicode-range:" + _LATIN + "}</style>\n"
+    "<!-- FONT-PRELOAD-END -->"
+)
+_FONT_HEAD_RE = re.compile(r"<!-- FONT-PRELOAD-START -->.*?<!-- FONT-PRELOAD-END -->", re.S)
 
 
 def ensure_fast_head(content: str) -> str:
@@ -311,6 +327,17 @@ def ensure_fast_head(content: str) -> str:
     - the form-handlers script is deferred"""
     content = FONT_CSS_RE.sub(lambda m: (f'<link rel="preload" as="style" href="{m.group(1)}" onload="this.onload=null;this.rel=\'stylesheet\'">\n'
                                          f'<noscript><link rel="stylesheet" href="{m.group(1)}"></noscript>'), content, count=1)
+    # latin fonts: inline @font-face plus preload, so the files download from the first bytes of the page instead of after the stylesheet request
+    if "</head>" in content:
+        if _FONT_HEAD_RE.search(content):
+            content = _FONT_HEAD_RE.sub(lambda m: FONT_HEAD, content, count=1)
+        else:
+            m = re.search(r'<link rel="preload" as="style" href="https://fonts\.googleapis\.com', content) or re.search(r'<link rel="preconnect" href="https://fonts\.gstatic\.com"', content)
+            if m:
+                content = content[:m.start()] + FONT_HEAD + "\n" + content[m.start():]
+    # The inline latin faces cover English text; the Google stylesheet would re-declare them with a swap after first paint, which shifts the layout. Drop it.
+    content = re.sub(r'<link rel="preload" as="style" href="https://fonts\.googleapis\.com/css2[^"]*" onload="[^"]*">\n?', "", content)
+    content = re.sub(r'<noscript><link rel="stylesheet" href="https://fonts\.googleapis\.com/css2[^"]*"></noscript>\n?', "", content)
     if 'rel="icon"' not in content and "</head>" in content:
         content = content.replace("</head>", ICON_LINKS + "\n</head>", 1)
     content = re.sub(r'<script src="(/form-handlers[^"]*\.js)"></script>', r'<script defer src="\1"></script>', content)

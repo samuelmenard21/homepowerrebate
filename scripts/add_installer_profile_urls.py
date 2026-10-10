@@ -8,7 +8,11 @@ Usage: python3 scripts/add_installer_profile_urls.py
 """
 import json
 import re
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import regions
 
 ROOT = Path(__file__).resolve().parent.parent
 JSON_DIR = ROOT / "installers" / "json"
@@ -19,17 +23,34 @@ def slugify(s):
     return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
 
 
+def slugify_gen(s):
+    """The profile generators drop '&' and apostrophes instead of writing 'and'; both spellings exist on disk."""
+    s = re.sub(r"[&']", "", s.lower().strip())
+    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+
+
 def profile_url(region, city_slug, name):
-    name_slug = slugify(name)
-    for rel in (f"installers/profiles/{city_slug}/{name_slug}", f"installers/profiles/{region}/{city_slug}/{name_slug}"):
-        if (ROOT / rel / "index.html").exists():
-            return "/" + rel + "/"
+    for name_slug in dict.fromkeys((slugify(name), slugify_gen(name))):
+        for rel in (f"installers/profiles/{city_slug}/{name_slug}", f"installers/profiles/{region}/{city_slug}/{name_slug}"):
+            if (ROOT / rel / "index.html").exists():
+                return "/" + rel + "/"
     return ""
+
+
+BC_CITIES = {h.strip("/").split("/")[-1] for h, _ in regions.BY_CODE["bc"]["cities"]}
 
 
 def region_of(path):
     parts = [x for x in path.relative_to(JSON_DIR).parts[:-1] if x != "solar"]
     return parts[0] if parts else "bc"
+
+
+def regions_to_try(path):
+    """Top-level files in installers/json/ are BC cities, but also hold flat copies of some CA and NY cities; those link to their real region's pages."""
+    r = region_of(path)
+    if r != "bc" or path.stem in BC_CITIES:
+        return [r]
+    return [c for c in regions.CODES if c != "bc"]
 
 
 def main():
@@ -43,13 +64,13 @@ def main():
         if fmt is None:
             continue
         files += 1
-        region, city = region_of(f), f.stem
+        tries, city = regions_to_try(f), f.stem
         dirty = False
         for rec in data:
             if not isinstance(rec, dict) or not rec.get("name"):
                 continue
             total += 1
-            url = profile_url(region, city, rec["name"])
+            url = next((u for u in (profile_url(r, city, rec["name"]) for r in tries) if u), "")
             if url:
                 linked += 1
                 if rec.get("profileUrl") != url:

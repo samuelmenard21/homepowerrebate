@@ -86,6 +86,13 @@ def extract(text):
     review_m = re.search(r'reviewCount":\s*"(\d+)"', text)
     d["rating"] = rating_m.group(1) if rating_m else None
     d["reviews"] = review_m.group(1) if review_m else None
+    # Profile pages no longer carry AggregateRating markup (Google Maps data policy), so fall back to the visible rating.
+    if not d["rating"]:
+        vr = re.search(r'ip-rating-num">\s*([\d.]+)', text)
+        d["rating"] = vr.group(1) if vr else None
+    if not d["reviews"]:
+        vc = re.search(r'ip-rating-count">\s*([\d,]+)\s*reviews?', text)
+        d["reviews"] = vc.group(1).replace(",", "") if vc else None
 
     area_m = re.search(r'"areaServed":\s*\{[^}]*"name":\s*"([^"]+)"', text)
     d["city"] = html.unescape(area_m.group(1)) if area_m else None
@@ -160,7 +167,7 @@ def apply(profile_path, dry_run, stats, samples):
 
     # --- Task 1: trade range note ---
     other_trade, _ = build_trade_range_note(text, region, city)
-    if other_trade:
+    if other_trade and 'ip-also-installs' not in text:
         note_html = f'<p class="ip-also-installs">Also installs: {other_trade}</p>\n        '
         new_text, n = re.subn(
             r'(<p class="ip-rank">Ranked.*?</p>\n)',
@@ -185,7 +192,7 @@ def apply(profile_path, dry_run, stats, samples):
 
     # --- Task 2: neighborhood sentence (Abbotsford/Chilliwack only) ---
     city_key = (d["city"] or "").strip().lower()
-    if city_key in NEARBY:
+    if city_key in NEARBY and 'commonly serve nearby' not in text:
         neighbor, neighbor_url = NEARBY[city_key]
         sentence = (
             f' They commonly serve nearby Fraser Valley communities like '
@@ -213,7 +220,7 @@ def apply(profile_path, dry_run, stats, samples):
     program_name = d["program_name"]
     program_detail = d["program_detail"]
 
-    if rating and reviews:
+    if rating and reviews and 'class="ip-faq"' not in text:
         if rank:
             r, out_of, trade, rank_city = rank
             q2 = f"Is {name} a good choice in {city_disp}?"
@@ -248,7 +255,7 @@ def apply(profile_path, dry_run, stats, samples):
         # insert before the ip-quote section
         new_text, n = re.subn(
             r'(\n  <section class="ip-quote">)',
-            faq_html + r'\1',
+            lambda m: faq_html + m.group(1),
             text,
             count=1,
         )

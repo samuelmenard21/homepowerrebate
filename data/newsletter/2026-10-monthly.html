@@ -170,6 +170,8 @@ section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited
 /* readable line length: running text stops at 72 characters */
 main p, article p, .wrap p, section p, .wrap li, article li, main li { max-width: 72ch; }
 .footer p, .footer li, nav p, nav li, table p, table li { max-width: none; }
+/* hero text is short and already centred or aligned by the page: never cap it (a cap would need a script to re-centre it after first paint) */
+.hero p, header.hero p, .hero .lead, .hero-sub, .hero li { max-width: none; }
 /* readable text floor: nothing below 13px */
 [style*="font-size:9px"],
 [style*="font-size: 9px"],

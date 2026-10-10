@@ -14,10 +14,10 @@
   gtag('config', 'G-W33G4TGRHD');
 </script>
 
-<meta name="description" content="Browse 660+ verified heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California. Pick your region, then">
+<meta name="description" content="Browse 1,300+ heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, and 11 US states. Pick your region, then">
 <link rel="canonical" href="https://homepowerrebate.com/installers/">
 <meta property="og:title" content="Heat Pump & Solar Installers by Region | HomePowerRebate Directory">
-<meta property="og:description" content="Browse 660+ verified heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California. Pick your region, then filter by service and city.">
+<meta property="og:description" content="Browse 1,300+ heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, and 11 US states. Pick your region, then filter by service and city.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://homepowerrebate.com/installers/">
 <meta property="og:image" content="https://homepowerrebate.com/og-image.jpg">
@@ -41,7 +41,7 @@
       "@type": "CollectionPage",
       "@id": "https://homepowerrebate.com/installers/#directory",
       "name": "Heat Pump & Solar Installer Directory",
-      "description": "Directory of 660+ heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California, all rated 4+ stars on Google, organized by region and city.",
+      "description": "Directory of 1,300+ heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, and 11 US states, all rated 4+ stars on Google, organized by region and city.",
       "url": "https://homepowerrebate.com/installers/",
       "isPartOf": { "@type": "WebSite", "name": "HomePowerRebate", "url": "https://homepowerrebate.com" },
       "about": [
@@ -230,6 +230,19 @@ mark { background:#fbe2b8; color:inherit; border-radius:2px; padding:0 1px; }
 .installer-desc { font-size:13px; color:var(--ink-soft); margin:12px 0; flex-grow:1; }
 .installer-cta { display:inline-block; color:var(--teal-deep); font-weight:600; font-size:13px; text-decoration:none; margin-top:12px; }
 .installer-cta:hover { color:var(--amber); }
+/* directory layout fixes: hide the results block until a region is picked, full-width FAQ text, button-style card link */
+.near-you.idle { display:none; }
+.near-you .empty-state { padding:24px 20px; }
+#stats-section { padding-bottom:0; }
+.stats-box { margin:8px 0 0; }
+.is-b5547f86 p, .is-efa99485 p, #top-rated-by-city p { max-width:none; }
+body .is-433de30b.is-433de30b.is-433de30b { font-size:16px; }
+.is-b5547f86 .faq-item p { font-size:16px; line-height:1.65; }
+.is-b5547f86 .faq-item p:first-child { font-size:17px; }
+.installer-card { position:relative; cursor:pointer; }
+.installer-card .installer-cta { align-self:flex-start; padding:9px 16px; border:2px solid var(--teal-deep); border-radius:999px; font-size:14px; background:#fff; }
+.installer-card:hover .installer-cta { background:var(--teal-deep); color:#fff; }
+
 
 .city-tabs { display:flex; gap:8px; flex-wrap:wrap; margin:24px 0; }
 .city-tab { background:#fff; border:1.5px solid var(--rule); color:var(--ink); padding:10px 16px; border-radius:8px; font-weight:600; font-size:13px; cursor:pointer; transition:all 0.2s; }
@@ -722,8 +735,8 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 <section class="hero">
   <div class="wrap">
     <h1>Find a Verified Installer Near You</h1>
-    <p>660+ heat pump and solar installers, all rated 4+ stars, across 7 regions and 96 cities in BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California.</p>
-    <p class="subnote">Three steps: pick your region, narrow by service, then browse or search by name.</p>
+    <p>1,300+ heat pump and solar installers, all rated 4+ stars on Google, across 15 states and provinces and 144 cities.</p>
+    <p class="subnote">Four steps: pick your region, choose a service, narrow by city, then browse or search by name.</p>
   </div>
 </section>
 
@@ -756,9 +769,20 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
       </div>
     </div>
 
-    <div class="step-block">
+    <div class="step-block is-6b99de8b" id="city-select-section">
       <div class="step-head">
         <span class="step-num">3</span>
+        <div>
+          <div class="eyebrow is-227f2db2">Narrow by City</div>
+          <h2 class="is-2ca2ec92">Which city are you in?</h2>
+        </div>
+      </div>
+      <div class="city-tabs" id="city-tabs-container"></div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-head">
+        <span class="step-num">4</span>
         <div>
           <div class="eyebrow is-227f2db2">Search by Name</div>
           <h2 class="is-2ca2ec92">Looking for a specific company?</h2>
@@ -779,30 +803,29 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
   </div>
 </section>
 
-<section class="section is-6b99de8b" id="city-select-section">
-  <div class="wrap">
-    <div class="eyebrow">Narrow by City</div>
-    <div class="city-tabs" id="city-tabs-container"></div>
-  </div>
-</section>
 
-<section class="section">
+<section class="section" id="stats-section">
   <div class="wrap">
     <div class="stats-box">
       <div class="stat">
-        <div class="stat-num">660+</div>
-        <div class="stat-label">Verified Installers</div>
+        <div class="stat-num">1,300+</div>
+        <div class="stat-label">Google-rated installers</div>
       </div>
       <div class="stat">
-        <div class="stat-num">36</div>
-        <div class="stat-label">Cities (BC &amp; ON)</div>
+        <div class="stat-num" id="stat-cities">144</div>
+        <div class="stat-label">Cities in 15 states and provinces</div>
       </div>
       <div class="stat">
-        <div class="stat-num">4.6★</div>
-        <div class="stat-label">Avg. Rating</div>
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">Average Google rating</div>
       </div>
     </div>
 
+  </div>
+</section>
+
+<section class="section near-you idle" id="near-you">
+  <div class="wrap">
     <h2>Installers Near You</h2>
     <div id="installers-container" class="installer-grid"></div>
     <div id="empty-state" class="empty-state">
@@ -851,7 +874,7 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
   <div class="wrap">
     <div class="eyebrow">Full Directory</div>
     <h2>Every Installer, By City</h2>
-    <p class="is-0b4a6e35">A complete, static list of all 765+ installer profiles in our directory across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California (the interactive filters above cover the same list).</p>
+    <p class="is-0b4a6e35">A complete, static list of every installer in our directory across BC, Ontario, Alberta, Nova Scotia, and 11 US states (the interactive filters above cover the same list).</p>
     <div class="directory-search-row">
       <input type="text" id="directory-search" class="search-input" placeholder="Search this directory by name or city…" autocomplete="off" aria-label="Search the full installer directory">
       <span id="directory-search-count" class="search-count"></span>
@@ -2456,46 +2479,23 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 // live here, or its emails will silently show "not specified" instead of real
 // numbers. See lead-router.js's cityRebateLookup()/PROVINCE_CONTEXT for how
 // this is consumed, and add a PROVINCE_CONTEXT entry too for any new state/province.
-const BC_CITIES = [
-  'Abbotsford', 'Burnaby', 'Chilliwack', 'Coquitlam', 'Fort St. John',
-  'Kamloops', 'Kelowna', 'Langley', 'Maple Ridge', 'Nanaimo',
-  'Penticton', 'Prince George', 'Richmond', 'Squamish', 'Surrey',
-  'Vancouver', 'Vernon', 'Victoria'
-];
-const ON_CITIES = [
-  'Toronto', 'Ottawa', 'Mississauga', 'Brampton', 'Hamilton', 'Markham',
-  'Vaughan', 'Richmond Hill', 'Barrie', 'London', 'Kitchener', 'Windsor',
-  'Oakville', 'Oshawa', 'Whitby', 'Burlington', 'Cambridge', 'Greater Sudbury'
-];
-const AB_CITIES = ['Calgary', 'Edmonton', 'Red Deer', 'Lethbridge', 'St. Albert'];
-const NS_CITIES = ['Halifax'];
-const MA_CITIES = [
-  'Boston', 'Worcester', 'Springfield', 'Cambridge', 'Lowell', 'Brockton',
-  'New Bedford', 'Quincy', 'Lynn', 'Fall River', 'Newton', 'Somerville'
-];
-const NY_CITIES = [
-  'Beacon', 'Kingston', 'Newburgh', 'Poughkeepsie', 'Saugerties',
-  'Mount Vernon', 'New Rochelle', 'New York City', 'White Plains', 'Yonkers',
-  'Albany', 'Buffalo', 'Rochester', 'Syracuse',
-  'Babylon', 'Brookhaven', 'Huntington', 'Islip', 'Oyster Bay', 'Smithtown', 'Southampton'
-];
-const CA_CITIES = [
-  'Burbank', 'Glendale', 'Long Beach', 'Los Angeles', 'Pasadena', 'Santa Monica',
-  'Berkeley', 'Fremont', 'Oakland', 'San Francisco', 'San Jose',
-  'Moreno Valley', 'Ontario', 'Riverside', 'San Bernardino',
-  'Chula Vista', 'Escondido', 'San Diego',
-  'Folsom', 'Rancho Cordova', 'Roseville', 'Sacramento',
-  'Fresno', 'Bakersfield'
-];
-
-const PA_CITIES = ['Philadelphia', 'Pittsburgh', 'Allentown', 'Erie'];
-const CO_CITIES = ['Denver', 'Colorado Springs', 'Aurora', 'Fort Collins', 'Boulder'];
-const VT_CITIES = ['Burlington', 'South Burlington', 'Rutland', 'Barre', 'Montpelier'];
+// CITY-LISTS-START
+const ON_CITIES = ['Barrie', 'Brampton', 'Burlington', 'Cambridge', 'Greater Sudbury', 'Guelph', 'Hamilton', 'Kingston', 'Kitchener', 'London', 'Markham', 'Mississauga', 'Niagara Falls', 'Oakville', 'Oshawa', 'Ottawa', 'Peterborough', 'Richmond Hill', 'Sault Ste. Marie', 'Thunder Bay', 'Timmins', 'Toronto', 'Vaughan', 'Whitby', 'Windsor'];
+const BC_CITIES = ['Abbotsford', 'Burnaby', 'Chilliwack', 'Coquitlam', 'Fort St. John', 'Kamloops', 'Kelowna', 'Langley', 'Maple Ridge', 'Nanaimo', 'Penticton', 'Prince George', 'Richmond', 'Squamish', 'Surrey', 'Vancouver', 'Vernon', 'Victoria'];
+const CA_CITIES = ['Bakersfield', 'Berkeley', 'Burbank', 'Chula Vista', 'Escondido', 'Folsom', 'Fremont', 'Fresno', 'Glendale', 'Long Beach', 'Los Angeles', 'Moreno Valley', 'Oakland', 'Ontario', 'Pasadena', 'Rancho Cordova', 'Riverside', 'Roseville', 'Sacramento', 'San Bernardino', 'San Diego', 'San Francisco', 'San Jose', 'Santa Monica'];
+const AB_CITIES = ['Calgary', 'Edmonton', 'Fort McMurray', 'Lethbridge', 'Red Deer', 'St. Albert'];
+const NS_CITIES = ['Cape Breton', 'Halifax'];
+const MA_CITIES = ['Boston', 'Brockton', 'Cambridge', 'Fall River', 'Lawrence', 'Lowell', 'Lynn', 'New Bedford', 'Newton', 'Quincy', 'Somerville', 'Springfield', 'Worcester'];
+const NY_CITIES = ['Albany', 'Babylon', 'Beacon', 'Brookhaven', 'Buffalo', 'Huntington', 'Islip', 'Kingston', 'Mount Vernon', 'New Rochelle', 'New York City', 'Newburgh', 'Oyster Bay', 'Poughkeepsie', 'Rochester', 'Saugerties', 'Smithtown', 'Southampton', 'Syracuse', 'White Plains', 'Yonkers'];
+const PA_CITIES = ['Allentown', 'Erie', 'Philadelphia', 'Pittsburgh'];
+const CO_CITIES = ['Aurora', 'Boulder', 'Colorado Springs', 'Denver', 'Fort Collins'];
+const VT_CITIES = ['Barre', 'Burlington', 'Montpelier', 'Rutland', 'South Burlington'];
 const MI_CITIES = ['Ann Arbor', 'Detroit', 'Grand Rapids', 'Lansing'];
 const NJ_CITIES = ['Atlantic City', 'Jersey City', 'Newark', 'Toms River'];
 const IL_CITIES = ['Aurora', 'Chicago', 'Naperville', 'Peoria'];
 const WA_CITIES = ['Bellevue', 'Seattle', 'Spokane', 'Tacoma', 'Vancouver'];
-const MN_CITIES = ['Duluth', 'Minneapolis', 'Rochester'];
+const MN_CITIES = ['Duluth', 'Minneapolis', 'Rochester', 'Saint Paul'];
+// CITY-LISTS-END
 // Kept for anything still referencing the old flat name.
 const CITIES = BC_CITIES.concat(ON_CITIES);
 
@@ -2517,6 +2517,9 @@ const REGIONS = [
   { code: 'WA', name: 'Washington', cities: WA_CITIES, jsonBase: '/installers/json/wa', profileBase: '/installers/profiles/wa', ready: true },
   { code: 'MN', name: 'Minnesota', cities: MN_CITIES, jsonBase: '/installers/json/mn', profileBase: '/installers/profiles/mn', ready: true },
 ];
+
+const cityStat = document.getElementById('stat-cities');
+if (cityStat) cityStat.textContent = REGIONS.reduce((n, r) => n + r.cities.length, 0);
 
 let allInstallers = [];
 let currentFilter = 'all';
@@ -2581,6 +2584,7 @@ function renderRegionGrid() {
       container.querySelectorAll('.region-card').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('city-select-section').style.display = 'block';
+      document.getElementById('near-you').classList.remove('idle');
       renderCityTabs();
       renderProgramFilters();
       if (!loadedRegions.has(code)) {
@@ -2685,6 +2689,7 @@ function render() {
 
   const container = document.getElementById('installers-container');
   const emptyState = document.getElementById('empty-state');
+  document.getElementById('near-you').classList.toggle('idle', !currentRegion && !currentSearch);
 
   if (filtered.length === 0) {
     container.innerHTML = '';

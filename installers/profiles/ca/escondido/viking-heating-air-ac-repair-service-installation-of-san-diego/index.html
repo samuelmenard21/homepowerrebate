@@ -28,8 +28,11 @@
 <meta name="twitter:image" content="https://lh3.googleusercontent.com/place-photos/AG9NLjANGZ1Z2IkqgYEAxWwGRoINSj6BvnxyjmQz-d60Kqg1_1YC0W7ev0vx2AKM_SbUsyrnlazpfulbPPn6G5tBPDu1zIrEcpfhL1KEEt5bhMIXVQ8u49iOkpw1qxyg4OAMPStZpgKty3xMIjylwsFDgU7VZQ=s4800-w640">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap"></noscript>
+<!-- FONT-PRELOAD-START -->
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/fraunces/v38/6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeP2Xz5c.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsH8ahuQ2e8.woff2">
+<style>@font-face{font-family:'Fraunces';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://fonts.gstatic.com/s/fraunces/v38/6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeP2Xz5c.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Inter Tight';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsH8ahuQ2e8.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}</style>
+<!-- FONT-PRELOAD-END -->
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@graph": [
@@ -309,6 +312,8 @@ section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited
 /* readable line length: running text stops at 72 characters */
 main p, article p, .wrap p, section p, .wrap li, article li, main li { max-width: 72ch; }
 .footer p, .footer li, nav p, nav li, table p, table li { max-width: none; }
+/* hero text is short and already centred or aligned by the page: never cap it (a cap would need a script to re-centre it after first paint) */
+.hero p, header.hero p, .hero .lead, .hero-sub, .hero li { max-width: none; }
 /* readable text floor: nothing below 13px */
 [style*="font-size:9px"],
 [style*="font-size: 9px"],

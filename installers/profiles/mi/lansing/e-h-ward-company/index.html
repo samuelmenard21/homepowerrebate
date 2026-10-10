@@ -531,9 +531,9 @@ h1, h2 { text-wrap: balance; }
     <h2>Get a Quote From E. H. Ward Company</h2>
     <p>We'll pass your details along and follow up with your rebate breakdown.</p>
     <form class="ip-quote-form" id="ip-quote-form">
-      <input type="text" id="ip-name" placeholder="First name" required>
-      <input type="email" id="ip-email" placeholder="your@email.com" required>
-      <input type="tel" id="ip-phone" placeholder="Phone number" required>
+      <input type="text" id="ip-name" placeholder="First name" aria-label="First name" autocomplete="given-name" required>
+      <input type="email" id="ip-email" placeholder="your@email.com" aria-label="Email address" autocomplete="email" inputmode="email" required>
+      <input type="tel" id="ip-phone" placeholder="Phone number" aria-label="Phone number" autocomplete="tel" inputmode="tel" required>
       <input type="text" id="ip-hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
       <button type="submit" id="ip-quote-btn">Request a Quote &rarr;</button>
     </form>

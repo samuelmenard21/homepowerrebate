@@ -194,6 +194,8 @@ a { color:var(--teal-deep); }
 .ip-quote-form input { padding:13px 14px; border-radius:9px; border:1.5px solid transparent; font-family:'Inter Tight',sans-serif; font-size:15px; }
 .ip-quote-form button { padding:13px; background:var(--amber); color:#fff; border:none; border-radius:999px; font-weight:700; font-size:15.5px; cursor:pointer; }
 .ip-quote-done { display:none; color:var(--amber-bright); font-weight:700; }"""
+from fix_profile_layout import RESPONSIVE_CSS  # noqa: E402
+CSS += RESPONSIVE_CSS
 
 
 missing_category_pages = set()  # tracked for the end-of-run report
@@ -259,7 +261,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     phone = installer.get("phone") or ""
     website = installer.get("website") or ""
     gmaps = installer.get("gmaps_url") or ""
-    photo_html = f'<img src="{photo}" alt="{html.escape(installer["name"])}" class="ip-photo" loading="lazy" width="760" height="380">' if photo else ""
+    photo_html = f'<img src="{photo}" alt="{html.escape(installer["name"])}" class="ip-photo" loading="lazy" width="760" height="380" onerror="this.remove()">' if photo else ""
     actions_html = "".join([
         f'<a href="{website}" target="_blank" rel="noopener" class="ip-btn ip-btn-primary">Visit Website</a>' if website else "",
         f'<a href="tel:{re.sub(r"[^0-9+]", "", phone)}" class="ip-btn ip-btn-outline">Call {phone}</a>' if phone else "",

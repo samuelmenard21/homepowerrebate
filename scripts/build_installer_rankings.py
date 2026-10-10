@@ -167,6 +167,13 @@ section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;
 .rank .btn-call:hover{background:var(--amber)}
 .rank .lnk{display:inline-flex;align-items:center;min-height:36px;font-size:14px}
 .rank .em{overflow-wrap:anywhere}
+.rank{position:relative}
+.rank.has-prof{cursor:pointer}
+.rank.has-prof .nm>a::after{content:"";position:absolute;inset:0;border-radius:14px;z-index:1}
+.rank.has-prof .nm>a:focus-visible::after{outline:3px solid var(--amber);outline-offset:2px}
+.rank .act a,.rank .nm .badge,.rank .nm .bf,.rank .nm .reg{position:relative;z-index:2}
+.rank .btn-prof{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:2px solid var(--teal-deep);border-radius:999px;color:var(--teal-deep)!important;font-weight:700;font-size:15px;text-decoration:none!important;background:#fff}
+.rank .btn-prof:hover{background:var(--teal-deep);color:#fff!important}
 .hero{position:relative;overflow:hidden;background:radial-gradient(900px 340px at 88% -30%,rgba(212,117,28,.32),transparent 62%),linear-gradient(135deg,#0d4f5c 0%,#08363f 72%);padding:38px 0 70px}
 .hero-top{display:flex;gap:16px;align-items:center;margin-bottom:12px}.hero-top h1{margin:0}
 .hero-ico{flex:none;width:58px;height:58px;border-radius:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);display:grid;place-items:center;color:#f5b566}
@@ -553,9 +560,9 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
         if r["gmaps"]:
             acts.append(f'<a class="lnk" href="{esc(r["gmaps"])}" rel="nofollow noopener" target="_blank">Google reviews</a>')
         if prof:
-            acts.append(f'<a class="lnk" href="{prof}">Profile</a>')
+            acts.append(f'<a class="btn-prof" href="{prof}">View profile</a>')
         if r["email"]:
-            acts.append(f'<a class="lnk em" href="mailto:{esc(r["email"])}">Email {esc(r["email"])}</a>')
+            acts.append(f'<a class="lnk em" href="mailto:{esc(r["email"])}" aria-label="Email {esc(r["name"])}">Email</a>')
         pct = max(0, min(100, round(r["rating"] / 5 * 100)))
         bar = max(4, round(r["reviews"] / max(most_reviewed["reviews"], 1) * 100))
         if r["address"]:
@@ -563,7 +570,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
             acts.insert(len(acts) - (1 if r["email"] else 0), f'<a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination={quote_plus(r["address"])}" rel="nofollow noopener" target="_blank">Directions</a>')
         medal = f" g{i}" if i <= 3 else ""
         items.append(
-            f'<li class="rank{" top" if i <= 3 else ""}{medal}" data-rank="{i}" data-reviews="{r["reviews"]}" data-rating="{r["rating"]}">'
+            f'<li class="rank{" top" if i <= 3 else ""}{medal}{" has-prof" if prof else ""}" data-rank="{i}" data-reviews="{r["reviews"]}" data-rating="{r["rating"]}">'
             f'<div class="n">{i}</div><div class="nm">{name_html}{badge}</div>'
             f'<div class="st"><span class="rt"><span class="stars" style="--p:{pct}%" aria-hidden="true">★★★★★</span> '
             f'<b>{r["rating"]:.1f}</b></span> <span class="rv">({r["reviews"]:,} Google reviews)</span>'

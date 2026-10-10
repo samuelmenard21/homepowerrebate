@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,18 +543,18 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/programs/">Rebate programs</a></li><li aria-current="page">Nicor Gas</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Furnaces $150 to $225</div><h1>Nicor Gas Home Rebates</h1><p>Nicor Gas delivers natural gas to homes across the northern third of Illinois outside the city of Chicago, including Aurora and Naperville. Its 2026 rebates reward you for replacing a gas furnace, boiler or water heater with a better gas one, and for sealing and insulating the house. They do not pay you to switch from gas to electric. We read the rebate page and the 2026 application on October 6, 2026.</p></div></section>
 <article class="article"><div class="wrap">
-<h2>What Nicor Gas pays in 2026</h2>
+<h2 id="what-nicor-gas-pays-in-2026">What Nicor Gas pays in 2026</h2>
 <p>Buy and install the product between January 1 and December 31, 2026, then apply within 90 days of the install or by January 31, 2027, whichever comes first.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">High-efficiency gas furnace</h4><div class="amount">$150 or $225</div><p style="font-size:14px;margin:8px 0 0;">$150 for a furnace rated at least 95% efficient and $225 for one rated at least 97%. The rating is called AFUE, which is the share of the gas that becomes heat.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Smart thermostat</h4><div class="amount">$25</div><p style="font-size:14px;margin:8px 0 0;">One per household. Bundle it with a furnace on the same application and the pair pays $200 (95% furnace) or $275 (97% furnace).</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Boilers and water heaters</h4><div class="amount">$150 to $500</div><p style="font-size:14px;margin:8px 0 0;">Boiler $350, boiler that also heats your hot water $500, gas tankless water heater $150, power-vented or condensing tank water heater $150.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Air sealing and insulation</h4><div class="amount">$150 to $600</div><p style="font-size:14px;margin:8px 0 0;">Air sealing $500, attic insulation $400, wall insulation $150, foundation wall insulation $200 and duct sealing $600. A program-approved contractor must do the work.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Windows</h4><div class="amount">$100 to $125 each</div><p style="font-size:14px;margin:8px 0 0;">Storm window inserts $100 each up to $1,000, and high performance replacement windows $100 to $125 each up to $3,000 per home.</p></div>
 </div>
 <p>Nicor Gas also lists pool covers ($1.25 or $0.75 a square foot) for gas-heated pools. Rebates cannot be more than what you paid, and all of them depend on the funding that is left.</p>
-<h2>Who gets Nicor Gas rebates</h2><p>You must be a current Nicor Gas residential customer, and the home must be your main residence. The product must be new, installed in a single-family home or a building with up to two units, and installed in a home you own or have the owner's permission to change. A landlord can apply too.</p><p>If your bill comes from Peoples Gas, you live in Chicago and should read our <a href="/programs/peoples-gas-rebates/">Peoples Gas guide</a>. If your gas comes from Ameren Illinois, see the <a href="/programs/ameren-illinois-rebates/">Ameren Illinois page</a>.</p><h2>The rule about replacing gas with gas</h2><p>Nicor's terms say the new product must replace an existing natural gas product used for the same purpose. Products that replace electric equipment do not count, and neither do electric products that replace gas ones. So the furnace rebate is for gas furnace owners who stay with gas. If you plan to switch to a heat pump, your electric company is the one to ask. In most of the Nicor area that is <a href="/programs/comed-rebates/">ComEd</a>, and in Naperville it is <a href="/programs/naperville-electric-rebates/">Naperville Electric</a>.</p><p>You can still get a Nicor rebate for air sealing and insulation even if you later add a heat pump. Sealing the house first often lets you buy a smaller heat pump, and that saves money.</p><h2>Insulation rules in plain words</h2><p>The attic rebate has three conditions. Air sealing must be done first, the old insulation must be R-20 or less, and the new total must be R-49 or more. R-value is a number for how well the layer stops heat, and a bigger number is better. You must send before and after photos with a ruler showing the depth. If your attic has vermiculite or perlite, which looks like small gray pebbles, Nicor says to talk to a trained person first because it can contain harmful material.</p><p>The air sealing rebate needs a drop of at least 200 on the blower door test, which is a fan test that measures air leaks. Wall insulation rebates only apply to walls with R-5 or less already in them. Duct sealing is for ducts that run through unheated spaces such as a crawl space.</p><h2>Window rebates</h2><p>High performance windows must be ENERGY STAR certified for your climate zone and at least 8 square feet. The most you can get is $3,000 a home. If you also seal the air leaks, that work has to be finished and tested before the windows go in. The invoice must show the rebate as a line that lowers your price, along with the size and number of each window. Storm window inserts are the cheaper path, at $100 each for up to 10 windows.</p><h2>Free help for lower-income households</h2><p>The state's Home Weatherization Assistance Program gives free insulation, air sealing and heating repair to households at or below 200 percent of the federal poverty level. Gas customers get help through their local community action agency. See the <a href="/us/il/">Illinois guide</a> for the limits.</p>
-<h2>How to claim a Nicor Gas rebate</h2>
+<h2 id="who-gets-nicor-gas-rebates">Who gets Nicor Gas rebates</h2><p>You must be a current Nicor Gas residential customer, and the home must be your main residence. The product must be new, installed in a single-family home or a building with up to two units, and installed in a home you own or have the owner's permission to change. A landlord can apply too.</p><p>If your bill comes from Peoples Gas, you live in Chicago and should read our <a href="/programs/peoples-gas-rebates/">Peoples Gas guide</a>. If your gas comes from Ameren Illinois, see the <a href="/programs/ameren-illinois-rebates/">Ameren Illinois page</a>.</p><h2 id="the-rule-about-replacing-gas-with-gas">The rule about replacing gas with gas</h2><p>Nicor's terms say the new product must replace an existing natural gas product used for the same purpose. Products that replace electric equipment do not count, and neither do electric products that replace gas ones. So the furnace rebate is for gas furnace owners who stay with gas. If you plan to switch to a heat pump, your electric company is the one to ask. In most of the Nicor area that is <a href="/programs/comed-rebates/">ComEd</a>, and in Naperville it is <a href="/programs/naperville-electric-rebates/">Naperville Electric</a>.</p><p>You can still get a Nicor rebate for air sealing and insulation even if you later add a heat pump. Sealing the house first often lets you buy a smaller heat pump, and that saves money.</p><h2 id="insulation-rules-in-plain-words">Insulation rules in plain words</h2><p>The attic rebate has three conditions. Air sealing must be done first, the old insulation must be R-20 or less, and the new total must be R-49 or more. R-value is a number for how well the layer stops heat, and a bigger number is better. You must send before and after photos with a ruler showing the depth. If your attic has vermiculite or perlite, which looks like small gray pebbles, Nicor says to talk to a trained person first because it can contain harmful material.</p><p>The air sealing rebate needs a drop of at least 200 on the blower door test, which is a fan test that measures air leaks. Wall insulation rebates only apply to walls with R-5 or less already in them. Duct sealing is for ducts that run through unheated spaces such as a crawl space.</p><h2 id="window-rebates">Window rebates</h2><p>High performance windows must be ENERGY STAR certified for your climate zone and at least 8 square feet. The most you can get is $3,000 a home. If you also seal the air leaks, that work has to be finished and tested before the windows go in. The invoice must show the rebate as a line that lowers your price, along with the size and number of each window. Storm window inserts are the cheaper path, at $100 each for up to 10 windows.</p><h2 id="free-help-for-lower-income-households">Free help for lower-income households</h2><p>The state's Home Weatherization Assistance Program gives free insulation, air sealing and heating repair to households at or below 200 percent of the federal poverty level. Gas customers get help through their local community action agency. See the <a href="/us/il/">Illinois guide</a> for the limits.</p>
+<h2 id="how-to-claim-a-nicor-gas-rebate">How to claim a Nicor Gas rebate</h2>
 <ol>
 <li>Check that your gas bill says Nicor Gas.</li>
 <li>Use Nicor's Find a Contractor tool for air sealing, insulation, duct sealing and window work.</li>
@@ -499,17 +562,17 @@ h1, h2 { text-wrap: balance; }
 <li>After the work, apply online at nicorgas.com/apply or mail the paper form with the invoice and proof of payment.</li>
 <li>Keep serial numbers and photos, which Nicor can ask for. Rebates arrive in six to eight weeks, as a prepaid card or a check.</li>
 </ol>
-<h2>Our pages for Nicor Gas customers</h2><ul><li><a href="/us/il/aurora/">Aurora</a>: ComEd electricity and Nicor Gas.</li>
+<h2 id="our-pages-for-nicor-gas-customers">Our pages for Nicor Gas customers</h2><ul><li><a href="/us/il/aurora/">Aurora</a>: ComEd electricity and Nicor Gas.</li>
 <li><a href="/us/il/naperville/">Naperville</a>: City electric utility and Nicor Gas.</li>
 </ul>
-<h2>Guides</h2><ul><li><a href="/us/il/">Illinois rebate hub</a></li>
+<h2 id="guides">Guides</h2><ul><li><a href="/us/il/">Illinois rebate hub</a></li>
 <li><a href="/programs/comed-rebates/">ComEd rebates</a></li>
 <li><a href="/us/il/aurora/heat-pump/">Aurora heat pump rebates</a></li>
 <li><a href="/us/il/naperville/insulation/">Naperville insulation rebates</a></li>
 <li><a href="/us/il/appliances/">Illinois appliance rebates</a></li>
 </ul>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/il/" style="color:var(--teal,#0d4f5c); font-weight:600;">Illinois rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much is the Nicor Gas furnace rebate?</h3><p>$150 for a furnace rated 95% efficient or better and $225 for 97% or better. If you add a smart thermostat on the same application, the total becomes $200 or $275.</p></div>
 <div class="faq-item"><h3>Does Nicor Gas pay for a heat pump?</h3><p>Not on the pages we read. Nicor's rebates replace gas equipment with gas equipment. Ask your electric company about heat pump discounts.</p></div>
 <div class="faq-item"><h3>What is the deadline to apply?</h3><p>Install in 2026 and apply within 90 days of the install or by January 31, 2027, whichever comes first.</p></div>
@@ -519,6 +582,9 @@ h1, h2 { text-wrap: balance; }
 
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.nicorgas.com/ways-to-save/residential-savings/rebates.html" target="_blank" rel="noopener">Nicor Gas residential rebates</a>, <a href="https://www.nicorgas.com/content/dam/southern-co-gas/nicor-gas/docs/energy-efficiency/residential/20251211-heer-residential-rebate-application.pdf" target="_blank" rel="noopener">Nicor Gas 2026 residential rebate application</a>, <a href="https://dceo.illinois.gov/communityservices/homeweatherization.html" target="_blank" rel="noopener">Illinois Home Weatherization Assistance Program</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-nicor-gas-pays-in-2026">What Nicor Gas pays in 2026</a></li><li><a href="#who-gets-nicor-gas-rebates">Who gets Nicor Gas rebates</a></li><li><a href="#the-rule-about-replacing-gas-with-gas">The rule about replacing gas with gas</a></li><li><a href="#insulation-rules-in-plain-words">Insulation rules in plain words</a></li><li><a href="#window-rebates">Window rebates</a></li><li><a href="#free-help-for-lower-income-households">Free help for lower-income households</a></li><li><a href="#how-to-claim-a-nicor-gas-rebate">How to claim a Nicor Gas rebate</a></li><li><a href="#our-pages-for-nicor-gas-customers">Our pages for Nicor Gas customers</a></li><li><a href="#guides">Guides</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -720,6 +786,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

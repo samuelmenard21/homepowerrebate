@@ -231,6 +231,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -533,7 +596,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">Water Heater Buying Guide for Nova Scotia Homes</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -553,7 +616,7 @@ h1, h2 { text-wrap: balance; }
       <strong>Short answer:</strong> Yes, replacing an electric water heater with a heat pump water heater in Nova Scotia gets you <strong>$800 back</strong> from Efficiency Nova Scotia. Most people get it <strong>off at checkout</strong> at participating stores (ENERGY STAR models only). Efficiency Nova Scotia says a heat pump water heater can <strong>cut your water heating costs in half</strong>. The rebate is the same in Halifax, Sydney and all of Cape Breton.
     </div>
 
-    <h2>Heat pump water heater rebate in Nova Scotia</h2>
+    <h2 id="heat-pump-water-heater-rebate-in-nova-scotia">Heat pump water heater rebate in Nova Scotia</h2>
     <p>As of September 28, 2026, there are two ways to get it. You can only use one.</p>
     <table>
       <tr><th>Way to claim</th><th>Amount</th><th>How it works</th></tr>
@@ -564,7 +627,7 @@ h1, h2 { text-wrap: balance; }
     <p><strong>Doing more than the water heater?</strong> Go the Home Energy Assessment route. The $800 then counts toward the same up-to-$5,000 total as insulation, heat pumps and windows. See <a href="/ca/ns/">all Nova Scotia rebates</a>.</p>
     <p><strong>Lower income?</strong> <a href="https://www.efficiencyns.ca/programs-rebates/homewarming" target="_blank" rel="noopener">HomeWarming</a> offers free upgrades. Check it before you pay for anything.</p>
 
-    <h2>Heat pump water heater cost in Nova Scotia</h2>
+    <h2 id="heat-pump-water-heater-cost-in-nova-scotia">Heat pump water heater cost in Nova Scotia</h2>
     <p>We don't publish a price, because it changes a lot by model, tank size and how much work your basement needs. A price you read online is rarely the price you'll pay. What your quote should include:</p>
     <ul>
       <li><strong>The unit itself</strong>, before the $800 instant rebate comes off.</li>
@@ -574,7 +637,7 @@ h1, h2 { text-wrap: balance; }
     </ul>
     <p>Get two or three written quotes. Ask each one for the price <em>after</em> the $800.</p>
 
-    <h2>Is it worth it? Do the math for your home</h2>
+    <h2 id="is-it-worth-it-do-the-math-for-your-home">Is it worth it? Do the math for your home</h2>
     <p>Here's a simple way to check, using real Nova Scotia numbers:</p>
     <ol>
       <li>Find how much electricity your water tank uses in a year. An electrician or your installer can estimate it, or look for a monitor reading.</li>
@@ -583,7 +646,7 @@ h1, h2 { text-wrap: balance; }
     </ol>
     <p><strong>Example only:</strong> if your tank used 3,000 kWh a year, half is 1,500 kWh. At 18.3 cents, that's about <strong>$275 a year</strong>. Now take your quote, subtract $800, and divide by your yearly savings. That's your payback in years.</p>
 
-    <h2>When to get one, and when to skip it</h2>
+    <h2 id="when-to-get-one-and-when-to-skip-it">When to get one, and when to skip it</h2>
     <table>
       <tr><th>If&hellip;</th><th>Our advice</th></tr>
       <tr><td>Your electric tank is 10+ years old or leaking</td><td><strong>Good time to switch.</strong> Plan it now so you're not stuck buying whatever's in stock during an emergency.</td></tr>
@@ -594,7 +657,7 @@ h1, h2 { text-wrap: balance; }
       <tr><td>Your tank is almost new</td><td><strong>Wait.</strong> Replace it when it wears out.</td></tr>
     </table>
 
-    <h2>Heat pump vs electric tank vs tankless</h2>
+    <h2 id="heat-pump-vs-electric-tank-vs-tankless">Heat pump vs electric tank vs tankless</h2>
     <table>
       <tr><th>Type</th><th>NS rebate</th><th>Good for</th><th>Watch out for</th></tr>
       <tr><td>Standard electric tank</td><td>None</td><td>Lowest upfront cost; fast emergency swap</td><td>Highest power use of the three</td></tr>
@@ -604,10 +667,10 @@ h1, h2 { text-wrap: balance; }
     <p>A heat pump water heater works like a fridge in reverse. It pulls heat from the air around it and puts it into the water. "Hybrid" means the same thing: it also has a backup electric element for busy mornings.</p>
     <p><strong>What about tankless?</strong> We found no Efficiency Nova Scotia rebate for electric tankless water heaters. Older articles that say "up to $2,500 for any efficient water heater" are wrong.</p>
 
-    <h2>Does it work in a cold Nova Scotia basement?</h2>
+    <h2 id="does-it-work-in-a-cold-nova-scotia-basement">Does it work in a cold Nova Scotia basement?</h2>
     <p>Usually, yes. Most units sit in a basement or utility room. They work best in a space that stays well above freezing and has plenty of air around it. Check the model's minimum room temperature in its manual. Because it cools the room a little, it can make a finished basement feel cooler in winter.</p>
 
-    <h2>What size do I need?</h2>
+    <h2 id="what-size-do-i-need">What size do I need?</h2>
     <ul>
       <li><strong>1&ndash;2 people:</strong> 40 gallons is usually enough</li>
       <li><strong>3&ndash;4 people:</strong> 50 gallons</li>
@@ -615,13 +678,13 @@ h1, h2 { text-wrap: balance; }
     </ul>
     <p>Heat pump water heaters recover slower than a plain tank. If your family takes back-to-back showers, size up one step.</p>
 
-    <h2>Cape Breton and Sydney: hybrid water heater rebates</h2>
+    <h2 id="cape-breton-and-sydney-hybrid-water-heater-rebat">Cape Breton and Sydney: hybrid water heater rebates</h2>
     <p>Cape Breton homes get the <strong>same $800</strong> as the rest of the province. We found no extra Cape Breton or CBRM top-up. Nova Scotia Power serves both Cape Breton and Halifax, so the savings math above is the same. Local details: <a href="/ca/ns/cape-breton/water-heater/">Cape Breton water heater rebates</a> &middot; <a href="/ca/ns/cape-breton/">Cape Breton rebates</a>.</p>
 
-    <h2>Halifax: replacing an electric water heater</h2>
+    <h2 id="halifax-replacing-an-electric-water-heater">Halifax: replacing an electric water heater</h2>
     <p>Same $800, same rules. Halifax homeowners doing a bigger project can also look at the city's Solar City financing for solar, which is a loan, not a rebate. Local details: <a href="/ca/ns/halifax/water-heater/">Halifax water heater rebates</a> &middot; <a href="/ca/ns/halifax/">Halifax rebates</a>.</p>
 
-    <h2>What to do next</h2>
+    <h2 id="what-to-do-next">What to do next</h2>
     <ol>
       <li>Check whether you qualify for free upgrades through HomeWarming.</li>
       <li>Decide how you'll claim the $800: in store, or through a Home Energy Assessment booked <em>before</em> you buy.</li>
@@ -629,14 +692,14 @@ h1, h2 { text-wrap: balance; }
       <li>Compare top-rated local installers, ranked by Google reviews. It's free for homeowners. Replacing electric baseboards too? See <a href="/installers/ns/halifax/heat-pump/">Halifax heat pump installers</a> or <a href="/installers/ns/cape-breton/heat-pump/">Cape Breton heat pump installers</a>.</li>
     </ol>
 
-    <h2>Common questions</h2>
+    <h2 id="common-questions">Common questions</h2>
     <div class="faq-item"><h3>Is there a heat pump water heater rebate in Nova Scotia?</h3><p>Yes. Efficiency Nova Scotia gives $800 for an ENERGY STAR heat pump water heater, either off at checkout at participating stores or through a Home Energy Assessment.</p></div>
     <div class="faq-item"><h3>Is there a heat pump water heater rebate in Cape Breton?</h3><p>Yes. It's the same $800 Efficiency Nova Scotia rebate as the rest of the province. We found no extra Cape Breton top-up.</p></div>
     <div class="faq-item"><h3>How much does a heat pump water heater cost in Nova Scotia?</h3><p>It depends on the model, tank size and install. Get two or three written quotes that include removal of the old tank and a condensate drain, and ask for the price after the $800 instant rebate.</p></div>
     <div class="faq-item"><h3>Is there a hot water tank rebate in Nova Scotia?</h3><p>Only for heat pump (hybrid) water heaters. We found no Efficiency Nova Scotia rebate for standard electric tanks or electric tankless water heaters as of September 2026.</p></div>
     <div class="faq-item"><h3>How much will I save by replacing an electric water heater with a heat pump?</h3><p>Efficiency Nova Scotia says a heat pump water heater can cut water heating costs in half. Take half of your tank's yearly kWh and multiply by about 18.3 cents, Nova Scotia Power's 2026 energy charge.</p></div>
 
-    <h2>Related reading</h2>
+    <h2 id="related-reading">Related reading</h2>
     <ul>
       <li><a href="/ca/ns/">All Nova Scotia rebate programs in 2026</a></li>
       <li><a href="/blog/heat-pump-water-heater-easiest-upgrade/">Why a heat pump water heater is the easiest upgrade</a></li>
@@ -650,6 +713,9 @@ h1, h2 { text-wrap: balance; }
 
 <!-- NS-CALC-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Do the math:</b> the <a href="/heat-pump-water-heater/nova-scotia/">Nova Scotia heat pump water heater savings calculator</a> uses NS Power's current rate.</p></section><!-- NS-CALC-LINK-END -->
 <!-- HARP-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Need help with this winter's heating bill?</b> The <a href="/programs/nova-scotia-heating-assistance-rebate-harp/">Nova Scotia Heating Assistance Rebate (HARP) pays $400 for 2026-27: who qualifies, how to check your status and when it pays</a>.</p></section><!-- HARP-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#heat-pump-water-heater-rebate-in-nova-scotia">Heat pump water heater rebate in Nova Scotia</a></li><li><a href="#heat-pump-water-heater-cost-in-nova-scotia">Heat pump water heater cost in Nova Scotia</a></li><li><a href="#is-it-worth-it-do-the-math-for-your-home">Is it worth it? Do the math for your home</a></li><li><a href="#when-to-get-one-and-when-to-skip-it">When to get one, and when to skip it</a></li><li><a href="#heat-pump-vs-electric-tank-vs-tankless">Heat pump vs electric tank vs tankless</a></li><li><a href="#does-it-work-in-a-cold-nova-scotia-basement">Does it work in a cold Nova Scotia basement?</a></li><li><a href="#what-size-do-i-need">What size do I need?</a></li><li><a href="#cape-breton-and-sydney-hybrid-water-heater-rebat">Cape Breton and Sydney: hybrid water heater rebates</a></li><li><a href="#halifax-replacing-an-electric-water-heater">Halifax: replacing an electric water heater</a></li><li><a href="#what-to-do-next">What to do next</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#related-reading">Related reading</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -852,6 +918,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

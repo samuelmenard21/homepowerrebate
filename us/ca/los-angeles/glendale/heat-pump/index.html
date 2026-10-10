@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ca/">California</a></li><li><a href="/us/ca/los-angeles/glendale/">Glendale</a></li><li aria-current="page">Heat Pump</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $5,000 per heat pump</div><h1>Heat Pump Rebates in Glendale</h1><p>Glendale Water and Power pays $1,000 for every ton of heat pump that replaces a gas furnace or a gas and electric system, up to $5,000. That is one of the largest heat pump rebates in the Los Angeles area, and the paperwork is where most of the effort goes.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -489,21 +552,21 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/ca/los-angeles/glendale/appliances/">Appliance Rebates in Glendale</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What Glendale Water and Power pays</h2>
+<h2 id="what-glendale-water-and-power-pays">What Glendale Water and Power pays</h2>
 <p>These figures come from the Home Energy and Water Saving Rebates page of Glendale Water and Power (GWP), which we read on October 2, 2026. GWP says its updated amounts took effect November 1, 2025, and that funds are first come, first served. You must be a GWP customer, and the unit must be installed at a home GWP serves.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Replacing gas heating (or gas and electric HVAC)</h4><div class="amount">$1,000 per ton</div><p style="font-size:14px;margin:8px 0 0;">Up to $5,000, paid as a check. Needs a finalized Building and Safety mechanical permit.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Replacing an existing heat pump</h4><div class="amount">$500 per ton</div><p style="font-size:14px;margin:8px 0 0;">Up to $2,500, paid as a bill credit.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Panel upgrade with a heat pump</h4><div class="amount">$1,000</div><p style="font-size:14px;margin:8px 0 0;">Only when paired with a heat pump or heat pump water heater. Needs a finalized electrical permit. Paid as a check.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Efficiency minimums</h4><div class="amount">15.2 SEER2, 7.8 HSPF2</div><p style="font-size:14px;margin:8px 0 0;">Plus ENERGY STAR and an AHRI certificate for the system.</p></div>
 </div>
 <div class='highlight-box'><h4>What that looks like in dollars</h4><p>A 3-ton system that replaces a gas furnace earns 3 x $1,000 = $3,000. A 5-ton system reaches the $5,000 cap. If the same job also needs a panel upgrade, add $1,000. Swapping one heat pump for a newer one pays 3 x $500 = $1,500 for 3 tons, as a bill credit, not a check. The second figure is much lower, so the difference between replacing gas and replacing a heat pump is worth confirming with your installer before you quote.</p></div>
-<h2>What GWP checks before it pays</h2><p>The ratings come first. The system needs at least 15.2 SEER2 and 7.8 HSPF2, ENERGY STAR status, and an AHRI certificate that your installer can get for you. GWP allows one rebate per story every 10 years for a ducted or packaged unit and one per room every 10 years for a ductless mini-split. A home with two stories and a separate studio can use the allowance more than once, which is the practical difference between ducted and ductless here.</p><p>GWP also says rebates are not guaranteed until it verifies them, and that a rebate cannot exceed the purchase price. Ask your installer to write the tonnage and the AHRI number on the invoice so there is no question later.</p><h2>Permits in Glendale</h2><p>The $1,000 per ton amount needs a finalized Building and Safety mechanical permit. Glendale takes permits through its online Glendale Permits portal, and inspections are requested there after you log in. The City's <a href='https://www.glendaleca.gov/business/doing-business-with-the-city/getting-a-permit' target='_blank' rel='noopener'>permit services page</a> lists the Permit Services Center at (818) 548-3200 for questions. The City adopted a new fee schedule on June 23, 2026, and some fees took effect July 1, so ask your installer for the current permit cost instead of an old quote.</p><p>A permit is not a formality for the rebate. If it is not finalized, GWP does not pay the larger amount. Ask your installer to schedule the inspection and to tell you when it passes.</p><h2>Your utility: Glendale Water and Power</h2><p>GWP is the City's own utility, and it sets these amounts itself. That is why Glendale pays several times what Pasadena does per ton (Pasadena pays $170, see <a href='/us/ca/los-angeles/pasadena/heat-pump/'>Pasadena heat pump rebates</a>) and more than Burbank, which caps its rebate at $2,500. If GWP serves your address you are in a good spot. GWP's customer service line on its rebate page is 855-550-4497.</p><p>The panel rebate matters too. Homes in older neighborhoods may need a bigger panel before a heat pump fits, and Burbank pays $750 toward a panel upgrade that comes with another measure, and Pasadena lists none, so GWP's $1,000 is the largest panel rebate we found nearby.</p><h2>Climate and sizing in Glendale</h2><p>Glendale's average January low over 2015 to 2024 was 8.1°C (about 47°F), and the coldest recorded day in that stretch was -0.1°C. That is mild enough that any heat pump meeting GWP's ratings will do the job, so you do not need to pay extra for a cold-climate model. Where money is lost is in oversizing. A unit that is too large costs more, short-cycles and earns the same rebate per ton only up to the cap. Ask your installer how they sized it, and ask for a load calculation, not a rule of thumb.</p><h2>Federal and state money</h2><p>The federal 25C tax credit ended for spending after December 31, 2025. Statewide heat pump help from TECH Clean California and the federal HEEHRA program is fully reserved and takes new requests on hold only. The Switch Is On California site lists more incentives you may qualify for, but GWP's rebate is the main one that is open for Glendale homes today.</p>
-<h2>Installers in Glendale</h2><p>These Glendale heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone. Ask each for the tonnage, the SEER2 and HSPF2 numbers, the AHRI certificate and who schedules the permit inspection.</p>
+<h2 id="what-gwp-checks-before-it-pays">What GWP checks before it pays</h2><p>The ratings come first. The system needs at least 15.2 SEER2 and 7.8 HSPF2, ENERGY STAR status, and an AHRI certificate that your installer can get for you. GWP allows one rebate per story every 10 years for a ducted or packaged unit and one per room every 10 years for a ductless mini-split. A home with two stories and a separate studio can use the allowance more than once, which is the practical difference between ducted and ductless here.</p><p>GWP also says rebates are not guaranteed until it verifies them, and that a rebate cannot exceed the purchase price. Ask your installer to write the tonnage and the AHRI number on the invoice so there is no question later.</p><h2 id="permits-in-glendale">Permits in Glendale</h2><p>The $1,000 per ton amount needs a finalized Building and Safety mechanical permit. Glendale takes permits through its online Glendale Permits portal, and inspections are requested there after you log in. The City's <a href='https://www.glendaleca.gov/business/doing-business-with-the-city/getting-a-permit' target='_blank' rel='noopener'>permit services page</a> lists the Permit Services Center at (818) 548-3200 for questions. The City adopted a new fee schedule on June 23, 2026, and some fees took effect July 1, so ask your installer for the current permit cost instead of an old quote.</p><p>A permit is not a formality for the rebate. If it is not finalized, GWP does not pay the larger amount. Ask your installer to schedule the inspection and to tell you when it passes.</p><h2 id="your-utility-glendale-water-and-power">Your utility: Glendale Water and Power</h2><p>GWP is the City's own utility, and it sets these amounts itself. That is why Glendale pays several times what Pasadena does per ton (Pasadena pays $170, see <a href='/us/ca/los-angeles/pasadena/heat-pump/'>Pasadena heat pump rebates</a>) and more than Burbank, which caps its rebate at $2,500. If GWP serves your address you are in a good spot. GWP's customer service line on its rebate page is 855-550-4497.</p><p>The panel rebate matters too. Homes in older neighborhoods may need a bigger panel before a heat pump fits, and Burbank pays $750 toward a panel upgrade that comes with another measure, and Pasadena lists none, so GWP's $1,000 is the largest panel rebate we found nearby.</p><h2 id="climate-and-sizing-in-glendale">Climate and sizing in Glendale</h2><p>Glendale's average January low over 2015 to 2024 was 8.1°C (about 47°F), and the coldest recorded day in that stretch was -0.1°C. That is mild enough that any heat pump meeting GWP's ratings will do the job, so you do not need to pay extra for a cold-climate model. Where money is lost is in oversizing. A unit that is too large costs more, short-cycles and earns the same rebate per ton only up to the cap. Ask your installer how they sized it, and ask for a load calculation, not a rule of thumb.</p><h2 id="federal-and-state-money">Federal and state money</h2><p>The federal 25C tax credit ended for spending after December 31, 2025. Statewide heat pump help from TECH Clean California and the federal HEEHRA program is fully reserved and takes new requests on hold only. The Switch Is On California site lists more incentives you may qualify for, but GWP's rebate is the main one that is open for Glendale homes today.</p>
+<h2 id="installers-in-glendale">Installers in Glendale</h2><p>These Glendale heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone. Ask each for the tonnage, the SEER2 and HSPF2 numbers, the AHRI certificate and who schedules the permit inspection.</p>
 <div class="installer-card"><div><div class="name">Ed &amp; Ed Brothers</div><div class="stars">&#9733; 5.0 (409 reviews)</div></div><a class="site-link" href="http://edandedbrothers.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">So Cal Air</div><div class="stars">&#9733; 5.0 (334 reviews)</div></div><a class="site-link" href="https://socalair.co/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">All City Plumbing, Air &amp; Electrical</div><div class="stars">&#9733; 5.0 (288 reviews)</div></div><a class="site-link" href="https://www.allcityplumbing4u.com/glendale/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Glendale HVAC Installation Contractor</div><div class="stars">&#9733; 5.0 (127 reviews)</div></div><a class="site-link" href="https://havcinstallationcontractor.com/glendale-air-duct-hvac-services/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Evans Heating &amp; Air</div><div class="stars">&#9733; 5.0 (87 reviews)</div></div><a class="site-link" href="https://www.evansheatingcooling.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/ca/glendale/heat-pump/">See all Glendale installers &rarr;</a></p>
-<h2>How to claim the GWP rebate</h2>
+<h2 id="how-to-claim-the-gwp-rebate">How to claim the GWP rebate</h2>
 <ol>
 <li>Check that GWP is your electric utility, and that the system will be installed at a GWP-served home.</li>
 <li>Choose a heat pump rated at least 15.2 SEER2 and 7.8 HSPF2, and ask for the AHRI certificate.</li>
@@ -513,7 +576,7 @@ h1, h2 { text-wrap: balance; }
 <li>Wait for GWP to verify. The larger rebate arrives as a check and the smaller one as a bill credit.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city=glendale" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Glendale</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much is the heat pump rebate in Glendale?</h3><p>$1,000 per ton, up to $5,000, when a heat pump replaces a gas furnace or a gas and electric HVAC system. Replacing an existing heat pump pays $500 per ton, up to $2,500.</p></div>
 <div class="faq-item"><h3>Is the rebate a check or a bill credit?</h3><p>The $1,000 per ton rebate is a check. The $500 per ton rebate for replacing a heat pump is a bill credit.</p></div>
 <div class="faq-item"><h3>How long do I have to apply?</h3><p>GWP says applications must be submitted no more than 12 months from the date of purchase.</p></div>
@@ -521,13 +584,16 @@ h1, h2 { text-wrap: balance; }
 <div class="faq-item"><h3>Can I get a rebate for each room with a mini-split?</h3><p>GWP allows one rebate per room every 10 years for a ductless mini-split and one per story for ducted or packaged systems.</p></div>
 <div class="faq-item"><h3>Is the $1,000 per ton amount permanent?</h3><p>GWP calls the increased amounts limited and says funds are first come, first served. Confirm before you buy.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See GWP's own <a href='https://www.glendaleca.gov/government/departments/glendale-water-and-power/residential-customers/residential-programs/smart-home-rebate-program' target='_blank' rel='noopener'>rebate page</a>, or compare all Glendale offers on our <a href='/us/ca/los-angeles/glendale/'>Glendale hub</a>. If you are also replacing a gas water heater, read <a href='/us/ca/los-angeles/glendale/water-heater/'>Glendale water heater rebates</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read September 28, 2026: <a href="https://www.glendaleca.gov/government/departments/glendale-water-and-power/residential-customers/residential-programs/smart-home-rebate-program" target="_blank" rel="noopener">GWP Home Energy and Water Saving Rebates Program</a>, <a href="https://www.glendaleca.gov/business/doing-business-with-the-city/getting-a-permit" target="_blank" rel="noopener">City of Glendale permit services</a>, <a href="https://www.switchison.org/" target="_blank" rel="noopener">The Switch Is On California</a>. <a href="/us/ca/los-angeles/glendale/">All Glendale rebates &rarr;</a> <a href="/programs/glendale-water-and-power-rebates/">Every Glendale Water and Power rebate &rarr;</a></p>
 </div></article>
 <!-- RANKINGS-LINK-START -->
-<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Glendale</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ca/glendale/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Glendale &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">12 local companies ranked by 1,742 Google reviews. Top picks: Ed &amp; Ed Brothers, So Cal Air, All City Plumbing, Air &amp; Electrical.</span></a></div></section>
+<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;" id="compare-top-rated-installers-in-glendale">Compare top-rated installers in Glendale</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ca/glendale/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Glendale &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">12 local companies ranked by 1,742 Google reviews. Top picks: Ed &amp; Ed Brothers, So Cal Air, All City Plumbing, Air &amp; Electrical.</span></a></div></section>
 <!-- RANKINGS-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-glendale-water-and-power-pays">What Glendale Water and Power pays</a></li><li><a href="#what-gwp-checks-before-it-pays">What GWP checks before it pays</a></li><li><a href="#permits-in-glendale">Permits in Glendale</a></li><li><a href="#your-utility-glendale-water-and-power">Your utility: Glendale Water and Power</a></li><li><a href="#climate-and-sizing-in-glendale">Climate and sizing in Glendale</a></li><li><a href="#federal-and-state-money">Federal and state money</a></li><li><a href="#installers-in-glendale">Installers in Glendale</a></li><li><a href="#how-to-claim-the-gwp-rebate">How to claim the GWP rebate</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li><li><a href="#compare-top-rated-installers-in-glendale">Compare top-rated installers in Glendale</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=glendale&province=ca">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Glendale where relevant -->
@@ -729,6 +795,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

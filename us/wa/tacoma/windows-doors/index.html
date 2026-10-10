@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/wa/">Washington</a></li><li><a href="/us/wa/tacoma/">Tacoma</a></li><li aria-current="page">Windows & Doors</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$100 per window, $400 per sliding door</div><h1>Window and Door Rebates in Tacoma</h1><p>Tacoma Power pays $100 per window and $400 per sliding door when you replace single-pane glass, and half of that when you replace double-pane windows in metal frames. Your home must heat with electricity.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -490,16 +553,16 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/wa/tacoma/heat-pump/">Heat Pump Rebates in Tacoma</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What window rebates pay in Tacoma</h2>
+<h2 id="what-window-rebates-pay-in-tacoma">What window rebates pay in Tacoma</h2>
 <p>We read Tacoma Power's window page on October 6, 2026. A Tacoma Power Participating Contractor must install the windows. The page we read does not state a cap on the number of windows.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3"><a href='/programs/tacoma-power-rebates/'>Single-pane windows</a></h4><div class="amount">$100 per window</div><p style="font-size:14px;margin:8px 0 0;">Replacing existing single-pane windows in a home that heats mainly with electricity.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Single-pane glass sliding doors</h4><div class="amount">$400 per door</div><p style="font-size:14px;margin:8px 0 0;">Replacing a single-pane glass slider.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Double-pane metal-framed windows</h4><div class="amount">$50 per window</div><p style="font-size:14px;margin:8px 0 0;">Only if the old frames are metal.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Double-pane metal-framed sliding doors</h4><div class="amount">$200 per door</div><p style="font-size:14px;margin:8px 0 0;">Same rule for the frame.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal tax credit</h4><div class="amount">$0</div><p style="font-size:14px;margin:8px 0 0;">The IRS says the energy efficient home improvement credit covers improvements made through December 31, 2025.</p></div>
 </div>
 <div class='highlight-box'><h4>Working it out</h4><p>A Tacoma home with ten single-pane windows and one single-pane slider could earn 10 times $100 plus $400, which is $1,400. The same home with double-pane metal-framed windows would earn 10 times $50 plus $200, or $700. Replacing double-pane windows that have vinyl or wood frames earns nothing, so check the frame before you plan.</p></div>
-<h2>Which windows count</h2><p>Tacoma Power only pays when the existing windows and doors are single-pane or double-pane with metal frames. That is a narrow rule. Double-pane windows with vinyl or wood frames do not qualify. The US Census Bureau's American Community Survey (2020 to 2024) says about 64 percent of Tacoma homes were built before 1980 and 27 percent before 1940, so many older homes have single-pane glass still in place. About 63 percent of Tacoma homes heat with electricity, which also matches the program rule.</p><h2>What does not qualify</h2><p>Manufactured homes, new construction, do-it-yourself installs and buildings with five or more units are not eligible. Ask your contractor in writing what type of window you are replacing, because a mistake on that line can cancel the rebate. Take photos of the old windows before they are removed, showing the frames and glass. Keep the shipping slip for the new windows, which Tacoma Power requires.</p><h2>Papers you need</h2><p>Send the application for your project, a contractor bid (or the contractor's form), an invoice that meets Tacoma Power's rules and the window shipping slip. Tacoma Power can also point you to a list of required documents on its page. The rebate covers part of your costs.</p><p>Ask the contractor to measure and list every window and slider by room, with its glass type and frame type, before the bid is signed. That list becomes your proof of what was replaced. Also ask what the bid says about trim, disposal of the old windows and the warranty, since those costs are not part of the rebate. A written, itemized bid protects you if the number of qualifying windows changes during the job.</p><p>Windows are costly and the rebate is small, so think of it as a bonus on a project you wanted to do for comfort or repairs. If energy savings are your main goal, insulation usually pays more per dollar in the Tacoma Power program: $750 for each area, compared with $100 for each window.</p><h2>If you rent or cannot qualify</h2><p>With about 44 percent of Tacoma households renting, many readers cannot choose their windows. Ask your landlord whether they plan to apply, and point them to Tacoma Power's page. If your household income is at or below 150 percent of area median income, the City of Tacoma is a state partner for home electrification rebates, though that program lists heat pumps, water heaters, induction cooking, dryers and wiring, not windows. For help with drafty windows on a low income, ask your community action agency about the state weatherization program.</p>
+<h2 id="which-windows-count">Which windows count</h2><p>Tacoma Power only pays when the existing windows and doors are single-pane or double-pane with metal frames. That is a narrow rule. Double-pane windows with vinyl or wood frames do not qualify. The US Census Bureau's American Community Survey (2020 to 2024) says about 64 percent of Tacoma homes were built before 1980 and 27 percent before 1940, so many older homes have single-pane glass still in place. About 63 percent of Tacoma homes heat with electricity, which also matches the program rule.</p><h2 id="what-does-not-qualify">What does not qualify</h2><p>Manufactured homes, new construction, do-it-yourself installs and buildings with five or more units are not eligible. Ask your contractor in writing what type of window you are replacing, because a mistake on that line can cancel the rebate. Take photos of the old windows before they are removed, showing the frames and glass. Keep the shipping slip for the new windows, which Tacoma Power requires.</p><h2 id="papers-you-need">Papers you need</h2><p>Send the application for your project, a contractor bid (or the contractor's form), an invoice that meets Tacoma Power's rules and the window shipping slip. Tacoma Power can also point you to a list of required documents on its page. The rebate covers part of your costs.</p><p>Ask the contractor to measure and list every window and slider by room, with its glass type and frame type, before the bid is signed. That list becomes your proof of what was replaced. Also ask what the bid says about trim, disposal of the old windows and the warranty, since those costs are not part of the rebate. A written, itemized bid protects you if the number of qualifying windows changes during the job.</p><p>Windows are costly and the rebate is small, so think of it as a bonus on a project you wanted to do for comfort or repairs. If energy savings are your main goal, insulation usually pays more per dollar in the Tacoma Power program: $750 for each area, compared with $100 for each window.</p><h2 id="if-you-rent-or-cannot-qualify">If you rent or cannot qualify</h2><p>With about 44 percent of Tacoma households renting, many readers cannot choose their windows. Ask your landlord whether they plan to apply, and point them to Tacoma Power's page. If your household income is at or below 150 percent of area median income, the City of Tacoma is a state partner for home electrification rebates, though that program lists heat pumps, water heaters, induction cooking, dryers and wiring, not windows. For help with drafty windows on a low income, ask your community action agency about the state weatherization program.</p>
 
 
-<h2>How to claim a Tacoma window rebate</h2>
+<h2 id="how-to-claim-a-tacoma-window-rebate">How to claim a Tacoma window rebate</h2>
 <ol>
 <li>Confirm that Tacoma Power serves your home and that your main heat is electric.</li>
 <li>Photograph your old windows, including the frames.</li>
@@ -508,17 +571,20 @@ h1, h2 { text-wrap: balance; }
 <li>Send the application and papers to Tacoma Power.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/wa/" style="color:var(--teal,#0d4f5c); font-weight:600;">Washington rebate calculator</a> and pick Tacoma to see what your utility pays.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much does Tacoma Power pay for windows?</h3><p>$100 per window and $400 per sliding door for single-pane, and $50 and $200 for double-pane metal-framed windows.</p></div>
 <div class="faq-item"><h3>Do vinyl double-pane windows qualify?</h3><p>No. Existing windows must be single-pane or double-pane metal framed.</p></div>
 <div class="faq-item"><h3>Do I need a contractor?</h3><p>Yes. A Participating Contractor must install the windows.</p></div>
 <div class="faq-item"><h3>Does my home need electric heat?</h3><p>Yes. The page says the home's primary heat source must be electric.</p></div>
 <div class="faq-item"><h3>Is there a federal credit?</h3><p>No. It ended after 2025.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See the <a href='/us/wa/tacoma/insulation/'>Tacoma insulation page</a> or return to the <a href='/us/wa/tacoma/'>Tacoma rebate hub</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/windows/" target="_blank" rel="noopener">Tacoma Power window rebates</a>, <a href="https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/" target="_blank" rel="noopener">Tacoma Power heating and cooling rebates</a>, <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" target="_blank" rel="noopener">IRS Energy Efficient Home Improvement Credit</a>. <a href="/us/wa/tacoma/">All Tacoma rebates &rarr;</a> <a href="/programs/tacoma-power-rebates/">Every Tacoma Power rebate &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-window-rebates-pay-in-tacoma">What window rebates pay in Tacoma</a></li><li><a href="#which-windows-count">Which windows count</a></li><li><a href="#what-does-not-qualify">What does not qualify</a></li><li><a href="#papers-you-need">Papers you need</a></li><li><a href="#if-you-rent-or-cannot-qualify">If you rent or cannot qualify</a></li><li><a href="#how-to-claim-a-tacoma-window-rebate">How to claim a Tacoma window rebate</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=tacoma&province=wa">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Tacoma where relevant -->
@@ -720,6 +786,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

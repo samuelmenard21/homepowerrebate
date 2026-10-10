@@ -22,6 +22,7 @@ Run from the Powerrebate root:
 """
 import argparse
 import json
+import html
 import re
 import sys
 from pathlib import Path
@@ -320,6 +321,109 @@ FONT_HEAD = (
 _FONT_HEAD_RE = re.compile(r"<!-- FONT-PRELOAD-START -->.*?<!-- FONT-PRELOAD-END -->", re.S)
 
 
+RAIL_S, RAIL_E = "<!-- PAGE-RAIL-START -->", "<!-- PAGE-RAIL-END -->"
+_RAIL_RE = re.compile(re.escape(RAIL_S) + r".*?" + re.escape(RAIL_E) + r"\n?", re.S)
+# long-form templates that get the desktop side panel (page types with no full-width colour bands)
+_RAIL_PATH = re.compile(r"^(blog/[^/]+/|guides/[^/]+/|questions/[^/]+/|programs/(?!utility-comparison)[^/]+/|(ca|us)/[a-z]+/([a-z-]+/)?[a-z-]+/[a-z-]+/|(ca|us)/[a-z]+/[a-z-]+/)index\.html$|^blog-[^/]+\.html$")
+
+
+def _slug(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", html.unescape(text).lower()).strip("-")[:48] or "section"
+
+
+_VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
+
+def top_level_children(body: str):
+    """[(tag, attrs)] for the direct children of a fragment (script, style and comments masked)."""
+    masked = re.sub(r"<script\b.*?</script>|<style\b.*?</style>|<!--.*?-->", lambda m: " " * len(m.group(0)), body, flags=re.S | re.I)
+    kids, depth = [], 0
+    for m in re.finditer(r"<(/?)([a-zA-Z][\w-]*)([^<>]*?)(/?)>", masked):
+        close, name, attrs, selfclose = m.groups()
+        name = name.lower()
+        if name in _VOID_TAGS or selfclose:
+            if depth == 0:
+                kids.append((name, attrs))
+            continue
+        if not close:
+            if depth == 0:
+                kids.append((name, attrs))
+            depth += 1
+        else:
+            depth = max(0, depth - 1)
+    return kids
+
+
+def ensure_rail(content: str, rel: str, plan_href: str) -> str:
+    """Desktop side panel for long-form pages: an 'On this page' list built from the page's own h2 headings plus a rebate-plan call to action.
+    Static HTML (no layout shift); hidden below 1180px. Idempotent: the block lives between PAGE-RAIL markers and main gets class has-rail."""
+    content = _RAIL_RE.sub("", content)
+    m = re.search(r'<main id="main"( tabindex="-1")?( class="has-rail")?>', content)
+    if not m or not _RAIL_PATH.match(str(rel).replace("\\", "/")):
+        return content
+    start = m.end()
+    end = content.find("</main>", start)
+    if end == -1:
+        return content
+    body = content[start:end]
+    if re.search(r'<section class="section|class="cta-box|class="final-cta', body):
+        return content  # full-width coloured bands: a side panel would break the stripes
+    used = set(re.findall(r'\bid="([^"]+)"', content))
+    items = []
+    def add_id(h):
+        tag, text = h.group(1), h.group(3)
+        label = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", text))).strip()
+        am = re.search(r'\bid="([^"]+)"', tag)
+        if am:
+            hid = am.group(1)
+        else:
+            base = _slug(label); hid = base; i = 2
+            while hid in used:
+                hid = f"{base}-{i}"; i += 1
+            used.add(hid)
+            tag = tag[:-1] + f' id="{hid}">'
+        if label and len(label) <= 90:
+            items.append((hid, label))
+        return tag + h.group(2) + h.group(3) + "</h2>"
+    new_body = re.sub(r"(<h2\b[^>]*>)()(.*?)</h2>", add_id, body, flags=re.S)
+    if len(items) < 3:
+        return content
+    kids = top_level_children(new_body)
+    hero_idx = max((i for i, (n, a) in enumerate(kids) if re.search(r'class="[^"]*\bhero\b', a)), default=-1)
+    row = hero_idx + 2  # 1-based grid row right after the last hero block
+    lis = "".join(f'<li><a href="#{i}">{html.escape(l)}</a></li>' for i, l in items[:12])
+    rail = (f'{RAIL_S}\n<aside class="page-rail" aria-label="On this page" style="grid-row: {row} / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol>{lis}</ol></nav>'
+            f'<div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p>'
+            f'<a class="rail-btn" href="{plan_href}">Get my plan</a></div></aside>\n{RAIL_E}\n')
+    new_main_open = '<main id="main"' + (m.group(1) or "") + ' class="has-rail">'
+    return content[:m.start()] + new_main_open + new_body + rail + content[end:]
+
+
+_WIDE_PATH = re.compile(r"^(ca|us)/[a-z]+/[a-z-]+/index\.html$")
+
+
+def ensure_wide(content: str, rel: str) -> str:
+    """City hubs with full-width colour bands keep their stripes but use a wider content column (main.has-wide, 1100px from 1280px). Idempotent."""
+    content = content.replace('<main id="main" tabindex="-1" class="has-wide">', '<main id="main" tabindex="-1">').replace('<main id="main" class="has-wide">', '<main id="main">')
+    if 'class="has-rail"' in content or not _WIDE_PATH.match(str(rel).replace("\\", "/")):
+        return content
+    widths = [int(x) for x in re.findall(r"\.wrap\s*\{[^}]*max-width:\s*(\d+)px", content)]
+    if not widths or not (700 <= widths[0] <= 960):
+        return content
+    return re.sub(r'<main id="main"( tabindex="-1")?>', lambda m: '<main id="main"' + (m.group(1) or "") + ' class="has-wide">', content, count=1)
+
+
+_LAYOUT_WIDE_PATH = re.compile(r"^(index\.html|installers/index\.html|installers/[a-z]+/[a-z-]+/[a-z-]+/index\.html|powerscore/index\.html)$")
+
+
+def ensure_layout_wide(content: str, rel: str) -> str:
+    """Homepage, installer directory and installer ranking pages use the fluid container (main.layout-wide). Idempotent."""
+    content = re.sub(r'(<main id="main"(?: tabindex="-1")?) class="layout-wide">', r"\1>", content)
+    if not _LAYOUT_WIDE_PATH.match(str(rel).replace("\\", "/")):
+        return content
+    return re.sub(r'<main id="main"( tabindex="-1")?>', lambda m: '<main id="main"' + (m.group(1) or "") + ' class="layout-wide">', content, count=1)
+
+
 def ensure_fast_head(content: str) -> str:
     """Performance and polish in <head>, idempotent:
     - Google Fonts stylesheet loads without blocking first paint (preload, then apply on load; noscript fallback; display=swap is in the URL)
@@ -430,6 +534,10 @@ def process_file(path: Path, dry_run: bool):
 
     content = ensure_shared_assets(content)
     content = ensure_landmarks(content)
+    _pm = re.search(r'href="(/get-quotes/[^"]*)"', nav_html)
+    content = ensure_rail(content, rel, _pm.group(1) if _pm else "/get-quotes/")
+    content = ensure_wide(content, rel)
+    content = ensure_layout_wide(content, rel)
     content = ensure_fast_head(content)
 
     # Safety net (added 2026-09-28): some pages had real content (e.g. "Learn more about

@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/il/">Illinois</a></li><li><a href="/us/il/naperville/">Naperville</a></li><li aria-current="page">Smart Thermostat</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">City rebate: $75</div><h1>Smart Thermostat Rebates in Naperville</h1><p>In Naperville you can collect from two different companies for a smart thermostat. The City of Naperville's electric utility pays $75, and you can claim it for up to two thermostats. Nicor Gas, your gas company, pays $25 for one if your home heats with gas. ComEd's thermostat rebate is not for Naperville customers. Here are the rules we read on October 6, 2026.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -489,16 +552,16 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/il/naperville/heat-pump/">Heat Pump Rebates in Naperville</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>Thermostat money in Naperville</h2>
+<h2 id="thermostat-money-in-naperville">Thermostat money in Naperville</h2>
 <p>The two rebates come from two separate programs with separate forms.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3"><a href='/programs/naperville-electric-rebates/'>Naperville Electric smart thermostat</a></h4><div class="amount">$75 each, up to two</div><p style="font-size:14px;margin:8px 0 0;">Any Wi-Fi smart thermostat that you can adjust from a phone. Owners and renters can apply.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/programs/nicor-gas-rebates/'>Nicor Gas smart thermostat</a></h4><div class="amount">$25</div><p style="font-size:14px;margin:8px 0 0;">One per household, on a home with a gas furnace or boiler, and the thermostat must be on Nicor's approved list or ENERGY STAR certified.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Nicor furnace and thermostat bundle</h4><div class="amount">$200 or $275</div><p style="font-size:14px;margin:8px 0 0;">A 95% or 97% efficient furnace with a smart thermostat on the same application.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Naperville rebates now closed</h4><div class="amount">Closed for 2026</div><p style="font-size:14px;margin:8px 0 0;">Attic, window, tune-up and blower motor rebates are used up this year.</p></div>
 </div>
 <p>Naperville's page does not say that you must give to its Renewable Energy Program for the thermostat rebate, unlike the attic and window rebates.</p>
-<h2>How the city rebate works</h2><p>You buy and install any smart thermostat with Wi-Fi that lets you change the temperature from afar. The city says all makes and models are included. You then fill out an application in the city's online portal, which needs an account, and attach your receipt and proof of install. A one-time $75 credit appears on your electric bill within two months. The complete application must reach the city within 120 days of installation. Funding is first-come, and the program ends when it is gone.</p><h2>How the Nicor rebate works</h2><p>Nicor's thermostat must be installed on a home with a gas furnace or boiler of home size. It needs a working Wi-Fi connection and features such as geofencing, which uses your phone's location to adjust the heat when you leave. A smart thermostat can replace a manual or programmable one, but not another smart thermostat. Nicor says a rebate from your electric company does not block the Nicor one. Apply within 90 days of install or by January 31, 2027.</p><h2>Naperville homes in numbers</h2><p>The Census Bureau's survey for 2020 to 2024 counts 54,847 households in Naperville. Owners are 74.8% and renters 25.2%. Utility gas heats 86.1% of homes, which means most households can use the Nicor rebate, and electricity heats 11.9%, for whom the city's rebate is the main one. Detached houses are 62.8% of homes.</p><h2>Two thermostats</h2><p>The city lets you claim two. That helps in a two-story house with two zones, or in a house with an addition. Nicor allows only one per household, so the second thermostat would earn only the city's $75.</p><h2>Set it up well</h2><p>A smart thermostat saves energy only if you use its schedule. Ask the installer to set an away temperature and a night setback, and to show you how to change them from your phone. Keep the box and the model number, because both rebate forms ask for them. If you plan a heat pump, ask whether the thermostat you pick works with it, because some thermostats do not control heat pumps well.</p>
+<h2 id="how-the-city-rebate-works">How the city rebate works</h2><p>You buy and install any smart thermostat with Wi-Fi that lets you change the temperature from afar. The city says all makes and models are included. You then fill out an application in the city's online portal, which needs an account, and attach your receipt and proof of install. A one-time $75 credit appears on your electric bill within two months. The complete application must reach the city within 120 days of installation. Funding is first-come, and the program ends when it is gone.</p><h2 id="how-the-nicor-rebate-works">How the Nicor rebate works</h2><p>Nicor's thermostat must be installed on a home with a gas furnace or boiler of home size. It needs a working Wi-Fi connection and features such as geofencing, which uses your phone's location to adjust the heat when you leave. A smart thermostat can replace a manual or programmable one, but not another smart thermostat. Nicor says a rebate from your electric company does not block the Nicor one. Apply within 90 days of install or by January 31, 2027.</p><h2 id="naperville-homes-in-numbers">Naperville homes in numbers</h2><p>The Census Bureau's survey for 2020 to 2024 counts 54,847 households in Naperville. Owners are 74.8% and renters 25.2%. Utility gas heats 86.1% of homes, which means most households can use the Nicor rebate, and electricity heats 11.9%, for whom the city's rebate is the main one. Detached houses are 62.8% of homes.</p><h2 id="two-thermostats">Two thermostats</h2><p>The city lets you claim two. That helps in a two-story house with two zones, or in a house with an addition. Nicor allows only one per household, so the second thermostat would earn only the city's $75.</p><h2 id="set-it-up-well">Set it up well</h2><p>A smart thermostat saves energy only if you use its schedule. Ask the installer to set an away temperature and a night setback, and to show you how to change them from your phone. Keep the box and the model number, because both rebate forms ask for them. If you plan a heat pump, ask whether the thermostat you pick works with it, because some thermostats do not control heat pumps well.</p>
 
 
-<h2>How to get a thermostat rebate in Naperville</h2>
+<h2 id="how-to-get-a-thermostat-rebate-in-naperville">How to get a thermostat rebate in Naperville</h2>
 <ol>
 <li>Check that your electric bill comes from the City of Naperville and your gas from Nicor Gas.</li>
 <li>Buy a smart thermostat with Wi-Fi from a store or an installer.</li>
@@ -507,17 +570,20 @@ h1, h2 { text-wrap: balance; }
 <li>Wait for the credit on your electric bill and the Nicor card or check.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/il/" style="color:var(--teal,#0d4f5c); font-weight:600;">Illinois rebate calculator</a>, or <a href="/get-quotes/?province=il&amp;city=naperville" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Naperville</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much does Naperville pay for a smart thermostat?</h3><p>$75, with a limit of two rebates per household.</p></div>
 <div class="faq-item"><h3>Does ComEd pay for a thermostat in Naperville?</h3><p>No. Naperville's electric company is the city, and ComEd's rebate is for ComEd customers.</p></div>
 <div class="faq-item"><h3>Can I get Nicor and the city rebate on the same thermostat?</h3><p>Both programs are separate, and Nicor's page says an electric company rebate does not block its own. Check each program's terms before you apply.</p></div>
 <div class="faq-item"><h3>What is the deadline?</h3><p>120 days after installation for the city and 90 days for Nicor, or January 31, 2027, whichever comes first.</p></div>
 <div class="faq-item"><h3>Do renters qualify?</h3><p>Yes for the city rebate. Nicor's thermostat is for gas customers, and a landlord can apply.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See <a href='/us/il/naperville/heat-pump/'>Naperville heat pump rebates</a>, <a href='/programs/naperville-electric-rebates/'>the city program page</a> and <a href='/programs/nicor-gas-rebates/'>Nicor Gas rebates</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.naperville.il.us/services/electric-utility/powering-our-community-for-the-future/energy-efficiency-grant-programs/" target="_blank" rel="noopener">Naperville energy efficiency grant programs</a>, <a href="https://www.nicorgas.com/ways-to-save/residential-savings/rebates.html" target="_blank" rel="noopener">Nicor Gas residential rebates</a>, <a href="https://data.census.gov/table/ACSDT5Y2024.B25040" target="_blank" rel="noopener">US Census Bureau, American Community Survey 2020-2024</a>. <a href="/us/il/naperville/">All Naperville rebates &rarr;</a> <a href="/programs/naperville-electric-rebates/">Every Naperville Electric rebate &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#thermostat-money-in-naperville">Thermostat money in Naperville</a></li><li><a href="#how-the-city-rebate-works">How the city rebate works</a></li><li><a href="#how-the-nicor-rebate-works">How the Nicor rebate works</a></li><li><a href="#naperville-homes-in-numbers">Naperville homes in numbers</a></li><li><a href="#two-thermostats">Two thermostats</a></li><li><a href="#set-it-up-well">Set it up well</a></li><li><a href="#how-to-get-a-thermostat-rebate-in-naperville">How to get a thermostat rebate in Naperville</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=naperville&province=il">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Naperville where relevant -->
@@ -719,6 +785,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

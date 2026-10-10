@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,18 +543,18 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/programs/">Rebate programs</a></li><li aria-current="page">Washington state home rebates</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Income up to 150% of area median, plus a solar sales tax break</div><h1>Washington State Home Electrification Rebates</h1><p>Washington runs a state rebate program through local partners, and it is aimed at households with lower and moderate incomes. A separate federal-funded program has not opened yet. The one benefit open to every homeowner is the state sales tax exemption on solar.</p></div></section>
 <article class="article"><div class="wrap">
-<h2>What the state offers in 2026</h2>
+<h2 id="what-the-state-offers-in-2026">What the state offers in 2026</h2>
 <p>We read the Washington State Department of Commerce pages on October 6, 2026, and the state law for the solar tax break the same day. The state page for the home electrification rebates was last updated by Commerce on September 8, 2026. No dollar amount per household is listed there, because each local partner sets its own.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Home Electrification and Appliance Rebates (HEAR)</h4><div class="amount">Set by your local partner</div><p style="font-size:14px;margin:8px 0 0;">Commerce awarded $39,323,876 to 40 local partners that give rebates to households at or below 150 percent of area median income. Partners include the cities of Seattle, Tacoma and Vancouver and Spokane, King and Pierce counties.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Federal-funded HOMES and HARP rebates</h4><div class="amount">Not yet available</div><p style="font-size:14px;margin:8px 0 0;">Commerce says it is still preparing, has not received approval to launch, and is reviewing new federal rules from June 1. Rebates will not be retroactive.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Sales tax exemption on solar</h4><div class="amount">100% of sales tax</div><p style="font-size:14px;margin:8px 0 0;">For equipment and installation of a solar system up to 100 kilowatts, from July 1, 2019 through December 31, 2029.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>State weatherization, LIHEAP and home repair grants</h4><div class="amount">Amounts not stated</div><p style="font-size:14px;margin:8px 0 0;">Commerce says these are funded and open to low-income households. Contact your local community action agency.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Federal clean energy tax credits</h4><div class="amount">$0</div><p style="font-size:14px;margin:8px 0 0;">The 30 percent residential clean energy credit does not apply to property placed in service after December 31, 2025.</p></div>
 </div>
 
-<h2>Who can use HEAR</h2><p>Commerce says HEAR is for low-income and moderate-income households, including renters, living in single-family or multifamily homes with a household income at or below 150 percent of area median income in their county. Small businesses and nonprofits with 50 or fewer workers and adult family homes licensed by the state can also apply. The Department of Housing and Urban Development publishes the area median income by county, and Commerce links a table of the limits. Because the limit depends on your county and household size, check it before you call.</p><p>The program pays for heat pumps for heating and cooling, induction cooking equipment, heat pump water heaters, heat pump clothes dryers and washer-dryer sets, and the electric panel and wiring upgrades needed to install them. All equipment must be ENERGY STAR or AHRI certified. Commerce notes that not every partner offers every item, and applications differ, so you need to call your local partner.</p><h2>Finding your local partner</h2><p>You do not apply to Commerce. You apply to a partner, and Commerce posts partners as their contracts are finished. The list we read included City of Seattle, City of Tacoma, City of Vancouver, Spokane County, King County, Pierce County, Energy Smart Eastside and community groups such as Opportunity Council and HopeSource. Commerce says that if you do not see a partner for your area, its contract may not be signed yet or no group may have applied to serve your area. Check back every few days, because the page is updated as contracts finish.</p><h2>What HEAR does not cover</h2><p>HEAR does not list insulation or windows. Those fall under your utility rebates or under the state weatherization program for low-income households. The state page names no amount for weatherization, so ask your community action agency. If your utility has its own rebates, ask each partner whether you can use both on the same equipment. The pages we read did not say.</p><h2>The federal-funded HOMES and HARP rebates</h2><p>These two programs come from the federal Inflation Reduction Act. HARP would give point-of-sale rebates on electric equipment, and HOMES would pay for whole-home energy retrofits, with amounts based on energy savings and income. Commerce lists the steps and says it is on step five of seven, preparing delivery with its rebate administrator. It also says the federal Department of Energy changed program rules on June 1, and Commerce is working out what that means. So a household cannot apply today, and no one should buy equipment now expecting a HOMES or HARP check. Commerce says these rebates are not retroactive.</p>
-<h2>How to use the state programs</h2>
+<h2 id="who-can-use-hear">Who can use HEAR</h2><p>Commerce says HEAR is for low-income and moderate-income households, including renters, living in single-family or multifamily homes with a household income at or below 150 percent of area median income in their county. Small businesses and nonprofits with 50 or fewer workers and adult family homes licensed by the state can also apply. The Department of Housing and Urban Development publishes the area median income by county, and Commerce links a table of the limits. Because the limit depends on your county and household size, check it before you call.</p><p>The program pays for heat pumps for heating and cooling, induction cooking equipment, heat pump water heaters, heat pump clothes dryers and washer-dryer sets, and the electric panel and wiring upgrades needed to install them. All equipment must be ENERGY STAR or AHRI certified. Commerce notes that not every partner offers every item, and applications differ, so you need to call your local partner.</p><h2 id="finding-your-local-partner">Finding your local partner</h2><p>You do not apply to Commerce. You apply to a partner, and Commerce posts partners as their contracts are finished. The list we read included City of Seattle, City of Tacoma, City of Vancouver, Spokane County, King County, Pierce County, Energy Smart Eastside and community groups such as Opportunity Council and HopeSource. Commerce says that if you do not see a partner for your area, its contract may not be signed yet or no group may have applied to serve your area. Check back every few days, because the page is updated as contracts finish.</p><h2 id="what-hear-does-not-cover">What HEAR does not cover</h2><p>HEAR does not list insulation or windows. Those fall under your utility rebates or under the state weatherization program for low-income households. The state page names no amount for weatherization, so ask your community action agency. If your utility has its own rebates, ask each partner whether you can use both on the same equipment. The pages we read did not say.</p><h2 id="the-federal-funded-homes-and-harp-rebates">The federal-funded HOMES and HARP rebates</h2><p>These two programs come from the federal Inflation Reduction Act. HARP would give point-of-sale rebates on electric equipment, and HOMES would pay for whole-home energy retrofits, with amounts based on energy savings and income. Commerce lists the steps and says it is on step five of seven, preparing delivery with its rebate administrator. It also says the federal Department of Energy changed program rules on June 1, and Commerce is working out what that means. So a household cannot apply today, and no one should buy equipment now expecting a HOMES or HARP check. Commerce says these rebates are not retroactive.</p>
+<h2 id="how-to-use-the-state-programs">How to use the state programs</h2>
 <ol>
 <li>Look up your county's area median income on Commerce's table and compare it with your household income and size.</li>
 <li>Open Commerce's HEAR page and look for your city or county on the list of local partners.</li>
@@ -499,18 +562,18 @@ h1, h2 { text-wrap: balance; }
 <li>If no partner covers your area, call your community action agency about weatherization and home repair help.</li>
 <li>For solar, ask your installer to show the sales tax exemption on the quote and tell you whether it is taken at the register or by a remittance request.</li>
 </ol>
-<h2>Our pages for Washington state home rebates customers</h2><ul><li><a href="/us/wa/seattle/">Seattle</a>: City of Seattle is a HEAR partner.</li>
+<h2 id="our-pages-for-washington-state-home-rebates-cust">Our pages for Washington state home rebates customers</h2><ul><li><a href="/us/wa/seattle/">Seattle</a>: City of Seattle is a HEAR partner.</li>
 <li><a href="/us/wa/spokane/">Spokane</a>: Spokane County is a HEAR partner.</li>
 <li><a href="/us/wa/tacoma/">Tacoma</a>: City of Tacoma and Pierce County are HEAR partners.</li>
 <li><a href="/us/wa/vancouver/">Vancouver, Washington</a>: City of Vancouver is a HEAR partner.</li>
 <li><a href="/us/wa/bellevue/">Bellevue</a>: King County and Energy Smart Eastside are HEAR partners.</li>
 </ul>
-<h2>Guides</h2><ul><li><a href="/us/wa/">Washington rebate hub</a></li>
+<h2 id="guides">Guides</h2><ul><li><a href="/us/wa/">Washington rebate hub</a></li>
 <li><a href="/us/wa/solar/">Washington solar guide</a></li>
 <li><a href="/us/wa/battery/">Washington battery guide</a></li>
 </ul>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/wa/" style="color:var(--teal,#0d4f5c); font-weight:600;">Washington rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Is there a statewide heat pump rebate in Washington?</h3><p>Not one set amount. The state gives money to local partners, and each partner sets amounts for households at or below 150 percent of area median income. Your utility's own rebate is separate.</p></div>
 <div class="faq-item"><h3>Can renters use HEAR?</h3><p>Yes. Commerce says renters and owners of single-family and multifamily homes can qualify if their income is at or below 150 percent of area median income, though each partner sets its own rules.</p></div>
 <div class="faq-item"><h3>Have the federal HOMES and HARP rebates started in Washington?</h3><p>No. Commerce says it is still preparing and has not received approval to launch.</p></div>
@@ -519,6 +582,9 @@ h1, h2 { text-wrap: balance; }
 
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.commerce.wa.gov/energy-incentives/hear/" target="_blank" rel="noopener">Washington Commerce HEAR program</a>, <a href="https://www.commerce.wa.gov/energy-incentives/ira-home-energy-rebates/" target="_blank" rel="noopener">Washington Commerce IRA home energy rebates</a>, <a href="https://app.leg.wa.gov/rcw/default.aspx?cite=82.08.962" target="_blank" rel="noopener">Washington solar sales tax exemption (RCW 82.08.962)</a>, <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS Residential Clean Energy Credit</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-the-state-offers-in-2026">What the state offers in 2026</a></li><li><a href="#who-can-use-hear">Who can use HEAR</a></li><li><a href="#finding-your-local-partner">Finding your local partner</a></li><li><a href="#what-hear-does-not-cover">What HEAR does not cover</a></li><li><a href="#the-federal-funded-homes-and-harp-rebates">The federal-funded HOMES and HARP rebates</a></li><li><a href="#how-to-use-the-state-programs">How to use the state programs</a></li><li><a href="#our-pages-for-washington-state-home-rebates-cust">Our pages for Washington state home rebates customers</a></li><li><a href="#guides">Guides</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -720,6 +786,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/bc/">British Columbia</a></li><li><a href="/ca/bc/abbotsford/">Abbotsford</a></li><li aria-current="page">Windows & Doors</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$100 each, up to $2,000</div><h1>Window and Door Rebates in Abbotsford</h1><p>Cold air pools in the Fraser Valley, and Abbotsford's coldest night in our record reached -18.3°C. A leaky window loses the most heat on exactly those nights, so replacing old units here earns a rebate and a real comfort gain.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -494,16 +557,16 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/ca/bc/abbotsford/hrv/">HRV & Ventilation Rebates in Abbotsford</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What BC Hydro pays for windows and doors in Abbotsford</h2>
+<h2 id="what-bc-hydro-pays-for-windows-and-doors-in-abbo">What BC Hydro pays for windows and doors in Abbotsford</h2>
 <p>We re-read BC Hydro's window and door page on October 2, 2026. The rebate is for homes heated mainly by electricity. FortisBC lists $100 per opening for its gas customers, except in the City of Vancouver.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Windows and doors</h4><div class="amount">$100 per opening</div><p style="font-size:14px;margin:8px 0 0;">Paid for each window or door that replaces an existing one between a heated space and outdoors.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Cap</h4><div class="amount">$2,000 total</div><p style="font-size:14px;margin:8px 0 0;">That is 20 openings at $100 each. A bay window counts as one opening.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Energy rating</h4><div class="amount">U-factor 1.22 or lower</div><p style="font-size:14px;margin:8px 0 0;">The window or door must have a maximum U-factor of 1.22 W/m2-K, which is BC Hydro's Tier 2 level.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>More than one upgrade</h4><div class="amount">Bonus up to $2,000</div><p style="font-size:14px;margin:8px 0 0;">BC Hydro adds a bonus when you finish more than one eligible upgrade.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Lower incomes</h4><div class="amount">Free</div><p style="font-size:14px;margin:8px 0 0;">Income-qualified customers can apply for free upgrades.</p></div>
 </div>
 <div class='highlight-box'><h4>An Abbotsford 1970s house</h4><p>A house with 12 windows, a front door and a back door is 14 openings. That pays $1,400. Add a patio slider and it is $1,500. A bay window counts as one opening, even when it has three panes.</p></div>
-<h2>Abbotsford's homes in numbers</h2><p>The 2021 Census counted 53,235 households in Abbotsford. About 15,445 (29%) live in homes built before 1981, and 6,070 are owner-occupied detached houses from that period. Single-detached houses are 37% of households, 29% live in apartments, and 69% own.</p><h2>The weather your windows face</h2><p>Abbotsford's average January low from 2015 to 2024 was 0.1°C and the coldest day was -18.3°C. The city sits on the Fraser Valley floor, where cold air can settle. Old windows leak most on still, cold nights and on windy days when outflow wind pushes against the glass.</p><h2>Who can and cannot claim</h2><p>The home must be at least 12 months old, a primary residence and mainly electric-heated. Mobile homes fixed to a foundation can qualify. Garages, workshops and outbuildings cannot, which matters on Abbotsford's larger and farm-edge lots. Condos and apartments use a separate program.</p><h2>Counting openings</h2><p>Each rough opening where a window or door was replaced is one opening. Skylights are not eligible. Windows must separate heated space from outdoors or an unheated space. Each unit needs a U-factor of 1.22 W/m2-K or lower and a listing from CSA, Intertek, Labtest, QAI or NFRC.</p><h2>Reading a U-factor label</h2><p>The rebate needs a U-factor of 1.22 W/m2-K or lower, and lower means less heat loss. Many window labels show the older imperial scale instead. To convert, multiply the imperial number by 5.678. A label that says U-0.30 equals 1.70 W/m2-K, which is too high. A label that says U-0.21 equals about 1.19 W/m2-K and passes. Ask the contractor to quote the metric value for each model so you do not have to convert.</p><h2>Timing and paperwork</h2><p>You have six months from the invoice date to apply, and the application needs the invoice and a photo of the manufacturer label on each unit. BC Hydro publishes a window and door checklist and a sample invoice. Ask the contractor to fill in the invoice the way the sample does, listing each window or door separately. A vague invoice is the usual reason a claim is sent back.</p><h2>If your income is lower</h2><p>BC Hydro sends income-qualified customers to the CleanBC Better Homes Energy Savings Program instead, and the two cannot be combined. The 2026 program document lists no insulation or window rebates, so the free Energy Conservation Assistance Program is the route to ask about.</p>
+<h2 id="abbotsford-s-homes-in-numbers">Abbotsford's homes in numbers</h2><p>The 2021 Census counted 53,235 households in Abbotsford. About 15,445 (29%) live in homes built before 1981, and 6,070 are owner-occupied detached houses from that period. Single-detached houses are 37% of households, 29% live in apartments, and 69% own.</p><h2 id="the-weather-your-windows-face">The weather your windows face</h2><p>Abbotsford's average January low from 2015 to 2024 was 0.1°C and the coldest day was -18.3°C. The city sits on the Fraser Valley floor, where cold air can settle. Old windows leak most on still, cold nights and on windy days when outflow wind pushes against the glass.</p><h2 id="who-can-and-cannot-claim">Who can and cannot claim</h2><p>The home must be at least 12 months old, a primary residence and mainly electric-heated. Mobile homes fixed to a foundation can qualify. Garages, workshops and outbuildings cannot, which matters on Abbotsford's larger and farm-edge lots. Condos and apartments use a separate program.</p><h2 id="counting-openings">Counting openings</h2><p>Each rough opening where a window or door was replaced is one opening. Skylights are not eligible. Windows must separate heated space from outdoors or an unheated space. Each unit needs a U-factor of 1.22 W/m2-K or lower and a listing from CSA, Intertek, Labtest, QAI or NFRC.</p><h2 id="reading-a-u-factor-label">Reading a U-factor label</h2><p>The rebate needs a U-factor of 1.22 W/m2-K or lower, and lower means less heat loss. Many window labels show the older imperial scale instead. To convert, multiply the imperial number by 5.678. A label that says U-0.30 equals 1.70 W/m2-K, which is too high. A label that says U-0.21 equals about 1.19 W/m2-K and passes. Ask the contractor to quote the metric value for each model so you do not have to convert.</p><h2 id="timing-and-paperwork">Timing and paperwork</h2><p>You have six months from the invoice date to apply, and the application needs the invoice and a photo of the manufacturer label on each unit. BC Hydro publishes a window and door checklist and a sample invoice. Ask the contractor to fill in the invoice the way the sample does, listing each window or door separately. A vague invoice is the usual reason a claim is sent back.</p><h2 id="if-your-income-is-lower">If your income is lower</h2><p>BC Hydro sends income-qualified customers to the CleanBC Better Homes Energy Savings Program instead, and the two cannot be combined. The 2026 program document lists no insulation or window rebates, so the free Energy Conservation Assistance Program is the route to ask about.</p>
 
 
-<h2>How to claim in Abbotsford</h2>
+<h2 id="how-to-claim-in-abbotsford">How to claim in Abbotsford</h2>
 <ol>
 <li>Check the home is electric-heated and at least 12 months old.</li>
 <li>Get quotes that list the U-factor of each window and door.</li>
@@ -512,17 +575,20 @@ h1, h2 { text-wrap: balance; }
 <li>Add insulation to the same application to check the bonus.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/bc/" style="color:var(--teal,#0d4f5c); font-weight:600;">BC rebate calculator</a>, or <a href="/get-quotes/?province=bc&amp;city=abbotsford" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Abbotsford</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Does a mobile home qualify?</h3><p>Yes, if it is permanently fixed on a foundation and meets the other rules.</p></div>
 <div class="faq-item"><h3>Are workshops included?</h3><p>No.</p></div>
 <div class="faq-item"><h3>How cold does Abbotsford get?</h3><p>The average January low was 0.1°C and the coldest day in 2015 to 2024 was -18.3°C.</p></div>
 <div class="faq-item"><h3>How many openings can I claim?</h3><p>Up to 20, for a $2,000 cap.</p></div>
 <div class="faq-item"><h3>What if I heat with gas?</h3><p>FortisBC lists $100 per opening for gas customers.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See <a href="/ca/bc/abbotsford/insulation/">Abbotsford insulation rebates</a> and <a href="/ca/bc/abbotsford/heat-pump/">heat pump rebates</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-windows-and-doors.html" target="_blank" rel="noopener">BC Hydro window and door rebates</a>, <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/eligibility.html" target="_blank" rel="noopener">BC Hydro program eligibility</a>, <a href="https://www.fortisbc.com/rebates/detail/door-window-rebates" target="_blank" rel="noopener">FortisBC window and door rebates</a>, <a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810023301" target="_blank" rel="noopener">Statistics Canada 2021 Census, table 98-10-0233-01</a>. <a href="/ca/bc/abbotsford/">All Abbotsford rebates &rarr;</a> <a href="/programs/bc-hydro-rebates/">Every BC Hydro rebate &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-bc-hydro-pays-for-windows-and-doors-in-abbo">What BC Hydro pays for windows and doors in Abbotsford</a></li><li><a href="#abbotsford-s-homes-in-numbers">Abbotsford&#x27;s homes in numbers</a></li><li><a href="#the-weather-your-windows-face">The weather your windows face</a></li><li><a href="#who-can-and-cannot-claim">Who can and cannot claim</a></li><li><a href="#counting-openings">Counting openings</a></li><li><a href="#reading-a-u-factor-label">Reading a U-factor label</a></li><li><a href="#timing-and-paperwork">Timing and paperwork</a></li><li><a href="#if-your-income-is-lower">If your income is lower</a></li><li><a href="#how-to-claim-in-abbotsford">How to claim in Abbotsford</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=abbotsford&province=bc">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Abbotsford where relevant -->
@@ -724,6 +790,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

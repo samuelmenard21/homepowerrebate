@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/ns/">Nova Scotia</a></li><li><a href="/ca/ns/halifax/">Halifax</a></li><li aria-current="page">Windows & Doors</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$30 per window or door</div><h1>Window and Door Rebates in Halifax</h1><p>Halifax homeowners can get a rebate on new windows and doors, but it is small: $30 per opening through Efficiency Nova Scotia's Home Energy Assessment. Here is how it works, what a typical house would get, and when the money is better spent elsewhere.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -492,16 +555,16 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/ca/ns/halifax/smart-thermostats/">Smart Thermostat Rebates in Halifax</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What window rebates pay in Halifax</h2>
+<h2 id="what-window-rebates-pay-in-halifax">What window rebates pay in Halifax</h2>
 <p>From Efficiency Nova Scotia's Home Energy Assessment rebate guide (August 2026), still linked from its program page on October 3, 2026.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">ENERGY STAR windows and doors</h4><div class="amount">$30 per rough opening</div><p style="font-size:14px;margin:8px 0 0;">Through the Home Energy Assessment. Paid per opening you replace with an ENERGY STAR certified product.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Air sealing</h4><div class="amount">$200</div><p style="font-size:14px;margin:8px 0 0;">Often the cheaper way to stop the drafts people blame on windows.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Assessment total</h4><div class="amount">Up to $5,000</div><p style="font-size:14px;margin:8px 0 0;">Window money counts toward the same $5,000 cap as insulation and heat pumps.</p></div>
 </div>
 <div class='highlight-box'><h4>The honest math</h4><p>A Halifax house replacing 12 windows and 2 doors has 14 rough openings. At $30 each, that is $420. New windows for a whole house cost far more than that, so the rebate covers a small slice. If your windows are failing (rot, broken seals, fogging), replace them and take the $420. If they are just old, compare them with the insulation and air sealing in your assessment report first.</p></div>
-<h2>What counts as a rough opening</h2><p>A rough opening is the framed hole in the wall that a window or door sits in. Efficiency Nova Scotia counts the openings you replace with ENERGY STAR certified products and pays $30 for each. Doors count too, as long as the product is ENERGY STAR certified. Ask your window supplier for the certification and keep the paperwork for your final assessment.</p><h2>Halifax homes and windows</h2><p>About 45% of Halifax households live in homes built before 1981, according to Statistics Canada's 2021 Census. If your windows are original to a house that age, they are the ones most likely to be due. About 8% of Halifax households live in homes built before 1946, where windows can be part of a home's character. Refurbishing and adding storm windows may suit those houses better than full replacement.</p><p>Renters can't claim this rebate, because the homeowner must book the assessment. That leaves out a large share of Halifax: 42% of households rent.</p><h2>When to do windows, and when to wait</h2><p>Do the assessment before you sign a window contract. The advisor's report shows where your house actually loses heat. If it points to the attic or basement, those rebates are bigger: up to $750 for the attic and $1,200 for basement walls. Air sealing pays $200 and can stop drafts around frames for much less than new windows. If you are planning a heat pump too, doing the shell first can let you buy a smaller unit.</p><p>If your household income is lower, HomeWarming may cover draft-proofing and insulation at no charge. Moderate-income homes heated with oil or propane can get up to $5,000 more through the Moderate Income Rebate, with pre-approval.</p><h2>Why Nova Scotia's window rebate looks small</h2><p>If you have read about window rebates elsewhere, Nova Scotia's will look low. In British Columbia, BC Hydro and FortisBC pay $100 per window or door, up to $2,000. Efficiency Nova Scotia's bigger amounts go to heat pumps, insulation and free upgrades for lower-income homes instead. That is a good hint about where your own money goes furthest in a Nova Scotia house, and why the assessment report is worth reading before you order anything.</p>
+<h2 id="what-counts-as-a-rough-opening">What counts as a rough opening</h2><p>A rough opening is the framed hole in the wall that a window or door sits in. Efficiency Nova Scotia counts the openings you replace with ENERGY STAR certified products and pays $30 for each. Doors count too, as long as the product is ENERGY STAR certified. Ask your window supplier for the certification and keep the paperwork for your final assessment.</p><h2 id="halifax-homes-and-windows">Halifax homes and windows</h2><p>About 45% of Halifax households live in homes built before 1981, according to Statistics Canada's 2021 Census. If your windows are original to a house that age, they are the ones most likely to be due. About 8% of Halifax households live in homes built before 1946, where windows can be part of a home's character. Refurbishing and adding storm windows may suit those houses better than full replacement.</p><p>Renters can't claim this rebate, because the homeowner must book the assessment. That leaves out a large share of Halifax: 42% of households rent.</p><h2 id="when-to-do-windows-and-when-to-wait">When to do windows, and when to wait</h2><p>Do the assessment before you sign a window contract. The advisor's report shows where your house actually loses heat. If it points to the attic or basement, those rebates are bigger: up to $750 for the attic and $1,200 for basement walls. Air sealing pays $200 and can stop drafts around frames for much less than new windows. If you are planning a heat pump too, doing the shell first can let you buy a smaller unit.</p><p>If your household income is lower, HomeWarming may cover draft-proofing and insulation at no charge. Moderate-income homes heated with oil or propane can get up to $5,000 more through the Moderate Income Rebate, with pre-approval.</p><h2 id="why-nova-scotia-s-window-rebate-looks-small">Why Nova Scotia's window rebate looks small</h2><p>If you have read about window rebates elsewhere, Nova Scotia's will look low. In British Columbia, BC Hydro and FortisBC pay $100 per window or door, up to $2,000. Efficiency Nova Scotia's bigger amounts go to heat pumps, insulation and free upgrades for lower-income homes instead. That is a good hint about where your own money goes furthest in a Nova Scotia house, and why the assessment report is worth reading before you order anything.</p>
 
 
-<h2>How to get the window rebate in Halifax</h2>
+<h2 id="how-to-get-the-window-rebate-in-halifax">How to get the window rebate in Halifax</h2>
 <ol>
 <li>Book a Home Energy Assessment before you order windows ($199, or free if your income qualifies).</li>
 <li>Read the report. Compare window replacement with the insulation and air sealing it recommends.</li>
@@ -510,18 +573,21 @@ h1, h2 { text-wrap: balance; }
 <li>Book the final assessment so the advisor can count your new openings.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ns/" style="color:var(--teal,#0d4f5c); font-weight:600;">Nova Scotia rebate calculator</a>, or <a href="/get-quotes/?province=ns&amp;city=halifax" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Halifax</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much is the window rebate in Halifax?</h3><p>$30 per rough opening for ENERGY STAR certified windows and doors, through Efficiency Nova Scotia's Home Energy Assessment.</p></div>
 <div class="faq-item"><h3>Do I need an assessment for the window rebate?</h3><p>Yes. The window rebate is paid only through the Home Energy Assessment, with a visit before the work and a final visit after.</p></div>
 <div class="faq-item"><h3>Is it worth replacing windows for the rebate?</h3><p>Not for the rebate alone. It covers a small part of the cost. Replace windows that are failing, and compare them with the insulation and air sealing your assessment recommends.</p></div>
 <div class="faq-item"><h3>Do doors count for the Nova Scotia window rebate?</h3><p>Yes. ENERGY STAR certified exterior doors count as rough openings at $30 each.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See <a href='/ca/ns/halifax/insulation/'>insulation rebates in Halifax</a>, which pay more per dollar, or the <a href='/programs/efficiency-nova-scotia/'>full list of Efficiency Nova Scotia rebates</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 5, 2026: <a href="https://www.efficiencyns.ca/programs-rebates/home-energy-assessments" target="_blank" rel="noopener">Efficiency Nova Scotia: Home Energy Assessments</a>, <a href="https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf" target="_blank" rel="noopener">Home Energy Assessment Rebate Guide (Aug 2026)</a>, <a href="https://natural-resources.canada.ca/energy-efficiency/energy-star/windows-doors-skylights" target="_blank" rel="noopener">NRCan: ENERGY STAR windows and doors</a>, <a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810023301" target="_blank" rel="noopener">Statistics Canada, 2021 Census table 98-10-0233-01</a>. <a href="/ca/ns/halifax/">All Halifax rebates &rarr;</a> <a href="/programs/efficiency-nova-scotia/">Every Efficiency Nova Scotia rebate &rarr;</a></p>
 </div></article>
 <!-- HARP-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Need help with this winter's heating bill?</b> The <a href="/programs/nova-scotia-heating-assistance-rebate-harp/">Nova Scotia Heating Assistance Rebate (HARP) pays $400 for 2026-27: who qualifies, how to check your status and when it pays</a>.</p></section><!-- HARP-LINK-END -->
 <!-- STATE-CA-NS-HRV-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/ca/ns/hrv/">Nova Scotia HRV and ERV rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-CA-NS-HRV-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-window-rebates-pay-in-halifax">What window rebates pay in Halifax</a></li><li><a href="#what-counts-as-a-rough-opening">What counts as a rough opening</a></li><li><a href="#halifax-homes-and-windows">Halifax homes and windows</a></li><li><a href="#when-to-do-windows-and-when-to-wait">When to do windows, and when to wait</a></li><li><a href="#why-nova-scotia-s-window-rebate-looks-small">Why Nova Scotia&#x27;s window rebate looks small</a></li><li><a href="#how-to-get-the-window-rebate-in-halifax">How to get the window rebate in Halifax</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=halifax&province=ns">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Halifax where relevant -->
@@ -723,6 +789,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

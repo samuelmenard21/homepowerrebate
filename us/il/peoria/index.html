@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,22 +543,22 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/il/">Illinois</a></li><li aria-current="page">Peoria</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Ameren amounts not confirmed</div><h1>Home Energy Rebates in Peoria</h1><p>Peoria is served by Ameren Illinois for electricity and gas, and Ameren Illinois is the one big utility whose rebate amounts we could not read. Its rebate site blocked our reader on October 6, 2026, and we did not work around that. So this page lists what we did confirm, including free state weatherization and solar credit payments, and says clearly where we have no number. It also shows why Peoria's housing makes the free programs worth checking first.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What we confirmed for Peoria in 2026</h2>
+<h2 id="what-we-confirmed-for-peoria-in-2026">What we confirmed for Peoria in 2026</h2>
 <p>A card marked "Check first" means we could not read the official page, so we show no amount.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3"><a href='/programs/ameren-illinois-rebates/'>Ameren Illinois rebates</a></h4><div class="amount">Not confirmed</div><p style="font-size:14px;margin:8px 0 0;">AmerenIllinoisSavings.com returned a block message to our reader. Call Ameren Illinois before you buy.</p></div><div class="rebate-card"><span class="program-status status-open">Info</span><h4>Ameren HVAC Pay As You Save</h4><div class="amount">Not in Illinois</div><p style="font-size:14px;margin:8px 0 0;">Ameren's page says the program is not available to Illinois customers.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Ameren Peak Time Savings</h4><div class="amount">Not confirmed</div><p style="font-size:14px;margin:8px 0 0;">The page lists $50 and $25 a year but names Missouri customers.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>State weatherization</h4><div class="amount">Free, up to $20,000</div><p style="font-size:14px;margin:8px 0 0;">Households at or below 200% of the federal poverty level, through a community action agency.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/programs/illinois-shines-rebates/'>Illinois Shines solar</a></h4><div class="amount">$70.37 per credit</div><p style="font-size:14px;margin:8px 0 0;">Ameren Illinois's area is Group A. Price for a home system of 10 kW or less in 2026-27.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Illinois Solar for All</h4><div class="amount">Bill savings</div><p style="font-size:14px;margin:8px 0 0;">Income-eligible households. No amount listed.</p></div><div class="rebate-card"><span class="program-status status-limited">Coming</span><h4>Illinois HOMES and HEAR</h4><div class="amount">Not launched</div><p style="font-size:14px;margin:8px 0 0;">Illinois EPA's federal-funded rebates are waiting on approval, with no amounts yet.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal home energy credit</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">After December 31, 2025.</p></div>
 </div>
 <p>ComEd and Nicor Gas rebates are not for Peoria. Those are for northern Illinois.</p>
-<h2>Peoria homes in numbers</h2><p>The Census Bureau's 2020 to 2024 survey counts 54,010 homes in Peoria and 49,037 lived in year-round. Owners are 57.5% of households and renters 42.5%. Detached houses are 63.1% of homes, attached houses 4.8% and buildings of two to four homes 6.1%.</p><p>Homes are old: 69.0% were built before 1980, 20.4% before 1940 and 16.7% since 2000.</p><h2>Electric heat is common here</h2><p>Electricity heats 31.0% of Peoria homes, the highest share among our four Illinois cities. Utility gas heats 67.2%, bottled gas 0.6% and fuel oil 0.1%. A household that heats with electric baseboards or a furnace with electric coils can cut its bill with a heat pump, if a rebate and a good installer make the numbers work. Ask Ameren Illinois what it pays before you buy.</p><h2>Free help comes first</h2><p>For program year 2027 the state's income limit is $31,920 for one person, $43,280 for two, $54,640 for three and $66,000 for four. Eligible homes can get air sealing, insulation, heating repair or replacement and water heater work, up to $20,000 plus $4,000 for health and safety. Households that got help from the Low Income Home Energy Assistance Program in the past 12 months qualify too.</p><h2>Solar in Ameren Illinois's area</h2><p>Group A pays $70.37 per credit for a small home system in 2026-27, less than Group B's $80.77 in ComEd's area. That is a real gap, but solar savings also depend on your roof and your bill. Ask for the number of credits in writing. See our <a href="/us/il/solar/">Illinois solar guide</a>.</p><h2>Owners and renters</h2><p>Renters are 42.5% of Peoria households, a larger share than in Naperville or Aurora. A tenant can ask the landlord to apply for weatherization, and the state program serves homes and apartments. Free programs rarely need money from the tenant, so ask the landlord to look at the income limits before anyone signs a contract for new equipment. Keep any promise from a landlord in writing.</p><h2>How we will update this page</h2><p>When we or Ameren Illinois publish readable amounts we will add them with the date we read them. Until then, we would rather say we do not know than guess.</p>
-<h2>Every rebate guide for Peoria</h2><ul></ul>
+<h2 id="peoria-homes-in-numbers">Peoria homes in numbers</h2><p>The Census Bureau's 2020 to 2024 survey counts 54,010 homes in Peoria and 49,037 lived in year-round. Owners are 57.5% of households and renters 42.5%. Detached houses are 63.1% of homes, attached houses 4.8% and buildings of two to four homes 6.1%.</p><p>Homes are old: 69.0% were built before 1980, 20.4% before 1940 and 16.7% since 2000.</p><h2 id="electric-heat-is-common-here">Electric heat is common here</h2><p>Electricity heats 31.0% of Peoria homes, the highest share among our four Illinois cities. Utility gas heats 67.2%, bottled gas 0.6% and fuel oil 0.1%. A household that heats with electric baseboards or a furnace with electric coils can cut its bill with a heat pump, if a rebate and a good installer make the numbers work. Ask Ameren Illinois what it pays before you buy.</p><h2 id="free-help-comes-first">Free help comes first</h2><p>For program year 2027 the state's income limit is $31,920 for one person, $43,280 for two, $54,640 for three and $66,000 for four. Eligible homes can get air sealing, insulation, heating repair or replacement and water heater work, up to $20,000 plus $4,000 for health and safety. Households that got help from the Low Income Home Energy Assistance Program in the past 12 months qualify too.</p><h2 id="solar-in-ameren-illinois-s-area">Solar in Ameren Illinois's area</h2><p>Group A pays $70.37 per credit for a small home system in 2026-27, less than Group B's $80.77 in ComEd's area. That is a real gap, but solar savings also depend on your roof and your bill. Ask for the number of credits in writing. See our <a href="/us/il/solar/">Illinois solar guide</a>.</p><h2 id="owners-and-renters">Owners and renters</h2><p>Renters are 42.5% of Peoria households, a larger share than in Naperville or Aurora. A tenant can ask the landlord to apply for weatherization, and the state program serves homes and apartments. Free programs rarely need money from the tenant, so ask the landlord to look at the income limits before anyone signs a contract for new equipment. Keep any promise from a landlord in writing.</p><h2 id="how-we-will-update-this-page">How we will update this page</h2><p>When we or Ameren Illinois publish readable amounts we will add them with the date we read them. Until then, we would rather say we do not know than guess.</p>
+<h2 id="every-rebate-guide-for-peoria">Every rebate guide for Peoria</h2><ul></ul>
 
-<h2>How to find money in Peoria</h2>
+<h2 id="how-to-find-money-in-peoria">How to find money in Peoria</h2>
 <ol>
 <li>Check your income against the free weatherization limits and apply if you qualify.</li>
 <li>Open AmerenIllinoisSavings.com in a normal browser and call Ameren Illinois to confirm any amount.</li>
@@ -504,17 +567,20 @@ h1, h2 { text-wrap: balance; }
 <li>Keep every invoice and model number.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/il/" style="color:var(--teal,#0d4f5c); font-weight:600;">Illinois rebate calculator</a>, or <a href="/get-quotes/?province=il&amp;city=peoria" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Peoria</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Who is my utility in Peoria?</h3><p>Ameren Illinois for electricity and gas, according to its rate schedules.</p></div>
 <div class="faq-item"><h3>What does Ameren Illinois pay for a heat pump?</h3><p>We could not confirm an amount. Call Ameren Illinois before you buy.</p></div>
 <div class="faq-item"><h3>Can Peoria homes use ComEd rebates?</h3><p>No. ComEd serves northern Illinois.</p></div>
 <div class="faq-item"><h3>Is there free help?</h3><p>Yes, the state's weatherization program, for households at or below 200 percent of the federal poverty level.</p></div>
 <div class="faq-item"><h3>Are federal tax credits still available?</h3><p>No. They ended after December 31, 2025.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Read the <a href='/programs/ameren-illinois-rebates/'>Ameren Illinois page</a> and the <a href='/programs/illinois-shines-rebates/'>Illinois Shines page</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.ameren.com/efficiency/programs" target="_blank" rel="noopener">Ameren efficiency programs</a>, <a href="https://dceo.illinois.gov/communityservices/homeweatherization.html" target="_blank" rel="noopener">Illinois Home Weatherization Assistance Program</a>, <a href="https://illinoisshines.com/wp-content/uploads/2026/05/Final-2026-27-REC-Prices-Applicable-for-the-Program-Year-starting-June-1-2026.pdf" target="_blank" rel="noopener">Illinois Shines REC prices 2026-27</a>, <a href="https://data.census.gov/table/ACSDT5Y2024.B25040" target="_blank" rel="noopener">US Census Bureau, American Community Survey 2020-2024</a>. <a href="/us/il/peoria/">All Peoria rebates &rarr;</a> <a href="/programs/ameren-illinois-rebates/">Every Ameren Illinois rebate &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-we-confirmed-for-peoria-in-2026">What we confirmed for Peoria in 2026</a></li><li><a href="#peoria-homes-in-numbers">Peoria homes in numbers</a></li><li><a href="#electric-heat-is-common-here">Electric heat is common here</a></li><li><a href="#free-help-comes-first">Free help comes first</a></li><li><a href="#solar-in-ameren-illinois-s-area">Solar in Ameren Illinois&#x27;s area</a></li><li><a href="#owners-and-renters">Owners and renters</a></li><li><a href="#how-we-will-update-this-page">How we will update this page</a></li><li><a href="#every-rebate-guide-for-peoria">Every rebate guide for Peoria</a></li><li><a href="#how-to-find-money-in-peoria">How to find money in Peoria</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=peoria&province=il">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Peoria where relevant -->
@@ -716,6 +782,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

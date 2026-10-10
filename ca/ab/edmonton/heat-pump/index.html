@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/ab/">Alberta</a></li><li><a href="/ca/ab/edmonton/">Edmonton</a></li><li aria-current="page">Heat Pump</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">6.00% fixed financing</div><h1>Heat Pump Rebates in Edmonton</h1><p>Edmonton has no cash rebate for a heat pump in 2026. The City says so on its own page: there are no City residential rebates available right now. What Edmonton offers is the Clean Energy Improvement Program, which finances upgrades at a fixed 6.00%. It has a few rules that matter a lot for heat pumps, so here they are in plain words.</p></div></section><!-- FED-HP-START --><p style="max-width:880px;margin:18px auto;padding:14px 20px;background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;font-size:15px;line-height:1.6;"><b>Edmonton: Federal heat pump rebate coming in early 2027: up to $10,000 for households below the median income and $2,000 for other eligible homeowners. </b>Alberta has no province-wide heat pump rebate we could verify, so the federal rebate may be the main one. <a href="/programs/national-heat-pump-rebate/">Read what is confirmed</a> or <a href="/blog/should-you-wait-federal-heat-pump-rebate/">decide whether to wait</a>.</p><!-- FED-HP-END -->
 
@@ -492,22 +555,22 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/ca/ab/edmonton/">HRV & Ventilation Rebates in Edmonton</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What an Edmonton home can use for a heat pump</h2>
+<h2 id="what-an-edmonton-home-can-use-for-a-heat-pump">What an Edmonton home can use for a heat pump</h2>
 <p>We re-read the City of Edmonton's CEIP page and Natural Resources Canada's program page on October 3, 2026. Sources are at the bottom.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-limited">On hold</span><h4 aria-level="3">Edmonton Clean Energy Improvement Program</h4><div class="amount">$3,000 to $50,000</div><p style="font-size:14px;margin:8px 0 0;">Financing at a fixed 6.00%, repaid on your property tax bill for up to 20 years. The program is nearing capacity, so new pre-qualifications are queued and handled first come, first served.</p></div><div class="rebate-card"><span class="program-status status-open">Info</span><h4>City of Edmonton rebates</h4><div class="amount">None right now</div><p style="font-size:14px;margin:8px 0 0;">The City's CEIP FAQ says there are currently no City residential rebates.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Oil to Heat Pump Affordability (federal)</h4><div class="amount">Closed</div><p style="font-size:14px;margin:8px 0 0;">July 31, 2026 was the last day for Alberta residents to apply.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Canada Greener Homes Grant</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">The grant has ended, and the Greener Homes Loan approves no new applications.</p></div>
 </div>
 <div class='highlight-box'><h4>Edmonton's three-upgrade rule</h4><p>Edmonton's CEIP finances a home only when at least three upgrades are installed. A heat pump on its own is usually not enough. A typical bundle might be a heat pump, a heat pump water heater and attic insulation. The exceptions: fewer upgrades are allowed if they get the home to net zero, or if you have used CEIP on that property before.</p></div>
-<h2>What Edmonton will and won't finance</h2><p>Edmonton is stricter than most Alberta cities. Its CEIP page lists three things that are <strong>not</strong> eligible in Edmonton:</p><ul><li>Air conditioners. The City suggests a heat pump instead, since it cools as well as heats.</li><li>High-efficiency gas furnaces, unless combined with a heat pump.</li><li>High-efficiency storage water heaters. A heat pump water heater or a tankless gas heater is allowed.</li></ul><p>So if your furnace is old and you also want summer cooling, the path CEIP supports is a heat pump paired with a furnace for backup, plus at least one more upgrade.</p><h2>Edmonton homes, by the numbers</h2><p>The 2021 Census counted 396,395 households in Edmonton. Half live in single-detached houses, and 64% own their home. About 41% of households live in homes built before 1981, a higher share than Calgary's 35%. That includes 70,205 owner households in detached houses built before 1981.</p><p>Those mid-century houses are where a three-upgrade CEIP bundle fits best. They often need insulation and a new heating system at the same time, which makes the three-upgrade rule easier to meet.</p><h2>Heat pumps in an Edmonton winter</h2><p>Edmonton's average January low over the last ten years was about -14.3°C, and the coldest reading was -41.2°C. That is cold for any heating system. A cold-climate heat pump can carry a home through much of the winter, but you should plan backup heat for the deepest cold. Ask each installer the lowest outdoor temperature the unit is rated to run at, and how your home will stay warm below it.</p><h2>How CEIP payments work in Edmonton</h2><p>Repayment goes on your property tax bill, and the term is the shorter of 20 years or the useful life of the upgrades. If you are on the monthly tax payment plan, the CEIP charge is split into monthly payments too. You can pay off any upgrade early, with no penalty.</p><p>Timing matters. Upgrades finished between May and December 15 show up on the next May tax notice with no interest yet. If you pay that first charge in full by December 15, you avoid interest. After that, interest starts and appears on the following year's notice.</p><p>The City's first $20 million is meant to fund about 300 home projects, and intake pauses after 150 pre-qualifications. That is why new applications are queued.</p>
+<h2 id="what-edmonton-will-and-won-t-finance">What Edmonton will and won't finance</h2><p>Edmonton is stricter than most Alberta cities. Its CEIP page lists three things that are <strong>not</strong> eligible in Edmonton:</p><ul><li>Air conditioners. The City suggests a heat pump instead, since it cools as well as heats.</li><li>High-efficiency gas furnaces, unless combined with a heat pump.</li><li>High-efficiency storage water heaters. A heat pump water heater or a tankless gas heater is allowed.</li></ul><p>So if your furnace is old and you also want summer cooling, the path CEIP supports is a heat pump paired with a furnace for backup, plus at least one more upgrade.</p><h2 id="edmonton-homes-by-the-numbers">Edmonton homes, by the numbers</h2><p>The 2021 Census counted 396,395 households in Edmonton. Half live in single-detached houses, and 64% own their home. About 41% of households live in homes built before 1981, a higher share than Calgary's 35%. That includes 70,205 owner households in detached houses built before 1981.</p><p>Those mid-century houses are where a three-upgrade CEIP bundle fits best. They often need insulation and a new heating system at the same time, which makes the three-upgrade rule easier to meet.</p><h2 id="heat-pumps-in-an-edmonton-winter">Heat pumps in an Edmonton winter</h2><p>Edmonton's average January low over the last ten years was about -14.3°C, and the coldest reading was -41.2°C. That is cold for any heating system. A cold-climate heat pump can carry a home through much of the winter, but you should plan backup heat for the deepest cold. Ask each installer the lowest outdoor temperature the unit is rated to run at, and how your home will stay warm below it.</p><h2 id="how-ceip-payments-work-in-edmonton">How CEIP payments work in Edmonton</h2><p>Repayment goes on your property tax bill, and the term is the shorter of 20 years or the useful life of the upgrades. If you are on the monthly tax payment plan, the CEIP charge is split into monthly payments too. You can pay off any upgrade early, with no penalty.</p><p>Timing matters. Upgrades finished between May and December 15 show up on the next May tax notice with no interest yet. If you pay that first charge in full by December 15, you avoid interest. After that, interest starts and appears on the following year's notice.</p><p>The City's first $20 million is meant to fund about 300 home projects, and intake pauses after 150 pre-qualifications. That is why new applications are queued.</p>
 
-<h2>Top-rated installers in Edmonton</h2><p>Ranked by Google reviews (minimum five). We don't take referral fees or paid placements. To use CEIP, choose a contractor listed as a CEIP Qualified Contractor.</p>
+<h2 id="top-rated-installers-in-edmonton">Top-rated installers in Edmonton</h2><p>Ranked by Google reviews (minimum five). We don't take referral fees or paid placements. To use CEIP, choose a contractor listed as a CEIP Qualified Contractor.</p>
 <div class="installer-card"><div><div class="name">Trust Home Comfort</div><div class="stars">&#9733; 5.0 (808 Google reviews)</div></div><a class="site-link" href="https://www.trusthomecomfort.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Hermes Plumbing &amp; Heating Service Ltd</div><div class="stars">&#9733; 5.0 (236 Google reviews)</div></div><a class="site-link" href="http://www.hermesplumbing.ca/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">K &amp; R Plumbing and Heating</div><div class="stars">&#9733; 5.0 (215 Google reviews)</div></div><a class="site-link" href="https://www.kandrplumbingandheating.ca/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">RG Home Comfort Ltd.</div><div class="stars">&#9733; 5.0 (191 Google reviews)</div></div><a class="site-link" href="http://www.rghomecomfort.unaux.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Furnace Family Edmonton</div><div class="stars">&#9733; 4.9 (3,911 Google reviews)</div></div><a class="site-link" href="https://www.furnacefamily.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/ab/edmonton/heat-pump/">See all Edmonton installers &rarr;</a></p>
-<h2>How to finance a heat pump through Edmonton CEIP</h2>
+<h2 id="how-to-finance-a-heat-pump-through-edmonton-ceip">How to finance a heat pump through Edmonton CEIP</h2>
 <ol>
 <li>Read the CEIP Terms and Conditions and check you meet the tax and mortgage rules.</li>
 <li>Send your pre-qualification to Alberta Municipalities. It will join the queue and be handled first come, first served.</li>
@@ -516,22 +579,25 @@ h1, h2 { text-wrap: balance; }
 <li>Make sure permits are pulled, then install, submit completion forms and book the post-project evaluation.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ab/" style="color:var(--teal,#0d4f5c); font-weight:600;">Alberta rebate calculator</a>, or <a href="/get-quotes/?province=ab&amp;city=edmonton" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Edmonton</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Is there a heat pump rebate in Edmonton?</h3><p>Not in 2026. The City of Edmonton says it has no residential rebates right now, Alberta has no provincial heat pump rebate, and the federal Oil to Heat Pump program closed for Alberta on July 31, 2026.</p></div>
 <div class="faq-item"><h3>What is the Edmonton CEIP interest rate?</h3><p>The current tranche is a fixed 6.00%, for up to 20 years or the useful life of your upgrades, whichever is shorter.</p></div>
 <div class="faq-item"><h3>Can I finance just a heat pump through Edmonton CEIP?</h3><p>Usually not. Edmonton requires at least three upgrades, unless fewer get the home to net zero or the property used CEIP before.</p></div>
 <div class="faq-item"><h3>Will Edmonton CEIP pay for a new gas furnace?</h3><p>Only if it is combined with a heat pump. A high-efficiency gas furnace on its own is not eligible in Edmonton.</p></div>
 <div class="faq-item"><h3>Can I combine CEIP with other rebates?</h3><p>Yes. The City encourages you to use any municipal, provincial, federal or utility incentive alongside CEIP.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Because you need three upgrades, plan the whole project at once. Read our <a href='/ca/ab/edmonton/insulation/'>Edmonton insulation page</a> for the second piece of most bundles, and see <a href='/programs/alberta-energy-rebates/'>every Alberta program we track</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://www.edmonton.ca/city_government/environmental_stewardship/clean-energy-improvement-program" target="_blank" rel="noopener">City of Edmonton: Clean Energy Improvement Program</a>, <a href="https://ceip.abmunis.ca/residential/residential-program-locations/" target="_blank" rel="noopener">Alberta Municipalities: CEIP program locations</a>, <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" target="_blank" rel="noopener">Natural Resources Canada: Canada Greener Homes Initiative</a>, <a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810023301" target="_blank" rel="noopener">Statistics Canada, 2021 Census table 98-10-0233-01</a>. <a href="/ca/ab/edmonton/">All Edmonton rebates &rarr;</a> <a href="/programs/alberta-energy-rebates/">Every Alberta rebate and financing program &rarr;</a></p>
 </div></article>
 <!-- BRANDS-COMPARE-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Choosing a brand?</b> Compare <a href="/blog/heat-pump-brands-comparison-mitsubishi-daikin-bosch/">Bosch vs Mitsubishi vs Daikin cold-climate heat pumps</a>: winter specs, warranties and rebates.</p></section><!-- BRANDS-COMPARE-LINK-END -->
 <!-- STATE-CA-AB-EV-CHARGER-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/ca/ab/ev-charger/">Alberta home EV charger rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-CA-AB-EV-CHARGER-LINK-END -->
 <!-- RANKINGS-LINK-START -->
-<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Edmonton</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ab/edmonton/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Edmonton &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">12 local companies ranked by 13,556 Google reviews. Top picks: Trust Home Comfort, Hermes Plumbing &amp; Heating Service Ltd, K &amp; R Plumbing and Heating.</span></a></div></section>
+<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;" id="compare-top-rated-installers-in-edmonton">Compare top-rated installers in Edmonton</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ab/edmonton/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Edmonton &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">12 local companies ranked by 13,556 Google reviews. Top picks: Trust Home Comfort, Hermes Plumbing &amp; Heating Service Ltd, K &amp; R Plumbing and Heating.</span></a></div></section>
 <!-- RANKINGS-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-an-edmonton-home-can-use-for-a-heat-pump">What an Edmonton home can use for a heat pump</a></li><li><a href="#what-edmonton-will-and-won-t-finance">What Edmonton will and won&#x27;t finance</a></li><li><a href="#edmonton-homes-by-the-numbers">Edmonton homes, by the numbers</a></li><li><a href="#heat-pumps-in-an-edmonton-winter">Heat pumps in an Edmonton winter</a></li><li><a href="#how-ceip-payments-work-in-edmonton">How CEIP payments work in Edmonton</a></li><li><a href="#top-rated-installers-in-edmonton">Top-rated installers in Edmonton</a></li><li><a href="#how-to-finance-a-heat-pump-through-edmonton-ceip">How to finance a heat pump through Edmonton CEIP</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li><li><a href="#compare-top-rated-installers-in-edmonton">Compare top-rated installers in Edmonton</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=edmonton&province=ab">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Edmonton where relevant -->
@@ -733,6 +799,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

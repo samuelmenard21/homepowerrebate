@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ny/">New York</a></li><li><a href="/us/ny/national-grid/">National Grid</a></li><li><a href="/us/ny/national-grid/buffalo/">Buffalo</a></li><li aria-current="page">Insulation</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $12,000 for income-eligible homes</div><h1>Insulation Rebates in Buffalo</h1><p>Buffalo has some of the oldest homes in New York, and most of them heat with gas. National Grid has closed its gas rebate program, so the help for insulation now comes from NYSERDA, mostly for lower- and moderate-income families. There is also a new reason to insulate first: it can unlock a much bigger heat pump rebate.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -488,16 +551,16 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/ny/national-grid/buffalo/">Heat Pump Rebates in Buffalo</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What insulation help exists in Buffalo</h2>
+<h2 id="what-insulation-help-exists-in-buffalo">What insulation help exists in Buffalo</h2>
 <p>We re-read National Grid's upstate program pages and NYSERDA's EmPower+ and Comfort Home pages on October 3, 2026. Erie County is not on NYSERDA's downstate list, so Buffalo gets the upstate EmPower+ caps.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">EmPower+ low income</h4><div class="amount">Free, up to $12,000</div><p style="font-size:14px;margin:8px 0 0;">No-cost insulation, air sealing and safety work for income-eligible owners and renters of 1 to 4 family homes.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>EmPower+ moderate income</h4><div class="amount">50% up to $6,000</div><p style="font-size:14px;margin:8px 0 0;">Half the cost of approved work. Federal HEAR money can add up to $1,600 for air sealing, insulation and ventilation.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>NYSERDA Comfort Home</h4><div class="amount">$2,500 to $3,000</div><p style="font-size:14px;margin:8px 0 0;">Good package $2,500, Better package $3,000, windows add-on $2,000. Any income, through a Comfort Home contractor listed for your county.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>National Grid health and safety</h4><div class="amount">No cost</div><p style="font-size:14px;margin:8px 0 0;">Safety repairs for EmPower+ eligible National Grid customers, after a free Health and Safety Assessment.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>National Grid gas rebates (HEHE)</h4><div class="amount">Closed</div><p style="font-size:14px;margin:8px 0 0;">No longer accepting applications, and in-store rebates have ended.</p></div>
 </div>
 <div class='highlight-box'><h4>Insulate first, then a heat pump</h4><p>Since September 1, 2026, NYS Clean Heat pays a Weatherized Tier to homes that took part in an approved weatherization program, such as Comfort Home or National Grid Total Home Comfort. For a National Grid single-family home that replaces and removes its old system, the rebate goes from $7,000 to $12,000. In a Disadvantaged Community it goes from $9,000 to $14,000.</p></div>
-<h2>What Buffalo homes look like</h2><p>The US Census Bureau's American Community Survey (2020 to 2024) counts about 136,900 homes in Buffalo. 90% were built before 1980, and 61% in 1939 or earlier. That is a very old housing stock. 36% of homes are single detached houses, and 43% are in buildings of 2 to 4 units. 43% of households own their home.</p><p>With homes this old, it pays to find out what is in your walls and attic. Attic and rim joist sealing is usually the cheapest first step, and it is exactly what Comfort Home's Good package covers.</p><h2>Gas heat and what changes</h2><p>The same Census survey shows 86% of Buffalo homes heat with piped gas and 10% with electricity. With National Grid's gas rebates closed, gas-heated homes that do not qualify on income have one main route: Comfort Home. The upside is that every bit of air sealing cuts your gas bill right away, and later makes a heat pump smaller and cheaper.</p><h2>Two-family homes and renters</h2><p>EmPower+ and Comfort Home both cover 1 to 4 family homes, so a two-family house qualifies. If you own one and live in one unit, a single project can treat the whole building. If you rent, EmPower+ is open to income-eligible tenants with the landlord's okay. National Grid's health and safety program also needs landlord approval for renters.</p><h2>What we would do first</h2><p>Check EmPower+ income limits before anything else. A low-income household can get up to $12,000 of work at no cost, which beats any other offer. If you are over the limit, book a free Comfort Home consultation, and ask the contractor whether your attic, rim joists and walls can all be done as one Better package. Keep every receipt and the program paperwork: it is your proof for the higher heat pump rebate later. Our <a href='/us/ny/national-grid/buffalo/heat-pump/'>Buffalo heat pump guide</a> has the Clean Heat details.</p>
+<h2 id="what-buffalo-homes-look-like">What Buffalo homes look like</h2><p>The US Census Bureau's American Community Survey (2020 to 2024) counts about 136,900 homes in Buffalo. 90% were built before 1980, and 61% in 1939 or earlier. That is a very old housing stock. 36% of homes are single detached houses, and 43% are in buildings of 2 to 4 units. 43% of households own their home.</p><p>With homes this old, it pays to find out what is in your walls and attic. Attic and rim joist sealing is usually the cheapest first step, and it is exactly what Comfort Home's Good package covers.</p><h2 id="gas-heat-and-what-changes">Gas heat and what changes</h2><p>The same Census survey shows 86% of Buffalo homes heat with piped gas and 10% with electricity. With National Grid's gas rebates closed, gas-heated homes that do not qualify on income have one main route: Comfort Home. The upside is that every bit of air sealing cuts your gas bill right away, and later makes a heat pump smaller and cheaper.</p><h2 id="two-family-homes-and-renters">Two-family homes and renters</h2><p>EmPower+ and Comfort Home both cover 1 to 4 family homes, so a two-family house qualifies. If you own one and live in one unit, a single project can treat the whole building. If you rent, EmPower+ is open to income-eligible tenants with the landlord's okay. National Grid's health and safety program also needs landlord approval for renters.</p><h2 id="what-we-would-do-first">What we would do first</h2><p>Check EmPower+ income limits before anything else. A low-income household can get up to $12,000 of work at no cost, which beats any other offer. If you are over the limit, book a free Comfort Home consultation, and ask the contractor whether your attic, rim joists and walls can all be done as one Better package. Keep every receipt and the program paperwork: it is your proof for the higher heat pump rebate later. Our <a href='/us/ny/national-grid/buffalo/heat-pump/'>Buffalo heat pump guide</a> has the Clean Heat details.</p>
 
 
-<h2>How to get insulation help in Buffalo</h2>
+<h2 id="how-to-get-insulation-help-in-buffalo">How to get insulation help in Buffalo</h2>
 <ol>
 <li>Check EmPower+ income limits for Erie County on NYSERDA's site.</li>
 <li>If you qualify, apply through the MyEnergy portal for a free home energy assessment.</li>
@@ -506,18 +569,21 @@ h1, h2 { text-wrap: balance; }
 <li>Keep your completion paperwork for the Clean Heat Weatherized Tier.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ny/" style="color:var(--teal,#0d4f5c); font-weight:600;">New York rebate calculator</a>, or <a href="/get-quotes/?state=ny&amp;city=buffalo" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Buffalo</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Does National Grid still give insulation rebates in Buffalo?</h3><p>Not through its gas rebate program. National Grid says its Gas Prescriptive Rebate (HEHE) program is no longer taking applications. Income-eligible customers can get no-cost safety work through its Weatherization Health and Safety Program, after EmPower+.</p></div>
 <div class="faq-item"><h3>What does Comfort Home pay?</h3><p>$2,500 for the Good package (seal and insulate the attic and rim joist), $3,000 for the Better package (adds walls and floors), and $2,000 more for ENERGY STAR windows after sealing and insulation.</p></div>
 <div class="faq-item"><h3>Is Buffalo upstate or downstate for EmPower+?</h3><p>Upstate. Erie County is not on NYSERDA's downstate list, so the caps are $12,000 for low income and $6,000 for moderate income.</p></div>
 <div class="faq-item"><h3>Does insulating raise my heat pump rebate?</h3><p>Yes, if you go through an approved program. For a National Grid single-family home with old-system removal, the Clean Heat rebate rises from $7,000 to $12,000.</p></div>
 <div class="faq-item"><h3>Is there a federal tax credit for insulation in 2026?</h3><p>No. The IRS says the 25C credit does not apply to work placed in service after December 31, 2025.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Start with the EmPower+ income check. Then see all your options on the <a href='/us/ny/national-grid/buffalo/'>Buffalo rebate hub</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program" target="_blank" rel="noopener">NYSERDA: EmPower+</a>, <a href="https://www.nyserda.ny.gov/All-Programs/Comfort-Home-Program" target="_blank" rel="noopener">NYSERDA: Comfort Home</a>, <a href="https://www.nationalgridus.com/Upstate-NY-Home/Energy-Saving-Programs/Gas-Heating-Water-Heating" target="_blank" rel="noopener">National Grid: Gas heating rebates</a>, <a href="https://www.nationalgridus.com/Upstate-NY-Home/Energy-Saving-Programs/Weatherization-Program" target="_blank" rel="noopener">National Grid: Weatherization Health and Safety</a>, <a href="https://visionelements.customerapplication.com/Framework/Ny_statewide/NYS-Clean-Heat-Program-Manual.Pdf" target="_blank" rel="noopener">NYS Clean Heat Program Manual</a>. <a href="/us/ny/national-grid/buffalo/">All Buffalo rebates &rarr;</a> <a href="/programs/national-grid-rebates/">Every National Grid rebate &rarr;</a></p>
 </div></article>
 <!-- INSULATION-HUB-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Insulation rebates in every region:</b> compare <a href="/insulation-rebates/">insulation rebates by province and state</a>, with a BC attic calculator.</p></section><!-- INSULATION-HUB-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-insulation-help-exists-in-buffalo">What insulation help exists in Buffalo</a></li><li><a href="#what-buffalo-homes-look-like">What Buffalo homes look like</a></li><li><a href="#gas-heat-and-what-changes">Gas heat and what changes</a></li><li><a href="#two-family-homes-and-renters">Two-family homes and renters</a></li><li><a href="#what-we-would-do-first">What we would do first</a></li><li><a href="#how-to-get-insulation-help-in-buffalo">How to get insulation help in Buffalo</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=buffalo&province=ny">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Buffalo where relevant -->
@@ -719,6 +785,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

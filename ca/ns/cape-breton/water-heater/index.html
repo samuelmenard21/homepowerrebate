@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/ns/">Nova Scotia</a></li><li><a href="/ca/ns/cape-breton/">Cape Breton</a></li><li aria-current="page">Water Heater</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$800 off</div><h1>Heat Pump Water Heater Rebates in Cape Breton</h1><p>Cape Breton homes get the same $800 heat pump water heater rebate as the rest of Nova Scotia. What is different is the housing: most Cape Breton households live in detached houses, where there is more often room for one than in an apartment. Here is how to claim it and when it pays.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -489,22 +552,22 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/ca/ns/cape-breton/heat-pump/">Heat Pump Rebates in Cape Breton</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What heat pump water heater rebates pay in Cape Breton</h2>
+<h2 id="what-heat-pump-water-heater-rebates-pay-in-cape-">What heat pump water heater rebates pay in Cape Breton</h2>
 <p>We re-read Efficiency Nova Scotia's program pages on October 3, 2026, and found no extra Cape Breton Regional Municipality top-up. You can take the provincial rebate one of two ways, but not both.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Instant rebate</h4><div class="amount">$800</div><p style="font-size:14px;margin:8px 0 0;">Off the price at participating retailers. No assessment needed.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Through a Home Energy Assessment</h4><div class="amount">$800</div><p style="font-size:14px;margin:8px 0 0;">If you did not take the instant rebate. Counts toward the $5,000 assessment total.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>HomeWarming</h4><div class="amount">Free upgrades</div><p style="font-size:14px;margin:8px 0 0;">For lower-income homeowners. Ask what it covers for your home.</p></div>
 </div>
 <div class='highlight-box'><h4>If you are buying in Sydney</h4><p>Check that the store is a participating retailer before you buy, so the $800 comes off at the till. If the model you want isn't sold locally, the assessment route still pays the $800 after installation, as long as you book the assessment before the work.</p></div>
-<h2>Why it suits Cape Breton homes</h2><p>A heat pump water heater pulls heat from the air in the room, so it needs open space around it, usually in a basement or utility room. Statistics Canada's 2021 Census counted 31,100 single-detached households in Cape Breton Regional Municipality, about 74% of all households. Only about 4,665 households, 11%, live in apartment buildings. Compare that with Halifax, where 36% of households live in apartments. In Cape Breton, most homes have the kind of space these units need.</p><p>Cape Breton's homes are also older. About 68% of households live in homes built before 1981. If your electric tank is near the end of its life, the timing is right: you are buying a tank either way, and the rebate narrows the gap to a heat pump model.</p><h2>Which models qualify</h2><p>The unit must be ENERGY STAR certified. Through the assessment, Efficiency Nova Scotia's guide also asks for a Uniform Energy Factor (UEF) of at least 2.00 for tanks under 56 gallons and at least 2.20 for 56 gallons and up. You'll find the UEF on the spec sheet and the ENERGY STAR listing.</p><h2>Savings at Nova Scotia Power rates</h2><p>Cape Breton is on Nova Scotia Power, at 19.128 cents per kWh plus a $20.08 monthly base charge. A heat pump water heater uses much less power than a standard electric element to heat the same water. Our <a href='/heat-pump-water-heater/nova-scotia/'>Nova Scotia savings calculator</a> uses the current rate to work out your own number. A cold basement makes the unit work a bit harder in winter, and most models switch to a backup element when they need to.</p><p>If your water is heated with oil, the savings case is different: switching removes a fuel bill. Ask the installer whether your electrical panel has room for a new circuit.</p>
+<h2 id="why-it-suits-cape-breton-homes">Why it suits Cape Breton homes</h2><p>A heat pump water heater pulls heat from the air in the room, so it needs open space around it, usually in a basement or utility room. Statistics Canada's 2021 Census counted 31,100 single-detached households in Cape Breton Regional Municipality, about 74% of all households. Only about 4,665 households, 11%, live in apartment buildings. Compare that with Halifax, where 36% of households live in apartments. In Cape Breton, most homes have the kind of space these units need.</p><p>Cape Breton's homes are also older. About 68% of households live in homes built before 1981. If your electric tank is near the end of its life, the timing is right: you are buying a tank either way, and the rebate narrows the gap to a heat pump model.</p><h2 id="which-models-qualify">Which models qualify</h2><p>The unit must be ENERGY STAR certified. Through the assessment, Efficiency Nova Scotia's guide also asks for a Uniform Energy Factor (UEF) of at least 2.00 for tanks under 56 gallons and at least 2.20 for 56 gallons and up. You'll find the UEF on the spec sheet and the ENERGY STAR listing.</p><h2 id="savings-at-nova-scotia-power-rates">Savings at Nova Scotia Power rates</h2><p>Cape Breton is on Nova Scotia Power, at 19.128 cents per kWh plus a $20.08 monthly base charge. A heat pump water heater uses much less power than a standard electric element to heat the same water. Our <a href='/heat-pump-water-heater/nova-scotia/'>Nova Scotia savings calculator</a> uses the current rate to work out your own number. A cold basement makes the unit work a bit harder in winter, and most models switch to a backup element when they need to.</p><p>If your water is heated with oil, the savings case is different: switching removes a fuel bill. Ask the installer whether your electrical panel has room for a new circuit.</p>
 
-<h2>Top-rated installers in Cape Breton</h2><p>Ranked by Google reviews (minimum five). Many Cape Breton heating contractors also install heat pump water heaters. We don't take referral fees.</p>
+<h2 id="top-rated-installers-in-cape-breton">Top-rated installers in Cape Breton</h2><p>Ranked by Google reviews (minimum five). Many Cape Breton heating contractors also install heat pump water heaters. We don't take referral fees.</p>
 <div class="installer-card"><div><div class="name">Happy Home Assistant</div><div class="stars">&#9733; 5.0 (148 Google reviews)</div></div><a class="site-link" href="https://happyhomeassistant.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Greenfoot Energy Solutions</div><div class="stars">&#9733; 5.0 (101 Google reviews)</div></div><a class="site-link" href="https://www.greenfootenergy.ca/locations/nova-scotia/sydney&amp;province=ns" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">BEST Heat Pump Solutions</div><div class="stars">&#9733; 5.0 (49 Google reviews)</div></div><a class="site-link" href="https://www.bestheat.ca/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">J. Wilkie Mechanical Inc</div><div class="stars">&#9733; 4.8 (42 Google reviews)</div></div><a class="site-link" href="https://jwilkie.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Dave the Plumber Plumbing and Heating Ltd.</div><div class="stars">&#9733; 4.7 (152 Google reviews)</div></div><a class="site-link" href="http://davetheplumber.ca/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/ns/cape-breton/heat-pump/">See all Cape Breton installers &rarr;</a></p>
-<h2>How to get the $800 in Cape Breton</h2>
+<h2 id="how-to-get-the-800-in-cape-breton">How to get the $800 in Cape Breton</h2>
 <ol>
 <li>Choose an ENERGY STAR certified model that meets the efficiency floor for its size.</li>
 <li>Buy from a participating retailer and confirm the $800 comes off at checkout.</li>
@@ -513,19 +576,22 @@ h1, h2 { text-wrap: balance; }
 <li>Keep the receipt and model number.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ns/" style="color:var(--teal,#0d4f5c); font-weight:600;">Nova Scotia rebate calculator</a>, or <a href="/get-quotes/?province=ns&amp;city=cape-breton" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Cape Breton</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Is there a heat pump water heater rebate in Cape Breton?</h3><p>Yes. Efficiency Nova Scotia pays $800, either off the price at participating retailers or through a Home Energy Assessment. We found no extra Cape Breton Regional Municipality top-up.</p></div>
 <div class="faq-item"><h3>Is the rebate different in Cape Breton than in Halifax?</h3><p>No. It is a provincial rebate, so the $800 is the same everywhere in Nova Scotia.</p></div>
 <div class="faq-item"><h3>Do I need an energy assessment for the water heater rebate?</h3><p>No. The instant rebate at participating stores needs no assessment.</p></div>
 <div class="faq-item"><h3>Will a heat pump water heater work in a cold Cape Breton basement?</h3><p>Yes, but it works harder when the room is cold, and most models use a backup element when needed. Check the model's operating range before buying.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Read the <a href='/blog/water-heater-buying-guide-ns/'>Nova Scotia heat pump water heater buying guide</a>, or see <a href='/ca/ns/cape-breton/heat-pump/'>heat pump rebates in Cape Breton</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 5, 2026: <a href="https://www.efficiencyns.ca/programs-rebates/instant-rebates" target="_blank" rel="noopener">Efficiency Nova Scotia: Instant Rebates</a>, <a href="https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf" target="_blank" rel="noopener">Home Energy Assessment Rebate Guide (Aug 2026)</a>, <a href="https://www.nspower.ca/your-home/residential-rates/standard-residential-service-rate" target="_blank" rel="noopener">Nova Scotia Power residential rate</a>, <a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810023301" target="_blank" rel="noopener">Statistics Canada, 2021 Census table 98-10-0233-01</a>. <a href="/ca/ns/cape-breton/">All Cape Breton rebates &rarr;</a> <a href="/programs/efficiency-nova-scotia/">Every Efficiency Nova Scotia rebate &rarr;</a></p>
 </div></article>
 <!-- NS-GUIDE-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Replacing an electric tank?</b> Read the <a href="/blog/water-heater-buying-guide-ns/">Nova Scotia heat pump water heater cost, sizing and rebate guide</a>, or <a href="/heat-pump-water-heater/nova-scotia/">work out your savings at NS Power rates</a>.</p></section><!-- NS-GUIDE-LINK-END -->
 <!-- HARP-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Need help with this winter's heating bill?</b> The <a href="/programs/nova-scotia-heating-assistance-rebate-harp/">Nova Scotia Heating Assistance Rebate (HARP) pays $400 for 2026-27: who qualifies, how to check your status and when it pays</a>.</p></section><!-- HARP-LINK-END -->
 <!-- STATE-CA-NS-HRV-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/ca/ns/hrv/">Nova Scotia HRV and ERV rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-CA-NS-HRV-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-heat-pump-water-heater-rebates-pay-in-cape-">What heat pump water heater rebates pay in Cape Breton</a></li><li><a href="#why-it-suits-cape-breton-homes">Why it suits Cape Breton homes</a></li><li><a href="#which-models-qualify">Which models qualify</a></li><li><a href="#savings-at-nova-scotia-power-rates">Savings at Nova Scotia Power rates</a></li><li><a href="#top-rated-installers-in-cape-breton">Top-rated installers in Cape Breton</a></li><li><a href="#how-to-get-the-800-in-cape-breton">How to get the $800 in Cape Breton</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=cape-breton&province=ns">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Cape Breton where relevant -->
@@ -727,6 +793,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

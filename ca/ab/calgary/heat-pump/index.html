@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/ab/">Alberta</a></li><li><a href="/ca/ab/calgary/">Calgary</a></li><li aria-current="page">Heat Pump</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Financing up to $50,000</div><h1>Heat Pump Rebates in Calgary</h1><p>Here is the honest answer for Calgary in 2026: there is no cash rebate for a heat pump right now. The federal grants have ended, and Alberta has no provincial rebate. What Calgary does have is low-hassle financing through the Clean Energy Improvement Program, and free upgrades for some lower-income homes. Here is how both work, and when the math makes sense.</p></div></section><!-- FED-HP-START --><p style="max-width:880px;margin:18px auto;padding:14px 20px;background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;font-size:15px;line-height:1.6;"><b>Calgary: Federal heat pump rebate coming in early 2027: up to $10,000 for households below the median income and $2,000 for other eligible homeowners. </b>Alberta has no province-wide heat pump rebate we could verify, so the federal rebate may be the main one. <a href="/programs/national-heat-pump-rebate/">Read what is confirmed</a> or <a href="/blog/should-you-wait-federal-heat-pump-rebate/">decide whether to wait</a>.</p><!-- FED-HP-END -->
 
@@ -492,22 +555,22 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/ca/ab/calgary/">HRV & Ventilation Rebates in Calgary</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What a Calgary home can use for a heat pump</h2>
+<h2 id="what-a-calgary-home-can-use-for-a-heat-pump">What a Calgary home can use for a heat pump</h2>
 <p>We re-read the City of Calgary, Home Upgrades Program and Natural Resources Canada pages on October 3, 2026. Each card links to its source at the bottom of the page.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-limited">Paused</span><h4 aria-level="3">Calgary Clean Energy Improvement Program (CEIP)</h4><div class="amount">Up to $50,000 financing</div><p style="font-size:14px;margin:8px 0 0;">A loan repaid on your property tax bill over up to 20 years. Intake is closed until winter 2026/2027. The City estimates the rate at 6.00% to 6.10%.</p></div><div class="rebate-card"><span class="program-status status-limited">On hold</span><h4>Calgary Home Upgrades Program</h4><div class="amount">Free upgrades</div><p style="font-size:14px;margin:8px 0 0;">For income-qualified homeowners and renters in detached homes, duplexes and townhomes built before 1998. New applications join a waiting list.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Oil to Heat Pump Affordability (federal)</h4><div class="amount">Closed</div><p style="font-size:14px;margin:8px 0 0;">July 31, 2026 was the last day for Alberta residents to apply.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Canada Greener Homes Grant and Loan</h4><div class="amount">Closed</div><p style="font-size:14px;margin:8px 0 0;">The grant has ended: its final document deadline was December 31, 2025. The loan is approving no new applications.</p></div>
 </div>
 <div class='highlight-box'><h4>CEIP is a loan, not a rebate</h4><p>The City says it plainly: you pay back every dollar you borrow. What makes CEIP different from a bank loan is how you repay it. The payment sits on your property tax bill, the rate is fixed when you sign, and you can pay it off any time without a fee. If you sell, the balance can stay with the house for the next owner, as long as you disclose it.</p></div>
-<h2>Calgary homes, by the numbers</h2><p>Statistics Canada's 2021 Census counted 502,305 households in Calgary. About 55% live in single-detached houses, and 69% own their home. Calgary is a young city: about 38% of households live in homes built in 2001 or later. Still, 133,025 households live in homes built between 1961 and 1980, and 77,125 owner households live in single-detached houses built before 1981.</p><p>Those older owned houses are where a heat pump project usually starts. They are also the homes the Home Upgrades Program is aimed at, since it covers homes built before 1998.</p><h2>Who can use CEIP in Calgary</h2><p>CEIP is for owners of low-rise homes: single or semi-detached houses, row houses and town homes, plus some units in small multi-unit buildings under three storeys. New builds don't qualify. Every owner on the land title has to sign.</p><p>There are money rules too. You can't be behind on property tax now or in the last five years, your home can't be in foreclosure, and your total mortgage and other property debt can't be more than your home's assessed value. You also can't be in the City's Property Tax Assistance Program or the province's Seniors Property Tax Deferral Program.</p><p>One rule trips people up: <strong>do not start work before you are approved.</strong> Projects started before you sign a Clean Energy Improvement Agreement can't be financed.</p><h2>Calgary winters and heat pumps</h2><p>Calgary's average January low over the last ten years was about -11.9°C, and the coldest reading was -39.4°C. Cold-climate heat pumps are built to keep heating in deep cold, but every model has a lowest working temperature. Ask your installer what that number is for the unit they quote, and what backup heat your home will use on the coldest nights. Many Calgary installs keep a furnace as backup.</p><p>If you are changing electrical load in a row house or town home, the City says CEIP needs a calculation from an electrician, designer or engineer showing the shared service can handle it.</p><h2>Is a 6% loan worth it for a heat pump?</h2><p>That depends on your home. A loan only makes sense when the upgrade solves a real problem: an old furnace near the end of its life, no air conditioning in a hot summer, or rooms that never get warm. We would not borrow at 6% just to chase a lower gas bill without seeing the numbers first.</p><p>CEIP starts with an EnerGuide home evaluation, which is a good thing. It shows where your home loses the most heat. In many older Calgary houses, sealing and insulating first means you can buy a smaller, cheaper heat pump later.</p>
+<h2 id="calgary-homes-by-the-numbers">Calgary homes, by the numbers</h2><p>Statistics Canada's 2021 Census counted 502,305 households in Calgary. About 55% live in single-detached houses, and 69% own their home. Calgary is a young city: about 38% of households live in homes built in 2001 or later. Still, 133,025 households live in homes built between 1961 and 1980, and 77,125 owner households live in single-detached houses built before 1981.</p><p>Those older owned houses are where a heat pump project usually starts. They are also the homes the Home Upgrades Program is aimed at, since it covers homes built before 1998.</p><h2 id="who-can-use-ceip-in-calgary">Who can use CEIP in Calgary</h2><p>CEIP is for owners of low-rise homes: single or semi-detached houses, row houses and town homes, plus some units in small multi-unit buildings under three storeys. New builds don't qualify. Every owner on the land title has to sign.</p><p>There are money rules too. You can't be behind on property tax now or in the last five years, your home can't be in foreclosure, and your total mortgage and other property debt can't be more than your home's assessed value. You also can't be in the City's Property Tax Assistance Program or the province's Seniors Property Tax Deferral Program.</p><p>One rule trips people up: <strong>do not start work before you are approved.</strong> Projects started before you sign a Clean Energy Improvement Agreement can't be financed.</p><h2 id="calgary-winters-and-heat-pumps">Calgary winters and heat pumps</h2><p>Calgary's average January low over the last ten years was about -11.9°C, and the coldest reading was -39.4°C. Cold-climate heat pumps are built to keep heating in deep cold, but every model has a lowest working temperature. Ask your installer what that number is for the unit they quote, and what backup heat your home will use on the coldest nights. Many Calgary installs keep a furnace as backup.</p><p>If you are changing electrical load in a row house or town home, the City says CEIP needs a calculation from an electrician, designer or engineer showing the shared service can handle it.</p><h2 id="is-a-6-loan-worth-it-for-a-heat-pump">Is a 6% loan worth it for a heat pump?</h2><p>That depends on your home. A loan only makes sense when the upgrade solves a real problem: an old furnace near the end of its life, no air conditioning in a hot summer, or rooms that never get warm. We would not borrow at 6% just to chase a lower gas bill without seeing the numbers first.</p><p>CEIP starts with an EnerGuide home evaluation, which is a good thing. It shows where your home loses the most heat. In many older Calgary houses, sealing and insulating first means you can buy a smaller, cheaper heat pump later.</p>
 
-<h2>Top-rated installers in Calgary</h2><p>Ranked by Google reviews (minimum five). We don't take referral fees or paid placements. If you plan to use CEIP, pick a contractor from the CEIP Qualified Contractor directory.</p>
+<h2 id="top-rated-installers-in-calgary">Top-rated installers in Calgary</h2><p>Ranked by Google reviews (minimum five). We don't take referral fees or paid placements. If you plan to use CEIP, pick a contractor from the CEIP Qualified Contractor directory.</p>
 <div class="installer-card"><div><div class="name">Calgary Air Heating and Cooling Ltd</div><div class="stars">&#9733; 5.0 (979 Google reviews)</div></div><a class="site-link" href="https://calgaryair.ca/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">AJ Furnace and Air Conditioning</div><div class="stars">&#9733; 5.0 (668 Google reviews)</div></div><a class="site-link" href="https://ajfurnace.ca/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Go Furnace Ltd.</div><div class="stars">&#9733; 5.0 (422 Google reviews)</div></div><a class="site-link" href="https://gofurnace.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Alpine Furnace &amp; AC</div><div class="stars">&#9733; 5.0 (315 Google reviews)</div></div><a class="site-link" href="http://www.alpinefurnaceac.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Airology Heating and Air Conditioning</div><div class="stars">&#9733; 5.0 (158 Google reviews)</div></div><a class="site-link" href="http://airology.ca/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/ab/calgary/heat-pump/">See all Calgary installers &rarr;</a></p>
-<h2>How to pay for a heat pump in Calgary</h2>
+<h2 id="how-to-pay-for-a-heat-pump-in-calgary">How to pay for a heat pump in Calgary</h2>
 <ol>
 <li>If your household income is under the Home Upgrades limit (for example $98,269 before tax for four people), apply to the Home Upgrades Program first.</li>
 <li>Otherwise, sign up for the City's CEIP email updates so you hear when intake reopens in winter 2026/2027.</li>
@@ -516,22 +579,25 @@ h1, h2 { text-wrap: balance; }
 <li>Sign your agreements before any work starts. Then install, submit completion forms, and book the post-project evaluation.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ab/" style="color:var(--teal,#0d4f5c); font-weight:600;">Alberta rebate calculator</a>, or <a href="/get-quotes/?province=ab&amp;city=calgary" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Calgary</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Is there a heat pump rebate in Calgary in 2026?</h3><p>Not a cash rebate. Alberta has no provincial heat pump rebate, the federal Greener Homes Grant is closed, and the federal Oil to Heat Pump program closed for Alberta on July 31, 2026. Calgary's CEIP offers financing instead, and the Home Upgrades Program offers free upgrades to income-qualified homes.</p></div>
 <div class="faq-item"><h3>When does Calgary CEIP reopen?</h3><p>The City of Calgary says residential CEIP is closed until winter 2026/2027. You can sign up for email updates on the City's CEIP page.</p></div>
 <div class="faq-item"><h3>What interest rate does Calgary CEIP charge?</h3><p>The City estimates 6.00% to 6.10%. The rate is fixed when you sign your agreement, so it could end up higher or lower than that range.</p></div>
 <div class="faq-item"><h3>Is there a furnace rebate in Alberta?</h3><p>We found no provincial furnace rebate. In Calgary, the Home Upgrades Program lists efficient furnaces among the free upgrades for income-qualified households. CEIP can also finance heating upgrades.</p></div>
 <div class="faq-item"><h3>Can renters in Calgary get help?</h3><p>Yes, in one program. The Home Upgrades Program is open to renters who meet the income limit and have their name on the utility bill. CEIP is for property owners only.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Start by checking the Home Upgrades income limits. If you are over them, read our <a href='/ca/ab/calgary/insulation/'>Calgary insulation page</a>, because sealing and insulating first often makes the heat pump smaller. You can also see <a href='/programs/alberta-energy-rebates/'>every Alberta program we track</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://www.calgary.ca/environment/programs/clean-energy-improvement-program.html" target="_blank" rel="noopener">City of Calgary: Residential Clean Energy Improvement Program</a>, <a href="https://www.homeupgradesprogram.ca/calgary" target="_blank" rel="noopener">Calgary Home Upgrades Program</a>, <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" target="_blank" rel="noopener">Natural Resources Canada: Canada Greener Homes Initiative</a>, <a href="https://ceip.abmunis.ca/residential/residential-program-locations/" target="_blank" rel="noopener">Alberta Municipalities: CEIP program locations</a>, <a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810023301" target="_blank" rel="noopener">Statistics Canada, 2021 Census table 98-10-0233-01</a>. <a href="/ca/ab/calgary/">All Calgary rebates &rarr;</a> <a href="/programs/alberta-energy-rebates/">Every Alberta rebate and financing program &rarr;</a></p>
 </div></article>
 <!-- BRANDS-COMPARE-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Choosing a brand?</b> Compare <a href="/blog/heat-pump-brands-comparison-mitsubishi-daikin-bosch/">Bosch vs Mitsubishi vs Daikin cold-climate heat pumps</a>: winter specs, warranties and rebates.</p></section><!-- BRANDS-COMPARE-LINK-END -->
 <!-- STATE-CA-AB-EV-CHARGER-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/ca/ab/ev-charger/">Alberta home EV charger rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-CA-AB-EV-CHARGER-LINK-END -->
 <!-- RANKINGS-LINK-START -->
-<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Calgary</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ab/calgary/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Calgary &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">13 local companies ranked by 10,839 Google reviews. Top picks: Calgary Air Heating and Cooling Ltd, AJ Furnace and Air Conditioning, Go Furnace Ltd..</span></a></div></section>
+<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;" id="compare-top-rated-installers-in-calgary">Compare top-rated installers in Calgary</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ab/calgary/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Calgary &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">13 local companies ranked by 10,839 Google reviews. Top picks: Calgary Air Heating and Cooling Ltd, AJ Furnace and Air Conditioning, Go Furnace Ltd..</span></a></div></section>
 <!-- RANKINGS-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-a-calgary-home-can-use-for-a-heat-pump">What a Calgary home can use for a heat pump</a></li><li><a href="#calgary-homes-by-the-numbers">Calgary homes, by the numbers</a></li><li><a href="#who-can-use-ceip-in-calgary">Who can use CEIP in Calgary</a></li><li><a href="#calgary-winters-and-heat-pumps">Calgary winters and heat pumps</a></li><li><a href="#is-a-6-loan-worth-it-for-a-heat-pump">Is a 6% loan worth it for a heat pump?</a></li><li><a href="#top-rated-installers-in-calgary">Top-rated installers in Calgary</a></li><li><a href="#how-to-pay-for-a-heat-pump-in-calgary">How to pay for a heat pump in Calgary</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li><li><a href="#compare-top-rated-installers-in-calgary">Compare top-rated installers in Calgary</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=calgary&province=ab">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Calgary where relevant -->
@@ -733,6 +799,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

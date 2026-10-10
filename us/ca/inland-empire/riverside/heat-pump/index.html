@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ca/">California</a></li><li><a href="/us/ca/inland-empire/riverside/">Riverside</a></li><li aria-current="page">Heat Pump</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$750 per ton</div><h1>Heat Pump Rebates in Riverside</h1><p>Riverside has its own city utility, Riverside Public Utilities (RPU), not Southern California Edison, and RPU pays $750 for every ton of electric heat pump rated at least 15.2 SEER. Older pages on this site wrongly said Riverside was in SCE territory and quoted a $3,100 figure. That figure is not on RPU's page.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -490,21 +553,21 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/ca/inland-empire/riverside/insulation/">Insulation Rebates in Riverside</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What Riverside Public Utilities pays</h2>
+<h2 id="what-riverside-public-utilities-pays">What Riverside Public Utilities pays</h2>
 <p>These figures come from the heat pump and air conditioning rebate page of Riverside Public Utilities (RPU), which we read on October 2, 2026. Only residential RPU electric customers qualify, and funding is limited.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Electric heat pump</h4><div class="amount">$750 per ton</div><p style="font-size:14px;margin:8px 0 0;">For an electric heat pump rated 15.2 SEER or greater.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Central air conditioner</h4><div class="amount">$150 to $250 per ton</div><p style="font-size:14px;margin:8px 0 0;">$150 per ton at 15.2 to 15.9 SEER and $250 per ton at 16 SEER or greater. A plain air conditioner earns far less than a heat pump.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>HVAC tune-up</h4><div class="amount">$25</div><p style="font-size:14px;margin:8px 0 0;">Must include a refrigerant level check.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Smart thermostat</h4><div class="amount">$50</div><p style="font-size:14px;margin:8px 0 0;">For a Wi-Fi enabled smart programmable thermostat.</p></div>
 </div>
 <div class='highlight-box'><h4>What that looks like in dollars</h4><p>A 3-ton heat pump earns 3 x $750 = $2,250. A 4-ton unit earns $3,000. The same size as a plain 16 SEER air conditioner would earn 3 x $250 = $750, so choosing a heat pump over a cooling-only unit adds $1,500 for a 3-ton system. RPU's page does not state a per-home cap.</p></div>
-<h2>The paperwork RPU wants</h2><p>The unit must be 15.2 SEER or better, with a matching condenser and evaporator coil, and the inside and outside coils of a split system must match so RPU can verify efficiency. The dated sales receipt must show the make, model number, serial number, tonnage and SEER rating. You apply after installation by mail or email to Riverside Public Utilities, Programs and Services, 3025 Madison Street, or RPURebates@riversideca.gov, within 90 days of the purchase date. Nothing needs approval before the work starts.</p><h2>Why Riverside is different from SCE cities</h2><p>RPU is the city's own utility and sets its own list, so its rebates are separate from those in nearby San Bernardino, Ontario or Moreno Valley, where Southern California Edison supplies the power (see <a href='/us/ca/inland-empire/san-bernardino/'>San Bernardino</a>). Before you plan anything, check that your electric bill names Riverside Public Utilities. RPU also lists a Mobile-Home and Multi-Family Energy Efficiency Program and the SHARE income-qualified program among its assistance options.</p><h2>Permits in Riverside</h2><p>The City's Building and Safety division says some permits can be issued same day over the counter, including simple water heater change-outs, and others need plan review. Its Public Permit Portal lets contractors submit applications and plans online and schedule inspections. A heat pump swap needs a mechanical permit. See the City's <a href='https://riversideca.gov/cedd/building-safety/building-safety-services/permits' target='_blank' rel='noopener'>permits page</a>, and ask your contractor who pulls it.</p><h2>Climate and sizing</h2><p>Riverside's average January low over 2015 to 2024 was 6.8°C (about 44°F), with a coldest recorded day of -2.5°C, and it gets about 5.4 peak sun hours a day. Summers are long and hot, so a heat pump here is mostly about cooling that also heats, and size is driven by the cooling load. Ask your installer for a written load calculation and the AHRI certificate for the exact indoor and outdoor combination.</p><h2>Other money</h2><p>The federal 25C and 25D tax credits ended after December 31, 2025. TECH Clean California and the federal HEEHRA program are fully reserved for single-family homes and take new requests on hold only. Other RPU rebates can sit alongside this one: see <a href='/us/ca/inland-empire/riverside/insulation/'>Riverside insulation and window rebates</a> and <a href='/us/ca/inland-empire/riverside/battery/'>Riverside battery rebates</a>.</p>
-<h2>Installers in Riverside</h2><p>These Riverside heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone. Ask each for the model's SEER, the tonnage and the serial numbers RPU needs.</p>
+<h2 id="the-paperwork-rpu-wants">The paperwork RPU wants</h2><p>The unit must be 15.2 SEER or better, with a matching condenser and evaporator coil, and the inside and outside coils of a split system must match so RPU can verify efficiency. The dated sales receipt must show the make, model number, serial number, tonnage and SEER rating. You apply after installation by mail or email to Riverside Public Utilities, Programs and Services, 3025 Madison Street, or RPURebates@riversideca.gov, within 90 days of the purchase date. Nothing needs approval before the work starts.</p><h2 id="why-riverside-is-different-from-sce-cities">Why Riverside is different from SCE cities</h2><p>RPU is the city's own utility and sets its own list, so its rebates are separate from those in nearby San Bernardino, Ontario or Moreno Valley, where Southern California Edison supplies the power (see <a href='/us/ca/inland-empire/san-bernardino/'>San Bernardino</a>). Before you plan anything, check that your electric bill names Riverside Public Utilities. RPU also lists a Mobile-Home and Multi-Family Energy Efficiency Program and the SHARE income-qualified program among its assistance options.</p><h2 id="permits-in-riverside">Permits in Riverside</h2><p>The City's Building and Safety division says some permits can be issued same day over the counter, including simple water heater change-outs, and others need plan review. Its Public Permit Portal lets contractors submit applications and plans online and schedule inspections. A heat pump swap needs a mechanical permit. See the City's <a href='https://riversideca.gov/cedd/building-safety/building-safety-services/permits' target='_blank' rel='noopener'>permits page</a>, and ask your contractor who pulls it.</p><h2 id="climate-and-sizing">Climate and sizing</h2><p>Riverside's average January low over 2015 to 2024 was 6.8°C (about 44°F), with a coldest recorded day of -2.5°C, and it gets about 5.4 peak sun hours a day. Summers are long and hot, so a heat pump here is mostly about cooling that also heats, and size is driven by the cooling load. Ask your installer for a written load calculation and the AHRI certificate for the exact indoor and outdoor combination.</p><h2 id="other-money">Other money</h2><p>The federal 25C and 25D tax credits ended after December 31, 2025. TECH Clean California and the federal HEEHRA program are fully reserved for single-family homes and take new requests on hold only. Other RPU rebates can sit alongside this one: see <a href='/us/ca/inland-empire/riverside/insulation/'>Riverside insulation and window rebates</a> and <a href='/us/ca/inland-empire/riverside/battery/'>Riverside battery rebates</a>.</p>
+<h2 id="installers-in-riverside">Installers in Riverside</h2><p>These Riverside heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone. Ask each for the model's SEER, the tonnage and the serial numbers RPU needs.</p>
 <div class="installer-card"><div><div class="name">Hush Air Heating &amp; Air Conditioning</div><div class="stars">&#9733; 5.0 (714 reviews)</div></div><a class="site-link" href="https://www.hushair.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Year Round Heating &amp; Air Conditioning</div><div class="stars">&#9733; 5.0 (407 reviews)</div></div><a class="site-link" href="https://yround.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Eco Air Heating &amp; Cooling</div><div class="stars">&#9733; 5.0 (376 reviews)</div></div><a class="site-link" href="http://ecoairheatandcool.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Green Comfort</div><div class="stars">&#9733; 5.0 (264 reviews)</div></div><a class="site-link" href="http://www.thinkgreencomfort.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Total Air Heating &amp; Air Conditioning</div><div class="stars">&#9733; 5.0 (238 reviews)</div></div><a class="site-link" href="https://totalairnow.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/ca/riverside/heat-pump/">See all Riverside installers &rarr;</a></p>
-<h2>How to claim the RPU rebate</h2>
+<h2 id="how-to-claim-the-rpu-rebate">How to claim the RPU rebate</h2>
 <ol>
 <li>Confirm that Riverside Public Utilities is your electric utility.</li>
 <li>Choose an electric heat pump rated at least 15.2 SEER, with a matching condenser and coil.</li>
@@ -514,20 +577,23 @@ h1, h2 { text-wrap: balance; }
 <li>RPU verifies the receipt and pays the rebate.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city=riverside" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Riverside</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much does RPU pay for a heat pump?</h3><p>$750 per ton for an electric heat pump rated 15.2 SEER or greater.</p></div>
 <div class="faq-item"><h3>Is Riverside served by SCE?</h3><p>No. Riverside has its own utility, Riverside Public Utilities. Check your electric bill.</p></div>
 <div class="faq-item"><h3>When do I apply?</h3><p>After installation, within 90 days of the purchase date. Nothing needs approval before the work starts.</p></div>
 <div class="faq-item"><h3>What proof does RPU want?</h3><p>A dated receipt showing make, model, serial number, tonnage and SEER rating, with matching coils on a split system.</p></div>
 <div class="faq-item"><h3>Is there an extra rebate for a tune-up?</h3><p>Yes. $25, and it must include a refrigerant level check.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See RPU's <a href='https://riversideca.gov/utilities/residents/rebates/energy-rebates/heat-pump-and-air-conditioning-rebates' target='_blank' rel='noopener'>heat pump rebate page</a>, or compare all Riverside offers on our <a href='/us/ca/inland-empire/riverside/'>Riverside hub</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://riversideca.gov/utilities/residents/rebates/energy-rebates/heat-pump-and-air-conditioning-rebates" target="_blank" rel="noopener">Riverside Public Utilities heat pump and air conditioning rebates</a>, <a href="https://riversideca.gov/utilities/residents/rebates/energy-rebates" target="_blank" rel="noopener">Riverside Public Utilities rebates and programs</a>, <a href="https://riversideca.gov/cedd/building-safety/building-safety-services/permits" target="_blank" rel="noopener">City of Riverside Building and Safety permits</a>. <a href="/us/ca/inland-empire/riverside/">All Riverside rebates &rarr;</a> <a href="/programs/riverside-public-utilities-rebates/">Every Riverside Public Utilities rebate &rarr;</a></p>
 </div></article>
 <!-- RANKINGS-LINK-START -->
-<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Riverside</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ca/riverside/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Riverside &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">12 local companies ranked by 6,382 Google reviews. Top picks: Hush Air Heating &amp; Air Conditioning, Year Round Heating &amp; Air Conditioning, Eco Air Heating &amp; Cooling.</span></a></div></section>
+<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;" id="compare-top-rated-installers-in-riverside">Compare top-rated installers in Riverside</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ca/riverside/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Riverside &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">12 local companies ranked by 6,382 Google reviews. Top picks: Hush Air Heating &amp; Air Conditioning, Year Round Heating &amp; Air Conditioning, Eco Air Heating &amp; Cooling.</span></a></div></section>
 <!-- RANKINGS-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-riverside-public-utilities-pays">What Riverside Public Utilities pays</a></li><li><a href="#the-paperwork-rpu-wants">The paperwork RPU wants</a></li><li><a href="#why-riverside-is-different-from-sce-cities">Why Riverside is different from SCE cities</a></li><li><a href="#permits-in-riverside">Permits in Riverside</a></li><li><a href="#climate-and-sizing">Climate and sizing</a></li><li><a href="#other-money">Other money</a></li><li><a href="#installers-in-riverside">Installers in Riverside</a></li><li><a href="#how-to-claim-the-rpu-rebate">How to claim the RPU rebate</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li><li><a href="#compare-top-rated-installers-in-riverside">Compare top-rated installers in Riverside</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=riverside&province=ca">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Riverside where relevant -->
@@ -729,6 +795,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

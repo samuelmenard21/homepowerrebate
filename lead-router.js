@@ -1801,6 +1801,20 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
       </div>`
     : '';
 
+  const svcLabel = lead.service === 'solar' ? 'solar' : 'heat pump';
+  const bizName = String(installer.name || '').trim();
+  const greeting = bizName && bizName.length <= 42 ? `Hi ${escapeHtml(bizName)} team` : 'Hi there';
+  // What this homeowner can claim locally, from the same verified city summaries the recap email uses.
+  const cityRecord = cityRebateLookup({ province: lead.province, city: lead.city });
+  const cityAmount = cityRecord && cityRecord.categories && cityRecord.categories[lead.service === 'solar' ? 'solar' : 'heat_pump'];
+  const rebateBlock = cityAmount
+    ? `<div style="background:#eef6f0;border:1px solid #cfe3d6;border-left:4px solid #2d6a4f;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:20px;">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#2d6a4f;margin-bottom:4px;">What they can claim in ${ct}${cityRecord.utility ? ' · ' + escapeHtml(cityRecord.utility) : ''}</div>
+        <div style="font-size:14px;line-height:1.5;color:#08363f;">${escapeHtml(cityAmount)}</div>
+        <div style="font-size:12px;color:#5a6b6e;margin-top:6px;">Published program amounts, not a quote. Rules and income tiers apply. <a href="https://homepowerrebate.com/${/^(BC|ON|AB|NS)$/i.test(lead.province || '') ? 'ca' : 'us'}/${String(lead.province || '').toLowerCase()}/${citySlug(lead.city)}/" style="color:#08363f;">See the ${ct} page</a>.</div>
+      </div>`
+    : '';
+  const outcomeLink = (label, word) => `<a href="mailto:hello@homepowerrebate.com?subject=${encodeURIComponent('Lead ' + lead.lead_id + ': ' + word)}&body=${encodeURIComponent('Optional note:')}" style="color:#08363f;font-weight:600;">${label}</a>`;
   const detailRow = (label, value) => {
     const v = String(value || '').trim();
     if (!v || v.toLowerCase() === 'not specified') return '';
@@ -1813,17 +1827,17 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
     cc: installer.cc || undefined,
     bcc: env.OPS_EMAIL || undefined,
     reply_to: lead.email,
-    subject: `${fn} in ${ct} wants a quote — sent via HomePowerRebate`,
+    subject: `New ${svcLabel} lead in ${ct}: ${fn}`,
     html: `
       <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:580px;margin:0 auto;padding:0;color:#0a2a2e;">
         <div style="background:#08363f;padding:28px 28px 24px;border-radius:14px 14px 0 0;">
-          <div style="font-size:13px;color:#e88a2e;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:10px;">New lead from HomePowerRebate.com</div>
-          <div style="font-size:22px;color:#fff;font-weight:600;line-height:1.3;">Hi ${instName} — a ${ct} homeowner wants your help.</div>
+          <div style="font-size:13px;color:#e88a2e;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:10px;text-decoration:none;">New lead from HomePowerRebate&#8203;.com</div>
+          <div style="font-size:22px;color:#fff;font-weight:600;line-height:1.3;">${greeting} — a ${ct} homeowner wants your help.</div>
         </div>
 
         <div style="background:#faf7f2;padding:28px;border-radius:0 0 14px 14px;border:1px solid #d9d0c1;border-top:none;">
           <p style="font-size:15px;line-height:1.6;color:#1a3d42;margin:0 0 20px;">
-            This is a referral from <strong>HomePowerRebate.com</strong>, a free rebate-matching site — not a lead you paid for or requested directly. ${/\/installers\//.test(lead.page_url || '') ? `${fn} found you on our top-rated ${escapeHtml(lead.service === 'solar' ? 'solar' : 'heat pump')} installers ranking for ${ct}` : `${fn} used our rebate assessment tool, saw what they qualify for,`} and chose <strong>${escapeHtml(installer.name)}</strong> as one of the installers they'd like a quote from. Please reach out to them directly using the contact info below — everything they've told us is included so you don't have to ask twice.
+            This is a referral from <strong style="color:#08363f;">HomePowerRebate&#8203;.com</strong>, a free rebate-matching site — not a lead you paid for or requested directly. ${/\/installers\//.test(lead.page_url || '') ? `${fn} found you on our top-rated ${escapeHtml(lead.service === 'solar' ? 'solar' : 'heat pump')} installers ranking for ${ct}` : `${fn} used our rebate assessment tool, saw what they qualify for,`} and chose <strong>${escapeHtml(installer.name)}</strong> as one of the installers they'd like a quote from. Please reach out to them directly using the contact info below — everything they've told us is included so you don't have to ask twice.
           </p>
 
           <div style="background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:20px;margin-bottom:20px;">
@@ -1846,6 +1860,7 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
             </table>
           </div>
 
+          ${rebateBlock}
           ${notesBlock}
 
           <div style="background:#0a2a2e;color:#faf7f2;padding:20px;border-radius:10px;text-align:center;margin-top:8px;">
@@ -1855,14 +1870,18 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
             <p style="margin:14px 0 0;font-size:12px;opacity:.65;">Prefer email? Just hit reply — it goes straight to ${em}, not to us.</p>
           </div>
 
-          <p style="font-size:13px;color:#6b7d80;text-align:center;margin:22px 0 0;">
+          <p style="font-size:13px;color:#1a3d42;text-align:center;margin:22px 0 0;">
+            Help us keep the rankings honest. How did it go? ${outcomeLink('Booked a visit', 'booked')} · ${outcomeLink('Quoted', 'quoted')} · ${outcomeLink('Could not reach them', 'no answer')} · ${outcomeLink('Not a fit', 'not a fit')}
+          </p>
+          <p style="font-size:13px;color:#6b7d80;text-align:center;margin:14px 0 0;">
             Note: this homeowner may have also requested quotes from a couple of other local installers — that's by design, so they can compare.
           </p>
 
           <div style="border-top:1px solid #d9d0c1;margin-top:24px;padding-top:18px;text-align:center;">
             <p style="margin:0;font-size:13px;color:#6b7d80;">
               Questions about this lead or the partnership? I'm easy to reach.<br>
-              <strong style="color:#08363f;">Sam Menard</strong> · HomePowerRebate.com<br>
+              <strong style="color:#08363f;">Sam Menard</strong> · HomePowerRebate&#8203;.com<br>
+              Listed for free, ranked only by Google reviews. If you'd like, <a href="https://homepowerrebate.com/installers/badge/" style="color:#08363f;">add our top-rated badge</a> to your site.<br>
               <a href="mailto:samuelmenard@gmail.com" style="color:#08363f;">samuelmenard@gmail.com</a>
             </p>
           </div>
@@ -1885,20 +1904,29 @@ async function sendOpsEstimateLead(lead, env) {
     from: 'HomePowerRebate <ops@homepowerrebate.com>',
     to: env.OPS_EMAIL,
     subject: `[Referral] ${capitalize(lead.city)} — ${lead.firstname} → ${lead.installer_assigned} (${lead.estimated_value})`,
-    html: `${warn}
-      <p>New estimate referral (routed to <strong>${assigned}</strong>).</p>
-      <ul>
-        <li><strong>Name:</strong> ${fn} ${ln}</li>
-        <li><strong>Phone:</strong> ${ph}</li>
-        <li><strong>Email:</strong> ${em}</li>
-        <li><strong>City:</strong> ${ct}</li>
-        <li><strong>Heating:</strong> ${ch}</li>
-        <li><strong>Income band:</strong> ${ib}</li>
-        <li><strong>Upgrades wanted:</strong> ${escapeHtml(lead.upgrades || 'none specified')}</li>
-        <li><strong>Estimate:</strong> ${ev}</li>
-        ${lead.notes ? `<li><strong>Notes from homeowner:</strong> ${escapeHtml(lead.notes)}</li>` : ''}
-        <li><strong>Source:</strong> ${src}</li>
-      </ul>`
+    html: `
+      <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;max-width:580px;margin:0 auto;color:#0a2a2e;">
+        <div style="background:#08363f;padding:22px 26px;border-radius:14px 14px 0 0;">
+          <div style="font-size:12px;color:#e88a2e;letter-spacing:.06em;text-transform:uppercase;font-weight:700;">${lead.installer_email ? 'Lead sent to an installer' : 'Needs your follow-up'}</div>
+          <div style="font-size:20px;color:#fff;font-weight:600;margin-top:6px;">${fn} ${ln} · ${capitalize(ct)}, ${escapeHtml(lead.province || '')}</div>
+        </div>
+        <div style="background:#faf7f2;padding:22px 26px;border:1px solid #d9d0c1;border-top:none;border-radius:0 0 14px 14px;">
+          ${warn}
+          <p style="margin:0 0 14px;font-size:14px;color:#1a3d42;">Routed to <strong>${assigned}</strong>${lead.installer_email ? ` (${escapeHtml(lead.installer_email)})` : ''}.</p>
+          <table style="width:100%;border-collapse:collapse;font-size:14px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;">
+            <tr><td style="padding:8px 14px;color:#6b7d80;width:120px;">Phone</td><td style="padding:8px 14px;font-weight:600;"><a href="tel:${escapeHtml(String(lead.phone || '').replace(/[^\d+]/g, ''))}" style="color:#08363f;">${ph}</a></td></tr>
+            <tr><td style="padding:8px 14px;color:#6b7d80;">Email</td><td style="padding:8px 14px;font-weight:600;"><a href="mailto:${em}" style="color:#08363f;">${em}</a></td></tr>
+            <tr><td style="padding:8px 14px;color:#6b7d80;">Heating</td><td style="padding:8px 14px;">${ch}</td></tr>
+            <tr><td style="padding:8px 14px;color:#6b7d80;">Income band</td><td style="padding:8px 14px;">${ib}</td></tr>
+            <tr><td style="padding:8px 14px;color:#6b7d80;">Upgrades</td><td style="padding:8px 14px;">${escapeHtml(lead.upgrades || 'none specified')}</td></tr>
+            ${/^(not specified|unknown|)$/i.test(String(lead.estimated_value || '').trim()) ? '' : `<tr><td style="padding:8px 14px;color:#6b7d80;">Estimate</td><td style="padding:8px 14px;font-weight:600;color:#2d6a4f;">${ev}</td></tr>`}
+            <tr><td style="padding:8px 14px;color:#6b7d80;">Came from</td><td style="padding:8px 14px;"><a href="${src}" style="color:#08363f;">${src}</a></td></tr>
+          </table>
+          ${lead.notes ? `<div style="background:#fef9e6;border-left:4px solid #d4751c;border-radius:0 8px 8px 0;padding:12px 16px;margin-top:14px;font-size:14px;color:#08363f;"><strong style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#a15d10;">Their note</strong><br>${escapeHtml(lead.notes)}</div>` : ''}
+          <p style="margin:18px 0 0;text-align:center;"><a href="tel:${escapeHtml(String(lead.phone || '').replace(/[^\d+]/g, ''))}" style="display:inline-block;background:#d4751c;color:#fff;padding:11px 24px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px;">Call ${ph}</a>
+          &nbsp;<a href="mailto:${em}" style="display:inline-block;background:#fff;color:#08363f;padding:9px 22px;border:2px solid #08363f;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px;">Email them</a></p>
+        </div>
+      </div>`
   });
 }
 

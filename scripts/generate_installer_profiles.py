@@ -30,6 +30,20 @@ if os.path.exists(_rsf):
     REVIEW_SUMMARIES = json.load(open(_rsf))
 
 
+try:
+    CITY_LOOKUP = json.load(open(os.path.join(ROOT, "city-rebate-lookup.json"), encoding="utf-8"))
+except (OSError, ValueError):
+    CITY_LOOKUP = {}
+try:
+    _reg = json.load(open(os.path.join(ROOT, "data", "rebate-registered.json"), encoding="utf-8"))
+except (OSError, ValueError):
+    _reg = {}
+
+
+def _br_region(region_key):
+    return region_key
+
+
 def slugify(name):
     s = name.lower().strip()
     s = re.sub(r"[&']", "", s)
@@ -268,6 +282,21 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
         f'<a href="{gmaps}" target="_blank" rel="noopener" class="ip-maps-link">View on Google Maps</a>' if gmaps else "",
     ])
     escaped_name = html.escape(name)
+    _svc_names = {"heat-pump": "heat pumps", "solar": "solar", "insulation": "insulation", "battery": "home batteries"}
+    _svcs = [_svc_names.get(c, c) for _, c, _, _ in listings]
+    extra_checks = ""
+    if len(_svcs) > 1:
+        extra_checks += f'<div class="ip-vet-row ip-vet-yes"><span class="ip-vet-icon">✓</span><div><strong>Listed for {" and ".join(dict.fromkeys(_svcs))} in {city_name}</strong><br><span class="ip-vet-detail">Ranked in each category by Google rating and review count</span></div></div>'
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import build_installer_rankings as _br
+        for _inst, _c, _, _ in listings:
+            _prog = _br.REGISTERED.get((_br_region(region_key), _c, _inst["name"]))
+            if _prog:
+                extra_checks += (f'<div class="ip-vet-row ip-vet-yes"><span class="ip-vet-icon">✓</span><div><strong>On the official contractor list: {html.escape(_prog["name"])}</strong><br>'
+                                 f'<span class="ip-vet-detail">{html.escape(_prog["why"])} Checked {_prog["checked"]}. <a href="{html.escape(_prog["source_url"])}" target="_blank" rel="noopener nofollow">Source</a></span></div></div>')
+    except Exception:
+        pass
     _sp = specialty.lower()
     lb_type = "Plumber" if "plumb" in _sp else "Electrician" if "electric" in _sp else "HVACBusiness" if ("hvac" in _sp or "heat pump" in _sp) else "HomeAndConstructionBusiness"
     # Google Places review summary (optional, written by the scraper when PLACES_REVIEW_SUMMARY=1). Shown with Google's own disclosure; never used in markup.
@@ -291,6 +320,11 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
         program_href = city_hub_url(region_key, city_slug, category)
         program_name = cfg["program_name"]
         program_detail = f"See {city_name}'s current {('heat pump' if category == 'heat-pump' else 'solar')} rebate breakdown for exact numbers"
+        _lk = CITY_LOOKUP.get(f"{region_key}|{city_name.lower()}") or CITY_LOOKUP.get(f"{region_key}|{city_slug.replace('-', ' ')}")
+        _amt = ((_lk or {}).get("categories") or {}).get({"heat-pump": "heat_pump", "solar": "solar", "insulation": "insulation", "battery": "battery"}.get(category, ""))
+        if _amt and "$" in _amt:
+            program_name = (_lk.get("utility") or program_name)
+            program_detail = html.escape(_amt) + " <span style=\"color:#7a7264\">(see the city page for eligibility and sources)</span>"
         program_cards.append(f'''    <a href="{program_href}" class="ip-program">
       <div class="ip-program-name">{program_name} ({label})</div>
       <div class="ip-program-detail">{program_detail}</div>
@@ -310,7 +344,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     nearby = [i for i in all_in_city if i["name"] != name][:9]
     nearby_html = "".join(
         f'<a href="/{profile_base(region_key)}/{city_slug}/{slugify(n["name"])}/" class="ip-nearby-item">'
-        f'<span>{html.escape(n["name"])}</span><span class="ip-nearby-rating">{n["rating"]:.0f}★</span></a>'
+        f'<span>{html.escape(n["name"])}</span><span class="ip-nearby-rating">{n["rating"]:.1f}★</span></a>'
         for n in nearby
     )
 
@@ -390,7 +424,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
       <h1>{escaped_name}</h1>
       <p class="ip-hero-meta">{specialty} &middot; {city_name}, {state}</p>
     </div>
-    <div class="ip-rating"><div class="ip-rating-num">{rating:.0f}★</div><div class="ip-rating-count">{reviews} reviews</div></div>
+    <div class="ip-rating"><div class="ip-rating-num">{rating:.1f}★</div><div class="ip-rating-count">{reviews:,} Google reviews</div></div>
   </div>
 
   {photo_html}
@@ -416,8 +450,9 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     <h3>What We Checked</h3>
     <div class="ip-vet-row ip-vet-yes">
       <span class="ip-vet-icon">✓</span>
-      <div><strong>Listed on Google Business Profile</strong><br><span class="ip-vet-detail">{rating:.1f}★ from {reviews} reviews on Google Maps</span></div>
+      <div><strong>Listed on Google Business Profile</strong><br><span class="ip-vet-detail">{rating:.1f}★ from {reviews:,} reviews on Google Maps</span></div>
     </div>
+{extra_checks}
     <p class="ip-vet-note">{cfg["vetting_note"]} &mdash; <a href="https://homepowerrebate.com/guides/installer-vetting-checklist/">see the full checklist</a>.</p>
     <div class="ip-verify-links">
 {verify_html}
@@ -431,7 +466,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
 
   <section class="ip-quote">
     <h2>Get a Quote From {escaped_name}</h2>
-    <p>We'll pass your details along and follow up with your rebate breakdown.</p>
+    <p>Tell {escaped_name} you're in {city_name}. We'll pass your details along and follow up with your {city_name} rebate breakdown. Free, and nobody pays to be listed.</p>
     <form class="ip-quote-form" id="ip-quote-form">
       <input type="text" id="ip-name" placeholder="First name" aria-label="First name" autocomplete="given-name" required>
       <input type="email" id="ip-email" placeholder="your@email.com" aria-label="Email address" autocomplete="email" inputmode="email" required>

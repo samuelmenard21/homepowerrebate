@@ -28,15 +28,18 @@
 <meta name="twitter:image" content="https://homepowerrebate.com/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap"></noscript>
+<!-- FONT-PRELOAD-START -->
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/fraunces/v38/6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeP2Xz5c.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsH8ahuQ2e8.woff2">
+<style>@font-face{font-family:'Fraunces';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://fonts.gstatic.com/s/fraunces/v38/6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeP2Xz5c.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Inter Tight';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsH8ahuQ2e8.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}</style>
+<!-- FONT-PRELOAD-END -->
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "HomeAndConstructionBusiness",
       "name": "AZTEC SPRAY FOAM INSULATION & ATTIC BLOWN-IN",
-      "image": "",
+      "image": "https://homepowerrebate.com/og-image.jpg",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "9510 114 Ave SE #5, Calgary, AB T3S 0A5",
@@ -54,7 +57,7 @@
       "@type": "BreadcrumbList",
       "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "HomePowerRebate", "item": "https://homepowerrebate.com/"},
-        {"@type": "ListItem", "position": 2, "name": "Calgary", "item": "https://homepowerrebate.com/us/ab/"},
+        {"@type": "ListItem", "position": 2, "name": "Calgary", "item": "https://homepowerrebate.com/ca/ab/"},
         {"@type": "ListItem", "position": 3, "name": "AZTEC SPRAY FOAM INSULATION & ATTIC BLOWN-IN", "item": "https://homepowerrebate.com/installers/profiles/ab/calgary/aztec-spray-foam-insulation-attic-blown-in/"}
       ]
     }
@@ -163,7 +166,7 @@ a { color:var(--teal-deep); }
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -287,10 +290,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -300,9 +309,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -311,6 +321,8 @@ section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited
 /* readable line length: running text stops at 72 characters */
 main p, article p, .wrap p, section p, .wrap li, article li, main li { max-width: 72ch; }
 .footer p, .footer li, nav p, nav li, table p, table li { max-width: none; }
+/* hero text is short and already centred or aligned by the page: never cap it (a cap would need a script to re-centre it after first paint) */
+.hero p, header.hero p, .hero .lead, .hero-sub, .hero li { max-width: none; }
 /* readable text floor: nothing below 13px */
 [style*="font-size:9px"],
 [style*="font-size: 9px"],
@@ -507,14 +519,14 @@ h1, h2 { text-wrap: balance; }
 <!-- CANONICAL-NAV-END -->
 <main id="main" tabindex="-1">
 <div class="ip-wrap">
-  <p class="ip-breadcrumb"><a href="/">HomePowerRebate</a> / <a href="https://homepowerrebate.com/us/ab/calgary/">Calgary</a> / AZTEC SPRAY FOAM INSULATION &amp; ATTIC BLOWN-IN</p>
+  <p class="ip-breadcrumb"><a href="/">HomePowerRebate</a> / <a href="https://homepowerrebate.com/ca/ab/calgary/">Calgary</a> / AZTEC SPRAY FOAM INSULATION &amp; ATTIC BLOWN-IN</p>
 
   <div class="ip-hero">
     <div>
       <h1>AZTEC SPRAY FOAM INSULATION &amp; ATTIC BLOWN-IN</h1>
       <p class="ip-hero-meta">Insulation &middot; Calgary, AB</p>
     </div>
-    <div class="ip-rating"><div class="ip-rating-num">5★</div><div class="ip-rating-count">32 reviews</div></div>
+    <div class="ip-rating"><div class="ip-rating-num">4.9★</div><div class="ip-rating-count">32 Google reviews</div></div>
   </div>
 
   
@@ -523,20 +535,18 @@ h1, h2 { text-wrap: balance; }
   
 
   <div class="ip-actions">
-    <a href="https://aztecspraysystems.ca/" target="_blank" rel="noopener" class="ip-btn ip-btn-primary">Visit Website</a>
-    <a href="tel:5876095660" class="ip-btn ip-btn-outline">Call (587) 609-5660</a>
-    <a href="https://maps.google.com/?cid=3628358043651113131&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" target="_blank" rel="noopener" class="ip-maps-link">View on Google Maps</a>
+    <a href="https://aztecspraysystems.ca/" target="_blank" rel="noopener" class="ip-btn ip-btn-primary">Visit Website</a><a href="tel:5876095660" class="ip-btn ip-btn-outline">Call (587) 609-5660</a><a href="https://maps.google.com/?cid=3628358043651113131&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" target="_blank" rel="noopener" class="ip-maps-link">View on Google Maps</a>
   </div>
 
   <section class="ip-kind">
     <div class="ip-kind-head">
       <h2>Insulation Rebates This Installer Puts You In Reach Of</h2>
-      <p class="ip-rank">Ranked <strong>#4 of 10</strong> insulation installers in Calgary by Google rating</p>
+      <p class="ip-rank">Ranked <strong>#4 of 10</strong> solar installers in Calgary by Google rating</p>
     </div>
     <div class="ip-programs">
-    <a href="https://homepowerrebate.com/us/ab/calgary/" class="ip-program">
-      <div class="ip-program-name">Alberta rebates guide (Insulation)</div>
-      <div class="ip-program-detail">See Calgary's current insulation rebate breakdown for exact numbers</div>
+    <a href="https://homepowerrebate.com/ca/ab/calgary/" class="ip-program">
+      <div class="ip-program-name">ENMAX (Solar)</div>
+      <div class="ip-program-detail">$0 (no current rebate; Greener Homes Grant and Loan closed) <span style="color:#7a7264">(see the city page for eligibility and sources)</span></div>
       <span class="ip-program-arrow">&rarr;</span>
     </a>
     </div>
@@ -548,6 +558,7 @@ h1, h2 { text-wrap: balance; }
       <span class="ip-vet-icon">✓</span>
       <div><strong>Listed on Google Business Profile</strong><br><span class="ip-vet-detail">4.9★ from 32 reviews on Google Maps</span></div>
     </div>
+
     <p class="ip-vet-note">Confirm current licensing, insurance and program eligibility directly with any installer before you sign. &mdash; <a href="https://homepowerrebate.com/guides/installer-vetting-checklist/">see the full checklist</a>.</p>
     <div class="ip-verify-links">
 
@@ -556,12 +567,12 @@ h1, h2 { text-wrap: balance; }
 
   <section class="ip-nearby">
     <h3>Other Calgary Installers</h3>
-    <div class="ip-nearby-list"><a href="/installers/profiles/ab/calgary/attic-rain-specialists-attic-insulation-calgary/" class="ip-nearby-item"><span>Attic Rain Specialists | Attic Insulation Calgary</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/ab/calgary/wescan-spray-systems-inc/" class="ip-nearby-item"><span>Wescan Spray Systems Inc</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/ab/calgary/western-insulations-ltd/" class="ip-nearby-item"><span>Western Insulations Ltd</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/ab/calgary/sealpro-foam-inc/" class="ip-nearby-item"><span>SealPro Foam Inc.</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/ab/calgary/northernshield-insulation/" class="ip-nearby-item"><span>NorthernShield Insulation</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/ab/calgary/ideal-insulation-1979-ltd/" class="ip-nearby-item"><span>Ideal Insulation (1979) Ltd</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/ab/calgary/arctic-shield-insulation-ltd-calgary-alberta/" class="ip-nearby-item"><span>Arctic Shield Insulation Ltd Calgary Alberta</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/ab/calgary/attic-pros-insulation-ventilation-services/" class="ip-nearby-item"><span>Attic Pros Insulation &amp; Ventilation Services</span><span class="ip-nearby-rating">5★</span></a><a href="/installers/profiles/ab/calgary/4-weather-insulation-ventilation/" class="ip-nearby-item"><span>4 Weather Insulation &amp; Ventilation</span><span class="ip-nearby-rating">4★</span></a></div>
+    <div class="ip-nearby-list"><a href="/installers/profiles/ab/calgary/attic-rain-specialists-attic-insulation-calgary/" class="ip-nearby-item"><span>Attic Rain Specialists | Attic Insulation Calgary</span><span class="ip-nearby-rating">4.8★</span></a><a href="/installers/profiles/ab/calgary/wescan-spray-systems-inc/" class="ip-nearby-item"><span>Wescan Spray Systems Inc</span><span class="ip-nearby-rating">4.9★</span></a><a href="/installers/profiles/ab/calgary/western-insulations-ltd/" class="ip-nearby-item"><span>Western Insulations Ltd</span><span class="ip-nearby-rating">4.9★</span></a><a href="/installers/profiles/ab/calgary/sealpro-foam-inc/" class="ip-nearby-item"><span>SealPro Foam Inc.</span><span class="ip-nearby-rating">5.0★</span></a><a href="/installers/profiles/ab/calgary/northernshield-insulation/" class="ip-nearby-item"><span>NorthernShield Insulation</span><span class="ip-nearby-rating">5.0★</span></a><a href="/installers/profiles/ab/calgary/ideal-insulation-1979-ltd/" class="ip-nearby-item"><span>Ideal Insulation (1979) Ltd</span><span class="ip-nearby-rating">4.7★</span></a><a href="/installers/profiles/ab/calgary/arctic-shield-insulation-ltd-calgary-alberta/" class="ip-nearby-item"><span>Arctic Shield Insulation Ltd Calgary Alberta</span><span class="ip-nearby-rating">4.7★</span></a><a href="/installers/profiles/ab/calgary/attic-pros-insulation-ventilation-services/" class="ip-nearby-item"><span>Attic Pros Insulation &amp; Ventilation Services</span><span class="ip-nearby-rating">4.6★</span></a><a href="/installers/profiles/ab/calgary/4-weather-insulation-ventilation/" class="ip-nearby-item"><span>4 Weather Insulation &amp; Ventilation</span><span class="ip-nearby-rating">4.4★</span></a></div>
   </section>
 
   <section class="ip-quote">
     <h2>Get a Quote From AZTEC SPRAY FOAM INSULATION &amp; ATTIC BLOWN-IN</h2>
-    <p>We'll pass your details along and follow up with your rebate breakdown.</p>
+    <p>Tell AZTEC SPRAY FOAM INSULATION &amp; ATTIC BLOWN-IN you're in Calgary. We'll pass your details along and follow up with your Calgary rebate breakdown. Free, and nobody pays to be listed.</p>
     <form class="ip-quote-form" id="ip-quote-form">
       <input type="text" id="ip-name" placeholder="First name" aria-label="First name" autocomplete="given-name" required>
       <input type="email" id="ip-email" placeholder="your@email.com" aria-label="Email address" autocomplete="email" inputmode="email" required>
@@ -572,7 +583,7 @@ h1, h2 { text-wrap: balance; }
     <p class="ip-quote-done" id="ip-quote-done">✓ Sent &mdash; AZTEC SPRAY FOAM INSULATION &amp; ATTIC BLOWN-IN will be in touch.</p>
   </section>
 
-  <a href="https://homepowerrebate.com/us/ab/calgary/" class="ip-city-link">See all Calgary rebates &rarr;</a>
+  <a href="https://homepowerrebate.com/ca/ab/calgary/" class="ip-city-link">See all Calgary rebates &rarr;</a>
 
   <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked via Google Places API. Spot an error? <a href="/contact/?subject=Correction: AZTEC SPRAY FOAM INSULATION &amp; ATTIC BLOWN-IN">Let us know</a>.</p>
 </div>

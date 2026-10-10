@@ -12,8 +12,30 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_installer_rankings as br
 import generate_installer_profiles as gp
 
+REFRESH = "--refresh" in sys.argv
 SPECIALTY = {"heat-pump": "Heat Pump & HVAC Installation", "solar": "Solar Installation",
              "insulation": "Insulation", "battery": "Home Battery Installation"}
+
+
+def _json_slugs():
+    """(region, city) -> slugs of installers that have curated JSON data; their profiles come from generate_installer_profiles.py."""
+    import json
+    out = {}
+    base = Path(__file__).resolve().parent.parent / "installers" / "json"
+    for f in base.rglob("*.json"):
+        rel = f.relative_to(base).parts
+        region = next((x for x in rel[:-1] if x in gp.REGIONS), "bc")
+        try:
+            items = json.loads(f.read_text(encoding="utf-8"))
+        except ValueError:
+            continue
+        for it in items if isinstance(items, list) else []:
+            if isinstance(it, dict) and it.get("name"):
+                out.setdefault((region, f.stem), set()).add(gp.slugify(it["name"]))
+    return out
+
+
+JSON_SLUGS = _json_slugs()
 
 
 def main():
@@ -42,7 +64,9 @@ def main():
             name = listings[0][0]["name"]
             out_dir = os.path.join(cfg["profiles_dir"], city_slug, slug)
             out_path = os.path.join(out_dir, "index.html")
-            if os.path.exists(out_path) or br.profile_url(region, city_slug, name):
+            if REFRESH and os.path.exists(out_path) and gp.slugify(name) not in JSON_SLUGS.get((region, city_slug), set()):
+                pass  # built from the CSV row only (no curated JSON data), so it is safe to rebuild
+            elif os.path.exists(out_path) or br.profile_url(region, city_slug, name):
                 skipped += 1
                 continue
             os.makedirs(out_dir, exist_ok=True)

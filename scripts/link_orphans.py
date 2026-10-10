@@ -17,7 +17,7 @@ JOBS = [
     ("ca/on/index.html", "ORPHAN-LINKS", '<b>More Ontario pages:</b> <a href="/ca/on/heat-pump/">Ontario heat pump rebates for 2026</a> · <a href="/blog/ontario-home-renovation-savings-deadlines-2026/">Home Renovation Savings deadlines</a>.'),
     ("ca/ns/index.html", "ORPHAN-LINKS", '<b>More Nova Scotia pages:</b> <a href="/ca/ns/heat-pump/">Nova Scotia heat pump rebates for 2026</a>.'),
     ("ca/ab/index.html", "ORPHAN-LINKS", '<b>More Alberta pages:</b> <a href="/ca/ab/heat-pump/">Alberta heat pump rebates for 2026</a>.'),
-    ("ca/index.html", "ORPHAN-LINKS", '<b>More Canada pages:</b> <a href="/ca/qc/heat-pump/">Quebec heat pump rebates for 2026</a>.'),
+    ("ca/index.html", "ORPHAN-LINKS", '<b>More Canada pages:</b> <a href="/ca/qc/heat-pump/">Quebec heat pump rebates for 2026</a> · <a href="/fr/qc/thermopompe/">Subvention thermopompe au Québec</a>.'),
     ("ca/bc/index.html", "ORPHAN-LINKS", '<b>More BC pages:</b> <a href="/ca/bc/heat-pump/">BC heat pump rebates for 2026</a> · <a href="/ca/bc/fraser-valley/">Fraser Valley rebates</a> · <a href="/solar-battery">BC solar and battery rebates</a>.'),
 ]
 for rel, marker, html in JOBS:

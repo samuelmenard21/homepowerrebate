@@ -283,6 +283,40 @@ def balanced(fragment: str) -> bool:
     return all(n in ("li", "p", "td", "tr", "th", "dd", "dt", "option", "tbody", "thead") for n in stack)
 
 
+FONT_CSS_RE = re.compile(r'<link href="(https://fonts\.googleapis\.com/css2[^"]*)" rel="stylesheet">')
+ICON_LINKS = ('<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n<link rel="icon" href="/favicon.ico" sizes="48x48">\n'
+              '<link rel="apple-touch-icon" href="/apple-touch-icon.png">')
+
+
+_FAMILY_RE = re.compile(r"font-family:[^;}\"<]*")
+_FALLBACKS = (("Fraunces", "'Fraunces Fallback'"), ("Inter Tight", "'Inter Tight Fallback'"))
+
+
+def add_font_fallbacks(content: str) -> str:
+    """Put the metric-matched fallback face right after each web font in every font-family list. Idempotent."""
+    def fix(m):
+        s = m.group(0)
+        for web, fb in _FALLBACKS:
+            if "Fallback" in s:
+                break
+            s = re.sub(r"""(['"]%s['"])""" % web, lambda x: x.group(1) + ", " + fb, s, count=1)
+        return s
+    return _FAMILY_RE.sub(fix, content)
+
+
+def ensure_fast_head(content: str) -> str:
+    """Performance and polish in <head>, idempotent:
+    - Google Fonts stylesheet loads without blocking first paint (preload, then apply on load; noscript fallback; display=swap is in the URL)
+    - favicon and touch icon links
+    - the form-handlers script is deferred"""
+    content = FONT_CSS_RE.sub(lambda m: (f'<link rel="preload" as="style" href="{m.group(1)}" onload="this.onload=null;this.rel=\'stylesheet\'">\n'
+                                         f'<noscript><link rel="stylesheet" href="{m.group(1)}"></noscript>'), content, count=1)
+    if 'rel="icon"' not in content and "</head>" in content:
+        content = content.replace("</head>", ICON_LINKS + "\n</head>", 1)
+    content = re.sub(r'<script src="(/form-handlers[^"]*\.js)"></script>', r'<script defer src="\1"></script>', content)
+    return add_font_fallbacks(content)
+
+
 def ensure_landmarks(content: str) -> str:
     """Skip link, <main id="main"> between the canonical nav and footer, and theme-color. Idempotent."""
     if 'name="theme-color"' not in content and "</head>" in content:
@@ -359,6 +393,7 @@ def process_file(path: Path, dry_run: bool):
 
     content = ensure_shared_assets(content)
     content = ensure_landmarks(content)
+    content = ensure_fast_head(content)
 
     # Safety net (added 2026-09-28): some pages had real content (e.g. "Learn more about
     # <city> rebates" guide cards) sitting between the old footer markers, and a restamp

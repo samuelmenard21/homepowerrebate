@@ -42,7 +42,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap"></noscript>
 
 <script>
 
@@ -194,7 +195,7 @@ document.addEventListener('click', function(e) {
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'Inter Tight', -apple-system, sans-serif;
+  font-family: 'Inter Tight', 'Inter Tight Fallback', -apple-system, sans-serif;
   background: var(--paper);
   color: var(--ink);
   line-height: 1.6;
@@ -218,7 +219,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex; justify-content: space-between; align-items: center;
 }
 .logo {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-weight: 600; font-size: 22px;
   letter-spacing: -0.02em;
   color: var(--teal-deep);
@@ -265,7 +266,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--amber); border-radius: 50%;
 }
 .hero-h1 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-weight: 500; font-size: clamp(44px, 6.5vw, 76px);
   line-height: 1.04; letter-spacing: -0.03em;
   color: var(--teal-deep);
@@ -395,7 +396,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 14px;
 }
 .section-h2 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-weight: 500; font-size: clamp(32px, 4.5vw, 50px);
   line-height: 1.1; letter-spacing: -0.025em;
   color: var(--teal-deep);
@@ -419,7 +420,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 36px 30px;
 }
 .what-num {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-size: 14px; font-weight: 600;
   color: var(--amber);
   letter-spacing: 0.06em;
@@ -435,7 +436,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 14px; color: var(--amber);
 }
 .what-h3 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-weight: 500; font-size: 26px;
   line-height: 1.2; letter-spacing: -0.01em;
   color: var(--teal-deep);
@@ -473,7 +474,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 18px;
 }
 .philosophy-h2 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-weight: 500; font-size: clamp(34px, 5vw, 52px);
   line-height: 1.08; letter-spacing: -0.025em;
   color: var(--paper);
@@ -510,7 +511,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--amber-bright); border-radius: 50%;
 }
 .philosophy-pillar-number {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-weight: 500; font-size: 42px;
   line-height: 1;
   color: var(--paper);
@@ -518,7 +519,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 8px;
 }
 .philosophy-pillar-h3 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-weight: 500; font-size: 22px;
   letter-spacing: -0.01em;
   color: var(--amber-bright);
@@ -565,7 +566,7 @@ h1, h2, h3, h4, h5, h6 {
   flex-shrink: 0;
 }
 .trust-card h3 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-weight: 500; font-size: 22px;
   color: var(--teal-deep);
   margin-bottom: 8px;
@@ -624,7 +625,7 @@ h1, h2, h3, h4, h5, h6 {
 .future-tag.soon { background: var(--paper-warm); color: var(--amber); }
 .future-tag.next { background: var(--paper-warm); color: var(--ink-soft); }
 .future-h3 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-weight: 500; font-size: 22px;
   color: var(--teal-deep);
   margin-bottom: 8px;
@@ -643,7 +644,7 @@ h1, h2, h3, h4, h5, h6 {
   gap: 36px; align-items: start;
 }
 .waitlist-h3 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-weight: 500; font-size: 24px;
   color: var(--teal-deep);
   letter-spacing: -0.01em;
@@ -690,7 +691,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--sage);
 }
 .waitlist-thanks h4 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-size: 20px; color: var(--teal-deep);
   margin-bottom: 6px;
 }
@@ -741,7 +742,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .final-cta-inner { max-width: 760px; margin: 0 auto; }
 .final-cta h2 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-weight: 500; font-size: clamp(34px, 4.5vw, 48px);
   letter-spacing: -0.025em; line-height: 1.1;
   margin-bottom: 18px;
@@ -769,7 +770,7 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid rgba(250, 247, 242, 0.1);
 }
 .footer-brand {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Fraunces Fallback', serif;
   font-weight: 500; font-size: 22px;
   color: var(--paper);
   letter-spacing: -0.02em;
@@ -780,7 +781,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 320px;
 }
 .footer-col-title {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif;
   font-size: 12px; font-weight: 700;
   letter-spacing: 0.08em; text-transform: uppercase;
   color: rgba(250, 247, 242, 0.7);
@@ -879,7 +880,7 @@ h1, h2, h3, h4, h5, h6 {
 /* CANONICAL-NAV-FOOTER-CSS-START */
 .nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
 .nav-inner { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
-.logo { font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.logo { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
 .logo-mark { width: 30px; height: 30px; background: var(--amber); border-radius: 50%; position: relative; box-shadow: 0 2px 8px rgba(212, 117, 28, 0.3); }
 .logo-mark::after { content: ''; position: absolute; inset: 8px; background: var(--paper); border-radius: 50%; }
 .logo-power { color: var(--amber); font-weight: 700; }
@@ -904,9 +905,9 @@ h1, h2, h3, h4, h5, h6 {
 .footer { background: var(--ink); color: rgba(250, 247, 242, 0.65); padding: 56px 28px 32px; }
 .footer-inner { max-width: 1180px; margin: 0 auto; }
 .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 32px; border-bottom: 1px solid rgba(250, 247, 242, 0.1); }
-.footer-brand { font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; color: var(--paper); letter-spacing: -0.02em; margin-bottom: 12px; }
+.footer-brand { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 500; font-size: 22px; color: var(--paper); letter-spacing: -0.02em; margin-bottom: 12px; }
 .footer-tagline { font-size: 13px; color: rgba(250, 247, 242, 0.4); max-width: 320px; }
-.footer-col-title { font-family: 'Inter Tight', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250, 247, 242, 0.7); margin-bottom: 14px; }
+.footer-col-title { font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250, 247, 242, 0.7); margin-bottom: 14px; }
 .footer-col-links { list-style: none; display: grid; gap: 8px; font-size: 14px; margin: 0; padding: 0; }
 .footer-col-links a { color: rgba(250, 247, 242, 0.45); text-decoration: none; }
 .footer-col-links a:hover { color: var(--amber); }
@@ -985,11 +986,11 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 .hs-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 20px 0 26px; position: relative; z-index: 2; }
 @media (min-width: 900px) { .hs-stats { margin-top: -34px; } }
 .hs-stat { background: #fff; border: 1px solid #d9d0c1; border-radius: 14px; padding: 14px 10px; text-align: center; box-shadow: 0 8px 20px rgba(10,42,46,.09); }
-.hs-stat b { display: block; font-family: 'Fraunces', Georgia, serif; font-size: 25px; line-height: 1.1; color: var(--teal-deep); }
-.hs-stat b small { display: block; font-family: 'Inter Tight', sans-serif; font-size: 12px; font-weight: 600; color: var(--amber); margin-top: 2px; }
+.hs-stat b { display: block; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 25px; line-height: 1.1; color: var(--teal-deep); }
+.hs-stat b small { display: block; font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 12px; font-weight: 600; color: var(--amber); margin-top: 2px; }
 .hs-stat span { display: block; font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; color: var(--ink-soft); margin-top: 4px; }
 .hs-sec { padding-top: 6px; padding-bottom: 20px; }
-.hs-h { font-family: 'Fraunces', Georgia, serif; font-size: clamp(24px, 4vw, 32px); color: var(--teal-deep); margin: 8px 0 6px; }
+.hs-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(24px, 4vw, 32px); color: var(--teal-deep); margin: 8px 0 6px; }
 .hs-sub { color: var(--ink-soft); margin: 0 0 16px; max-width: 680px; }
 .hs-ctl { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
 .hs-ctl input { flex: 1; min-width: 200px; padding: 12px 14px; border: 1px solid #d9d0c1; border-radius: 10px; font: inherit; font-size: 16px; background: #fff; }
@@ -1002,7 +1003,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 .hs-city.hide { display: none; }
 .hs-ring { --d: 0deg; flex: none; position: relative; width: 48px; height: 48px; border-radius: 50%; background: conic-gradient(var(--amber) var(--d), #eee 0); display: grid; place-items: center; }
 .hs-ring::before { content: ''; position: absolute; inset: 5px; background: #fff; border-radius: 50%; }
-.hs-ring b { position: relative; font-family: 'Fraunces', Georgia, serif; font-size: 15px; color: var(--teal-deep); }
+.hs-ring b { position: relative; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 15px; color: var(--teal-deep); }
 .hs-cn b { display: block; font-size: 16px; }
 .hs-cn small { display: block; font-size: 12.5px; color: var(--ink-soft); line-height: 1.3; }
 .hs-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
@@ -1010,7 +1011,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 .hs-tile:hover { border-color: var(--amber); transform: translateY(-2px); }
 .hs-ti { font-size: 24px; line-height: 1; }
 .hs-tt em { display: block; font-style: normal; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); }
-.hs-tt b { font-family: 'Fraunces', Georgia, serif; font-size: 22px; color: var(--green-money); }
+.hs-tt b { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 22px; color: var(--green-money); }
 .hs-tt small { display: block; font-size: 12.5px; color: var(--ink-soft); }
 .hs-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .hs-chip { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; background: #fff; border: 1px solid #d9d0c1; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
@@ -1019,6 +1020,11 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
+@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+/* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
+@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -1029,7 +1035,7 @@ main:focus { outline: none; }
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
 .section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
-[style*="color:var(--amber)"], [style*="color: var(--amber)"] { color: #a4540a !important; }
+[style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
 .finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
@@ -1121,13 +1127,17 @@ h1, h2 { text-wrap: balance; }
 }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<meta name="theme-color" content="#faf7f2">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Home Power Rebates 2026: Find Every Rebate | HomePowerRebate", "url": "https://homepowerrebate.com/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
 <style>
 /* EXTRACTED-INLINE-START */
-body .is-022e8bb5.is-022e8bb5.is-022e8bb5 { font-family:'Fraunces',serif; font-size:clamp(28px,5vw,42px); font-weight:500; line-height:1.2; color:#111; margin:0 0 16px; }
+body .is-022e8bb5.is-022e8bb5.is-022e8bb5 { font-family:'Fraunces', 'Fraunces Fallback',serif; font-size:clamp(28px,5vw,42px); font-weight:500; line-height:1.2; color:#111; margin:0 0 16px; }
 body .is-036913c4.is-036913c4.is-036913c4 { display:none; gap:8px; }
 body .is-043eb68f.is-043eb68f.is-043eb68f { font-size: 13px !important; color: #b45309; margin-top: 12px; }
 body .is-0a990d7e.is-0a990d7e.is-0a990d7e { border:none; cursor:pointer; }
-body .is-0cde321b.is-0cde321b.is-0cde321b { font-family:'Fraunces',Georgia,serif; font-size:clamp(28px,4vw,36px); margin:0 0 6px; color:var(--ink); }
+body .is-0cde321b.is-0cde321b.is-0cde321b { font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif; font-size:clamp(28px,4vw,36px); margin:0 0 6px; color:var(--ink); }
 body .is-15ade639.is-15ade639.is-15ade639 { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #15803d; }
 body .is-18ad0489.is-18ad0489.is-18ad0489 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; contain: layout; }
 body .is-1b0f4999.is-1b0f4999.is-1b0f4999 { margin-top:16px; }
@@ -1136,7 +1146,7 @@ body .is-1c9c449e.is-1c9c449e.is-1c9c449e { color:inherit; }
 body .is-1cafff85.is-1cafff85.is-1cafff85 { font-size:14px; color:var(--ink-soft); margin-bottom:12px; }
 body .is-1d025f42.is-1d025f42.is-1d025f42 { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #be123c; }
 body .is-1f3bab59.is-1f3bab59.is-1f3bab59 { font-size: 13px !important; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color: #a4540a !important; margin-bottom:8px; }
-body .is-24497659.is-24497659.is-24497659 { font-size: 24px; font-weight: 700; color: #d4751c; margin-bottom: 6px; }
+body .is-24497659.is-24497659.is-24497659 { font-size: 24px; font-weight: 700; color: #a4540a !important; margin-bottom: 6px; }
 body .is-26757191.is-26757191.is-26757191 { font-size:14px; color:var(--ink-soft); }
 body .is-2813698b.is-2813698b.is-2813698b { padding:0 16px 16px; }
 body .is-296fe222.is-296fe222.is-296fe222 { color: #b45309; font-weight: 600; text-decoration: none; }
@@ -1151,17 +1161,17 @@ body .is-441e7a69.is-441e7a69.is-441e7a69 { background: #fef3e6; border: 2px sol
 body .is-445553f5.is-445553f5.is-445553f5 { max-width:600px; margin:12px auto 0; color:var(--ink-soft); font-size:16px; }
 body .is-48711be5.is-48711be5.is-48711be5 { color:inherit; text-decoration:none; }
 body .is-5506133a.is-5506133a.is-5506133a { display:flex; gap:6px; margin-bottom:12px; }
-body .is-5694966f.is-5694966f.is-5694966f { font-size:13px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:#d4751c; margin:0 0 8px; }
+body .is-5694966f.is-5694966f.is-5694966f { font-size:13px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color: #a4540a !important; margin:0 0 8px; }
 body .is-5e451d7d.is-5e451d7d.is-5e451d7d { font-size:13px; color:var(--ink-soft); }
 body .is-60e32dcb.is-60e32dcb.is-60e32dcb { display:inline-block; }
 body .is-61f619c8.is-61f619c8.is-61f619c8 { font-size:24px; margin-bottom:8px; }
 body .is-6292f4da.is-6292f4da.is-6292f4da { font-size: 13px !important; color: #be185d; margin-top: 12px; }
 body .is-640fce8e.is-640fce8e.is-640fce8e { color:var(--teal-deep); font-weight:600; border-bottom:1px solid var(--amber); text-decoration:none; }
-body .is-654dbb30.is-654dbb30.is-654dbb30 { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; margin-bottom:12px; border-radius:8px; background:linear-gradient(135deg, var(--teal-deep), #08363f); color:#fff; text-decoration:none; font-weight:700; font-size:13px; font-family:'Inter Tight',sans-serif; }
+body .is-654dbb30.is-654dbb30.is-654dbb30 { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; margin-bottom:12px; border-radius:8px; background:linear-gradient(135deg, var(--teal-deep), #08363f); color:#fff; text-decoration:none; font-weight:700; font-size:13px; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif; }
 body .is-674471e9.is-674471e9.is-674471e9 { display:flex; align-items:center; gap:16px; }
 body .is-68f0e454.is-68f0e454.is-68f0e454 { font-size: 13px; color: #be185d; margin-bottom: 8px; }
-body .is-7602045f.is-7602045f.is-7602045f { font-size:13px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:#d4751c; margin:0 0 10px; }
-body .is-8290863c.is-8290863c.is-8290863c { font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--teal-deep); margin-bottom:4px; }
+body .is-7602045f.is-7602045f.is-7602045f { font-size:13px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color: #a4540a !important; margin:0 0 10px; }
+body .is-8290863c.is-8290863c.is-8290863c { font-family:'Fraunces', 'Fraunces Fallback',serif; font-size:17px; font-weight:600; color:var(--teal-deep); margin-bottom:4px; }
 body .is-83c08b16.is-83c08b16.is-83c08b16 { padding:56px 28px 60px; max-width:1100px; margin:0 auto; }
 body .is-84db4a6c.is-84db4a6c.is-84db4a6c { display:none; align-items:center; gap:12px; }
 body .is-8545cf06.is-8545cf06.is-8545cf06 { font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111; }
@@ -1172,12 +1182,12 @@ body .is-8dbc78d4.is-8dbc78d4.is-8dbc78d4 { color:var(--ink-soft); font-weight:6
 body .is-8e1a34c6.is-8e1a34c6.is-8e1a34c6 { font-size: 13px !important; color: #15803d; margin-top: 12px; }
 body .is-8f057828.is-8f057828.is-8f057828 { font-size: 13px; color: #be185d; }
 body .is-91a87015.is-91a87015.is-91a87015 { text-align:center; }
-body .is-a0a74463.is-a0a74463.is-a0a74463 { font-family:'Fraunces',Georgia,serif; font-size:22px; margin:36px 0 6px; color:var(--ink); }
+body .is-a0a74463.is-a0a74463.is-a0a74463 { font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif; font-size:22px; margin:36px 0 6px; color:var(--ink); }
 body .is-a0ea9386.is-a0ea9386.is-a0ea9386 { background:#fdeccf; color:#8a4a06; }
 body .is-a2597964.is-a2597964.is-a2597964 { color:#4a5f5b; margin:0 0 12px; font-size:15px; }
-body .is-a8fef75d.is-a8fef75d.is-a8fef75d { display:inline-block; background:var(--amber,#d4751c); color:#fff; padding:13px 26px; border-radius:999px; text-decoration:none; font-weight:600; }
+body .is-a8fef75d.is-a8fef75d.is-a8fef75d { display:inline-block; padding:13px 26px; border-radius:999px; text-decoration:none; font-weight:600; background: #b4590a !important; color: #fff !important; }
 body .is-a986eed1.is-a986eed1.is-a986eed1 { color: #be185d; font-weight: 600; text-decoration: none; }
-body .is-ab1b25e3.is-ab1b25e3.is-ab1b25e3 { font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px; }
+body .is-ab1b25e3.is-ab1b25e3.is-ab1b25e3 { font-family:'Fraunces', 'Fraunces Fallback',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px; }
 body .is-ab59634f.is-ab59634f.is-ab59634f { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; contain: layout; }
 body .is-b2661a19.is-b2661a19.is-b2661a19 { font-size: 13px; color: #166534; }
 body .is-b5d4358c.is-b5d4358c.is-b5d4358c { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #92400e; }
@@ -1198,7 +1208,7 @@ body .is-d3c1be7a.is-d3c1be7a.is-d3c1be7a { color:#4a5f5b; margin:0 0 14px; }
 body .is-d51bfbd8.is-d51bfbd8.is-d51bfbd8 { color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none; }
 body .is-d5f01cd0.is-d5f01cd0.is-d5f01cd0 { font-size: 13px; color: #166534; margin-bottom: 8px; }
 body .is-db8baeb9.is-db8baeb9.is-db8baeb9 { max-width: 1180px; margin: 72px auto 0; padding: 0 28px; }
-body .is-e1c13d85.is-e1c13d85.is-e1c13d85 { display:block; font-family:'Fraunces', Georgia, serif; font-size:19px; margin-bottom:8px; line-height:1.3; }
+body .is-e1c13d85.is-e1c13d85.is-e1c13d85 { display:block; font-family:'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size:19px; margin-bottom:8px; line-height:1.3; }
 body .is-e1d223f3.is-e1d223f3.is-e1d223f3 { color: #15803d; font-weight: 600; text-decoration: none; }
 body .is-e526ae97.is-e526ae97.is-e526ae97 { color:#0d4f5c; font-weight:600; }
 body .is-ea853cbd.is-ea853cbd.is-ea853cbd { font-size: 28px; margin-bottom: 8px; }
@@ -1210,10 +1220,9 @@ body .is-f6ff5be9.is-f6ff5be9.is-f6ff5be9 { padding:0; margin:0; }
 body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 /* EXTRACTED-INLINE-END */
 </style>
-<meta name="theme-color" content="#faf7f2">
-<!-- AEO-SPEAKABLE-START -->
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Home Power Rebates 2026: Find Every Rebate | HomePowerRebate", "url": "https://homepowerrebate.com/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
-<!-- AEO-SPEAKABLE-END -->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -1243,34 +1252,34 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 
   <div id="city-dropdown-modal" style="display:none; position:absolute; top:56px; right:20px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:49; max-width:300px; max-height:70vh; overflow-y:auto;">
     <div style="padding:16px 16px 0;">
-      <a href="/powerscore/" style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; margin-bottom:12px; border-radius:8px; background:linear-gradient(135deg, var(--teal-deep), #08363f); color:#fff; text-decoration:none; font-weight:700; font-size:13px; font-family:'Inter Tight',sans-serif;">
+      <a href="/powerscore/" style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; margin-bottom:12px; border-radius:8px; background:linear-gradient(135deg, var(--teal-deep), #08363f); color:#fff; text-decoration:none; font-weight:700; font-size:13px; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">
         <span>&#9889; See your city's PowerScore</span>
         <span style="opacity:.7;">&rarr;</span>
       </a>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
-        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
-        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">California (US)</button>
+        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Ontario</button>
+        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">British Columbia</button>
+        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">California (US)</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Alberta</button>
-        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Nova Scotia</button>
-        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Massachusetts</button>
+        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Alberta</button>
+        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Nova Scotia</button>
+        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Massachusetts</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New York</button>
-        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Pennsylvania</button>
-        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Colorado</button>
+        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">New York</button>
+        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Pennsylvania</button>
+        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Colorado</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Vermont</button>
-        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Michigan</button>
-        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New Jersey</button>
+        <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Vermont</button>
+        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Michigan</button>
+        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">New Jersey</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Illinois</button>
-        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Washington</button>
-        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Minnesota</button>
+        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Illinois</button>
+        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Washington</button>
+        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Minnesota</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -1331,8 +1340,8 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 #hero-find{max-width:640px;margin:20px auto 8px;background:var(--paper);color:var(--ink);border-radius:16px;padding:22px 22px 20px;text-align:left;box-shadow:0 20px 48px rgba(0,0,0,.18)}
 #hero-find .hf-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 #hero-find label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;color:var(--ink-soft)}
-#hero-find select{width:100%;min-height:48px;padding:10px 12px;border:1.5px solid var(--rule);border-radius:9px;font-family:'Inter Tight',sans-serif;font-size:16px;background:#fff;color:var(--ink)}
-#hero-find button{width:100%;margin-top:14px;min-height:50px;border:0;border-radius:999px;background:var(--amber);color:#fff;font-family:'Inter Tight',sans-serif;font-weight:700;font-size:16px;cursor:pointer}
+#hero-find select{width:100%;min-height:48px;padding:10px 12px;border:1.5px solid var(--rule);border-radius:9px;font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;font-size:16px;background:#fff;color:var(--ink)}
+#hero-find button{width:100%;margin-top:14px;min-height:50px;border:0;border-radius:999px;background:var(--amber);color:#fff;font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;font-weight:700;font-size:16px;cursor:pointer}
 #hero-find .hf-note{font-size:13px;color:var(--ink-soft);margin:10px 0 0;text-align:center}
 @media(max-width:600px){#hero-find .hf-row{grid-template-columns:1fr}#hero-find{order:2}}
 @media(max-width:600px){.hero-trust-line{flex-direction:column;align-items:center;gap:4px;flex-wrap:wrap}.hero-trust-line span.dot{display:none}.hero-trust-line span{white-space:normal}}
@@ -1370,7 +1379,7 @@ var r=D.filter(function(x){return x.c===p.value})[0];if(r)r.k.forEach(function(k
 <style>.ps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px}
 .ps-card{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:#111;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;position:relative}
 .ps-first{background:linear-gradient(135deg,#0d4f5c,#08363f);border:0;color:#fff}
-.ps-num{font-family:'Fraunces',serif;font-size:38px;line-height:1.1}.ps-lab{font-size:12px;opacity:.65;margin-bottom:8px}
+.ps-num{font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:38px;line-height:1.1}.ps-lab{font-size:12px;opacity:.65;margin-bottom:8px}
 .ps-city{font-size:16px}.ps-sub{font-size:13px;opacity:.75}.ps-tag{position:absolute;top:12px;right:16px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.7}</style>
 <div class="is-83c08b16">
   <div class="is-c1c036be">
@@ -1708,10 +1717,10 @@ var r=D.filter(function(x){return x.c===p.value})[0];if(r)r.k.forEach(function(k
 .hf-i p{margin:4px 0 0;font-size:15px;line-height:1.5;color:#1a3d42}.hf-m{font-size:13px;color:#4a5f5b;white-space:nowrap}
 .hf-pill{flex:none;min-width:78px;text-align:center;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:700}
 .hf-close{background:#fdeccf;border-left:4px solid #d4751c;border-radius:8px;padding:12px 14px;margin:0 0 14px;font-size:15px;color:#5a3306}
-.hf-tops a{font-size:14px;color:#4a5f5b}.hf-tops b{font-size:16px;color:#0a2a2e;font-family:'Inter Tight',sans-serif}
+.hf-tops a{font-size:14px;color:#4a5f5b}.hf-tops b{font-size:16px;color:#0a2a2e;font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif}
 .hf-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:36px}
 .hf-strip a{display:block;text-decoration:none;background:#fff;border:1px solid #d9d0c1;border-radius:12px;padding:18px;color:#0a2a2e}
-.hf-strip b{display:block;font-family:'Fraunces',Georgia,serif;font-size:19px;margin-bottom:4px}
+.hf-strip b{display:block;font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:19px;margin-bottom:4px}
 @media(max-width:600px){.hf-i{flex-direction:column;gap:6px}.hf-m{white-space:normal}}</style>
 <section class="is-c16ac2f4">
   <p class="is-5694966f">What changed</p>
@@ -1749,7 +1758,7 @@ var r=D.filter(function(x){return x.c===p.value})[0];if(r)r.k.forEach(function(k
 .nl{background:linear-gradient(135deg,#0d4f5c,#08363f);padding:clamp(48px,8vw,88px) 20px;color:#fff}
 .nl-in{max-width:560px;margin:0 auto;text-align:center}
 .nl-eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#f0a35e;margin-bottom:14px}
-.nl h2{font-family:'Fraunces',Georgia,serif;font-size:clamp(28px,5vw,40px);line-height:1.15;margin:0 0 14px;color:#fff;text-wrap:balance}
+.nl h2{font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:clamp(28px,5vw,40px);line-height:1.15;margin:0 0 14px;color:#fff;text-wrap:balance}
 .nl-lead{font-size:17px;line-height:1.55;color:rgba(250,247,242,.88);margin:0 0 20px}
 .nl-list{list-style:none;margin:0 auto 28px;padding:0;display:inline-block;text-align:left;font-size:16px;color:rgba(250,247,242,.92)}
 .nl-list li{padding-left:26px;position:relative;margin:7px 0}
@@ -1890,7 +1899,7 @@ document.addEventListener('click', (e) => {
 
 
 <!-- Form handlers with installer selection -->
-<script src="/form-handlers-with-installer-select.js"></script>
+<script defer src="/form-handlers-with-installer-select.js"></script>
 
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */

@@ -735,8 +735,8 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 <section class="hero">
   <div class="wrap">
     <h1>Find a Verified Installer Near You</h1>
-    <p>1,300+ heat pump and solar installers, all rated 4+ stars on Google, across 15 states and provinces and 133 cities.</p>
-    <p class="subnote">Three steps: pick your region, narrow by service, then browse or search by name.</p>
+    <p>1,300+ heat pump and solar installers, all rated 4+ stars on Google, across 15 states and provinces and 144 cities.</p>
+    <p class="subnote">Four steps: pick your region, choose a service, narrow by city, then browse or search by name.</p>
   </div>
 </section>
 
@@ -769,9 +769,20 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
       </div>
     </div>
 
-    <div class="step-block">
+    <div class="step-block is-6b99de8b" id="city-select-section">
       <div class="step-head">
         <span class="step-num">3</span>
+        <div>
+          <div class="eyebrow is-227f2db2">Narrow by City</div>
+          <h2 class="is-2ca2ec92">Which city are you in?</h2>
+        </div>
+      </div>
+      <div class="city-tabs" id="city-tabs-container"></div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-head">
+        <span class="step-num">4</span>
         <div>
           <div class="eyebrow is-227f2db2">Search by Name</div>
           <h2 class="is-2ca2ec92">Looking for a specific company?</h2>
@@ -792,12 +803,6 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
   </div>
 </section>
 
-<section class="section is-6b99de8b" id="city-select-section">
-  <div class="wrap">
-    <div class="eyebrow">Narrow by City</div>
-    <div class="city-tabs" id="city-tabs-container"></div>
-  </div>
-</section>
 
 <section class="section" id="stats-section">
   <div class="wrap">
@@ -807,7 +812,7 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
         <div class="stat-label">Google-rated installers</div>
       </div>
       <div class="stat">
-        <div class="stat-num" id="stat-cities">133</div>
+        <div class="stat-num" id="stat-cities">144</div>
         <div class="stat-label">Cities in 15 states and provinces</div>
       </div>
       <div class="stat">
@@ -2474,46 +2479,23 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 // live here, or its emails will silently show "not specified" instead of real
 // numbers. See lead-router.js's cityRebateLookup()/PROVINCE_CONTEXT for how
 // this is consumed, and add a PROVINCE_CONTEXT entry too for any new state/province.
-const BC_CITIES = [
-  'Abbotsford', 'Burnaby', 'Chilliwack', 'Coquitlam', 'Fort St. John',
-  'Kamloops', 'Kelowna', 'Langley', 'Maple Ridge', 'Nanaimo',
-  'Penticton', 'Prince George', 'Richmond', 'Squamish', 'Surrey',
-  'Vancouver', 'Vernon', 'Victoria'
-];
-const ON_CITIES = [
-  'Toronto', 'Ottawa', 'Mississauga', 'Brampton', 'Hamilton', 'Markham',
-  'Vaughan', 'Richmond Hill', 'Barrie', 'London', 'Kitchener', 'Windsor',
-  'Oakville', 'Oshawa', 'Whitby', 'Burlington', 'Cambridge', 'Greater Sudbury'
-];
-const AB_CITIES = ['Calgary', 'Edmonton', 'Red Deer', 'Lethbridge', 'St. Albert'];
-const NS_CITIES = ['Halifax'];
-const MA_CITIES = [
-  'Boston', 'Worcester', 'Springfield', 'Cambridge', 'Lowell', 'Brockton',
-  'New Bedford', 'Quincy', 'Lynn', 'Fall River', 'Newton', 'Somerville'
-];
-const NY_CITIES = [
-  'Beacon', 'Kingston', 'Newburgh', 'Poughkeepsie', 'Saugerties',
-  'Mount Vernon', 'New Rochelle', 'New York City', 'White Plains', 'Yonkers',
-  'Albany', 'Buffalo', 'Rochester', 'Syracuse',
-  'Babylon', 'Brookhaven', 'Huntington', 'Islip', 'Oyster Bay', 'Smithtown', 'Southampton'
-];
-const CA_CITIES = [
-  'Burbank', 'Glendale', 'Long Beach', 'Los Angeles', 'Pasadena', 'Santa Monica',
-  'Berkeley', 'Fremont', 'Oakland', 'San Francisco', 'San Jose',
-  'Moreno Valley', 'Ontario', 'Riverside', 'San Bernardino',
-  'Chula Vista', 'Escondido', 'San Diego',
-  'Folsom', 'Rancho Cordova', 'Roseville', 'Sacramento',
-  'Fresno', 'Bakersfield'
-];
-
-const PA_CITIES = ['Philadelphia', 'Pittsburgh', 'Allentown', 'Erie'];
-const CO_CITIES = ['Denver', 'Colorado Springs', 'Aurora', 'Fort Collins', 'Boulder'];
-const VT_CITIES = ['Burlington', 'South Burlington', 'Rutland', 'Barre', 'Montpelier'];
+// CITY-LISTS-START
+const ON_CITIES = ['Barrie', 'Brampton', 'Burlington', 'Cambridge', 'Greater Sudbury', 'Guelph', 'Hamilton', 'Kingston', 'Kitchener', 'London', 'Markham', 'Mississauga', 'Niagara Falls', 'Oakville', 'Oshawa', 'Ottawa', 'Peterborough', 'Richmond Hill', 'Sault Ste. Marie', 'Thunder Bay', 'Timmins', 'Toronto', 'Vaughan', 'Whitby', 'Windsor'];
+const BC_CITIES = ['Abbotsford', 'Burnaby', 'Chilliwack', 'Coquitlam', 'Fort St. John', 'Kamloops', 'Kelowna', 'Langley', 'Maple Ridge', 'Nanaimo', 'Penticton', 'Prince George', 'Richmond', 'Squamish', 'Surrey', 'Vancouver', 'Vernon', 'Victoria'];
+const CA_CITIES = ['Bakersfield', 'Berkeley', 'Burbank', 'Chula Vista', 'Escondido', 'Folsom', 'Fremont', 'Fresno', 'Glendale', 'Long Beach', 'Los Angeles', 'Moreno Valley', 'Oakland', 'Ontario', 'Pasadena', 'Rancho Cordova', 'Riverside', 'Roseville', 'Sacramento', 'San Bernardino', 'San Diego', 'San Francisco', 'San Jose', 'Santa Monica'];
+const AB_CITIES = ['Calgary', 'Edmonton', 'Fort McMurray', 'Lethbridge', 'Red Deer', 'St. Albert'];
+const NS_CITIES = ['Cape Breton', 'Halifax'];
+const MA_CITIES = ['Boston', 'Brockton', 'Cambridge', 'Fall River', 'Lawrence', 'Lowell', 'Lynn', 'New Bedford', 'Newton', 'Quincy', 'Somerville', 'Springfield', 'Worcester'];
+const NY_CITIES = ['Albany', 'Babylon', 'Beacon', 'Brookhaven', 'Buffalo', 'Huntington', 'Islip', 'Kingston', 'Mount Vernon', 'New Rochelle', 'New York City', 'Newburgh', 'Oyster Bay', 'Poughkeepsie', 'Rochester', 'Saugerties', 'Smithtown', 'Southampton', 'Syracuse', 'White Plains', 'Yonkers'];
+const PA_CITIES = ['Allentown', 'Erie', 'Philadelphia', 'Pittsburgh'];
+const CO_CITIES = ['Aurora', 'Boulder', 'Colorado Springs', 'Denver', 'Fort Collins'];
+const VT_CITIES = ['Barre', 'Burlington', 'Montpelier', 'Rutland', 'South Burlington'];
 const MI_CITIES = ['Ann Arbor', 'Detroit', 'Grand Rapids', 'Lansing'];
 const NJ_CITIES = ['Atlantic City', 'Jersey City', 'Newark', 'Toms River'];
 const IL_CITIES = ['Aurora', 'Chicago', 'Naperville', 'Peoria'];
 const WA_CITIES = ['Bellevue', 'Seattle', 'Spokane', 'Tacoma', 'Vancouver'];
-const MN_CITIES = ['Duluth', 'Minneapolis', 'Rochester'];
+const MN_CITIES = ['Duluth', 'Minneapolis', 'Rochester', 'Saint Paul'];
+// CITY-LISTS-END
 // Kept for anything still referencing the old flat name.
 const CITIES = BC_CITIES.concat(ON_CITIES);
 

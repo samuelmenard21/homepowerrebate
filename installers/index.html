@@ -14,10 +14,10 @@
   gtag('config', 'G-W33G4TGRHD');
 </script>
 
-<meta name="description" content="Browse 660+ verified heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California. Pick your region, then">
+<meta name="description" content="Browse 1,300+ heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, and 11 US states. Pick your region, then">
 <link rel="canonical" href="https://homepowerrebate.com/installers/">
 <meta property="og:title" content="Heat Pump & Solar Installers by Region | HomePowerRebate Directory">
-<meta property="og:description" content="Browse 660+ verified heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California. Pick your region, then filter by service and city.">
+<meta property="og:description" content="Browse 1,300+ heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, and 11 US states. Pick your region, then filter by service and city.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://homepowerrebate.com/installers/">
 <meta property="og:image" content="https://homepowerrebate.com/og-image.jpg">
@@ -41,7 +41,7 @@
       "@type": "CollectionPage",
       "@id": "https://homepowerrebate.com/installers/#directory",
       "name": "Heat Pump & Solar Installer Directory",
-      "description": "Directory of 660+ heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California, all rated 4+ stars on Google, organized by region and city.",
+      "description": "Directory of 1,300+ heat pump and solar installers across BC, Ontario, Alberta, Nova Scotia, and 11 US states, all rated 4+ stars on Google, organized by region and city.",
       "url": "https://homepowerrebate.com/installers/",
       "isPartOf": { "@type": "WebSite", "name": "HomePowerRebate", "url": "https://homepowerrebate.com" },
       "about": [
@@ -230,6 +230,19 @@ mark { background:#fbe2b8; color:inherit; border-radius:2px; padding:0 1px; }
 .installer-desc { font-size:13px; color:var(--ink-soft); margin:12px 0; flex-grow:1; }
 .installer-cta { display:inline-block; color:var(--teal-deep); font-weight:600; font-size:13px; text-decoration:none; margin-top:12px; }
 .installer-cta:hover { color:var(--amber); }
+/* directory layout fixes: hide the results block until a region is picked, full-width FAQ text, button-style card link */
+.near-you.idle { display:none; }
+.near-you .empty-state { padding:24px 20px; }
+#stats-section { padding-bottom:0; }
+.stats-box { margin:8px 0 0; }
+.is-b5547f86 p, .is-efa99485 p, #top-rated-by-city p { max-width:none; }
+body .is-433de30b.is-433de30b.is-433de30b { font-size:16px; }
+.is-b5547f86 .faq-item p { font-size:16px; line-height:1.65; }
+.is-b5547f86 .faq-item p:first-child { font-size:17px; }
+.installer-card { position:relative; cursor:pointer; }
+.installer-card .installer-cta { align-self:flex-start; padding:9px 16px; border:2px solid var(--teal-deep); border-radius:999px; font-size:14px; background:#fff; }
+.installer-card:hover .installer-cta { background:var(--teal-deep); color:#fff; }
+
 
 .city-tabs { display:flex; gap:8px; flex-wrap:wrap; margin:24px 0; }
 .city-tab { background:#fff; border:1.5px solid var(--rule); color:var(--ink); padding:10px 16px; border-radius:8px; font-weight:600; font-size:13px; cursor:pointer; transition:all 0.2s; }
@@ -715,7 +728,7 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 <section class="hero">
   <div class="wrap">
     <h1>Find a Verified Installer Near You</h1>
-    <p>660+ heat pump and solar installers, all rated 4+ stars, across 7 regions and 96 cities in BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California.</p>
+    <p>1,300+ heat pump and solar installers, all rated 4+ stars on Google, across 15 states and provinces and 133 cities.</p>
     <p class="subnote">Three steps: pick your region, narrow by service, then browse or search by name.</p>
   </div>
 </section>
@@ -779,23 +792,28 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="stats-section">
   <div class="wrap">
     <div class="stats-box">
       <div class="stat">
-        <div class="stat-num">660+</div>
-        <div class="stat-label">Verified Installers</div>
+        <div class="stat-num">1,300+</div>
+        <div class="stat-label">Google-rated installers</div>
       </div>
       <div class="stat">
-        <div class="stat-num">36</div>
-        <div class="stat-label">Cities (BC &amp; ON)</div>
+        <div class="stat-num" id="stat-cities">133</div>
+        <div class="stat-label">Cities in 15 states and provinces</div>
       </div>
       <div class="stat">
-        <div class="stat-num">4.6★</div>
-        <div class="stat-label">Avg. Rating</div>
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">Average Google rating</div>
       </div>
     </div>
 
+  </div>
+</section>
+
+<section class="section near-you idle" id="near-you">
+  <div class="wrap">
     <h2>Installers Near You</h2>
     <div id="installers-container" class="installer-grid"></div>
     <div id="empty-state" class="empty-state">
@@ -844,7 +862,7 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
   <div class="wrap">
     <div class="eyebrow">Full Directory</div>
     <h2>Every Installer, By City</h2>
-    <p class="is-0b4a6e35">A complete, static list of all 765+ installer profiles in our directory across BC, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California (the interactive filters above cover the same list).</p>
+    <p class="is-0b4a6e35">A complete, static list of every installer in our directory across BC, Ontario, Alberta, Nova Scotia, and 11 US states (the interactive filters above cover the same list).</p>
     <div class="directory-search-row">
       <input type="text" id="directory-search" class="search-input" placeholder="Search this directory by name or city…" autocomplete="off" aria-label="Search the full installer directory">
       <span id="directory-search-count" class="search-count"></span>
@@ -2511,6 +2529,9 @@ const REGIONS = [
   { code: 'MN', name: 'Minnesota', cities: MN_CITIES, jsonBase: '/installers/json/mn', profileBase: '/installers/profiles/mn', ready: true },
 ];
 
+const cityStat = document.getElementById('stat-cities');
+if (cityStat) cityStat.textContent = REGIONS.reduce((n, r) => n + r.cities.length, 0);
+
 let allInstallers = [];
 let currentFilter = 'all';
 let currentCity = 'all';
@@ -2574,6 +2595,7 @@ function renderRegionGrid() {
       container.querySelectorAll('.region-card').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('city-select-section').style.display = 'block';
+      document.getElementById('near-you').classList.remove('idle');
       renderCityTabs();
       renderProgramFilters();
       if (!loadedRegions.has(code)) {
@@ -2678,6 +2700,7 @@ function render() {
 
   const container = document.getElementById('installers-container');
   const emptyState = document.getElementById('empty-state');
+  document.getElementById('near-you').classList.toggle('idle', !currentRegion && !currentSearch);
 
   if (filtered.length === 0) {
     container.innerHTML = '';

@@ -2676,18 +2676,22 @@ function render() {
 
   emptyState.style.display = 'none';
   container.innerHTML = filtered.map(installer => {
-    const profileUrl = installer.profileUrl || '#';
+    // Profile page when one exists; otherwise the installer's own site or Google listing (new tab), else a plain card.
+    const ext = installer.website || installer.gmaps_url || '';
+    const tag = installer.profileUrl ? 'a' : (ext ? 'a' : 'div');
+    const linkAttrs = installer.profileUrl ? `href="${installer.profileUrl}"` : (ext ? `href="${ext}" target="_blank" rel="nofollow noopener"` : '');
+    const ctaText = installer.profileUrl ? 'View profile →' : (installer.website ? 'Visit website →' : (installer.gmaps_url ? 'See on Google Maps →' : ''));
     const bhbcBadge = installer.bhbc_badge ? `<div style="display: inline-block; background: #e8f5f0; border: 1px solid #2d6a4f; border-radius: 6px; padding: 6px 10px; margin-top: 8px; color: #2d6a4f; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em;"><span style="color: #2d6a4f;">✓</span> ${installer.bhbc_badge}</div>` : '';
     return `
-      <a href="${profileUrl}" class="installer-card">
+      <${tag} ${linkAttrs} class="installer-card">
         <h3>${installer.name}</h3>
         <div class="installer-city">📍 ${installer.city}, ${installer.region || 'BC'}</div>
         ${installer.specialty ? `<span class="installer-specialty">${installer.specialty}</span>` : ''}
         ${bhbcBadge}
         <div class="installer-rating">${installer.rating.toFixed(1)}★ (${installer.reviews} reviews)</div>
         <p class="installer-desc">${installer.description || 'Installer serving ' + installer.city + '.'}</p>
-        <span class="installer-cta">View profile →</span>
-      </a>
+        ${ctaText ? `<span class="installer-cta">${ctaText}</span>` : ''}
+      </${tag}>
     `;
   }).join('');
 }

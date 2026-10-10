@@ -28,7 +28,8 @@
 <meta name="twitter:image" content="https://homepowerrebate.com/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap"></noscript>
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@graph": [
@@ -62,8 +63,8 @@
 <style>
 :root { --ink:#0a2a2e; --ink-soft:#1a3d42; --paper:#faf7f2; --paper-warm:#f5efe5; --teal:#0d4f5c; --teal-deep:#08363f; --amber:#d4751c; --amber-bright:#e88a2e; --green-money:#2d6a4f; --rule:#d9d0c1; }
 * { box-sizing:border-box; }
-body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter Tight',sans-serif; line-height:1.6; }
-h1,h2,h3 { font-family:'Fraunces',Georgia,serif; color:var(--teal-deep); }
+body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif; line-height:1.6; }
+h1,h2,h3 { font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif; color:var(--teal-deep); }
 a { color:var(--teal-deep); }
 .ip-wrap { max-width:760px; margin:0 auto; padding:32px 20px 80px; }
 .ip-breadcrumb { font-size:13px; color:#7a7264; margin-bottom:24px; }
@@ -76,7 +77,7 @@ a { color:var(--teal-deep); }
 .ip-reviewsum p { margin:0 0 6px; font-size:14.5px; }
 .ip-intro { font-size:16px; color:#3d3830; margin:18px 0 0; max-width:62ch; }
 .ip-rating { text-align:right; }
-.ip-rating-num { font-family:'Fraunces',Georgia,serif; font-size:32px; font-weight:700; color:var(--amber); line-height:1; }
+.ip-rating-num { font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif; font-size:32px; font-weight:700; color:var(--amber); line-height:1; }
 .ip-rating-count { font-size:13px; color:#7a7264; }
 .ip-actions { display:flex; gap:10px; flex-wrap:wrap; margin:22px 0 8px; }
 .ip-btn { padding:12px 22px; border-radius:999px; font-weight:700; font-size:15px; text-decoration:none; display:inline-block; }
@@ -114,12 +115,374 @@ a { color:var(--teal-deep); }
 .ip-quote h2 { color:#fff; font-size:22px; margin:0 0 8px; }
 .ip-quote p { color:#c9d8d5; font-size:14.5px; margin:0 0 20px; }
 .ip-quote-form { display:flex; flex-direction:column; gap:10px; max-width:380px; }
-.ip-quote-form input { padding:13px 14px; border-radius:9px; border:1.5px solid transparent; font-family:'Inter Tight',sans-serif; font-size:15px; }
+.ip-quote-form input { padding:13px 14px; border-radius:9px; border:1.5px solid transparent; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif; font-size:15px; }
 .ip-quote-form button { padding:13px; background:var(--amber); color:#fff; border:none; border-radius:999px; font-weight:700; font-size:15.5px; cursor:pointer; }
 .ip-quote-done { display:none; color:var(--amber-bright); font-weight:700; }
 </style>
+<style>
+/* CANONICAL-NAV-FOOTER-CSS-START */
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
+.nav-inner { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.logo-mark { width: 30px; height: 30px; background: var(--amber); border-radius: 50%; position: relative; box-shadow: 0 2px 8px rgba(212, 117, 28, 0.3); }
+.logo-mark::after { content: ''; position: absolute; inset: 8px; background: var(--paper); border-radius: 50%; }
+.logo-power { color: var(--amber); font-weight: 700; }
+.nav-pick { display: flex; align-items: center; gap: 8px; background: var(--teal-deep); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; transition: all 0.2s; }
+.nav-pick:hover { background: var(--amber); transform: translateY(-1px); }
+.nav-desktop-only { display: flex !important; }
+.nav-mobile-only { display: none !important; }
+@media (max-width: 768px) {
+  .nav-desktop-only { display: none !important; }
+  .nav-mobile-only { display: flex !important; flex-wrap: wrap; }
+  .nav-inner { padding: 14px 20px; flex-wrap: wrap; row-gap: 8px; gap: 8px; }
+  .logo { font-size: 16px !important; }
+  .logo-mark { width: 22px !important; height: 22px !important; }
+  .nav-mobile-only a { font-size: 13px !important; }
+  .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
+}
+@media (max-width: 400px) {
+  .nav-inner { justify-content: center !important; }
+  .logo { flex: 1 0 100%; justify-content: center; }
+  .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
+}
+.footer { background: var(--ink); color: rgba(250, 247, 242, 0.65); padding: 56px 28px 32px; }
+.footer-inner { max-width: 1180px; margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 32px; border-bottom: 1px solid rgba(250, 247, 242, 0.1); }
+.footer-brand { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 500; font-size: 22px; color: var(--paper); letter-spacing: -0.02em; margin-bottom: 12px; }
+.footer-tagline { font-size: 13px; color: rgba(250, 247, 242, 0.4); max-width: 320px; }
+.footer-col-title { font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250, 247, 242, 0.7); margin-bottom: 14px; }
+.footer-col-links { list-style: none; display: grid; gap: 8px; font-size: 14px; margin: 0; padding: 0; }
+.footer-col-links a { color: rgba(250, 247, 242, 0.45); text-decoration: none; }
+.footer-col-links a:hover { color: var(--amber); }
+.footer-bottom { padding-top: 24px; font-size: 12px; color: rgba(250, 247, 242, 0.35); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
+@media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
+.sticky-cta { display: none; }
+@media (min-width: 769px) {
+  .sticky-cta { position: fixed; right: 24px; bottom: 24px; z-index: 60; background: var(--amber); color: #fff; font-weight: 700; font-size: 15px; padding: 14px 22px; border-radius: 999px; text-decoration: none; box-shadow: 0 6px 20px rgba(10, 42, 46, 0.3); transform: translateY(140%); transition: transform .25s ease; }
+  .sticky-cta.show { display: block; transform: none; }
+  .sticky-cta.on { display: block; }
+}
+@media (max-width: 768px) {
+  .sticky-cta { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 60; background: var(--amber); color: #fff; text-align: center; font-weight: 700; font-size: 15px; padding: 14px 16px; border-radius: 999px; text-decoration: none; box-shadow: 0 6px 20px rgba(10, 42, 46, 0.3); transform: translateY(140%); transition: transform .25s ease; }
+  .sticky-cta.show { display: block; transform: none; }
+  .sticky-cta.on { display: block; }
+  body.has-sticky-cta { padding-bottom: 76px; }
+}
+
+/* city page opening: numbers right after the lead on phones, detail notes after them */
+@media (max-width: 700px) {
+  .hero:has(.hero-stat-strip) .wrap { display: flex; flex-direction: column; }
+  .hero:has(.hero-stat-strip) .wrap > * { order: 3; }
+  .hero:has(.hero-stat-strip) .wrap > h1 { order: 0; }
+  .hero:has(.hero-stat-strip) .wrap > .lead { order: 1; }
+  .hero:has(.hero-stat-strip) .wrap > .hero-stat-strip { order: 2; display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 8px !important; margin: 16px 0 18px !important; }
+  .hero-stat-strip > div { min-width: 0 !important; padding: 12px 8px !important; text-align: center; }
+  .hero-stat-strip > div > div:first-child { font-size: 18px !important; }
+}
+/* design pass 2026-09-29 */
+.hero strong, .hero b, header.hero strong { color: inherit; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 3px solid var(--amber-bright); outline-offset: 2px; border-radius: 4px; }
+.footer-col-links a { display: inline-block; padding: 5px 0; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+@media (max-width: 600px) {
+  .tw { overflow: visible !important; }
+  .tw table { min-width: 0 !important; display: block; width: 100%; }
+  .tw tbody { display: block; }
+  .tw tr { display: block; background: #fff; border: 1px solid #d9d0c1; border-radius: 12px; margin: 0 0 12px; padding: 10px 14px; }
+  .tw tr:has(th) { display: none; }
+  .tw td { display: block; border: 0 !important; padding: 6px 0 !important; }
+  .tw td::before { content: attr(data-label); display: block; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #6b8e7f; margin-bottom: 2px; }
+  .tw td:first-child { font-size: 17px; padding-top: 2px !important; }
+  .tw td:first-child::before { display: none; }
+  /* rebate tables on phones: amount directly under the name in green, no label rows for Amount/Rules */
+  .tw td[data-label="Amount"] { font-size: 19px; font-weight: 700; color: #2d6a4f; padding-top: 0 !important; }
+  .tw td[data-label="Amount"]::before, .tw td[data-label="Rules"]::before { display: none; }
+  .tw td[data-label="Rules"] { font-size: 15px; color: #1a3d42; padding-top: 2px !important; }
+}
+.hpr-toc { background: #fff; border: 1px solid #d9d0c1; border-radius: 12px; padding: 4px 16px; margin: 18px 0 26px; max-width: 720px; }
+.hpr-toc summary { cursor: pointer; font-weight: 700; font-size: 15px; padding: 12px 0; color: var(--teal-deep); list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.hpr-toc summary::-webkit-details-marker { display: none; }
+.hpr-toc summary::after { content: "+"; font-size: 20px; color: var(--amber); }
+.hpr-toc[open] summary::after { content: "\2212"; }
+.hpr-toc ol { margin: 0 0 12px 20px !important; padding: 0; }
+.hpr-toc li { margin: 0 !important; font-size: 15px !important; }
+.hpr-toc a { display: inline-block; padding: 6px 0; text-decoration: none !important; font-weight: 500 !important; color: var(--ink) !important; }
+.hpr-toc a:hover { color: var(--amber) !important; }
+h2[id] { scroll-margin-top: 84px; }
+/* hub showcase */
+.hs-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.hub-hero { background: var(--teal-deep, #08363f); color: var(--paper, #faf7f2); padding: 48px 0 40px; text-align: left; }
+header.hub-hero .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+header.hub-hero .eyebrow { font-size: 14px; color: var(--amber-bright, #e88a2e); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 18px; }
+header.hub-hero h1 { font-size: clamp(34px, 6vw, 54px); color: #fff; margin: 0 0 20px; text-align: left; }
+header.hub-hero .sub { font-size: clamp(17px, 2.4vw, 21px); color: rgba(250,247,242,.82); max-width: 640px; margin: 0 0 32px; }
+header.hub-hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+header.hub-hero .btn { display: inline-block; background: var(--amber, #d4751c); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1.5px solid transparent; }
+header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e); border-color: #d9d0c1; }
+.hub-fold { margin-top: 18px; }
+.hub-fold > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--teal-deep); color: #fff; font-weight: 600; font-size: 15px; }
+.hub-fold > summary::-webkit-details-marker { display: none; }
+.hub-fold > summary::after { content: "+"; font-size: 20px; line-height: 1; }
+.hub-fold[open] > summary::after { content: "\2212"; }
+.hub-fold[open] > summary { margin-bottom: 20px; }
+.hs-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 20px 0 26px; position: relative; z-index: 2; }
+@media (min-width: 900px) { .hs-stats { margin-top: -34px; } }
+.hs-stat { background: #fff; border: 1px solid #d9d0c1; border-radius: 14px; padding: 14px 10px; text-align: center; box-shadow: 0 8px 20px rgba(10,42,46,.09); }
+.hs-stat b { display: block; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 25px; line-height: 1.1; color: var(--teal-deep); }
+.hs-stat b small { display: block; font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 12px; font-weight: 600; color: var(--amber); margin-top: 2px; }
+.hs-stat span { display: block; font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; color: var(--ink-soft); margin-top: 4px; }
+.hs-sec { padding-top: 6px; padding-bottom: 20px; }
+.hs-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(24px, 4vw, 32px); color: var(--teal-deep); margin: 8px 0 6px; }
+.hs-sub { color: var(--ink-soft); margin: 0 0 16px; max-width: 680px; }
+.hs-ctl { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.hs-ctl input { flex: 1; min-width: 200px; padding: 12px 14px; border: 1px solid #d9d0c1; border-radius: 10px; font: inherit; font-size: 16px; background: #fff; }
+.hs-sort, .hs-more { font: inherit; font-size: 14px; font-weight: 600; border: 1px solid #d9d0c1; background: #fff; color: var(--ink); border-radius: 999px; padding: 8px 16px; min-height: 44px; cursor: pointer; }
+.hs-sort.on { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.hs-more { display: block; margin: 16px auto 0; background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; padding: 0 24px; }
+.hs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+.hs-city { display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid #d9d0c1; border-radius: 14px; padding: 12px 14px; text-decoration: none; color: var(--ink); transition: transform .15s, box-shadow .15s, border-color .15s; }
+.hs-city:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10,42,46,.1); border-color: var(--amber); }
+.hs-city.hide { display: none; }
+.hs-ring { --d: 0deg; flex: none; position: relative; width: 48px; height: 48px; border-radius: 50%; background: conic-gradient(var(--amber) var(--d), #eee 0); display: grid; place-items: center; }
+.hs-ring::before { content: ''; position: absolute; inset: 5px; background: #fff; border-radius: 50%; }
+.hs-ring b { position: relative; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 15px; color: var(--teal-deep); }
+.hs-cn b { display: block; font-size: 16px; }
+.hs-cn small { display: block; font-size: 12.5px; color: var(--ink-soft); line-height: 1.3; }
+.hs-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+.hs-tile { display: flex; gap: 12px; align-items: flex-start; background: var(--paper-warm); border: 1px solid #d9d0c1; border-radius: 14px; padding: 14px; text-decoration: none; color: var(--ink); transition: border-color .15s, transform .15s; }
+.hs-tile:hover { border-color: var(--amber); transform: translateY(-2px); }
+.hs-ti { font-size: 24px; line-height: 1; }
+.hs-tt em { display: block; font-style: normal; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); }
+.hs-tt b { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 22px; color: var(--green-money); }
+.hs-tt small { display: block; font-size: 12.5px; color: var(--ink-soft); }
+.hs-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.hs-chip { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; background: #fff; border: 1px solid #d9d0c1; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
+.hs-chip:hover { border-color: var(--amber); color: var(--amber); }
+.hs-note { margin: 14px 0 0; padding: 10px 14px; background: #fdf2f0; border: 1px solid #efc9c4; border-radius: 10px; font-size: 14px; color: #8a2a1c; }
+@media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
+
+/* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
+@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+/* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
+@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+/* skip link: first tab stop, visible on focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
+/* design pass 2026-10-09: touch targets, contrast, focus, motion, tables */
+/* contrast (WCAG AA): amber and sage text on light backgrounds, white-on-amber buttons, footer links */
+.btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
+a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
+.btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+[style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.src, p.src, p.src a { color: #6b6355 !important; }
+section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
+.finder-cat a, .city-card > a { color: #a4540a; }
+.footer .footer-col-links a { color: rgba(250, 247, 242, 0.8) !important; }
+.footer .footer-bottom, .footer .footer-bottom a, .footer .footer-tagline { color: rgba(250, 247, 242, 0.7) !important; }
+/* readable line length: running text stops at 72 characters */
+main p, article p, .wrap p, section p, .wrap li, article li, main li { max-width: 72ch; }
+.footer p, .footer li, nav p, nav li, table p, table li { max-width: none; }
+/* readable text floor: nothing below 13px */
+[style*="font-size:9px"],
+[style*="font-size: 9px"],
+[style*="font-size:9.5px"],
+[style*="font-size: 9.5px"],
+[style*="font-size:10px"],
+[style*="font-size: 10px"],
+[style*="font-size:10.5px"],
+[style*="font-size: 10.5px"],
+[style*="font-size:11px"],
+[style*="font-size: 11px"],
+[style*="font-size:11.5px"],
+[style*="font-size: 11.5px"],
+[style*="font-size:12px"],
+[style*="font-size: 12px"],
+[style*="font-size:12.5px"],
+[style*="font-size: 12.5px"],
+small,
+.small,
+.finder-cat,
+.finder-source,
+.program-status,
+.rr-eyebrow,
+.tag,
+.region-tag,
+.status-pill,
+.badge,
+.bf,
+.lbl,
+.src,
+.ps-lab,
+.ps-tag,
+.hf-pill,
+.section-eyebrow,
+.quick-answer-label,
+.popular-label,
+.rb-status,
+.region-count,
+.stat span,
+.hs-stat span,
+.installer-note,
+.rg { font-size: 13px !important; }
+ol[class*="crumb"] li, ol[class*="crumb"] a, nav[aria-label*="readcrumb"] li, nav[aria-label*="readcrumb"] a, .breadcrumb, .breadcrumb a, .breadcrumbs, .breadcrumbs a, .crumbs, .crumbs a { font-size: 13px !important; }
+.powerscore-table small, table small { font-size: 12px !important; }
+/* tap targets on phones */
+@media (max-width: 768px) {
+  nav.toc a, .fact-value a, .city-card > a, .hf-close a, h3 > a, h4 > a, ol[class*="crumb"] a, .breadcrumb a, .breadcrumbs a, .crumbs a, .installer-note a, p > a[href]:only-child { display: inline-flex; align-items: center; min-height: 44px; }
+  div > a[style*="border:1px solid var(--rule)"] { display: inline-flex !important; align-items: center; min-height: 40px; padding-top: 6px !important; padding-bottom: 6px !important; }
+  details > summary { padding: 12px 0; min-height: 44px; box-sizing: border-box; }
+}
+/* sibling-page links (builders emit them as inline spans) become tappable chips */
+div[style*="line-height:2.2"] { display: flex !important; flex-wrap: wrap; gap: 8px; line-height: 1.3 !important; }
+div[style*="line-height:2.2"] > span { margin: 0 !important; }
+div[style*="line-height:2.2"] > span > a { display: inline-flex; align-items: center; min-height: 40px; padding: 6px 14px; border: 1px solid var(--rule); border-radius: 999px; background: #fff; text-decoration: none; font-weight: 600; color: var(--teal-deep); }
+div[style*="line-height:2.2"] > span > a:hover { border-color: var(--amber); color: var(--amber); }
+html { scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
+h1, h2 { text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--amber-bright, #e88a2e); outline-offset: 3px; border-radius: 4px; }
+.nav-desktop-only a, .nav-mobile-only a { display: inline-flex; align-items: center; min-height: 44px; }
+.logo { min-height: 44px; }
+.nav-pick { min-height: 44px; }
+@media (max-width: 768px) {
+  .nav-inner { padding: 8px 16px; row-gap: 0; }
+  .nav-mobile-only { gap: 4px; }
+  .nav-mobile-only a { padding: 0 10px; }
+  .nav-pick { font-size: 13px !important; padding: 0 14px !important; }
+}
+.footer-tagline { color: rgba(250, 247, 242, 0.7); font-size: 14px; }
+.footer-col-title { font-size: 13px; color: rgba(250, 247, 242, 0.82); }
+.footer-col-links { gap: 2px; font-size: 15px; }
+.footer-col-links a { color: rgba(250, 247, 242, 0.78); display: inline-block; padding: 7px 0; min-height: 24px; }
+.footer-col-links a:hover { color: var(--amber-bright, #e88a2e); text-decoration: underline; }
+.footer-bottom { font-size: 13px; color: rgba(250, 247, 242, 0.68); }
+.footer-bottom a { color: inherit; text-decoration: underline; }
+@media (max-width: 700px) {
+  :not(.tw) > table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+/* CANONICAL-NAV-FOOTER-CSS-END */
+</style>
+<meta name="theme-color" content="#faf7f2">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<!-- CANONICAL-NAV-START -->
+<nav class="nav" aria-label="Main">
+  <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
+    <a href="/" class="logo">
+      <span class="logo-mark"></span>
+      <span>Home<span class="logo-power">Power</span>Rebate</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
+      <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
+      <a href="/get-quotes/?city=&province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Get my plan</a>
+      <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
+      <a href="/search/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Search</a>
+    </div>
+    <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
+      <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
+      <a href="/get-quotes/?city=&province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Get my plan</a>
+    </div>
+    <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
+      Pick your city
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div id="city-dropdown-modal" style="display:none; position:absolute; top:56px; right:20px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:49; max-width:300px; max-height:70vh; overflow-y:auto;">
+    <div style="padding:16px 16px 0;">
+      <a href="/powerscore/" style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; margin-bottom:12px; border-radius:8px; background:linear-gradient(135deg, var(--teal-deep), #08363f); color:#fff; text-decoration:none; font-weight:700; font-size:13px; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">
+        <span>&#9889; See your city's PowerScore</span>
+        <span style="opacity:.7;">&rarr;</span>
+      </a>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Ontario</button>
+        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">British Columbia</button>
+        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">California (US)</button>
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Alberta</button>
+        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Nova Scotia</button>
+        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Massachusetts</button>
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">New York</button>
+        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Pennsylvania</button>
+        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Colorado</button>
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Vermont</button>
+        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Michigan</button>
+        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">New Jersey</button>
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:12px;">
+        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Illinois</button>
+        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Washington</button>
+        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Minnesota</button>
+      </div>
+    </div>
+    <div style="padding:0 16px 16px;">
+    <div id="province-cities-on" style="display:grid; gap:8px;">
+      <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
+    </div>
+    <div id="province-cities-bc" style="display:none; gap:8px;">
+      <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
+    </div>
+    <div id="province-cities-ca" style="display:none; gap:8px;">
+      <a href="/us/ca/los-angeles/">Los Angeles</a><a href="/us/ca/sacramento/">Sacramento</a><a href="/us/ca/bay-area/">Bay Area</a><a href="/us/ca/san-diego/">San Diego</a><a href="/us/ca/inland-empire/">Inland Empire</a>
+    </div>
+    <div id="province-cities-ab" style="display:none; gap:8px;">
+      <a href="/ca/ab/calgary/">Calgary</a><a href="/ca/ab/edmonton/">Edmonton</a><a href="/ca/ab/red-deer/">Red Deer</a><a href="/ca/ab/lethbridge/">Lethbridge</a><a href="/ca/ab/st-albert/">St. Albert</a>
+    </div>
+    <div id="province-cities-ns" style="display:none; gap:8px;">
+      <a href="/ca/ns/halifax/">Halifax</a>
+    </div>
+    <div id="province-cities-ma" style="display:none; gap:8px;">
+      <a href="/us/ma/boston/">Boston</a><a href="/us/ma/worcester/">Worcester</a><a href="/us/ma/springfield/">Springfield</a><a href="/us/ma/cambridge/">Cambridge</a><a href="/us/ma/lowell/">Lowell</a><a href="/us/ma/brockton/">Brockton</a><a href="/us/ma/new-bedford/">New Bedford</a><a href="/us/ma/quincy/">Quincy</a><a href="/us/ma/lynn/">Lynn</a><a href="/us/ma/fall-river/">Fall River</a><a href="/us/ma/newton/">Newton</a><a href="/us/ma/somerville/">Somerville</a>
+    </div>
+    <div id="province-cities-ny" style="display:none; gap:8px;">
+      <a href="/us/ny/con-edison/new-york-city/">New York City</a><a href="/us/ny/con-edison/yonkers/">Yonkers</a><a href="/us/ny/con-edison/mount-vernon/">Mount Vernon</a><a href="/us/ny/con-edison/new-rochelle/">New Rochelle</a><a href="/us/ny/con-edison/white-plains/">White Plains</a><a href="/us/ny/pseg/brookhaven/">Brookhaven</a><a href="/us/ny/pseg/islip/">Islip</a><a href="/us/ny/pseg/babylon/">Babylon</a><a href="/us/ny/pseg/huntington/">Huntington</a><a href="/us/ny/pseg/smithtown/">Smithtown</a><a href="/us/ny/pseg/oyster-bay/">Oyster Bay</a><a href="/us/ny/pseg/southampton/">Southampton</a><a href="/us/ny/central-hudson/poughkeepsie/">Poughkeepsie</a><a href="/us/ny/central-hudson/newburgh/">Newburgh</a><a href="/us/ny/central-hudson/kingston/">Kingston</a><a href="/us/ny/central-hudson/beacon/">Beacon</a><a href="/us/ny/central-hudson/saugerties/">Saugerties</a><a href="/us/ny/national-grid/albany/">Albany</a><a href="/us/ny/national-grid/buffalo/">Buffalo</a><a href="/us/ny/national-grid/rochester/">Rochester</a><a href="/us/ny/national-grid/syracuse/">Syracuse</a>
+    </div>
+    <div id="province-cities-pa" style="display:none; gap:8px;">
+      <a href="/us/pa/philadelphia/">Philadelphia</a><a href="/us/pa/pittsburgh/">Pittsburgh</a><a href="/us/pa/allentown/">Allentown</a><a href="/us/pa/erie/">Erie</a>
+    </div>
+    <div id="province-cities-co" style="display:none; gap:8px;">
+      <a href="/us/co/denver/">Denver</a><a href="/us/co/colorado-springs/">Colorado Springs</a><a href="/us/co/aurora/">Aurora</a><a href="/us/co/fort-collins/">Fort Collins</a><a href="/us/co/boulder/">Boulder</a>
+    </div>
+    <div id="province-cities-vt" style="display:none; gap:8px;">
+      <a href="/us/vt/burlington/">Burlington</a><a href="/us/vt/south-burlington/">South Burlington</a><a href="/us/vt/rutland/">Rutland</a><a href="/us/vt/barre/">Barre</a><a href="/us/vt/montpelier/">Montpelier</a>
+    </div>
+    <div id="province-cities-mi" style="display:none; gap:8px;">
+      <a href="/us/mi/detroit/">Detroit</a><a href="/us/mi/grand-rapids/">Grand Rapids</a><a href="/us/mi/ann-arbor/">Ann Arbor</a><a href="/us/mi/lansing/">Lansing</a>
+    </div>
+    <div id="province-cities-nj" style="display:none; gap:8px;">
+      <a href="/us/nj/newark/">Newark</a><a href="/us/nj/jersey-city/">Jersey City</a><a href="/us/nj/toms-river/">Toms River</a><a href="/us/nj/atlantic-city/">Atlantic City</a>
+    </div>
+    <div id="province-cities-il" style="display:none; gap:8px;">
+      <a href="/us/il/chicago/">Chicago</a><a href="/us/il/aurora/">Aurora</a><a href="/us/il/naperville/">Naperville</a><a href="/us/il/peoria/">Peoria</a>
+    </div>
+    <div id="province-cities-wa" style="display:none; gap:8px;">
+      <a href="/us/wa/seattle/">Seattle</a><a href="/us/wa/spokane/">Spokane</a><a href="/us/wa/tacoma/">Tacoma</a><a href="/us/wa/vancouver/">Vancouver</a><a href="/us/wa/bellevue/">Bellevue</a>
+    </div>
+    <div id="province-cities-mn" style="display:none; gap:8px;">
+      <a href="/us/mn/minneapolis/">Minneapolis</a><a href="/us/mn/saint-paul/">Saint Paul</a><a href="/us/mn/rochester/">Rochester</a><a href="/us/mn/duluth/">Duluth</a>
+    </div>
+    </div>
+  </div>
+</nav>
+<!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <div class="ip-wrap">
   <p class="ip-breadcrumb"><a href="/">HomePowerRebate</a> / <a href="https://homepowerrebate.com/us/ny/pseg/brookhaven/">Brookhaven</a> / Therm-A-Trol</p>
 
@@ -216,6 +579,209 @@ a { color:var(--teal-deep); }
       });
   });
 })();
+</script>
+</main>
+<!-- CANONICAL-FOOTER-START -->
+<!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
+<section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
+  <div class="wrap" style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">
+    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
+    <h2 style="font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get the monthly rebate update</h2>
+    <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Once a month: new and changing rebate programs across every province and state we cover, plus what's new in heat pumps, solar and batteries. Short, sourced, no marketing.</p>
+    <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
+      <input type="email" id="newsletter-email" placeholder="your@email.com" required aria-label="Your email address" autocomplete="email" style="min-height: 46px; padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 16px; background: #fff; color: var(--ink);">
+      <input type="hidden" id="newsletter-city" value="">
+      <input type="hidden" id="newsletter-page" value="/installers/profiles/ny/brookhaven/therm-a-trol/">
+      <button type="submit" style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 15px; min-height: 46px; cursor: pointer; font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif;">Subscribe</button>
+      <p style="font-size: 13px; color: rgba(250, 247, 242, 0.78); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
+    </form>
+    <div id="newsletter-response" style="display: none; margin-top: 12px; padding: 12px; background: rgba(45, 106, 79, 0.2); border-radius: 6px; border: 1px solid rgba(45, 106, 79, 0.4); font-size: 13px;"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Home<span class="logo-power">Power</span>Rebate</div>
+        <p class="footer-tagline">Helping homeowners understand rebates and choose trusted installers. Real numbers. Your choice.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Canada</div>
+        <ul class="footer-col-links">
+          <li><a href="/ca/">All Provinces</a></li>
+          <li><a href="/ca/on/">Ontario</a></li>
+          <li><a href="/ca/bc/">British Columbia</a></li>
+          <li><a href="/ca/ab/">Alberta</a></li>
+          <li><a href="/ca/ns/">Nova Scotia</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">United States</div>
+        <ul class="footer-col-links">
+          <li><a href="/us/">All States</a></li>
+          <li><a href="/us/ca/">California</a></li>
+          <li><a href="/us/ma/">Massachusetts</a></li>
+          <li><a href="/us/ny/">New York</a></li>
+          <li><a href="/us/pa/">Pennsylvania</a></li>
+          <li><a href="/us/co/">Colorado</a></li>
+          <li><a href="/us/vt/">Vermont</a></li>
+          <li><a href="/us/mi/">Michigan</a></li>
+          <li><a href="/us/nj/">New Jersey</a></li>
+          <li><a href="/us/il/">Illinois</a></li>
+          <li><a href="/us/wa/">Washington</a></li>
+          <li><a href="/us/mn/">Minnesota</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Guides &amp; Tools</div>
+        <ul class="footer-col-links">
+          <li><a href="/powerscore/">PowerScore Rankings</a></li>
+          <li><a href="/programs/national-heat-pump-rebate/">Federal Heat Pump Rebate</a></li>
+          <li><a href="/programs/">Rebate Programs by Utility</a></li>
+          <li><a href="/technology/">Technology</a></li>
+          <li><a href="/installers/">Find an Installer</a></li>
+          <li><a href="/search/">Search the Site</a></li>
+          <li><a href="/get-quotes/">Get Quotes</a></li>
+          <li><a href="/get-quotes/?city=&province={{CURRENT_PROVINCE}}">Get My Plan</a></li>
+          <li><a href="/share-your-cost/">Share Your Cost</a></li>
+          <li><a href="/blog/">Full Blog</a></li>
+          <li><a href="/questions/">Rebate Questions</a></li>
+          <li><a href="/rebate-tracker/">Rebate Tracker</a></li>
+          <li><a href="/smart-thermostats/">Smart Thermostat Rebates</a></li>
+          <li><a href="/batteries/">Home Battery Guides</a></li>
+          <li><a href="/furnace-rebates/">Furnace &amp; AC Rebates</a></li>
+          <li><a href="/solar-quote-checker/">Solar Quote Checker</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-col-links">
+          <li><a href="/about">About</a></li>
+          <li><a href="/partners/">Partners</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 HomePowerRebate &middot; Independent guide. By <a href="/about" style="color:inherit;">Sam Menard</a>. <a href="https://www.facebook.com/profile.php?id=61592376033225" style="color:inherit; text-decoration:none;">Follow on Facebook</a></div>
+      <div>Made in Canada 🇨🇦</div>
+    </div>
+  </div>
+</footer>
+<a id="sticky-cta" class="sticky-cta" href="/get-quotes/">See your rebates and top installers</a>
+<!-- CANONICAL-FOOTER-END -->
+<script>
+/* CANONICAL-NAV-FOOTER-JS-START */
+function toggleCityDropdown() {
+  const modal = document.getElementById('city-dropdown-modal');
+  if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
+}
+function showProvinceCities(prov) {
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
+  regions.forEach(function(r) {
+    const panel = document.getElementById('province-cities-' + r);
+    const tab = document.getElementById('province-tab-' + r);
+    if (!panel || !tab) return;
+    panel.style.display = (prov === r) ? 'grid' : 'none';
+    tab.style.background = (prov === r) ? 'var(--teal-deep)' : '#fff';
+    tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
+  });
+}
+document.addEventListener('DOMContentLoaded', function () {
+  var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) showProvinceCities(m[1]);
+});
+document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('newsletter-email').value;
+  const city = document.getElementById('newsletter-city').value;
+  const page = document.getElementById('newsletter-page').value;
+  const responseEl = document.getElementById('newsletter-response');
+  const button = document.querySelector('#newsletter-form button');
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Subscribing...';
+  try {
+    const response = await fetch('https://leads.homepowerrebate.com/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, city, page, province: (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1]?.toUpperCase() || '' })
+    });
+    if (!response.ok) throw new Error('Subscription failed');
+    responseEl.textContent = "You're in! Check your inbox for a welcome email.";
+    responseEl.style.display = 'block';
+    document.getElementById('newsletter-form').style.display = 'none';
+  } catch (error) {
+    responseEl.textContent = 'Something went wrong — please try again or email us directly.';
+    responseEl.style.display = 'block';
+    responseEl.style.background = 'rgba(163, 64, 47, 0.2)';
+    responseEl.style.borderColor = 'rgba(163, 64, 47, 0.4)';
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+});
+(function () {
+  var b = document.getElementById('sticky-cta');
+  if (!b || /^\/(get-quotes|privacy|terms|unsubscribe)/.test(location.pathname)) return;
+  document.body.classList.add('has-sticky-cta');
+  b.classList.add('on');
+  var f = 0;
+  function upd() { f = 0; b.classList.toggle('show', window.scrollY > 600); }
+  window.addEventListener('scroll', function () { if (!f) { f = 1; requestAnimationFrame(upd); } }, { passive: true });
+  upd();
+})();
+(function () {
+  document.querySelectorAll('.tw table').forEach(function (t) {
+    var head = t.querySelector('tr');
+    var labels = head ? [].map.call(head.querySelectorAll('th'), function (x) { return x.textContent.trim(); }) : [];
+    t.querySelectorAll('tr').forEach(function (r) {
+      [].forEach.call(r.querySelectorAll('td'), function (c, i) { if (labels[i] && !c.hasAttribute('data-label')) c.setAttribute('data-label', labels[i]); });
+    });
+  });
+})();
+(function () {
+  var box = document.querySelector('article.article, section.body .wrap');
+  if (!box || box.querySelector('.hpr-toc')) return;
+  var hs = [].filter.call(box.querySelectorAll('h2'), function (h) { return !h.closest('footer, form, .cta, aside, nav') && h.textContent.trim().length > 3; });
+  var words = (box.innerText || '').split(/\s+/).length;
+  if (hs.length < 5 || words < 1200) return;
+  var used = {}, items = hs.map(function (h) {
+    var id = h.id || h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'section';
+    while (used[id] || (document.getElementById(id) && document.getElementById(id) !== h)) id += '-2';
+    used[id] = 1; h.id = id;
+    return '<li><a href="#' + id + '">' + h.textContent.trim().replace(/</g, '&lt;') + '</a></li>';
+  });
+  var d = document.createElement('details');
+  d.className = 'hpr-toc';
+  if (window.innerWidth > 700) d.open = true;
+  d.innerHTML = '<summary>On this page</summary><ol>' + items.join('') + '</ol>';
+  hs[0].parentNode.insertBefore(d, hs[0]);
+})();
+(function () {
+  var g = document.getElementById('hs-grid'); if (!g) return;
+  var cards = [].slice.call(g.children), q = '', sort = 'score', all = false, LIM = 12;
+  var more = document.getElementById('hs-more');
+  function apply() {
+    var vis = cards.filter(function (c) { return !q || c.dataset.name.indexOf(q) > -1; });
+    vis.sort(function (a, b) { return sort === 'az' ? a.dataset.name.localeCompare(b.dataset.name) : (b.dataset.score - a.dataset.score) || (a.dataset.order - b.dataset.order); });
+    var lim = (all || q) ? vis.length : LIM;
+    cards.forEach(function (c) { c.classList.add('hide'); });
+    vis.forEach(function (c, i) { g.appendChild(c); c.classList.toggle('hide', i >= lim); });
+    if (more) more.style.display = vis.length > lim ? '' : 'none';
+  }
+  document.getElementById('hs-q').addEventListener('input', function (e) { q = e.target.value.trim().toLowerCase(); apply(); });
+  [].forEach.call(document.querySelectorAll('.hs-sort'), function (b) { b.addEventListener('click', function () { sort = b.dataset.s; [].forEach.call(document.querySelectorAll('.hs-sort'), function (x) { x.classList.toggle('on', x === b); }); apply(); }); });
+  if (more) more.addEventListener('click', function () { all = true; apply(); });
+  apply();
+})();
+(function(){function o(){var h=location.hash&&document.getElementById(location.hash.slice(1));if(!h)return;var d=h.closest?h.closest('details.hub-fold'):null;if(d){d.open=true;h.scrollIntoView();}}
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
+(function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+/* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>
 </html>

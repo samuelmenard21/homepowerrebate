@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +551,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/co/">Colorado</a></li><li><a href="/us/co/fort-collins/">Fort Collins</a></li><li aria-current="page">Windows & Doors</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$3.75 to $5.00 per sq ft</div><h1>Window and Door Rebates in Fort Collins</h1><p>Fort Collins is the one Colorado city we cover with a utility rebate for windows and doors. Efficiency Works pays by the square foot of glass and door, with a higher rate for the newest ENERGY STAR windows. A combustion safety test is part of the deal.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -494,16 +565,16 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/co/smart-thermostats/">Colorado Smart Thermostat Rebates</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What window and door rebates pay in Fort Collins</h2>
+<h2 id="what-window-and-door-rebates-pay-in-fort-collins">What window and door rebates pay in Fort Collins</h2>
 <p>We read Efficiency Works' windows and doors sheet and its rebate page on October 5, 2026. The program serves residential electric customers of Fort Collins Utilities, and also Estes Park, Longmont and Loveland.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Windows and sliding doors, Tier 2</h4><div class="amount">$5.00 per sq ft</div><p style="font-size:14px;margin:8px 0 0;">ENERGY STAR version 7 for the Northern climate zone.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Windows and sliding doors, Tier 1</h4><div class="amount">$3.75 per sq ft</div><p style="font-size:14px;margin:8px 0 0;">ENERGY STAR version 6 for the Northern climate zone.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Exterior doors</h4><div class="amount">$3.75 per sq ft</div><p style="font-size:14px;margin:8px 0 0;">ENERGY STAR certified for the Northern climate zone.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Bundling bonus</h4><div class="amount">$2,000</div><p style="font-size:14px;margin:8px 0 0;">If you also install a heat pump within six months of the windows or doors. Water heaters do not count.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Rental bonus</h4><div class="amount">Double</div><p style="font-size:14px;margin:8px 0 0;">Rental properties served by Fort Collins Utilities get twice the retrofit rebate, with a 12-month lease and approval before work.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal tax credit (25C)</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">The credit for windows and doors ended for spending after December 31, 2025.</p></div>
 </div>
 <div class='highlight-box'><h4>Working it out</h4><p>Efficiency Works' own example is 20 windows of 20 square feet each, which is 400 square feet. At Tier 1 that is 400 x $3.75 = $1,500. At Tier 2 it is 400 x $5.00 = $2,000. Replace a patio slider of 40 square feet with a Tier 2 unit and that line is $200. The sheet notes no known 2026 rebate stacking for windows. Packages over $2,500 need approval before work begins.</p></div>
-<h2>What Fort Collins homes look like</h2><p>The American Community Survey (2020 to 2024) counts 74,558 homes in Fort Collins. About 52% of households own and 48% rent. About 52% of homes are detached houses, and only 31% were built before 1980, while 37% were built in 2000 or later.</p><p>With fewer old homes than Denver or Boulder, windows are not an obvious first step for many Fort Collins owners. The rebate is a reason to look at the glass you have, not a reason to replace windows that work.</p><h2>How the rebate is worked out</h2><p>The rebate is the glass or door area times the rate. Area is the area of the product, so measure the openings you plan to change and ask your installer for each unit's size. The sheet's example of twenty 20-square-foot windows is a big whole-house job. A few windows or one slider would earn a few hundred dollars.</p><h2>The rules</h2><p>Work must be done by an Efficiency Works listed service provider on a home at least a year old, with new products. The window must meet the ENERGY STAR Northern climate zone requirement, version 6 for Tier 1 and version 7 for Tier 2. A combustion safety test is required, which checks gas appliances for safe venting. You apply within 45 days of finishing, and a package above $2,500 needs approval first.</p><h2>What Fort Collins heats with</h2><p>About 66% of Fort Collins households heat with utility gas and 31% with electricity. The window rebate does not depend on your fuel. If your windows are drafty and you are planning a heat pump, the $2,000 bundling bonus applies when you do both within six months.</p><h2>Cold in Fort Collins</h2><p>Our climate file, built from ten Januaries (2015 to 2024), gives Fort Collins an average January low of about 16°F and a coldest day near minus 28°F. Ask your installer for each window's rating and for the ENERGY STAR version, since the higher rate needs version 7.</p>
+<h2 id="what-fort-collins-homes-look-like">What Fort Collins homes look like</h2><p>The American Community Survey (2020 to 2024) counts 74,558 homes in Fort Collins. About 52% of households own and 48% rent. About 52% of homes are detached houses, and only 31% were built before 1980, while 37% were built in 2000 or later.</p><p>With fewer old homes than Denver or Boulder, windows are not an obvious first step for many Fort Collins owners. The rebate is a reason to look at the glass you have, not a reason to replace windows that work.</p><h2 id="how-the-rebate-is-worked-out">How the rebate is worked out</h2><p>The rebate is the glass or door area times the rate. Area is the area of the product, so measure the openings you plan to change and ask your installer for each unit's size. The sheet's example of twenty 20-square-foot windows is a big whole-house job. A few windows or one slider would earn a few hundred dollars.</p><h2 id="the-rules">The rules</h2><p>Work must be done by an Efficiency Works listed service provider on a home at least a year old, with new products. The window must meet the ENERGY STAR Northern climate zone requirement, version 6 for Tier 1 and version 7 for Tier 2. A combustion safety test is required, which checks gas appliances for safe venting. You apply within 45 days of finishing, and a package above $2,500 needs approval first.</p><h2 id="what-fort-collins-heats-with">What Fort Collins heats with</h2><p>About 66% of Fort Collins households heat with utility gas and 31% with electricity. The window rebate does not depend on your fuel. If your windows are drafty and you are planning a heat pump, the $2,000 bundling bonus applies when you do both within six months.</p><h2 id="cold-in-fort-collins">Cold in Fort Collins</h2><p>Our climate file, built from ten Januaries (2015 to 2024), gives Fort Collins an average January low of about 16°F and a coldest day near minus 28°F. Ask your installer for each window's rating and for the ENERGY STAR version, since the higher rate needs version 7.</p>
 
 
-<h2>How to claim Fort Collins window and door rebates</h2>
+<h2 id="how-to-claim-fort-collins-window-and-door-rebate">How to claim Fort Collins window and door rebates</h2>
 <ol>
 <li>Check that Fort Collins Utilities is your electric company.</li>
 <li>Measure the openings and ask for each unit's ENERGY STAR version.</li>
@@ -512,20 +583,23 @@ h1, h2 { text-wrap: balance; }
 <li>Apply within 45 days of finishing, after the combustion safety test.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/co/" style="color:var(--teal,#0d4f5c); font-weight:600;">Colorado rebate calculator</a>, or <a href="/get-quotes/?city=fort-collins&amp;province=co" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Fort Collins</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much does Fort Collins pay for windows?</h3><p>$3.75 per square foot for ENERGY STAR version 6 windows and sliding doors, $5.00 for version 7, and $3.75 for exterior doors, from Efficiency Works' 2026 sheet.</p></div>
 <div class="faq-item"><h3>Is a combustion safety test required?</h3><p>Yes. The sheet requires a combustion safety test for windows and doors.</p></div>
 <div class="faq-item"><h3>Do other Colorado cities have a window rebate?</h3><p>We could not confirm a utility window rebate for Denver, Aurora, Boulder or Colorado Springs, so we do not list one.</p></div>
 <div class="faq-item"><h3>Can I combine with other rebates?</h3><p>The sheet says there is no known 2026 stacking for windows, but the $2,000 bundling bonus applies if you also install a heat pump within six months.</p></div>
 <div class="faq-item"><h3>Is there a federal tax credit?</h3><p>Not for 2026. It ended for spending after December 31, 2025.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See our <a href='/us/co/fort-collins/insulation/'>Fort Collins insulation page</a> and <a href='/us/co/fort-collins/heat-pump/'>Fort Collins heat pump page</a> for the other pieces of the bonus, or the <a href='/us/co/fort-collins/'>Fort Collins rebate hub</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 5, 2026: <a href="https://efficiencyworks.org/for-your-home-rebates-and-incentives/" target="_blank" rel="noopener">Efficiency Works home rebates (Fort Collins Utilities)</a>, <a href="https://efficiencyworks.org/wp-content/uploads/2025/02/EW_Windows-Incentives.pdf" target="_blank" rel="noopener">Efficiency Works windows and doors sheet</a>, <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS residential clean energy credit</a>. <a href="/us/co/fort-collins/">All Fort Collins rebates &rarr;</a> <a href="https://efficiencyworks.org/for-your-home-rebates-and-incentives/">Every Efficiency Works home rebate &rarr;</a></p>
 </div></article>
 <!-- STATE-US-CO-BATTERY-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/co/battery/">Colorado home battery rebates and incentives</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-CO-BATTERY-LINK-END -->
 <!-- STATE-US-CO-SOLAR-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/co/solar/">Colorado home solar rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-CO-SOLAR-LINK-END -->
 <!-- STATE-US-CO-EV-CHARGER-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/co/ev-charger/">Colorado home EV charger rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-CO-EV-CHARGER-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-window-and-door-rebates-pay-in-fort-collins">What window and door rebates pay in Fort Collins</a></li><li><a href="#what-fort-collins-homes-look-like">What Fort Collins homes look like</a></li><li><a href="#how-the-rebate-is-worked-out">How the rebate is worked out</a></li><li><a href="#the-rules">The rules</a></li><li><a href="#what-fort-collins-heats-with">What Fort Collins heats with</a></li><li><a href="#cold-in-fort-collins">Cold in Fort Collins</a></li><li><a href="#how-to-claim-fort-collins-window-and-door-rebate">How to claim Fort Collins window and door rebates</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=fort-collins&province=co">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Fort Collins where relevant -->
@@ -727,6 +801,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

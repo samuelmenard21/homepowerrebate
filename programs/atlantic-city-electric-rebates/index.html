@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,18 +551,18 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/programs/">Rebate programs</a></li><li aria-current="page">Atlantic City Electric</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Heat pumps up to $10,000</div><h1>Atlantic City Electric Rebates for Homeowners</h1><p>Atlantic City Electric serves about 547,000 customers across eight counties in southern New Jersey. It splits its home rebates into two tracks: a heating and cooling program for equipment upgrades, and an electrification program for homes leaving gas, oil or propane. Appliances have their own store. These are the 2026 figures from the company's pages, read in a browser on October 6, 2026.</p></div></section>
 <article class="article"><div class="wrap">
-<h2>What Atlantic City Electric pays in 2026</h2>
+<h2 id="what-atlantic-city-electric-pays-in-2026">What Atlantic City Electric pays in 2026</h2>
 <p>The company says its programs depend on available funding. Each card names the fact with the date and source link.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Standard heat pump</h4><div class="amount">$500 to $2,000</div><p style="font-size:14px;margin:8px 0 0;">$500 or $750 for a standard air source model by efficiency tier, $750 for a ductless mini-split, and $2,000 for a cold climate model from April 1, 2026 through June 30, 2027.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Electrification: leave gas, oil or propane</h4><div class="amount">Up to $10,000</div><p style="font-size:14px;margin:8px 0 0;">Up to $10,000 or 50% of project costs for a full switch with a cold climate heat pump, up to $5,000 or 50% for dual fuel, and up to $2,000 or 30% for a partial switch with a standard heat pump.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Panels, decommissioning and appliances for switchers</h4><div class="amount">$200 to $4,000</div><p style="font-size:14px;margin:8px 0 0;">Electric panel help up to $4,000 for income-qualified homes or $300 per circuit, removal of the old system at half of the cost up to $2,000, a heat pump dryer $200 and an induction stove $250 ($350 moderate-income).</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Heat pump water heater</h4><div class="amount">$750</div><p style="font-size:14px;margin:8px 0 0;">ENERGY STAR certified.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Smart thermostat</h4><div class="amount">$150</div><p style="font-size:14px;margin:8px 0 0;">With an HVAC job, for a limited time through June 30, 2027. Energy Wise Rewards adds up to $100.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Lower-income bonus</h4><div class="amount">$300 per unit</div><p style="font-size:14px;margin:8px 0 0;">Added for low- to moderate-income customers on each qualified piece of equipment.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Appliance rebates</h4><div class="amount">$25 to $300</div><p style="font-size:14px;margin:8px 0 0;">Dryer up to $300, washer up to $150, refrigerator up to $100, dehumidifier $40, room air conditioner $30, electric lawn equipment $25 to $75. Ends December 31, 2026 or earlier.</p></div>
 </div>
 
-<h2>Who Atlantic City Electric serves</h2><p>The company serves about 547,000 customers in eight counties of southern New Jersey, according to the state's Rate Counsel office. Atlantic City is in that region, but we found no official page that names the city, so confirm the name on your electric bill. Part of Ocean County is also in its territory. If your bill says PSE&amp;G or JCP&amp;L, use the <a href="/programs/pseg-rebates/">PSE&amp;G page</a> or the <a href="/programs/jcpl-rebates/">JCP&amp;L page</a>.</p><h2>Two tracks, one contractor</h2><p>HVAC equipment and electrical panels go through a licensed contractor who submits online within 90 days of purchase. Indoor appliances and lawn equipment you can submit yourself, also within 90 days, and the company mails a check within 45 days. The company has joint forms for customers who also buy gas rebates from South Jersey Gas, New Jersey Natural Gas or PSE&amp;G gas, so ask the contractor which form to use.</p><h2>The headline numbers</h2><p>The rebates page says "up to $1,300" for the standard HVAC program, and the appliance page says "up to $750." Neither is the full story. The heat pump line alone reaches $2,000, and the electrification program reaches $10,000. When you compare quotes, add the rows yourself from the tables in the cards above.</p><h2>What Atlantic City Electric does not pay</h2><p>We found no home battery rebate or rooftop solar rebate on the pages we read. State solar credits and net metering still apply to solar owners. We also found no weatherization rebate; Comfort Partners covers lower incomes at no cost. The federal credits ended after 2025.</p>
-<h2>How to claim an Atlantic City Electric rebate</h2>
+<h2 id="who-atlantic-city-electric-serves">Who Atlantic City Electric serves</h2><p>The company serves about 547,000 customers in eight counties of southern New Jersey, according to the state's Rate Counsel office. Atlantic City is in that region, but we found no official page that names the city, so confirm the name on your electric bill. Part of Ocean County is also in its territory. If your bill says PSE&amp;G or JCP&amp;L, use the <a href="/programs/pseg-rebates/">PSE&amp;G page</a> or the <a href="/programs/jcpl-rebates/">JCP&amp;L page</a>.</p><h2 id="two-tracks-one-contractor">Two tracks, one contractor</h2><p>HVAC equipment and electrical panels go through a licensed contractor who submits online within 90 days of purchase. Indoor appliances and lawn equipment you can submit yourself, also within 90 days, and the company mails a check within 45 days. The company has joint forms for customers who also buy gas rebates from South Jersey Gas, New Jersey Natural Gas or PSE&amp;G gas, so ask the contractor which form to use.</p><h2 id="the-headline-numbers">The headline numbers</h2><p>The rebates page says "up to $1,300" for the standard HVAC program, and the appliance page says "up to $750." Neither is the full story. The heat pump line alone reaches $2,000, and the electrification program reaches $10,000. When you compare quotes, add the rows yourself from the tables in the cards above.</p><h2 id="what-atlantic-city-electric-does-not-pay">What Atlantic City Electric does not pay</h2><p>We found no home battery rebate or rooftop solar rebate on the pages we read. State solar credits and net metering still apply to solar owners. We also found no weatherization rebate; Comfort Partners covers lower incomes at no cost. The federal credits ended after 2025.</p>
+<h2 id="how-to-claim-an-atlantic-city-electric-rebate">How to claim an Atlantic City Electric rebate</h2>
 <ol>
 <li>Confirm your electric bill says Atlantic City Electric.</li>
 <li>For heating, choose a licensed contractor and ask for both the standard and switching rebates on the quote.</li>
@@ -499,17 +570,17 @@ h1, h2 { text-wrap: balance; }
 <li>Call 1-866-353-0007 or email ACErebates@clearesult.com for help.</li>
 <li>Keep invoices, model numbers and photos.</li>
 </ol>
-<h2>Our pages for Atlantic City Electric customers</h2><ul><li><a href="/us/nj/atlantic-city/">Atlantic City</a>: rental-heavy, with common electric heat.</li>
+<h2 id="our-pages-for-atlantic-city-electric-customers">Our pages for Atlantic City Electric customers</h2><ul><li><a href="/us/nj/atlantic-city/">Atlantic City</a>: rental-heavy, with common electric heat.</li>
 <li><a href="/us/nj/atlantic-city/heat-pump/">Atlantic City heat pumps</a>: standard and switching rebates.</li>
 </ul>
-<h2>Guides</h2><ul><li><a href="/us/nj/">New Jersey rebates by state</a></li>
+<h2 id="guides">Guides</h2><ul><li><a href="/us/nj/">New Jersey rebates by state</a></li>
 <li><a href="/us/nj/water-heater/">Heat pump water heaters in New Jersey</a></li>
 <li><a href="/us/nj/smart-thermostats/">Smart thermostats in New Jersey</a></li>
 <li><a href="/us/nj/appliances/">Appliance rebates in New Jersey</a></li>
 <li><a href="/us/nj/insulation/">Weatherization help in New Jersey</a></li>
 </ul>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/nj/" style="color:var(--teal,#0d4f5c); font-weight:600;">New Jersey rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much does Atlantic City Electric pay for a heat pump?</h3><p>$500 to $750 for a standard model, $750 for a ductless mini-split, $2,000 for a cold climate model for a limited time, and up to $10,000 to switch from gas, oil or propane.</p></div>
 <div class="faq-item"><h3>Is there an income-based bonus?</h3><p>Yes. Low- to moderate-income customers get $300 more per qualified piece of equipment, and income-qualified homes can get up to $4,000 for a panel upgrade.</p></div>
 <div class="faq-item"><h3>When does the appliance program end?</h3><p>December 31, 2026, or earlier if funding runs out.</p></div>
@@ -518,6 +589,9 @@ h1, h2 { text-wrap: balance; }
 
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://homeenergysavings.atlanticcityelectric.com/residential/rebates/hvac-efficiency-program" target="_blank" rel="noopener">Atlantic City Electric HVAC Efficiency Program</a>, <a href="https://homeenergysavings.atlanticcityelectric.com/residential/electrification/eligible-upgrades" target="_blank" rel="noopener">Atlantic City Electric eligible upgrades</a>, <a href="https://ace.clearesult.com/shop-products" target="_blank" rel="noopener">Atlantic City Electric rebate store</a>, <a href="https://www.nj.gov/rpa/case/electric/about_atlantic_city_electric.html" target="_blank" rel="noopener">NJ Rate Counsel, Atlantic City Electric</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-atlantic-city-electric-pays-in-2026">What Atlantic City Electric pays in 2026</a></li><li><a href="#who-atlantic-city-electric-serves">Who Atlantic City Electric serves</a></li><li><a href="#two-tracks-one-contractor">Two tracks, one contractor</a></li><li><a href="#the-headline-numbers">The headline numbers</a></li><li><a href="#what-atlantic-city-electric-does-not-pay">What Atlantic City Electric does not pay</a></li><li><a href="#how-to-claim-an-atlantic-city-electric-rebate">How to claim an Atlantic City Electric rebate</a></li><li><a href="#our-pages-for-atlantic-city-electric-customers">Our pages for Atlantic City Electric customers</a></li><li><a href="#guides">Guides</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -719,6 +793,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

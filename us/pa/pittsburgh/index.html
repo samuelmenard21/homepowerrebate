@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,28 +551,28 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/pa/">Pennsylvania</a></li><li aria-current="page">Pittsburgh</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Duquesne Light rebates paused</div><h1>Home Rebates in Pittsburgh</h1><p>Pittsburgh is between rounds. Duquesne Light's rebate store said on October 5, 2026 that energy rebates are not available yet while the next round is built, and the state's big federal-funded rebate program has not launched either. What is open today is free weatherization for income-eligible households, plus Pennsylvania's net metering for solar. Here is how to plan around it for the city's 138,188 occupied homes.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What is open for Pittsburgh homes in 2026</h2>
+<h2 id="what-is-open-for-pittsburgh-homes-in-2026">What is open for Pittsburgh homes in 2026</h2>
 <p>Each card names the fact we keep on file, with the date we last read the official page. We show no Duquesne Light dollar amount because the utility does not publish one right now.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-limited">Paused</span><h4 aria-level="3">Duquesne Light rebates</h4><div class="amount">Not open right now</div><p style="font-size:14px;margin:8px 0 0;">The rebate store says energy rebates are not available yet while the next round is brought online. Call 1-888-928-8539 for the start date.</p></div><div class="rebate-card"><span class="program-status status-limited">Coming</span><h4>Penn Energy Savers</h4><div class="amount">Not launched</div><p style="font-size:14px;margin:8px 0 0;">The state's federal-funded HOMES and HEEHR rebates have no launch date or published amounts. The state is revising the design after new federal guidance in June 2026.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>ACTION-Housing weatherization</h4><div class="amount">Free</div><p style="font-size:14px;margin:8px 0 0;">Air sealing, insulation and heating work for households at or below 200% of poverty, in the City of Pittsburgh and Allegheny County.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>State Weatherization Assistance Program</h4><div class="amount">Free</div><p style="font-size:14px;margin:8px 0 0;">The state program behind ACTION-Housing's work. The state reports an average spend of $8,547 per household.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/us/pa/solar/'>Net metering for solar</a></h4><div class="amount">Retail-rate credit</div><p style="font-size:14px;margin:8px 0 0;">Systems up to 50 kW are credited at the full retail rate for the power they send to the grid. This is a policy, not a cash rebate.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>PA Sunshine Solar Program</h4><div class="amount">Closed</div><p style="font-size:14px;margin:8px 0 0;">The state solar rebate stopped taking applications in 2013.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal 25C and 25D credits</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">No federal credit applies to work done after December 31, 2025.</p></div>
 </div>
 
-<h2>Why we list no Duquesne Light amount</h2><p>Duquesne Light's own website showed a security check when our reader visited, and we do not get past those. Its rebate store, run by a contractor, loaded and says plainly that rebates are not available yet. Sites that still quote Duquesne Light dollar amounts are quoting older figures. We will not print them as if they were open. When the store reopens, the amounts will come from that page.</p><h2>Pittsburgh's housing</h2><p>The Census Bureau's American Community Survey (2020 to 2024) counts 161,908 homes in Pittsburgh. Detached houses are the biggest group at 43.6%, followed by 14.5% in buildings of two to four units and 14.1% attached homes. Pittsburgh has the oldest stock of the four Pennsylvania cities we cover on one measure: 48.3% of homes were built before 1940, and 83.0% before 1980. Only 9.6% date from 2000 or later.</p><h2>How Pittsburgh heats</h2><p>Gas heats 75.2% of households, electricity 21.0%, bottled gas 1.9% and fuel oil only 0.6%. Because oil is nearly absent, the oil-to-heat-pump switch that matters in Allentown is rare here. The better targets are the roughly one in five homes on electric heat, and any house whose old furnace is due. Renters are 52.3% of households, so many Pittsburgh decisions belong to a landlord.</p><h2>Free weatherization is the open door</h2><p>ACTION-Housing runs the state weatherization program for the City of Pittsburgh and Allegheny County. It is free for owners, and for renters with a landlord's sign-off, whose income is at or below 200% of poverty. The 2025 limits on its page are $30,300 for one person, $42,300 for two, $53,300 for three and $64,300 for four, with $11,000 for each extra person. You need three months in the home and your gas and electric bills. No lien is placed on the property. To ask for an application, call 412-281-2102.</p><h2>Timing your own upgrade</h2><p>If your furnace has died, do not wait for Duquesne Light. A dead heating system cannot wait. If you can plan, watch the rebate store before you buy. We do not know the next round's rules or dates, so keep the paid invoice and ask your installer for the model numbers and AHRI certificate in writing, in case you can claim later.</p><h2>Winter in Pittsburgh</h2><p>Pittsburgh's average January low is about -5.1°C (22°F), and the coldest reading in our ten years of data was -29.2°C, the lowest of our four Pennsylvania cities. Choose a cold-climate heat pump and ask how the system handles those nights.</p>
-<h2>Every rebate guide for Pittsburgh</h2><ul></ul>
-<h2>Top-rated installers in Pittsburgh</h2><p>Ranked by Google reviews (minimum five). We don't take referral fees or paid placements. Ask each installer whether they have worked under Duquesne Light's rebate program before.</p>
+<h2 id="why-we-list-no-duquesne-light-amount">Why we list no Duquesne Light amount</h2><p>Duquesne Light's own website showed a security check when our reader visited, and we do not get past those. Its rebate store, run by a contractor, loaded and says plainly that rebates are not available yet. Sites that still quote Duquesne Light dollar amounts are quoting older figures. We will not print them as if they were open. When the store reopens, the amounts will come from that page.</p><h2 id="pittsburgh-s-housing">Pittsburgh's housing</h2><p>The Census Bureau's American Community Survey (2020 to 2024) counts 161,908 homes in Pittsburgh. Detached houses are the biggest group at 43.6%, followed by 14.5% in buildings of two to four units and 14.1% attached homes. Pittsburgh has the oldest stock of the four Pennsylvania cities we cover on one measure: 48.3% of homes were built before 1940, and 83.0% before 1980. Only 9.6% date from 2000 or later.</p><h2 id="how-pittsburgh-heats">How Pittsburgh heats</h2><p>Gas heats 75.2% of households, electricity 21.0%, bottled gas 1.9% and fuel oil only 0.6%. Because oil is nearly absent, the oil-to-heat-pump switch that matters in Allentown is rare here. The better targets are the roughly one in five homes on electric heat, and any house whose old furnace is due. Renters are 52.3% of households, so many Pittsburgh decisions belong to a landlord.</p><h2 id="free-weatherization-is-the-open-door">Free weatherization is the open door</h2><p>ACTION-Housing runs the state weatherization program for the City of Pittsburgh and Allegheny County. It is free for owners, and for renters with a landlord's sign-off, whose income is at or below 200% of poverty. The 2025 limits on its page are $30,300 for one person, $42,300 for two, $53,300 for three and $64,300 for four, with $11,000 for each extra person. You need three months in the home and your gas and electric bills. No lien is placed on the property. To ask for an application, call 412-281-2102.</p><h2 id="timing-your-own-upgrade">Timing your own upgrade</h2><p>If your furnace has died, do not wait for Duquesne Light. A dead heating system cannot wait. If you can plan, watch the rebate store before you buy. We do not know the next round's rules or dates, so keep the paid invoice and ask your installer for the model numbers and AHRI certificate in writing, in case you can claim later.</p><h2 id="winter-in-pittsburgh">Winter in Pittsburgh</h2><p>Pittsburgh's average January low is about -5.1°C (22°F), and the coldest reading in our ten years of data was -29.2°C, the lowest of our four Pennsylvania cities. Choose a cold-climate heat pump and ask how the system handles those nights.</p>
+<h2 id="every-rebate-guide-for-pittsburgh">Every rebate guide for Pittsburgh</h2><ul></ul>
+<h2 id="top-rated-installers-in-pittsburgh">Top-rated installers in Pittsburgh</h2><p>Ranked by Google reviews (minimum five). We don't take referral fees or paid placements. Ask each installer whether they have worked under Duquesne Light's rebate program before.</p>
 <div class="installer-card"><div><div class="name">PGX Heating And Cooling</div><div class="stars">&#9733; 5.0 (227 Google reviews)</div></div><a class="site-link" href="https://www.pgxheatingandcooling.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">MRT HVAC Contracting</div><div class="stars">&#9733; 5.0 (111 Google reviews)</div></div><a class="site-link" href="https://www.mrtpgh.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">White Heating</div><div class="stars">&#9733; 4.9 (1,576 Google reviews)</div></div><a class="site-link" href="https://www.whiteheating.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Armstrong Comfort Solutions</div><div class="stars">&#9733; 4.9 (1,460 Google reviews)</div></div><a class="site-link" href="https://armstrongcomfort.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">McVay Plumbing Heating Cooling</div><div class="stars">&#9733; 4.9 (609 Google reviews)</div></div><a class="site-link" href="https://www.mcvayplumbing.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/pa/pittsburgh/heat-pump/">See all Pittsburgh installers &rarr;</a></p>
-<h2>What to do in Pittsburgh</h2>
+<h2 id="what-to-do-in-pittsburgh">What to do in Pittsburgh</h2>
 <ol>
 <li>Check your income against ACTION-Housing's limits. If you qualify, request a weatherization application.</li>
 <li>Call Duquesne Light on 1-888-928-8539 and ask when its rebate store reopens.</li>
@@ -510,19 +581,22 @@ h1, h2 { text-wrap: balance; }
 <li>Join the update list on pennenergysavers.com for the state program.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/pa/" style="color:var(--teal,#0d4f5c); font-weight:600;">Pennsylvania rebate calculator</a>, or <a href="/get-quotes/?province=pa&amp;city=pittsburgh" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Pittsburgh</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Does Duquesne Light pay for a heat pump in 2026?</h3><p>Not right now. Its rebate store says energy rebates are not available yet while the next round is brought online. We list no amount until it publishes one.</p></div>
 <div class="faq-item"><h3>Is there free help in Pittsburgh?</h3><p>Yes. ACTION-Housing runs the state weatherization program for the City of Pittsburgh and Allegheny County, free for households at or below 200% of the federal poverty level.</p></div>
 <div class="faq-item"><h3>When will Penn Energy Savers open?</h3><p>The state has not said. DEP says it is changing the design after new federal guidance from June 1, 2026, and it publishes no launch date or rebate amounts.</p></div>
 <div class="faq-item"><h3>Is there a solar rebate in Pittsburgh?</h3><p>No cash rebate. The PA Sunshine program closed in 2013 and the federal credit ended after 2025. Pennsylvania does credit solar exports at the retail rate for systems up to 50 kW.</p></div>
 <div class="faq-item"><h3>Can I claim the federal heat pump credit?</h3><p>No. Federal credits for heat pumps, insulation, solar and batteries ended for spending after December 31, 2025.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Read the <a href='/us/pa/solar/'>Pennsylvania solar page</a> if panels are on your mind, or run the <a href='/calculator/pa/'>Pennsylvania rebate calculator</a>. We will add Pittsburgh heat pump and thermostat pages when Duquesne Light publishes its amounts.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 5, 2026: <a href="https://duquesne.clearesult.com/" target="_blank" rel="noopener">Duquesne Light rebate store</a>, <a href="https://actionhousing.org/our-services/weatherization/" target="_blank" rel="noopener">ACTION-Housing: Weatherization</a>, <a href="https://dced.pa.gov/programs/weatherization-assistance-program-wap/" target="_blank" rel="noopener">Pennsylvania DCED: Weatherization Assistance Program</a>, <a href="https://www.pa.gov/agencies/dep/residents/saving-energy/inflation-reduction-act" target="_blank" rel="noopener">Pennsylvania DEP: Inflation Reduction Act programs</a>, <a href="https://www.pa.gov/agencies/dep/residents/solar-energy-resource-hub/residents" target="_blank" rel="noopener">Pennsylvania DEP: solar for residents</a>, <a href="https://data.census.gov/table/ACSDT5Y2024.B25040" target="_blank" rel="noopener">US Census Bureau, ACS 5-year estimates 2020 to 2024</a>. <a href="/us/pa/pittsburgh/">All Pittsburgh rebates &rarr;</a> <a href="/us/pa/">Every Pennsylvania rebate &rarr;</a></p>
 </div></article>
 <!-- STATE-US-PA-BATTERY-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/pa/battery/">Pennsylvania home battery rebates and incentives</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-PA-BATTERY-LINK-END -->
 <!-- STATE-US-PA-SOLAR-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/pa/solar/">Pennsylvania home solar rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-PA-SOLAR-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-is-open-for-pittsburgh-homes-in-2026">What is open for Pittsburgh homes in 2026</a></li><li><a href="#why-we-list-no-duquesne-light-amount">Why we list no Duquesne Light amount</a></li><li><a href="#pittsburgh-s-housing">Pittsburgh&#x27;s housing</a></li><li><a href="#how-pittsburgh-heats">How Pittsburgh heats</a></li><li><a href="#free-weatherization-is-the-open-door">Free weatherization is the open door</a></li><li><a href="#timing-your-own-upgrade">Timing your own upgrade</a></li><li><a href="#winter-in-pittsburgh">Winter in Pittsburgh</a></li><li><a href="#every-rebate-guide-for-pittsburgh">Every rebate guide for Pittsburgh</a></li><li><a href="#top-rated-installers-in-pittsburgh">Top-rated installers in Pittsburgh</a></li><li><a href="#what-to-do-in-pittsburgh">What to do in Pittsburgh</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=pittsburgh&province=pa">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Pittsburgh where relevant -->
@@ -724,6 +798,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

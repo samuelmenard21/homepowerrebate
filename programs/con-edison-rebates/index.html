@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,18 +551,18 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/programs/">Rebate programs</a></li><li aria-current="page">Con Edison</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Heat pumps up to $11,000</div><h1>Con Edison Home Rebates</h1><p>Con Edison runs NYS Clean Heat for New York City and Westchester. From September 1, 2026 the top single-family air-source amount is $11,000, but it needs a disadvantaged-community address, a Weatherized Tier home and a full replacement of the old heating system. Most homes land well below that, so here is how the table actually reads.</p></div></section>
 <article class="article"><div class="wrap">
-<h2>What Con Edison pays in 2026</h2>
+<h2 id="what-con-edison-pays-in-2026">What Con Edison pays in 2026</h2>
 <p>The amounts below are from the statewide NYS Clean Heat manual, version 3. Con Edison takes the incentive off your invoice through a participating contractor, so you never file a rebate form yourself.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Air-source heat pump, single-family</h4><div class="amount">$2,500 to $11,000</div><p style="font-size:14px;margin:8px 0 0;">Category 2a with integrated controls pays $2,500 outside a disadvantaged community and $4,500 inside one. Category 2b, which removes the old heating system, pays $7,000 or $8,000. The Weatherized Tier lifts 2b to $10,000 or $11,000. Con Edison pays no Weatherized Tier on 2a projects that use integrated controls.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Partial-load heat pump</h4><div class="amount">$4,000 single-family, $1,500 apartment</div><p style="font-size:14px;margin:8px 0 0;">For a system that covers part of the heating load instead of all of it, such as a few mini-splits added to a house that keeps its boiler.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Ground-source (geothermal)</h4><div class="amount">$25,000 to $40,000</div><p style="font-size:14px;margin:8px 0 0;">Whole-building retrofit rates: $25,000 outside a disadvantaged community and $35,000 inside, rising to $30,000 and $40,000 in the Weatherized Tier. New construction pays $15,000 or $20,000 per home. The scope has to cover every unit in the one-to-four-unit building.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Heat pump water heater</h4><div class="amount">$1,300, or $1,500 until Nov 30</div><p style="font-size:14px;margin:8px 0 0;">A limited-time offer pays $1,500 for applications submitted September 1 to November 30, 2026. The unit has to be ENERGY STAR with a UEF rating.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Steady Use Rate for heat pump homes</h4><div class="amount">About 10% average savings</div><p style="font-size:14px;margin:8px 0 0;">Con Edison's own estimate for heat pump customers who switch rate plans. We have not checked it independently, so treat it as the utility's claim.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>SmartCharge New York</h4><div class="amount">10 cents/kWh off-peak</div><p style="font-size:14px;margin:8px 0 0;">No hardware rebate for a home charger. Con Edison pays for charging between midnight and 8am, with bonuses for staying off the grid on summer weekday afternoons.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>PowerReady (light-duty)</h4><div class="amount">Closed to new Level 2 applications</div><p style="font-size:14px;margin:8px 0 0;">Con Edison stopped taking new Level 2 applications on April 22, 2026.</p></div>
 </div>
 <p>The 70% cap in the manual applies on top of the table: an incentive cannot exceed 70% of project cost, or 85% in a disadvantaged community. A small mini-split job can therefore pay less than the headline number.</p>
-<h2>Reading the Category 2a, 2b and 3 labels</h2><p>The labels come from the manual and decide your amount. Category 2a is a full-load heat pump that keeps the existing heating system as backup but uses integrated controls, so the heat pump runs first. Category 2b is a full-load heat pump where the old system is decommissioned. Pay attention to this at the quote stage: a contractor who quotes 2a to save you money on the old boiler may be leaving $4,500 on the table if your home qualifies for 2b in the Weatherized Tier.</p><p>Apartments, meaning whole units in a larger building, receive about half of the single-family figure. A Manhattan co-op owner should read the apartment column, not the headline, and ask whether the building board needs to approve the outdoor condenser placement before any incentive is requested.</p><h2>The Weatherized Tier, in plain terms</h2><p>A home reaches the Weatherized Tier by any one of three routes: it was built after 2010, it took part in an approved weatherization program such as Con Edison's Weather Ready and Sealed, or it passes a heating-load test. For a pre-war brownstone or a 1950s Westchester colonial the second and third routes matter most. The practical order of work is sealing first, then the heat pump, and the invoice records the order. By March 1, 2028 the program is due to make weatherization a prerequisite, so sealing now is not wasted effort.</p><h2>What Con Edison does not do</h2><p>The Clean Heat table only applies to homes Con Edison serves electrically, and it covers heat pumps and water heaters, not solar panels. Solar incentives for income-eligible households run through NYSERDA's NY-Sun program, and our <a href="/us/ny/">New York hub</a> covers them. If your home is on the Long Island grid, the utility is PSEG Long Island, which has its own table.</p><p>The program also pays only for systems sized to the whole home, with a Manual J load calculation behind them. A contractor who skips the calculation cannot submit the job, so ask to see it before you sign.</p><h2>Income-based help sits outside this table</h2><p>Households that qualify as low or moderate income may do better through NYSERDA's EmPower+ program, which pays for free or discounted upgrades rather than a per-unit rebate. The two can sometimes be combined, but rules on stacking change, so ask the contractor which program administers your job first.</p>
-<h2>How to claim Con Edison Clean Heat</h2>
+<h2 id="reading-the-category-2a-2b-and-3-labels">Reading the Category 2a, 2b and 3 labels</h2><p>The labels come from the manual and decide your amount. Category 2a is a full-load heat pump that keeps the existing heating system as backup but uses integrated controls, so the heat pump runs first. Category 2b is a full-load heat pump where the old system is decommissioned. Pay attention to this at the quote stage: a contractor who quotes 2a to save you money on the old boiler may be leaving $4,500 on the table if your home qualifies for 2b in the Weatherized Tier.</p><p>Apartments, meaning whole units in a larger building, receive about half of the single-family figure. A Manhattan co-op owner should read the apartment column, not the headline, and ask whether the building board needs to approve the outdoor condenser placement before any incentive is requested.</p><h2 id="the-weatherized-tier-in-plain-terms">The Weatherized Tier, in plain terms</h2><p>A home reaches the Weatherized Tier by any one of three routes: it was built after 2010, it took part in an approved weatherization program such as Con Edison's Weather Ready and Sealed, or it passes a heating-load test. For a pre-war brownstone or a 1950s Westchester colonial the second and third routes matter most. The practical order of work is sealing first, then the heat pump, and the invoice records the order. By March 1, 2028 the program is due to make weatherization a prerequisite, so sealing now is not wasted effort.</p><h2 id="what-con-edison-does-not-do">What Con Edison does not do</h2><p>The Clean Heat table only applies to homes Con Edison serves electrically, and it covers heat pumps and water heaters, not solar panels. Solar incentives for income-eligible households run through NYSERDA's NY-Sun program, and our <a href="/us/ny/">New York hub</a> covers them. If your home is on the Long Island grid, the utility is PSEG Long Island, which has its own table.</p><p>The program also pays only for systems sized to the whole home, with a Manual J load calculation behind them. A contractor who skips the calculation cannot submit the job, so ask to see it before you sign.</p><h2 id="income-based-help-sits-outside-this-table">Income-based help sits outside this table</h2><p>Households that qualify as low or moderate income may do better through NYSERDA's EmPower+ program, which pays for free or discounted upgrades rather than a per-unit rebate. The two can sometimes be combined, but rules on stacking change, so ask the contractor which program administers your job first.</p>
+<h2 id="how-to-claim-con-edison-clean-heat">How to claim Con Edison Clean Heat</h2>
 <ol>
 <li>Confirm Con Edison is your electric utility: look for it on your bill. Gas service from Con Edison does not matter here, only electric.</li>
 <li>Ask for quotes from a NYS Clean Heat participating contractor and ask which category (2a, 2b or partial) and which tier each quote targets.</li>
@@ -499,17 +570,17 @@ h1, h2 { text-wrap: balance; }
 <li>Say whether you want the Weatherized Tier, and ask the contractor to document which of the three routes your home uses.</li>
 <li>The contractor applies the incentive as a discount on your invoice. Keep the final invoice and the commissioning record.</li>
 </ol>
-<h2>Our pages for Con Edison customers</h2><ul><li><a href="/us/ny/con-edison/new-york-city/">New York City</a>: Con Edison electric service across the five boroughs.</li>
+<h2 id="our-pages-for-con-edison-customers">Our pages for Con Edison customers</h2><ul><li><a href="/us/ny/con-edison/new-york-city/">New York City</a>: Con Edison electric service across the five boroughs.</li>
 <li><a href="/us/ny/con-edison/yonkers/">Yonkers</a>: Westchester city on Con Edison.</li>
 <li><a href="/us/ny/con-edison/white-plains/">White Plains</a>: County seat, Con Edison electric.</li>
 <li><a href="/us/ny/con-edison/new-rochelle/">New Rochelle</a>: Con Edison electric.</li>
 <li><a href="/us/ny/con-edison/mount-vernon/">Mount Vernon</a>: Con Edison electric.</li>
 </ul>
-<h2>Guides</h2><ul><li><a href="/us/ny/">New York rebate hub</a></li>
+<h2 id="guides">Guides</h2><ul><li><a href="/us/ny/">New York rebate hub</a></li>
 <li><a href="/programs/nys-clean-heat/">NYS Clean Heat explained</a></li>
 </ul>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ny/" style="color:var(--teal,#0d4f5c); font-weight:600;">New York rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>What is the most Con Edison pays for a heat pump?</h3><p>For single-family air-source, $11,000, which needs a disadvantaged-community address, the Weatherized Tier and decommissioning of the old system (Category 2b). For ground-source, up to $40,000 for a whole-building retrofit under the same conditions.</p></div>
 <div class="faq-item"><h3>Do I apply to Con Edison myself?</h3><p>No. A participating contractor applies the incentive as an instant discount on your invoice.</p></div>
 <div class="faq-item"><h3>Is a heat pump water heater included?</h3><p>Yes. $1,300, or $1,500 for applications submitted September 1 to November 30, 2026, on an ENERGY STAR unit.</p></div>
@@ -518,6 +589,9 @@ h1, h2 { text-wrap: balance; }
 
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://visionelements.customerapplication.com/Framework/Ny_statewide/NYS-Clean-Heat-Program-Manual.Pdf" target="_blank" rel="noopener">NYS Clean Heat Program Manual, version 3</a>, <a href="https://cleanheat.ny.gov/" target="_blank" rel="noopener">NYS Clean Heat, program overview</a>, <a href="https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-heating-and-cooling-technology-for-renters-homeowners/save-on-a-central-air-source-heat-pump" target="_blank" rel="noopener">Con Edison, central air-source heat pump incentive</a>, <a href="https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program" target="_blank" rel="noopener">NYSERDA EmPower+</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-con-edison-pays-in-2026">What Con Edison pays in 2026</a></li><li><a href="#reading-the-category-2a-2b-and-3-labels">Reading the Category 2a, 2b and 3 labels</a></li><li><a href="#the-weatherized-tier-in-plain-terms">The Weatherized Tier, in plain terms</a></li><li><a href="#what-con-edison-does-not-do">What Con Edison does not do</a></li><li><a href="#income-based-help-sits-outside-this-table">Income-based help sits outside this table</a></li><li><a href="#how-to-claim-con-edison-clean-heat">How to claim Con Edison Clean Heat</a></li><li><a href="#our-pages-for-con-edison-customers">Our pages for Con Edison customers</a></li><li><a href="#guides">Guides</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -719,6 +793,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

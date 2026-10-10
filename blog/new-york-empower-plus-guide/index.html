@@ -212,6 +212,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -514,7 +585,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">EmPower+ for New York: Free or Cheap Heat Pump Installation</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -530,10 +601,10 @@ h1, h2 { text-wrap: balance; }
   <div class="wrap">
     <div class="callout" style="border-left:4px solid var(--amber); background:#fff; padding:16px 18px; border-radius:10px; margin:18px 0;"><strong>Short answer:</strong> EmPower+ is NYSERDA&rsquo;s program for lower-income New Yorkers, open statewide to owners <em>and renters</em> of 1&ndash;4 family homes. Low-income households get upgrades at no cost, up to <strong>$12,000 upstate or $14,000 downstate</strong>. Moderate-income households get <strong>50% covered, up to $6,000 upstate or $7,000 downstate</strong>. It&rsquo;s also how New York delivers the federal HEAR/HOMES rebates.</div>
 
-    <h2>Who qualifies for EmPower+?</h2>
+    <h2 id="who-qualifies-for-empower">Who qualifies for EmPower+?</h2>
     <p>EmPower+ is for households that meet NYSERDA&rsquo;s income limits, which depend on your county and how many people live with you. It covers owners and renters of one- to four-family homes, anywhere in the state &mdash; NYC, Westchester, Long Island, the Hudson Valley and upstate. If someone in your home already gets help like SNAP or HEAP, ask NYSERDA whether that fast-tracks your application.</p>
 
-    <h2>How much does EmPower+ pay?</h2>
+    <h2 id="how-much-does-empower-pay">How much does EmPower+ pay?</h2>
     <div style="overflow-x:auto;"><table style="width:100%; border-collapse:collapse; background:#fff; font-size:15px;">
       <thead><tr style="background:var(--paper-warm);"><th style="padding:8px; border:1px solid var(--rule); text-align:left;">Household</th><th style="padding:8px; border:1px solid var(--rule); text-align:left;">Upstate</th><th style="padding:8px; border:1px solid var(--rule); text-align:left;">Downstate</th></tr></thead>
       <tbody>
@@ -543,7 +614,7 @@ h1, h2 { text-wrap: balance; }
     </table></div>
     <p>These caps are per project and cover efficiency work like insulation and air sealing. NYSERDA also lists extra funding for heat pumps (for example $10,000 toward an air-source or ground-source heat pump through its Sustainable Futures funding) and $5,000 toward a heat pump water heater through HEAR &mdash; your contractor will confirm what your home qualifies for.</p>
 
-    <h2>How EmPower+ fits with other New York rebates</h2>
+    <h2 id="how-empower-fits-with-other-new-york-rebates">How EmPower+ fits with other New York rebates</h2>
     <ul>
       <li><strong>Utility heat pump rebate (NYS Clean Heat or PSEG Long Island):</strong> a separate program from your electric company. Clean Heat pays up to about $8,000&ndash;$12,000 depending on your utility; PSEG Long Island pays $4,000&ndash;$7,500.</li>
       <li><strong>Federal HEAR and HOMES:</strong> delivered through EmPower+ and the Appliance Upgrade Program, not a separate application.</li>
@@ -551,7 +622,7 @@ h1, h2 { text-wrap: balance; }
       <li><strong>Comfort Home:</strong> NYSERDA&rsquo;s insulation packages ($2,500&ndash;$3,000, +$2,000 for windows) for households that don&rsquo;t qualify for EmPower+.</li>
     </ul>
 
-    <h2>How to apply</h2>
+    <h2 id="how-to-apply">How to apply</h2>
     <ol>
       <li>Check the income limits for your county on <a href="https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program" rel="noopener">NYSERDA&rsquo;s EmPower+ page</a>.</li>
       <li>Apply online or by phone (1-866-NYSERDA). Renters will need their landlord&rsquo;s OK for the work.</li>
@@ -559,15 +630,18 @@ h1, h2 { text-wrap: balance; }
       <li>The work is done; NYSERDA pays the contractor directly for the covered share.</li>
     </ol>
 
-    <h2>Common questions</h2>
+    <h2 id="common-questions">Common questions</h2>
     <h3>Who qualifies for EmPower+?</h3><p>Income-eligible owners and renters of 1-4 family homes anywhere in New York State. Income limits depend on your county and household size; NYSERDA publishes the current limits.</p><h3>How much does EmPower+ pay?</h3><p>Low-income households get upgrades at no cost, up to $12,000 upstate or $14,000 downstate per project. Moderate-income households get 50% of the cost covered, up to $6,000 upstate or $7,000 downstate. Heat pumps can qualify for more through linked funding.</p><h3>Is EmPower+ only for Con Edison customers?</h3><p>No. EmPower+ is run by NYSERDA and is open statewide, including National Grid, NYSEG, RG&amp;E, Central Hudson, O&amp;R and PSEG Long Island areas.</p><h3>Can I combine EmPower+ with the Con Edison or NYS Clean Heat rebate?</h3><p>Often, yes - EmPower+ and your utility&#x27;s heat pump rebate are separate programs, and NYSERDA coordinates with utility programs. Your EmPower+ contractor will tell you how the funding is split on your project.</p><h3>Is there a separate federal HEAR rebate?</h3><p>Not for most households. New York delivers the federal Home Energy Rebates (HEAR and HOMES) through EmPower+ and NYSERDA&#x27;s Appliance Upgrade Program, so applying to EmPower+ is how you get it.</p>
 
-    <h2>What to do next</h2>
+    <h2 id="what-to-do-next">What to do next</h2>
     <p>Not sure you qualify? Look up your utility&rsquo;s heat pump rebate first on your <a href="/us/ny/">city page</a>, then check EmPower+. When you&rsquo;re ready, compare top-rated local installers, ranked by Google reviews &mdash; free for homeowners. Related: <a href="/blog/new-york-dac-mapping-eligibility-guide/">DAC eligibility guide</a>, <a href="/us/ny/con-edison/new-york-city/">NYC rebates</a>, <a href="/us/ny/national-grid/buffalo/">Buffalo rebates</a>.</p>
     <p style="font-size:14px; color:var(--ink-soft);">Sources, checked September 26, 2026: <a href="https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program" rel="noopener">NYSERDA EmPower+</a>, <a href="https://www.nyserda.ny.gov/-/media/Project/Nyserda/Files/Programs/IRA/IRA-HER-HEAR-FAQ.pdf" rel="noopener">NYSERDA HER/HEAR FAQ</a>, <a href="https://cleanheat.ny.gov/assets/pdf/NYS%20Clean%20Heat%20Program%20Manual%202025_v2.pdf" rel="noopener">NYS Clean Heat Program Manual v2</a>, <a href="https://www.nyserda.ny.gov/All-Programs/Comfort-Home-Program" rel="noopener">NYSERDA Comfort Home</a>, <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" rel="noopener">IRS 25C</a>.</p>
   </div>
 </article>
 
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#who-qualifies-for-empower">Who qualifies for EmPower+?</a></li><li><a href="#how-much-does-empower-pay">How much does EmPower+ pay?</a></li><li><a href="#how-empower-fits-with-other-new-york-rebates">How EmPower+ fits with other New York rebates</a></li><li><a href="#how-to-apply">How to apply</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -770,6 +844,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

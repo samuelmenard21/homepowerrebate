@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,28 +551,28 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ca/">California</a></li><li aria-current="page">Folsom</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">SMUD rebates, plus waived solar permit fees</div><h1>Folsom Home Energy Rebates 2026</h1><p>Folsom homeowners use the same SMUD rebates as Sacramento, and Folsom adds something its neighbors do not: an instant solar and battery permit process that waives the City's application and plan check fees. We read SMUD's and the City's pages on October 2, 2026.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
 
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What SMUD pays Folsom homeowners</h2>
+<h2 id="what-smud-pays-folsom-homeowners">What SMUD pays Folsom homeowners</h2>
 <p>The amounts are SMUD's and are identical across its territory, so each card links to the Sacramento page with the rules and prices. SMUD's big rebates are submitted by a participating contractor in the SMUD Contractor Network.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3"><a href='/us/ca/sacramento/sacramento/heat-pump/'>Heat pump</a></h4><div class="amount">$1,000 to $3,000</div><p style="font-size:14px;margin:8px 0 0;">$3,000 variable-stage and $2,000 two-stage when replacing gas; $1,000 for an electric upgrade.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/us/ca/sacramento/sacramento/water-heater/'>Heat pump water heater</a></h4><div class="amount">$3,000 to $4,000</div><p style="font-size:14px;margin:8px 0 0;">By tank size when replacing gas; $1,000 when replacing electric.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/us/ca/sacramento/sacramento/insulation/'>Seal and insulate</a></h4><div class="amount">Up to $3,000</div><p style="font-size:14px;margin:8px 0 0;">Through a Home Performance Program contractor.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/us/ca/sacramento/sacramento/heat-pump/'>Panel and circuit work</a></h4><div class="amount">Up to $4,000</div><p style="font-size:14px;margin:8px 0 0;">Go Electric rebates, with a gas-to-electric conversion.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/us/ca/sacramento/sacramento/battery/'>Home battery</a></h4><div class="amount">$300 per kWh</div><p style="font-size:14px;margin:8px 0 0;">Up to $6,000. Cut from $500 per kWh on September 23, 2026.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/us/ca/sacramento/sacramento/ev-charger/'>EV charger</a></h4><div class="amount">Up to $850</div><p style="font-size:14px;margin:8px 0 0;">Charge@Home: charger, device and circuit.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/us/ca/sacramento/sacramento/smart-thermostats/'>Smart thermostat</a></h4><div class="amount">$50</div><p style="font-size:14px;margin:8px 0 0;">Instant rebate online at the SMUD Energy Store.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/us/ca/sacramento/sacramento/appliances/'>Induction cooking</a></h4><div class="amount">$750</div><p style="font-size:14px;margin:8px 0 0;">Replacing gas. $100 replacing electric.</p></div>
 </div>
 
-<h2>Instant solar and battery permits</h2><p>The City of Folsom runs an Instant Solar Permitting process through Symbium, aligned with California's SB 379, with approvals issued in as little as 24 business hours for eligible residential solar and battery projects. Applicants submit in Symbium, and they must upload the SMUD Interconnection Approval Letter. They then pay permit fees through the City's eTRAKiT portal. The City says the eTRAKiT application fee and plan check fees are waived. For a solar or battery buyer, that is a real saving and a faster start, and it ties directly into SMUD's interconnection step.</p><h2>Permits for everything else</h2><p>Other residential permits go through the City's Building Services, and the City's ePermit Center describes the online eTRAKiT system. A heat pump, a water heater swap and a panel upgrade each need their own permit, and the City's Permit Services can be reached at 916-461-6000. Ask your contractor who pulls each permit, and keep the final inspection records, which SMUD and the state programs often ask to see.</p><h2>Installers worth a call</h2><p>Folsom's best-reviewed HVAC and heat pump companies on Google include ICM Mechanical, Water Heaters Only, and Atticman Heating and Air Conditioning, which also does insulation, so it fits SMUD's seal and insulate package. Water Heaters Only is a natural first call for a heat pump water heater. SMUD pays rebates only through its Contractor Network, so check membership before you accept a bid.</p><h2>Climate in Folsom</h2><p>Folsom's average January low over 2015 to 2024 was 4.9°C, with a coldest recorded day of -2.6°C, and about 5.1 peak sun hours a day. Winters are mild enough for any heat pump that meets SMUD's two-stage or variable-stage rules, and summers are hot, so cooling decides the size. Ask your contractor to show the load calculation.</p><h2>Which utility serves your address</h2><p>Folsom is in SMUD's territory, and the City's solar process requires a SMUD interconnection letter, which confirms it for solar customers. Because the area borders other utilities, check the name on your own electric bill before you plan around SMUD's rebates.</p><h2>Money that ended or is full</h2><p>The federal 25C and 25D tax credits ended after December 31, 2025. Single-family TECH Clean California and federal HEEHRA help is fully reserved and takes requests on hold only. SMUD pays no cash rebate for solar panels that we found, but its battery incentive is $300 per kWh up to $6,000 from September 23, 2026 (<a href='/us/ca/sacramento/sacramento/battery/'>Sacramento battery rebates</a>).</p>
-<h2>Installers in Folsom</h2><p>These Folsom heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone. Ask each whether it belongs to the SMUD Contractor Network.</p>
+<h2 id="instant-solar-and-battery-permits">Instant solar and battery permits</h2><p>The City of Folsom runs an Instant Solar Permitting process through Symbium, aligned with California's SB 379, with approvals issued in as little as 24 business hours for eligible residential solar and battery projects. Applicants submit in Symbium, and they must upload the SMUD Interconnection Approval Letter. They then pay permit fees through the City's eTRAKiT portal. The City says the eTRAKiT application fee and plan check fees are waived. For a solar or battery buyer, that is a real saving and a faster start, and it ties directly into SMUD's interconnection step.</p><h2 id="permits-for-everything-else">Permits for everything else</h2><p>Other residential permits go through the City's Building Services, and the City's ePermit Center describes the online eTRAKiT system. A heat pump, a water heater swap and a panel upgrade each need their own permit, and the City's Permit Services can be reached at 916-461-6000. Ask your contractor who pulls each permit, and keep the final inspection records, which SMUD and the state programs often ask to see.</p><h2 id="installers-worth-a-call">Installers worth a call</h2><p>Folsom's best-reviewed HVAC and heat pump companies on Google include ICM Mechanical, Water Heaters Only, and Atticman Heating and Air Conditioning, which also does insulation, so it fits SMUD's seal and insulate package. Water Heaters Only is a natural first call for a heat pump water heater. SMUD pays rebates only through its Contractor Network, so check membership before you accept a bid.</p><h2 id="climate-in-folsom">Climate in Folsom</h2><p>Folsom's average January low over 2015 to 2024 was 4.9°C, with a coldest recorded day of -2.6°C, and about 5.1 peak sun hours a day. Winters are mild enough for any heat pump that meets SMUD's two-stage or variable-stage rules, and summers are hot, so cooling decides the size. Ask your contractor to show the load calculation.</p><h2 id="which-utility-serves-your-address">Which utility serves your address</h2><p>Folsom is in SMUD's territory, and the City's solar process requires a SMUD interconnection letter, which confirms it for solar customers. Because the area borders other utilities, check the name on your own electric bill before you plan around SMUD's rebates.</p><h2 id="money-that-ended-or-is-full">Money that ended or is full</h2><p>The federal 25C and 25D tax credits ended after December 31, 2025. Single-family TECH Clean California and federal HEEHRA help is fully reserved and takes requests on hold only. SMUD pays no cash rebate for solar panels that we found, but its battery incentive is $300 per kWh up to $6,000 from September 23, 2026 (<a href='/us/ca/sacramento/sacramento/battery/'>Sacramento battery rebates</a>).</p>
+<h2 id="installers-in-folsom">Installers in Folsom</h2><p>These Folsom heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone. Ask each whether it belongs to the SMUD Contractor Network.</p>
 <div class="installer-card"><div><div class="name">ICM Mechanical Inc</div><div class="stars">&#9733; 5.0 (219 reviews)</div></div><a class="site-link" href="http://icmhvac.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Water Heaters Only, Inc</div><div class="stars">&#9733; 5.0 (144 reviews)</div></div><a class="site-link" href="https://waterheaters-sacramento.com/folsom-water-heaters/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Atticman Heating and Air Conditioning, Insulation</div><div class="stars">&#9733; 5.0 (91 reviews)</div></div><a class="site-link" href="https://atticmanhvac.com/folsom-hvac/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Next Level Comfort</div><div class="stars">&#9733; 5.0 (28 reviews)</div></div><a class="site-link" href="https://nextlevelcomfortca.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Lee&#x27;s Air, Plumbing, &amp; Heating</div><div class="stars">&#9733; 4.9 (100 reviews)</div></div><a class="site-link" href="https://leesair.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/ca/folsom/heat-pump/">See all Folsom installers &rarr;</a></p>
-<h2>How to start</h2>
+<h2 id="how-to-start">How to start</h2>
 <ol>
 <li>Confirm that SMUD is your electric utility.</li>
 <li>Pick the upgrade you plan from the cards above and read the Sacramento page for its rules.</li>
@@ -511,18 +582,21 @@ h1, h2 { text-wrap: balance; }
 <li>Let the contractor submit the SMUD rebate.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city=folsom" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Folsom</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Does Folsom have instant solar permits?</h3><p>Yes. The City's Instant Solar Permitting process through Symbium can approve eligible residential solar and battery projects in as little as 24 business hours.</p></div>
 <div class="faq-item"><h3>Are Folsom&#x27;s permit fees waived?</h3><p>For instant solar permits, the City says the eTRAKiT application fee and plan check fees are waived. You still pay the applicable permit fees and a Symbium application fee.</p></div>
 <div class="faq-item"><h3>What does Folsom require for a solar permit?</h3><p>The SMUD Interconnection Approval Letter, uploaded with the Symbium application.</p></div>
 <div class="faq-item"><h3>Are Folsom&#x27;s SMUD rebates different from Sacramento&#x27;s?</h3><p>No. SMUD's amounts are the same across its territory.</p></div>
 <div class="faq-item"><h3>Is there a SMUD solar panel rebate?</h3><p>We found none. SMUD's battery enrollment incentive pays $300 per kWh up to $6,000 from September 23, 2026.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See <a href='/us/ca/sacramento/sacramento/'>all SMUD rebates on our Sacramento hub</a>, the City's <a href='https://www.folsom.ca.us/government/community-development/building-services/instant-solar-permitting' target='_blank' rel='noopener'>instant solar permitting page</a>, or <a href='https://www.smud.org/Rebates-and-Savings-Tips/Rebates-for-My-Home' target='_blank' rel='noopener'>SMUD's rebates for my home page</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://www.smud.org/Rebates-and-Savings-Tips/Rebates-for-My-Home" target="_blank" rel="noopener">SMUD rebates for my home</a>, <a href="https://www.folsom.ca.us/government/community-development/building-services/instant-solar-permitting" target="_blank" rel="noopener">City of Folsom instant solar permitting</a>, <a href="https://www.smud.org/en/Rebates-and-Savings-Tips/Rebates-for-My-Home/Heating-and-Cooling-Rebates" target="_blank" rel="noopener">SMUD heating and cooling rebates</a>. <a href="/us/ca/sacramento/folsom/">All Folsom rebates &rarr;</a> <a href="/programs/smud-rebates/">Every SMUD rebate &rarr;</a></p>
 </div></article>
 <!-- SMUD-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>On SMUD power?</b> See <a href="/blog/smud-rebate-breakdown/">every SMUD rebate: EV charger up to $600, heat pump up to $3,000, water heater and battery</a>.</p></section><!-- SMUD-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-smud-pays-folsom-homeowners">What SMUD pays Folsom homeowners</a></li><li><a href="#instant-solar-and-battery-permits">Instant solar and battery permits</a></li><li><a href="#permits-for-everything-else">Permits for everything else</a></li><li><a href="#installers-worth-a-call">Installers worth a call</a></li><li><a href="#climate-in-folsom">Climate in Folsom</a></li><li><a href="#which-utility-serves-your-address">Which utility serves your address</a></li><li><a href="#money-that-ended-or-is-full">Money that ended or is full</a></li><li><a href="#installers-in-folsom">Installers in Folsom</a></li><li><a href="#how-to-start">How to start</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=folsom&province=ca">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Folsom where relevant -->
@@ -724,6 +798,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

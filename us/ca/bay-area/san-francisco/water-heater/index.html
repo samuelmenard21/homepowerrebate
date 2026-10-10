@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +551,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ca/">California</a></li><li><a href="/us/ca/bay-area/san-francisco/">San Francisco</a></li><li aria-current="page">Water Heater</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $1,200 in bill credits</div><h1>Heat Pump Water Heater Rebates in San Francisco</h1><p>CleanPowerSF pays up to $1,200 for a heat pump water heater, but not as a cheque. It arrives as $50 off your electric bill each month for 24 months, and you have to be on an electrification rate to receive it.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -490,21 +561,21 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/ca/bay-area/san-francisco/appliances/">Appliance Rebates in San Francisco</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What CleanPowerSF pays</h2>
+<h2 id="what-cleanpowersf-pays">What CleanPowerSF pays</h2>
 <p>These figures come from CleanPowerSF's Electrify Your Home page, which we read on October 2, 2026. You must be a residential CleanPowerSF customer, and the heater must have been installed on or after March 15, 2025.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Heat pump water heater</h4><div class="amount">Up to $1,200</div><p style="font-size:14px;margin:8px 0 0;">$50 a month in bill credits for 24 months.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>CARE or FERA customers</h4><div class="amount">+12 months ($600)</div><p style="font-size:14px;margin:8px 0 0;">An automatic bonus of 12 more months of credits when you apply, for a total of $1,800 over 36 months.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Rate requirement</h4><div class="amount">EV2-A or E-ELEC</div><p style="font-size:14px;margin:8px 0 0;">Customers seeking hot water or heating credits must enroll in an electrification rate such as EV2-A or E-ELEC.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Gas meter removal</h4><div class="amount">+$300</div><p style="font-size:14px;margin:8px 0 0;">An extra credit when you electrify everything and remove the gas meter, for removals on or after April 14, 2026.</p></div>
 </div>
 <div class='highlight-box'><h4>How the credits work</h4><p>The credit comes off your CleanPowerSF bill, so it lowers what you pay each month and does not arrive as one payment. 24 months x $50 = $1,200. If you move before the credits are used up, you stop receiving them, so the program suits people who plan to stay. A CARE or FERA customer gets 36 months of credits, which is $1,800 in total.</p></div>
-<h2>The electric rate is part of the deal</h2><p>CleanPowerSF says to get your account on the right electric rate and set the new appliance to avoid peak usage times where that applies. For hot water and heating credits, you must enroll in an electrification rate such as EV2-A or E-ELEC. These rates charge less at off-peak hours, which is when a modern heat pump water heater shifts its work, so the two fit together. Email CleanPowerSF for help choosing, and check how the rate treats the rest of your household before you switch.</p><h2>Permits and the contractor</h2><p>CleanPowerSF asks you to comply with the Department of Building Inspection's permit requirements. The City takes plumbing and mechanical permits on PermitSF, and contractors need one of the listed licenses (C4, C16, C20, C36, C54, B or A) to apply for them, with the permit scope limited by license type. Ask your installer to pull the permit and to have the work inspected before pipes are covered. CleanPowerSF recommends a licensed, insured contractor for every upgrade, and keeps an Active Contractors List.</p><h2>Approved products only</h2><p>CleanPowerSF publishes an approved products list as a spreadsheet, last dated September 3, 2026 on the page we read. Check your model against it before you buy, and ask your installer to confirm it in writing. Credits depend on the model qualifying, so a unit that is not on the list could earn nothing.</p><h2>Your utility: CleanPowerSF</h2><p>CleanPowerSF is San Francisco's city-run electricity supplier, operated by the SFPUC, and it runs these credits. Its credit of up to $1,200 is smaller than Glendale's $4,000 cash check (<a href='/us/ca/los-angeles/glendale/water-heater/'>Glendale</a>) but larger than Pasadena's $500 (<a href='/us/ca/los-angeles/pasadena/water-heater/'>Pasadena</a>). San Francisco's average January low over 2015 to 2024 was 7.8°C (about 46°F), so a garage or basement rarely gets too cold for the unit.</p><h2>Other money</h2><p>BayREN's EASE Home program, for income-qualified PG&amp;E customers, helps with weatherization and applications (<a href='https://www.bayren.org/ease-home' target='_blank' rel='noopener'>BayREN EASE Home</a>). The federal 25C and 25D tax credits ended after December 31, 2025. Single-family state programs are fully reserved and take new requests on hold only.</p>
-<h2>Installers in San Francisco</h2><p>HVAC and plumbing companies in San Francisco both fit these units. These have the best Google ratings, listed by rating and then review count. We are not paid to list anyone, and not every company does water heaters, so ask first.</p>
+<h2 id="the-electric-rate-is-part-of-the-deal">The electric rate is part of the deal</h2><p>CleanPowerSF says to get your account on the right electric rate and set the new appliance to avoid peak usage times where that applies. For hot water and heating credits, you must enroll in an electrification rate such as EV2-A or E-ELEC. These rates charge less at off-peak hours, which is when a modern heat pump water heater shifts its work, so the two fit together. Email CleanPowerSF for help choosing, and check how the rate treats the rest of your household before you switch.</p><h2 id="permits-and-the-contractor">Permits and the contractor</h2><p>CleanPowerSF asks you to comply with the Department of Building Inspection's permit requirements. The City takes plumbing and mechanical permits on PermitSF, and contractors need one of the listed licenses (C4, C16, C20, C36, C54, B or A) to apply for them, with the permit scope limited by license type. Ask your installer to pull the permit and to have the work inspected before pipes are covered. CleanPowerSF recommends a licensed, insured contractor for every upgrade, and keeps an Active Contractors List.</p><h2 id="approved-products-only">Approved products only</h2><p>CleanPowerSF publishes an approved products list as a spreadsheet, last dated September 3, 2026 on the page we read. Check your model against it before you buy, and ask your installer to confirm it in writing. Credits depend on the model qualifying, so a unit that is not on the list could earn nothing.</p><h2 id="your-utility-cleanpowersf">Your utility: CleanPowerSF</h2><p>CleanPowerSF is San Francisco's city-run electricity supplier, operated by the SFPUC, and it runs these credits. Its credit of up to $1,200 is smaller than Glendale's $4,000 cash check (<a href='/us/ca/los-angeles/glendale/water-heater/'>Glendale</a>) but larger than Pasadena's $500 (<a href='/us/ca/los-angeles/pasadena/water-heater/'>Pasadena</a>). San Francisco's average January low over 2015 to 2024 was 7.8°C (about 46°F), so a garage or basement rarely gets too cold for the unit.</p><h2 id="other-money">Other money</h2><p>BayREN's EASE Home program, for income-qualified PG&amp;E customers, helps with weatherization and applications (<a href='https://www.bayren.org/ease-home' target='_blank' rel='noopener'>BayREN EASE Home</a>). The federal 25C and 25D tax credits ended after December 31, 2025. Single-family state programs are fully reserved and take new requests on hold only.</p>
+<h2 id="installers-in-san-francisco">Installers in San Francisco</h2><p>HVAC and plumbing companies in San Francisco both fit these units. These have the best Google ratings, listed by rating and then review count. We are not paid to list anyone, and not every company does water heaters, so ask first.</p>
 <div class="installer-card"><div><div class="name">Heating And Air Experts</div><div class="stars">&#9733; 5.0 (804 reviews)</div></div><a class="site-link" href="https://heatingandairexpertsllc.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Freon HVAC &amp; Electrical Service - San Francisco</div><div class="stars">&#9733; 5.0 (35 reviews)</div></div><a class="site-link" href="https://freonhvacservice.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Acosta Heating &amp; Sheet Metal</div><div class="stars">&#9733; 5.0 (20 reviews)</div></div><a class="site-link" href="https://acostaheatingandair.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Magic Plumbing Heating &amp; Cooling</div><div class="stars">&#9733; 4.9 (1,928 reviews)</div></div><a class="site-link" href="https://www.magicplumbing.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Heise&#x27;s Plumbing</div><div class="stars">&#9733; 4.9 (1,751 reviews)</div></div><a class="site-link" href="https://www.heisesplumbing.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/ca/san-francisco/heat-pump/">See all San Francisco installers &rarr;</a></p>
-<h2>How to claim the CleanPowerSF credits</h2>
+<h2 id="how-to-claim-the-cleanpowersf-credits">How to claim the CleanPowerSF credits</h2>
 <ol>
 <li>Confirm that CleanPowerSF supplies your electricity.</li>
 <li>Enroll your account in an electrification rate such as EV2-A or E-ELEC.</li>
@@ -514,17 +585,20 @@ h1, h2 { text-wrap: balance; }
 <li>Receive $50 a month for 24 months, plus 12 more months if you are on CARE or FERA.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city=san-francisco" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in San Francisco</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much does CleanPowerSF pay for a heat pump water heater?</h3><p>Up to $1,200 in bill credits, $50 a month for 24 months, for installs on or after March 15, 2025. CARE and FERA customers get 12 more months.</p></div>
 <div class="faq-item"><h3>Is it a cheque?</h3><p>No. The money comes off your CleanPowerSF bill as monthly credits.</p></div>
 <div class="faq-item"><h3>Do I need a special rate?</h3><p>Yes. For hot water and heating credits you must enroll in an electrification rate such as EV2-A or E-ELEC.</p></div>
 <div class="faq-item"><h3>Does the credit follow me if I move?</h3><p>No. Credits stop if you move from the address.</p></div>
 <div class="faq-item"><h3>Do I need a permit?</h3><p>You must comply with the Department of Building Inspection's permit requirements, and plumbing and mechanical permits are issued through PermitSF.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See CleanPowerSF's <a href='https://cleanpowersf.org/electrify-your-home' target='_blank' rel='noopener'>Electrify Your Home page</a> for the application, or compare all San Francisco offers on our <a href='/us/ca/bay-area/san-francisco/'>San Francisco hub</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://cleanpowersf.org/electrify-your-home" target="_blank" rel="noopener">CleanPowerSF Electrify Your Home</a>, <a href="https://www.sf.gov/apply-plumbing-and-mechanical-permit" target="_blank" rel="noopener">City of San Francisco plumbing and mechanical permits</a>, <a href="https://cleanpowersf.org/programs-and-rebates-for-residents" target="_blank" rel="noopener">CleanPowerSF programs and rebates for residents</a>, <a href="https://www.bayren.org/ease-home" target="_blank" rel="noopener">BayREN EASE Home</a>. <a href="/us/ca/bay-area/san-francisco/">All San Francisco rebates &rarr;</a> <a href="/programs/cleanpowersf-rebates/">Every CleanPowerSF rebate &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-cleanpowersf-pays">What CleanPowerSF pays</a></li><li><a href="#the-electric-rate-is-part-of-the-deal">The electric rate is part of the deal</a></li><li><a href="#permits-and-the-contractor">Permits and the contractor</a></li><li><a href="#approved-products-only">Approved products only</a></li><li><a href="#your-utility-cleanpowersf">Your utility: CleanPowerSF</a></li><li><a href="#other-money">Other money</a></li><li><a href="#installers-in-san-francisco">Installers in San Francisco</a></li><li><a href="#how-to-claim-the-cleanpowersf-credits">How to claim the CleanPowerSF credits</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=san-francisco&province=ca">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to San Francisco where relevant -->
@@ -726,6 +800,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +551,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ca/">California</a></li><li><a href="/us/ca/los-angeles/burbank/">Burbank</a></li><li aria-current="page">Heat Pump</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$1,000 per ton, up to $2,500</div><h1>Heat Pump Rebates in Burbank</h1><p>Burbank Water and Power pays $1,000 per ton of heat pump when it replaces a gas system, but the standard cap of $2,500 means a typical 3-ton system leaves money on the table. Low-income customers get a cap of $5,000. The program has firm rules about who does the work.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -492,21 +563,21 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/ca/los-angeles/burbank/appliances/">Appliance Rebates in Burbank</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What Burbank Water and Power pays</h2>
+<h2 id="what-burbank-water-and-power-pays">What Burbank Water and Power pays</h2>
 <p>These figures come from the Electrify Your Home page of Burbank Water and Power (BWP), which we read on October 2, 2026. BWP says new construction does not qualify and that at least one new item must replace a gas-powered equivalent.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Standard rebate</h4><div class="amount">$1,000 per ton</div><p style="font-size:14px;margin:8px 0 0;">Up to $2,500, for a heat pump HVAC system or mini-split replacing gas.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Low-income customers</h4><div class="amount">$1,000 per ton</div><p style="font-size:14px;margin:8px 0 0;">Up to $5,000, for customers in the Burbank Utility Service Subsidy (BUSS) or Lifeline program.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Affordable housing providers</h4><div class="amount">$1,000 per ton</div><p style="font-size:14px;margin:8px 0 0;">Up to $5,000, for providers serving low- or very low-income tenants that meet BWP's tests.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Panel upgrade with it</h4><div class="amount">$750</div><p style="font-size:14px;margin:8px 0 0;">BWP says a panel upgrade cannot be claimed on its own.</p></div>
 </div>
 <div class='highlight-box'><h4>Where the cap bites</h4><p>At $1,000 per ton, a 2.5-ton system reaches the $2,500 cap. A 3-ton or 4-ton system earns the same $2,500, so the extra tons are not rebated. A low-income customer with a 3-ton system earns $3,000 and one with a 5-ton system reaches $5,000. Size the system for the house first, and do not buy a bigger unit because of the rebate.</p></div>
-<h2>The rule that decides whether you qualify</h2><p>BWP's rebates are for electrification, not for upgrades in general. One new item on your project must replace a gas-powered equivalent, and the gas line has to be capped. A heat pump that replaces an old electric heater, or an air conditioner swap with no gas involved, does not meet that test. New construction does not qualify either. If you are not sure whether your project counts, ask BWP before you sign a quote.</p><h2>Who has to do the work</h2><p>BWP wants a licensed electrician to plan and install the work, including any panel or circuit upgrade and the capping of the gas line. The electrician must pull the permits and the installation must pass inspection from Burbank's Building and Safety Division. That is stricter than many utilities, so confirm early that your installer will work this way. A general handyman, or a homeowner doing the job alone, does not meet the program's steps.</p><p>BWP also asks for before and after photos of the old and new equipment, the nameplates with make, model and serial number, and a mark from a recognized testing lab such as UL or ETL. Take the photos on installation day.</p><h2>Your utility: Burbank Water and Power</h2><p>BWP is the city's own utility and it sets these amounts. Its standard $1,000 per ton, capped at $2,500, sits between Pasadena's $170 per ton (<a href='/us/ca/los-angeles/pasadena/heat-pump/'>Pasadena</a>) and Glendale's $1,000 per ton capped at $5,000 (<a href='/us/ca/los-angeles/glendale/heat-pump/'>Glendale</a>). BWP's own site is clear that bigger incentives exist for income-qualified customers: enroll in BUSS or Lifeline before you apply, and note that BWP wants the enrollment approved within the past 18 months.</p><p>The call center is (818) 238-3700, and the office is at 164 W. Magnolia Boulevard.</p><h2>Climate and sizing in Burbank</h2><p>Burbank's average January low over 2015 to 2024 was 8.4°C (about 47°F), with a coldest recorded day of -0.6°C. A standard heat pump handles that without a cold-climate rating. Where homeowners get caught is oversizing: because the cap is flat, a larger unit costs more and earns nothing extra above 2.5 tons. Ask your installer for a written load calculation and the tonnage they recommend.</p><h2>Other money</h2><p>The federal 25C and 25D tax credits ended for spending after December 31, 2025. Statewide heat pump help from TECH Clean California and the federal HEEHRA program is fully reserved and takes new requests on hold only. BWP points customers to the Home Energy Resource Hub and the Switch Is On site for anything else.</p>
-<h2>Installers in Burbank</h2><p>These Burbank heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone. BWP wants a licensed electrician on the job, so ask each company who installs, who pulls the permit and who handles the gas cap.</p>
+<h2 id="the-rule-that-decides-whether-you-qualify">The rule that decides whether you qualify</h2><p>BWP's rebates are for electrification, not for upgrades in general. One new item on your project must replace a gas-powered equivalent, and the gas line has to be capped. A heat pump that replaces an old electric heater, or an air conditioner swap with no gas involved, does not meet that test. New construction does not qualify either. If you are not sure whether your project counts, ask BWP before you sign a quote.</p><h2 id="who-has-to-do-the-work">Who has to do the work</h2><p>BWP wants a licensed electrician to plan and install the work, including any panel or circuit upgrade and the capping of the gas line. The electrician must pull the permits and the installation must pass inspection from Burbank's Building and Safety Division. That is stricter than many utilities, so confirm early that your installer will work this way. A general handyman, or a homeowner doing the job alone, does not meet the program's steps.</p><p>BWP also asks for before and after photos of the old and new equipment, the nameplates with make, model and serial number, and a mark from a recognized testing lab such as UL or ETL. Take the photos on installation day.</p><h2 id="your-utility-burbank-water-and-power">Your utility: Burbank Water and Power</h2><p>BWP is the city's own utility and it sets these amounts. Its standard $1,000 per ton, capped at $2,500, sits between Pasadena's $170 per ton (<a href='/us/ca/los-angeles/pasadena/heat-pump/'>Pasadena</a>) and Glendale's $1,000 per ton capped at $5,000 (<a href='/us/ca/los-angeles/glendale/heat-pump/'>Glendale</a>). BWP's own site is clear that bigger incentives exist for income-qualified customers: enroll in BUSS or Lifeline before you apply, and note that BWP wants the enrollment approved within the past 18 months.</p><p>The call center is (818) 238-3700, and the office is at 164 W. Magnolia Boulevard.</p><h2 id="climate-and-sizing-in-burbank">Climate and sizing in Burbank</h2><p>Burbank's average January low over 2015 to 2024 was 8.4°C (about 47°F), with a coldest recorded day of -0.6°C. A standard heat pump handles that without a cold-climate rating. Where homeowners get caught is oversizing: because the cap is flat, a larger unit costs more and earns nothing extra above 2.5 tons. Ask your installer for a written load calculation and the tonnage they recommend.</p><h2 id="other-money">Other money</h2><p>The federal 25C and 25D tax credits ended for spending after December 31, 2025. Statewide heat pump help from TECH Clean California and the federal HEEHRA program is fully reserved and takes new requests on hold only. BWP points customers to the Home Energy Resource Hub and the Switch Is On site for anything else.</p>
+<h2 id="installers-in-burbank">Installers in Burbank</h2><p>These Burbank heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone. BWP wants a licensed electrician on the job, so ask each company who installs, who pulls the permit and who handles the gas cap.</p>
 <div class="installer-card"><div><div class="name">North Air</div><div class="stars">&#9733; 5.0 (103 reviews)</div></div><a class="site-link" href="http://northairinc.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Purified air heating and Air Conditioning Inc</div><div class="stars">&#9733; 5.0 (99 reviews)</div></div><a class="site-link" href="https://purifiedairinc.com/burbank-ca/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">VHP AIR CONDITIONING &amp; HEATING, Inc.</div><div class="stars">&#9733; 5.0 (90 reviews)</div></div><a class="site-link" href="https://www.vhpairconditioning.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Rhino Air</div><div class="stars">&#9733; 5.0 (88 reviews)</div></div><a class="site-link" href="https://www.rhinoair.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Green Planet Heating and Air</div><div class="stars">&#9733; 5.0 (75 reviews)</div></div><a class="site-link" href="https://greenplanet-hvac.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/ca/burbank/heat-pump/">See all Burbank installers &rarr;</a></p>
-<h2>How to claim the BWP rebate</h2>
+<h2 id="how-to-claim-the-bwp-rebate">How to claim the BWP rebate</h2>
 <ol>
 <li>Check that BWP is your electric utility, and that at least one new item will replace a gas-powered equivalent.</li>
 <li>If you want the low-income amount, enroll in BUSS or Lifeline first and make sure it was approved within the past 18 months.</li>
@@ -516,20 +587,23 @@ h1, h2 { text-wrap: balance; }
 <li>Submit by email to BWPConservation@burbankca.gov, by mail, or in person at 164 W. Magnolia Boulevard.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city=burbank" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Burbank</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much is the heat pump rebate in Burbank?</h3><p>$1,000 per ton, up to $2,500. Low-income customers in BUSS or Lifeline, and certain affordable housing providers, can get up to $5,000.</p></div>
 <div class="faq-item"><h3>Does the heat pump have to replace gas?</h3><p>Yes. BWP says at least one new item on the project must replace a gas-powered equivalent, and new construction does not qualify.</p></div>
 <div class="faq-item"><h3>Can I do the install myself?</h3><p>No. BWP requires a licensed electrician to install the equipment and any panel work, with permits and an inspection by Burbank's Building and Safety Division.</p></div>
 <div class="faq-item"><h3>Can I claim a panel upgrade rebate alone?</h3><p>No. The $750 panel upgrade rebate cannot be claimed on its own.</p></div>
 <div class="faq-item"><h3>What proof does BWP ask for?</h3><p>Itemized invoices and proof of payment, a signed W-9, the finaled permits, before pictures of the old equipment and nameplate pictures of the new equipment.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See BWP's <a href='https://www.burbankwaterandpower.com/electrify-your-home' target='_blank' rel='noopener'>Electrify Your Home page</a> for the application, or compare all Burbank offers on our <a href='/us/ca/los-angeles/burbank/'>Burbank hub</a>. If you also need a new water heater, see <a href='/us/ca/los-angeles/burbank/water-heater/'>Burbank water heater rebates</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://www.burbankwaterandpower.com/electrify-your-home" target="_blank" rel="noopener">BWP Electrify Your Home rebates</a>, <a href="https://www.burbankwaterandpower.com/residential-rebates" target="_blank" rel="noopener">BWP residential rebates</a>, <a href="https://www.burbankwaterandpower.com/residential-ev-charging-stations-rebate" target="_blank" rel="noopener">BWP residential EV charging station rebate</a>, <a href="https://www.switchison.org/" target="_blank" rel="noopener">The Switch Is On California</a>. <a href="/us/ca/los-angeles/burbank/">All Burbank rebates &rarr;</a> <a href="/programs/burbank-water-and-power-rebates/">Every Burbank Water and Power rebate &rarr;</a></p>
 </div></article>
 <!-- RANKINGS-LINK-START -->
-<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Burbank</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ca/burbank/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Burbank &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">14 local companies ranked by 784 Google reviews. Top picks: North Air, Purified air heating and Air Conditioning Inc, VHP AIR CONDITIONING &amp; HEATING, Inc..</span></a></div></section>
+<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;" id="compare-top-rated-installers-in-burbank">Compare top-rated installers in Burbank</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ca/burbank/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Burbank &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">14 local companies ranked by 784 Google reviews. Top picks: North Air, Purified air heating and Air Conditioning Inc, VHP AIR CONDITIONING &amp; HEATING, Inc..</span></a></div></section>
 <!-- RANKINGS-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-burbank-water-and-power-pays">What Burbank Water and Power pays</a></li><li><a href="#the-rule-that-decides-whether-you-qualify">The rule that decides whether you qualify</a></li><li><a href="#who-has-to-do-the-work">Who has to do the work</a></li><li><a href="#your-utility-burbank-water-and-power">Your utility: Burbank Water and Power</a></li><li><a href="#climate-and-sizing-in-burbank">Climate and sizing in Burbank</a></li><li><a href="#other-money">Other money</a></li><li><a href="#installers-in-burbank">Installers in Burbank</a></li><li><a href="#how-to-claim-the-bwp-rebate">How to claim the BWP rebate</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li><li><a href="#compare-top-rated-installers-in-burbank">Compare top-rated installers in Burbank</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=burbank&province=ca">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Burbank where relevant -->
@@ -731,6 +805,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

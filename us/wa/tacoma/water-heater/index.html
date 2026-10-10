@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +551,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/wa/">Washington</a></li><li><a href="/us/wa/tacoma/">Tacoma</a></li><li aria-current="page">Water Heater</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$500 from Tacoma Power</div><h1>Water Heater Rebates in Tacoma</h1><p>Tacoma Power pays $500 when you replace a standard electric water heater with an electric hybrid, also called a heat pump water heater. You can hire a contractor or install it yourself.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -490,16 +561,16 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/wa/tacoma/heat-pump/">Heat Pump Rebates in Tacoma</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What water heater rebates pay in Tacoma</h2>
+<h2 id="what-water-heater-rebates-pay-in-tacoma">What water heater rebates pay in Tacoma</h2>
 <p>We read Tacoma Power's electric hybrid water heater page on October 6, 2026. The page also lists a zero percent loan but we did not read the loan amount, so we do not quote one.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3"><a href='/programs/tacoma-power-rebates/'>Tacoma Power electric hybrid water heater</a></h4><div class="amount">$500</div><p style="font-size:14px;margin:8px 0 0;">For replacing a standard electric water heater with a Tier 3 or Tier 4 model on the Bonneville Power Administration's qualified list. You need permits before installation and the unit must be installed to the maker's instructions.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/programs/washington-home-electrification-rebates/'>State home electrification rebates</a></h4><div class="amount">Set by the City</div><p style="font-size:14px;margin:8px 0 0;">The City of Tacoma received $637,000 and Pierce County $500,000 for rebates to households at or below 150 percent of area median income, with heat pump water heaters on the covered list.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal tax credit</h4><div class="amount">$0</div><p style="font-size:14px;margin:8px 0 0;">The IRS says the residential clean energy credit does not apply after 2025.</p></div>
 </div>
 <div class='highlight-box'><h4>Working it out</h4><p>If a qualifying unit and its installation cost $2,800, which is only an example, the $500 rebate leaves $2,300. Tacoma Power says a hybrid unit can save about $350 a year compared with a standard electric tank, and that it uses 60 percent less energy. At $350 a year, a $2,300 cost would take about seven years to earn back from savings alone. Those are Tacoma Power's estimates, not a guarantee for your home.</p></div>
-<h2>Why the rebate says electric</h2><p>Tacoma Power only pays when you replace a standard electric water heater. The US Census Bureau's American Community Survey (2020 to 2024) says about 63 percent of Tacoma homes use electricity as their main heat, and many electrically heated homes also use electric water heaters, but the survey does not count water heaters, so check your own tank. A gas tank does not qualify. If your gas tank is old, ask Tacoma Power before you plan a switch.</p><h2>What Tacoma Power says about hybrids</h2><p>Tacoma Power's page says a standard electric water heater is the second-largest energy user in a home, after heating. It says replacing one with a hybrid can save about $350 a year, that hybrid units use 60 percent less energy and that they come with a 10-year limited warranty, compared with six years for a standard electric tank. It also says a hybrid has an electronic display with four operating modes, including a vacation mode. These are the utility's own statements. Ask the maker of any model you consider for its warranty in writing.</p><h2>Rules to follow</h2><p>Get all permits before installation, follow the water heater program specifications and make sure the model is on the Tier 3 or Tier 4 list. You can request the rebate online or by paper form, and you need to include a copy of your receipt. You must be a Tacoma Power customer. The page says you can hire a contractor or buy and install your own unit, which is different from Tacoma Power's heat pump and insulation rebates, where do-it-yourself work is not eligible.</p><p>A hybrid water heater works best in a room with enough space around it. Ask whoever installs it where the cold air will go and whether the room will stay warm enough in winter.</p>
+<h2 id="why-the-rebate-says-electric">Why the rebate says electric</h2><p>Tacoma Power only pays when you replace a standard electric water heater. The US Census Bureau's American Community Survey (2020 to 2024) says about 63 percent of Tacoma homes use electricity as their main heat, and many electrically heated homes also use electric water heaters, but the survey does not count water heaters, so check your own tank. A gas tank does not qualify. If your gas tank is old, ask Tacoma Power before you plan a switch.</p><h2 id="what-tacoma-power-says-about-hybrids">What Tacoma Power says about hybrids</h2><p>Tacoma Power's page says a standard electric water heater is the second-largest energy user in a home, after heating. It says replacing one with a hybrid can save about $350 a year, that hybrid units use 60 percent less energy and that they come with a 10-year limited warranty, compared with six years for a standard electric tank. It also says a hybrid has an electronic display with four operating modes, including a vacation mode. These are the utility's own statements. Ask the maker of any model you consider for its warranty in writing.</p><h2 id="rules-to-follow">Rules to follow</h2><p>Get all permits before installation, follow the water heater program specifications and make sure the model is on the Tier 3 or Tier 4 list. You can request the rebate online or by paper form, and you need to include a copy of your receipt. You must be a Tacoma Power customer. The page says you can hire a contractor or buy and install your own unit, which is different from Tacoma Power's heat pump and insulation rebates, where do-it-yourself work is not eligible.</p><p>A hybrid water heater works best in a room with enough space around it. Ask whoever installs it where the cold air will go and whether the room will stay warm enough in winter.</p>
 
 
-<h2>How to claim a Tacoma water heater rebate</h2>
+<h2 id="how-to-claim-a-tacoma-water-heater-rebate">How to claim a Tacoma water heater rebate</h2>
 <ol>
 <li>Check that your current water heater is a standard electric tank and that Tacoma Power serves your home.</li>
 <li>Pick a Tier 3 or Tier 4 model from the qualified list.</li>
@@ -508,17 +579,20 @@ h1, h2 { text-wrap: balance; }
 <li>Send the online or paper rebate form with a copy of your receipt.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/wa/" style="color:var(--teal,#0d4f5c); font-weight:600;">Washington rebate calculator</a> and pick Tacoma to see what your utility pays.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much is the Tacoma Power water heater rebate?</h3><p>$500 for replacing a standard electric water heater with a Tier 3 or Tier 4 electric hybrid water heater.</p></div>
 <div class="faq-item"><h3>Can I install it myself?</h3><p>Yes. Tacoma Power says you can hire a contractor or buy and install your own unit, as long as permits are in place and the maker's directions are followed.</p></div>
 <div class="faq-item"><h3>Do I need to be a customer?</h3><p>Yes. You must be a Tacoma Power customer.</p></div>
 <div class="faq-item"><h3>How much could I save?</h3><p>Tacoma Power says about $350 a year compared with a standard electric tank. That is the utility's estimate.</p></div>
 <div class="faq-item"><h3>Is there a federal credit?</h3><p>No. The IRS says it ended after 2025.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See the <a href='/us/wa/tacoma/heat-pump/'>Tacoma heat pump page</a> or return to the <a href='/us/wa/tacoma/'>Tacoma rebate hub</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.mytpu.org/ways-to-save/for-my-home/hybrid-water-heater/" target="_blank" rel="noopener">Tacoma Power electric hybrid water heater</a>, <a href="https://www.commerce.wa.gov/energy-incentives/hear/" target="_blank" rel="noopener">Washington Commerce HEAR program</a>, <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS Residential Clean Energy Credit</a>. <a href="/us/wa/tacoma/">All Tacoma rebates &rarr;</a> <a href="/programs/tacoma-power-rebates/">Every Tacoma Power rebate &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-water-heater-rebates-pay-in-tacoma">What water heater rebates pay in Tacoma</a></li><li><a href="#why-the-rebate-says-electric">Why the rebate says electric</a></li><li><a href="#what-tacoma-power-says-about-hybrids">What Tacoma Power says about hybrids</a></li><li><a href="#rules-to-follow">Rules to follow</a></li><li><a href="#how-to-claim-a-tacoma-water-heater-rebate">How to claim a Tacoma water heater rebate</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=tacoma&province=wa">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Tacoma where relevant -->
@@ -720,6 +794,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +551,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/wa/">Washington</a></li><li><a href="/us/wa/vancouver/">Vancouver</a></li><li aria-current="page">Heat Pump</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$500 to $1,250 central, $900 ductless</div><h1>Heat Pump Rebates in Vancouver, Washington</h1><p>Clark Public Utilities pays between $500 and $1,250 for a central heat pump and $900 for a ductless one, if your home is heated with electricity and a contractor from its network does the work.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -490,16 +561,16 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/wa/vancouver/water-heater/">Water Heater Rebates in Vancouver</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What heat pump rebates pay in Vancouver, Washington</h2>
+<h2 id="what-heat-pump-rebates-pay-in-vancouver-washingt">What heat pump rebates pay in Vancouver, Washington</h2>
 <p>We read Clark Public Utilities' heat pump page and its overview of rebates on October 6, 2026. We did not open the ductless program page, so the $900 amount comes from the overview card.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3"><a href='/programs/clark-public-utilities-rebates/'>Central heat pump replacing an electric furnace</a></h4><div class="amount">$1,000</div><p style="font-size:14px;margin:8px 0 0;">A central heat pump with a heating rating of 7.5 HSPF2 or higher.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Variable-speed central heat pump replacing an electric furnace</h4><div class="amount">$1,250</div><p style="font-size:14px;margin:8px 0 0;">The same rating, with a variable-speed compressor.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Variable-speed heat pump replacing a heat pump or electric zonal heat</h4><div class="amount">$500</div><p style="font-size:14px;margin:8px 0 0;">Also available for single-family new construction unless the home is in the New Homes Performance program.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Ductless heat pump</h4><div class="amount">$900</div><p style="font-size:14px;margin:8px 0 0;">For homes now heated with ceiling cable, baseboard, wall heaters or an electric furnace.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/programs/washington-home-electrification-rebates/'>State home electrification rebates</a></h4><div class="amount">Set by the City</div><p style="font-size:14px;margin:8px 0 0;">The City of Vancouver received $500,000 for households at or below 150 percent of area median income. No per-household amount is listed.</p></div>
 </div>
 <div class='highlight-box'><h4>Working it out</h4><p>A Vancouver home with an electric forced-air furnace that gets a variable-speed ducted heat pump earns $1,250. A home with baseboards that gets a ductless system earns $900. The pages we read do not say whether one home can claim both a central and a ductless rebate, so ask the utility to confirm the amount for your plan.</p></div>
-<h2>Electric heat is the starting point</h2><p>The US Census Bureau's American Community Survey (2020 to 2024) says about 68 percent of Vancouver, Washington homes use electricity as their main heat and about 29 percent use utility gas. All of Clark's heat pump amounts are for electrically heated homes. If you heat with gas, the pages we read do not list a heat pump rebate for you, so ask the utility before you plan. About 51 percent of homes are detached houses and 51 percent of households own, which are the households that can pick equipment.</p><h2>How a heat pump changes the bill</h2><p>Clark Public Utilities' page says heat pumps can deliver significant savings on heating bills because they move heat rather than make it, and that they cool a house in summer by reversing. It also notes that when the outside temperature falls below about 35 degrees, a backup system takes over, and that this backup costs more to run. The utility says to consider a special heat pump thermostat. That advice fits with its $140 thermostat rebate on our <a href="/us/wa/smart-thermostats/">Washington smart thermostat page</a>.</p><h2>Contractors and checks</h2><p>The rebate needs a contractor from the utility's Contractor Network. Ask for the model's rating on paper to prove it meets 7.5 HSPF2. Ask whether the ducts need sealing or insulating, since leaky ducts lower the benefit, and Clark offers duct sealing rebates of $200 or $500. Ask what the backup heat will be and when it turns on. If your home also needs insulation, do it first, and see our <a href="/us/wa/vancouver/insulation/">Vancouver insulation page</a>.</p>
+<h2 id="electric-heat-is-the-starting-point">Electric heat is the starting point</h2><p>The US Census Bureau's American Community Survey (2020 to 2024) says about 68 percent of Vancouver, Washington homes use electricity as their main heat and about 29 percent use utility gas. All of Clark's heat pump amounts are for electrically heated homes. If you heat with gas, the pages we read do not list a heat pump rebate for you, so ask the utility before you plan. About 51 percent of homes are detached houses and 51 percent of households own, which are the households that can pick equipment.</p><h2 id="how-a-heat-pump-changes-the-bill">How a heat pump changes the bill</h2><p>Clark Public Utilities' page says heat pumps can deliver significant savings on heating bills because they move heat rather than make it, and that they cool a house in summer by reversing. It also notes that when the outside temperature falls below about 35 degrees, a backup system takes over, and that this backup costs more to run. The utility says to consider a special heat pump thermostat. That advice fits with its $140 thermostat rebate on our <a href="/us/wa/smart-thermostats/">Washington smart thermostat page</a>.</p><h2 id="contractors-and-checks">Contractors and checks</h2><p>The rebate needs a contractor from the utility's Contractor Network. Ask for the model's rating on paper to prove it meets 7.5 HSPF2. Ask whether the ducts need sealing or insulating, since leaky ducts lower the benefit, and Clark offers duct sealing rebates of $200 or $500. Ask what the backup heat will be and when it turns on. If your home also needs insulation, do it first, and see our <a href="/us/wa/vancouver/insulation/">Vancouver insulation page</a>.</p>
 
 
-<h2>How to claim a Vancouver, Washington heat pump rebate</h2>
+<h2 id="how-to-claim-a-vancouver-washington-heat-pump-re">How to claim a Vancouver, Washington heat pump rebate</h2>
 <ol>
 <li>Confirm that Clark Public Utilities serves your home and that it is heated with electricity.</li>
 <li>Choose a contractor from the utility's Contractor Network.</li>
@@ -508,17 +579,20 @@ h1, h2 { text-wrap: balance; }
 <li>Call 360-992-3355 if your system does not fit one of the listed cases.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/wa/" style="color:var(--teal,#0d4f5c); font-weight:600;">Washington rebate calculator</a> and pick Vancouver to see what your utility pays.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much is the Clark Public Utilities heat pump rebate?</h3><p>$1,000 for a central heat pump replacing an electric furnace, $1,250 for a variable-speed one, $500 replacing a heat pump or zonal heat with a variable-speed unit, and $900 for ductless.</p></div>
 <div class="faq-item"><h3>Do I need a certain contractor?</h3><p>Yes. The heat pump must be installed by a contractor in the utility's Contractor Network.</p></div>
 <div class="faq-item"><h3>Does my home need electric heat?</h3><p>Yes. The rebates are for electrically heated homes.</p></div>
 <div class="faq-item"><h3>Is there help for lower incomes?</h3><p>The state's home electrification program, run locally by the City of Vancouver, is for households at or below 150 percent of area median income. Ask for amounts.</p></div>
 <div class="faq-item"><h3>Is there a federal credit?</h3><p>No. The IRS says the energy efficient home improvement credit covers improvements made through December 31, 2025.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Next, see the <a href='/us/wa/vancouver/water-heater/'>Vancouver water heater page</a> or return to the <a href='/us/wa/vancouver/'>Vancouver rebate hub</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/heat-pump-program/" target="_blank" rel="noopener">Clark Public Utilities heat pump program</a>, <a href="https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/" target="_blank" rel="noopener">Clark Public Utilities all rebates and incentives</a>, <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" target="_blank" rel="noopener">IRS Energy Efficient Home Improvement Credit</a>. <a href="/us/wa/vancouver/">All Vancouver rebates &rarr;</a> <a href="/programs/clark-public-utilities-rebates/">Every Clark Public Utilities rebate &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-heat-pump-rebates-pay-in-vancouver-washingt">What heat pump rebates pay in Vancouver, Washington</a></li><li><a href="#electric-heat-is-the-starting-point">Electric heat is the starting point</a></li><li><a href="#how-a-heat-pump-changes-the-bill">How a heat pump changes the bill</a></li><li><a href="#contractors-and-checks">Contractors and checks</a></li><li><a href="#how-to-claim-a-vancouver-washington-heat-pump-re">How to claim a Vancouver, Washington heat pump rebate</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=vancouver&province=wa">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- RANKINGS-LINK-START -->
 <section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Vancouver</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/wa/vancouver/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Vancouver &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">12 local companies ranked by 9,046 Google reviews. Top picks: Precision Heating &amp; Cooling, Area Heating &amp; Cooling, Inc., Smart Choice Heating &amp; Cooling, Inc..</span></a></div></section>
@@ -723,6 +797,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

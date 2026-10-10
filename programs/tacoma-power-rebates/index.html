@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,18 +551,18 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/programs/">Rebate programs</a></li><li aria-current="page">Tacoma Power</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $2,000 heat pump, $2,250 insulation, 0% loans</div><h1>Tacoma Power Home Rebates</h1><p>Tacoma Power is part of Tacoma Public Utilities, owned by the city. Its rebates are aimed at homes that heat with electricity, and its zero percent loans help with the part a rebate does not cover.</p></div></section>
 <article class="article"><div class="wrap">
-<h2>What Tacoma Power pays in 2026</h2>
+<h2 id="what-tacoma-power-pays-in-2026">What Tacoma Power pays in 2026</h2>
 <p>We read Tacoma Public Utilities' heat pump, insulation, window, thermostat, water heater and EV charging pages on October 6, 2026. Most rebates need a Tacoma Power Participating Contractor and do not cover do-it-yourself work. Several only apply when your main heat is electric, so check what heats your home before you plan.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Heat pump</h4><div class="amount">Up to $2,000</div><p style="font-size:14px;margin:8px 0 0;">$1,000 for a ductless or standard air-source heat pump replacing electric heat, $2,000 for a variable-speed heat pump replacing an electric forced-air furnace, and $1,000 for a variable-speed heat pump replacing non-electric heat or an old heat pump.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Insulation</h4><div class="amount">Up to $2,250</div><p style="font-size:14px;margin:8px 0 0;">$750 for each area of crawlspace, wall and attic. Your insulation must start thin and reach a set level, and your main heat must be electric.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Windows and sliding doors</h4><div class="amount">$50 to $100 per window</div><p style="font-size:14px;margin:8px 0 0;">$100 per window and $400 per sliding door replacing single-pane glass. $50 and $200 replacing double-pane metal frames.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Heat pump water heater</h4><div class="amount">$500</div><p style="font-size:14px;margin:8px 0 0;">For replacing a standard electric water heater with a Tier 3 or Tier 4 model. You can hire a contractor or install it yourself.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Smart thermostat</h4><div class="amount">$75</div><p style="font-size:14px;margin:8px 0 0;">Up to two rebates, one for each heating system. Line-voltage thermostats earn $25.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Home EV charging</h4><div class="amount">Up to $600</div><p style="font-size:14px;margin:8px 0 0;">Bill credits of $400 each for a Level 2 charger, a smart splitter, electrical work or a 240-volt outlet, with a $600 maximum for more than one. Renters can apply.</p></div>
 </div>
 <div class='highlight-box'><h4>A quick example</h4><p>Picture a Tacoma home with an electric forced-air furnace, a bare attic and a floor with no insulation. A variable-speed heat pump pays $2,000, attic insulation $750 and floor insulation $750, which is $3,500 from Tacoma Power. Tacoma Power's zero percent loan can then cover part of the rest, up to $20,000 for the heat pump and up to $10,000 for insulation, paid back over seven years.</p></div>
-<h2>The zero percent loans</h2><p>Tacoma Power offers seven-year loans at zero percent interest. For a heat pump the loan can be up to $20,000 when your home now heats with electric zonal heat or an electric forced-air furnace. For insulation it can be up to $10,000 when your main heat is electric and your insulation starts thin. You must own the home and the land, you need a good payment and credit history with Tacoma Public Utilities, and Tacoma Power must approve the project before work begins. Heat pump loans are not offered if you already have a heat pump.</p><p>A loan with no interest is worth about as much as the interest you would have paid elsewhere, so it can be worth more than a small rebate. Ask for the pre-approval form first, before a contractor schedules work.</p><h2>Rules that matter on the heat pump rebate</h2><p>The home must be served by Tacoma Power. A Tacoma Power Participating Contractor must install the unit, and the unit must be certified by the Air-Conditioning, Heating, and Refrigeration Institute, with a heating rating of 9.0 HSPF or 7.5 HSPF2 and a cooling rating of 15 SEER or 14.3 SEER2. Ductless units must go in the main area of the home. Homes that already got a Tacoma Power heat pump incentive, new construction and do-it-yourself jobs are not eligible. You also need heat load calculations for central and whole-home ductless systems and, for central systems, sizing and balance point calculations. A good contractor handles those, but ask to see them.</p><p>The rebate amount depends on what you replace. An existing ductless heat pump is not eligible for a new one under this page. That matters for someone who added a mini-split years ago.</p><h2>Insulation and window limits</h2><p>The insulation rebate needs a starting level of R-11 or less in the attic, none in the walls and R-11 or less in the floor. The new levels are R-49 with air sealing in the attic, R-13 in the walls and R-30 in the floor. Manufactured homes, major remodels where building code already forces insulation, new construction, do-it-yourself work and buildings with five or more units are not eligible, and neither are homes that already received an insulation incentive from Tacoma Power. Windows must replace single-pane or double-pane metal-framed windows, and the home's main heat must be electric. The window page lists the same exclusions.</p><h2>Other help in Tacoma</h2><p>The State Department of Commerce lists the City of Tacoma and Pierce County as local partners for its home electrification rebates, with awards of $637,000 and $500,000. These go to households at or below 150 percent of area median income, but the state page gives no per-household dollar amount, so ask the City of Tacoma before you plan on it. Our <a href="/programs/washington-home-electrification-rebates/">Washington home electrification guide</a> explains how to find your local partner.</p>
-<h2>How to claim Tacoma Power rebates</h2>
+<h2 id="the-zero-percent-loans">The zero percent loans</h2><p>Tacoma Power offers seven-year loans at zero percent interest. For a heat pump the loan can be up to $20,000 when your home now heats with electric zonal heat or an electric forced-air furnace. For insulation it can be up to $10,000 when your main heat is electric and your insulation starts thin. You must own the home and the land, you need a good payment and credit history with Tacoma Public Utilities, and Tacoma Power must approve the project before work begins. Heat pump loans are not offered if you already have a heat pump.</p><p>A loan with no interest is worth about as much as the interest you would have paid elsewhere, so it can be worth more than a small rebate. Ask for the pre-approval form first, before a contractor schedules work.</p><h2 id="rules-that-matter-on-the-heat-pump-rebate">Rules that matter on the heat pump rebate</h2><p>The home must be served by Tacoma Power. A Tacoma Power Participating Contractor must install the unit, and the unit must be certified by the Air-Conditioning, Heating, and Refrigeration Institute, with a heating rating of 9.0 HSPF or 7.5 HSPF2 and a cooling rating of 15 SEER or 14.3 SEER2. Ductless units must go in the main area of the home. Homes that already got a Tacoma Power heat pump incentive, new construction and do-it-yourself jobs are not eligible. You also need heat load calculations for central and whole-home ductless systems and, for central systems, sizing and balance point calculations. A good contractor handles those, but ask to see them.</p><p>The rebate amount depends on what you replace. An existing ductless heat pump is not eligible for a new one under this page. That matters for someone who added a mini-split years ago.</p><h2 id="insulation-and-window-limits">Insulation and window limits</h2><p>The insulation rebate needs a starting level of R-11 or less in the attic, none in the walls and R-11 or less in the floor. The new levels are R-49 with air sealing in the attic, R-13 in the walls and R-30 in the floor. Manufactured homes, major remodels where building code already forces insulation, new construction, do-it-yourself work and buildings with five or more units are not eligible, and neither are homes that already received an insulation incentive from Tacoma Power. Windows must replace single-pane or double-pane metal-framed windows, and the home's main heat must be electric. The window page lists the same exclusions.</p><h2 id="other-help-in-tacoma">Other help in Tacoma</h2><p>The State Department of Commerce lists the City of Tacoma and Pierce County as local partners for its home electrification rebates, with awards of $637,000 and $500,000. These go to households at or below 150 percent of area median income, but the state page gives no per-household dollar amount, so ask the City of Tacoma before you plan on it. Our <a href="/programs/washington-home-electrification-rebates/">Washington home electrification guide</a> explains how to find your local partner.</p>
+<h2 id="how-to-claim-tacoma-power-rebates">How to claim Tacoma Power rebates</h2>
 <ol>
 <li>Confirm that Tacoma Power sends your electric bill and that your main heat is electric.</li>
 <li>Call the Tacoma Power Energy Advisor at 253-502-8363 or email rebates@tacoma.gov to check the rules for your project.</li>
@@ -499,18 +570,18 @@ h1, h2 { text-wrap: balance; }
 <li>If you want a zero percent loan, get it approved before any work begins.</li>
 <li>After the project, send the application, the contractor's bid and invoice, and any required reports within the time on each program page.</li>
 </ol>
-<h2>Our pages for Tacoma Power customers</h2><ul><li><a href="/us/wa/tacoma/">Tacoma</a>: Tacoma Power electric service.</li>
+<h2 id="our-pages-for-tacoma-power-customers">Our pages for Tacoma Power customers</h2><ul><li><a href="/us/wa/tacoma/">Tacoma</a>: Tacoma Power electric service.</li>
 <li><a href="/us/wa/tacoma/heat-pump/">Tacoma heat pump rebates</a>: Up to $2,000 plus loans.</li>
 <li><a href="/us/wa/tacoma/insulation/">Tacoma insulation rebates</a>: Up to $2,250.</li>
 <li><a href="/us/wa/tacoma/windows-doors/">Tacoma window rebates</a>: Per-window amounts.</li>
 <li><a href="/us/wa/tacoma/water-heater/">Tacoma water heater rebates</a>: $500.</li>
 </ul>
-<h2>Guides</h2><ul><li><a href="/us/wa/">Washington rebate hub</a></li>
+<h2 id="guides">Guides</h2><ul><li><a href="/us/wa/">Washington rebate hub</a></li>
 <li><a href="/us/wa/ev-charger/">Washington EV charger rebates</a></li>
 <li><a href="/us/wa/smart-thermostats/">Washington smart thermostat rebates</a></li>
 </ul>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/wa/" style="color:var(--teal,#0d4f5c); font-weight:600;">Washington rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much is the Tacoma Power heat pump rebate?</h3><p>Up to $2,000. A variable-speed heat pump replacing an electric forced-air furnace gets $2,000, and a standard or ductless unit replacing electric heat gets $1,000, with lower amounts in some cases.</p></div>
 <div class="faq-item"><h3>Do I need a certain contractor?</h3><p>Yes. Tacoma Power requires a Participating Contractor for heat pumps, insulation and windows, and does not pay for do-it-yourself work on those.</p></div>
 <div class="faq-item"><h3>Can renters get anything?</h3><p>The EV charging bill credits are open to renters. Most other rebates need the home to be served by Tacoma Power, and the loans need you to own the home and land.</p></div>
@@ -519,6 +590,9 @@ h1, h2 { text-wrap: balance; }
 
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/heat-pump/" target="_blank" rel="noopener">Tacoma Power heat pump rebates</a>, <a href="https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/insulation/" target="_blank" rel="noopener">Tacoma Power insulation rebates</a>, <a href="https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/windows/" target="_blank" rel="noopener">Tacoma Power window rebates</a>, <a href="https://www.mytpu.org/ways-to-save/for-my-home/hybrid-water-heater/" target="_blank" rel="noopener">Tacoma Power electric hybrid water heater</a>, <a href="https://www.commerce.wa.gov/energy-incentives/hear/" target="_blank" rel="noopener">Washington Department of Commerce HEAR program</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-tacoma-power-pays-in-2026">What Tacoma Power pays in 2026</a></li><li><a href="#the-zero-percent-loans">The zero percent loans</a></li><li><a href="#rules-that-matter-on-the-heat-pump-rebate">Rules that matter on the heat pump rebate</a></li><li><a href="#insulation-and-window-limits">Insulation and window limits</a></li><li><a href="#other-help-in-tacoma">Other help in Tacoma</a></li><li><a href="#how-to-claim-tacoma-power-rebates">How to claim Tacoma Power rebates</a></li><li><a href="#our-pages-for-tacoma-power-customers">Our pages for Tacoma Power customers</a></li><li><a href="#guides">Guides</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -720,6 +794,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

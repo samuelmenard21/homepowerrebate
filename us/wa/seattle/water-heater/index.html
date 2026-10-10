@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +551,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/wa/">Washington</a></li><li><a href="/us/wa/seattle/">Seattle</a></li><li aria-current="page">Water Heater</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$750 from Seattle City Light</div><h1>Heat Pump Water Heater Rebates in Seattle</h1><p>Seattle City Light pays $750 for a qualifying heat pump water heater. You can claim it through a contractor, as a coupon at The Home Depot or Lowe's, or as an online rebate if you buy somewhere else and install the unit yourself.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -488,16 +559,16 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/wa/seattle/heat-pump/">Heat Pump Rebates in Seattle</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What water heater rebates pay in Seattle</h2>
+<h2 id="what-water-heater-rebates-pay-in-seattle">What water heater rebates pay in Seattle</h2>
 <p>We read Seattle City Light's heating and cooling page and the State Department of Commerce page on October 6, 2026. The City Light rebate is for the electric side of your home, so it fits households with an electric tank now.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3"><a href='/programs/seattle-city-light-rebates/'>Seattle City Light rebate, contractor route</a></h4><div class="amount">$750</div><p style="font-size:14px;margin:8px 0 0;">Your contractor installs a qualifying heat pump water heater and the $750 comes off the bill or goes to you through the contractor. The unit must be ENERGY STAR rated and a Tier 3 or Tier 4 model on the qualified list.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Instant coupon at The Home Depot or Lowe&#x27;s</h4><div class="amount">$750</div><p style="font-size:14px;margin:8px 0 0;">A discount at the store on a qualifying unit. Units bought with the coupon cannot also use the online rebate form.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Online rebate for do-it-yourself installs</h4><div class="amount">$750</div><p style="font-size:14px;margin:8px 0 0;">If you buy from another seller and install it yourself, you can apply to City Light for $750 on an online form.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/programs/washington-home-electrification-rebates/'>State home electrification rebates</a></h4><div class="amount">Set by the City</div><p style="font-size:14px;margin:8px 0 0;">Heat pump water heaters are on the state's list of equipment for households at or below 150 percent of area median income. The City of Seattle received $1,616,516 to give out. The state page lists no per-household amount.</p></div>
 </div>
 <div class='highlight-box'><h4>Working it out</h4><p>If a Seattle household pays $2,400 for a qualifying heat pump water heater installed by a contractor, the $750 rebate brings the cost to $1,650. The $2,400 is only an example, not a quote. Ask for local bids, because installation work such as new wiring or moving the tank can change the total.</p></div>
-<h2>Why the electric tank matters here</h2><p>The US Census Bureau's American Community Survey (2020 to 2024) says about 61 percent of Seattle homes use electricity as their main heat. The survey does not count water heaters, but a home that heats with electricity often also has an electric tank. If you have one, it is probably the biggest single use of power in the house after heating. A heat pump water heater moves heat from the air around it into the water, so it uses less electricity for the same amount of hot water. The City Light page does not give an energy saving number, so we do not quote one.</p><p>Seattle also has more renters than owners, about 56 percent of households, and 63 percent of homes are not detached houses. In an apartment or condo the water heater may belong to the building. In that case the owner or the homeowners association decides, and City Light's page for single-family homes may not fit.</p><h2>Which of the three routes to pick</h2><p>The contractor route fits a household that wants someone else to size the unit, haul away the old tank and handle permits. The store coupon is quick if you already have an installer and you shop at The Home Depot or Lowe's. The online rebate is for people who buy elsewhere and install it themselves. You cannot stack the coupon with the online rebate, so pick one before you buy. Check that the exact model number appears on City Light's list of Tier 3 and Tier 4 models, because a model that looks the same but is a different number may not qualify.</p><h2>Space and size questions to ask</h2><p>A heat pump water heater needs room to breathe, and it works best in a space that does not get too small or too cold. City Light links a guide on right-sizing the unit through its partner, Hot Water Solutions Northwest. Ask your contractor how many people live in the home and whether the tank will fit through the doorway or down the stairs. A good bid names the model, the installation work, the permit and the disposal of the old tank, and shows the $750 as a separate line.</p>
+<h2 id="why-the-electric-tank-matters-here">Why the electric tank matters here</h2><p>The US Census Bureau's American Community Survey (2020 to 2024) says about 61 percent of Seattle homes use electricity as their main heat. The survey does not count water heaters, but a home that heats with electricity often also has an electric tank. If you have one, it is probably the biggest single use of power in the house after heating. A heat pump water heater moves heat from the air around it into the water, so it uses less electricity for the same amount of hot water. The City Light page does not give an energy saving number, so we do not quote one.</p><p>Seattle also has more renters than owners, about 56 percent of households, and 63 percent of homes are not detached houses. In an apartment or condo the water heater may belong to the building. In that case the owner or the homeowners association decides, and City Light's page for single-family homes may not fit.</p><h2 id="which-of-the-three-routes-to-pick">Which of the three routes to pick</h2><p>The contractor route fits a household that wants someone else to size the unit, haul away the old tank and handle permits. The store coupon is quick if you already have an installer and you shop at The Home Depot or Lowe's. The online rebate is for people who buy elsewhere and install it themselves. You cannot stack the coupon with the online rebate, so pick one before you buy. Check that the exact model number appears on City Light's list of Tier 3 and Tier 4 models, because a model that looks the same but is a different number may not qualify.</p><h2 id="space-and-size-questions-to-ask">Space and size questions to ask</h2><p>A heat pump water heater needs room to breathe, and it works best in a space that does not get too small or too cold. City Light links a guide on right-sizing the unit through its partner, Hot Water Solutions Northwest. Ask your contractor how many people live in the home and whether the tank will fit through the doorway or down the stairs. A good bid names the model, the installation work, the permit and the disposal of the old tank, and shows the $750 as a separate line.</p>
 
 
-<h2>How to claim a Seattle water heater rebate</h2>
+<h2 id="how-to-claim-a-seattle-water-heater-rebate">How to claim a Seattle water heater rebate</h2>
 <ol>
 <li>Look up your model on the City Light list of Tier 3 and Tier 4 models before you buy.</li>
 <li>Choose the contractor route, the store coupon or the online rebate.</li>
@@ -506,17 +577,20 @@ h1, h2 { text-wrap: balance; }
 <li>Keep the receipt, the model number and the install date.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/wa/" style="color:var(--teal,#0d4f5c); font-weight:600;">Washington rebate calculator</a> and pick Seattle to see what your utility pays.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much is the water heater rebate in Seattle?</h3><p>$750 from Seattle City Light for a qualifying ENERGY STAR Tier 3 or Tier 4 heat pump water heater.</p></div>
 <div class="faq-item"><h3>Can I use the Home Depot coupon and the online rebate?</h3><p>No. City Light says units discounted with the store coupon are not eligible for the online rebate form.</p></div>
 <div class="faq-item"><h3>Do I need a contractor?</h3><p>No. City Light has a route for do-it-yourself installs, but the unit still has to be on its qualified list.</p></div>
 <div class="faq-item"><h3>Is there extra help for lower incomes?</h3><p>The state's home electrification program lists heat pump water heaters for households at or below 150 percent of area median income, run locally by the City of Seattle. Ask the City for the current amount.</p></div>
 <div class="faq-item"><h3>Is there a federal tax credit?</h3><p>No. The IRS says the residential clean energy credit does not apply to property placed in service after December 31, 2025.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Next, read our <a href='/us/wa/seattle/heat-pump/'>Seattle heat pump rebate page</a> if you also plan to replace your heating, or go back to the <a href='/us/wa/seattle/'>Seattle rebate hub</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.seattle.gov/city-light/residential-services/home-energy-solutions/heating-and-cooling-your-home" target="_blank" rel="noopener">Seattle City Light heating and cooling</a>, <a href="https://hotwatersolutionsnw.org/heat-pump-water-heaters-101/" target="_blank" rel="noopener">Hot Water Solutions Northwest heat pump water heaters</a>, <a href="https://www.commerce.wa.gov/energy-incentives/hear/" target="_blank" rel="noopener">Washington Commerce HEAR program</a>, <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS Residential Clean Energy Credit</a>. <a href="/us/wa/seattle/">All Seattle rebates &rarr;</a> <a href="/programs/seattle-city-light-rebates/">Every Seattle City Light rebate &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-water-heater-rebates-pay-in-seattle">What water heater rebates pay in Seattle</a></li><li><a href="#why-the-electric-tank-matters-here">Why the electric tank matters here</a></li><li><a href="#which-of-the-three-routes-to-pick">Which of the three routes to pick</a></li><li><a href="#space-and-size-questions-to-ask">Space and size questions to ask</a></li><li><a href="#how-to-claim-a-seattle-water-heater-rebate">How to claim a Seattle water heater rebate</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=seattle&province=wa">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Seattle where relevant -->
@@ -718,6 +792,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,18 +551,18 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/programs/">Rebate programs</a></li><li aria-current="page">BC Hydro free thermostats</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to 5 free, about $350</div><h1>BC Hydro Free Smart Thermostats (Fall 2026)</h1><p>BC Hydro is giving homes with electric baseboard heat up to five free smart thermostats from Mysa or Sinopé. They ship free and come already signed up for Peak Saver, which pays you $50 each winter, or $100 if your income qualifies. Here is who can get them, when, and whether it's worth it, read from BC Hydro and the Province.</p></div></section>
 <article class="article"><div class="wrap">
-<h2>The offer at a glance</h2>
+<h2 id="the-offer-at-a-glance">The offer at a glance</h2>
 <p>We read BC Hydro's product page and the Province's July 6, 2026 news release on October 3, 2026. On that date BC Hydro still listed the thermostats as <strong>coming this fall</strong>, with more details to come. We will update this page the day ordering opens.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-limited">Coming</span><h4 aria-level="3">Free smart thermostats</h4><div class="amount">Up to 5 per home</div><p style="font-size:14px;margin:8px 0 0;">Mysa or Sinopé baseboard (line-voltage) models, worth about $350 per home. Free shipping. Ordered through Mysa's or Sinopé's own website.</p></div><div class="rebate-card"><span class="program-status status-limited">Coming</span><h4>Peak Saver reward</h4><div class="amount">$50 a winter ($100 income-qualified)</div><p style="font-size:14px;margin:8px 0 0;">The thermostats come pre-enrolled. A few times a winter BC Hydro turns your heat down a degree or two for a short time. You can override any event.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Already own a baseboard smart thermostat?</h4><div class="amount">$100 to enroll + $50 a winter</div><p style="font-size:14px;margin:8px 0 0;">Enroll an eligible thermostat you already have in Peak Saver for a one-time $100 bill credit, then $50 each season (November to March).</p></div>
 </div>
 
-<h2>Who can get free thermostats</h2><p>The offer is for <strong>BC Hydro residential customers whose homes are heated by electric baseboards</strong>. Mysa and Sinopé baseboard thermostats are line-voltage thermostats. They switch the 120V or 240V power that runs a baseboard heater.</p><p>The Province says the program is meant to reach condos and apartments too. Renters and condo owners with baseboards have had few ways to join Peak Saver before. About 800,000 BC homes, more than 40%, heat with electricity.</p><p>It is <strong>not</strong> for a furnace or a ducted heat pump. Ecobee, Nest and other 24V thermostats can't run baseboards, and BC Hydro doesn't give them away. It is also not for <strong>FortisBC electric</strong> customers in places like Kelowna and Penticton. FortisBC has its own connected-thermostat rebate for electric central heat.</p><h2>When you can order</h2><p>BC Hydro opened an email sign-up on July 6, 2026 and said ordering would start in October 2026. On October 3 its page still said "coming this fall" and that more details are coming soon. The safest move now is to join the email list on BC Hydro's Peak Saver page so you hear the day it opens.</p><p>When it opens, you order from Mysa or Sinopé directly, not from a store. You pick the brand. You install them yourself or hire an electrician. Line-voltage wiring carries full house voltage, so if you are not sure, hire an electrician.</p><h2>Mysa or Sinopé: which to pick</h2><p>Both are Canadian and both make baseboard models that work with Peak Saver. Mysa is the better-known app, with Apple Home, Alexa and Google support, and a minimal look. Sinopé says its newest and most advanced baseboard thermostat is the one in this program. Check the amperage (load) of each heater against the model before you order. A large baseboard on one thermostat can exceed what a model handles.</p><p>For a deeper side-by-side, see our <a href='/blog/smart-thermostat-comparison-nest-ecobee-honeywell-mysa/'>Mysa vs Ecobee vs Nest comparison</a>, which also covers which thermostat fits which kind of heat.</p><h2>Is it worth it?</h2><p>For a baseboard home, yes. The thermostats are free, they let you heat only the rooms you use, and BC Hydro pays you $50 each winter to let it trim your heat during a few peak events.</p><p>The catch is control. During a peak event your heat drops a degree or two for a short time. You can override any event. But BC Hydro's Peak Saver rules say you need to take part in at least half the events in a season to get that season's reward.</p><h2>Other BC Hydro offers this winter</h2><p>BC Hydro also brought back appliance rebates on October 2, 2026: up to $200 on ENERGY STAR washers, dryers, fridges and laundry centres until January 8, 2027, and $25 on air fryers. If you are ready to replace baseboards entirely, a heat pump that replaces electric heat gets up to $4,000. See <a href='/blog/bc-hydro-product-rebates-appliances/'>every BC Hydro rebate in one table</a> and <a href='/programs/bc-hydro-peak-saver/'>Peak Saver, explained</a>.</p>
-<h2>How to get your free thermostats</h2>
+<h2 id="who-can-get-free-thermostats">Who can get free thermostats</h2><p>The offer is for <strong>BC Hydro residential customers whose homes are heated by electric baseboards</strong>. Mysa and Sinopé baseboard thermostats are line-voltage thermostats. They switch the 120V or 240V power that runs a baseboard heater.</p><p>The Province says the program is meant to reach condos and apartments too. Renters and condo owners with baseboards have had few ways to join Peak Saver before. About 800,000 BC homes, more than 40%, heat with electricity.</p><p>It is <strong>not</strong> for a furnace or a ducted heat pump. Ecobee, Nest and other 24V thermostats can't run baseboards, and BC Hydro doesn't give them away. It is also not for <strong>FortisBC electric</strong> customers in places like Kelowna and Penticton. FortisBC has its own connected-thermostat rebate for electric central heat.</p><h2 id="when-you-can-order">When you can order</h2><p>BC Hydro opened an email sign-up on July 6, 2026 and said ordering would start in October 2026. On October 3 its page still said "coming this fall" and that more details are coming soon. The safest move now is to join the email list on BC Hydro's Peak Saver page so you hear the day it opens.</p><p>When it opens, you order from Mysa or Sinopé directly, not from a store. You pick the brand. You install them yourself or hire an electrician. Line-voltage wiring carries full house voltage, so if you are not sure, hire an electrician.</p><h2 id="mysa-or-sinop-which-to-pick">Mysa or Sinopé: which to pick</h2><p>Both are Canadian and both make baseboard models that work with Peak Saver. Mysa is the better-known app, with Apple Home, Alexa and Google support, and a minimal look. Sinopé says its newest and most advanced baseboard thermostat is the one in this program. Check the amperage (load) of each heater against the model before you order. A large baseboard on one thermostat can exceed what a model handles.</p><p>For a deeper side-by-side, see our <a href='/blog/smart-thermostat-comparison-nest-ecobee-honeywell-mysa/'>Mysa vs Ecobee vs Nest comparison</a>, which also covers which thermostat fits which kind of heat.</p><h2 id="is-it-worth-it">Is it worth it?</h2><p>For a baseboard home, yes. The thermostats are free, they let you heat only the rooms you use, and BC Hydro pays you $50 each winter to let it trim your heat during a few peak events.</p><p>The catch is control. During a peak event your heat drops a degree or two for a short time. You can override any event. But BC Hydro's Peak Saver rules say you need to take part in at least half the events in a season to get that season's reward.</p><h2 id="other-bc-hydro-offers-this-winter">Other BC Hydro offers this winter</h2><p>BC Hydro also brought back appliance rebates on October 2, 2026: up to $200 on ENERGY STAR washers, dryers, fridges and laundry centres until January 8, 2027, and $25 on air fryers. If you are ready to replace baseboards entirely, a heat pump that replaces electric heat gets up to $4,000. See <a href='/blog/bc-hydro-product-rebates-appliances/'>every BC Hydro rebate in one table</a> and <a href='/programs/bc-hydro-peak-saver/'>Peak Saver, explained</a>.</p>
+<h2 id="how-to-get-your-free-thermostats">How to get your free thermostats</h2>
 <ol>
 <li>Check your bill: you need a BC Hydro residential account and electric baseboard heat.</li>
 <li>Count your baseboard zones. You can get up to five thermostats per home, so pick the rooms you use most.</li>
@@ -500,12 +571,12 @@ h1, h2 { text-wrap: balance; }
 <li>Install them (or hire an electrician), connect them to Wi-Fi, and they are already enrolled in Peak Saver.</li>
 </ol>
 
-<h2>Guides</h2><ul><li><a href="/blog/bc-hydro-product-rebates-appliances/">Every BC Hydro rebate in one table</a></li>
+<h2 id="guides">Guides</h2><ul><li><a href="/blog/bc-hydro-product-rebates-appliances/">Every BC Hydro rebate in one table</a></li>
 <li><a href="/blog/smart-thermostat-comparison-nest-ecobee-honeywell-mysa/">Mysa vs Ecobee vs Nest</a></li>
 <li><a href="/calculator/bc/">BC rebate calculator</a></li>
 </ul>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/bc/" style="color:var(--teal,#0d4f5c); font-weight:600;">BC rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Is the BC Hydro free thermostat available now?</h3><p>Not yet, as of October 3, 2026. BC Hydro said ordering would start in October 2026, and its page says the offer is coming this fall with more details soon. You can sign up to be told when it opens.</p></div>
 <div class="faq-item"><h3>How many free thermostats can I get from BC Hydro?</h3><p>Up to five per home, from Mysa or Sinopé. The Province values them at about $350 per home.</p></div>
 <div class="faq-item"><h3>Can I get a free Ecobee or Nest from BC Hydro?</h3><p>No. The free thermostats are line-voltage models for electric baseboards. Ecobee and Nest are for furnaces and ducted heat pumps, and BC Hydro does not rebate them.</p></div>
@@ -514,6 +585,9 @@ h1, h2 { text-wrap: balance; }
 
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/product-rebates.html" target="_blank" rel="noopener">BC Hydro deals and free thermostats</a>, <a href="https://news.gov.bc.ca/releases/2026ECS0037-000794" target="_blank" rel="noopener">Province of BC news release, July 6, 2026</a>, <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/peak-saver/enroll-smart-home-devices.html" target="_blank" rel="noopener">BC Hydro Peak Saver: enroll smart home devices</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#the-offer-at-a-glance">The offer at a glance</a></li><li><a href="#who-can-get-free-thermostats">Who can get free thermostats</a></li><li><a href="#when-you-can-order">When you can order</a></li><li><a href="#mysa-or-sinop-which-to-pick">Mysa or Sinopé: which to pick</a></li><li><a href="#is-it-worth-it">Is it worth it?</a></li><li><a href="#other-bc-hydro-offers-this-winter">Other BC Hydro offers this winter</a></li><li><a href="#how-to-get-your-free-thermostats">How to get your free thermostats</a></li><li><a href="#guides">Guides</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -715,6 +789,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

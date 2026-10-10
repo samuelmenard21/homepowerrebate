@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +551,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/on/">Ontario</a></li><li><a href="/ca/on/burlington/">Burlington</a></li><li aria-current="page">Heat Pump</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $7,500 for an air-source heat pump</div><h1>Heat Pump Rebates in Burlington</h1><p>Burlington has 73,180 households, 75% of them owners. The January low averages -7.2&deg;C, mild for Ontario, and the rebate depends on your current fuel.</p></div></section><!-- FED-HP-START --><p style="max-width:880px;margin:18px auto;padding:14px 20px;background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;font-size:15px;line-height:1.6;"><b>Burlington: Federal heat pump rebate coming in early 2027: up to $10,000 for households below the median income and $2,000 for other eligible homeowners. </b>Home Renovation Savings pays now, and Ottawa says the federal rebate can be combined with provincial programs. <a href="/programs/national-heat-pump-rebate/">Read what is confirmed</a> or <a href="/blog/should-you-wait-federal-heat-pump-rebate/">decide whether to wait</a>.</p><!-- FED-HP-END -->
 
@@ -495,16 +566,16 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/ca/on/burlington/appliances/">Appliance Rebates in Burlington</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What Home Renovation Savings pays for a heat pump in Burlington</h2>
+<h2 id="what-home-renovation-savings-pays-for-a-heat-pum">What Home Renovation Savings pays for a heat pump in Burlington</h2>
 <p>We re-read the program's heat pump page and its requirements document on October 3, 2026. No home energy assessment is needed for this stream, but a participating HVAC contractor and written pre-approval are.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Air-source, electric, oil, propane or wood heat</h4><div class="amount">$1,250/ton, up to $7,500</div><p style="font-size:14px;margin:8px 0 0;">For a cold-climate air-source heat pump replacing electric resistance, oil, propane or wood as the main heat. A 3-ton system pays $3,750 and 6 tons or more reaches the cap.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Air-source, Enbridge gas heat</h4><div class="amount">$500/ton, up to $2,000</div><p style="font-size:14px;margin:8px 0 0;">For homes primarily heated by an Enbridge gas furnace or boiler. The cap is reached at 4 tons.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Ground-source</h4><div class="amount">$2,000/ton, up to $12,000</div><p style="font-size:14px;margin:8px 0 0;">For electric, oil, propane or wood homes. Gas homes get a flat $3,000. The system must be a full installation sized to the home's load.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Rented heat pump</h4><div class="amount">$500/ton, up to $2,000</div><p style="font-size:14px;margin:8px 0 0;">Rentals are eligible for any primary heating fuel: $500 per ton for air-source, up to $2,000, or a flat $3,000 for ground-source.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>More than one outdoor unit</h4><div class="amount">Up to three units, one rebate</div><p style="font-size:14px;margin:8px 0 0;">If several outdoor units are needed to heat the whole home, their tons add up and one rebate is paid on the total, for example 3 + 3 tons for $7,500.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>One rebate, pre-approved</h4><div class="amount">Cheque in 60 days</div><p style="font-size:14px;margin:8px 0 0;">One rebate per home. The contractor needs written pre-approval before installing, files the post-installation application within 30 days, and the cheque arrives within 60 days of approval.</p></div>
 </div>
 <p>The requirements document lists no end date, but the program's other streams close in late 2026, so check the program page before you sign a contract. Pre-approval is mandatory: an installation done first earns nothing.</p>
-<h2>Burlington housing</h2><p>The 2021 Census counts 19,345 owner-occupied detached houses built before 1981, 73% of households in an eligible house type and 50% in detached houses. 4.1% report needing major repairs. 18% live in tall apartments, which are excluded.</p><h2>Two programs, two timelines</h2><p>A Burlington owner who wants a heat pump and insulation can combine them, but the heat pump stream and the assessment stream are separate. The heat pump stream needs no assessment, only pre-approval, while insulation and window rebates need the assessment and the dates in late 2026. Plan them separately.</p><h2>What the NRCan form does</h2><p>The contractor submits NRCan's ASHP sizing and selection form for each outdoor unit. It records the home's loads, the planned capacity and the sizing option. The program may ask for extra justification. Ask the contractor to share the completed form so you can see the assumptions.</p><h2>Lake climate</h2><p>The January average low is -7.2&deg;C and the 2015 to 2024 record was -26.2&deg;C. A cold-climate model on the NRCan list will cover most conditions, and the program's performance minimums apply at -15&deg;C.</p><h2>Contractor responsibilities</h2><p>The contractor submits the pre-installation application, waits for written approval, installs the system and files the post-installation application within 30 days. A Burlington owner should ask the contractor to confirm each step in writing and to provide copies of the approvals.</p><h2>Oil and propane homes</h2><p>An oil-heated Burlington home must transition to an electric heat pump and arrange tank removal or emptying through a TSSA-registered contractor, and the owner signs the tank removal attestation form. Propane homes also sign it. Both then qualify for the $1,250-per-ton rate.</p>
+<h2 id="burlington-housing">Burlington housing</h2><p>The 2021 Census counts 19,345 owner-occupied detached houses built before 1981, 73% of households in an eligible house type and 50% in detached houses. 4.1% report needing major repairs. 18% live in tall apartments, which are excluded.</p><h2 id="two-programs-two-timelines">Two programs, two timelines</h2><p>A Burlington owner who wants a heat pump and insulation can combine them, but the heat pump stream and the assessment stream are separate. The heat pump stream needs no assessment, only pre-approval, while insulation and window rebates need the assessment and the dates in late 2026. Plan them separately.</p><h2 id="what-the-nrcan-form-does">What the NRCan form does</h2><p>The contractor submits NRCan's ASHP sizing and selection form for each outdoor unit. It records the home's loads, the planned capacity and the sizing option. The program may ask for extra justification. Ask the contractor to share the completed form so you can see the assumptions.</p><h2 id="lake-climate">Lake climate</h2><p>The January average low is -7.2&deg;C and the 2015 to 2024 record was -26.2&deg;C. A cold-climate model on the NRCan list will cover most conditions, and the program's performance minimums apply at -15&deg;C.</p><h2 id="contractor-responsibilities">Contractor responsibilities</h2><p>The contractor submits the pre-installation application, waits for written approval, installs the system and files the post-installation application within 30 days. A Burlington owner should ask the contractor to confirm each step in writing and to provide copies of the approvals.</p><h2 id="oil-and-propane-homes">Oil and propane homes</h2><p>An oil-heated Burlington home must transition to an electric heat pump and arrange tank removal or emptying through a TSSA-registered contractor, and the owner signs the tank removal attestation form. Propane homes also sign it. Both then qualify for the $1,250-per-ton rate.</p>
 
 
-<h2>How to claim in Burlington</h2>
+<h2 id="how-to-claim-in-burlington">How to claim in Burlington</h2>
 <ol>
 <li>Check your fuel and whether you also plan insulation or window work.</li>
 <li>Confirm eligibility on the program's short form and get the list of participating HVAC contractors.</li>
@@ -513,13 +584,13 @@ h1, h2 { text-wrap: balance; }
 <li>After the install, check that the contractor files the post-installation application within 30 days, with the final itemized invoice and photos.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/on/" style="color:var(--teal,#0d4f5c); font-weight:600;">Ontario rebate calculator</a>, or <a href="/get-quotes/?province=on&amp;city=burlington" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Burlington</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Does the heat pump need an assessment?</h3><p>No.</p></div>
 <div class="faq-item"><h3>Do insulation and windows need one?</h3><p>Yes.</p></div>
 <div class="faq-item"><h3>What does the NRCan form record?</h3><p>Loads, capacity and sizing option per outdoor unit.</p></div>
 <div class="faq-item"><h3>What is Burlington&#x27;s January low?</h3><p>-7.2 degrees Celsius on average.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See <a href="/ca/on/burlington/insulation/">Burlington insulation rebates</a> and the <a href="/calculator/on/">Ontario rebate calculator</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://www.homerenovationsavings.ca/without-assessment/heat-pumps" target="_blank" rel="noopener">Home Renovation Savings: heat pumps</a>, <a href="https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Heat-Pump-Program-Stream-Requirements.pdf" target="_blank" rel="noopener">Heat Pump Program Stream requirements (PDF)</a>, <a href="https://saveonenergy.ca/For-Your-Home/Home-Renovation-Savings" target="_blank" rel="noopener">Save on Energy: Home Renovation Savings</a>, <a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810023301" target="_blank" rel="noopener">Statistics Canada 2021 Census, table 98-10-0233-01</a>. <a href="/ca/on/burlington/">All Burlington rebates &rarr;</a> <a href="/programs/home-renovation-savings/">Every Home Renovation Savings rebate &rarr;</a></p>
 </div></article>
@@ -528,8 +599,11 @@ h1, h2 { text-wrap: balance; }
 <!-- STATE-CA-ON-EV-CHARGER-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/ca/on/ev-charger/">Ontario home EV charger rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-CA-ON-EV-CHARGER-LINK-END -->
 <!-- STATE-CA-ON-HRV-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/ca/on/hrv/">Ontario HRV and ERV rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-CA-ON-HRV-LINK-END -->
 <!-- RANKINGS-LINK-START -->
-<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Burlington</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/on/burlington/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Burlington &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">15 local companies ranked by 3,383 Google reviews. Top picks: Creature Comforts HVAC, AirTemp HVAC Furnace and Air Conditioner of Burlington, AirTemp HVAC.</span></a></div></section>
+<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;" id="compare-top-rated-installers-in-burlington">Compare top-rated installers in Burlington</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/on/burlington/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Burlington &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">15 local companies ranked by 3,383 Google reviews. Top picks: Creature Comforts HVAC, AirTemp HVAC Furnace and Air Conditioner of Burlington, AirTemp HVAC.</span></a></div></section>
 <!-- RANKINGS-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-home-renovation-savings-pays-for-a-heat-pum">What Home Renovation Savings pays for a heat pump in Burlington</a></li><li><a href="#burlington-housing">Burlington housing</a></li><li><a href="#two-programs-two-timelines">Two programs, two timelines</a></li><li><a href="#what-the-nrcan-form-does">What the NRCan form does</a></li><li><a href="#lake-climate">Lake climate</a></li><li><a href="#contractor-responsibilities">Contractor responsibilities</a></li><li><a href="#oil-and-propane-homes">Oil and propane homes</a></li><li><a href="#how-to-claim-in-burlington">How to claim in Burlington</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li><li><a href="#compare-top-rated-installers-in-burlington">Compare top-rated installers in Burlington</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=burlington&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Burlington where relevant -->
@@ -731,6 +805,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

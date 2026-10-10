@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +551,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/co/">Colorado</a></li><li><a href="/us/co/boulder/">Boulder</a></li><li aria-current="page">Insulation</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $2,000 a year if income-qualified, 30% from Xcel for everyone</div><h1>Insulation Rebates in Boulder</h1><p>In Boulder, more than half of the homes were built before 1980 and most households rent. The county's EnergySmart program now pays half the cost of insulation and air sealing for households at or below median income. Everyone else relies on Xcel Energy's 30%.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -493,18 +564,18 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/co/smart-thermostats/">Colorado Smart Thermostat Rebates</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What insulation rebates pay in Boulder</h2>
+<h2 id="what-insulation-rebates-pay-in-boulder">What insulation rebates pay in Boulder</h2>
 <p>We read EnergySmart's rebate page on October 5, 2026. Xcel's amounts come from its 2026 rebate summary, last read September 29, 2026, because Xcel's own page would not load for our reader.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">EnergySmart income-qualified rebate</h4><div class="amount">50% up to $2,000 a year</div><p style="font-size:14px;margin:8px 0 0;">For Boulder County households at or below 100% of area median income. Covers insulation and air sealing, heat pumps, water heaters and panels. Work must be finished and invoiced in 2026.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/programs/xcel-energy-colorado-rebates/'>Xcel attic insulation</a></h4><div class="amount">30% of cost, up to $500</div><p style="font-size:14px;margin:8px 0 0;">Gas-heated homes get 1.5 times the standard amounts, which works out to $750 by our math. Applies to homes heated by Xcel gas or electricity.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Xcel wall insulation</h4><div class="amount">30% of cost, up to $350</div><p style="font-size:14px;margin:8px 0 0;">Same 30% rule. Gas-heated homes get 1.5 times, or $525 by our math.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Xcel air sealing</h4><div class="amount">30% of cost, up to $400</div><p style="font-size:14px;margin:8px 0 0;">Gas-heated homes get 1.5 times, or $600 by our math.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>EnergySmart standard rebates</h4><div class="amount">Retired</div><p style="font-size:14px;margin:8px 0 0;">Boulder County retired its standard rebates in late 2025.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>State income-based rebates (HEAR)</h4><div class="amount">Closed</div><p style="font-size:14px;margin:8px 0 0;">Up to $1,600 for insulation, air sealing and ventilation while it was open. The single-family program is now closed.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal tax credit (25C)</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">The credit for insulation and air sealing ended for spending after December 31, 2025.</p></div>
 </div>
 <div class='highlight-box'><h4>Working it out</h4><p>An income-qualified household pays $3,600 for attic insulation and air sealing together. EnergySmart pays 50%, or $1,800, which is under the $2,000 yearly cap. If the same household also uses Xcel's rebate on the same work, the program says it can combine the two, but your advisor must confirm how. A household above the income line gets Xcel's 30% only: $500 at most for the attic and $400 for air sealing.</p></div>
-<h2>What Boulder homes look like</h2><p>The American Community Survey (2020 to 2024) counts 47,465 homes in Boulder. About 55% were built before 1980, 7% before 1940, and only 18% in 2000 or later. About 53% of households rent, and only 39% of homes are detached houses. About 9% are in buildings of two to four units.</p><p>Many Boulder homes are older, so insulation levels are worth checking. But the majority of residents rent, which makes the owner the key person. If you are a tenant, ask an EnergySmart advisor whether you can apply, and expect to need the owner's agreement for work on the building.</p><h2>EnergySmart is the first stop</h2><p>EnergySmart is the Boulder County energy advising program. Its advisors can tell you if your household is at or below the 100% area median income line and walk you through the rebate. The rebate covers insulation, air sealing, electrification upgrades, panel upgrades and cellular shades, for site-built and manufactured homes, and is first come, first served until funds run out. Work must be finished and invoiced between January 1 and December 31, 2026.</p><h2>If your income is above the line</h2><p>Standard EnergySmart rebates ended in late 2025, so households above the income line use Xcel Energy's 30% rebate. Xcel pays up to $500 for an attic, $350 for walls and $400 for air sealing, with 1.5 times those caps for homes heated with Xcel natural gas. That is a smaller rebate than the income-qualified one, so for many households the order is: check income, then Xcel.</p><h2>What Boulder heats with</h2><p>About 63% of Boulder households heat with utility gas and 33% with electricity. For the 33% on electricity, good insulation cuts bills the most. Gas homes get Xcel's higher caps if Xcel supplies the gas.</p><h2>What changed in 2026</h2><p>The federal credit for insulation ended after 2025. The Colorado Energy Office closed its single-family income-based program in August 2026, which could pay up to $1,600 for insulation. EnergySmart's own program is the live one for Boulder County households at or below median income.</p>
+<h2 id="what-boulder-homes-look-like">What Boulder homes look like</h2><p>The American Community Survey (2020 to 2024) counts 47,465 homes in Boulder. About 55% were built before 1980, 7% before 1940, and only 18% in 2000 or later. About 53% of households rent, and only 39% of homes are detached houses. About 9% are in buildings of two to four units.</p><p>Many Boulder homes are older, so insulation levels are worth checking. But the majority of residents rent, which makes the owner the key person. If you are a tenant, ask an EnergySmart advisor whether you can apply, and expect to need the owner's agreement for work on the building.</p><h2 id="energysmart-is-the-first-stop">EnergySmart is the first stop</h2><p>EnergySmart is the Boulder County energy advising program. Its advisors can tell you if your household is at or below the 100% area median income line and walk you through the rebate. The rebate covers insulation, air sealing, electrification upgrades, panel upgrades and cellular shades, for site-built and manufactured homes, and is first come, first served until funds run out. Work must be finished and invoiced between January 1 and December 31, 2026.</p><h2 id="if-your-income-is-above-the-line">If your income is above the line</h2><p>Standard EnergySmart rebates ended in late 2025, so households above the income line use Xcel Energy's 30% rebate. Xcel pays up to $500 for an attic, $350 for walls and $400 for air sealing, with 1.5 times those caps for homes heated with Xcel natural gas. That is a smaller rebate than the income-qualified one, so for many households the order is: check income, then Xcel.</p><h2 id="what-boulder-heats-with">What Boulder heats with</h2><p>About 63% of Boulder households heat with utility gas and 33% with electricity. For the 33% on electricity, good insulation cuts bills the most. Gas homes get Xcel's higher caps if Xcel supplies the gas.</p><h2 id="what-changed-in-2026">What changed in 2026</h2><p>The federal credit for insulation ended after 2025. The Colorado Energy Office closed its single-family income-based program in August 2026, which could pay up to $1,600 for insulation. EnergySmart's own program is the live one for Boulder County households at or below median income.</p>
 
-<h2>Top-rated installers in Boulder</h2><p>Ranked by Google reviews (minimum five). We don't take referral fees or paid placements. Ask each one whether they work with EnergySmart advisors and Xcel.</p>
+<h2 id="top-rated-installers-in-boulder">Top-rated installers in Boulder</h2><p>Ranked by Google reviews (minimum five). We don't take referral fees or paid placements. Ask each one whether they work with EnergySmart advisors and Xcel.</p>
 <div class="installer-card"><div><div class="name">Koala Insulation of Boulder</div><div class="stars">&#9733; 4.9 (344 Google reviews)</div></div><a class="site-link" href="https://koalainsulation.com/boulder" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 
-<h2>How to claim Boulder insulation rebates</h2>
+<h2 id="how-to-claim-boulder-insulation-rebates">How to claim Boulder insulation rebates</h2>
 <ol>
 <li>Check your household income against 100% of area median income at energysmartyes.com.</li>
 <li>Book an EnergySmart advisor, who can guide you through rebates.</li>
@@ -513,14 +584,14 @@ h1, h2 { text-wrap: balance; }
 <li>Use an Xcel participating contractor if you want Xcel's rebate too.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/co/" style="color:var(--teal,#0d4f5c); font-weight:600;">Colorado rebate calculator</a>, or <a href="/get-quotes/?city=boulder&amp;province=co" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Boulder</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much can I get for insulation in Boulder?</h3><p>Households at or below 100% of area median income get 50% up to $2,000 a year from EnergySmart. Xcel pays 30% of cost, up to $500 for attics, $350 for walls and $400 for air sealing.</p></div>
 <div class="faq-item"><h3>Did Boulder County end its rebates?</h3><p>It retired its standard rebates in late 2025 and kept the income-qualified ones.</p></div>
 <div class="faq-item"><h3>Can renters apply?</h3><p>Its page says site-built and manufactured homes qualify but does not say whether renters can apply, so ask an advisor. Building work needs the owner's agreement.</p></div>
 <div class="faq-item"><h3>Is the state&#x27;s income-based rebate still open?</h3><p>No. The Colorado Energy Office says the single-family program is closed.</p></div>
 <div class="faq-item"><h3>Is there a federal tax credit?</h3><p>Not for 2026. It ended for spending after December 31, 2025.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Start with an income check. Then see our <a href='/us/co/boulder/heat-pump/'>Boulder heat pump rebate page</a> or the <a href='/us/co/boulder/'>Boulder rebate hub</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 5, 2026: <a href="https://energysmartyes.com/rebates/" target="_blank" rel="noopener">Boulder County EnergySmart rebates</a>, <a href="https://co.my.xcelenergy.com/s/residential" target="_blank" rel="noopener">Xcel Energy Colorado residential rebates</a>, <a href="https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000VaKHh/LOhy1LXjBUFmC3Wtx5nXUMWKdLrID1qbswR8JUCuM8Q" target="_blank" rel="noopener">Xcel Energy 2026 rebate summary</a>, <a href="https://energyoffice.colorado.gov/home-energy-rebates" target="_blank" rel="noopener">Colorado Home Energy Rebate Program</a>, <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS residential clean energy credit</a>. <a href="/us/co/boulder/">All Boulder rebates &rarr;</a> <a href="/programs/xcel-energy-colorado-rebates/">Every Xcel Energy Colorado rebate &rarr;</a></p>
 </div></article>
@@ -529,6 +600,9 @@ h1, h2 { text-wrap: balance; }
 <!-- STATE-US-CO-BATTERY-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/co/battery/">Colorado home battery rebates and incentives</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-CO-BATTERY-LINK-END -->
 <!-- STATE-US-CO-SOLAR-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/co/solar/">Colorado home solar rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-CO-SOLAR-LINK-END -->
 <!-- STATE-US-CO-EV-CHARGER-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/co/ev-charger/">Colorado home EV charger rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-CO-EV-CHARGER-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-insulation-rebates-pay-in-boulder">What insulation rebates pay in Boulder</a></li><li><a href="#what-boulder-homes-look-like">What Boulder homes look like</a></li><li><a href="#energysmart-is-the-first-stop">EnergySmart is the first stop</a></li><li><a href="#if-your-income-is-above-the-line">If your income is above the line</a></li><li><a href="#what-boulder-heats-with">What Boulder heats with</a></li><li><a href="#what-changed-in-2026">What changed in 2026</a></li><li><a href="#top-rated-installers-in-boulder">Top-rated installers in Boulder</a></li><li><a href="#how-to-claim-boulder-insulation-rebates">How to claim Boulder insulation rebates</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=boulder&province=co">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Boulder where relevant -->
@@ -730,6 +804,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

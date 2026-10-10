@@ -13,6 +13,8 @@ A = lambda u, t: f'<a href="{u}">{t}</a>'
 JOBS = {
     "programs/nova-scotia-heating-assistance-rebate-harp/index.html":
         "<b>Replacing your heating system?</b> " + A("/ca/ns/heat-pump/", "Nova Scotia heat pump rebates: $300 to $600 a ton") + " &middot; " + A("/programs/national-heat-pump-rebate/", "the new federal heat pump rebate (early 2027)") + " &middot; " + A("/ca/ns/", "all Nova Scotia rebates"),
+    "ca/ns/index.html":
+        "<b>HARP heating rebate:</b> " + A("/programs/nova-scotia-heating-assistance-rebate-harp/", "check your HARP status and payment dates") + " &middot; " + A("/blog/nova-scotia-harp-heating-assistance-rebate-explained/", "what HARP is and who qualifies") + ".",
     "ca/index.html":
         "<b>Heat pump rebates by province:</b> " + " &middot; ".join([A("/ca/bc/heat-pump/", "BC"), A("/ca/on/heat-pump/", "Ontario"), A("/ca/ab/heat-pump/", "Alberta"), A("/ca/mb/heat-pump/", "Manitoba"), A("/ca/ns/heat-pump/", "Nova Scotia"), A("/ca/qc/heat-pump/", "Quebec") + " (" + A("/fr/qc/thermopompe/", "en fran&ccedil;ais") + ")"]) + ". " + A("/programs/national-heat-pump-rebate/", "Federal rebate guide"),
     "index.html":
@@ -20,7 +22,7 @@ JOBS = {
     "blog/ontario-smart-thermostats-100-rebate-compared/index.html":
         "<b>Also in Ontario:</b> " + A("/blog/ontario-home-renovation-savings-deadlines-2026/", "Home Renovation Savings deadlines (Nov 30 and Dec 31, 2026)") + " &middot; " + A("/ca/on/heat-pump/", "Ontario heat pump rebates"),
     "us/ma/index.html":
-        "<b>Before year end:</b> " + A("/blog/ma-ny-year-end-rebate-deadlines-2026/", "Massachusetts and New York rebate deadlines for 2026") + " (EV charger rebates end Nov 1 to Dec 31).",
+        "<b>Before year end:</b> " + A("/blog/ma-ny-year-end-rebate-deadlines-2026/", "Massachusetts and New York rebate deadlines for 2026") + " (EV charger rebates end Nov 1 to Dec 31). Next door: " + A("/us/me/heat-pump/", "Maine heat pump rebates") + ".",
     "us/ny/index.html":
         "<b>Before year end:</b> " + A("/blog/ma-ny-year-end-rebate-deadlines-2026/", "Massachusetts and New York rebate deadlines for 2026") + " (heat pump water heater offers end Nov 30 and Dec 31).",
 }

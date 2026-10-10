@@ -241,6 +241,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -474,7 +545,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">12 ways to cut your energy bill in Massachusetts</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -500,47 +571,47 @@ h1, h2 { text-wrap: balance; }
 <article class="article">
   <div class="wrap">
 
-    <h2>1. Know the real Mass Save ceiling before you plan around a bigger number</h2>
+    <h2 id="1-know-the-real-mass-save-ceiling-before-you-pla">1. Know the real Mass Save ceiling before you plan around a bigger number</h2>
     <p>Massachusetts's Department of Public Utilities cut $500 million from Mass Save's proposed three-year budget in early 2025, reducing total residential program funding by 25% for gas and 15% for electric. In 2026, the whole-home heat pump rebate tops out at $8,500, down from $10,000 in 2024. If you've seen the old $10,000 figure referenced anywhere, confirm the current ceiling with your contractor before budgeting around it. (<a href="https://www.mass.gov/news/dpu-reduces-mass-save-plan-by-500-million-and-approves-proposals-to-reduce-residential-gas-bills" target="_blank" rel="noopener">Massachusetts DPU press release</a>)</p>
 
-    <h2>2. Apply early and keep every piece of paperwork</h2>
+    <h2 id="2-apply-early-and-keep-every-piece-of-paperwork">2. Apply early and keep every piece of paperwork</h2>
     <p>Mass Save's rebate processing has run 8-12 weeks behind in 2024-2026, and the program brought in an outside company specifically to clear the backlog. File your application as early as possible in the project, and keep copies of every invoice, model number, and contractor form — a missing document is the most common reason a rebate check gets delayed further.</p>
 
-    <h2>3. Confirm your contractor is a Mass Save network participant</h2>
+    <h2 id="3-confirm-your-contractor-is-a-mass-save-network">3. Confirm your contractor is a Mass Save network participant</h2>
     <p>The 0% HEAT Loan (up to $25,000, 7-year term) and most rebates route through your contractor's own paperwork rather than a separate application. If your contractor isn't a participating installer, you may not be able to access the loan or rebate at all for that job, regardless of the equipment. Ask before you sign, not after.</p>
 
-    <h2>4. Check that your equipment's refrigerant still qualifies</h2>
+    <h2 id="4-check-that-your-equipment-s-refrigerant-still-">4. Check that your equipment's refrigerant still qualifies</h2>
     <p>Some heat pump models using R-410A refrigerant no longer qualify for Mass Save rebates in 2026. A contractor quoting older stock may not realize the model fell off the qualifying list. Confirm eligibility with the specific model number before you sign a contract, not after installation.</p>
 
-    <h2>5. Look at delivery charges, not just usage, when a bill spikes</h2>
+    <h2 id="5-look-at-delivery-charges-not-just-usage-when-a">5. Look at delivery charges, not just usage, when a bill spikes</h2>
     <p>Some Massachusetts homeowners have reported bills over $1,000 a month where delivery charges, not the underlying commodity cost, made up the majority of the increase. Eversource and National Grid both run in-person events to help customers decode confusing bills — worth attending before assuming a bill is simply an error or a usage spike.</p>
 
-    <h2>6. Use the level payment plan if winter bills swing hard</h2>
+    <h2 id="6-use-the-level-payment-plan-if-winter-bills-swi">6. Use the level payment plan if winter bills swing hard</h2>
     <p>Eversource and National Grid both offer a payment plan that spreads your annual cost evenly across 12 months instead of concentrating it in the coldest months. If your winter bills spike sharply, this doesn't lower the total, but it removes the shock of a single oversized bill.</p>
 
-    <h2>7. Get a real energy assessment before assuming what your home needs</h2>
+    <h2 id="7-get-a-real-energy-assessment-before-assuming-w">7. Get a real energy assessment before assuming what your home needs</h2>
     <p>A Mass Save Home Energy Assessment is still free and still identifies the specific gaps in your specific house, rather than generic advice. Even with a reduced rebate ceiling, the assessment itself remains one of the highest-value free things available to a Massachusetts homeowner.</p>
 
-    <h2>8. Weigh oil-to-heat-pump conversion against current oil prices</h2>
+    <h2 id="8-weigh-oil-to-heat-pump-conversion-against-curr">8. Weigh oil-to-heat-pump conversion against current oil prices</h2>
     <p>Cold-climate heat pumps have been documented running through New England winters even in homes with an uninsulated attic, and oil-to-heat-pump converts commonly report roughly half the running cost of oil at current prices. Run the comparison against your specific oil delivery cost before assuming a heat pump won't keep up with a Massachusetts winter.</p>
 
-    <h2>9. Insulate before you size new heating equipment</h2>
+    <h2 id="9-insulate-before-you-size-new-heating-equipment">9. Insulate before you size new heating equipment</h2>
     <p>Massachusetts's older triple-decker and colonial housing stock often has minimal insulation behind the walls. Insulating first, or at the same time as a heat pump swap, lets you size the new equipment smaller and lowers your ongoing heating cost regardless of which system you choose.</p>
 
-    <h2>10. Shift laundry, dishwasher, and EV charging off-peak where your rate structure allows it</h2>
+    <h2 id="10-shift-laundry-dishwasher-and-ev-charging-off-">10. Shift laundry, dishwasher, and EV charging off-peak where your rate structure allows it</h2>
     <p>If your utility offers a time-of-use option, moving flexible, schedulable loads to cheaper hours is a free lever that doesn't require any equipment change.</p>
 
-    <h2>11. Seal and weatherstrip before the heating season, not during it</h2>
+    <h2 id="11-seal-and-weatherstrip-before-the-heating-seas">11. Seal and weatherstrip before the heating season, not during it</h2>
     <p>Door sweeps, outlet gaskets, and frame weatherstripping are the cheapest fix on this list and pay back within a season in a New England climate.</p>
 
-    <h2>12. Get your real number before you commit</h2>
+    <h2 id="12-get-your-real-number-before-you-commit">12. Get your real number before you commit</h2>
     <p>With the Mass Save ceiling now $8,500 instead of $10,000, and a documented processing backlog, the math on any project looks different than it did a year ago. Run your specific address and project through an assessment to see the current, real numbers.</p>
 
     <div class="callout">
       <strong>Next step:</strong> Run your address through <a href="/get-quotes/">HomePowerRebate's assessment tool</a> to see your current Mass Save eligibility under the reduced 2026 program.
     </div>
 
-    <h2>Related Reading</h2>
+    <h2 id="related-reading">Related Reading</h2>
     <ul>
       <li><a href="/us/ma/">All Massachusetts Rebate Programs by City</a></li>
       <li><a href="/blog/mass-save-home-energy-assessment-explained/">Mass Save Home Energy Assessment: What to Expect</a></li>
@@ -554,6 +625,9 @@ h1, h2 { text-wrap: balance; }
   </div>
 </article>
 
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 4 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#1-know-the-real-mass-save-ceiling-before-you-pla">1. Know the real Mass Save ceiling before you plan around a bigger number</a></li><li><a href="#2-apply-early-and-keep-every-piece-of-paperwork">2. Apply early and keep every piece of paperwork</a></li><li><a href="#3-confirm-your-contractor-is-a-mass-save-network">3. Confirm your contractor is a Mass Save network participant</a></li><li><a href="#4-check-that-your-equipment-s-refrigerant-still-">4. Check that your equipment&#x27;s refrigerant still qualifies</a></li><li><a href="#5-look-at-delivery-charges-not-just-usage-when-a">5. Look at delivery charges, not just usage, when a bill spikes</a></li><li><a href="#6-use-the-level-payment-plan-if-winter-bills-swi">6. Use the level payment plan if winter bills swing hard</a></li><li><a href="#7-get-a-real-energy-assessment-before-assuming-w">7. Get a real energy assessment before assuming what your home needs</a></li><li><a href="#8-weigh-oil-to-heat-pump-conversion-against-curr">8. Weigh oil-to-heat-pump conversion against current oil prices</a></li><li><a href="#9-insulate-before-you-size-new-heating-equipment">9. Insulate before you size new heating equipment</a></li><li><a href="#11-seal-and-weatherstrip-before-the-heating-seas">11. Seal and weatherstrip before the heating season, not during it</a></li><li><a href="#12-get-your-real-number-before-you-commit">12. Get your real number before you commit</a></li><li><a href="#related-reading">Related Reading</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -756,6 +830,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,18 +551,18 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/programs/">Rebate programs</a></li><li aria-current="page">Pasadena Water and Power</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Battery pilot up to $550 per kWh</div><h1>Pasadena Water and Power Rebates</h1><p>Pasadena runs its own electric utility, and its rebates are small for heat pumps but newer for solar and batteries. PWP's solar and battery pilot, announced in April 2026, replaces an old claim that Pasadena had no battery rebate. These figures come from PWP's pages.</p></div></section>
 <article class="article"><div class="wrap">
-<h2>What PWP pays in 2026</h2>
+<h2 id="what-pwp-pays-in-2026">What PWP pays in 2026</h2>
 <p>PWP's rebates are for residential electric customers and funds are limited. We read its pages between September 28 and October 2, 2026. Each card names the fact with the date and a link to the source.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Heat pump</h4><div class="amount">$170 per ton base</div><p style="font-size:14px;margin:8px 0 0;">A 3-ton system is $510 at the base rate.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Heat pump water heater</h4><div class="amount">$500</div><p style="font-size:14px;margin:8px 0 0;">For PWP residential customers.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>EV charger</h4><div class="amount">$600 or $200</div><p style="font-size:14px;margin:8px 0 0;">Amount depends on the charger type.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Smart thermostat</h4><div class="amount">$50</div><p style="font-size:14px;margin:8px 0 0;">For eligible smart thermostats.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Ceiling insulation</h4><div class="amount">$0.10 to $0.15 per sq ft</div><p style="font-size:14px;margin:8px 0 0;">$0.10 base plus $0.05 with a local contractor. Must reach R-30. One per property every 15 years.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Solar and battery pilot</h4><div class="amount">$0.60 per watt, battery up to $550 per kWh</div><p style="font-size:14px;margin:8px 0 0;">Announced April 7, 2026, a pilot with limited funds.</p></div><div class="rebate-card"><span class="program-status status-limited">Check first</span><h4>Appliances</h4><div class="amount">Check with PWP</div><p style="font-size:14px;margin:8px 0 0;">Our earlier $75, $25 and $90 appliance figures could not be confirmed on a public page.</p></div>
 </div>
 
-<h2>Who PWP serves</h2><p>PWP supplies electricity and water in Pasadena. Burbank, Glendale and Los Angeles have their own utilities, and much of the San Gabriel Valley is served by Southern California Edison. Check the name on your electric bill first, since a city address does not tell you which utility serves it. PWP's page notes that the Southern California Gas Company may have additional incentives. We did not read that page, so confirm any gas-side amount with SoCalGas.</p><h2>Why the heat pump rebate is small</h2><p>At $170 per ton, PWP's heat pump rebate is a fraction of what LADWP, Glendale or SMUD pay. A typical 3-ton system earns $510. That makes PWP's rebate a small credit rather than a deciding factor, so compare the equipment price and efficiency rather than chasing the rebate. The insulation rebate has a limit of one per property every 15 years, so use it once and do it well.</p><h2>The solar and battery pilot</h2><p>PWP's pilot pays $0.60 per watt for solar and up to $550 per kWh for batteries. It is a pilot with limited funds, which means it can close without notice. Reserve funds before you sign a contract, and ask the installer to confirm in writing that your system qualifies.</p><h2>What PWP does not pay</h2><p>We found no PWP cash rebate for windows. A wall insulation rebate exists, but we could not verify its amount. State and federal money is mostly out: TECH Clean California and the federal home electrification rebates are reserved or paused in 2026, and the federal 25C and 25D credits ended after 2025.</p>
-<h2>How to claim a PWP rebate</h2>
+<h2 id="who-pwp-serves">Who PWP serves</h2><p>PWP supplies electricity and water in Pasadena. Burbank, Glendale and Los Angeles have their own utilities, and much of the San Gabriel Valley is served by Southern California Edison. Check the name on your electric bill first, since a city address does not tell you which utility serves it. PWP's page notes that the Southern California Gas Company may have additional incentives. We did not read that page, so confirm any gas-side amount with SoCalGas.</p><h2 id="why-the-heat-pump-rebate-is-small">Why the heat pump rebate is small</h2><p>At $170 per ton, PWP's heat pump rebate is a fraction of what LADWP, Glendale or SMUD pay. A typical 3-ton system earns $510. That makes PWP's rebate a small credit rather than a deciding factor, so compare the equipment price and efficiency rather than chasing the rebate. The insulation rebate has a limit of one per property every 15 years, so use it once and do it well.</p><h2 id="the-solar-and-battery-pilot">The solar and battery pilot</h2><p>PWP's pilot pays $0.60 per watt for solar and up to $550 per kWh for batteries. It is a pilot with limited funds, which means it can close without notice. Reserve funds before you sign a contract, and ask the installer to confirm in writing that your system qualifies.</p><h2 id="what-pwp-does-not-pay">What PWP does not pay</h2><p>We found no PWP cash rebate for windows. A wall insulation rebate exists, but we could not verify its amount. State and federal money is mostly out: TECH Clean California and the federal home electrification rebates are reserved or paused in 2026, and the federal 25C and 25D credits ended after 2025.</p>
+<h2 id="how-to-claim-a-pwp-rebate">How to claim a PWP rebate</h2>
 <ol>
 <li>Confirm your electric bill says Pasadena Water and Power.</li>
 <li>Check the current rebate page for the item before you buy.</li>
@@ -499,17 +570,17 @@ h1, h2 { text-wrap: balance; }
 <li>Apply through PWP's online form for the item.</li>
 <li>For solar and battery, reserve pilot funds before you sign.</li>
 </ol>
-<h2>Our pages for Pasadena Water and Power customers</h2><ul><li><a href="/us/ca/los-angeles/pasadena/">Pasadena</a>: hub with six category pages.</li>
+<h2 id="our-pages-for-pasadena-water-and-power-customers">Our pages for Pasadena Water and Power customers</h2><ul><li><a href="/us/ca/los-angeles/pasadena/">Pasadena</a>: hub with six category pages.</li>
 <li><a href="/us/ca/los-angeles/pasadena/heat-pump/">Pasadena heat pumps</a>: worked example.</li>
 <li><a href="/us/ca/los-angeles/pasadena/insulation/">Pasadena insulation</a>: the R-30 rule.</li>
 <li><a href="/us/ca/los-angeles/pasadena/solar/">Pasadena solar</a>: the pilot.</li>
 <li><a href="/us/ca/los-angeles/pasadena/ev-charger/">Pasadena EV chargers</a>: $600 and $200.</li>
 </ul>
-<h2>Guides</h2><ul><li><a href="/blog/top-5-california-cities-heat-pump-rebate/">Top 5 California cities for heat pump rebates</a></li>
+<h2 id="guides">Guides</h2><ul><li><a href="/blog/top-5-california-cities-heat-pump-rebate/">Top 5 California cities for heat pump rebates</a></li>
 <li><a href="/blog/7-california-heat-pump-rebates-you-can-stack/">7 California heat pump rebates you can stack</a></li>
 </ul>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Does Pasadena have a battery rebate?</h3><p>Yes, as a pilot. PWP pays up to $550 per kWh for batteries, announced April 7, 2026, with limited funds.</p></div>
 <div class="faq-item"><h3>How much does PWP pay for a heat pump?</h3><p>$170 per ton at the base rate. A 3-ton system earns $510.</p></div>
 <div class="faq-item"><h3>Is PWP&#x27;s insulation rebate worth it?</h3><p>It pays $0.10 to $0.15 per square foot to reach R-30. On 1,500 square feet that is $150 to $225, so treat it as a bonus.</p></div>
@@ -518,6 +589,9 @@ h1, h2 { text-wrap: balance; }
 
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://pwp.cityofpasadena.net/heatpumprebate/" target="_blank" rel="noopener">PWP heat pump rebate</a>, <a href="https://pwp.cityofpasadena.net/ceilinginsulationrebate/" target="_blank" rel="noopener">PWP ceiling insulation rebate</a>, <a href="https://pwp.cityofpasadena.net/launch-solar-and-battery-rebate-pilot-program-for-residential-and-commercial-customers/" target="_blank" rel="noopener">PWP solar and battery pilot</a>, <a href="https://pwp.cityofpasadena.net/residentialevrebate/" target="_blank" rel="noopener">PWP EV charger rebate</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-pwp-pays-in-2026">What PWP pays in 2026</a></li><li><a href="#who-pwp-serves">Who PWP serves</a></li><li><a href="#why-the-heat-pump-rebate-is-small">Why the heat pump rebate is small</a></li><li><a href="#the-solar-and-battery-pilot">The solar and battery pilot</a></li><li><a href="#what-pwp-does-not-pay">What PWP does not pay</a></li><li><a href="#how-to-claim-a-pwp-rebate">How to claim a PWP rebate</a></li><li><a href="#our-pages-for-pasadena-water-and-power-customers">Our pages for Pasadena Water and Power customers</a></li><li><a href="#guides">Guides</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -719,6 +793,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

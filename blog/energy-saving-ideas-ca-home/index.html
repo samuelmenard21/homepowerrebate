@@ -241,6 +241,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -474,7 +545,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">13 ways to cut your energy bill in California</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -500,50 +571,50 @@ h1, h2 { text-wrap: balance; }
 <article class="article">
   <div class="wrap">
 
-    <h2>1. Understand NEM 3.0's real export math before assuming solar-only pays off</h2>
+    <h2 id="1-understand-nem-3-0-s-real-export-math-before-a">1. Understand NEM 3.0's real export math before assuming solar-only pays off</h2>
     <p>Under NEM 3.0, the credit for power your solar system exports to the grid is roughly 3-8¢/kWh, against a retail import rate of 23-62¢/kWh depending on your utility and time of day. That gap means solar without a battery cuts a typical bill by around 45%, while solar paired with a battery gets closer to 73%, since you're using your own power instead of exporting it cheap and buying it back expensive.</p>
 
-    <h2>2. If you already have NEM 1.0 or 2.0, don't lose your grandfathered rate by expanding carelessly</h2>
+    <h2 id="2-if-you-already-have-nem-1-0-or-2-0-don-t-lose-">2. If you already have NEM 1.0 or 2.0, don't lose your grandfathered rate by expanding carelessly</h2>
     <p>Homeowners on legacy net metering can add a second, export-restricted array alongside their original system without losing the original grandfathered export rate — a specific technical workaround most solar homeowners don't know exists. Ask an installer specifically about this before assuming any expansion forces you onto NEM 3.0.</p>
 
-    <h2>3. Know that grid-tied solar shuts off during a PSPS event, without a battery</h2>
+    <h2 id="3-know-that-grid-tied-solar-shuts-off-during-a-p">3. Know that grid-tied solar shuts off during a PSPS event, without a battery</h2>
     <p>A Public Safety Power Shutoff cuts your solar system's output along with the grid unless you have battery backup, which surprises a lot of new solar buyers who assumed their panels alone would keep the lights on. PSPS events average 5-6 per year at 24-48 hours each in wildfire-prone areas, and batteries win over generators for this specific use case because of automatic sub-second switchover and zero spark risk.</p>
 
-    <h2>4. Check which time-of-use plan actually fits your household</h2>
+    <h2 id="4-check-which-time-of-use-plan-actually-fits-you">4. Check which time-of-use plan actually fits your household</h2>
     <p>PG&E and SCE both default most residential customers onto a time-of-use rate, but a tiered plan can still beat TOU for a household with low nighttime usage. It's optional in both cases — worth checking which structure actually matches how your household uses power rather than assuming the default is correct for you.</p>
 
-    <h2>5. Charge EVs and run big loads after midnight, not just "off-peak evening"</h2>
+    <h2 id="5-charge-evs-and-run-big-loads-after-midnight-no">5. Charge EVs and run big loads after midnight, not just "off-peak evening"</h2>
     <p>The overnight window is the cheapest tier under most California time-of-use plans, and it's meaningfully cheaper than the broader "off-peak evening" window some homeowners settle for. A Level 2 charger with delay-start scheduling captures this automatically once it's set up correctly.</p>
 
-    <h2>6. Confirm which utility actually serves your address near a territory line</h2>
+    <h2 id="6-confirm-which-utility-actually-serves-your-add">6. Confirm which utility actually serves your address near a territory line</h2>
     <p>SMUD (Sacramento's municipal utility) runs about 47% cheaper than neighboring PG&E territory on average bills. Some California cities sit close enough to a utility boundary that two houses a few blocks apart pay meaningfully different rates. Confirm your specific utility before assuming a rate you heard from a neighbor applies to you.</p>
 
-    <h2>7. If you're on LADWP, know that most of the load-shifting advice above doesn't apply the same way</h2>
+    <h2 id="7-if-you-re-on-ladwp-know-that-most-of-the-load-">7. If you're on LADWP, know that most of the load-shifting advice above doesn't apply the same way</h2>
     <p>LADWP defaults residential customers to flat/tiered pricing rather than time-of-use, unlike PG&E and SCE. Opting into LADWP's TOU option only pays off for specific usage patterns, so the general "shift everything after midnight" advice needs a second look if LADWP is your utility.</p>
 
-    <h2>8. If you're on SDG&E, budget deliberately, since it's the highest rate in the state</h2>
+    <h2 id="8-if-you-re-on-sdg-e-budget-deliberately-since-i">8. If you're on SDG&E, budget deliberately, since it's the highest rate in the state</h2>
     <p>SDG&E customers pay the highest electric rates in the country, and roughly 1 in 4 San Diego households report struggling to pay their bill. If SDG&E serves you, prioritize LIHEAP/CARE program enrollment and load-shifting harder than a homeowner on a cheaper utility would need to.</p>
 
-    <h2>9. Check whether your home was built assuming no heating or cooling was needed</h2>
+    <h2 id="9-check-whether-your-home-was-built-assuming-no-">9. Check whether your home was built assuming no heating or cooling was needed</h2>
     <p>Roughly half of California's homes were built before 1978 with minimal or no insulation, on the outdated assumption that the mild climate never required much heating or cooling. As heat waves intensify, that gap shows up directly on the bill. Sealing and insulating matters more in California than the "mild climate" reputation suggests.</p>
 
-    <h2>10. Ask about ducting before committing to central HVAC in a slab-foundation home</h2>
+    <h2 id="10-ask-about-ducting-before-committing-to-centra">10. Ask about ducting before committing to central HVAC in a slab-foundation home</h2>
     <p>Many California houses have slab foundations and open-beam ceilings with no attic space to run ducts, which forces ducts through ceiling cavities or pushes homeowners toward ductless mini-split zoning instead. This is a real construction constraint, not just a preference — confirm with your installer before assuming a standard central system is straightforward to install.</p>
 
-    <h2>11. Weigh SGIP battery incentives against your utility and fire zone</h2>
+    <h2 id="11-weigh-sgip-battery-incentives-against-your-ut">11. Weigh SGIP battery incentives against your utility and fire zone</h2>
     <p>The SGIP battery incentive ranges $2,700-$13,500 depending on income and fire-zone tier, and it's generally limited to investor-owned utility customers, though LADWP has a separate RSSE pathway for its own customers. Confirm your specific eligibility path before assuming a flat number applies.</p>
 
-    <h2>12. Don't assume every federal credit still applies in 2026</h2>
+    <h2 id="12-don-t-assume-every-federal-credit-still-appli">12. Don't assume every federal credit still applies in 2026</h2>
     <p>The federal 25D solar credit and 25C insulation credit both ended for installs after 2025 under the OBBBA law, ending earlier than their originally scheduled 2032 and 2025 no-sunset dates respectively. Confirm current federal eligibility before budgeting around a credit that may no longer exist for your project's timeline.</p>
 
-    <h2>13. Get your real number before you commit</h2>
+    <h2 id="13-get-your-real-number-before-you-commit">13. Get your real number before you commit</h2>
     <p>Between five different utility rate structures, NEM 3.0's export math, and a real gap in which federal credits still apply, a generic "California solar payback" estimate is close to useless. Run your specific address through an assessment to see your actual utility, current incentives, and real numbers.</p>
 
     <div class="callout">
       <strong>Next step:</strong> Run your address through <a href="/get-quotes/">HomePowerRebate's assessment tool</a> to see your exact utility, current NEM/SGIP eligibility, and real numbers.
     </div>
 
-    <h2>Related Reading</h2>
+    <h2 id="related-reading">Related Reading</h2>
     <ul>
       <li><a href="/us/ca/">All California Rebate Programs by City</a></li>
       <li><a href="/blog/california-solar-rebate-closed/">California Solar Rebate: What's Actually Closed</a></li>
@@ -557,6 +628,9 @@ h1, h2 { text-wrap: balance; }
   </div>
 </article>
 
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 4 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#1-understand-nem-3-0-s-real-export-math-before-a">1. Understand NEM 3.0&#x27;s real export math before assuming solar-only pays off</a></li><li><a href="#3-know-that-grid-tied-solar-shuts-off-during-a-p">3. Know that grid-tied solar shuts off during a PSPS event, without a battery</a></li><li><a href="#4-check-which-time-of-use-plan-actually-fits-you">4. Check which time-of-use plan actually fits your household</a></li><li><a href="#5-charge-evs-and-run-big-loads-after-midnight-no">5. Charge EVs and run big loads after midnight, not just &quot;off-peak evening&quot;</a></li><li><a href="#6-confirm-which-utility-actually-serves-your-add">6. Confirm which utility actually serves your address near a territory line</a></li><li><a href="#8-if-you-re-on-sdg-e-budget-deliberately-since-i">8. If you&#x27;re on SDG&amp;E, budget deliberately, since it&#x27;s the highest rate in the state</a></li><li><a href="#9-check-whether-your-home-was-built-assuming-no-">9. Check whether your home was built assuming no heating or cooling was needed</a></li><li><a href="#10-ask-about-ducting-before-committing-to-centra">10. Ask about ducting before committing to central HVAC in a slab-foundation home</a></li><li><a href="#11-weigh-sgip-battery-incentives-against-your-ut">11. Weigh SGIP battery incentives against your utility and fire zone</a></li><li><a href="#12-don-t-assume-every-federal-credit-still-appli">12. Don&#x27;t assume every federal credit still applies in 2026</a></li><li><a href="#13-get-your-real-number-before-you-commit">13. Get your real number before you commit</a></li><li><a href="#related-reading">Related Reading</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -759,6 +833,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

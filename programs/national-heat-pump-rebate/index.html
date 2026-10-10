@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,18 +551,18 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/programs/">Rebate programs</a></li><li aria-current="page">National Heat Pump Rebate</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $10,000, or $2,000 for most homeowners</div><h1>Canada&#x27;s National Heat Pump Rebate: What We Know</h1><p>On October 8, 2026 the Government of Canada announced a $2 billion heat pump rebate. It is not open yet. This page keeps one list of what Ottawa has confirmed, what it has not said, and what that means for your home, and we update it every time the government publishes something new.</p></div></section>
 <article class="article"><div class="wrap">
-<h2>The federal rebate at a glance</h2>
+<h2 id="the-federal-rebate-at-a-glance">The federal rebate at a glance</h2>
 <p>Every figure below comes from the Prime Minister's news release and the Environment and Climate Change Canada release, both read on October 9, 2026. If a detail is missing, the government has not published it yet.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-limited">Coming</span><h4 aria-level="3">Households below the median income</h4><div class="amount">Up to $10,000</div><p style="font-size:14px;margin:8px 0 0;">For an electric heat pump. The government has not said which median it uses or how it will check income.</p></div><div class="rebate-card"><span class="program-status status-limited">Coming</span><h4>Other eligible homeowners</h4><div class="amount">$2,000</div><p style="font-size:14px;margin:8px 0 0;">Flat amount for homeowners above the median. Only one rebate is issued per person.</p></div><div class="rebate-card"><span class="program-status status-limited">Coming</span><h4>When it starts</h4><div class="amount">Early 2027</div><p style="font-size:14px;margin:8px 0 0;">CBC reports Ottawa is looking at making it retroactive to fall 2026. The government text we read does not promise that, so do not count on it.</p></div><div class="rebate-card"><span class="program-status status-limited">Coming</span><h4>Combine with provincial rebates</h4><div class="amount">Allowed, per Ottawa</div><p style="font-size:14px;margin:8px 0 0;">The government says the rebates can be combined with provincial programs. Each province still has its own rules, so we check them one by one.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Free retrofit for lower incomes</h4><div class="amount">Free upgrades</div><p style="font-size:14px;margin:8px 0 0;">The older Canada Greener Homes Affordability Program installs insulation and heat pumps at no cost for low-to-median-income homeowners and tenants. It is open in BC, Manitoba, Nova Scotia, PEI and Quebec.</p></div><div class="rebate-card"><span class="program-status status-limited">Coming</span><h4>Apartment buildings</h4><div class="amount">Building owners</div><p style="font-size:14px;margin:8px 0 0;">Separate CMHC, Canada Infrastructure Bank and Deep Retrofit Accelerator money is aimed at rental buildings, not at individual tenants.</p></div>
 </div>
 <p>The government says the program can reach up to 820,000 households over eight years, and that homes switching from oil, propane or electric resistance heat save an average of more than $1,400 a year on energy bills. That savings figure is quoted for those fuels only. It does not say how natural gas homes are treated.</p>
-<h2>How it will work, as announced</h2><p>The steps the government has described are simple and have no energy audit before or after the install.</p><ol><li>You apply in a secure online portal when your heating system breaks down or is close to the end of its life.</li><li>The government confirms approval within 24 hours.</li><li>You buy and install a pre-approved heat pump from the Eligible Products List, which the government says has over 100,000 options.</li><li>You upload your receipts in the portal.</li><li>Payment is approved within five days and paid by direct deposit.</li></ol><p>The design follows what the government says happens in real life: about eight in ten furnace and heating replacements happen after something breaks. If your heating works fine today, this program is not built for you yet.</p><h2>What the government has not said yet</h2><ul><li><b>The income line.</b> "Below the median income" has no published number, household size rule or proof requirement.</li><li><b>Which homes and fuels.</b> The savings figure names oil, propane and electric resistance. Natural gas homes, condos, rentals and mobile homes are not addressed in the text we read.</li><li><b>Retroactivity.</b> Reported by CBC as being considered. Not confirmed.</li><li><b>The product list.</b> Which models and what cold-climate rating are not published yet.</li><li><b>Installer rules.</b> Ottawa says it is consulting the HVAC industry so contractors have stock ready, so installer requirements may come out of that.</li></ul><p>We will not guess at any of these. When a fact is published we add it with its source and date, and this page changes with it.</p><h2>Why the quote matters more than the rebate</h2><p>Many homeowners worry that contractors raise prices by the amount of any rebate. Whether or not that happens near you, you can protect yourself by getting a written load calculation, three itemized quotes and a price for the same equipment with and without the rebate. Our guide on <a href="/blog/fair-heat-pump-quote-canada/">how to get a fair heat pump quote</a> walks through it.</p><h2>Should you wait or buy now?</h2><p>If your system still works, waiting a few months costs little and lets you see the real rules. If it has failed and you need heat this winter, provincial money available today may be worth more than a federal rebate that is not open yet. We lay out the deadlines in <a href="/blog/should-you-wait-federal-heat-pump-rebate/">Should you wait for the federal heat pump rebate?</a></p><h2>What each province already pays</h2><p>The federal money is meant to sit on top of provincial programs. Here is what is live today, each from the program's own page.</p><ul><li><b>British Columbia:</b> BC Hydro pays up to $4,000 for a whole-home heat pump replacing electric heat. CleanBC pays $13,000, $7,000 or $3,500 by income level for gas, propane or oil homes. See the <a href="/ca/bc/">BC hub</a>.</li><li><b>Ontario:</b> Home Renovation Savings pays $1,250 per ton up to $7,500 for homes heated with electricity, oil, propane or wood, and $500 per ton up to $2,000 for gas homes. See the <a href="/ca/on/">Ontario hub</a>.</li><li><b>Nova Scotia:</b> Efficiency Nova Scotia pays per ton, and HomeWarming installs upgrades free for lower incomes. See the <a href="/ca/ns/">Nova Scotia hub</a>.</li><li><b>Alberta:</b> we found no province-wide heat pump rebate, and the earlier federal Oil to Heat Pump Affordability program closed on July 31, 2026, so the new federal rebate may matter most here. See the <a href="/ca/ab/">Alberta hub</a>.</li></ul><p>The full breakdown, with sample stacks, is in <a href="/blog/federal-heat-pump-rebate-stacking-by-province/">federal and provincial heat pump rebates: what stacks</a>.</p>
-<h2>What to do before the rebate launches</h2>
+<h2 id="how-it-will-work-as-announced">How it will work, as announced</h2><p>The steps the government has described are simple and have no energy audit before or after the install.</p><ol><li>You apply in a secure online portal when your heating system breaks down or is close to the end of its life.</li><li>The government confirms approval within 24 hours.</li><li>You buy and install a pre-approved heat pump from the Eligible Products List, which the government says has over 100,000 options.</li><li>You upload your receipts in the portal.</li><li>Payment is approved within five days and paid by direct deposit.</li></ol><p>The design follows what the government says happens in real life: about eight in ten furnace and heating replacements happen after something breaks. If your heating works fine today, this program is not built for you yet.</p><h2 id="what-the-government-has-not-said-yet">What the government has not said yet</h2><ul><li><b>The income line.</b> "Below the median income" has no published number, household size rule or proof requirement.</li><li><b>Which homes and fuels.</b> The savings figure names oil, propane and electric resistance. Natural gas homes, condos, rentals and mobile homes are not addressed in the text we read.</li><li><b>Retroactivity.</b> Reported by CBC as being considered. Not confirmed.</li><li><b>The product list.</b> Which models and what cold-climate rating are not published yet.</li><li><b>Installer rules.</b> Ottawa says it is consulting the HVAC industry so contractors have stock ready, so installer requirements may come out of that.</li></ul><p>We will not guess at any of these. When a fact is published we add it with its source and date, and this page changes with it.</p><h2 id="why-the-quote-matters-more-than-the-rebate">Why the quote matters more than the rebate</h2><p>Many homeowners worry that contractors raise prices by the amount of any rebate. Whether or not that happens near you, you can protect yourself by getting a written load calculation, three itemized quotes and a price for the same equipment with and without the rebate. Our guide on <a href="/blog/fair-heat-pump-quote-canada/">how to get a fair heat pump quote</a> walks through it.</p><h2 id="should-you-wait-or-buy-now">Should you wait or buy now?</h2><p>If your system still works, waiting a few months costs little and lets you see the real rules. If it has failed and you need heat this winter, provincial money available today may be worth more than a federal rebate that is not open yet. We lay out the deadlines in <a href="/blog/should-you-wait-federal-heat-pump-rebate/">Should you wait for the federal heat pump rebate?</a></p><h2 id="what-each-province-already-pays">What each province already pays</h2><p>The federal money is meant to sit on top of provincial programs. Here is what is live today, each from the program's own page.</p><ul><li><b>British Columbia:</b> BC Hydro pays up to $4,000 for a whole-home heat pump replacing electric heat. CleanBC pays $13,000, $7,000 or $3,500 by income level for gas, propane or oil homes. See the <a href="/ca/bc/">BC hub</a>.</li><li><b>Ontario:</b> Home Renovation Savings pays $1,250 per ton up to $7,500 for homes heated with electricity, oil, propane or wood, and $500 per ton up to $2,000 for gas homes. See the <a href="/ca/on/">Ontario hub</a>.</li><li><b>Nova Scotia:</b> Efficiency Nova Scotia pays per ton, and HomeWarming installs upgrades free for lower incomes. See the <a href="/ca/ns/">Nova Scotia hub</a>.</li><li><b>Alberta:</b> we found no province-wide heat pump rebate, and the earlier federal Oil to Heat Pump Affordability program closed on July 31, 2026, so the new federal rebate may matter most here. See the <a href="/ca/ab/">Alberta hub</a>.</li></ul><p>The full breakdown, with sample stacks, is in <a href="/blog/federal-heat-pump-rebate-stacking-by-province/">federal and provincial heat pump rebates: what stacks</a>.</p>
+<h2 id="what-to-do-before-the-rebate-launches">What to do before the rebate launches</h2>
 <ol>
 <li>Sign up for updates on the <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html" target="_blank" rel="noopener">Canada.ca campaign page</a>, which is where launch dates will be posted.</li>
 <li>Find out what you heat with today. Oil, propane and electric baseboard homes are the clearest fit.</li>
@@ -500,12 +571,12 @@ h1, h2 { text-wrap: balance; }
 <li>Keep quotes, invoices and photos of the old equipment in one folder in case Ottawa makes the rebate retroactive.</li>
 <li>Run your numbers in our <a href="/calculator/on/">rebate calculator</a> for your province.</li>
 </ol>
-<h2>Our pages for National Heat Pump Rebate customers</h2><ul><li><a href="/ca/bc/">British Columbia</a>: heat pump rebates for 18 BC cities</li>
+<h2 id="our-pages-for-national-heat-pump-rebate-customer">Our pages for National Heat Pump Rebate customers</h2><ul><li><a href="/ca/bc/">British Columbia</a>: heat pump rebates for 18 BC cities</li>
 <li><a href="/ca/on/">Ontario</a>: heat pump rebates for 25 Ontario cities</li>
 <li><a href="/ca/ab/">Alberta</a>: what Alberta homes can claim</li>
 <li><a href="/ca/ns/">Nova Scotia</a>: Halifax and Cape Breton</li>
 </ul>
-<h2>Guides</h2><ul><li><a href="/blog/should-you-wait-federal-heat-pump-rebate/">Should you wait for the federal heat pump rebate?</a></li>
+<h2 id="guides">Guides</h2><ul><li><a href="/blog/should-you-wait-federal-heat-pump-rebate/">Should you wait for the federal heat pump rebate?</a></li>
 <li><a href="/blog/federal-heat-pump-rebate-stacking-by-province/">What stacks: federal and provincial heat pump rebates</a></li>
 <li><a href="/blog/heat-pump-natural-gas-home-federal-rebate/">Heat pump on a natural gas home</a></li>
 <li><a href="/blog/heat-pumps-alberta-saskatchewan-cold-federal-rebate/">Heat pumps in Alberta and Saskatchewan cold</a></li>
@@ -513,7 +584,7 @@ h1, h2 { text-wrap: balance; }
 <li><a href="/blog/federal-heat-pump-rebate-renters-condos-landlords/">Renters, condos and landlords</a></li>
 </ul>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/on/" style="color:var(--teal,#0d4f5c); font-weight:600;">Ontario rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much is the National Heat Pump Rebate?</h3><p>Up to $10,000 for households below the median income and $2,000 for other eligible homeowners. The government has not yet published the income line.</p></div>
 <div class="faq-item"><h3>When can I apply?</h3><p>Not yet. The government expects to launch in early 2027. Sign up on the Canada.ca campaign page to hear launch dates.</p></div>
 <div class="faq-item"><h3>Will it cover a heat pump I already installed?</h3><p>Not confirmed. CBC reports that Ottawa is looking at making the rebate retroactive to fall 2026, but the government text we read does not promise it. Keep your invoices either way.</p></div>
@@ -524,6 +595,9 @@ h1, h2 { text-wrap: balance; }
 
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 9, 2026: <a href="https://www.pm.gc.ca/en/news/news-releases/2026/10/08/prime-minister-carney-announces-landmark-investment-retrofit-one" target="_blank" rel="noopener">Prime Minister of Canada: news release, October 8, 2026</a>, <a href="https://www.canada.ca/en/environment-climate-change/news/2026/10/prime-minister-carney-announces-landmark-investment-to-retrofit-one-million-homes-cutting-energy-costs-and-emissions.html" target="_blank" rel="noopener">Environment and Climate Change Canada: news release</a>, <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html" target="_blank" rel="noopener">Canada.ca: One million home energy retrofits</a>, <a href="https://www.cbc.ca/news/canada/canada-heat-pump-retrofit-faq-9.7374613" target="_blank" rel="noopener">CBC News: what we know about the $2B rebate plan</a>, <a href="https://www.ctvnews.ca/politics/article/2b-heat-pump-rebate-program-unveiled-by-federal-government/" target="_blank" rel="noopener">CTV News: $2B heat pump rebate program unveiled</a>, <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-affordability-program" target="_blank" rel="noopener">Natural Resources Canada: Greener Homes Affordability Program</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#the-federal-rebate-at-a-glance">The federal rebate at a glance</a></li><li><a href="#how-it-will-work-as-announced">How it will work, as announced</a></li><li><a href="#what-the-government-has-not-said-yet">What the government has not said yet</a></li><li><a href="#why-the-quote-matters-more-than-the-rebate">Why the quote matters more than the rebate</a></li><li><a href="#should-you-wait-or-buy-now">Should you wait or buy now?</a></li><li><a href="#what-each-province-already-pays">What each province already pays</a></li><li><a href="#what-to-do-before-the-rebate-launches">What to do before the rebate launches</a></li><li><a href="#our-pages-for-national-heat-pump-rebate-customer">Our pages for National Heat Pump Rebate customers</a></li><li><a href="#guides">Guides</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -725,6 +799,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

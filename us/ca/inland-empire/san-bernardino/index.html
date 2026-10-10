@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,28 +551,28 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ca/">California</a></li><li aria-current="page">San Bernardino</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">EV charger up to $4,200, no solar permit fee</div><h1>San Bernardino Home Energy Rebates 2026</h1><p>San Bernardino gets its electricity from Southern California Edison (SCE), so it does not have a city-run rebate list like Riverside next door. We found no SCE rebate for a heat pump, water heater or battery. What San Bernardino does have is income-qualified help, an EV charger program, and a City that charges nothing for solar permits. We read the pages on October 2, 2026.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
 
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What is open in San Bernardino</h2>
+<h2 id="what-is-open-in-san-bernardino">What is open in San Bernardino</h2>
 <p>SCE's offers are the same across its territory. These are the ones we could confirm from SCE's own pages.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">EV charger panel upgrade (SCE Charge Ready Home)</h4><div class="amount">Up to $4,200</div><p style="font-size:14px;margin:8px 0 0;">Income-qualified customers only, below 80% of area median income or on an assistance program. A Level 2 charger must be installed within 180 days.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>SCE Charge Smart</h4><div class="amount">Up to $100</div><p style="font-size:14px;margin:8px 0 0;">Plus $100 off professional charger installation through the SCE Home Electrification Marketplace.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Smart thermostat (SCE Smart Energy Program)</h4><div class="amount">$75 bill credit</div><p style="font-size:14px;margin:8px 0 0;">For letting SCE adjust an eligible smart thermostat by up to four degrees during demand response events.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>SCE Energy Savings Assistance</h4><div class="amount">No-cost upgrades</div><p style="font-size:14px;margin:8px 0 0;">For income-qualified customers. Can include a heat pump water heater, appliances and weatherization.</p></div><div class="rebate-card"><span class="program-status status-limited">On hold</span><h4>TECH Clean California</h4><div class="amount">Fully reserved</div><p style="font-size:14px;margin:8px 0 0;">Single-family heat pump incentives are fully reserved and take new requests on hold only.</p></div>
 </div>
 <div class='highlight-box'><h4>Riverside is different</h4><p>Riverside, next door, runs its own utility and pays $750 per ton for a heat pump and $500 per kWh for a battery. San Bernardino homes do not get those amounts, however close the address is to the border. Check the name on your electric bill. See <a href='/us/ca/inland-empire/riverside/'>Riverside's rebates</a> if you live or own property there.</p></div>
-<h2>Why heat pump money is thin here</h2><p>SCE's rebates page names bill assistance and a Marketplace with smart thermostat incentives, Golden State Rebates coupons, the Switch Is On site and a Home Performance Plus program for homes in disadvantaged or low-income communities. It does not list a direct SCE rebate for a heat pump or heat pump water heater. TECH Clean California and the federal HEEHRA program, which paid for those, are fully reserved for single-family homes and take new requests on hold only. See <a href='https://www.sce.com/save-money/rebates-financial-assistance/rebates-sce-marketplace' target='_blank' rel='noopener'>SCE's rebates and Marketplace page</a>.</p><h2>Income-qualified help first</h2><p>If your household qualifies, three SCE programs matter more than any single rebate. Energy Savings Assistance gives no-cost upgrades. Home Performance Plus gives a no-cost assessment and enhanced rebates in disadvantaged or low-income communities, for single-family homes and buildings of up to four units. Charge Ready Home pays up to $4,200 for a panel upgrade when you install a Level 2 charger. Ask SCE which your address qualifies for before you get any quotes.</p><h2>Solar permits cost nothing in San Bernardino</h2><p>The City's Building and Safety Division says residential solar systems can be applied for online or in person and carry no permit charge, and that expedited residential solar and electric vehicle charger plans can be submitted online. Water heater replacements and panel upgrades are usually issued over the counter. Building and Safety's Public Service Counter is at 201B North E Street. See the City's <a href='https://www.sbcity.org/1436/Building-Permit' target='_blank' rel='noopener'>building permit page</a>. Ask your contractor to confirm which route each part of the project uses.</p><h2>Climate and sizing</h2><p>San Bernardino's average January low over 2015 to 2024 was 6.3°C (about 43°F), with a coldest recorded day of -1.8°C, and it gets about 5.4 peak sun hours a day. A standard heat pump handles the winters, and cooling drives the size in long hot summers. Without a rebate, the best protection is a correct load calculation, three bids, and a model chosen on its ratings.</p><h2>What else might help</h2><p>South Coast AQMD's GO ZERO single-family rebate resumed accepting applications on August 28, 2026, with limited funding remaining, according to the City of Santa Monica's incentives page (<a href='https://www.santamonica.gov/green-building-incentives-and-installation-resources' target='_blank' rel='noopener'>City of Santa Monica</a>). We did not read SCAQMD's own terms, so check the amount and eligibility with them. The federal 25C and 25D tax credits ended after December 31, 2025.</p>
-<h2>Installers in San Bernardino</h2><p>These San Bernardino heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone, and some have few reviews, so call several.</p>
+<h2 id="why-heat-pump-money-is-thin-here">Why heat pump money is thin here</h2><p>SCE's rebates page names bill assistance and a Marketplace with smart thermostat incentives, Golden State Rebates coupons, the Switch Is On site and a Home Performance Plus program for homes in disadvantaged or low-income communities. It does not list a direct SCE rebate for a heat pump or heat pump water heater. TECH Clean California and the federal HEEHRA program, which paid for those, are fully reserved for single-family homes and take new requests on hold only. See <a href='https://www.sce.com/save-money/rebates-financial-assistance/rebates-sce-marketplace' target='_blank' rel='noopener'>SCE's rebates and Marketplace page</a>.</p><h2 id="income-qualified-help-first">Income-qualified help first</h2><p>If your household qualifies, three SCE programs matter more than any single rebate. Energy Savings Assistance gives no-cost upgrades. Home Performance Plus gives a no-cost assessment and enhanced rebates in disadvantaged or low-income communities, for single-family homes and buildings of up to four units. Charge Ready Home pays up to $4,200 for a panel upgrade when you install a Level 2 charger. Ask SCE which your address qualifies for before you get any quotes.</p><h2 id="solar-permits-cost-nothing-in-san-bernardino">Solar permits cost nothing in San Bernardino</h2><p>The City's Building and Safety Division says residential solar systems can be applied for online or in person and carry no permit charge, and that expedited residential solar and electric vehicle charger plans can be submitted online. Water heater replacements and panel upgrades are usually issued over the counter. Building and Safety's Public Service Counter is at 201B North E Street. See the City's <a href='https://www.sbcity.org/1436/Building-Permit' target='_blank' rel='noopener'>building permit page</a>. Ask your contractor to confirm which route each part of the project uses.</p><h2 id="climate-and-sizing">Climate and sizing</h2><p>San Bernardino's average January low over 2015 to 2024 was 6.3°C (about 43°F), with a coldest recorded day of -1.8°C, and it gets about 5.4 peak sun hours a day. A standard heat pump handles the winters, and cooling drives the size in long hot summers. Without a rebate, the best protection is a correct load calculation, three bids, and a model chosen on its ratings.</p><h2 id="what-else-might-help">What else might help</h2><p>South Coast AQMD's GO ZERO single-family rebate resumed accepting applications on August 28, 2026, with limited funding remaining, according to the City of Santa Monica's incentives page (<a href='https://www.santamonica.gov/green-building-incentives-and-installation-resources' target='_blank' rel='noopener'>City of Santa Monica</a>). We did not read SCAQMD's own terms, so check the amount and eligibility with them. The federal 25C and 25D tax credits ended after December 31, 2025.</p>
+<h2 id="installers-in-san-bernardino">Installers in San Bernardino</h2><p>These San Bernardino heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone, and some have few reviews, so call several.</p>
 <div class="installer-card"><div><div class="name">Superior Mechanical Heating &amp; Air Inc.</div><div class="stars">&#9733; 5.0 (247 reviews)</div></div><a class="site-link" href="https://www.mysuperiorair.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">AJ Heating &amp; Air Conditioning</div><div class="stars">&#9733; 5.0 (21 reviews)</div></div></div>
 <div class="installer-card"><div><div class="name">Eazy cool HVAC</div><div class="stars">&#9733; 5.0 (18 reviews)</div></div><a class="site-link" href="https://eazycoolhvac.org/home" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">AC Repair</div><div class="stars">&#9733; 5.0 (13 reviews)</div></div><a class="site-link" href="http://phelpsacrepair.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Ballard Plumbing Heating &amp; Air Conditioning</div><div class="stars">&#9733; 4.9 (2,632 reviews)</div></div><a class="site-link" href="https://www.ballardplumbingandair.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/ca/san-bernardino/heat-pump/">See all San Bernardino installers &rarr;</a></p>
-<h2>How to start</h2>
+<h2 id="how-to-start">How to start</h2>
 <ol>
 <li>Look at your electric bill to confirm SCE, and at your gas bill for SoCalGas.</li>
 <li>Ask SCE about Energy Savings Assistance, Home Performance Plus and Charge Ready Home if your household may qualify.</li>
@@ -510,17 +581,20 @@ h1, h2 { text-wrap: balance; }
 <li>Get three bids for any heat pump or water heater and ask your contractor which City permit each part needs.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city=san-bernardino" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in San Bernardino</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Who supplies electricity in San Bernardino?</h3><p>Southern California Edison. The City does not run its own electric utility.</p></div>
 <div class="faq-item"><h3>Is there a heat pump rebate in San Bernardino?</h3><p>We found no SCE rebate for a heat pump. State programs are fully reserved for single-family homes.</p></div>
 <div class="faq-item"><h3>Do solar permits cost anything?</h3><p>The City says solar energy systems have no permit charge.</p></div>
 <div class="faq-item"><h3>How do I get a water heater permit?</h3><p>The City says permits for minor work such as water heater replacement are usually issued over the counter.</p></div>
 <div class="faq-item"><h3>How is Riverside different?</h3><p>Riverside has its own utility, Riverside Public Utilities, and pays $750 per ton for a heat pump.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Run the <a href='/calculator/ca/'>California rebate calculator</a>, read <a href='https://www.sce.com/save-money/rebates-financial-assistance/rebates-sce-marketplace' target='_blank' rel='noopener'>SCE's rebates page</a>, or see the <a href='https://www.sbcity.org/1436/Building-Permit' target='_blank' rel='noopener'>City's permits page</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://www.sce.com/save-money/rebates-financial-assistance/rebates-sce-marketplace" target="_blank" rel="noopener">SCE rebates and Marketplace</a>, <a href="https://www.sce.com/clean-energy-efficiency/electric-vehicles/rebates-rates" target="_blank" rel="noopener">SCE EV rebates and rates</a>, <a href="https://www.sbcity.org/1436/Building-Permit" target="_blank" rel="noopener">City of San Bernardino building permits</a>, <a href="https://www.switchison.org/" target="_blank" rel="noopener">The Switch Is On California</a>. <a href="/us/ca/inland-empire/san-bernardino/">All San Bernardino rebates &rarr;</a> <a href="/programs/sce-rebates/">Every Southern California Edison rebate &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-is-open-in-san-bernardino">What is open in San Bernardino</a></li><li><a href="#why-heat-pump-money-is-thin-here">Why heat pump money is thin here</a></li><li><a href="#income-qualified-help-first">Income-qualified help first</a></li><li><a href="#solar-permits-cost-nothing-in-san-bernardino">Solar permits cost nothing in San Bernardino</a></li><li><a href="#climate-and-sizing">Climate and sizing</a></li><li><a href="#what-else-might-help">What else might help</a></li><li><a href="#installers-in-san-bernardino">Installers in San Bernardino</a></li><li><a href="#how-to-start">How to start</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=san-bernardino&province=ca">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to San Bernardino where relevant -->
@@ -722,6 +796,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

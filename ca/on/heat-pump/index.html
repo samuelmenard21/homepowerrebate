@@ -213,6 +213,77 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* balanced card grids on wide screens: cap the columns so rows divide evenly (15 cards as 5 x 3, 8 as 4 x 2, 6 as 3 x 2) */
+@media (min-width: 769px) {
+  main.layout-wide .ps-grid, main.layout-wide .hf-tops { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 18px) / 5)), 1fr)) !important; }
+  main.layout-wide .region-grid { grid-template-columns: repeat(auto-fit, minmax(max(190px, calc((100% - 4 * 20px) / 5)), 1fr)) !important; }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 3 * 18px) / 4)), 1fr)) !important; }
+  main.layout-wide .typical-grid { grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 2 * 18px) / 3)), 1fr)) !important; }
+  main.layout-wide .region-grid { align-items: start !important; }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -512,18 +583,18 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/on/">Ontario</a></li><li aria-current="page">Heat pump rebates</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $7,500, or $2,000 if you heat with gas</div><h1>Ontario Heat Pump Rebates in 2026</h1><p>How much you get in Ontario depends on what heats your home today. Homes on electric baseboards, oil, propane or wood get far more than homes on Enbridge gas. We re-read the program's heat pump page on October 9, 2026 and its requirements document on October 3. This page shows the rate for your fuel, the rules that trip people up, and the steps to claim.</p></div></section>
 <article class="article"><div class="wrap">
-<h2>What Ontario pays for a heat pump, by what you heat with now</h2>
+<h2 id="what-ontario-pays-for-a-heat-pump-by-what-you-he">What Ontario pays for a heat pump, by what you heat with now</h2>
 <p>These amounts come from Home Renovation Savings, run through Save on Energy and Enbridge. A home energy assessment is not needed for this stream. A participating HVAC contractor and written pre-approval are.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Air-source, electric, oil, propane or wood heat</h4><div class="amount">$1,250 a ton, up to $7,500</div><p class="is-6f0f1613">For a cold-climate air-source heat pump that replaces electric resistance, oil, propane or wood as the main heat. A 3-ton system pays $3,750, and 6 tons reaches the cap.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Air-source, Enbridge gas heat</h4><div class="amount">$500 a ton, up to $2,000</div><p class="is-6f0f1613">For homes mainly heated by an Enbridge gas furnace or boiler. A 4-ton system reaches the cap.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Ground-source</h4><div class="amount">$2,000 a ton, up to $12,000</div><p class="is-6f0f1613">For electric, oil, propane or wood homes. Gas homes get a flat $3,000.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Rented heat pump</h4><div class="amount">$500 a ton, up to $2,000</div><p class="is-6f0f1613">Rentals qualify for any main heating fuel. Ground-source rentals get a flat $3,000.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Toronto home energy loan</h4><div class="amount">Up to $125,000</div><p class="is-6f0f1613">Toronto homeowners can borrow for upgrades and repay on the property tax bill. We have not re-checked the current rate, so confirm it on the City's page.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Peak Perks</h4><div class="amount">$75 to join, then $20 a year</div><p class="is-6f0f1613">For homes with central air or a heat pump controlled by an eligible Wi-Fi thermostat. It is a thermostat program, not a heat pump rebate.</p></div><div class="rebate-card"><span class="program-status status-limited">Coming</span><h4>National Heat Pump Rebate</h4><div class="amount">Up to $10,000 or $2,000</div><p class="is-6f0f1613">Announced by the federal government on October 8, 2026. It is not open yet. Launch is expected in early 2027, and the rules are not published.</p></div>
 </div>
 <p>The gap between the two main rates is the headline. Most Ontario homes heat with natural gas, so most homeowners land on the $500 a ton rate, which is capped at $2,000. Homes on baseboards, oil, propane or wood are the ones that reach $7,500.</p>
-<h2>Which row is yours?</h2><p><strong>You heat with electric baseboards or an electric furnace.</strong> You get the higher rate: $1,250 a ton, up to $7,500. You must be on the Ontario grid. Cornwall Electric customers are on the Hydro Quebec grid, so they are not eligible unless they heat with Enbridge gas.</p><p><strong>You heat with oil, propane or wood.</strong> Same high rate. If you heat with oil, the tank must be removed or emptied by a TSSA contractor.</p><p><strong>You heat with natural gas from Enbridge.</strong> You get $500 a ton, up to $2,000. You must have an active Enbridge residential account and heat mainly with a gas furnace or boiler.</p><p><strong>You already have a heat pump for space heating.</strong> You are not eligible. Replacing an old heat pump earns nothing under this stream.</p><h2>How the tons work</h2><p>The rebate is paid per ton of rated heating capacity. One ton is 12,000 BTU an hour, measured at 8.3C. Your contractor reads the number off the NRCan listing for your exact model. If you need more than one outdoor unit to heat the whole home, up to three can count, their tons add up, and you still get one rebate. For example, two 3-ton units on an electric-heat home reach the $7,500 cap.</p><h2>The rules that trip people up</h2><p>Pre-approval is mandatory. Your contractor must get written approval before the heat pump goes in. An install done first earns nothing. The heat pump must be an active cold-climate model on NRCan's list, and the contractor must be a participating HVAC contractor from the program's list.</p><p>For homes heated by electricity, oil or wood, only sizing options C and D qualify. In plain words, the heat pump has to carry most or all of the heating, not just cool the house. Ask your contractor to show you NRCan's sizing and selection form before you sign. Existing electric or wood heat can stay as backup.</p><p>You must own the home. A landlord applies on behalf of tenants. The home must be a detached house, semi, row house, townhome or mobile home on a permanent foundation, and it cannot be a new build that has been lived in for six months or less. The requirements document also allows a single unit in a duplex, triplex or stacked townhome that has its own heating and meter. The web page lists only the narrower house types, so ask the program if you are in a duplex.</p><h2>Is there a deadline?</h2><p>As of October 9, 2026, the program page and its requirements document show no end date for the heat pump stream. That is not a promise. Funding and terms can change, so if you are planning a job, get your pre-approval in rather than waiting. We will update this page if an end date appears.</p><h2>The new federal rebate: what we know and what we do not</h2><p>On October 8, 2026, the federal government announced a <a href="/programs/national-heat-pump-rebate/">National Heat Pump Rebate</a>. It would pay up to $10,000 to households below the median income and $2,000 to other eligible homeowners. The government says launch is expected in early 2027. It has not said which home types, heating fuels or income cut-off will qualify.</p><p>That means we cannot tell you if it stacks with Ontario's program, or if work done now will count. If your furnace is failing this winter, do not wait for it. Ontario's rebate is open now. We will update this page when the federal rules come out.</p>
-<h2>How to claim an Ontario heat pump rebate</h2>
+<h2 id="which-row-is-yours">Which row is yours?</h2><p><strong>You heat with electric baseboards or an electric furnace.</strong> You get the higher rate: $1,250 a ton, up to $7,500. You must be on the Ontario grid. Cornwall Electric customers are on the Hydro Quebec grid, so they are not eligible unless they heat with Enbridge gas.</p><p><strong>You heat with oil, propane or wood.</strong> Same high rate. If you heat with oil, the tank must be removed or emptied by a TSSA contractor.</p><p><strong>You heat with natural gas from Enbridge.</strong> You get $500 a ton, up to $2,000. You must have an active Enbridge residential account and heat mainly with a gas furnace or boiler.</p><p><strong>You already have a heat pump for space heating.</strong> You are not eligible. Replacing an old heat pump earns nothing under this stream.</p><h2 id="how-the-tons-work">How the tons work</h2><p>The rebate is paid per ton of rated heating capacity. One ton is 12,000 BTU an hour, measured at 8.3C. Your contractor reads the number off the NRCan listing for your exact model. If you need more than one outdoor unit to heat the whole home, up to three can count, their tons add up, and you still get one rebate. For example, two 3-ton units on an electric-heat home reach the $7,500 cap.</p><h2 id="the-rules-that-trip-people-up">The rules that trip people up</h2><p>Pre-approval is mandatory. Your contractor must get written approval before the heat pump goes in. An install done first earns nothing. The heat pump must be an active cold-climate model on NRCan's list, and the contractor must be a participating HVAC contractor from the program's list.</p><p>For homes heated by electricity, oil or wood, only sizing options C and D qualify. In plain words, the heat pump has to carry most or all of the heating, not just cool the house. Ask your contractor to show you NRCan's sizing and selection form before you sign. Existing electric or wood heat can stay as backup.</p><p>You must own the home. A landlord applies on behalf of tenants. The home must be a detached house, semi, row house, townhome or mobile home on a permanent foundation, and it cannot be a new build that has been lived in for six months or less. The requirements document also allows a single unit in a duplex, triplex or stacked townhome that has its own heating and meter. The web page lists only the narrower house types, so ask the program if you are in a duplex.</p><h2 id="is-there-a-deadline">Is there a deadline?</h2><p>As of October 9, 2026, the program page and its requirements document show no end date for the heat pump stream. That is not a promise. Funding and terms can change, so if you are planning a job, get your pre-approval in rather than waiting. We will update this page if an end date appears.</p><h2 id="the-new-federal-rebate-what-we-know-and-what-we-">The new federal rebate: what we know and what we do not</h2><p>On October 8, 2026, the federal government announced a <a href="/programs/national-heat-pump-rebate/">National Heat Pump Rebate</a>. It would pay up to $10,000 to households below the median income and $2,000 to other eligible homeowners. The government says launch is expected in early 2027. It has not said which home types, heating fuels or income cut-off will qualify.</p><p>That means we cannot tell you if it stacks with Ontario's program, or if work done now will count. If your furnace is failing this winter, do not wait for it. Ontario's rebate is open now. We will update this page when the federal rules come out.</p>
+<h2 id="how-to-claim-an-ontario-heat-pump-rebate">How to claim an Ontario heat pump rebate</h2>
 <ol>
 <li>Work out your row: what heats the home now, and whether you own it. Gas, electric, oil, propane or wood each have different rates.</li>
 <li>Fill in the program's short eligibility form. It sends you a list of participating HVAC contractors.</li>
@@ -532,7 +603,7 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 <li>Have the heat pump installed. Your contractor files the post-installation application within 30 days.</li>
 <li>Watch for the cheque. It should arrive by mail within 60 days of post-installation approval.</li>
 </ol>
-<h2>More for Ontario homes</h2>
+<h2 id="more-for-ontario-homes">More for Ontario homes</h2>
 <ul>
 <li><a href="/ca/on/">Ontario home rebates: every program in one place</a></li>
 <li><a href="/programs/national-heat-pump-rebate/">National Heat Pump Rebate guide</a>: what Ottawa has confirmed so far</li>
@@ -550,7 +621,7 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 <li><a href="/ca/on/hamilton/heat-pump/">Hamilton heat pump rebates</a>: city details and installers</li>
 </ul>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/on/" class="is-7480ec7e">Ontario rebate calculator</a>, or <a href="/get-quotes/" class="is-7480ec7e">get a plan emailed with the top-rated installers near you</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much is the Ontario heat pump rebate in 2026?</h3><p>It depends on what you heat with now. Electric, oil, propane or wood homes get $1,250 a ton, up to $7,500, for an air-source heat pump. Enbridge gas homes get $500 a ton, up to $2,000. Ground-source systems pay up to $12,000 for non-gas homes and a flat $3,000 for gas homes.</p></div>
 <div class="faq-item"><h3>Is there a deadline for the Ontario heat pump rebate?</h3><p>We found no end date on the program page or its requirements document as of October 9, 2026. Terms can change, so file your pre-approval before you plan to buy.</p></div>
 <div class="faq-item"><h3>Do I need a home energy assessment?</h3><p>No. This stream does not require one. You need a participating HVAC contractor and written pre-approval before the install.</p></div>
@@ -560,6 +631,9 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 
 <p class="is-433de30b">By <a href="/about">Sam Menard</a>. Sources, last read October 9, 2026: <a href="https://www.homerenovationsavings.ca/without-assessment/heat-pumps" target="_blank" rel="noopener">Home Renovation Savings: heat pumps</a>, <a href="https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Heat-Pump-Program-Stream-Requirements.pdf" target="_blank" rel="noopener">Heat Pump Program Stream requirements (PDF)</a>, <a href="https://saveonenergy.ca/For-Your-Home/Home-Renovation-Savings" target="_blank" rel="noopener">Save on Energy: Home Renovation Savings</a>, <a href="https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/" target="_blank" rel="noopener">City of Toronto Home Energy Loan Program</a>, <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html" target="_blank" rel="noopener">Government of Canada: one million home retrofits announcement</a>.</p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-ontario-pays-for-a-heat-pump-by-what-you-he">What Ontario pays for a heat pump, by what you heat with now</a></li><li><a href="#which-row-is-yours">Which row is yours?</a></li><li><a href="#how-the-tons-work">How the tons work</a></li><li><a href="#the-rules-that-trip-people-up">The rules that trip people up</a></li><li><a href="#is-there-a-deadline">Is there a deadline?</a></li><li><a href="#the-new-federal-rebate-what-we-know-and-what-we-">The new federal rebate: what we know and what we do not</a></li><li><a href="#how-to-claim-an-ontario-heat-pump-rebate">How to claim an Ontario heat pump rebate</a></li><li><a href="#more-for-ontario-homes">More for Ontario homes</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -761,6 +835,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

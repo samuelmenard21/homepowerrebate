@@ -72,11 +72,11 @@ def build(slug, cat):
     sibs = [] if state else [k for k in LABEL if k != cat and (ROOT / f"us/il/{slug}/{k}/index.html").exists()]
     sib = "".join(f'<span style="margin-right:14px;"><a href="{hub}{k}/">{LABEL[k]} Rebates in {e(name)}</a></span>\n' for k in sibs)
     if state:
-        topics = [(k, t) for k, t in (("solar", "Solar rebates"), ("appliances", "Appliance rebates")) if (ROOT / f"us/il/{k}/index.html").exists()]
+        topics = [(k, t) for k, t in (("solar", "Solar rebates"), ("appliances", "Appliance rebates"), ("smart-thermostats", "Smart thermostat rebates")) if (ROOT / f"us/il/{k}/index.html").exists()]
         guides = ("<h2>City guides and statewide guides</h2><ul>" + "".join(f'<li><a href="/us/il/{c}/">{NAMES[c]} rebates</a></li>' for c in CITY_SLUGS if (ROOT / f"us/il/{c}/index.html").exists())
                   + "".join(f'<li><a href="/us/il/{k}/">Illinois {t.lower()}</a></li>' for k, t in topics) + "</ul>")
     else:
-        guides = ("<h2>Every rebate guide for " + e(name) + "</h2><ul>" + "".join(f'<li><a href="{hub}{k}/">{LABEL[k]} rebates in {e(name)}</a></li>' for k in sibs) + "</ul>") if is_hub else ""
+        guides = ("<h2>Every rebate guide for " + e(name) + "</h2><ul>" + "".join(f'<li><a href="{hub}{k}/">{LABEL[k]} rebates in {e(name)}</a></li>' for k in sibs) + ('<li><a href="/us/il/smart-thermostats/">Illinois smart thermostat rebates (all utilities side by side)</a></li>' if (ROOT / "us/il/smart-thermostats/index.html").exists() else "") + "</ul>") if is_hub else ""
     cards = "".join(ca.card(x) for x in d["cards"])
     inst = "" if d.get("no_installers") else installer_html(slug, name, cat, d.get("installers_intro", ""))
     steps = "".join(f"<li>{s}</li>\n" for s in d.get("claim_steps", []))

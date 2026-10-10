@@ -99,6 +99,7 @@ section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;
 .cta{background:radial-gradient(500px 200px at 90% -20%,rgba(255,255,255,.22),transparent 60%),linear-gradient(135deg,#e88a2e,#d4751c);box-shadow:0 14px 30px rgba(212,117,28,.28)}
 .rank .nm{font-weight:700;color:var(--ink);font-size:16.5px}
 .rank .nm a{color:var(--ink);text-decoration:none}
+.rank .nm a:hover{text-decoration:underline}.rank .n a{color:inherit;text-decoration:none;display:grid;place-items:center;width:100%;height:100%}
 .rank .st{font-size:14px;color:var(--ink-soft)}
 .rank .st b{color:var(--ink)}
 .rank .act{grid-column:2;font-size:14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;margin-top:6px}
@@ -165,17 +166,20 @@ body .wrap section.body>p,body .wrap section.body>ul li,body .wrap section.body>
   {
    "@type": "ListItem",
    "position": 1,
-   "name": "Albany Insulation"
+   "name": "Albany Insulation",
+   "url": "https://homepowerrebate.com/installers/profiles/ny/albany/albany-insulation/"
   },
   {
    "@type": "ListItem",
    "position": 2,
-   "name": "Standard Heating, Cooling & Insulating"
+   "name": "Standard Heating, Cooling & Insulating",
+   "url": "https://homepowerrebate.com/installers/profiles/ny/albany/standard-heating-cooling-insulating/"
   },
   {
    "@type": "ListItem",
    "position": 3,
-   "name": "Albany Spray Foam Insulation"
+   "name": "Albany Spray Foam Insulation",
+   "url": "https://homepowerrebate.com/installers/profiles/ny/albany/albany-spray-foam-insulation/"
   }
  ]
 }
@@ -257,7 +261,7 @@ body .wrap section.body>p,body .wrap section.body>ul li,body .wrap section.body>
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -381,10 +385,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -394,9 +404,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -607,7 +618,7 @@ h1, h2 { text-wrap: balance; }
 <div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
 <h1>Top-Rated Insulation Installers in Albany, NY</h1></div>
 <p>3 local companies ranked by 187 Google reviews. Free to compare, no sign-up.</p>
-<p class="meta">Ratings and review counts from Google Maps, collected September 2026 · Page updated October 9, 2026</p>
+<p class="meta">Ratings and review counts from Google Maps, collected September 2026 · Page updated October 10, 2026</p>
 </div></header>
 <section class="body"><div class="wrap">
 <div class="stats"><div class="stat"><b>3</b><span>Companies</span></div><div class="stat"><b>187</b><span>Google reviews</span></div><div class="stat"><b>4.9★</b><span>Average rating</span></div><div class="stat"><b>Sep 2026</b><span>Data collected</span></div></div>
@@ -617,9 +628,9 @@ h1, h2 { text-wrap: balance; }
 <h2 class="sec-h">Insulation installers in Albany, ranked <span class="chip">3 listed</span></h2>
 <div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button></div>
 <ol class="rank-list">
-<li class="rank top g1" data-rank="1" data-reviews="36" data-rating="5.0"><div class="n">1</div><div class="nm">Albany Insulation<span class="badge">Top pick</span></div><div class="st"><span class="rt"><span class="stars" style="--p:100%" aria-hidden="true">★★★★★</span> <b>5.0</b></span> <span class="rv">(36 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:28%"></i></div><div class="adr">9 Elmhurst Ave, Albany, NY 12203</div></div><div class="act"><a class="btn-call" href="tel:5187304048">Call (518) 730-4048</a><a class="lnk" href="https://insulationalbany.com/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=5838937032043299737&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=9+Elmhurst+Ave%2C+Albany%2C+NY+12203" rel="nofollow noopener" target="_blank">Directions</a></div></li>
-<li class="rank top g2" data-rank="2" data-reviews="127" data-rating="4.8"><div class="n">2</div><div class="nm">Standard Heating, Cooling &amp; Insulating<span class="badge">Top pick</span><span class="bf">Most reviews</span><span class="bf">Also installs heat pumps</span></div><div class="st"><span class="rt"><span class="stars" style="--p:96%" aria-hidden="true">★★★★★</span> <b>4.8</b></span> <span class="rv">(127 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:100%"></i></div><div class="adr">80 Fuller Rd, Albany, NY 12205</div></div><div class="act"><a class="btn-call" href="tel:8007381424">Call (800) 738-1424</a><a class="lnk" href="https://www.standardco.com/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=12517963657573687163&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=80+Fuller+Rd%2C+Albany%2C+NY+12205" rel="nofollow noopener" target="_blank">Directions</a><a class="lnk em" href="mailto:info@standardco.com" aria-label="Email Standard Heating, Cooling &amp; Insulating">Email</a></div></li>
-<li class="rank top g3" data-rank="3" data-reviews="24" data-rating="5.0"><div class="n">3</div><div class="nm">Albany Spray Foam Insulation<span class="badge">Top pick</span></div><div class="st"><span class="rt"><span class="stars" style="--p:100%" aria-hidden="true">★★★★★</span> <b>5.0</b></span> <span class="rv">(24 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:19%"></i></div><div class="adr">213 N Allen St Apt 1, Albany, NY 12206</div></div><div class="act"><a class="btn-call" href="tel:5185193316">Call (518) 519-3316</a><a class="lnk" href="https://albanysprayfoaminsulation.com/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=15047297705658568483&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=213+N+Allen+St+Apt+1%2C+Albany%2C+NY+12206" rel="nofollow noopener" target="_blank">Directions</a></div></li>
+<li class="rank top g1 has-prof" data-rank="1" data-reviews="36" data-rating="5.0"><div class="n"><a href="/installers/profiles/ny/albany/albany-insulation/" aria-label="Albany Insulation profile">1</a></div><div class="nm"><a href="/installers/profiles/ny/albany/albany-insulation/">Albany Insulation</a><span class="badge">Top pick</span></div><div class="st"><span class="rt"><span class="stars" style="--p:100%" aria-hidden="true">★★★★★</span> <b>5.0</b></span> <span class="rv">(36 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:28%"></i></div><div class="adr">9 Elmhurst Ave, Albany, NY 12203</div></div><div class="act"><a class="btn-call" href="tel:5187304048">Call (518) 730-4048</a><a class="lnk" href="https://insulationalbany.com/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=5838937032043299737&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="btn-prof" href="/installers/profiles/ny/albany/albany-insulation/">View profile</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=9+Elmhurst+Ave%2C+Albany%2C+NY+12203" rel="nofollow noopener" target="_blank">Directions</a></div></li>
+<li class="rank top g2 has-prof" data-rank="2" data-reviews="127" data-rating="4.8"><div class="n"><a href="/installers/profiles/ny/albany/standard-heating-cooling-insulating/" aria-label="Standard Heating, Cooling &amp; Insulating profile">2</a></div><div class="nm"><a href="/installers/profiles/ny/albany/standard-heating-cooling-insulating/">Standard Heating, Cooling &amp; Insulating</a><span class="badge">Top pick</span><span class="bf">Most reviews</span><span class="bf">Also installs heat pumps</span></div><div class="st"><span class="rt"><span class="stars" style="--p:96%" aria-hidden="true">★★★★★</span> <b>4.8</b></span> <span class="rv">(127 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:100%"></i></div><div class="adr">80 Fuller Rd, Albany, NY 12205</div></div><div class="act"><a class="btn-call" href="tel:8007381424">Call (800) 738-1424</a><a class="lnk" href="https://www.standardco.com/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=12517963657573687163&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="btn-prof" href="/installers/profiles/ny/albany/standard-heating-cooling-insulating/">View profile</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=80+Fuller+Rd%2C+Albany%2C+NY+12205" rel="nofollow noopener" target="_blank">Directions</a><a class="lnk em" href="mailto:info@standardco.com" aria-label="Email Standard Heating, Cooling &amp; Insulating">Email</a></div></li>
+<li class="rank top g3 has-prof" data-rank="3" data-reviews="24" data-rating="5.0"><div class="n"><a href="/installers/profiles/ny/albany/albany-spray-foam-insulation/" aria-label="Albany Spray Foam Insulation profile">3</a></div><div class="nm"><a href="/installers/profiles/ny/albany/albany-spray-foam-insulation/">Albany Spray Foam Insulation</a><span class="badge">Top pick</span></div><div class="st"><span class="rt"><span class="stars" style="--p:100%" aria-hidden="true">★★★★★</span> <b>5.0</b></span> <span class="rv">(24 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:19%"></i></div><div class="adr">213 N Allen St Apt 1, Albany, NY 12206</div></div><div class="act"><a class="btn-call" href="tel:5185193316">Call (518) 519-3316</a><a class="lnk" href="https://albanysprayfoaminsulation.com/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=15047297705658568483&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="btn-prof" href="/installers/profiles/ny/albany/albany-spray-foam-insulation/">View profile</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=213+N+Allen+St+Apt+1%2C+Albany%2C+NY+12206" rel="nofollow noopener" target="_blank">Directions</a></div></li>
 </ol>
 
 <p class="small">Together these 3 companies average 4.9★ across 187 reviews. Standard Heating, Cooling &amp; Insulating has the most reviews (127).</p>

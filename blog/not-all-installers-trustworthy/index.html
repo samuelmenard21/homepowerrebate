@@ -74,7 +74,7 @@
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -198,10 +198,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -211,9 +217,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -448,25 +455,25 @@ h1, h2 { text-wrap: balance; }
 
   <h2>Red Flag #1: The Quote That's Too Good to Be True</h2>
   <div class="red-flag">
-    <h4>🚩 Suspiciously Low Initial Quote</h4>
+    <h4 aria-level="3">🚩 Suspiciously Low Initial Quote</h4>
     <p>If one installer quotes $35K and everyone else quotes $45K, ask why. Sometimes it's efficiency. Sometimes it's because they're planning to hit you with add-ons later. Get everything in writing upfront: system size, roof work, electrical upgrades, timeline, and the final price. No surprises.</p>
   </div>
 
   <h2>Red Flag #2: They Push a Battery You Don't Need</h2>
   <div class="red-flag">
-    <h4>🚩 Aggressive Battery Upselling</h4>
+    <h4 aria-level="3">🚩 Aggressive Battery Upselling</h4>
     <p>I hear from homeowners all the time: "The installer said I had to get a battery to claim my rebate." False. BC Hydro's solar rebate ($5,000) works without a battery. The battery rebate is separate. If an installer is telling you a battery is mandatory, they're either misinformed or selling commission. Get a second opinion before adding $15K to your bill.</p>
   </div>
 
   <h2>Red Flag #3: They Rush the Paperwork</h2>
   <div class="red-flag">
-    <h4>🚩 Pressure to Sign Quickly</h4>
+    <h4 aria-level="3">🚩 Pressure to Sign Quickly</h4>
     <p>Good installers give you time to review documents. Bad ones say, "Sign today and we can start this week." Why the rush? Because they want you committed before you ask questions. Rebate paperwork is complex. Any installer worth hiring will walk you through it and give you a copy. If they're vague or hurried, that's a sign.</p>
   </div>
 
   <h2>Red Flag #4: No Proof of Previous Work</h2>
   <div class="red-flag">
-    <h4>🚩 Can't Show Case Studies or Reviews</h4>
+    <h4 aria-level="3">🚩 Can't Show Case Studies or Reviews</h4>
     <p>Ask for references. Specifically, ask for photos and performance data from 3–5 systems they've installed in your city in the last two years. A legitimate installer will have this. If they dodge the question or show you generic pictures, move on. You want someone with proven work in BC, not a salesperson who learned to install solar last year.</p>
   </div>
 
@@ -476,7 +483,7 @@ h1, h2 { text-wrap: balance; }
 
   <h2>Red Flag #6: Payment Before Installation</h2>
   <div class="red-flag">
-    <h4>🚩 Asking for Full Payment Upfront</h4>
+    <h4 aria-level="3">🚩 Asking for Full Payment Upfront</h4>
     <p>Most installers ask for a deposit (25-33%) to start, then final payment upon completion. If someone's asking for the full amount before they show up with a truck, that's a major red flag. You don't know if they'll finish, and you have no recourse if they disappear.</p>
   </div>
 

@@ -79,7 +79,7 @@ footer.site-footer { padding: 40px 0; text-align: center; font-size: 13px; }
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -203,10 +203,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -216,9 +222,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -367,6 +374,7 @@ h1, h2 { text-wrap: balance; }
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Michigan Home Energy Rebates 2026: DTE, Consumers, Lansing BWL and Ann Arbor", "url": "https://homepowerrebate.com/us/mi/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
 <!-- AEO-SPEAKABLE-END -->
 </head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
 <nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
@@ -494,7 +502,7 @@ h1, h2 { text-wrap: balance; }
 <!-- HUB-TOC-START --><nav class="toc" aria-label="On this page"><span class="toc-lbl">On this page:</span><a href="#find-city">Find your city</a><a href="#how-michigan-s-rebates-are-organized">How Michigan's rebates…</a><a href="#which-company-serves-you">Your utility</a><a href="#heat-pumps-are-the-exception-not-the-rul">Heat pumps</a><a href="#what-is-paused-or-ended">What is paused or ended</a><a href="#free-and-low-cost-help">Free and low-cost help</a><a href="#cities-we-cover">Cities</a></nav><!-- HUB-TOC-END -->
 
 <!-- CALC-LINK-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Not sure what you qualify for?</b> <a href="/calculator/mi/">Use the Michigan rebate calculator</a>.</p><!-- CALC-LINK-END -->
-<article class="article"><div class="wrap">
+<article class="article" role="main" id="main"><div class="wrap">
 <h2 id="how-michigan-s-rebates-are-organized">How Michigan's rebates are organized</h2><p>Most Michigan homes heat with gas, so most of the money is for furnaces, insulation and thermostats, not heat pumps. Your electric and gas companies run their own programs, a few cities run their own, and the state runs one large program for lower-income households. The page for each city shows the offers that apply there. We read every official page we cite, and we mark any amount we could not confirm.</p><h2 id="which-company-serves-you">Which company serves you</h2><p>Look at your bill. In the four cities we cover: Detroit and Ann Arbor homes usually buy from <a href='/programs/dte-energy-rebates/'>DTE Energy</a>. Grand Rapids homes usually buy from <a href='/programs/consumers-energy-rebates/'>Consumers Energy</a>. Lansing homes usually buy electricity from the <a href='/programs/lansing-bwl-rebates/'>Board of Water and Light</a> and gas from Consumers Energy. Ann Arbor also has its own <a href='/programs/ann-arbor-a2zero-rebates/'>A2ZERO city rebates</a>. If your address is outside these cities, start with the company named on your bill.</p><h2 id="heat-pumps-are-the-exception-not-the-rul">Heat pumps are the exception, not the rule</h2><p>The Census Bureau's American Community Survey (2020 to 2024) says utility gas heats 80.5% of Detroit homes, 82.5% of Grand Rapids homes, 70.7% of Ann Arbor homes and 74.6% of Lansing homes. DTE and Consumers pay little or nothing to switch a gas home to a heat pump. The big exceptions are Ann Arbor's city program and the Lansing Board of Water and Light. That is why this page leads with them.</p><h2 id="what-is-paused-or-ended">What is paused or ended</h2><p>The state's MiHER program can cover up to the full project cost for lower-income households, with caps of $14,000 for electric equipment and $20,000 for whole-home efficiency. Its page says new income-qualified applications are temporarily unavailable in the Detroit, Warren, Grand Rapids, Lansing and Kalamazoo districts. The state page names districts, not counties, and Ann Arbor's district is not named, so look up your county on the state's map. The federal home energy tax credits (25C and 25D) ended for work finished after December 31, 2025.</p><h2 id="free-and-low-cost-help">Free and low-cost help</h2><p>Michigan's weatherization program is free for households at or below 200% of the federal poverty level. DTE's Energy Efficiency Assistance covers 250%. Read our <a href='/us/mi/free-weatherization/'>free weatherization guide</a>. If you pay yourself, Michigan Saves offers fixed-rate loans through credit unions at 6.24% to 6.99% APR. For smaller upgrades, see our <a href='/us/mi/water-heater/'>water heater guide</a> and <a href='/us/mi/smart-thermostats/'>smart thermostat guide</a>.</p><h2 id="cities-we-cover">Cities we cover</h2><ul><li><a href='/us/mi/detroit/'>Detroit</a>: DTE Energy furnace, insulation and thermostat rebates.</li><li><a href='/us/mi/grand-rapids/'>Grand Rapids</a>: Consumers Energy furnace and insulation rebates.</li><li><a href='/us/mi/ann-arbor/'>Ann Arbor</a>: the city's A2ZERO rebates plus DTE.</li><li><a href='/us/mi/lansing/'>Lansing</a>: the Board of Water and Light heat pump rebate.</li></ul><p>Statewide guides: <a href='/us/mi/water-heater/'>water heaters</a>, <a href='/us/mi/smart-thermostats/'>smart thermostats</a> and <a href='/us/mi/free-weatherization/'>free weatherization</a>.</p><h2 id="common-questions">Common questions</h2>
 <details class="hub-fold"><summary>Read the questions and answers</summary>
 <div class="faq-item"><h3>Is there a statewide heat pump rebate in Michigan?</h3><p>Not from the utilities. The state's MiHER program covers heat pumps for lower-income households, but new income-qualified applications are paused in five districts. Ann Arbor and Lansing have local heat pump rebates.</p></div>

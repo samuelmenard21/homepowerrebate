@@ -79,7 +79,7 @@ footer.site-footer { padding: 40px 0; text-align: center; font-size: 13px; }
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -203,10 +203,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -216,9 +222,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -489,7 +496,7 @@ h1, h2 { text-wrap: balance; }
 <h2>What SMUD pays</h2>
 <p>These figures come from SMUD's appliance rebates page, which we read on October 2, 2026. The unit must be NEEA Tier III or IV with a UEF of 2.87 or higher, installed by a participating contractor in the SMUD Contractor Network.</p>
 <div class="rebate-grid">
-<div class="rebate-card"><span class="program-status status-open">Open</span><h4>Gas to electric, 50 gallons or more</h4><div class="amount">$3,000</div><p style="font-size:14px;margin:8px 0 0;">The base amount for replacing a gas water heater.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Gas to electric, 65 gallons or more</h4><div class="amount">$3,500</div><p style="font-size:14px;margin:8px 0 0;">A larger tank earns more.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Gas to electric, 80 gallons or more</h4><div class="amount">$4,000</div><p style="font-size:14px;margin:8px 0 0;">The most SMUD pays for a water heater.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Electric to electric</h4><div class="amount">$1,000</div><p style="font-size:14px;margin:8px 0 0;">For all sizes, replacing an electric tank.</p></div>
+<div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Gas to electric, 50 gallons or more</h4><div class="amount">$3,000</div><p style="font-size:14px;margin:8px 0 0;">The base amount for replacing a gas water heater.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Gas to electric, 65 gallons or more</h4><div class="amount">$3,500</div><p style="font-size:14px;margin:8px 0 0;">A larger tank earns more.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Gas to electric, 80 gallons or more</h4><div class="amount">$4,000</div><p style="font-size:14px;margin:8px 0 0;">The most SMUD pays for a water heater.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Electric to electric</h4><div class="amount">$1,000</div><p style="font-size:14px;margin:8px 0 0;">For all sizes, replacing an electric tank.</p></div>
 </div>
 <div class='highlight-box'><h4>What it costs and what is left</h4><p>SMUD's data for the past 12 months shows a median installed price of $6,220 for gas to electric (range $2,710 to $13,395) and $5,416 for electric to electric. With a 50-gallon tank, the $3,000 rebate leaves about $3,200 at the median. The 80-gallon tank earns $1,000 more but costs more too: its median was $6,800. Size the tank for the household, not the rebate.</p></div>
 <h2>What drives the price</h2><p>SMUD lists the things it sees behind the spread: the installation company, how far the water heater is from the electrical panel, whether the panel has space for more amperage, and whether the water heater has to be moved. It recommends at least three bids. If the panel is full, the Go Electric rebates for a smart panel, subpanel or new circuit pay up to $4,000 when a gas-to-electric conversion is part of the job.</p><h2>Which size to choose</h2><p>The rebate climbs at 50, 65 and 80 gallons, which tempts people to buy a bigger tank. A larger tank holds more hot water but costs more to buy and takes more space. A household of one or two rarely needs 80 gallons. Ask your contractor how they sized it and what the recovery time is, and check that the model meets the NEEA Tier III or IV list and UEF 2.87.</p><h2>Your utility: SMUD</h2><p>SMUD's rebate center is at 916-732-7550, and its Advanced Home Solutions team at 916-732-5732. Rebates must be submitted by a qualified participating contractor, who provides the application for your signature. SMUD says the water heater rebate can be stacked with statewide and federal programs, and notes that some contractors offer the rebate amount up front. Compare with <a href='/us/ca/los-angeles/glendale/water-heater/'>Glendale's $4,000</a> and <a href='/us/ca/los-angeles/los-angeles/water-heater/'>LADWP's $1,500 to $2,500</a>.</p><h2>Space and temperature</h2><p>With Sacramento's average January low of 4.7°C over 2015 to 2024 and hot summers, a garage is usually fine for a heat pump water heater, but a very hot or tight space can be a problem. The unit needs air around it and a drain. Ask the contractor for the model's allowed temperature range and clearance, and for the noise level.</p><h2>Federal money</h2><p>The federal 25C and 25D tax credits ended after December 31, 2025. Statewide single-family help is fully reserved and takes requests on hold only.</p>

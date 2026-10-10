@@ -99,6 +99,7 @@ section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;
 .cta{background:radial-gradient(500px 200px at 90% -20%,rgba(255,255,255,.22),transparent 60%),linear-gradient(135deg,#e88a2e,#d4751c);box-shadow:0 14px 30px rgba(212,117,28,.28)}
 .rank .nm{font-weight:700;color:var(--ink);font-size:16.5px}
 .rank .nm a{color:var(--ink);text-decoration:none}
+.rank .nm a:hover{text-decoration:underline}.rank .n a{color:inherit;text-decoration:none;display:grid;place-items:center;width:100%;height:100%}
 .rank .st{font-size:14px;color:var(--ink-soft)}
 .rank .st b{color:var(--ink)}
 .rank .act{grid-column:2;font-size:14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;margin-top:6px}
@@ -171,17 +172,20 @@ body .wrap section.body>p,body .wrap section.body>ul li,body .wrap section.body>
   {
    "@type": "ListItem",
    "position": 1,
-   "name": "Pro-Custom Drywall LLC"
+   "name": "Pro-Custom Drywall LLC",
+   "url": "https://homepowerrebate.com/installers/profiles/nj/toms-river/pro-custom-drywall-llc/"
   },
   {
    "@type": "ListItem",
    "position": 2,
-   "name": "Ultimate Construction"
+   "name": "Ultimate Construction",
+   "url": "https://homepowerrebate.com/installers/profiles/nj/toms-river/ultimate-construction/"
   },
   {
    "@type": "ListItem",
    "position": 3,
-   "name": "John Alexander, LLC"
+   "name": "John Alexander, LLC",
+   "url": "https://homepowerrebate.com/installers/profiles/nj/toms-river/john-alexander-llc/"
   }
  ]
 }
@@ -255,7 +259,7 @@ body .wrap section.body>p,body .wrap section.body>ul li,body .wrap section.body>
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -379,10 +383,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -392,9 +402,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -605,7 +616,7 @@ h1, h2 { text-wrap: balance; }
 <div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
 <h1>Top-Rated Insulation Installers in Toms River, NJ</h1></div>
 <p>3 local companies ranked by 126 Google reviews. Free to compare, no sign-up.</p>
-<p class="meta">Ratings and review counts from Google Maps, collected October 2026 · Page updated October 9, 2026</p>
+<p class="meta">Ratings and review counts from Google Maps, collected October 2026 · Page updated October 10, 2026</p>
 </div></header>
 <section class="body"><div class="wrap">
 <div class="stats"><div class="stat"><b>3</b><span>Companies</span></div><div class="stat"><b>126</b><span>Google reviews</span></div><div class="stat"><b>4.9★</b><span>Average rating</span></div><div class="stat"><b>Oct 2026</b><span>Data collected</span></div></div>
@@ -615,9 +626,9 @@ h1, h2 { text-wrap: balance; }
 <h2 class="sec-h">Insulation installers in Toms River, ranked <span class="chip">3 listed</span></h2>
 <div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button></div>
 <ol class="rank-list">
-<li class="rank top g1" data-rank="1" data-reviews="90" data-rating="4.9"><div class="n">1</div><div class="nm">Pro-Custom Drywall LLC<span class="badge">Top pick</span><span class="bf">Most reviews</span></div><div class="st"><span class="rt"><span class="stars" style="--p:98%" aria-hidden="true">★★★★★</span> <b>4.9</b></span> <span class="rv">(90 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:100%"></i></div><div class="adr">219 Dayton Ave, Toms River, NJ 08753</div></div><div class="act"><a class="btn-call" href="tel:7323853989">Call (732) 385-3989</a><a class="lnk" href="https://www.procustomdrywall.com/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=14321696898450509520&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=219+Dayton+Ave%2C+Toms+River%2C+NJ+08753" rel="nofollow noopener" target="_blank">Directions</a><a class="lnk em" href="mailto:booking@procustomdrywall.com" aria-label="Email Pro-Custom Drywall LLC">Email</a></div></li>
-<li class="rank top g2" data-rank="2" data-reviews="25" data-rating="4.9"><div class="n">2</div><div class="nm">Ultimate Construction<span class="badge">Top pick</span></div><div class="st"><span class="rt"><span class="stars" style="--p:98%" aria-hidden="true">★★★★★</span> <b>4.9</b></span> <span class="rv">(25 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:28%"></i></div><div class="adr">1358 Hooper Ave Ste 400, Toms River, NJ 08753</div></div><div class="act"><a class="btn-call" href="tel:7322552190">Call (732) 255-2190</a><a class="lnk" href="http://www.ultimateconstructionnj.com/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=14541599760210382478&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=1358+Hooper+Ave+Ste+400%2C+Toms+River%2C+NJ+08753" rel="nofollow noopener" target="_blank">Directions</a><a class="lnk em" href="mailto:ultimateconstructionnj@yahoo.com" aria-label="Email Ultimate Construction">Email</a></div></li>
-<li class="rank top g3" data-rank="3" data-reviews="11" data-rating="4.7"><div class="n">3</div><div class="nm">John Alexander, LLC<span class="badge">Top pick</span></div><div class="st"><span class="rt"><span class="stars" style="--p:94%" aria-hidden="true">★★★★★</span> <b>4.7</b></span> <span class="rv">(11 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:12%"></i></div><div class="adr">1624 Shore Blvd #3031, Toms River, NJ 08753</div></div><div class="act"><a class="btn-call" href="tel:7322781616">Call (732) 278-1616</a><a class="lnk" href="https://maps.google.com/?cid=3184540334589276051&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=1624+Shore+Blvd+%233031%2C+Toms+River%2C+NJ+08753" rel="nofollow noopener" target="_blank">Directions</a></div></li>
+<li class="rank top g1 has-prof" data-rank="1" data-reviews="90" data-rating="4.9"><div class="n"><a href="/installers/profiles/nj/toms-river/pro-custom-drywall-llc/" aria-label="Pro-Custom Drywall LLC profile">1</a></div><div class="nm"><a href="/installers/profiles/nj/toms-river/pro-custom-drywall-llc/">Pro-Custom Drywall LLC</a><span class="badge">Top pick</span><span class="bf">Most reviews</span></div><div class="st"><span class="rt"><span class="stars" style="--p:98%" aria-hidden="true">★★★★★</span> <b>4.9</b></span> <span class="rv">(90 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:100%"></i></div><div class="adr">219 Dayton Ave, Toms River, NJ 08753</div></div><div class="act"><a class="btn-call" href="tel:7323853989">Call (732) 385-3989</a><a class="lnk" href="https://www.procustomdrywall.com/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=14321696898450509520&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="btn-prof" href="/installers/profiles/nj/toms-river/pro-custom-drywall-llc/">View profile</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=219+Dayton+Ave%2C+Toms+River%2C+NJ+08753" rel="nofollow noopener" target="_blank">Directions</a><a class="lnk em" href="mailto:booking@procustomdrywall.com" aria-label="Email Pro-Custom Drywall LLC">Email</a></div></li>
+<li class="rank top g2 has-prof" data-rank="2" data-reviews="25" data-rating="4.9"><div class="n"><a href="/installers/profiles/nj/toms-river/ultimate-construction/" aria-label="Ultimate Construction profile">2</a></div><div class="nm"><a href="/installers/profiles/nj/toms-river/ultimate-construction/">Ultimate Construction</a><span class="badge">Top pick</span></div><div class="st"><span class="rt"><span class="stars" style="--p:98%" aria-hidden="true">★★★★★</span> <b>4.9</b></span> <span class="rv">(25 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:28%"></i></div><div class="adr">1358 Hooper Ave Ste 400, Toms River, NJ 08753</div></div><div class="act"><a class="btn-call" href="tel:7322552190">Call (732) 255-2190</a><a class="lnk" href="http://www.ultimateconstructionnj.com/" rel="nofollow noopener" target="_blank">Website</a><a class="lnk" href="https://maps.google.com/?cid=14541599760210382478&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="btn-prof" href="/installers/profiles/nj/toms-river/ultimate-construction/">View profile</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=1358+Hooper+Ave+Ste+400%2C+Toms+River%2C+NJ+08753" rel="nofollow noopener" target="_blank">Directions</a><a class="lnk em" href="mailto:ultimateconstructionnj@yahoo.com" aria-label="Email Ultimate Construction">Email</a></div></li>
+<li class="rank top g3 has-prof" data-rank="3" data-reviews="11" data-rating="4.7"><div class="n"><a href="/installers/profiles/nj/toms-river/john-alexander-llc/" aria-label="John Alexander, LLC profile">3</a></div><div class="nm"><a href="/installers/profiles/nj/toms-river/john-alexander-llc/">John Alexander, LLC</a><span class="badge">Top pick</span></div><div class="st"><span class="rt"><span class="stars" style="--p:94%" aria-hidden="true">★★★★★</span> <b>4.7</b></span> <span class="rv">(11 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:12%"></i></div><div class="adr">1624 Shore Blvd #3031, Toms River, NJ 08753</div></div><div class="act"><a class="btn-call" href="tel:7322781616">Call (732) 278-1616</a><a class="lnk" href="https://maps.google.com/?cid=3184540334589276051&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="btn-prof" href="/installers/profiles/nj/toms-river/john-alexander-llc/">View profile</a><a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination=1624+Shore+Blvd+%233031%2C+Toms+River%2C+NJ+08753" rel="nofollow noopener" target="_blank">Directions</a></div></li>
 </ol>
 
 <p class="small">Together these 3 companies average 4.9★ across 126 reviews. Pro-Custom Drywall LLC has the most reviews (90).</p>

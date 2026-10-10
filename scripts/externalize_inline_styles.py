@@ -46,11 +46,11 @@ def adjust(decls, tag):
         m = re.fullmatch(r"(\d+(?:\.\d+)?)px", v) if k == "font-size" else None
         if m and float(m.group(1)) < 13:
             d = "font-size: 13px !important"
-        elif k == "color" and re.fullmatch(r"var\(--amber\)", v):
+        elif k == "color" and re.fullmatch(r"(var\(--amber\)|#d4751c)", v, re.I):
             d = "color: #a4540a !important"
         elif k == "color" and re.fullmatch(r"var\(--sage\)", v):
             d = "color: #4f6f61 !important"
-        elif k == "background" and tag in ("a", "button") and re.fullmatch(r"(var\(--amber\)|#d4751c)", v, re.I):
+        elif k == "background" and (tag in ("a", "button") or "color: #fff" in decls or "color:#fff" in decls) and re.fullmatch(r"(var\(--amber(,\s*#d4751c)?\)|#d4751c)", v, re.I):
             amber_bg = True
         out.append(d)
     if amber_bg:
@@ -112,7 +112,7 @@ def run(path):
     bm = BLOCK_RE.search(html)
     if bm:
         for m in RULE_RE.finditer(bm.group(0)):
-            old[m.group(1)[1:]] = m.group(2).rstrip(";")
+            old[m.group(1)[1:]] = adjust(m.group(2).rstrip(";").replace(";", ";"), "").replace(";;", ";")
         html = html[:bm.start()] + html[bm.end():]
     new_html, rules, kept = process(html, old)
     used = set(re.findall(r"\bis-[0-9a-f]{8}\b", new_html))

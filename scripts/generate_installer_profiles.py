@@ -126,6 +126,17 @@ for _r in regions.REGIONS:
             "program_name": (_r["programs"][0][1] if _r.get("programs") else f"{_r['name']} utility rebates"),
         }
 
+# BC's hand-built profiles have no region folder: installers/profiles/<city>/<slug>/
+REGIONS["bc"]["profiles_dir"] = os.path.join(ROOT, "installers/profiles")
+REGIONS["bc"]["url_base"] = "installers/profiles"
+REGIONS["bc"]["json_dir"] = os.path.join(ROOT, "installers/json")
+REGIONS["bc"]["cities_only"] = {h.strip("/").split("/")[-1] for h, _ in regions.BY_CODE["bc"]["cities"]}  # installers/json/ also holds flat copies of CA and NY cities  # BC JSON is flat: installers/json/<city>.json, solar/<city>.json
+
+
+def profile_base(region_key):
+    return REGIONS[region_key].get("url_base", f"installers/profiles/{region_key}")
+
+
 CSS = """:root { --ink:#0a2a2e; --ink-soft:#1a3d42; --paper:#faf7f2; --paper-warm:#f5efe5; --teal:#0d4f5c; --teal-deep:#08363f; --amber:#d4751c; --amber-bright:#e88a2e; --green-money:#2d6a4f; --rule:#d9d0c1; }
 * { box-sizing:border-box; }
 body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter Tight',sans-serif; line-height:1.6; }
@@ -188,6 +199,11 @@ a { color:var(--teal-deep); }
 missing_category_pages = set()  # tracked for the end-of-run report
 
 
+def hub_path(region_key):
+    """Site path of a region's hub (ca/on, us/mi, ...), from data/regions.json."""
+    return regions.BY_CODE[region_key]["path"]
+
+
 def city_hub_url(region_key, city_slug, category):
     cfg = REGIONS[region_key]
     if cfg["hub_style"] == "category-subpage":
@@ -211,8 +227,8 @@ def city_hub_url(region_key, city_slug, category):
     elif cfg["hub_style"] == "combined-index":
         utility = cfg["city_to_utility"][city_slug]
         return f"https://homepowerrebate.com/us/{region_key}/{utility}/{city_slug}/"
-    else:  # flat-index — city page lives directly at /us/<region>/<city>/
-        return f"https://homepowerrebate.com/us/{region_key}/{city_slug}/"
+    else:  # flat-index: city page lives directly at /<country>/<region>/<city>/
+        return f"https://homepowerrebate.com/{hub_path(region_key)}/{city_slug}/"
 
 
 def city_display_name(city_slug):
@@ -237,10 +253,19 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     rating = installer["rating"]
     reviews = installer["reviews"]
     state = address_region_from_location(installer["location"], cfg["state"])
-    specialty = " & ".join(dict.fromkeys(inst["specialty"] for inst, _, _, _ in listings))
-    image = installer["image_url"]
+    specialty = " & ".join(dict.fromkeys(inst.get("specialty") or ("Solar" if cat == "solar" else "Heat pump") for inst, cat, _, _ in listings))
+    photo = installer.get("image_url") or ""
+    image = photo or "https://homepowerrebate.com/og-image.jpg"  # social/schema image falls back to the site image
+    phone = installer.get("phone") or ""
+    website = installer.get("website") or ""
+    gmaps = installer.get("gmaps_url") or ""
+    photo_html = f'<img src="{photo}" alt="{html.escape(installer["name"])}" class="ip-photo" loading="lazy" width="760" height="380">' if photo else ""
+    actions_html = "".join([
+        f'<a href="{website}" target="_blank" rel="noopener" class="ip-btn ip-btn-primary">Visit Website</a>' if website else "",
+        f'<a href="tel:{re.sub(r"[^0-9+]", "", phone)}" class="ip-btn ip-btn-outline">Call {phone}</a>' if phone else "",
+        f'<a href="{gmaps}" target="_blank" rel="noopener" class="ip-maps-link">View on Google Maps</a>' if gmaps else "",
+    ])
     escaped_name = html.escape(name)
-    photo_html = (f'<img src="{image}" alt="{escaped_name}" class="ip-photo" loading="lazy" width="760" height="380">' if image else "")
     _sp = specialty.lower()
     lb_type = "Plumber" if "plumb" in _sp else "Electrician" if "electric" in _sp else "HVACBusiness" if ("hvac" in _sp or "heat pump" in _sp) else "HomeAndConstructionBusiness"
     # Google Places review summary (optional, written by the scraper when PLACES_REVIEW_SUMMARY=1). Shown with Google's own disclosure; never used in markup.
@@ -251,19 +276,19 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
                    f'<p class="ip-vet-note">{html.escape(rs.get("disclosure") or "Summarized with Gemini")} Source: Google Maps.'
                    + (f' <a href="{html.escape(rs["flag_uri"])}" target="_blank" rel="noopener">Report a problem</a>' if rs.get("flag_uri") else "") + '</p></div>')
 
-    canonical = f"https://homepowerrebate.com/installers/profiles/{region_key}/{city_slug}/{slug}/"
-    breadcrumb_city_url = f"https://homepowerrebate.com/us/{region_key}/"  # generic state hub, safe fallback
+    canonical = f"https://homepowerrebate.com/{profile_base(region_key)}/{city_slug}/{slug}/"
+    breadcrumb_city_url = f"https://homepowerrebate.com/{hub_path(region_key)}/"  # generic state hub, safe fallback
     primary_category = listings[0][1]
     hub_url = city_hub_url(region_key, city_slug, primary_category)
 
     rank_lines = []
     program_cards = []
     for inst, category, rank, total in listings:
-        label = {"heat-pump": "Heat Pump & HVAC", "insulation": "Insulation", "battery": "Home Battery"}.get(category, "Solar")
+        label = "Heat Pump & HVAC" if category == "heat-pump" else "Solar"
         rank_lines.append(f"Ranked <strong>#{rank} of {total}</strong> {label.lower()} installers in {city_name} by Google rating")
         program_href = city_hub_url(region_key, city_slug, category)
         program_name = cfg["program_name"]
-        program_detail = f"See {city_name}'s current { {'heat-pump': 'heat pump', 'insulation': 'insulation', 'battery': 'home battery'}.get(category, 'solar') } rebate breakdown for exact numbers"
+        program_detail = f"See {city_name}'s current {('heat pump' if category == 'heat-pump' else 'solar')} rebate breakdown for exact numbers"
         program_cards.append(f'''    <a href="{program_href}" class="ip-program">
       <div class="ip-program-name">{program_name} ({label})</div>
       <div class="ip-program-detail">{program_detail}</div>
@@ -282,7 +307,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     all_in_city = all_in_city_by_cat[primary_category]
     nearby = [i for i in all_in_city if i["name"] != name][:9]
     nearby_html = "".join(
-        f'<a href="/installers/profiles/{region_key}/{city_slug}/{slugify(n["name"])}/" class="ip-nearby-item">'
+        f'<a href="/{profile_base(region_key)}/{city_slug}/{slugify(n["name"])}/" class="ip-nearby-item">'
         f'<span>{html.escape(n["name"])}</span><span class="ip-nearby-rating">{n["rating"]:.0f}★</span></a>'
         for n in nearby
     )
@@ -312,11 +337,11 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
 <meta property="og:title" content="{escaped_name} — {city_name}, {state}">
 <meta property="og:description" content="{escaped_name} in {city_name}, {state} — {rating:.1f}★ ({reviews} reviews). {specialty} installer. See which rebates their work qualifies for and get a quote.">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{image or "https://homepowerrebate.com/og-image.jpg"}">
+<meta property="og:image" content="{image}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{escaped_name} — {city_name}, {state}">
 <meta name="twitter:description" content="{escaped_name} in {city_name}, {state} — {rating:.1f}★ ({reviews} reviews). {specialty} installer.">
-<meta name="twitter:image" content="{image or "https://homepowerrebate.com/og-image.jpg"}">
+<meta name="twitter:image" content="{image}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -333,8 +358,8 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
         "addressRegion": {json.dumps(state)},
         "addressCountry": "US"
       }},
-      "telephone": {json.dumps(installer["phone"])},
-      "url": {json.dumps(installer["website"])},
+      "telephone": {json.dumps(phone)},
+      "url": {json.dumps(website)},
       "areaServed": {{
         "@type": "City",
         "name": {json.dumps(city_name)}
@@ -372,9 +397,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
   {rs_html}
 
   <div class="ip-actions">
-    <a href="{installer["website"]}" target="_blank" rel="noopener" class="ip-btn ip-btn-primary">Visit Website</a>
-    <a href="tel:{re.sub(r"[^0-9+]", "", installer["phone"])}" class="ip-btn ip-btn-outline">Call {installer["phone"]}</a>
-    <a href="{installer["gmaps_url"]}" target="_blank" rel="noopener" class="ip-maps-link">View on Google Maps</a>
+    {actions_html}
   </div>
 
   <section class="ip-kind">
@@ -453,10 +476,14 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
 """
 
 
-MISSING_ONLY = "--missing-only" in _sys.argv
+def profile_exists(region_key, city_slug, name):
+    """True when a page exists for this installer under either slug spelling (the old pages kept '&' out, rankings write 'and')."""
+    base = os.path.join(ROOT, profile_base(region_key), city_slug)
+    spellings = {slugify(name), re.sub(r"[^a-z0-9]+", "-", name.lower().replace("&", "and").replace("'", "").replace("\u2019", "")).strip("-")}
+    return any(os.path.exists(os.path.join(base, s, "index.html")) for s in spellings)
 
 
-def build_region(region_key):
+def build_region(region_key, only_missing=False):
     cfg = REGIONS[region_key]
     total_pages = 0
 
@@ -472,6 +499,8 @@ def build_region(region_key):
             cities.update(f[:-5] for f in os.listdir(d) if f.endswith(".json"))
 
     for city_slug in sorted(cities):
+        if cfg.get("cities_only") and city_slug not in cfg["cities_only"]:
+            continue
         all_in_city_by_cat = {}
         for category, d in cat_dirs.items():
             path = os.path.join(d, f"{city_slug}.json")
@@ -490,11 +519,11 @@ def build_region(region_key):
                 by_slug.setdefault(slug, []).append((installer, category, idx + 1, len(installers)))
 
         for slug, listings in by_slug.items():
+            if only_missing and profile_exists(region_key, city_slug, listings[0][0]["name"]):
+                continue
             out_dir = os.path.join(cfg["profiles_dir"], city_slug, slug)
             os.makedirs(out_dir, exist_ok=True)
             out_path = os.path.join(out_dir, "index.html")
-            if MISSING_ONLY and os.path.exists(out_path):
-                continue
             html_out = render_profile(region_key, city_slug, listings, all_in_city_by_cat)
             with open(out_path, "w", encoding="utf-8") as f:
                 f.write(html_out)
@@ -504,9 +533,14 @@ def build_region(region_key):
 
 
 if __name__ == "__main__":
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--only-missing", action="store_true", help="write only profiles that do not exist yet (never touches existing pages)")
+    ap.add_argument("--regions", help="comma-separated region codes (default: all)")
+    args = ap.parse_args()
     grand = 0
-    for region_key in REGIONS:
-        n = build_region(region_key)
+    for region_key in (args.regions.split(",") if args.regions else REGIONS):
+        n = build_region(region_key, args.only_missing)
         print(f"{region_key}: {n} profile pages")
         grand += n
     print(f"\nTotal: {grand} profile pages generated")

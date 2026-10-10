@@ -16,7 +16,8 @@
 <meta property="og:image" content="https://homepowerrebate.com/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap"></noscript>
 <style>
 :root{--ink:#0a2a2e;--ink-soft:#1a3d42;--paper:#faf7f2;--paper-warm:#f5efe5;--teal:#0d4f5c;--teal-deep:#08363f;--amber:#d4751c;--amber-bright:#e88a2e;--sage:#6b8e7f;--green-money:#2d6a4f;--rule:#d9d0c1;}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -29,8 +30,8 @@
 .qf input:not([type=checkbox]),.qf select,.qf textarea{display:block;width:100%;margin-top:4px;padding:11px;border:1px solid var(--rule);border-radius:8px;font:inherit;font-size:16px}
 .qf-btn{margin-top:16px;background:var(--amber);color:#fff;border:0;border-radius:8px;padding:14px 22px;font:inherit;font-weight:700;font-size:16px;cursor:pointer;min-height:48px}
 .qf-ok{background:#eef6f0;border-radius:8px;padding:14px}#qf-msg{margin-top:10px;font-weight:600;color:#8a2a1c}
-body{font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.2;letter-spacing:-.01em}
+body{font-family:'Inter Tight', 'Inter Tight Fallback',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-weight:500;line-height:1.2;letter-spacing:-.01em}
 .wrap{max-width:860px;margin:0 auto;padding:0 20px}
 .hero{background:var(--teal-deep);color:var(--paper);padding:44px 0 36px}
 .hero h1{font-size:clamp(27px,5vw,40px);color:#fff;margin-bottom:12px}
@@ -49,7 +50,7 @@ section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;
 .rank-list{list-style:none;margin:0 0 10px!important;padding:0}
 .rank{background:#fff;border:1px solid var(--rule);border-radius:14px;padding:16px 16px 14px;margin-bottom:12px!important;display:grid;grid-template-columns:36px 1fr;gap:6px 12px;box-shadow:0 1px 2px rgba(10,42,46,.04)}
 .rank.top{border-left:4px solid var(--green-money)}
-.rank .n{grid-row:span 3;font-family:'Fraunces',Georgia,serif;font-size:22px;color:var(--amber);font-weight:700;line-height:1.1}
+.rank .n{grid-row:span 3;font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:22px;color:var(--amber);font-weight:700;line-height:1.1}
 .rank .stars{display:inline-block;font-size:17px;letter-spacing:1px;line-height:1;background:linear-gradient(90deg,#d4751c var(--p),#e3dacb var(--p));-webkit-background-clip:text;background-clip:text;color:transparent;vertical-align:-1px}
 .rank .rt{font-size:15px;color:var(--ink)}.rank .rt b{font-size:17px}.rank .rv{color:var(--ink-soft);font-size:14px}
 .rank .adr{font-size:13.5px;color:var(--sage);margin-top:3px}
@@ -63,7 +64,7 @@ section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;
 .hero-ico svg{width:30px;height:30px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:-44px 0 10px;position:relative;z-index:2}
 .stat{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:12px 8px;text-align:center;box-shadow:0 8px 20px rgba(10,42,46,.09)}
-.stat b{display:block;font-family:'Fraunces',Georgia,serif;font-size:23px;color:var(--teal-deep);line-height:1.1}
+.stat b{display:block;font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:23px;color:var(--teal-deep);line-height:1.1}
 .stat span{font-size:11.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
 .trust{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center;margin:12px 0 18px;font-size:13.5px;color:var(--ink-soft)}
 .trust span::before{content:"✓ ";color:var(--green-money);font-weight:700}
@@ -84,7 +85,7 @@ section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;
 .js .rank.in{opacity:1;transform:none;transition:opacity .4s ease,transform .4s ease,box-shadow .18s ease}
 .js .rank.in:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(10,42,46,.10)}
 @media (prefers-reduced-motion:reduce){.js .rank{opacity:1;transform:none}.rank,.rank:hover,.js .rank.in:hover{transition:none;transform:none}}
-.sec-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.sec-h .chip{font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:700;background:var(--paper-warm);border:1px solid var(--rule);border-radius:999px;padding:3px 10px;color:var(--teal-deep)}
+.sec-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.sec-h .chip{font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;font-size:13px;font-weight:700;background:var(--paper-warm);border:1px solid var(--rule);border-radius:999px;padding:3px 10px;color:var(--teal-deep)}
 .cta{background:radial-gradient(500px 200px at 90% -20%,rgba(255,255,255,.22),transparent 60%),linear-gradient(135deg,#e88a2e,#d4751c);box-shadow:0 14px 30px rgba(212,117,28,.28)}
 .rank .nm{font-weight:700;color:var(--ink);font-size:16.5px}
 .rank .nm a{color:var(--ink);text-decoration:none}
@@ -98,7 +99,7 @@ p.small .reg{border:0;padding:0;margin:0;cursor:auto}
 .bf{display:inline-block;font-size:12px;font-weight:600;color:var(--teal-deep);background:var(--paper-warm);border:1px solid var(--rule);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:2px}
 .cb{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:6px 18px 12px;margin-bottom:10px}
 .cb-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 0 4px;border-top:1px solid var(--rule);font-size:16px}
-.cb-row:first-child{border-top:0}.cb-row b{font-family:'Fraunces',Georgia,serif;font-size:19px;color:var(--ink)}
+.cb-row:first-child{border-top:0}.cb-row b{font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:19px;color:var(--ink)}
 .cb-reb b{color:var(--green-money)}.cb-note{font-size:14px!important;margin:2px 0 6px!important}
 .small{font-size:13.5px!important;color:var(--sage)!important}
 .cta{background:var(--amber);color:#fff;border-radius:14px;padding:26px 22px;text-align:center;margin-top:36px}
@@ -299,7 +300,7 @@ body .wrap section.body>p,body .wrap section.body>ul li,body .wrap section.body>
 /* CANONICAL-NAV-FOOTER-CSS-START */
 .nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
 .nav-inner { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
-.logo { font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.logo { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
 .logo-mark { width: 30px; height: 30px; background: var(--amber); border-radius: 50%; position: relative; box-shadow: 0 2px 8px rgba(212, 117, 28, 0.3); }
 .logo-mark::after { content: ''; position: absolute; inset: 8px; background: var(--paper); border-radius: 50%; }
 .logo-power { color: var(--amber); font-weight: 700; }
@@ -324,9 +325,9 @@ body .wrap section.body>p,body .wrap section.body>ul li,body .wrap section.body>
 .footer { background: var(--ink); color: rgba(250, 247, 242, 0.65); padding: 56px 28px 32px; }
 .footer-inner { max-width: 1180px; margin: 0 auto; }
 .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 32px; border-bottom: 1px solid rgba(250, 247, 242, 0.1); }
-.footer-brand { font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; color: var(--paper); letter-spacing: -0.02em; margin-bottom: 12px; }
+.footer-brand { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 500; font-size: 22px; color: var(--paper); letter-spacing: -0.02em; margin-bottom: 12px; }
 .footer-tagline { font-size: 13px; color: rgba(250, 247, 242, 0.4); max-width: 320px; }
-.footer-col-title { font-family: 'Inter Tight', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250, 247, 242, 0.7); margin-bottom: 14px; }
+.footer-col-title { font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250, 247, 242, 0.7); margin-bottom: 14px; }
 .footer-col-links { list-style: none; display: grid; gap: 8px; font-size: 14px; margin: 0; padding: 0; }
 .footer-col-links a { color: rgba(250, 247, 242, 0.45); text-decoration: none; }
 .footer-col-links a:hover { color: var(--amber); }
@@ -405,11 +406,11 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 .hs-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 20px 0 26px; position: relative; z-index: 2; }
 @media (min-width: 900px) { .hs-stats { margin-top: -34px; } }
 .hs-stat { background: #fff; border: 1px solid #d9d0c1; border-radius: 14px; padding: 14px 10px; text-align: center; box-shadow: 0 8px 20px rgba(10,42,46,.09); }
-.hs-stat b { display: block; font-family: 'Fraunces', Georgia, serif; font-size: 25px; line-height: 1.1; color: var(--teal-deep); }
-.hs-stat b small { display: block; font-family: 'Inter Tight', sans-serif; font-size: 12px; font-weight: 600; color: var(--amber); margin-top: 2px; }
+.hs-stat b { display: block; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 25px; line-height: 1.1; color: var(--teal-deep); }
+.hs-stat b small { display: block; font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 12px; font-weight: 600; color: var(--amber); margin-top: 2px; }
 .hs-stat span { display: block; font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; color: var(--ink-soft); margin-top: 4px; }
 .hs-sec { padding-top: 6px; padding-bottom: 20px; }
-.hs-h { font-family: 'Fraunces', Georgia, serif; font-size: clamp(24px, 4vw, 32px); color: var(--teal-deep); margin: 8px 0 6px; }
+.hs-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(24px, 4vw, 32px); color: var(--teal-deep); margin: 8px 0 6px; }
 .hs-sub { color: var(--ink-soft); margin: 0 0 16px; max-width: 680px; }
 .hs-ctl { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
 .hs-ctl input { flex: 1; min-width: 200px; padding: 12px 14px; border: 1px solid #d9d0c1; border-radius: 10px; font: inherit; font-size: 16px; background: #fff; }
@@ -422,7 +423,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 .hs-city.hide { display: none; }
 .hs-ring { --d: 0deg; flex: none; position: relative; width: 48px; height: 48px; border-radius: 50%; background: conic-gradient(var(--amber) var(--d), #eee 0); display: grid; place-items: center; }
 .hs-ring::before { content: ''; position: absolute; inset: 5px; background: #fff; border-radius: 50%; }
-.hs-ring b { position: relative; font-family: 'Fraunces', Georgia, serif; font-size: 15px; color: var(--teal-deep); }
+.hs-ring b { position: relative; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 15px; color: var(--teal-deep); }
 .hs-cn b { display: block; font-size: 16px; }
 .hs-cn small { display: block; font-size: 12.5px; color: var(--ink-soft); line-height: 1.3; }
 .hs-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
@@ -430,7 +431,7 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 .hs-tile:hover { border-color: var(--amber); transform: translateY(-2px); }
 .hs-ti { font-size: 24px; line-height: 1; }
 .hs-tt em { display: block; font-style: normal; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); }
-.hs-tt b { font-family: 'Fraunces', Georgia, serif; font-size: 22px; color: var(--green-money); }
+.hs-tt b { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 22px; color: var(--green-money); }
 .hs-tt small { display: block; font-size: 12.5px; color: var(--ink-soft); }
 .hs-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .hs-chip { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; background: #fff; border: 1px solid #d9d0c1; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
@@ -439,6 +440,11 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (max-width: 700px) { .hs-stats { grid-template-columns: repeat(2, 1fr); } .hs-stats .hs-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } .hs-grid, .hs-tiles { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
+/* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
+@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+/* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
+@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -449,7 +455,7 @@ main:focus { outline: none; }
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
 .section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
-[style*="color:var(--amber)"], [style*="color: var(--amber)"] { color: #a4540a !important; }
+[style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
 .finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
@@ -541,8 +547,13 @@ h1, h2 { text-wrap: balance; }
 }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
+<meta name="theme-color" content="#faf7f2">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
 <nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
@@ -568,34 +579,34 @@ h1, h2 { text-wrap: balance; }
 
   <div id="city-dropdown-modal" style="display:none; position:absolute; top:56px; right:20px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:49; max-width:300px; max-height:70vh; overflow-y:auto;">
     <div style="padding:16px 16px 0;">
-      <a href="/powerscore/" style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; margin-bottom:12px; border-radius:8px; background:linear-gradient(135deg, var(--teal-deep), #08363f); color:#fff; text-decoration:none; font-weight:700; font-size:13px; font-family:'Inter Tight',sans-serif;">
+      <a href="/powerscore/" style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; margin-bottom:12px; border-radius:8px; background:linear-gradient(135deg, var(--teal-deep), #08363f); color:#fff; text-decoration:none; font-weight:700; font-size:13px; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">
         <span>&#9889; See your city's PowerScore</span>
         <span style="opacity:.7;">&rarr;</span>
       </a>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Ontario</button>
-        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">British Columbia</button>
-        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">California (US)</button>
+        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Ontario</button>
+        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">British Columbia</button>
+        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">California (US)</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Alberta</button>
-        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Nova Scotia</button>
-        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Massachusetts</button>
+        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Alberta</button>
+        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Nova Scotia</button>
+        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Massachusetts</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New York</button>
-        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Pennsylvania</button>
-        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Colorado</button>
+        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">New York</button>
+        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Pennsylvania</button>
+        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Colorado</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Vermont</button>
-        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Michigan</button>
-        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">New Jersey</button>
+        <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Vermont</button>
+        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Michigan</button>
+        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">New Jersey</button>
       </div>
       <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Illinois</button>
-        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Washington</button>
-        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;">Minnesota</button>
+        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Illinois</button>
+        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Washington</button>
+        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Minnesota</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -648,6 +659,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/installers/">Installers</a></li><li><a href="/ca/on/brampton/">Brampton</a></li><li aria-current="page">Heat Pump installers</li></ol></nav>
 <header class="hero"><div class="wrap">
 <div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 4.6A2 2 0 1 1 11 8H2M12.6 19.4A2 2 0 1 0 14 16H2M17.7 7.7A2.5 2.5 0 1 1 19.5 12H2"/></svg></div>
@@ -755,18 +767,19 @@ if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es
 setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600);
 })();
 </script>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Brampton where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div class="wrap" style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">
     <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
-    <h2 style="font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get the monthly rebate update</h2>
+    <h2 style="font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get the monthly rebate update</h2>
     <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Once a month: new and changing rebate programs across every province and state we cover, plus what's new in heat pumps, solar and batteries. Short, sourced, no marketing.</p>
     <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
-      <input type="email" id="newsletter-email" placeholder="your@email.com" required aria-label="Your email address" autocomplete="email" style="min-height: 46px; padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', sans-serif; font-size: 16px; background: #fff; color: var(--ink);">
+      <input type="email" id="newsletter-email" placeholder="your@email.com" required aria-label="Your email address" autocomplete="email" style="min-height: 46px; padding: 12px 14px; border: none; border-radius: 6px; font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 16px; background: #fff; color: var(--ink);">
       <input type="hidden" id="newsletter-city" value="Brampton">
       <input type="hidden" id="newsletter-page" value="/installers/on/brampton/heat-pump/">
-      <button type="submit" style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 15px; min-height: 46px; cursor: pointer; font-family: 'Inter Tight', sans-serif;">Subscribe</button>
+      <button type="submit" style="padding: 12px 24px; background: #d4751c; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 15px; min-height: 46px; cursor: pointer; font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif;">Subscribe</button>
       <p style="font-size: 13px; color: rgba(250, 247, 242, 0.78); margin-top: 6px;">No spam, ever. Unsubscribe anytime.</p>
     </form>
     <div id="newsletter-response" style="display: none; margin-top: 12px; padding: 12px; background: rgba(45, 106, 79, 0.2); border-radius: 6px; border: 1px solid rgba(45, 106, 79, 0.4); font-size: 13px;"></div>

@@ -1082,11 +1082,50 @@ const PROVINCE_CONTEXT = {
   VT: {
     programName: 'Efficiency Vermont',
     links: []
+  },
+  NJ: {
+    programName: 'New Jersey utility rebates & NJ Clean Energy Program',
+    links: [
+      { href: 'https://homepowerrebate.com/us/nj/', label: 'New Jersey Home Energy Rebates' },
+      { href: 'https://homepowerrebate.com/programs/nj-clean-energy-program/', label: 'NJ Clean Energy Program Explained' }
+    ]
+  },
+  IL: {
+    programName: 'Illinois utility rebates (ComEd, Nicor Gas, Ameren)',
+    links: [
+      { href: 'https://homepowerrebate.com/us/il/', label: 'Illinois Home Energy Rebates' },
+      { href: 'https://homepowerrebate.com/programs/comed-rebates/', label: 'ComEd Rebates Explained' }
+    ]
+  },
+  WA: {
+    programName: 'Washington utility rebates (Puget Sound Energy, Seattle City Light and others)',
+    links: [
+      { href: 'https://homepowerrebate.com/us/wa/', label: 'Washington Home Energy Rebates' },
+      { href: 'https://homepowerrebate.com/programs/puget-sound-energy-rebates/', label: 'Puget Sound Energy Rebates Explained' }
+    ]
+  },
+  MN: {
+    programName: 'Minnesota utility rebates (Xcel Energy, CenterPoint and others)',
+    links: [
+      { href: 'https://homepowerrebate.com/us/mn/', label: 'Minnesota Home Energy Rebates' },
+      { href: 'https://homepowerrebate.com/programs/xcel-energy-minnesota-rebates/', label: 'Xcel Energy Minnesota Rebates Explained' }
+    ]
+  },
+  MI: {
+    programName: 'Michigan utility rebates (DTE Energy, Consumers Energy)',
+    links: [
+      { href: 'https://homepowerrebate.com/us/mi/', label: 'Michigan Home Energy Rebates' },
+      { href: 'https://homepowerrebate.com/programs/dte-energy-rebates/', label: 'DTE Energy Rebates Explained' }
+    ]
   }
 };
 
+// A region we have no entry for gets a neutral context linking to its own hub, never BC's.
 function provinceContext(sub) {
-  return PROVINCE_CONTEXT[String(sub.province || 'BC').toUpperCase()] || PROVINCE_CONTEXT.BC;
+  const code = String(sub.province || 'BC').toUpperCase();
+  if (PROVINCE_CONTEXT[code]) return PROVINCE_CONTEXT[code];
+  const path = CA_PROVINCES.has(code) ? `ca/${code.toLowerCase()}` : `us/${code.toLowerCase()}`;
+  return { programName: 'Local utility and state', links: [{ href: `https://homepowerrebate.com/${path}/`, label: 'Home Energy Rebates in Your Area' }] };
 }
 
 // Looks up the city's published heat-pump rebate range so the recap email can
@@ -1174,7 +1213,7 @@ function localizedBlogLinksFor(sub) {
 function learnMoreBlock(sub) {
   const ctx = provinceContext(sub);
   const localLinks = localizedBlogLinksFor(sub);
-  const links = [...localLinks, ...ctx.links, { href: 'https://homepowerrebate.com/blog/canada-provinces-ranked-home-energy-rebates/', label: 'How Every Province Compares' }];
+  const links = [...localLinks, ...ctx.links, ...(CA_PROVINCES.has(String(sub.province || 'BC').toUpperCase()) ? [{ href: 'https://homepowerrebate.com/blog/canada-provinces-ranked-home-energy-rebates/', label: 'How Every Province Compares' }] : [])];
   return `
     <div style="margin:20px 0 0;padding-top:16px;border-top:1px solid #d9d0c1;">
       <p style="margin:0 0 8px;font-size:12px;color:#6b7d80;text-transform:uppercase;letter-spacing:0.04em;">Worth reading next</p>
@@ -1751,7 +1790,7 @@ async function sendOpsOutcomeAlert(record, env) {
 // ===========================================================================
 
 async function sendEstimateInstallerEmail(lead, installer, env) {
-  const fn = escapeHtml(lead.firstname), ln = escapeHtml(lead.lastname), ph = escapeHtml(lead.phone),
+  const fn = escapeHtml(lead.firstname), ln = escapeHtml(lead.lastname), ph = escapeHtml(formatPhone(lead.phone)), phTel = escapeHtml(String(lead.phone || '').replace(/[^\d+]/g, '')),
         em = escapeHtml(lead.email), ct = escapeHtml(capitalize(lead.city)), ch = escapeHtml(lead.current_heat),
         ev = escapeHtml(lead.estimated_value), instName = escapeHtml(installer.name.split(' ')[0] || 'there');
 
@@ -1790,7 +1829,7 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
           <div style="background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:20px;margin-bottom:20px;">
             <table style="width:100%;border-collapse:collapse;font-size:14px;">
               <tr><td style="padding:6px 0;color:#6b7d80;width:130px;">Name</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${fn} ${ln}</td></tr>
-              <tr><td style="padding:6px 0;color:#6b7d80;">Phone</td><td style="padding:6px 0;font-weight:600;"><a href="tel:${ph}" style="color:#08363f;">${ph}</a></td></tr>
+              <tr><td style="padding:6px 0;color:#6b7d80;">Phone</td><td style="padding:6px 0;font-weight:600;"><a href="tel:${phTel}" style="color:#08363f;">${ph}</a></td></tr>
               <tr><td style="padding:6px 0;color:#6b7d80;">Email</td><td style="padding:6px 0;font-weight:600;"><a href="mailto:${em}" style="color:#08363f;">${em}</a></td></tr>
               <tr><td style="padding:6px 0;color:#6b7d80;">City</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${ct}, ${escapeHtml(lead.province || 'BC')}</td></tr>
               ${detailRow('Postal code', lead.postal)}
@@ -1799,8 +1838,8 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
               ${detailRow('Utility', lead.utility)}
               ${detailRow('Year built', lead.year_built)}
               ${detailRow('Income tier', lead.income_tier)}
-              <tr><td style="padding:6px 0;color:#6b7d80;">Interested in</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${escapeHtml(lead.upgrades || 'not specified')}</td></tr>
-              <tr><td style="padding:6px 0;color:#6b7d80;">${lead.estimate_is_city_range ? `Typical rebate range for ${ct}` : 'Rebate estimate shown'}</td><td style="padding:6px 0;font-weight:700;color:#2d6a4f;">${lead.estimate_is_city_range ? ev : `up to ${ev}`}</td></tr>
+              <tr><td style="padding:6px 0;color:#6b7d80;">Interested in</td><td style="padding:6px 0;font-weight:600;color:#08363f;">${escapeHtml(lead.upgrades && lead.upgrades !== 'none specified' ? lead.upgrades : (lead.service === 'solar' ? 'Solar' : 'Heat pump'))}</td></tr>
+              ${/^(not specified|unknown|)$/i.test(String(lead.estimated_value || '').trim()) ? '' : `<tr><td style="padding:6px 0;color:#6b7d80;">${lead.estimate_is_city_range ? `Typical rebate range for ${ct}` : 'Rebate estimate shown'}</td><td style="padding:6px 0;font-weight:700;color:#2d6a4f;">${lead.estimate_is_city_range ? ev : `up to ${ev}`}</td></tr>`}
               ${detailRow('Est. total project cost', lead.total_cost)}
               ${detailRow('Est. net cost after rebates', lead.net_cost)}
               ${detailRow('Est. 10-year savings', lead.ten_year_savings)}
@@ -1812,7 +1851,7 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
           <div style="background:#0a2a2e;color:#faf7f2;padding:20px;border-radius:10px;text-align:center;margin-top:8px;">
             <p style="margin:0 0 4px;font-size:13px;opacity:.75;">They're expecting to hear from you</p>
             <p style="margin:0 0 14px;font-size:16px;font-weight:600;">Please reach out within 1 business day.</p>
-            <a href="tel:${ph}" style="display:inline-block;background:#d4751c;color:#fff;padding:12px 26px;border-radius:999px;text-decoration:none;font-weight:600;">Call ${ph}</a>
+            <a href="tel:${phTel}" style="display:inline-block;background:#d4751c;color:#fff;padding:12px 26px;border-radius:999px;text-decoration:none;font-weight:600;">Call ${ph}</a>
             <p style="margin:14px 0 0;font-size:12px;opacity:.65;">Prefer email? Just hit reply — it goes straight to ${em}, not to us.</p>
           </div>
 
@@ -1834,12 +1873,14 @@ async function sendEstimateInstallerEmail(lead, installer, env) {
 
 async function sendOpsEstimateLead(lead, env) {
   if (!env.OPS_EMAIL) return Promise.resolve();
-  const fn = escapeHtml(lead.firstname), ln = escapeHtml(lead.lastname), ph = escapeHtml(lead.phone),
+  const fn = escapeHtml(lead.firstname), ln = escapeHtml(lead.lastname), ph = escapeHtml(formatPhone(lead.phone)),
         em = escapeHtml(lead.email), ct = escapeHtml(lead.city), ch = escapeHtml(lead.current_heat),
         ib = escapeHtml(lead.income_band), ev = escapeHtml(lead.estimated_value), src = escapeHtml(lead.page_url),
         assigned = escapeHtml(lead.installer_assigned);
   const warn = lead.installer_email ? '' :
-    `<p style="background:#fef3e6;border:1px solid #e8b87a;padding:10px 14px;border-radius:8px;"><strong>⚠️ No live heat-pump installer for ${ct} yet.</strong> Follow up manually / forward to a partner.</p>`;
+    (/^UNASSIGNED/.test(lead.installer_assigned || '')
+      ? `<p style="background:#fef3e6;border:1px solid #e8b87a;padding:10px 14px;border-radius:8px;"><strong>⚠️ No installer was chosen for ${ct}.</strong> Follow up manually or forward to a partner.</p>`
+      : `<p style="background:#fef3e6;border:1px solid #e8b87a;padding:10px 14px;border-radius:8px;"><strong>⚠️ ${assigned} was chosen, but their email is not on the installer list, so nothing was sent to them.</strong> Forward this lead by hand.</p>`);
   return resendEmail(env.RESEND_API_KEY, {
     from: 'HomePowerRebate <ops@homepowerrebate.com>',
     to: env.OPS_EMAIL,
@@ -2253,6 +2294,13 @@ function escapeHtml(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
   });
+}
+
+// (312) 555-0100 for 10-digit North American numbers; anything else is shown as typed.
+function formatPhone(raw) {
+  const d = String(raw || '').replace(/\D/g, '');
+  const n = d.length === 11 && d[0] === '1' ? d.slice(1) : d;
+  return n.length === 10 ? `(${n.slice(0, 3)}) ${n.slice(3, 6)}-${n.slice(6)}` : String(raw || '');
 }
 
 function capitalize(s) {

@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/wa/">Washington</a></li><li><a href="/us/wa/spokane/">Spokane</a></li><li aria-current="page">Insulation</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$1.75 per square foot from Avista</div><h1>Insulation Rebates in Spokane</h1><p>Avista pays $1.75 per square foot for attic, floor and wall insulation in Spokane homes that start with thin insulation. Some homes qualify for a project that costs nothing out of pocket.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -490,16 +553,16 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/wa/spokane/heat-pump/">Heat Pump Rebates in Spokane</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What insulation rebates pay in Spokane</h2>
+<h2 id="what-insulation-rebates-pay-in-spokane">What insulation rebates pay in Spokane</h2>
 <p>We read Avista's Home Insulation Program page on October 6, 2026. The program has no income test, and approved installers take the rebate off your bill. Your home must use Avista electricity or natural gas for heating.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3"><a href='/programs/avista-washington-rebates/'>Attic insulation</a></h4><div class="amount">$1.75 per square foot</div><p style="font-size:14px;margin:8px 0 0;">Your attic must start at R-11 or less and be brought up to R-49 or more. If your space allows it, Avista says you can install R-38 or higher.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Floor insulation</h4><div class="amount">$1.75 per square foot</div><p style="font-size:14px;margin:8px 0 0;">Floors over a crawl space must start at R-11 or less and reach R-30 or more.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Wall insulation</h4><div class="amount">$1.75 per square foot</div><p style="font-size:14px;margin:8px 0 0;">For walls with no insulation, brought up to R-11 or more.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Duct insulation and sealing</h4><div class="amount">$400 each</div><p style="font-size:14px;margin:8px 0 0;">$400 per home to insulate ducts that have none and $400 per home to seal ducts.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>No-cost upgrades for some homes</h4><div class="amount">Free for those who qualify</div><p style="font-size:14px;margin:8px 0 0;">Avista's Home Weatherization Program is free for income-qualifying customers, and some homes in Named Communities can get insulation paid in full.</p></div>
 </div>
 <div class='highlight-box'><h4>Working it out</h4><p>Avista gives its own example: a home with 1,200 square feet of qualifying insulation gets a rebate of about $2,100. That is 1,200 times $1.75. If an attic is 900 square feet and starts at R-11, the attic rebate is 900 times $1.75, or $1,575. Your real amount depends on the area the installer measures and the levels it finds.</p></div>
-<h2>Spokane's older homes</h2><p>The US Census Bureau's American Community Survey (2020 to 2024) says about 68 percent of Spokane homes were built before 1980 and 26 percent before 1940. Only about 16 percent were built in 2000 or later. Older homes are the ones most likely to start under the R-11 line, because building codes asked for little insulation when they were built. About 64 percent of Spokane homes are detached houses and about 59 percent are owner-occupied, which are the homes the program is built for.</p><p>Still, being old does not guarantee a rebate. A previous owner may have added insulation. Avista says only 10 to 30 percent of homes in its area qualify based on existing insulation, so the free assessment is the step that tells you.</p><h2>How the program works</h2><p>You call one of Avista's approved installers, who come to your home for a free assessment. They tell you your current R-values, what upgrade is possible, your out-of-pocket cost and the rebate. If you go ahead, they do the work, and the rebate is applied up front. You do not file a form or wait for a check. Avista's list as of July 2026 has ten installers, with names, phone numbers and the services each offers, such as attic, walls, floors, crawl space and duct sealing. Get at least two assessments, because the same job can be priced differently.</p><h2>Rules and limits to watch</h2><p>You must be an existing Avista residential customer insulating your main home. Single-family houses, duplexes, triplexes and fourplexes count. New construction does not. Avista requires the starting and finished R-values in its tables, so adding an inch to an already insulated attic will not earn the rebate. The Washington table covers homes heated by Avista electricity or natural gas using an electric or gas furnace, a gas boiler, an electric wall heater, radiant heat, baseboards or a heat pump. If you heat with wood or oil, ask Avista before you plan.</p>
+<h2 id="spokane-s-older-homes">Spokane's older homes</h2><p>The US Census Bureau's American Community Survey (2020 to 2024) says about 68 percent of Spokane homes were built before 1980 and 26 percent before 1940. Only about 16 percent were built in 2000 or later. Older homes are the ones most likely to start under the R-11 line, because building codes asked for little insulation when they were built. About 64 percent of Spokane homes are detached houses and about 59 percent are owner-occupied, which are the homes the program is built for.</p><p>Still, being old does not guarantee a rebate. A previous owner may have added insulation. Avista says only 10 to 30 percent of homes in its area qualify based on existing insulation, so the free assessment is the step that tells you.</p><h2 id="how-the-program-works">How the program works</h2><p>You call one of Avista's approved installers, who come to your home for a free assessment. They tell you your current R-values, what upgrade is possible, your out-of-pocket cost and the rebate. If you go ahead, they do the work, and the rebate is applied up front. You do not file a form or wait for a check. Avista's list as of July 2026 has ten installers, with names, phone numbers and the services each offers, such as attic, walls, floors, crawl space and duct sealing. Get at least two assessments, because the same job can be priced differently.</p><h2 id="rules-and-limits-to-watch">Rules and limits to watch</h2><p>You must be an existing Avista residential customer insulating your main home. Single-family houses, duplexes, triplexes and fourplexes count. New construction does not. Avista requires the starting and finished R-values in its tables, so adding an inch to an already insulated attic will not earn the rebate. The Washington table covers homes heated by Avista electricity or natural gas using an electric or gas furnace, a gas boiler, an electric wall heater, radiant heat, baseboards or a heat pump. If you heat with wood or oil, ask Avista before you plan.</p>
 
 
-<h2>How to claim Spokane insulation rebates</h2>
+<h2 id="how-to-claim-spokane-insulation-rebates">How to claim Spokane insulation rebates</h2>
 <ol>
 <li>Call an approved installer from Avista's Home Insulation Program page for a free assessment.</li>
 <li>Ask for the current and new R-values and the price after the rebate in writing.</li>
@@ -508,17 +571,20 @@ h1, h2 { text-wrap: balance; }
 <li>Keep the final invoice and the insulation certificate.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/wa/" style="color:var(--teal,#0d4f5c); font-weight:600;">Washington rebate calculator</a> and pick Spokane to see what your utility pays.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much does Avista pay for attic insulation?</h3><p>$1.75 per square foot when the attic starts at R-11 or less and ends at R-49 or more.</p></div>
 <div class="faq-item"><h3>Is there an income limit?</h3><p>No for the Home Insulation Program. The Home Weatherization Program is free for income-qualifying customers.</p></div>
 <div class="faq-item"><h3>Does my home qualify if I already have some insulation?</h3><p>Only if it starts at or below the level in Avista's table. Avista says 10 to 30 percent of homes in its area qualify.</p></div>
 <div class="faq-item"><h3>Do I fill out a form?</h3><p>No. Approved installers take the rebate off the bill.</p></div>
 <div class="faq-item"><h3>Can I do it myself?</h3><p>The program page describes installer-based work. Ask Avista if you want to insulate on your own.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Next, see <a href='/us/wa/spokane/windows-doors/'>Spokane window rebates</a>, or go back to the <a href='/us/wa/spokane/'>Spokane rebate hub</a>. Our <a href='/us/wa/spokane/heat-pump/'>heat pump page</a> shows how a tighter home can use a smaller system.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.myavista.com/energy-savings/rebate-overview/home-insulation-program" target="_blank" rel="noopener">Avista Home Insulation Program</a>, <a href="https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington" target="_blank" rel="noopener">Avista single-family rebates in Washington</a>, <a href="https://data.census.gov/table/ACSDT5Y2024.B25034" target="_blank" rel="noopener">US Census Bureau American Community Survey housing tables</a>. <a href="/us/wa/spokane/">All Spokane rebates &rarr;</a> <a href="/programs/avista-washington-rebates/">Every Avista Washington rebate &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-insulation-rebates-pay-in-spokane">What insulation rebates pay in Spokane</a></li><li><a href="#spokane-s-older-homes">Spokane&#x27;s older homes</a></li><li><a href="#how-the-program-works">How the program works</a></li><li><a href="#rules-and-limits-to-watch">Rules and limits to watch</a></li><li><a href="#how-to-claim-spokane-insulation-rebates">How to claim Spokane insulation rebates</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=spokane&province=wa">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- RANKINGS-LINK-START -->
 <section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Spokane</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/wa/spokane/insulation/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated insulation installers in Spokane &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">10 local companies ranked by 349 Google reviews. Top picks: Pacific Insulation &amp; Mold Remediation, HOC Spray Foam Insulation, Attic Crew.</span></a></div></section>
@@ -723,6 +789,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/bc/">British Columbia</a></li><li><a href="/ca/bc/victoria/">Victoria</a></li><li aria-current="page">Heat Pump</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $4,000, plus up to $1,000 until Oct 31</div><h1>Heat Pump Rebates in Victoria</h1><p>Victoria has the mildest winters of any BC city we cover, which suits heat pumps. If you own a home heated by electricity, BC Hydro pays up to $4,000.</p></div></section><!-- FED-HP-START --><p style="max-width:880px;margin:18px auto;padding:14px 20px;background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;font-size:15px;line-height:1.6;"><b>Victoria: Federal heat pump rebate coming in early 2027: up to $10,000 for households below the median income and $2,000 for other eligible homeowners. </b>BC Hydro and CleanBC rebates can already be claimed, and Ottawa says the federal rebate can be combined with provincial programs. <a href="/programs/national-heat-pump-rebate/">Read what is confirmed</a> or <a href="/blog/should-you-wait-federal-heat-pump-rebate/">decide whether to wait</a>.</p><!-- FED-HP-END -->
 
@@ -495,22 +558,22 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/ca/bc/victoria/hrv/">HRV & Ventilation Rebates in Victoria</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What heat pump rebates pay in Victoria</h2>
+<h2 id="what-heat-pump-rebates-pay-in-victoria">What heat pump rebates pay in Victoria</h2>
 <p>We re-read BC Hydro's heat pump rebate page on October 3, 2026. These rebates are for homes that heat with electricity today. The CleanBC amounts are for income-qualified households only.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">BC Hydro whole home</h4><div class="amount">Up to $4,000</div><p style="font-size:14px;margin:8px 0 0;">Replacing electric heat; the heat pump meets 100% of the load at -5°C.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>BC Hydro partial</h4><div class="amount">$1,500</div><p style="font-size:14px;margin:8px 0 0;">The heat pump meets at least half of the heating load.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Limited-time bonus</h4><div class="amount">Up to $1,000</div><p style="font-size:14px;margin:8px 0 0;">Installed, invoiced and paid August 1 to October 31, 2026. Apply by November 30, 2026.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Income-qualified (CleanBC)</h4><div class="amount">Up to $13,000</div><p style="font-size:14px;margin:8px 0 0;">Level 1 switching from gas, oil or propane to a central or 3+ head system. Level 2 up to $7,000, Level 3 up to $3,500. From electric heat, Level 1 only, up to $5,000.</p></div>
 </div>
 <div class='highlight-box'><h4>A Victoria example</h4><p>A 1,300 square foot Victoria house heated by baseboards gets a two-head multi-split. BC Hydro pays $4,000, plus up to $1,000 if finished and paid by October 31, 2026.</p></div>
-<h2>Winter in Victoria</h2><p>Victoria's average January low from 2015 to 2024 was 3.0°C, the mildest we cover, and the coldest reading was -10.6°C. A cold-climate heat pump will run near its best efficiency almost all winter.</p><h2>Homes in Victoria</h2><p>The 2021 Census counted 49,220 households in the City of Victoria. Only 40% own and 14% live in a detached house (6,715 homes). Of all households, 4,515 own a detached house built before 1981.</p><h2>Mostly renters</h2><p>Victoria has the lowest share of owners we cover. The rebate goes to the owner who pays for the work. If you rent, you can show your landlord this page; a heat pump also cools in summer.</p><h2>Only for homes replacing electric heat</h2><p>BC Hydro's heat pump rebate is only for homes that are heated mainly by electricity today: baseboards or an electric furnace. If your home heats with natural gas, oil or propane, BC Hydro pays nothing for the switch. The gas-to-heat-pump rebate for all households ended on April 11, 2025. Income-qualified households can still use the CleanBC Energy Savings Program.</p><h2>What the heat pump must do</h2><p>For the $4,000 whole-home rebate, the heat pump must keep 22°C inside at -5°C outside, shown by a CSA F280-12 heat loss calculation. It must be on BC Hydro's eligible list, with HSPF2 of 8.5 or higher and SEER2 of 15.2 or higher. A home over 1,200 square feet needs a multi-split or central system. If the unit meets at least half your heat, it can earn the $1,500 partial rebate instead.</p><h2>The bonus ends October 31, 2026</h2><p>BC Hydro is adding up to $1,000 for heat pumps that are installed, invoiced and paid between August 1 and October 31, 2026. Apply by November 30, 2026. It is first come, first served. After October 31, the normal $4,000 and $1,500 amounts still apply.</p>
+<h2 id="winter-in-victoria">Winter in Victoria</h2><p>Victoria's average January low from 2015 to 2024 was 3.0°C, the mildest we cover, and the coldest reading was -10.6°C. A cold-climate heat pump will run near its best efficiency almost all winter.</p><h2 id="homes-in-victoria">Homes in Victoria</h2><p>The 2021 Census counted 49,220 households in the City of Victoria. Only 40% own and 14% live in a detached house (6,715 homes). Of all households, 4,515 own a detached house built before 1981.</p><h2 id="mostly-renters">Mostly renters</h2><p>Victoria has the lowest share of owners we cover. The rebate goes to the owner who pays for the work. If you rent, you can show your landlord this page; a heat pump also cools in summer.</p><h2 id="only-for-homes-replacing-electric-heat">Only for homes replacing electric heat</h2><p>BC Hydro's heat pump rebate is only for homes that are heated mainly by electricity today: baseboards or an electric furnace. If your home heats with natural gas, oil or propane, BC Hydro pays nothing for the switch. The gas-to-heat-pump rebate for all households ended on April 11, 2025. Income-qualified households can still use the CleanBC Energy Savings Program.</p><h2 id="what-the-heat-pump-must-do">What the heat pump must do</h2><p>For the $4,000 whole-home rebate, the heat pump must keep 22°C inside at -5°C outside, shown by a CSA F280-12 heat loss calculation. It must be on BC Hydro's eligible list, with HSPF2 of 8.5 or higher and SEER2 of 15.2 or higher. A home over 1,200 square feet needs a multi-split or central system. If the unit meets at least half your heat, it can earn the $1,500 partial rebate instead.</p><h2 id="the-bonus-ends-october-31-2026">The bonus ends October 31, 2026</h2><p>BC Hydro is adding up to $1,000 for heat pumps that are installed, invoiced and paid between August 1 and October 31, 2026. Apply by November 30, 2026. It is first come, first served. After October 31, the normal $4,000 and $1,500 amounts still apply.</p>
 
-<h2>Top-rated installers in Victoria</h2><p>These Victoria heat pump installers have the best Google ratings with enough reviews to trust. Ratings and review counts from Google Maps. Ask each one if they are HPCN members.</p>
+<h2 id="top-rated-installers-in-victoria">Top-rated installers in Victoria</h2><p>These Victoria heat pump installers have the best Google ratings with enough reviews to trust. Ratings and review counts from Google Maps. Ask each one if they are HPCN members.</p>
 <div class="installer-card"><div><div class="name">Coastal Heat Pumps</div><div class="stars">&#9733; 4.9 (928 Google reviews)</div></div><a class="site-link" href="https://coastalheatpumps.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">The Clear Choice Plumbing &amp; Heating</div><div class="stars">&#9733; 4.9 (626 Google reviews)</div></div><a class="site-link" href="https://thesmellgoodplumbers.ca/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Sasquatch Heat Pumps</div><div class="stars">&#9733; 4.9 (317 Google reviews)</div></div><a class="site-link" href="http://sasquatchheatpumps.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Barracuda Mechanical</div><div class="stars">&#9733; 5.0 (40 Google reviews)</div></div><a class="site-link" href="https://www.barracuda-mechanical.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Method Air</div><div class="stars">&#9733; 4.9 (80 Google reviews)</div></div><a class="site-link" href="http://methodair.ca/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/bc/victoria/heat-pump/">See all Victoria installers &rarr;</a></p>
-<h2>How to claim it</h2>
+<h2 id="how-to-claim-it">How to claim it</h2>
 <ol>
 <li>Check your bill: BC Hydro or FortisBC, and confirm your home heats with electricity.</li>
 <li>Hire a contractor in the Home Performance Contractor Network (required since June 1, 2026).</li>
@@ -519,21 +582,24 @@ h1, h2 { text-wrap: balance; }
 <li>Apply online within six months of the invoice date.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/bc/" style="color:var(--teal,#0d4f5c); font-weight:600;">BC rebate calculator</a>, or <a href="/get-quotes/?province=bc&amp;city=victoria" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Victoria</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Do I need a cold-climate model in Victoria?</h3><p>BC Hydro's list requires one that holds 22°C at -5°C or colder, so yes, to get the rebate.</p></div>
 <div class="faq-item"><h3>Is there a City of Victoria heat pump top-up?</h3><p>We could not confirm a current one. BC Hydro's rebate is the main offer.</p></div>
 <div class="faq-item"><h3>Do I need an HPCN contractor?</h3><p>Yes. Since June 1, 2026, BC Hydro pays only for installs by a Home Performance Contractor Network member. Self-installs do not qualify.</p></div>
 <div class="faq-item"><h3>Can I get a rebate if I heat with gas?</h3><p>Not from the utility rebate. It is only for replacing electric heat. Income-qualified households can use the CleanBC Energy Savings Program, which pays up to $13,000 at Level 1 for central or 3+ head systems.</p></div>
 <div class="faq-item"><h3>How long do I have to apply?</h3><p>Six months from the invoice date for BC Hydro. For the limited-time bonus, apply by November 30, 2026.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Planning more than one upgrade? See <a href="/ca/bc/victoria/insulation/">Victoria insulation rebates</a> and <a href="/ca/bc/victoria/water-heater/">heat pump water heater rebates</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html" target="_blank" rel="noopener">BC Hydro heat pump rebates</a>, <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/eligibility.html" target="_blank" rel="noopener">BC Hydro program eligibility</a>, <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/finding-qualified-contractors-and-advisors.html" target="_blank" rel="noopener">Find an HPCN contractor</a>, <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" target="_blank" rel="noopener">CleanBC Energy Savings Program requirements</a>, <a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810023301" target="_blank" rel="noopener">Statistics Canada 2021 Census, table 98-10-0233-01</a>, <a href="https://natural-resources.canada.ca/maps-tools-publications/publications/cooling-heating-season-performance-assessment-cold-climate-air-source-heat-pump-canadian-centre-housing-technology" target="_blank" rel="noopener">NRCan cold-climate heat pump field test</a>, <a href="https://open-meteo.com/en/docs/historical-weather-api" target="_blank" rel="noopener">Winter temperatures, Open-Meteo historical archive 2015 to 2024</a>. <a href="/ca/bc/victoria/">All Victoria rebates &rarr;</a> <a href="/programs/bc-hydro-rebates/">Every BC Hydro rebate &rarr;</a></p>
 </div></article>
 <!-- BRANDS-COMPARE-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Choosing a brand?</b> Compare <a href="/blog/heat-pump-brands-comparison-mitsubishi-daikin-bosch/">Bosch vs Mitsubishi vs Daikin cold-climate heat pumps</a>: winter specs, warranties and rebates.</p></section><!-- BRANDS-COMPARE-LINK-END -->
 <!-- RANKINGS-LINK-START -->
-<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Victoria</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/bc/victoria/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Victoria &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">14 local companies ranked by 5,068 Google reviews. Top picks: Coastal Heat Pumps, The Clear Choice Plumbing &amp; Heating, Sasquatch Heat Pumps.</span></a></div></section>
+<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;" id="compare-top-rated-installers-in-victoria">Compare top-rated installers in Victoria</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/bc/victoria/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Victoria &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">14 local companies ranked by 5,068 Google reviews. Top picks: Coastal Heat Pumps, The Clear Choice Plumbing &amp; Heating, Sasquatch Heat Pumps.</span></a></div></section>
 <!-- RANKINGS-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-heat-pump-rebates-pay-in-victoria">What heat pump rebates pay in Victoria</a></li><li><a href="#winter-in-victoria">Winter in Victoria</a></li><li><a href="#homes-in-victoria">Homes in Victoria</a></li><li><a href="#mostly-renters">Mostly renters</a></li><li><a href="#only-for-homes-replacing-electric-heat">Only for homes replacing electric heat</a></li><li><a href="#what-the-heat-pump-must-do">What the heat pump must do</a></li><li><a href="#the-bonus-ends-october-31-2026">The bonus ends October 31, 2026</a></li><li><a href="#top-rated-installers-in-victoria">Top-rated installers in Victoria</a></li><li><a href="#how-to-claim-it">How to claim it</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li><li><a href="#compare-top-rated-installers-in-victoria">Compare top-rated installers in Victoria</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=victoria&province=bc">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Victoria where relevant -->
@@ -735,6 +801,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

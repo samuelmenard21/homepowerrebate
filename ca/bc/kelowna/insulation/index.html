@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ca/bc/">British Columbia</a></li><li><a href="/ca/bc/kelowna/">Kelowna</a></li><li aria-current="page">Insulation</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $5,500</div><h1>Insulation Rebates in Kelowna</h1><p>Kelowna is one of the few BC cities where FortisBC, not BC Hydro, sends your power bill. That decides who pays your insulation rebate, so this page starts there and then shows what the work can pay back in a city where winter lows still reach -24°C.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -494,22 +557,22 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/ca/bc/kelowna/hrv/">HRV & Ventilation Rebates in Kelowna</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What an insulation upgrade can pay in Kelowna</h2>
+<h2 id="what-an-insulation-upgrade-can-pay-in-kelowna">What an insulation upgrade can pay in Kelowna</h2>
 <p>FortisBC uses the same formula as BC Hydro's Home Renovation Rebate. We re-read BC Hydro's insulation page on October 2, 2026 and checked FortisBC's listing against it. Amounts are per project and depend on the R-value you add, not on the price you pay.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Attic insulation</h4><div class="amount">$0.02 x R-value added x sq ft</div><p style="font-size:14px;margin:8px 0 0;">Capped at $900. Flat and cathedral ceilings count, and the new layer must add at least R12.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Walls and basement</h4><div class="amount">$0.09 x R-value added x sq ft</div><p style="font-size:14px;margin:8px 0 0;">Capped at $1,200 each for exterior wall cavities, wall sheathing and basement or crawlspace walls.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Other spots</h4><div class="amount">$0.07 x R-value added x sq ft</div><p style="font-size:14px;margin:8px 0 0;">Exposed floors, floors over a crawlspace and basement headers, capped at $1,000. New insulation must add at least R20 here.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Second-upgrade bonus</h4><div class="amount">$300, or $750 to $2,000</div><p style="font-size:14px;margin:8px 0 0;">FortisBC adds $300 for a second upgrade, or an EnerGuide improvement bonus of $750 to $2,000 if your home's rating improves enough.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Free for lower incomes</h4><div class="amount">Free</div><p style="font-size:14px;margin:8px 0 0;">Income-qualified FortisBC customers can get a free home evaluation and free upgrades, which may include insulation.</p></div>
 </div>
 <div class='highlight-box'><h4>A Kelowna-sized example</h4><p>A 1,400 square foot attic at R-20 topped up to R-50 adds R-30. That pays 0.02 x 30 x 1,400 = $840, just under the $900 cap. Blowing R-12 into 1,000 square feet of exterior wall cavity pays 0.09 x 12 x 1,000 = $1,080, under its $1,200 cap. Together that is $1,920 before any bonus. These are our sums from the published formula, not a quote, so your contractor's invoice decides the final figure.</p></div>
-<h2>Why FortisBC pays here, and what that changes</h2><p>Most BC cities buy power from BC Hydro and gas from FortisBC. Kelowna is different: FortisBC supplies the electricity too. BC Hydro's insulation rebate is for BC Hydro accounts, so a Kelowna household applies to FortisBC instead. FortisBC adds a rule worth reading before you book work. Your primary heating system must be able to heat at least half your home through the whole heating season to 22°C. A house that leans on a small space heater in one room may not pass.</p><p>The application is the same online form that BC Hydro and CleanBC use. You can apply for rebates from more than one partner in one go, which matters if you also replace windows or a water heater.</p><h2>What Kelowna's homes look like</h2><p>Statistics Canada's 2021 Census counted 62,210 households in Kelowna. About 19,735 of them, or 32%, live in homes built before 1981, and 8,205 of those are owner-occupied single-detached houses, the type that usually has an open attic you can top up. Another 33% of Kelowna households live in apartments, and they cannot use the Home Renovation Rebate at all. Condo owners should look at the separate Condo and Apartment Rebate Program instead.</p><p>Only 3.9% of Kelowna households told the census their home needs major repairs. That is lower than in Burnaby (6.0%) or Prince George (6.5%), which fits a city that has built a lot since 1990. Insulation here is usually an upgrade to a sound house rather than a repair job.</p><h2>Cold snaps are the reason to do it</h2><p>The lake keeps Kelowna gentler than Kamloops or Vernon. The average January low from 2015 to 2024 was -3.2°C, and the coldest day in that record hit -24.0°C. A well-insulated attic does its best work on those few hard nights, when a furnace or baseboard heater runs flat out. The program's own page says better insulation can cut at least 10% off a home's energy cost.</p><p>If the house was reinsulated before, ask the contractor to note what was removed. When old insulation is pulled out because of pests or mould, BC's program assumes a starting R-value based on the age of the home and pays on the difference, so a clean quote shows both numbers.</p><h2>Rules that catch people out</h2><ul><li>Work must be done by a member of the Home Performance Contractor Network for the BC Hydro version of the rebate. Check FortisBC's listing for its own contractor wording before you sign.</li><li>Any pests or rodent tunnels must be fixed first.</li><li>Insulation that code requires for a building permit on an addition or new construction does not count.</li><li>You have six months from the invoice date to apply, and the invoice is the only supporting document.</li></ul>
+<h2 id="why-fortisbc-pays-here-and-what-that-changes">Why FortisBC pays here, and what that changes</h2><p>Most BC cities buy power from BC Hydro and gas from FortisBC. Kelowna is different: FortisBC supplies the electricity too. BC Hydro's insulation rebate is for BC Hydro accounts, so a Kelowna household applies to FortisBC instead. FortisBC adds a rule worth reading before you book work. Your primary heating system must be able to heat at least half your home through the whole heating season to 22°C. A house that leans on a small space heater in one room may not pass.</p><p>The application is the same online form that BC Hydro and CleanBC use. You can apply for rebates from more than one partner in one go, which matters if you also replace windows or a water heater.</p><h2 id="what-kelowna-s-homes-look-like">What Kelowna's homes look like</h2><p>Statistics Canada's 2021 Census counted 62,210 households in Kelowna. About 19,735 of them, or 32%, live in homes built before 1981, and 8,205 of those are owner-occupied single-detached houses, the type that usually has an open attic you can top up. Another 33% of Kelowna households live in apartments, and they cannot use the Home Renovation Rebate at all. Condo owners should look at the separate Condo and Apartment Rebate Program instead.</p><p>Only 3.9% of Kelowna households told the census their home needs major repairs. That is lower than in Burnaby (6.0%) or Prince George (6.5%), which fits a city that has built a lot since 1990. Insulation here is usually an upgrade to a sound house rather than a repair job.</p><h2 id="cold-snaps-are-the-reason-to-do-it">Cold snaps are the reason to do it</h2><p>The lake keeps Kelowna gentler than Kamloops or Vernon. The average January low from 2015 to 2024 was -3.2°C, and the coldest day in that record hit -24.0°C. A well-insulated attic does its best work on those few hard nights, when a furnace or baseboard heater runs flat out. The program's own page says better insulation can cut at least 10% off a home's energy cost.</p><p>If the house was reinsulated before, ask the contractor to note what was removed. When old insulation is pulled out because of pests or mould, BC's program assumes a starting R-value based on the age of the home and pays on the difference, so a clean quote shows both numbers.</p><h2 id="rules-that-catch-people-out">Rules that catch people out</h2><ul><li>Work must be done by a member of the Home Performance Contractor Network for the BC Hydro version of the rebate. Check FortisBC's listing for its own contractor wording before you sign.</li><li>Any pests or rodent tunnels must be fixed first.</li><li>Insulation that code requires for a building permit on an addition or new construction does not count.</li><li>You have six months from the invoice date to apply, and the invoice is the only supporting document.</li></ul>
 
-<h2>Top-rated installers in Kelowna</h2><p>These Kelowna companies have the strongest Google reviews for insulation work. We rank by review quality weighted by count, and nobody pays to be listed.</p>
+<h2 id="top-rated-installers-in-kelowna">Top-rated installers in Kelowna</h2><p>These Kelowna companies have the strongest Google reviews for insulation work. We rank by review quality weighted by count, and nobody pays to be listed.</p>
 <div class="installer-card"><div><div class="name">All Around Sprayfoam Ltd.</div><div class="stars">&#9733; 5.0 (37 Google reviews)</div></div></div>
 <div class="installer-card"><div><div class="name">Peoples Insulation</div><div class="stars">&#9733; 4.8 (33 Google reviews)</div></div><a class="site-link" href="https://www.kelownainsulationanddrywall.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Assured Insulation</div><div class="stars">&#9733; 5.0 (12 Google reviews)</div></div><a class="site-link" href="http://assuredinsulation.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Optimized Spray Foam Insulation Inc.</div><div class="stars">&#9733; 5.0 (12 Google reviews)</div></div><a class="site-link" href="http://www.optimizedsprayfoam.ca/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Okanagan Insulation Services</div><div class="stars">&#9733; 4.7 (52 Google reviews)</div></div><a class="site-link" href="https://www.okinsulation.ca/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/bc/kelowna/insulation/">See all Kelowna installers &rarr;</a></p>
-<h2>How to claim in Kelowna</h2>
+<h2 id="how-to-claim-in-kelowna">How to claim in Kelowna</h2>
 <ol>
 <li>Confirm your power bill says FortisBC. If it does, you are in the right program.</li>
 <li>Get two or three insulation quotes that show the R-value being added and the square feet in each area.</li>
@@ -518,21 +581,24 @@ h1, h2 { text-wrap: balance; }
 <li>If your income may qualify, ask FortisBC about the free upgrade program before paying for any work.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/bc/" style="color:var(--teal,#0d4f5c); font-weight:600;">BC rebate calculator</a>, or <a href="/get-quotes/?province=bc&amp;city=kelowna" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Kelowna</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Do I apply to BC Hydro or FortisBC in Kelowna?</h3><p>FortisBC. It supplies Kelowna's electricity, so its rebate applies. BC Hydro's insulation rebate is for BC Hydro accounts.</p></div>
 <div class="faq-item"><h3>Can I get an insulation rebate if I heat with gas?</h3><p>FortisBC lists the insulation rebate for gas and electric homes. If your primary heat source cannot warm at least half the house to 22°C through the season, you may be turned down.</p></div>
 <div class="faq-item"><h3>I live in a condo in Kelowna. Does this apply?</h3><p>No. The Home Renovation Rebate does not cover condo or apartment units. About one in three Kelowna households lives in an apartment, so check the Condo and Apartment Rebate Program instead.</p></div>
 <div class="faq-item"><h3>Is there a CleanBC insulation rebate on top?</h3><p>We found no insulation rebate in the 2026 CleanBC Energy Savings Program document. Income-qualified households get free upgrades through the FortisBC program, so ask there.</p></div>
 <div class="faq-item"><h3>How long do I have to apply after the work?</h3><p>Six months from the invoice date. Keep the invoice, because it is the only document the application asks for.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Check <a href="/ca/bc/kelowna/windows/">Kelowna window rebates</a> and <a href="/ca/bc/kelowna/heat-pump/">heat pump rebates</a> if you are doing more than one upgrade, since a second upgrade can add a bonus. The <a href="/insulation-rebates/">insulation rebate guide</a> compares every province and state.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-insulation.html" target="_blank" rel="noopener">BC Hydro insulation rebates</a>, <a href="https://www.fortisbc.com/rebates/detail/insulation-rebates" target="_blank" rel="noopener">FortisBC insulation rebates</a>, <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation.html" target="_blank" rel="noopener">BC Hydro Home Renovation Rebate Program</a>, <a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810023301" target="_blank" rel="noopener">Statistics Canada 2021 Census, table 98-10-0233-01</a>. <a href="/ca/bc/kelowna/">All Kelowna rebates &rarr;</a> <a href="/programs/fortisbc-rebates/">Every FortisBC rebate &rarr;</a></p>
 </div></article>
 <!-- INSULATION-HUB-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Insulation rebates in every region:</b> compare <a href="/insulation-rebates/">insulation rebates by province and state</a>, with a BC attic calculator.</p></section><!-- INSULATION-HUB-LINK-END -->
 <!-- RANKINGS-LINK-START -->
-<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Kelowna</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/bc/kelowna/insulation/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated insulation installers in Kelowna &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">6 local companies ranked by 156 Google reviews. Top picks: All Around Sprayfoam Ltd., Peoples Insulation, Assured Insulation.</span></a></div></section>
+<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;" id="compare-top-rated-installers-in-kelowna">Compare top-rated installers in Kelowna</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/bc/kelowna/insulation/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated insulation installers in Kelowna &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">6 local companies ranked by 156 Google reviews. Top picks: All Around Sprayfoam Ltd., Peoples Insulation, Assured Insulation.</span></a></div></section>
 <!-- RANKINGS-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-an-insulation-upgrade-can-pay-in-kelowna">What an insulation upgrade can pay in Kelowna</a></li><li><a href="#why-fortisbc-pays-here-and-what-that-changes">Why FortisBC pays here, and what that changes</a></li><li><a href="#what-kelowna-s-homes-look-like">What Kelowna&#x27;s homes look like</a></li><li><a href="#cold-snaps-are-the-reason-to-do-it">Cold snaps are the reason to do it</a></li><li><a href="#rules-that-catch-people-out">Rules that catch people out</a></li><li><a href="#top-rated-installers-in-kelowna">Top-rated installers in Kelowna</a></li><li><a href="#how-to-claim-in-kelowna">How to claim in Kelowna</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li><li><a href="#compare-top-rated-installers-in-kelowna">Compare top-rated installers in Kelowna</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=kelowna&province=bc">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Kelowna where relevant -->
@@ -734,6 +800,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

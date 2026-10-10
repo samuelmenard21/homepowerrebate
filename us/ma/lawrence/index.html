@@ -356,6 +356,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -590,7 +653,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ma/">Massachusetts</a></li><li aria-current="page">Lawrence</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -628,11 +691,11 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 <article class="article">
   <div class="wrap">
 
-    <h2>Yes, Lawrence is eligible for Mass Save</h2>
+    <h2 id="yes-lawrence-is-eligible-for-mass-save">Yes, Lawrence is eligible for Mass Save</h2>
     <p>Lawrence isn't a Municipal Light Plant town, so it isn't shut out of Mass Save the way some Massachusetts towns are. Lawrence's electric utility is <strong>National Grid</strong>, an investor-owned utility that helps fund the statewide Mass Save program. Homeowners here qualify the same way homeowners in Boston or Worcester do.</p>
     <p>Lawrence has a split utility setup worth knowing about: <strong>National Grid delivers electricity</strong> and <strong>Eversource delivers gas</strong> (Eversource took over the former Columbia Gas of Massachusetts territory in 2020 and runs a local office on Marston Street). Because Mass Save is jointly administered by all the state's investor-owned utilities, the rebate amounts below apply whether your project touches the electric side (heat pumps, EV chargers, smart thermostats) or the gas side (insulation, some water heater work) &mdash; you don't need to figure out which utility "owns" a given rebate before applying.</p>
 
-    <h2>What Lawrence homeowners can claim</h2>
+    <h2 id="what-lawrence-homeowners-can-claim">What Lawrence homeowners can claim</h2>
     <p>Mass Save funds nearly all residential energy rebates across Massachusetts, including Lawrence. All amounts below are in <strong>US dollars</strong>.</p>
 
     <div class="rebate-grid">
@@ -724,7 +787,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
       </div>
 </div>
 
-    <h2>How to claim it</h2>
+    <h2 id="how-to-claim-it">How to claim it</h2>
     <ol>
       <li>Schedule your free Mass Save home energy assessment</li>
       <li>Get quotes from Mass Save-participating contractors in Lawrence</li>
@@ -741,7 +804,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <section class="unified-carousel-section" style="margin: 60px 0; padding: 40px 28px; max-width: 1100px; margin-left: auto; margin-right: auto; border-top: 1px solid #d9d0c1;">
   <div style="margin-bottom: 32px;">
     <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #d4751c; margin-bottom: 8px;">Trusted Partners</p>
-    <h2 style="font-size: 28px; font-weight: 600; color: #0a2a2e; margin-bottom: 8px; font-family: 'Fraunces', 'Fraunces Fallback', serif;">Top Installers in Lawrence</h2>
+    <h2 style="font-size: 28px; font-weight: 600; color: #0a2a2e; margin-bottom: 8px; font-family: 'Fraunces', 'Fraunces Fallback', serif;" id="top-installers-in-lawrence">Top Installers in Lawrence</h2>
     <p style="font-size: 15px; color: #666; margin-bottom: 20px;">Verified by Google ratings and reviews. Browse and pick one &mdash; no auctions, no bidding wars.</p>
   </div>
   <div style="display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap;">
@@ -791,7 +854,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
   </style>
 </section>
 <!-- RANKINGS-LINK-START -->
-<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Lawrence</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ma/lawrence/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Lawrence &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">5 local companies ranked by 165 Google reviews. Top picks: 67 Degrees Heating &amp; Cooling, Air Man Heating &amp; Cooling - Mass, B.J Services HVAC-R.</span></a></div></section>
+<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;" id="compare-top-rated-installers-in-lawrence">Compare top-rated installers in Lawrence</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ma/lawrence/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Lawrence &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">5 local companies ranked by 165 Google reviews. Top picks: 67 Degrees Heating &amp; Cooling, Air Man Heating &amp; Cooling - Mass, B.J Services HVAC-R.</span></a></div></section>
 <!-- RANKINGS-LINK-END -->
 <script>
 class UnifiedInstallerCarouselMALawrence {
@@ -899,7 +962,7 @@ class UnifiedInstallerCarouselMALawrence {
 document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarouselMALawrence(); });
 </script>
 
-    <h2>Other Massachusetts cities</h2>
+    <h2 id="other-massachusetts-cities">Other Massachusetts cities</h2>
     <p style="font-size:14px;">
       <a href="/us/ma/lowell/" style="margin-right:14px; display:inline-block;">Lowell</a>
       <a href="/us/ma/boston/" style="margin-right:14px; display:inline-block;">Boston</a>
@@ -907,7 +970,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
       <a href="/us/ma/worcester/" style="margin-right:14px; display:inline-block;">Worcester</a>
     </p>
 
-    <h2>Renting or living in a condo? Here's what actually applies to you</h2>
+    <h2 id="renting-or-living-in-a-condo-here-s-what-actuall">Renting or living in a condo? Here's what actually applies to you</h2>
     <p>Most of the numbers above assume you own a single-family or multi-family home and control the whole building. Lawrence has a large share of renters and multi-unit triple-deckers, so this section matters for a lot of homeowners here. Here's what changes:</p>
 
     <div class="callout">
@@ -925,7 +988,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
       <p style="margin-bottom:0;">Heat pumps, insulation, and solar for the whole building go through Mass Save's multifamily program rather than the single-unit process on this page, and that program handles the paperwork differently. The HEAT Loan and Mass Save's free assessment are both still available &mdash; your property manager or the building's owner coordinates the application, not individual unit owners.</p>
     </div>
 
-    <h2>Next steps</h2>
+    <h2 id="next-steps">Next steps</h2>
     <p><a href="/us/ma/">View all Massachusetts rebate programs &rarr;</a>, <a href="/blog/heat-pump-buyers-guide/">read our heat pump buyer's guide &rarr;</a>, or if your neighboring town has its own electric department, see <a href="/blog/massachusetts-towns-not-eligible-mass-save/">which Massachusetts towns aren't eligible for Mass Save &rarr;</a></p>
 
   </div>
@@ -935,7 +998,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 
 <section id="rebate-finder" style="background:var(--paper-warm); padding: 48px 28px;">
   <div class="wrap" style="max-width:1100px;">
-    <h2>Rebate finder: every Mass Save program in Lawrence, by category.</h2>
+    <h2 id="rebate-finder-every-mass-save-program-in-lawrenc">Rebate finder: every Mass Save program in Lawrence, by category.</h2>
     <p>These are the real, current Mass Save amounts that apply in Lawrence &mdash; the same statewide program you'd see in any Massachusetts city, not a Lawrence-only deal. The whole-home heat pump ceiling is $8,500 in 2026, down from $10,000 in 2024, and regulators trimmed the 2025&ndash;2027 Mass Save budget by $500 million, and Mass Save has documented processing delays, so treat these as caps to plan around, not guaranteed instant payouts. Filter by category below.</p>
 
     <div class="finder-filters" role="group" aria-label="Filter rebates by category">
@@ -1121,7 +1184,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 <section style="padding:0 28px;">
   <div class="wrap" style="max-width:1000px;margin:0 auto;">
     <div style="background:var(--paper-warm);border:1px solid var(--rule);border-radius:16px;padding:32px;margin:0 0 40px;">
-      <h2 style="font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:22px;color:var(--teal-deep);margin:0 0 8px;">Nearby cities we cover</h2>
+      <h2 style="font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:22px;color:var(--teal-deep);margin:0 0 8px;" id="nearby-cities-we-cover">Nearby cities we cover</h2>
       <p style="margin:0 0 16px;font-size:14px;color:var(--ink-soft);">Homeowners near Lawrence also use this guide for their own city's rebates and installer picks.</p>
       <p style="font-size:14px;margin:0;">
         <a href="/us/ma/lowell/" style="margin-right:14px; display:inline-block;">Lowell</a>
@@ -1133,7 +1196,7 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
 <!-- ============================ FOOTER (canonical, from _partials/nav-footer.html) ============================= -->
 <section style="padding:0 28px; margin-bottom: 40px;">
   <div class="wrap" style="max-width:1000px; margin:0 auto;">
-    <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;">Learn more about Massachusetts rebates</h2>
+    <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #111;" id="learn-more-about-massachusetts-rebates">Learn more about Massachusetts rebates</h2>
     <p style="font-size: 15px; color: #666; margin-bottom: 32px;">Guides and deep-dives to help you navigate MA programs like MassSave.</p>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
       <a href="/guides/which-rebate-first/" style="display: block; border: 1px solid #d9d0c1; border-radius: 10px; padding: 16px; text-decoration: none; color: inherit;">
@@ -1162,12 +1225,15 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
     </p>
   </div>
 </section>
-<!-- CITY-EXTRAS-START --><section style="max-width:1180px;margin:0 auto;padding:24px 28px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 10px;">More for Lawrence</h2><ul style="margin:0 0 0 20px;line-height:1.9;"><li><a href="/stacking-calculator/us/ma/lawrence/">Rebate stacking calculator for Lawrence</a></li><li><a href="/us/ma/appliances/">Appliance rebates in Lawrence</a></li></ul></section><!-- CITY-EXTRAS-END -->
+<!-- CITY-EXTRAS-START --><section style="max-width:1180px;margin:0 auto;padding:24px 28px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 10px;" id="more-for-lawrence">More for Lawrence</h2><ul style="margin:0 0 0 20px;line-height:1.9;"><li><a href="/stacking-calculator/us/ma/lawrence/">Rebate stacking calculator for Lawrence</a></li><li><a href="/us/ma/appliances/">Appliance rebates in Lawrence</a></li></ul></section><!-- CITY-EXTRAS-END -->
 <!-- STATE-US-MA-BATTERY-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/ma/battery/">Massachusetts home battery rebates and incentives</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-MA-BATTERY-LINK-END -->
 <!-- STATE-US-MA-EV-CHARGER-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/ma/ev-charger/">Massachusetts home EV charger rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-MA-EV-CHARGER-LINK-END -->
 <!-- STATE-US-MA-HRV-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/ma/hrv/">Massachusetts HRV and ERV rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-MA-HRV-LINK-END -->
 <!-- STATE-US-MA-APPLIANCES-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/ma/appliances/">Massachusetts appliance rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-MA-APPLIANCES-LINK-END -->
 <!-- ROOF-CHECK-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>See your own roof:</b> try the free <a href="/roof-check/">Solar Roof Check</a>. Type your address to see how many panels fit and which verified solar rebates apply.</p></section><!-- ROOF-CHECK-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 4 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#yes-lawrence-is-eligible-for-mass-save">Yes, Lawrence is eligible for Mass Save</a></li><li><a href="#what-lawrence-homeowners-can-claim">What Lawrence homeowners can claim</a></li><li><a href="#how-to-claim-it">How to claim it</a></li><li><a href="#top-installers-in-lawrence">Top Installers in Lawrence</a></li><li><a href="#compare-top-rated-installers-in-lawrence">Compare top-rated installers in Lawrence</a></li><li><a href="#other-massachusetts-cities">Other Massachusetts cities</a></li><li><a href="#renting-or-living-in-a-condo-here-s-what-actuall">Renting or living in a condo? Here&#x27;s what actually applies to you</a></li><li><a href="#next-steps">Next steps</a></li><li><a href="#rebate-finder-every-mass-save-program-in-lawrenc">Rebate finder: every Mass Save program in Lawrence, by category.</a></li><li><a href="#nearby-cities-we-cover">Nearby cities we cover</a></li><li><a href="#learn-more-about-massachusetts-rebates">Learn more about Massachusetts rebates</a></li><li><a href="#more-for-lawrence">More for Lawrence</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=lawrence&province=ma">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Lawrence where relevant -->
@@ -1375,6 +1441,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

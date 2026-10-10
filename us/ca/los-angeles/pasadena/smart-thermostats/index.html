@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ca/">California</a></li><li><a href="/us/ca/los-angeles/pasadena/">Pasadena</a></li><li aria-current="page">Smart Thermostat</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">$50, plus $10 local and a $50 bonus</div><h1>Smart Thermostat Rebates in Pasadena</h1><p>Pasadena Water and Power pays $50 for a Wi-Fi smart thermostat, with a photo of the finished install as part of the proof. It is the quickest rebate on the list and the one most likely to be worth doing alongside a bigger project.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -492,21 +555,21 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/ca/los-angeles/pasadena/insulation/">Insulation Rebates in Pasadena</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What Pasadena Water and Power pays</h2>
+<h2 id="what-pasadena-water-and-power-pays">What Pasadena Water and Power pays</h2>
 <p>These figures come from PWP's smart thermostat page, which we read on October 2, 2026. Only residential PWP electric customers qualify.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Base rebate</h4><div class="amount">$50</div><p style="font-size:14px;margin:8px 0 0;">For a new Wi-Fi enabled smart thermostat that you install in your home.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Bought in Pasadena</h4><div class="amount">+$10</div><p style="font-size:14px;margin:8px 0 0;">Added when you buy the thermostat from a seller in Pasadena.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Bill Payment Assistance</h4><div class="amount">+$50 per unit</div><p style="font-size:14px;margin:8px 0 0;">For customers enrolled in PWP's income-qualified Bill Payment Assistance program.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Limit</h4><div class="amount">2 every 5 years</div><p style="font-size:14px;margin:8px 0 0;">Thermostats per customer.</p></div>
 </div>
 <div class='highlight-box'><h4>The math</h4><p>One thermostat bought in Pasadena earns $50 + $10 = $60. A customer on Bill Payment Assistance can add $50 per unit, and with two thermostats that comes to as much as $220 over five years if everything stacks. PWP does not spell out the stacking, so ask before you count on it.</p></div>
-<h2>How Pasadena compares nearby</h2><p>Burbank pays up to $75 for a smart thermostat (<a href='/us/ca/los-angeles/burbank/smart-thermostats/'>Burbank thermostat rebates</a>). Southern California Edison customers can get a $75 bill credit for enrolling a thermostat in demand response, which is a different kind of offer. Glendale's current rebate list has no thermostat rebate at all. So Pasadena's $50 sits in the middle, and it is paid as a check after you buy, not as a credit for joining a program.</p><h2>Your utility: Pasadena Water and Power</h2><p>PWP pays this one, and only for PWP electric customers. Pasadena gas customers can also look at the Southern California Gas Company, which PWP's page names as a source of additional rebates. Gas company offers change often, so check its rebate page the week you buy. We did not read the SoCalGas page and cannot quote an amount.</p><h2>Check that it works with your system</h2><p>A smart thermostat only helps if it fits your heating and cooling equipment. Heat pumps, multi-stage systems and old wall furnaces each have different needs. Check that the model supports your system type, and check whether your system already has a common wire (a C-wire) at the thermostat. Take a photo of the old wiring before you remove anything, because PWP also wants a photo of the finished install for the rebate.</p><p>Pasadena winters are mild, with an average January low of 7.5°C (about 45°F) over 2015 to 2024, so a heating schedule saves less here than in a cold city. Make sure the model you buy handles cooling well, and use its schedule for the hours the house is empty.</p><h2>Keep the paperwork tidy</h2><p>PWP asks for your complete sales receipt or paid invoice showing the product and model number, the date purchased and installed or delivered, and a proof-of-install photo. Rebates are for new products only, not refurbished ones. Apply within 180 days of the purchase date, and keep the order confirmation if you bought online.</p>
-<h2>Installers in Pasadena</h2><p>A thermostat is a do-it-yourself job for some homes and an installer job for others, especially with a heat pump or a multi-stage system. These Pasadena-area HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone.</p>
+<h2 id="how-pasadena-compares-nearby">How Pasadena compares nearby</h2><p>Burbank pays up to $75 for a smart thermostat (<a href='/us/ca/los-angeles/burbank/smart-thermostats/'>Burbank thermostat rebates</a>). Southern California Edison customers can get a $75 bill credit for enrolling a thermostat in demand response, which is a different kind of offer. Glendale's current rebate list has no thermostat rebate at all. So Pasadena's $50 sits in the middle, and it is paid as a check after you buy, not as a credit for joining a program.</p><h2 id="your-utility-pasadena-water-and-power">Your utility: Pasadena Water and Power</h2><p>PWP pays this one, and only for PWP electric customers. Pasadena gas customers can also look at the Southern California Gas Company, which PWP's page names as a source of additional rebates. Gas company offers change often, so check its rebate page the week you buy. We did not read the SoCalGas page and cannot quote an amount.</p><h2 id="check-that-it-works-with-your-system">Check that it works with your system</h2><p>A smart thermostat only helps if it fits your heating and cooling equipment. Heat pumps, multi-stage systems and old wall furnaces each have different needs. Check that the model supports your system type, and check whether your system already has a common wire (a C-wire) at the thermostat. Take a photo of the old wiring before you remove anything, because PWP also wants a photo of the finished install for the rebate.</p><p>Pasadena winters are mild, with an average January low of 7.5°C (about 45°F) over 2015 to 2024, so a heating schedule saves less here than in a cold city. Make sure the model you buy handles cooling well, and use its schedule for the hours the house is empty.</p><h2 id="keep-the-paperwork-tidy">Keep the paperwork tidy</h2><p>PWP asks for your complete sales receipt or paid invoice showing the product and model number, the date purchased and installed or delivered, and a proof-of-install photo. Rebates are for new products only, not refurbished ones. Apply within 180 days of the purchase date, and keep the order confirmation if you bought online.</p>
+<h2 id="installers-in-pasadena">Installers in Pasadena</h2><p>A thermostat is a do-it-yourself job for some homes and an installer job for others, especially with a heat pump or a multi-stage system. These Pasadena-area HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone.</p>
 <div class="installer-card"><div><div class="name">Purified Air Heating and Air Conditioning, Inc</div><div class="stars">&#9733; 5.0 (296 reviews)</div></div><a class="site-link" href="https://purifiedairinc.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Pasadena HVAC Installation Contractor</div><div class="stars">&#9733; 5.0 (144 reviews)</div></div><a class="site-link" href="https://havcinstallationcontractor.com/pasandena-air-duct-hvac-services/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Dr Air Conditioning And Heating</div><div class="stars">&#9733; 5.0 (113 reviews)</div></div><a class="site-link" href="https://24hvacservices.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Temp Kings Air</div><div class="stars">&#9733; 5.0 (111 reviews)</div></div><a class="site-link" href="https://tempkingsair.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">LC Heating &amp; Air Conditioning</div><div class="stars">&#9733; 5.0 (54 reviews)</div></div><a class="site-link" href="https://lahvaclc.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/ca/pasadena/heat-pump/">See all Pasadena installers &rarr;</a></p>
-<h2>How to claim the PWP rebate</h2>
+<h2 id="how-to-claim-the-pwp-rebate">How to claim the PWP rebate</h2>
 <ol>
 <li>Check that PWP is your electric utility. The name is on your electric bill.</li>
 <li>Buy a new Wi-Fi enabled smart thermostat. Buy it from a Pasadena seller if you want the extra $10.</li>
@@ -516,17 +579,20 @@ h1, h2 { text-wrap: balance; }
 <li>PWP says the check arrives 6 to 8 weeks after approval.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city=pasadena" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Pasadena</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much is the smart thermostat rebate in Pasadena?</h3><p>$50, plus $10 if you buy in Pasadena. Customers on PWP's Bill Payment Assistance program can add $50 per unit.</p></div>
 <div class="faq-item"><h3>How many thermostats can I claim?</h3><p>PWP limits the rebate to two thermostats every five years.</p></div>
 <div class="faq-item"><h3>Do I need approval before I buy?</h3><p>No. PWP pays after the install. Apply within 180 days of the purchase date.</p></div>
 <div class="faq-item"><h3>What proof does PWP want?</h3><p>A complete receipt or paid invoice with the model number and dates, and a photo of the installed thermostat.</p></div>
 <div class="faq-item"><h3>Will a smart thermostat save much in Pasadena?</h3><p>It depends on your system and habits. Winters here are mild, so most of the gain comes from cooling and from not conditioning an empty house.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>See PWP's <a href='https://pwp.cityofpasadena.net/smartthermostatrebate/' target='_blank' rel='noopener'>smart thermostat page</a> for the application, or compare all Pasadena offers on our <a href='/us/ca/los-angeles/pasadena/'>Pasadena hub</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read September 28, 2026: <a href="https://pwp.cityofpasadena.net/smartthermostatrebate/" target="_blank" rel="noopener">PWP smart thermostat rebate</a>, <a href="https://pwp.cityofpasadena.net/savemoney/" target="_blank" rel="noopener">PWP residential rebates and programs</a>, <a href="https://pwp.cityofpasadena.net/low-income/" target="_blank" rel="noopener">PWP Bill Payment Assistance</a>. <a href="/us/ca/los-angeles/pasadena/">All Pasadena rebates &rarr;</a> <a href="/programs/pasadena-water-and-power-rebates/">Every Pasadena Water and Power rebate &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-pasadena-water-and-power-pays">What Pasadena Water and Power pays</a></li><li><a href="#how-pasadena-compares-nearby">How Pasadena compares nearby</a></li><li><a href="#your-utility-pasadena-water-and-power">Your utility: Pasadena Water and Power</a></li><li><a href="#check-that-it-works-with-your-system">Check that it works with your system</a></li><li><a href="#keep-the-paperwork-tidy">Keep the paperwork tidy</a></li><li><a href="#installers-in-pasadena">Installers in Pasadena</a></li><li><a href="#how-to-claim-the-pwp-rebate">How to claim the PWP rebate</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=pasadena&province=ca">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Pasadena where relevant -->
@@ -728,6 +794,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

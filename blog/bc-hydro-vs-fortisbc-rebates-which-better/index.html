@@ -198,6 +198,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -507,7 +570,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">BC Hydro vs FortisBC rebates</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -521,7 +584,7 @@ h1, h2 { text-wrap: balance; }
     <p style="margin:0"><strong>Short answer:</strong> It depends on who supplies your <strong>electricity</strong>. Most of BC is BC Hydro; Kelowna and some southern Interior towns are FortisBC. For the same upgrades, the two pay about the same: <strong>$4,000</strong> for a heat pump that replaces electric heat, <strong>$100 per window</strong>, the same insulation rates, $1,000 for a heat pump water heater. FortisBC pays more for <strong>income-qualified</strong> heat pumps (up to $12,000). BC Hydro is the only one with <strong>solar and battery</strong> rebates (up to $10,000) and Peak Saver.</p>
   </div>
 
-  <h2>Side by side: BC Hydro vs FortisBC rebates (2026)</h2>
+  <h2 id="side-by-side-bc-hydro-vs-fortisbc-rebates-2026">Side by side: BC Hydro vs FortisBC rebates (2026)</h2>
   <div class="hpr-table"><table><thead><tr><th>Upgrade</th><th>BC Hydro</th><th>FortisBC</th></tr></thead><tbody>
     <tr><td>Heat pump (replacing electric heat)</td><td>Up to $4,000 whole home / $1,500 partial, + up to $1,000 bonus Aug 1 - Oct 31, 2026</td><td>Up to $4,000 whole home / $1,500 partial</td></tr>
     <tr><td>Heat pump, income-qualified</td><td>Through CleanBC: up to $5,000 from electric (Level 1), up to $13,000 from gas</td><td>Up to $12,000 central, $9,000 mini/multi-split, $5,000 partial (electric customers)</td></tr>
@@ -536,19 +599,19 @@ h1, h2 { text-wrap: balance; }
     <tr><td>Multi-upgrade bonus</td><td>Up to $2,000</td><td>$300, or $750-$2,000 based on EnerGuide improvement</td></tr>
   </tbody></table></div>
 
-  <h2>Which utility am I on?</h2>
+  <h2 id="which-utility-am-i-on">Which utility am I on?</h2>
   <p>Look at your electricity bill. Most homes in Vancouver, Victoria, Surrey, Kamloops, Vernon, Prince George and the rest of BC Hydro's area use BC Hydro. <strong>Kelowna</strong> gets electricity from FortisBC. <strong>Penticton</strong>, Summerland, Grand Forks and Nelson Hydro customers use FortisBC's electric rebates. Many homes get electricity from BC Hydro and natural gas from FortisBC; that's normal.</p>
 
-  <h2>Can I stack BC Hydro and FortisBC rebates?</h2>
+  <h2 id="can-i-stack-bc-hydro-and-fortisbc-rebates">Can I stack BC Hydro and FortisBC rebates?</h2>
   <p>Only where each utility supplies what you're upgrading. For example, a BC Hydro electricity + FortisBC gas home could get a BC Hydro heat pump rebate if it replaces electric baseboards, and use FortisBC's window rebate as a gas customer. But you can't get two heat pump rebates for one heat pump, and FortisBC electric customers are not eligible for BC Hydro programs.</p>
 
-  <h2>Switching off gas? Here's the honest picture</h2>
+  <h2 id="switching-off-gas-here-s-the-honest-picture">Switching off gas? Here's the honest picture</h2>
   <p>The general CleanBC rebate for switching from gas to a heat pump ended April 11, 2025. Today, gas homes get heat pump money only through the income-qualified <strong>CleanBC Energy Savings Program</strong>: up to $13,000 at Income Level 1, $7,000 at Level 2 and $3,500 at Level 3, plus a $3,000 northern top-up at or north of 100 Mile House. See <a href="/blog/free-heat-pump-bc-income-qualified/">the free heat pump guide</a>.</p>
 
-  <h2>Solar and batteries: BC Hydro only</h2>
+  <h2 id="solar-and-batteries-bc-hydro-only">Solar and batteries: BC Hydro only</h2>
   <p>BC Hydro pays $1,000 per kW of solar (up to $5,000) and $500 per kWh of battery (up to $5,000 with Peak Saver, or $1,500 paired with solar without it). Tesla products are not eligible. Since July 1, 2026, new solar customers are paid 10 cents per kWh for power they send to the grid. <a href="/blog/is-bc-hydro-solar-rebate-worth-it/">Is the BC Hydro solar rebate worth it?</a></p>
 
-  <h2>What to do next</h2>
+  <h2 id="what-to-do-next">What to do next</h2>
   <ol>
     <li>Find your electric utility on your bill.</li>
     <li>If you have electric heat, a heat pump is the biggest rebate either utility offers.</li>
@@ -556,7 +619,7 @@ h1, h2 { text-wrap: balance; }
     <li>Hire a contractor who knows your utility's rules (an HPCN member for BC Hydro).</li>
   </ol>
 
-  <h2>Questions people ask</h2>
+  <h2 id="questions-people-ask">Questions people ask</h2>
 <h3>Is my home on BC Hydro or FortisBC?</h3><p>Check your bill. Most of BC gets electricity from BC Hydro. FortisBC supplies electricity in parts of the southern Interior, like Kelowna, and several city utilities (Penticton, Summerland, Grand Forks, Nelson) use FortisBC's rebates. FortisBC also supplies natural gas in most of BC.</p>
 <h3>Can I get both BC Hydro and FortisBC rebates?</h3><p>Sometimes, but not for the same thing. Each utility rebates the energy it supplies. You can't claim two heat pump rebates for one system. If you're a FortisBC electric customer, you can't use BC Hydro programs at all.</p>
 <h3>Which pays more for a heat pump?</h3><p>For replacing electric heat, both pay up to $4,000. For income-qualified homes, FortisBC's electric program pays up to $12,000, while BC Hydro customers use the CleanBC program (up to $5,000 from electric heat at Level 1, or up to $13,000 from gas).</p>
@@ -677,8 +740,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 1 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#side-by-side-bc-hydro-vs-fortisbc-rebates-2026">Side by side: BC Hydro vs FortisBC rebates (2026)</a></li><li><a href="#which-utility-am-i-on">Which utility am I on?</a></li><li><a href="#can-i-stack-bc-hydro-and-fortisbc-rebates">Can I stack BC Hydro and FortisBC rebates?</a></li><li><a href="#switching-off-gas-here-s-the-honest-picture">Switching off gas? Here&#x27;s the honest picture</a></li><li><a href="#solar-and-batteries-bc-hydro-only">Solar and batteries: BC Hydro only</a></li><li><a href="#what-to-do-next">What to do next</a></li><li><a href="#questions-people-ask">Questions people ask</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->

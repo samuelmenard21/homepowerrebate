@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,7 +543,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ma/">Massachusetts</a></li><li><a href="/us/ma/worcester/">Worcester</a></li><li aria-current="page">EV Charger</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Up to $700 to $2,000</div><h1>EV Charger Rebates in Worcester</h1><p>Worcester gets its electricity from National Grid, and National Grid pays for the wiring that lets you charge an electric car at home. In a two- or three-family, the rebate doubles. Apply by December 10, 2026.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
@@ -489,16 +552,16 @@ h1, h2 { text-wrap: balance; }
 <span style="margin-right:14px;"><a href="/us/ma/worcester/heat-pump/">Heat Pump Rebates in Worcester</a></span>
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What EV charger rebates pay in Worcester</h2>
+<h2 id="what-ev-charger-rebates-pay-in-worcester">What EV charger rebates pay in Worcester</h2>
 <p>We read National Grid's Massachusetts program page on October 3, 2026. National Grid is Worcester's electric company, based on its own list of the towns it serves. Each rebate is the listed amount or what you actually paid, whichever is less.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Home wiring, single family</h4><div class="amount">Up to $700</div><p style="font-size:14px;margin:8px 0 0;">For a 240-volt circuit or outlet in your garage or parking spot.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Home wiring, 2-4 unit building</h4><div class="amount">Up to $1,400</div><p style="font-size:14px;margin:8px 0 0;">For a two-, three- or four-family. Landlords can apply too.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Environmental justice neighbourhood</h4><div class="amount">Up to $1,000 or $2,000</div><p style="font-size:14px;margin:8px 0 0;">Higher wiring rebate if your home is in a state-mapped environmental justice area and your EV cost $55,000 or less.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Discount rate (R-2) customers</h4><div class="amount">Wiring plus up to $700 for the charger</div><p style="font-size:14px;margin:8px 0 0;">Up to $1,000 or $2,000 for wiring, plus up to $700 toward a qualified smart charger.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Off-Peak Charging Program</h4><div class="amount">About $100 a year</div><p style="font-size:14px;margin:8px 0 0;">Required for most single-family rebates. You charge at times that are easier on the grid.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal 30C charger tax credit</h4><div class="amount">$0 for new installs</div><p style="font-size:14px;margin:8px 0 0;">It covered chargers placed in service up to June 30, 2026. Nothing after that.</p></div>
 </div>
 <div class='highlight-box'><h4>Working it out</h4><p>Say an electrician charges $1,800 to run a 240-volt circuit to the driveway of a Worcester three-family, shared by the tenants. National Grid's 2-4 unit rebate is up to $1,400, so the owner pays about $400. In a single-family house with a $900 wiring job, the rebate is $700 and you pay $200.</p></div>
-<h2>Why the 2-4 unit rule matters in Worcester</h2><p>The US Census Bureau's survey (2020 to 2024) counts 85,876 homes in Worcester. About 34% are in buildings with two to four units, and only about 32% are single-family detached houses. That makes the 2-4 unit rebate the one many Worcester owners should look at first.</p><p>About 57% of Worcester households rent. If you rent, National Grid's advice is to tell your landlord, because the landlord usually pays for the outlet. Whoever pays for the work is the one who applies. If the tenant holds the electric account and the landlord pays, the landlord adds a Third Party Payee form.</p><h2>Landlords can wire before tenants have an EV</h2><p>National Grid pays landlords of 1-4 unit buildings to add 240-volt outlets for current or future tenants. If nobody in the building owns an EV yet, or parking is shared, the Off-Peak Charging sign-up is waived. A ready outlet is something you can mention when you list a unit.</p><h2>Cold winters and charging</h2><p>Worcester's average January low is about -6.3°C, and the coldest reading in our ten years of data was -27.2°C. Batteries charge slower in the cold, and many Worcester homes are old, so the panel may be the real question. About 75% of homes were built before 1980, and about 41% before 1940. Ask your electrician whether your panel has room before you count on the rebate covering everything.</p><h2>Check the environmental justice map</h2><p>Parts of many Massachusetts cities are mapped as environmental justice neighbourhoods. If your address is in one, National Grid raises the wiring rebate to up to $1,000 for a single family or $2,000 for a 2-4 unit building, as long as your EV cost $55,000 or less. The state's map is on mass.gov. Discount rate (R-2) and environmental justice customers can also use National Grid's Turnkey program, where the same incentive comes off the bill up front instead of as a cheque later.</p>
+<h2 id="why-the-2-4-unit-rule-matters-in-worcester">Why the 2-4 unit rule matters in Worcester</h2><p>The US Census Bureau's survey (2020 to 2024) counts 85,876 homes in Worcester. About 34% are in buildings with two to four units, and only about 32% are single-family detached houses. That makes the 2-4 unit rebate the one many Worcester owners should look at first.</p><p>About 57% of Worcester households rent. If you rent, National Grid's advice is to tell your landlord, because the landlord usually pays for the outlet. Whoever pays for the work is the one who applies. If the tenant holds the electric account and the landlord pays, the landlord adds a Third Party Payee form.</p><h2 id="landlords-can-wire-before-tenants-have-an-ev">Landlords can wire before tenants have an EV</h2><p>National Grid pays landlords of 1-4 unit buildings to add 240-volt outlets for current or future tenants. If nobody in the building owns an EV yet, or parking is shared, the Off-Peak Charging sign-up is waived. A ready outlet is something you can mention when you list a unit.</p><h2 id="cold-winters-and-charging">Cold winters and charging</h2><p>Worcester's average January low is about -6.3°C, and the coldest reading in our ten years of data was -27.2°C. Batteries charge slower in the cold, and many Worcester homes are old, so the panel may be the real question. About 75% of homes were built before 1980, and about 41% before 1940. Ask your electrician whether your panel has room before you count on the rebate covering everything.</p><h2 id="check-the-environmental-justice-map">Check the environmental justice map</h2><p>Parts of many Massachusetts cities are mapped as environmental justice neighbourhoods. If your address is in one, National Grid raises the wiring rebate to up to $1,000 for a single family or $2,000 for a 2-4 unit building, as long as your EV cost $55,000 or less. The state's map is on mass.gov. Discount rate (R-2) and environmental justice customers can also use National Grid's Turnkey program, where the same incentive comes off the bill up front instead of as a cheque later.</p>
 
 
-<h2>How to get the EV charger rebate in Worcester</h2>
+<h2 id="how-to-get-the-ev-charger-rebate-in-worcester">How to get the EV charger rebate in Worcester</h2>
 <ol>
 <li>Check that your car or charger is on National Grid's compatible list, then enroll in the Off-Peak Charging Program before you install.</li>
 <li>Hire a licensed electrician to install a 240-volt circuit or outlet where you park.</li>
@@ -507,14 +570,14 @@ h1, h2 { text-wrap: balance; }
 <li>Your cheque comes about 6 to 8 weeks after your Off-Peak enrollment is confirmed.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ma/" style="color:var(--teal,#0d4f5c); font-weight:600;">Massachusetts rebate calculator</a>, or <a href="/get-quotes/?city=worcester&amp;province=ma" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Worcester</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Is there an EV charger rebate in Worcester?</h3><p>Yes. National Grid, Worcester's electric company, pays up to $700 for the home wiring in a single-family house and up to $1,400 in a 2-4 unit building. Income-qualified and environmental justice customers can get more.</p></div>
 <div class="faq-item"><h3>Does the rebate pay for the charger itself?</h3><p>Only for customers on National Grid's low-income discount rate (R-2), who can get up to $700 toward a qualified smart charger. For everyone else, the rebate covers the 240-volt wiring.</p></div>
 <div class="faq-item"><h3>I rent in Worcester. Can I get this?</h3><p>Your landlord usually pays for the outlet, so the landlord usually applies. If you hold the electric account and the landlord pays, the landlord sends a Third Party Payee form with the application.</p></div>
 <div class="faq-item"><h3>Is Worcester on Eversource for EV charging?</h3><p>No. Eversource lists Worcester as a gas town, not an electric town. National Grid delivers Worcester's electricity, so its EV program is the one that applies.</p></div>
 <div class="faq-item"><h3>Is there still a federal tax credit for home chargers?</h3><p>No. The IRS says the 30C credit covered chargers placed in service at your home up to June 30, 2026.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Enroll in Off-Peak Charging, then book a licensed electrician. See <a href='/us/ma/worcester/'>every rebate in Worcester</a>, or get a home ready for winter with <a href='/us/ma/worcester/insulation/'>Worcester insulation rebates</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://www.nationalgridus.com/electric-vehicle-hub/Programs/Massachusetts/EV-Charging-Upgrade-Program" target="_blank" rel="noopener">National Grid: EV Charging Upgrade Program (Massachusetts)</a>, <a href="https://www.nationalgridus.com/media/pdfs/billing-payments/tariffs/mae/shared_load_zones.pdf" target="_blank" rel="noopener">National Grid: Massachusetts towns served</a>, <a href="https://www.eversource.com/residential/services/communities-we-serve" target="_blank" rel="noopener">Eversource: communities we serve</a>, <a href="https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit" target="_blank" rel="noopener">IRS: alternative fuel vehicle refueling property credit</a>. <a href="/us/ma/worcester/">All Worcester rebates &rarr;</a> <a href="/programs/mass-save/">Every Mass Save rebate &rarr;</a></p>
 </div></article>
@@ -522,6 +585,9 @@ h1, h2 { text-wrap: balance; }
 <!-- STATE-US-MA-EV-CHARGER-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/ma/ev-charger/">Massachusetts home EV charger rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-MA-EV-CHARGER-LINK-END -->
 <!-- STATE-US-MA-HRV-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/ma/hrv/">Massachusetts HRV and ERV rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-MA-HRV-LINK-END -->
 <!-- STATE-US-MA-APPLIANCES-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/ma/appliances/">Massachusetts appliance rebates</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-MA-APPLIANCES-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-ev-charger-rebates-pay-in-worcester">What EV charger rebates pay in Worcester</a></li><li><a href="#why-the-2-4-unit-rule-matters-in-worcester">Why the 2-4 unit rule matters in Worcester</a></li><li><a href="#landlords-can-wire-before-tenants-have-an-ev">Landlords can wire before tenants have an EV</a></li><li><a href="#cold-winters-and-charging">Cold winters and charging</a></li><li><a href="#check-the-environmental-justice-map">Check the environmental justice map</a></li><li><a href="#how-to-get-the-ev-charger-rebate-in-worcester">How to get the EV charger rebate in Worcester</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=worcester&province=ma">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Worcester where relevant -->
@@ -723,6 +789,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

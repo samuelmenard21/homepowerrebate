@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,28 +543,28 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ca/">California</a></li><li aria-current="page">Bakersfield</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Free weatherization, EV rebate up to $5,000</div><h1>Bakersfield Home Energy Rebates 2026</h1><p>Bakersfield buys electricity from PG&E and natural gas from SoCalGas, two different utilities, and that matters when you switch from gas to electric. We found no open PG&E cash rebate for a heat pump or water heater. The real help is free weatherization and upgrades for income-qualified households, and an EV charger rebate. We read the pages on October 2, 2026.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
 
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What is available in Bakersfield</h2>
+<h2 id="what-is-available-in-bakersfield">What is available in Bakersfield</h2>
 <p>PG&E's programs are the same across its territory. The Kern County program is run locally.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">CAPK weatherization</h4><div class="amount">Free</div><p style="font-size:14px;margin:8px 0 0;">Free weatherization and energy efficiency services for Kern County households at or below 150% of the federal poverty guidelines. Call 2-1-1 or 661-336-5203.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>PG&amp;E Energy Savings Assistance</h4><div class="amount">No-cost upgrades</div><p style="font-size:14px;margin:8px 0 0;">For income-qualified renters and owners: heat pump water heaters, furnaces, lighting and refrigerators. Income limit $39,900 for one person and $82,500 for four, valid through May 31, 2027.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Residential EV charging rebate</h4><div class="amount">Up to 50%, or $2,000 to $5,000</div><p style="font-size:14px;margin:8px 0 0;">Standard option up to 50% of approved charging equipment. Households below 80% of area median income can get up to $2,000 for a charger or up to $5,000 with a panel upgrade.</p></div><div class="rebate-card"><span class="program-status status-limited">On hold</span><h4>California Energy-Smart Homes</h4><div class="amount">$4,250 plus bonuses</div><p style="font-size:14px;margin:8px 0 0;">For converting every gas appliance in a single-family home. Funds are first come, first served and applicants join a waiting list.</p></div><div class="rebate-card"><span class="program-status status-limited">On hold</span><h4>TECH Clean California and federal HEEHRA</h4><div class="amount">Fully reserved</div><p style="font-size:14px;margin:8px 0 0;">Single-family heat pump incentives are fully reserved and take new requests on hold only.</p></div>
 </div>
 <div class='highlight-box'><h4>Two utilities, one switch</h4><p>If you move a gas furnace or water heater to a heat pump, your electric bill rises and your gas bill falls, and the gas meter's monthly service charge stays until the meter is removed. PG&E says its Base Services Charge, in place since March 2026, lowers the price per kWh. SoCalGas serves Bakersfield and the Delano-West Bakersfield area, so ask SoCalGas what removing the meter involves before you plan an all-electric home.</p></div>
-<h2>Free help first</h2><p>The Community Action Partnership of Kern runs the Weatherization program, free for eligible Kern County households, with an income limit of 150% of the federal poverty guidelines. Renters need the owner to sign an energy service agreement. PG&E's Energy Savings Assistance program also gives no-cost upgrades, including heat pump water heaters and furnaces, to households under its income table, for homes at least five years old. Apply to both before you pay for anything. CAPK's office is at 300 19th Street.</p><h2>PG&E's neighborhood programs</h2><p>PG&E's page lists Empower My Home, available in parts of Bakersfield, and Powerful Neighborhoods, which serves parts of Kern County, as ways to upgrade to electric appliances, heating and cooling and water heaters at low or no cost. Eligibility depends on your address and PG&E's page does not list the neighborhoods, so check it on <a href='https://www.pge.com/en/clean-energy/building-electrification.html' target='_blank' rel='noopener'>PG&E's building electrification page</a>.</p><h2>Why heat pump money is thin</h2><p>California Energy-Smart Homes pays $4,250 plus bonuses for converting every gas appliance in a single-family home, but applicants join a waiting list (<a href='https://caenergysmarthomes.com/alterations/' target='_blank' rel='noopener'>program page</a>). TECH Clean California and federal HEEHRA are fully reserved for single-family homes and take new requests on hold only. PG&E publishes cost ranges of $1,200 to $5,500 for a heat pump water heater and $3,500 to $25,000 for a heat pump system. Without a rebate, the protection is three bids and a written load calculation.</p><h2>EV chargers</h2><p>PG&E's EV charging rebate pays up to 50% of approved equipment, and income-qualified households can get up to $2,000 for a charger or $5,000 with a panel upgrade. The rules are the same in Bakersfield as in Fresno, so see <a href='/us/ca/fresno/ev-charger/'>Fresno EV charger rebates</a> for the full detail.</p><h2>Permits in Bakersfield</h2><p>The City's Development Services Department at 1715 Chester Avenue handles building permit payments in person, and the City's Clariti customer portal lets you apply for and check the status of permits. Its permit types include water heater change-outs, air conditioner change-outs and solar panels. See the <a href='https://www.bakersfieldcity.us/building-permits' target='_blank' rel='noopener'>City's building permits page</a>, and ask your contractor who pulls the permit.</p><h2>Climate and sizing</h2><p>Bakersfield's average January low over 2015 to 2024 was 5.5°C (about 42°F), with a coldest recorded day of -3.0°C, and it gets about 5.5 peak sun hours a day, the most of the Central Valley cities we cover. Summers are extremely hot, so cooling decides the size of a system. The federal 25C and 25D tax credits ended after December 31, 2025.</p>
-<h2>Installers in Bakersfield</h2><p>These Bakersfield heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone.</p>
+<h2 id="free-help-first">Free help first</h2><p>The Community Action Partnership of Kern runs the Weatherization program, free for eligible Kern County households, with an income limit of 150% of the federal poverty guidelines. Renters need the owner to sign an energy service agreement. PG&E's Energy Savings Assistance program also gives no-cost upgrades, including heat pump water heaters and furnaces, to households under its income table, for homes at least five years old. Apply to both before you pay for anything. CAPK's office is at 300 19th Street.</p><h2 id="pg-e-s-neighborhood-programs">PG&E's neighborhood programs</h2><p>PG&E's page lists Empower My Home, available in parts of Bakersfield, and Powerful Neighborhoods, which serves parts of Kern County, as ways to upgrade to electric appliances, heating and cooling and water heaters at low or no cost. Eligibility depends on your address and PG&E's page does not list the neighborhoods, so check it on <a href='https://www.pge.com/en/clean-energy/building-electrification.html' target='_blank' rel='noopener'>PG&E's building electrification page</a>.</p><h2 id="why-heat-pump-money-is-thin">Why heat pump money is thin</h2><p>California Energy-Smart Homes pays $4,250 plus bonuses for converting every gas appliance in a single-family home, but applicants join a waiting list (<a href='https://caenergysmarthomes.com/alterations/' target='_blank' rel='noopener'>program page</a>). TECH Clean California and federal HEEHRA are fully reserved for single-family homes and take new requests on hold only. PG&E publishes cost ranges of $1,200 to $5,500 for a heat pump water heater and $3,500 to $25,000 for a heat pump system. Without a rebate, the protection is three bids and a written load calculation.</p><h2 id="ev-chargers">EV chargers</h2><p>PG&E's EV charging rebate pays up to 50% of approved equipment, and income-qualified households can get up to $2,000 for a charger or $5,000 with a panel upgrade. The rules are the same in Bakersfield as in Fresno, so see <a href='/us/ca/fresno/ev-charger/'>Fresno EV charger rebates</a> for the full detail.</p><h2 id="permits-in-bakersfield">Permits in Bakersfield</h2><p>The City's Development Services Department at 1715 Chester Avenue handles building permit payments in person, and the City's Clariti customer portal lets you apply for and check the status of permits. Its permit types include water heater change-outs, air conditioner change-outs and solar panels. See the <a href='https://www.bakersfieldcity.us/building-permits' target='_blank' rel='noopener'>City's building permits page</a>, and ask your contractor who pulls the permit.</p><h2 id="climate-and-sizing">Climate and sizing</h2><p>Bakersfield's average January low over 2015 to 2024 was 5.5°C (about 42°F), with a coldest recorded day of -3.0°C, and it gets about 5.5 peak sun hours a day, the most of the Central Valley cities we cover. Summers are extremely hot, so cooling decides the size of a system. The federal 25C and 25D tax credits ended after December 31, 2025.</p>
+<h2 id="installers-in-bakersfield">Installers in Bakersfield</h2><p>These Bakersfield heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone.</p>
 <div class="installer-card"><div><div class="name">South Valley AC &amp; Heating LLC</div><div class="stars">&#9733; 5.0 (578 reviews)</div></div><a class="site-link" href="https://www.southvalleyac.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Xceptional Heating &amp; Air</div><div class="stars">&#9733; 5.0 (417 reviews)</div></div><a class="site-link" href="http://callxceptional.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">All Heart Heating, Cooling &amp; Plumbing</div><div class="stars">&#9733; 5.0 (205 reviews)</div></div><a class="site-link" href="https://callallheart.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Central California Air Inc.</div><div class="stars">&#9733; 5.0 (191 reviews)</div></div><a class="site-link" href="https://centralcaliforniaair.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Optimal Heating &amp; Air</div><div class="stars">&#9733; 5.0 (156 reviews)</div></div><a class="site-link" href="https://www.optimalheatingandair.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/ca/bakersfield/heat-pump/">See all Bakersfield installers &rarr;</a></p>
-<h2>How to start</h2>
+<h2 id="how-to-start">How to start</h2>
 <ol>
 <li>Look at your bills: PG&E for electricity, SoCalGas for gas.</li>
 <li>Apply to CAPK weatherization and PG&E Energy Savings Assistance if your income may qualify.</li>
@@ -510,17 +573,20 @@ h1, h2 { text-wrap: balance; }
 <li>Ask your contractor which City permit each part needs.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city=bakersfield" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Bakersfield</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Who supplies electricity and gas in Bakersfield?</h3><p>PG&E supplies electricity. Southern California Gas Company supplies natural gas.</p></div>
 <div class="faq-item"><h3>Is there a heat pump rebate in Bakersfield?</h3><p>We found no open PG&E cash rebate. California Energy-Smart Homes has a waiting list, and TECH and federal HEEHRA are fully reserved for single-family homes.</p></div>
 <div class="faq-item"><h3>Is weatherization free?</h3><p>CAPK's Weatherization is free for Kern County households at or below 150% of the federal poverty guidelines.</p></div>
 <div class="faq-item"><h3>Is there an EV charger rebate?</h3><p>Yes. PG&E's standard option pays up to 50% of approved equipment, with up to $2,000 or $5,000 for income-qualified households.</p></div>
 <div class="faq-item"><h3>How do I apply for a building permit?</h3><p>Through the City's Clariti customer portal, or in person at Development Services, 1715 Chester Avenue.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Run the <a href='/calculator/ca/'>California rebate calculator</a>, read <a href='https://www.pge.com/en/clean-energy/building-electrification.html' target='_blank' rel='noopener'>PG&E's building electrification page</a>, or see <a href='https://energy.capk.org/weatherization-and-energy-efficiency/' target='_blank' rel='noopener'>CAPK's weatherization page</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://www.pge.com/en/clean-energy/building-electrification.html" target="_blank" rel="noopener">PG&amp;E building electrification</a>, <a href="https://www.pge.com/en/save-energy-and-money/energy-saving-programs/energy-savings-assistance-program.html" target="_blank" rel="noopener">PG&amp;E Energy Savings Assistance</a>, <a href="https://energy.capk.org/weatherization-and-energy-efficiency/" target="_blank" rel="noopener">CAPK Weatherization</a>, <a href="https://www.bakersfieldcity.us/building-permits" target="_blank" rel="noopener">City of Bakersfield building permits</a>. <a href="/us/ca/bakersfield/">All Bakersfield rebates &rarr;</a> <a href="/programs/pge-rebates/">Every PG&amp;E rebate &rarr;</a></p>
 </div></article>
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-is-available-in-bakersfield">What is available in Bakersfield</a></li><li><a href="#free-help-first">Free help first</a></li><li><a href="#pg-e-s-neighborhood-programs">PG&amp;E&#x27;s neighborhood programs</a></li><li><a href="#why-heat-pump-money-is-thin">Why heat pump money is thin</a></li><li><a href="#ev-chargers">EV chargers</a></li><li><a href="#permits-in-bakersfield">Permits in Bakersfield</a></li><li><a href="#climate-and-sizing">Climate and sizing</a></li><li><a href="#installers-in-bakersfield">Installers in Bakersfield</a></li><li><a href="#how-to-start">How to start</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=bakersfield&province=ca">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Bakersfield where relevant -->
@@ -722,6 +788,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

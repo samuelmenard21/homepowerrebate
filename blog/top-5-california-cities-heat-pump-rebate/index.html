@@ -219,6 +219,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -454,7 +517,7 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">Top 5 California Cities for Heat Pump Rebates (2026)</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -469,15 +532,15 @@ h1, h2 { text-wrap: balance; }
 <article class="article">
   <div class="wrap">
 <p class="byline">By <a href="/about">Sam Menard</a> · Updated October 2, 2026</p>
-<h2>The ranking, by a 3-ton gas-to-electric swap</h2>
+<h2 id="the-ranking-by-a-3-ton-gas-to-electric-swap">The ranking, by a 3-ton gas-to-electric swap</h2>
 <p>The same 3-ton system earns very different amounts depending on the utility. Here is what each pays, from its own page.</p><div class='tw' style='overflow-x:auto'><table style='width:100%;border-collapse:collapse;min-width:520px'><tr><th align='left'>Utility (city)</th><th align='left'>What it pays</th><th align='left'>3-ton, gas to electric</th></tr><tr><td style='padding:8px;border-bottom:1px solid #d9d0c1'>LADWP (Los Angeles)</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$1,000 to $1,250 per ton ducted, $1,500 to $2,500 per ton mini-split, by efficiency tier</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$3,000 ducted at the entry tier, $4,500 mini-split, up to $7,500</td></tr><tr><td style='padding:8px;border-bottom:1px solid #d9d0c1'>Glendale Water and Power</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$1,000 per ton, up to $5,000, replacing gas</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$3,000</td></tr><tr><td style='padding:8px;border-bottom:1px solid #d9d0c1'>SMUD (Sacramento)</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$3,000 variable-stage, $2,000 two-stage, replacing gas</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$3,000 (variable-stage)</td></tr><tr><td style='padding:8px;border-bottom:1px solid #d9d0c1'>Burbank Water and Power</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$1,000 per ton, up to $2,500 (up to $5,000 low-income)</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$2,500 (the cap)</td></tr><tr><td style='padding:8px;border-bottom:1px solid #d9d0c1'>Riverside Public Utilities</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$750 per ton, 15.2 SEER or higher</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$2,250</td></tr><tr><td style='padding:8px;border-bottom:1px solid #d9d0c1'>San Jose Clean Energy</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$1,500 flat ($2,500 in Environmental Justice communities)</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$1,500</td></tr><tr><td style='padding:8px;border-bottom:1px solid #d9d0c1'>Pasadena Water and Power</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$170 per ton, plus $20 per ton if bought in Pasadena</td><td style='padding:8px;border-bottom:1px solid #d9d0c1'>$510</td></tr></table></div><p>These are utility rebates only. Funding is limited, and every one of these programs can change.</p>
-<h2>Why Los Angeles still comes first</h2>
+<h2 id="why-los-angeles-still-comes-first">Why Los Angeles still comes first</h2>
 <p>LADWP's top mini-split tier pays $2,500 per ton, so a 3-ton unit at 20.5 SEER2 and 9.1 HSPF2 earns up to $7,500. Most homes will land lower, because the entry tier for a ducted system is $1,000 per ton. LADWP's scale also rewards buying a more efficient model, which no other utility here does. See <a href='/us/ca/los-angeles/los-angeles/heat-pump/'>Los Angeles heat pump rebates</a>.</p>
-<h2>Where Glendale, Sacramento, Burbank and Riverside land</h2>
+<h2 id="where-glendale-sacramento-burbank-and-riverside-">Where Glendale, Sacramento, Burbank and Riverside land</h2>
 <p>Glendale's $1,000 per ton is simple and reaches $5,000 at 5 tons, but the water heater rebate of $4,000 is the bigger draw (<a href='/us/ca/los-angeles/glendale/'>Glendale</a>). SMUD pays $3,000 for a variable-stage unit and also publishes what its customers paid, a median of $18,804 for a gas-to-electric heat pump (<a href='/us/ca/sacramento/sacramento/heat-pump/'>Sacramento</a>). Burbank caps its standard rebate at $2,500 so a 3-ton system gets the same as a 2.5-ton one (<a href='/us/ca/los-angeles/burbank/heat-pump/'>Burbank</a>). Riverside's $750 per ton is the highest flat per-ton rate (<a href='/us/ca/inland-empire/riverside/heat-pump/'>Riverside</a>).</p>
-<h2>Big California areas with no utility cash rebate</h2>
+<h2 id="big-california-areas-with-no-utility-cash-rebate">Big California areas with no utility cash rebate</h2>
 <p>PG&E (Fresno, Bakersfield, Oakland, Berkeley, Fremont), SDG&E and San Diego Community Power (San Diego, Chula Vista, Escondido) and Southern California Edison (San Bernardino, Ontario, Long Beach) have no open utility cash rebate for a heat pump that we could confirm. San Francisco pays up to $1,200 in bill credits over two years. Free upgrades for income-qualified households are available through several of them. The federal 25C credit ended after December 31, 2025, and TECH Clean California and HEEHRA are fully reserved for single-family homes.</p>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Which California city has the best heat pump rebate?</h3><p>For a typical 3-ton system, Los Angeles (LADWP) at $3,000 to $7,500, Glendale at $3,000 and Sacramento (SMUD) at $3,000.</p></div>
 <div class="faq-item"><h3>Does the rebate depend on the unit&#x27;s efficiency?</h3><p>At LADWP, yes: the per-ton amount rises with the SEER2 and HSPF2 tier. At most others it is a flat per-ton or flat amount.</p></div>
 <div class="faq-item"><h3>Is there a statewide California heat pump rebate?</h3><p>Not open for single-family homes. TECH Clean California and HEEHRA are fully reserved.</p></div>
@@ -486,6 +549,9 @@ h1, h2 { text-wrap: balance; }
   </div>
 </article>
 
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#the-ranking-by-a-3-ton-gas-to-electric-swap">The ranking, by a 3-ton gas-to-electric swap</a></li><li><a href="#why-los-angeles-still-comes-first">Why Los Angeles still comes first</a></li><li><a href="#where-glendale-sacramento-burbank-and-riverside-">Where Glendale, Sacramento, Burbank and Riverside land</a></li><li><a href="#big-california-areas-with-no-utility-cash-rebate">Big California areas with no utility cash rebate</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -688,6 +754,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

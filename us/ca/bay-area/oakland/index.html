@@ -213,6 +213,69 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+/* ===== fluid layout system =====
+   One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
+html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
+main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+@media (min-width: 769px) {
+  main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+/* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
+main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
+@media (min-width: 900px) {
+  main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
+  main.layout-wide section:has(.hf-i) ul { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); column-gap: clamp(32px, 4vw, 64px); }
+}
+/* homepage hero on wide screens: headline and intro on the left, the search card on the right */
+@media (min-width: 1100px) {
+  main.layout-wide > section.hero:has(#hero-find) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(380px, .9fr); column-gap: clamp(40px, 5vw, 96px); align-items: center; text-align: left; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 64px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-eyebrow { grid-column: 1; grid-row: 1; justify-self: start; margin: 0 0 18px; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-h1 { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 20px; text-align: left; font-size: clamp(48px, 4.4vw, 80px); }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-sub { grid-column: 1; grid-row: 3; margin: 0 !important; max-width: 34em; text-align: left; }
+  main.layout-wide > section.hero:has(#hero-find) > #hero-find { grid-column: 2; grid-row: 1 / span 3; margin: 0; max-width: none; width: 100%; }
+  main.layout-wide > section.hero:has(#hero-find) > .quick-answer { grid-column: 1 / -1; grid-row: 4; max-width: none; margin: 40px 0 0; }
+  main.layout-wide > section.hero:has(#hero-find) > .hero-trust-line { grid-column: 1 / -1; grid-row: 5; justify-content: flex-start; margin-left: 0; }
+}
+/* desktop layout: long-form pages use the width. A sticky side panel (page sections + rebate-plan call to action) sits beside the reading column from 1180px; below that it is hidden and nothing changes. */
+.page-rail { display: none; }
+@media (min-width: 1180px) {
+  main.has-rail { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, var(--article)) var(--rail) minmax(24px, 1fr); column-gap: clamp(32px, 3.4vw, 64px); }
+  main.has-rail > * { grid-column: 2; }
+  main.has-rail > .hero, main.has-rail > section.hero, main.has-rail > header.hero, main.has-rail > div.hero { grid-column: 1 / -1; }
+  main.has-rail > .page-rail { display: block; grid-column: 3; align-self: start; position: sticky; top: 96px; margin-top: 32px; }
+  .page-rail .rail-toc { border-left: 2px solid var(--rule); padding-left: 18px; }
+  .page-rail .rail-h { font: 700 12px/1.2 'Inter Tight', 'Inter Tight Fallback', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+  .page-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: calc(100vh - 340px); overflow: auto; }
+  .page-rail ol a { display: block; padding: 6px 0; font-size: 14px; line-height: 1.35; color: var(--ink-soft); text-decoration: none; }
+  .page-rail ol a:hover { color: var(--teal-deep); text-decoration: underline; }
+  .page-rail ol a[aria-current="true"] { color: #a4540a; font-weight: 700; }
+  .page-rail .rail-cta { margin-top: 24px; padding: 20px; border-radius: 14px; background: var(--teal-deep); color: #fff; }
+  .page-rail .rail-cta p { max-width: none; margin: 0 0 8px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+  .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
+  .page-rail .rail-btn:hover { background: #9a4f08; }
+}
+@media (min-width: 1180px) {
+  main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }
+}
+/* installer profile pages: contrast (page greys and amber), and a heading size that cannot sit on the edge of the narrower column */
+.ip-breadcrumb, .ip-breadcrumb a, .ip-rating-count, .ip-maps-link, .ip-vet-note { color: #5f5849 !important; }
+.ip-footer-note { color: #6b6355 !important; }
+.ip-nearby-rating { color: #a4540a !important; }
+.ip-btn-primary, #ip-quote-btn, .ip-quote-form button { background: #b4590a !important; color: #fff !important; }
+@media (min-width: 1100px) { .ip-hero h1 { font-size: 32px; } }
+/* installer profile pages: reading column plus a sticky quote panel */
+@media (min-width: 1100px) {
+  .ip-wrap { max-width: var(--container); display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px); column-gap: clamp(40px, 4vw, 72px); }
+  .ip-wrap > * { grid-column: 1; }
+  .ip-wrap > .ip-breadcrumb { grid-column: 1 / -1; }
+  .ip-wrap > .ip-quote { grid-column: 2; grid-row: 2 / span 12; position: sticky; top: 96px; align-self: start; margin-top: 0; display: block; padding: 26px 22px; }
+  .ip-wrap > .ip-quote > form { grid-column: auto; grid-row: auto; }
+}
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -480,28 +543,28 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1" class="has-rail">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/ca/">California</a></li><li aria-current="page">Oakland</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">Free expert help, income-qualified upgrades</div><h1>Oakland Home Energy Rebates 2026</h1><p>Oakland's electricity supplier is Ava Community Energy, and the City keeps its own list of electrification programs. We found no dollar amount for a heat pump or heat pump water heater rebate from Ava, PG&E or the City, so we show none. Here is what is real, what is full, and how Oakland's permits work. We read the City's pages on October 2, 2026.</p></div></section>
 <section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
 
 </div></section>
 <article class="article"><div class="wrap">
-<h2>What is open in Oakland</h2>
+<h2 id="what-is-open-in-oakland">What is open in Oakland</h2>
 <p>The City of Oakland's incentives page lists programs by name without dollar amounts for heat pumps. The cards below are the ones we could read ourselves. Where a program is full, we say so.</p>
 <div class="rebate-grid">
 <div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Ava rebates and induction lending</h4><div class="amount">Batteries and induction</div><p style="font-size:14px;margin:8px 0 0;">Oakland's page says Ava provides rebates for holistic electrification, including battery storage and induction stoves, and an induction cooktop lending program with sites across Alameda County.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>PG&amp;E Energy Savings Assistance</h4><div class="amount">Free upgrades</div><p style="font-size:14px;margin:8px 0 0;">Free energy efficiency upgrades for income-qualified households, including renters.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>BayREN EASE Home</h4><div class="amount">80% of weatherization</div><p style="font-size:14px;margin:8px 0 0;">For income-qualified PG&E customers (at or below 120% of area median income) in a single-family home built before 2010. Helps with heat pump and water heater applications but does not pay for that equipment.</p></div><div class="rebate-card"><span class="program-status status-limited">On hold</span><h4>TECH Clean California</h4><div class="amount">Fully reserved</div><p style="font-size:14px;margin:8px 0 0;">Single-family heat pump incentives are fully reserved and take new requests on hold only.</p></div><div class="rebate-card"><span class="program-status status-limited">On hold</span><h4>Federal HEEHRA rebates</h4><div class="amount">Fully reserved</div><p style="font-size:14px;margin:8px 0 0;">Single-family funding was fully reserved statewide on February 24, 2026, with requests on hold.</p></div>
 </div>
 <div class='highlight-box'><h4>What we could not confirm</h4><p>Ava's incentive finder asks for your zip code, household size, income, homeowner or renter status and tax filing status before it shows results, and its amounts are not printed on a public page. A search summary mentioned a $1,000 Ava incentive for heat pump water heaters that is paid through BayREN to contractors. We could not read that program page, so we do not quote it as a homeowner rebate. Ask your contractor whether such a discount is already in the quote.</p></div>
-<h2>Ava and the City's list</h2><p>Ava Community Energy, formerly East Bay Community Energy, is Oakland's default electricity provider. The City of Oakland's building electrification page lists Ava next to BayREN, TECH Clean California, the Switch Is On campaign, California Energy Smart Homes through PG&amp;E, PG&amp;E's Energy Savings Assistance, the Low Income Weatherization Program, PACE and GoGreen Financing. That is a good map of where to look, but it prints no heat pump amounts. Use <a href='https://avaenergy.org/go-electric/savings-incentives/' target='_blank' rel='noopener'>Ava's incentive finder</a> with your own household details to see the figures that apply to you, and treat the result as a lead until you confirm it with the program.</p><h2>Permits are quick in Oakland</h2><p>The City says you usually need a separate mechanical, electrical and plumbing permit for each type of work, and that residential permits are for houses, duplexes and their accessory structures. If your project does not need a plan check, permits are issued right after you submit your application and pay the fees through the Online Permit Center. That is faster than many cities. Ask your contractor to pull each permit and book the inspections, and call the City at (510) 238-3891 with questions. See the <a href='https://www.oaklandca.gov/services/apply-for-mechanical-electrical-and-plumbing-mep-permits' target='_blank' rel='noopener'>MEP permit page</a>.</p><h2>Climate and what it means</h2><p>Oakland's average January low over 2015 to 2024 was 7.0°C (about 45°F), with a coldest recorded day of 0.2°C, and it gets about 5.2 peak sun hours a day. A standard heat pump does the job, and solar works well, though shading and roof direction decide the result. The Bay Area Air District's clean building appliance rules begin phasing out some gas appliances in 2027, which is a reason to plan a replacement before a failure forces one.</p><h2>What is full</h2><p>TECH Clean California's single-family heat pump incentives and the federal HEEHRA program are fully reserved and take new requests on hold only. California Energy Smart Homes, which PG&amp;E administers, is listed by Oakland, but BayREN's incentive page says funding for 2026 had no funding left as of April 2026. The federal 25C and 25D tax credits ended after December 31, 2025. Financing is available through PACE and GoGreen Financing, with repayment on the property tax bill for PACE.</p><h2>Free guidance first</h2><p>BayREN's EASE Home program pays 80% of weatherization costs for income-qualified PG&amp;E customers and helps you apply for heat pump, water heater and induction rebates, with a limit to homes of four units or fewer built before 2010 (<a href='https://www.bayren.org/ease-home' target='_blank' rel='noopener'>BayREN EASE Home</a>). BayREN's Home Energy Advisor service connects owners to available rebates and qualified contractors, according to the City's list. Start there before you spend on quotes.</p>
-<h2>Installers in Oakland</h2><p>These Oakland heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone, and some have few reviews, so call several.</p>
+<h2 id="ava-and-the-city-s-list">Ava and the City's list</h2><p>Ava Community Energy, formerly East Bay Community Energy, is Oakland's default electricity provider. The City of Oakland's building electrification page lists Ava next to BayREN, TECH Clean California, the Switch Is On campaign, California Energy Smart Homes through PG&amp;E, PG&amp;E's Energy Savings Assistance, the Low Income Weatherization Program, PACE and GoGreen Financing. That is a good map of where to look, but it prints no heat pump amounts. Use <a href='https://avaenergy.org/go-electric/savings-incentives/' target='_blank' rel='noopener'>Ava's incentive finder</a> with your own household details to see the figures that apply to you, and treat the result as a lead until you confirm it with the program.</p><h2 id="permits-are-quick-in-oakland">Permits are quick in Oakland</h2><p>The City says you usually need a separate mechanical, electrical and plumbing permit for each type of work, and that residential permits are for houses, duplexes and their accessory structures. If your project does not need a plan check, permits are issued right after you submit your application and pay the fees through the Online Permit Center. That is faster than many cities. Ask your contractor to pull each permit and book the inspections, and call the City at (510) 238-3891 with questions. See the <a href='https://www.oaklandca.gov/services/apply-for-mechanical-electrical-and-plumbing-mep-permits' target='_blank' rel='noopener'>MEP permit page</a>.</p><h2 id="climate-and-what-it-means">Climate and what it means</h2><p>Oakland's average January low over 2015 to 2024 was 7.0°C (about 45°F), with a coldest recorded day of 0.2°C, and it gets about 5.2 peak sun hours a day. A standard heat pump does the job, and solar works well, though shading and roof direction decide the result. The Bay Area Air District's clean building appliance rules begin phasing out some gas appliances in 2027, which is a reason to plan a replacement before a failure forces one.</p><h2 id="what-is-full">What is full</h2><p>TECH Clean California's single-family heat pump incentives and the federal HEEHRA program are fully reserved and take new requests on hold only. California Energy Smart Homes, which PG&amp;E administers, is listed by Oakland, but BayREN's incentive page says funding for 2026 had no funding left as of April 2026. The federal 25C and 25D tax credits ended after December 31, 2025. Financing is available through PACE and GoGreen Financing, with repayment on the property tax bill for PACE.</p><h2 id="free-guidance-first">Free guidance first</h2><p>BayREN's EASE Home program pays 80% of weatherization costs for income-qualified PG&amp;E customers and helps you apply for heat pump, water heater and induction rebates, with a limit to homes of four units or fewer built before 2010 (<a href='https://www.bayren.org/ease-home' target='_blank' rel='noopener'>BayREN EASE Home</a>). BayREN's Home Energy Advisor service connects owners to available rebates and qualified contractors, according to the City's list. Start there before you spend on quotes.</p>
+<h2 id="installers-in-oakland">Installers in Oakland</h2><p>These Oakland heat pump and HVAC companies have the best Google ratings, listed by rating and then review count. We are not paid to list anyone, and some have few reviews, so call several.</p>
 <div class="installer-card"><div><div class="name">California HVAC</div><div class="stars">&#9733; 5.0 (61 reviews)</div></div><a class="site-link" href="http://www.californiahvacs.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Daniel&#x27;s plumbing heating &amp; a/c</div><div class="stars">&#9733; 5.0 (36 reviews)</div></div></div>
 <div class="installer-card"><div><div class="name">AirTong Heating and Air</div><div class="stars">&#9733; 5.0 (11 reviews)</div></div><a class="site-link" href="https://airtongheating.co/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Atlas Heating and Air Conditioning</div><div class="stars">&#9733; 4.9 (588 reviews)</div></div><a class="site-link" href="http://www.atlasheating.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">Breathable</div><div class="stars">&#9733; 4.9 (262 reviews)</div></div><a class="site-link" href="http://www.breathable.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/ca/oakland/heat-pump/">See all Oakland installers &rarr;</a></p>
-<h2>How to start</h2>
+<h2 id="how-to-start">How to start</h2>
 <ol>
 <li>Check your electric bill for Ava and your gas bill for PG&E.</li>
 <li>Run Ava's incentive finder with your household details, and ask BayREN's Home Energy Advisor about current rebates.</li>
@@ -510,18 +573,21 @@ h1, h2 { text-wrap: balance; }
 <li>Ask the contractor to pull the City permits and book the inspections.</li>
 </ol>
 <div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city=oakland" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Oakland</a>.</div>
-<h2>Common questions</h2>
+<h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Who is Oakland&#x27;s electricity provider?</h3><p>Ava Community Energy, formerly East Bay Community Energy, is the default provider, and PG&E delivers the power.</p></div>
 <div class="faq-item"><h3>Is there an Oakland heat pump rebate?</h3><p>We found no dollar amount for one from Ava, PG&E or the City. TECH Clean California and federal HEEHRA are fully reserved for single-family homes.</p></div>
 <div class="faq-item"><h3>Can I borrow an induction cooktop?</h3><p>Yes. Oakland's page says Ava runs an induction cooktop lending program with sites across Alameda County.</p></div>
 <div class="faq-item"><h3>How do Oakland permits work?</h3><p>Separate mechanical, electrical and plumbing permits for houses and duplexes, issued right after you apply and pay when no plan check is needed.</p></div>
 <div class="faq-item"><h3>Is there free help for income-qualified households?</h3><p>Yes. PG&E's Energy Savings Assistance offers free upgrades, and BayREN's EASE Home pays 80% of weatherization costs.</p></div>
 
-<h2>What to do next</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Open <a href='https://www.oaklandca.gov/resources/building-electrification-incentives-and-rebates' target='_blank' rel='noopener'>the City's incentives list</a>, run the <a href='/calculator/ca/'>California rebate calculator</a>, or see <a href='https://avaenergy.org/go-electric/savings-incentives/' target='_blank' rel='noopener'>Ava's incentive finder</a>.</p>
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://www.oaklandca.gov/resources/building-electrification-incentives-and-rebates" target="_blank" rel="noopener">City of Oakland building electrification incentives</a>, <a href="https://www.oaklandca.gov/services/apply-for-mechanical-electrical-and-plumbing-mep-permits" target="_blank" rel="noopener">City of Oakland MEP permits</a>, <a href="https://www.bayren.org/ease-home" target="_blank" rel="noopener">BayREN EASE Home</a>, <a href="https://avaenergy.org/go-electric/savings-incentives/" target="_blank" rel="noopener">Ava Community Energy incentive finder</a>. <a href="/us/ca/bay-area/oakland/">All Oakland rebates &rarr;</a> <a href="/programs/pge-rebates/">Every PG&amp;E rebate &rarr;</a></p>
 </div></article>
 <!-- UTILITY-AVA-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Buying power from Ava?</b> See <a href="/programs/ava-community-energy-rebates/">what Ava Community Energy offers and where heat pump money comes from</a>.</p></section><!-- UTILITY-AVA-LINK-END -->
+<!-- PAGE-RAIL-START -->
+<aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-is-open-in-oakland">What is open in Oakland</a></li><li><a href="#ava-and-the-city-s-list">Ava and the City&#x27;s list</a></li><li><a href="#permits-are-quick-in-oakland">Permits are quick in Oakland</a></li><li><a href="#climate-and-what-it-means">Climate and what it means</a></li><li><a href="#what-is-full">What is full</a></li><li><a href="#free-guidance-first">Free guidance first</a></li><li><a href="#installers-in-oakland">Installers in Oakland</a></li><li><a href="#how-to-start">How to start</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=oakland&province=ca">Get my plan</a></div></aside>
+<!-- PAGE-RAIL-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Oakland where relevant -->
@@ -723,6 +789,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){var t=document.getElementById(a.getAttribute('href').slice(1));var d=t&&t.closest('details.hub-fold');if(d)d.open=true;}});window.addEventListener('hashchange',o);o();})();
 (function(){function c(){document.querySelectorAll('main p, article p, .wrap p, section p').forEach(function(p){if(getComputedStyle(p).textAlign==='center'){p.style.marginLeft='auto';p.style.marginRight='auto'}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',c);else c()})();
+(function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body></html>

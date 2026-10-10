@@ -46,6 +46,8 @@ def adjust(decls, tag):
         m = re.fullmatch(r"(\d+(?:\.\d+)?)px", v) if k == "font-size" else None
         if m and float(m.group(1)) < 13:
             d = "font-size: 13px !important"
+        elif k == "max-width" and re.fullmatch(r"(1100|1120|1140|1180|1200)px", v):
+            d = "max-width: var(--container, " + v + ")"
         elif k == "color" and re.fullmatch(r"(var\(--amber\)|#d4751c)", v, re.I):
             d = "color: #a4540a !important"
         elif k == "color" and re.fullmatch(r"var\(--sage\)", v):

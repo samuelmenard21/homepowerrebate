@@ -34,6 +34,7 @@ CITY = {
     "ab": "Alberta has no province-wide heat pump rebate we could verify, so the federal rebate may be the main one.",
     "ns": "Efficiency Nova Scotia pays per ton now, and Ottawa says the federal rebate can be combined with provincial programs.",
 }
+HPPAGE = {"bc": ("BC", "/ca/bc/heat-pump/"), "on": ("Ontario", "/ca/on/heat-pump/"), "ab": ("Alberta", "/ca/ab/heat-pump/"), "ns": ("Nova Scotia", "/ca/ns/heat-pump/")}
 NAMES = {"st-albert": "St. Albert", "fort-st-john": "Fort St. John", "niagara-falls": "Niagara Falls", "sault-ste-marie": "Sault Ste. Marie"}
 POSTS = [("should-you-wait-federal-heat-pump-rebate", "Should You Wait for the Federal Heat Pump Rebate?", "The rebate launches early 2027. Deadlines that are real today and a simple rule for deciding."),
          ("federal-heat-pump-rebate-stacking-by-province", "Federal + Provincial Heat Pump Rebates: What Stacks", "BC, Ontario, Nova Scotia and Alberta, with sample stacks."),
@@ -58,7 +59,8 @@ def main():
         f = ROOT / "ca" / code / "index.html"
         t = f.read_text(encoding="utf-8")
         ln = " &middot; ".join(f'<a href="/blog/{s}/">{html.escape(a)}</a>' for a, s in links)
-        blk = f'<section {BOX}><b>{LEAD}</b>{text} <a href="{P}">Everything confirmed so far</a> &middot; {ln}</section>'
+        nm, hp = HPPAGE[code]
+        blk = f'<section {BOX}><b>{LEAD}</b>{text} <a href="{P}">Everything confirmed so far</a> &middot; <a href="{hp}">{nm} heat pump rebate guide</a> &middot; {ln}</section>'
         f.write_text(put(t, blk), encoding="utf-8"); n += 1
     for f in sorted((ROOT / "ca").glob("*/*/heat-pump/index.html")):
         code, slug = f.parts[-4], f.parts[-3]

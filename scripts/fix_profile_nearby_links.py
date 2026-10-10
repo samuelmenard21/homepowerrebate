@@ -44,7 +44,10 @@ def main():
                 return m.group(0)
             parts = rel.split("/")
             alt = "/".join(parts[1:]) if len(parts) == 3 else None
-            for cand in (rel, alt):
+            cands = [rel, alt] if alt else [rel]
+            if len(parts) == 2:
+                cands += [f"{r}/{rel}" for r in ("bc", "on")]
+            for cand in cands:
                 if cand:
                     if exists(cand):
                         return f'href="/installers/profiles/{cand}/"'

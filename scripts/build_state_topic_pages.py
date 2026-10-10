@@ -37,7 +37,8 @@ def build(name):
     steps = "".join(f"<li>{s}</li>\n" for s in d["claim_steps"])
     faq = "".join(f'<div class="faq-item"><h3>{e(q)}</h3><p>{a}</p></div>\n' for q, a in d["faq"])
     sources = " ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>' + ("," if i < len(d["refs"]) - 1 else "") for i, (t, u) in enumerate(d["refs"]))
-    calc = f"/calculator/{region}/"
+    calc = d.get("calc") or f"/calculator/{region}/"
+    calc_label = d.get("calc_label") or f"{hub_name} rebate calculator"
     article = f"""<h2>{d['cards_heading']}</h2>
 {d['cards_intro']}
 <div class="rebate-grid">
@@ -52,7 +53,7 @@ def build(name):
 <ul>
 <li><a href="{hub}">{e(hub_name)} home rebates: every program in one place</a></li>
 {links}</ul>
-<div class="callout"><strong>Want your exact number?</strong> Run our <a href="{calc}" style="color:var(--teal,#0d4f5c); font-weight:600;">{e(hub_name)} rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
+<div class="callout"><strong>Want your exact number?</strong> Run our <a href="{calc}" style="color:var(--teal,#0d4f5c); font-weight:600;">{e(calc_label)}</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
 <h2>Common questions</h2>
 {faq}
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {sources}.</p>"""

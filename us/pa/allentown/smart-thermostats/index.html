@@ -79,7 +79,7 @@ footer.site-footer { padding: 40px 0; text-align: center; font-size: 13px; }
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -203,10 +203,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -216,9 +222,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -486,7 +493,7 @@ h1, h2 { text-wrap: balance; }
 <h2>What smart thermostat rebates pay in Allentown</h2>
 <p>We re-read PPL Electric's smart thermostat page on October 5, 2026, and the offer was listed with an Apply for Rebate button.</p>
 <div class="rebate-grid">
-<div class="rebate-card"><span class="program-status status-open">Open</span><h4>PPL smart thermostat</h4><div class="amount">$50 or $100</div><p style="font-size:14px;margin:8px 0 0;">ENERGY STAR certified. Your home needs an air-source heat pump, fossil fuel heating with central A/C, or an electric furnace with central A/C. A labor invoice is required for installed units.</p></div>
+<div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">PPL smart thermostat</h4><div class="amount">$50 or $100</div><p style="font-size:14px;margin:8px 0 0;">ENERGY STAR certified. Your home needs an air-source heat pump, fossil fuel heating with central A/C, or an electric furnace with central A/C. A labor invoice is required for installed units.</p></div>
 </div>
 <div class='highlight-box'><h4>Check your system first</h4><p>PPL does not pay for a thermostat on baseboard heat, a geothermal system or a mini-split heat pump. Self-installed units may be inspected to confirm your heat source. PPL shows two amounts, so run its Check Best Offers questions to see whether you get $50 or $100.</p></div>
 <h2>Who saves most in Allentown</h2><p>The US Census Bureau's American Community Survey (2020 to 2024) shows 39.5% of Allentown households heat with electricity. If you have a central electric furnace or a heat pump run by one wall thermostat, a smart model can trim your PPL bill all winter by lowering the heat when you are out or asleep.</p><p>If you heat with gas (44.2% of households) or oil (14.1%), heating savings show up on your gas bill or oil deliveries, not on PPL. Your summer air conditioning savings still land on PPL.</p><p>Electric baseboards are different. Each heater usually has its own dial, and a standard smart thermostat can't control them. Line-voltage smart thermostats exist for baseboards; check that the model you pick is ENERGY STAR certified before counting on the rebate.</p><h2>Heat pump homes: use the right setting</h2><p>With a heat pump, deep night setbacks can backfire. When the house is cold in the morning, the system may switch on its backup electric strips to catch up fast, and those use a lot of power. Pick a thermostat with a heat pump mode, and set gentle setbacks of a few degrees.</p><h2>Settings that save the most</h2><p>A smart thermostat saves money only if its schedule matches your life. Start with these:</p><ul><li><strong>Away mode:</strong> most models use your phone's location to notice when the house is empty and ease the heat down.</li><li><strong>Sleep schedule:</strong> a slightly cooler house overnight is the simplest winter saving. In summer, let the air conditioning run a bit warmer while you sleep.</li><li><strong>Reports:</strong> many models send a monthly report of how long the system ran. Watching it is a quick way to spot a filter that needs changing or a furnace that runs far more than it should.</li></ul><p>Allentown's average January low is about -4.3°C (24°F), so most winter days are cold but not extreme. That suits moderate setbacks well. On the coldest nights, keep setbacks small so the house does not have to work hard to recover in the morning.</p><h2>Older homes and wiring</h2><p>82.1% of Allentown homes were built before 1980. Older systems often lack a C-wire, which many smart thermostats need for power. Look behind your current thermostat first. If there is no C-wire, choose a model with an adapter or have a technician add one.</p><h2>Renters</h2><p>Most Allentown households (56.8%) rent. If you pay your own PPL bill, ask your landlord before swapping the thermostat, and keep the old one to put back when you move.</p><h2>Pair it with other PPL rebates</h2><p>If you are also adding a heat pump or insulation, have the thermostat set up at the same time. PPL pays separate rebates on <a href='/us/pa/allentown/heat-pump/'>heat pumps</a> and <a href='/us/pa/allentown/insulation/'>insulation</a>, and each one is claimed on the same rebate store.</p>

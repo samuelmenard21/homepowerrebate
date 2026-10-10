@@ -79,7 +79,7 @@ footer.site-footer { padding: 40px 0; text-align: center; font-size: 13px; }
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -203,10 +203,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -216,9 +222,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -367,6 +374,7 @@ h1, h2 { text-wrap: balance; }
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "New Jersey Home Energy Rebates 2026: PSE&G, JCP&L and Atlantic City Electric", "url": "https://homepowerrebate.com/us/nj/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
 <!-- AEO-SPEAKABLE-END -->
 </head><body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
 <nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
@@ -493,7 +501,7 @@ h1, h2 { text-wrap: balance; }
 <!-- HUB-TOC-START --><nav class="toc" aria-label="On this page"><span class="toc-lbl">On this page:</span><a href="#find-city">Find your city</a><a href="#how-new-jersey-s-rebates-are-organized">How New Jersey's rebates…</a><a href="#what-is-not-available">What is not available</a><a href="#who-can-use-these-rebates">Who can use these rebates</a><a href="#paying-for-it">Paying for it</a><a href="#what-we-have-not-checked">What we have not checked</a><a href="#find-your-utility">Your utility</a></nav><!-- HUB-TOC-END -->
 
 <!-- CALC-LINK-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Not sure what you qualify for?</b> <a href="/calculator/nj/">Use the New Jersey rebate calculator</a>.</p><!-- CALC-LINK-END -->
-<article class="article"><div class="wrap">
+<article class="article" role="main" id="main"><div class="wrap">
 <h2 id="how-new-jersey-s-rebates-are-organized">How New Jersey's rebates are organized</h2><p>Three electric utilities cover most of the state, and each runs its own rebate programs: PSE&amp;G in the north and center, JCP&amp;L across the center and shore, and Atlantic City Electric in the south. The big heat pump rebates are the same idea at each. They pay up to $10,000 when a cold climate heat pump replaces a gas, oil or propane heating system, with more for moderate incomes. The details, deadlines and rules differ, so the first step is to read the name on your electric bill.</p><p>The state's Clean Energy Program adds things the utilities do not: free upgrades through Comfort Partners, up to $4,000 toward an electric car through Charge Up New Jersey, and credits for solar owners.</p><h2 id="what-is-not-available">What is not available</h2><p>The federal 25C and 25D tax credits for heat pumps, insulation, solar and batteries ended for spending after December 31, 2025. The federal-funded state home rebates (called HOMES and HEAR) show up on a state page as a design only, and we found no launch date or amounts, so we do not list them as open. The state has also proposed a home battery program, but it has no amounts yet. New Jersey has no cash rebate for solar panels. It pays credits on the power they make instead.</p><h2 id="who-can-use-these-rebates">Who can use these rebates</h2><p>Most heating rebates require that you own the home where the work is done, and several are limited to single-family homes or buildings of up to four homes. That matters in a state where many people rent. Renters can still use appliance rebates, free assessments and income-based weatherization, and can show the building owner the heat pump pages. Our city guides show how housing differs: Toms River is 82% owner-occupied, while Newark, Jersey City and Atlantic City are all more than 69% renters, according to the Census Bureau's American Community Survey for 2020 to 2024.</p><h2 id="paying-for-it">Paying for it</h2><p>PSE&amp;G offers interest-free repayment on your bill of up to $25,000 for a heating and cooling project, $50,000 for a stand-alone electrification project and $75,000 for both together. JCP&amp;L and Atlantic City Electric point to 0% financing through partner sites. Always read the loan terms before you borrow. Most rebates come off the contractor's invoice or arrive as a check, so you may need to cover the gap until you are paid.</p><h2 id="what-we-have-not-checked">What we have not checked</h2><p>Gas companies, including Elizabethtown Gas, New Jersey Natural Gas and South Jersey Gas, run their own rebates. We did not read their tables and list no amounts. We also have not ranked New Jersey installers yet, so ask each company for references and at least two written quotes.</p>
 <h2 id="find-your-utility">Find your utility</h2>
 <p>Pick the company printed at the top of your electric bill. Each page lists every offer with its source and the date we read it.</p>

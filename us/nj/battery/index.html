@@ -79,7 +79,7 @@ footer.site-footer { padding: 40px 0; text-align: center; font-size: 13px; }
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -203,10 +203,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -216,9 +222,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -480,7 +487,7 @@ h1, h2 { text-wrap: balance; }
 <h2>Battery money in New Jersey in 2026</h2>
 <p>Each card names the fact we keep on file, with the date we last read the official page.</p>
 <div class="rebate-grid">
-<div class="rebate-card"><span class="program-status status-open">Open</span><h4><a href='/programs/pseg-rebates/'>PSE&amp;G GridSmart Battery Program</a></h4><div class="amount">Up to $5,000</div><p style="font-size:14px;margin:8px 0 0;">An instant rebate on the contractor's invoice, plus up to $25,000 of interest-free repayment on your bill. For PSE&amp;G electric or dual-fuel customers. New installs only.</p></div><div class="rebate-card"><span class="program-status status-open">Info</span><h4>Garden State Energy Storage Program</h4><div class="amount">Proposal only</div><p style="font-size:14px;margin:8px 0 0;">The state released a plan for about 150 megawatts of storage that includes options for home batteries. It has no amounts or start date yet.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal 25D battery credit</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">The 30% credit does not apply to batteries paid for after December 31, 2025.</p></div>
+<div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3"><a href='/programs/pseg-rebates/'>PSE&amp;G GridSmart Battery Program</a></h4><div class="amount">Up to $5,000</div><p style="font-size:14px;margin:8px 0 0;">An instant rebate on the contractor's invoice, plus up to $25,000 of interest-free repayment on your bill. For PSE&amp;G electric or dual-fuel customers. New installs only.</p></div><div class="rebate-card"><span class="program-status status-open">Info</span><h4>Garden State Energy Storage Program</h4><div class="amount">Proposal only</div><p style="font-size:14px;margin:8px 0 0;">The state released a plan for about 150 megawatts of storage that includes options for home batteries. It has no amounts or start date yet.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal 25D battery credit</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">The 30% credit does not apply to batteries paid for after December 31, 2025.</p></div>
 </div>
 <p>JCP&amp;L and Atlantic City Electric are not on the list. On the pages we read, neither utility offers a home battery rebate. Check your electric bill, because the answer depends on the name printed there.</p>
 <h2>What GridSmart asks of you</h2><p>The rebate is not free money. In return, you agree to let PSE&amp;G run your battery during up to 100 events a year, each up to four hours, when demand on the grid is high. PSE&amp;G sends an email before each event. If the battery falls to 20% charge, your house goes back to the grid so you keep a reserve. PSE&amp;G says it will not call an event during an outage. You also agree to share data from the battery.</p><h2>Which batteries and which homes</h2><p>PSE&amp;G lists three approved batteries: Tesla Powerwall 3, Enphase 10C and Enphase 5P. At least two Enphase 5P units are needed to reach the minimum size of 8.5 kilowatts of storage. You need a smart meter and a Wi-Fi connection. Leased batteries and batteries already in place do not qualify, and the program has a cap on total participants. The state is looking at ways to let existing batteries join later.</p><h2>Does it save money?</h2><p>PSE&amp;G says plainly that the program is meant to give you backup power, and that it will not inherently save you money on bills. Customers on PSE&amp;G's time-of-use rate may save more by charging off-peak and using the battery at peak times. Think of the rebate as lowering the price of insurance against outages, not as a way to earn a return.</p><h2>How long can it run the house?</h2><p>PSE&amp;G says modern batteries can power the needs of most homes for about 11 hours, depending on size and use. That is the company's figure, not a promise for your home. Ask your contractor to list the circuits the battery will run and for how long, in writing.</p><h2>Solar is optional</h2><p>You can install a battery with or without solar panels. Solar hardware is not covered by the battery rebate or repayment. If you add panels, the state's solar credits and net metering apply separately. Read our <a href="/us/nj/solar/">solar guide</a> to see how those work.</p>

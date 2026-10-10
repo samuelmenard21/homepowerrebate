@@ -79,7 +79,7 @@ footer.site-footer { padding: 40px 0; text-align: center; font-size: 13px; }
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -203,10 +203,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -216,9 +222,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -486,7 +493,7 @@ h1, h2 { text-wrap: balance; }
 <h2>What water heater rebates pay in Allentown</h2>
 <p>We re-read PPL Electric's heat pump water heater page on October 5, 2026. The $400 offer was listed with an Apply for Rebate button.</p>
 <div class="rebate-grid">
-<div class="rebate-card"><span class="program-status status-open">Open</span><h4>PPL heat pump water heater</h4><div class="amount">$400</div><p style="font-size:14px;margin:8px 0 0;">ENERGY STAR certified with a uniform energy factor (UEF) of 3.3 or higher. Applies to PPL Electric customers.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal tax credit (25C)</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">Ended for spending after December 31, 2025.</p></div>
+<div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">PPL heat pump water heater</h4><div class="amount">$400</div><p style="font-size:14px;margin:8px 0 0;">ENERGY STAR certified with a uniform energy factor (UEF) of 3.3 or higher. Applies to PPL Electric customers.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal tax credit (25C)</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">Ended for spending after December 31, 2025.</p></div>
 </div>
 <div class='highlight-box'><h4>What the $400 covers</h4><p>It is a flat rebate on the unit, not a share of the cost. You pay the installer, then claim the $400 from PPL. Check Best Offers on PPL's store in case your household qualifies for extra help.</p></div>
 <h2>Why it fits many Allentown homes</h2><p>The US Census Bureau's American Community Survey (2020 to 2024) shows 39.5% of Allentown households heat with electricity and 14.1% with fuel oil. Homes like these often heat water the same way. An electric tank swapped for a heat pump model uses much less power. An oil-fired water heater swapped for one means fewer oil deliveries.</p><p>Gas homes (44.2% of households) save less, since gas water heating is already fairly cheap. A heat pump model can still make sense if you plan to leave gas over time.</p><h2>How a heat pump water heater works</h2><p>A plain electric tank heats water with a metal element, like a kettle. A heat pump water heater works more like a fridge in reverse. A small fan pulls warm air over a coil, a compressor moves that heat into the tank, and the cooled air blows out the side. Because it moves heat instead of making it, it uses far less electricity for the same hot shower.</p><p>Most models also have a backup element and a few modes. Heat pump only is the cheapest to run. Hybrid mode uses the element when you need a lot of hot water fast, for example on a busy morning. If your family is large, ask about tank size so you don't lean on the element every day.</p><h2>Space, drain and power</h2><p>Allentown's homes are mostly older: 82.1% were built before 1980. Water heaters in these homes usually sit in a basement, which tends to suit a heat pump model. Before you buy, check:</p><ul><li>Enough open space around the unit for air flow. Read the maker's minimum room size.</li><li>A floor drain or a spot for a small condensate pump.</li><li>A 240-volt circuit. Electric tanks usually have one. Gas or oil tanks often don't, so budget for an electrician.</li></ul><p>The unit cools the air around it. In a damp basement that is a bonus in summer.</p><h2>Renters</h2><p>Most Allentown households rent: 56.8%, per the same Census survey. The rebate goes to whoever buys the unit, which is usually the owner. If you rent and pay your own electric bill, it is worth showing your landlord the $400 offer when the old tank nears the end.</p><h2>Plan ahead</h2><p>A water heater usually gets replaced in a hurry, when it leaks. If yours is over ten years old, get a heat pump quote now so you are not stuck with whatever plain tank is in stock on the day it fails.</p>

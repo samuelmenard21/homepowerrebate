@@ -359,8 +359,18 @@ def ensure_landmarks(content: str) -> str:
             return content
         a += len(NAV_MARKER_END)
         if not balanced(content[a:b]):
-            return content
-        content = content[:a] + '\n<main id="main" tabindex="-1">' + content[a:b] + "</main>\n" + content[b:]
+            # markup between nav and footer does not nest cleanly (stray or unclosed tags): do not wrap, tag the page's own content container instead
+            seg = content[a:b]
+            m = re.search(r"<article\b", seg) or re.search(r"<section\b", seg)
+            if not m:
+                return content
+            tag_end = seg.index(">", m.start())
+            tag = seg[m.start():tag_end]
+            if "role=" not in tag and "id=" not in tag:
+                seg = seg[:tag_end] + ' role="main" id="main"' + seg[tag_end:]
+                content = content[:a] + seg + content[b:]
+        else:
+            content = content[:a] + '\n<main id="main" tabindex="-1">' + content[a:b] + "</main>\n" + content[b:]
     if 'class="skip-link"' not in content and 'id="main"' in content:
         content = re.sub(r"(<body[^>]*>)", lambda m: m.group(1) + '\n<a class="skip-link" href="#main">Skip to main content</a>', content, count=1)
     return content

@@ -104,6 +104,12 @@ p.small .reg{border:0;padding:0;margin:0;cursor:auto}
 .cta h3{color:#fff;font-size:21px;margin-bottom:8px}
 .cta p{color:rgba(255,255,255,.92)!important;margin-bottom:14px}
 .cta a{display:inline-block;background:var(--ink);color:#fff!important;text-decoration:none!important;padding:12px 24px;border-radius:999px;font-weight:700}
+.wrap{max-width:1180px;padding:0 28px}
+body .wrap p,body .wrap li,body .wrap .callout p{max-width:none}
+body .wrap section.body>p,body .wrap section.body>ul li,body .wrap section.body>ol li{max-width:78ch}
+.hpr-toc{max-width:none!important}
+@media(min-width:900px){.rank-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}.rank-list .rank{margin-bottom:0!important}.hero .wrap>p{max-width:760px}.stats{max-width:900px;margin-left:auto;margin-right:auto}}
+@media(max-width:600px){.wrap{padding:0 20px}}
 .hpr-breadcrumb{max-width:1180px;margin:0 auto;padding:14px 28px;font-size:13px;color:var(--ink-soft)}
 .hpr-breadcrumb ol{list-style:none;display:flex;flex-wrap:wrap;margin:0;padding:0}
 .hpr-breadcrumb li{display:flex;align-items:center}
@@ -518,10 +524,8 @@ h1, h2 { text-wrap: balance; }
 }
 /* CANONICAL-NAV-FOOTER-CSS-END */
 </style>
-<meta name="theme-color" content="#faf7f2">
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
 <nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
@@ -627,7 +631,6 @@ h1, h2 { text-wrap: balance; }
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/installers/">Installers</a></li><li aria-current="page">Heat Pump installers</li></ol></nav>
 <header class="hero"><div class="wrap">
 <div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 4.6A2 2 0 1 1 11 8H2M12.6 19.4A2 2 0 1 0 14 16H2M17.7 7.7A2.5 2.5 0 1 1 19.5 12H2"/></svg></div>
@@ -735,7 +738,6 @@ if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es
 setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600);
 })();
 </script>
-</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Santa Monica where relevant -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

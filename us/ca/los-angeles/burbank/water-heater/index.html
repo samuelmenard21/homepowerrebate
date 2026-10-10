@@ -79,7 +79,7 @@ footer.site-footer { padding: 40px 0; text-align: center; font-size: 13px; }
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -203,10 +203,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -216,9 +222,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -488,7 +495,7 @@ h1, h2 { text-wrap: balance; }
 <h2>What Burbank Water and Power pays</h2>
 <p>These figures come from BWP's Electrify Your Home page, which we read on October 2, 2026. At least one new item on the project must replace a gas-powered equivalent, and new construction does not qualify.</p>
 <div class="rebate-grid">
-<div class="rebate-card"><span class="program-status status-open">Open</span><h4>Heat pump water heater</h4><div class="amount">$1,500</div><p style="font-size:14px;margin:8px 0 0;">Standard rebate. BWP lists no separate low-income amount for this item.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Heat pump clothes dryer, same visit</h4><div class="amount">$200</div><p style="font-size:14px;margin:8px 0 0;">$600 for low-income customers and $1,500 for affordable housing providers.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Panel upgrade</h4><div class="amount">$750</div><p style="font-size:14px;margin:8px 0 0;">Cannot be claimed alone.</p></div>
+<div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Heat pump water heater</h4><div class="amount">$1,500</div><p style="font-size:14px;margin:8px 0 0;">Standard rebate. BWP lists no separate low-income amount for this item.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Heat pump clothes dryer, same visit</h4><div class="amount">$200</div><p style="font-size:14px;margin:8px 0 0;">$600 for low-income customers and $1,500 for affordable housing providers.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Panel upgrade</h4><div class="amount">$750</div><p style="font-size:14px;margin:8px 0 0;">Cannot be claimed alone.</p></div>
 </div>
 <div class='highlight-box'><h4>Adding it up</h4><p>A water heater swap pays $1,500. If the same electrician also replaces a gas dryer with a heat pump dryer, add $200, and if the panel needs work add $750. That is up to $2,450 for one visit, assuming each part meets BWP's rules.</p></div>
 <h2>It has to replace gas, and the gas has to come off</h2><p>BWP's program is about electrifying. A heat pump water heater that replaces an electric tank does not meet the test, so the rebate depends on what is leaving the house. The installation has to include capping the gas line, and your electrician has to obtain every required permit and pass inspection from Burbank's Building and Safety Division. You send the finaled permits with your application, so a missing sign-off holds up the payment.</p><h2>Compared with the neighbors</h2><p>Glendale pays $4,000 for the same swap (<a href='/us/ca/los-angeles/glendale/water-heater/'>Glendale water heater rebates</a>), LADWP pays up to $2,500 in Los Angeles, and Pasadena pays $500 (<a href='/us/ca/los-angeles/pasadena/water-heater/'>Pasadena</a>). Burbank's $1,500 is in the middle. BWP's utility sets its own list, so the one on your electric bill decides what you can claim.</p><h2>Your utility: Burbank Water and Power</h2><p>BWP can also help with the electrical side. If your electrician finds that the home needs a larger service, the EV charger page says to contact BWP's Service Planning at (818) 238-3647 as soon as possible, and the same advice makes sense for a water heater that adds load. The general call center is (818) 238-3700.</p><h2>Where the tank goes</h2><p>With an average January low of 8.4°C in Burbank over 2015 to 2024, cold is not the problem for a heat pump water heater. Tight spaces are. The unit needs air to draw from and a drain for condensate, and it is usually taller than a gas tank. Ask the electrician to check the clearance before you buy, and ask for the model's noise rating.</p><h2>Other money</h2><p>The federal 25C and 25D tax credits ended for spending after December 31, 2025. Statewide help through TECH Clean California and the federal HEEHRA program is fully reserved and takes new requests on hold only. BWP's page points to the Home Energy Resource Hub for other incentives.</p>

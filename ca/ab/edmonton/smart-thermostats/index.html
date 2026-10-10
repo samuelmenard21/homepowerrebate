@@ -79,7 +79,7 @@ footer.site-footer { padding: 40px 0; text-align: center; font-size: 13px; }
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -203,10 +203,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -216,9 +222,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -487,7 +494,7 @@ h1, h2 { text-wrap: balance; }
 <h2>What Peak Rewards pays</h2>
 <p>We re-read EPCOR's Peak Rewards page on October 3, 2026. It is linked at the bottom of this page.</p>
 <div class="rebate-grid">
-<div class="rebate-card"><span class="program-status status-open">Open</span><h4>Enrollment reward</h4><div class="amount">$50</div><p style="font-size:14px;margin:8px 0 0;">A prepaid Mastercard for enrolling, one per household. It is paid by CLEAResult, which runs the pilot for the Alberta Energy Efficiency Alliance.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Seasonal reward</h4><div class="amount">$25 per season</div><p style="font-size:14px;margin:8px 0 0;">EPCOR lists $25 per season for taking part in events. The Alliance's pilot page says this is paid at the start of your second summer season if you are still active.</p></div><div class="rebate-card"><span class="program-status status-open">Info</span><h4>City of Edmonton rebates</h4><div class="amount">None right now</div><p style="font-size:14px;margin:8px 0 0;">The City says it has no residential rebates at the moment, including for thermostats.</p></div>
+<div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Enrollment reward</h4><div class="amount">$50</div><p style="font-size:14px;margin:8px 0 0;">A prepaid Mastercard for enrolling, one per household. It is paid by CLEAResult, which runs the pilot for the Alberta Energy Efficiency Alliance.</p></div><div class="rebate-card"><span class="program-status status-open">Open</span><h4>Seasonal reward</h4><div class="amount">$25 per season</div><p style="font-size:14px;margin:8px 0 0;">EPCOR lists $25 per season for taking part in events. The Alliance's pilot page says this is paid at the start of your second summer season if you are still active.</p></div><div class="rebate-card"><span class="program-status status-open">Info</span><h4>City of Edmonton rebates</h4><div class="amount">None right now</div><p style="font-size:14px;margin:8px 0 0;">The City says it has no residential rebates at the moment, including for thermostats.</p></div>
 </div>
 <div class='highlight-box'><h4>No free thermostats</h4><p>Peak Rewards does not give out or discount thermostats. You need to own a compatible one already, such as an ecobee, Honeywell Home or Google Nest. If you are buying one just for this, the $50 card will only cover part of it.</p></div>
 <h2>Who can join</h2><p>EPCOR and the Alberta Energy Efficiency Alliance list these rules. You must be in EPCOR's electricity distribution area, in a qualifying postal code, and the account holder on the power bill. You must have central air conditioning and a compatible smart thermostat on Wi-Fi. EPCOR says the pilot runs in select Edmonton neighbourhoods, so check your postal code when you enroll.</p><p>The central air rule matters. Even with a smart thermostat, a home without central air can't take part.</p><h2>What happens during an event</h2><p>On high-demand days, your thermostat may be adjusted by up to 3°C for up to four hours. Your thermostat may pre-cool or pre-heat the home before an event, and you get a notice through the app or email.</p><p>The Alliance says summer events usually run June to September, on weekdays between 3 and 8 PM, with 10 to 15 events a summer lasting 2 to 4 hours each. Winter events run December to February, usually just 1 or 2 a winter.</p><p>You stay in control. You can opt out of any event from your thermostat or app, with no penalty. If someone at home is sensitive to heat or cold, such as a baby or an older relative, you can join and simply opt out on hard days.</p><h2>Is it a scam?</h2><p>It is a fair question, since the rewards come from a company most people haven't heard of. EPCOR's page names the partners: the Alberta Energy Efficiency Alliance sponsors it, CLEAResult runs it and pays the rewards, EnergyHub connects the thermostats, and ecobee, Honeywell Home and Google Nest take part. EPCOR says emails from clearesult.com and energyhub.com about this program are real.</p><p>Always start from EPCOR's own page, not a link in an email, when you enroll.</p><h2>Edmonton homes and central air</h2><p>The 2021 Census counted 396,395 Edmonton households, and 64% own their home. About 36% rent. Renters can only join if they are the account holder on the power bill, and they should check with the landlord before changing the thermostat. Edmonton's average January low over the last ten years was about -14.3°C, so the winter events land in real cold. If your home struggles to stay warm already, opting out of winter events is sensible.</p>

@@ -79,7 +79,7 @@ footer.site-footer { padding: 40px 0; text-align: center; font-size: 13px; }
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -203,10 +203,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -216,9 +222,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -486,7 +493,7 @@ h1, h2 { text-wrap: balance; }
 <h2>What water heater rebates pay in Philadelphia</h2>
 <p>The amount below comes from PECO's water heating rebate page, which we re-read on October 5, 2026. It applies across the whole city. PECO also lists $200 for a natural gas tankless and $50 for a gas storage tank water heater, but those are for PECO gas customers, and most Philadelphia households buy gas from PGW instead.</p>
 <div class="rebate-grid">
-<div class="rebate-card"><span class="program-status status-open">Open</span><h4>PECO heat pump water heater</h4><div class="amount">$350</div><p style="font-size:14px;margin:8px 0 0;">Must be ENERGY STAR certified and electric. Apply within 90 days of buying.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal tax credit (25C)</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">The federal credit for heat pump water heaters ended for spending after December 31, 2025.</p></div>
+<div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">PECO heat pump water heater</h4><div class="amount">$350</div><p style="font-size:14px;margin:8px 0 0;">Must be ENERGY STAR certified and electric. Apply within 90 days of buying.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Federal tax credit (25C)</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">The federal credit for heat pump water heaters ended for spending after December 31, 2025.</p></div>
 </div>
 <div class='highlight-box'><h4>How it works</h4><p>A heat pump water heater pulls warmth out of the air around it and moves it into the tank. That takes much less power than heating water with a plain electric element. The $350 PECO rebate is paid after you buy, so you pay the full price first and get the money back once PECO approves your claim.</p></div>
 <h2>Who should look at this in Philadelphia</h2><p>This rebate fits best if your water heater is electric now. Swapping an old electric tank for a heat pump model cuts the power it uses, and every kilowatt-hour you save is on your PECO bill. The Census Bureau's American Community Survey (2020 to 2024) finds that 24.7% of Philadelphia households heat their homes with electricity, and many of those homes also heat water with it.</p><p>If your water heater runs on PGW gas, the math is harder. A heat pump model can still make sense when your gas tank is old and you want to move away from gas, but your savings will be smaller. Get a quote for both before you decide.</p><h2>Basements in old rowhouses</h2><p>Most Philadelphia homes are old. The same Census survey shows 83.3% were built before 1980 and 39.9% before 1940, and 55.6% are rowhouses or twins. In many of these homes the water heater sits in a basement. That is often a good spot for a heat pump model, with some checks:</p><ul><li><strong>Space:</strong> the unit needs room around it to draw air. Small, closed-off closets can be too tight.</li><li><strong>Drain:</strong> it makes water (condensate), so it needs a drain or a pump nearby.</li><li><strong>Power:</strong> most need a 240-volt circuit, which an electric tank usually already has.</li><li><strong>Cool air:</strong> it blows cooler air into the room. In a basement that also helps dry the air in summer.</li></ul><h2>Is it worth it?</h2><p>Heat pump water heaters cost more than plain electric tanks up front. The $350 PECO rebate narrows that gap, and the lower power use does the rest over time. We don't publish a payback number for your home, because it depends on how much hot water your family uses and what your installer charges. Ask for a quote that shows the expected yearly energy use from the model's ENERGY STAR listing, then compare it with your current tank.</p><h2>Plan the swap before the old tank fails</h2><p>Most people replace a water heater the day it leaks. That rush pushes them into whatever plain tank the plumber has on the truck. A heat pump model can take a few days to order, so if your tank is ten years old or more, get a quote now. You will have time to check the space, line up the drain and pick an ENERGY STAR model that qualifies for the $350.</p>

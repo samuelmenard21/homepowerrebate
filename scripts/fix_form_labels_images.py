@@ -29,6 +29,7 @@ REPL = [
      '<input type="tel" id="il-phone" name="phone" placeholder="Your Phone Number" aria-label="Your phone number" autocomplete="tel" required>'),
     ('<select id="il-city" name="city" required>', '<select id="il-city" name="city" aria-label="Your city" required>'),
 ]
+JUMP = re.compile(r'<select id="directory-jump-select"(?![^>]*aria-label)')
 SELECT = re.compile(r'<select id="res_([a-z_-]+)_category"(?![^>]*aria-label)')
 IMG = re.compile(r'<img class="unified-carousel-installer-image" src=""(?![^>]*\bwidth=)')
 
@@ -36,6 +37,7 @@ IMG = re.compile(r'<img class="unified-carousel-installer-image" src=""(?![^>]*\
 def fix(s):
     for a, b in REPL:
         s = s.replace(a, b)
+    s = JUMP.sub('<select id="directory-jump-select" aria-label="Jump to a region or city"', s)
     s = SELECT.sub(lambda m: f'<select id="res_{m.group(1)}_category" aria-label="Filter what homeowners paid by category"', s)
     s = IMG.sub('<img class="unified-carousel-installer-image" src="" width="400" height="200" loading="lazy" decoding="async"', s)
     return s

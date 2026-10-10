@@ -79,7 +79,7 @@ footer.site-footer { padding: 40px 0; text-align: center; font-size: 13px; }
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -203,10 +203,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -216,9 +222,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -487,7 +494,7 @@ h1, h2 { text-wrap: balance; }
 <h2>What an Edmonton home can use for insulation</h2>
 <p>We re-read the City of Edmonton's CEIP page and Natural Resources Canada's page on October 3, 2026. Both are linked at the bottom.</p>
 <div class="rebate-grid">
-<div class="rebate-card"><span class="program-status status-limited">On hold</span><h4>Edmonton CEIP: windows, doors and insulation</h4><div class="amount">Fixed 6.00%</div><p style="font-size:14px;margin:8px 0 0;">Borrow $3,000 to $50,000, up to 100% of the cost, and repay it on your property tax bill. New pre-qualifications are queued while the program is near capacity.</p></div><div class="rebate-card"><span class="program-status status-open">Info</span><h4>City of Edmonton rebates</h4><div class="amount">None right now</div><p style="font-size:14px;margin:8px 0 0;">The City's CEIP FAQ says there are currently no City residential rebates.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Canada Greener Homes Grant</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">The grant has ended. December 31, 2025 was the last day to submit documents.</p></div>
+<div class="rebate-card"><span class="program-status status-limited">On hold</span><h4 aria-level="3">Edmonton CEIP: windows, doors and insulation</h4><div class="amount">Fixed 6.00%</div><p style="font-size:14px;margin:8px 0 0;">Borrow $3,000 to $50,000, up to 100% of the cost, and repay it on your property tax bill. New pre-qualifications are queued while the program is near capacity.</p></div><div class="rebate-card"><span class="program-status status-open">Info</span><h4>City of Edmonton rebates</h4><div class="amount">None right now</div><p style="font-size:14px;margin:8px 0 0;">The City's CEIP FAQ says there are currently no City residential rebates.</p></div><div class="rebate-card"><span class="program-status status-closed">Closed</span><h4>Canada Greener Homes Grant</h4><div class="amount">Ended</div><p style="font-size:14px;margin:8px 0 0;">The grant has ended. December 31, 2025 was the last day to submit documents.</p></div>
 </div>
 <div class='highlight-box'><h4>Insulation alone won't qualify</h4><p>Edmonton's CEIP needs at least three upgrades per home. Attic insulation, basement insulation and new windows can count as separate upgrades, but check the eligible list with Alberta Municipalities before you plan. The rule is waived if fewer upgrades get your home to net zero, or if the property used CEIP before.</p></div>
 <h2>Edmonton's older homes</h2><p>Statistics Canada's 2021 Census counted 396,395 Edmonton households. About 13% live in homes built before 1961, and another 28% in homes built from 1961 to 1980. Together that is 160,600 households in homes built before 1981, when insulation rules were much weaker than today.</p><p>Edmonton also has 21,010 households (5.3%) who told the Census their home needs major repairs. If that is your home, fix leaks and structural problems before adding insulation, so you don't trap moisture.</p><h2>Why insulation suits CEIP</h2><p>CEIP sets your repayment term as the shorter of 20 years or the useful life of the upgrade. Insulation lasts a long time, so it usually gets a long term and lower yearly payments. That makes it one of the easier upgrades to spread over many years.</p><p>The loan stays with the house. If you sell, you can pay it off with no penalty, or pass it to the buyer if you disclose it. You can also pay off one upgrade early to stop its interest.</p><h2>Cold weather and air leaks</h2><p>Edmonton's average January low over the last ten years was about -14.3°C, and the coldest day reached -41.2°C. In that kind of cold, every gap around an attic hatch or a pipe costs you heat, so ask your evaluator about air sealing as well as insulation.</p><p>Your CEIP project begins with an EnerGuide evaluation. It rates how well your home holds heat and points to where upgrades will help most. Use it to decide between attic, walls and basement, rather than guessing.</p><h2>Townhomes and shared walls</h2><p>Edmonton's CEIP covers single and semi-detached houses, row houses and town homes. The 2021 Census counted 38,525 Edmonton households in row houses and 28,590 in semi-detached homes. If your insulation work touches shared or common property, such as a shared attic, you need an approval letter from your condo board or building owner.</p>

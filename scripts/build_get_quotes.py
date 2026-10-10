@@ -26,7 +26,7 @@ CSS = """
 .gq-cta{display:inline-block;background:var(--amber);color:#fff;text-decoration:none;font-weight:700;border-radius:999px;padding:14px 24px;border:0;font:inherit;font-weight:700;cursor:pointer}
 .gq-cta[disabled]{opacity:.5;cursor:not-allowed}.gq-alt{display:inline-block;margin-left:14px;font-weight:600}
 .gq-inst{display:grid;grid-template-columns:1fr auto;gap:10px 16px;padding:14px 0;border-top:1px solid var(--rule);align-items:start}
-.gq-inst:first-of-type{border-top:0}.gq-inst h4{margin:0;font-size:17px}.gq-meta{font-size:14px;color:var(--ink-soft)}
+.gq-inst:first-of-type{border-top:0}.gq-inst h3{margin:0;font-size:17px}.gq-meta{font-size:14px;color:var(--ink-soft)}
 .gq-links{display:flex;gap:14px;flex-wrap:wrap;font-size:15px;margin-top:4px}
 .gq-pick{display:flex;align-items:center;gap:8px;font-size:14px;white-space:nowrap}.gq-pick input{width:20px;height:20px;accent-color:var(--amber)}
 .gq-h{font-family:'Fraunces',serif;font-size:22px;color:var(--teal-deep);margin:0 0 6px}.gq-sub{font-size:14px;color:var(--ink-soft);margin:0 0 10px}
@@ -42,7 +42,7 @@ var P=new URLSearchParams(location.search);
 var UPG=[["heat-pump","\uD83D\uDD25","Heat pump","Replaces a furnace or baseboards \u2014 heats and cools with one machine."],["solar","\u2600\uFE0F","Solar panels","Rooftop solar, typically 8\u201312 kW for a home."],["battery","\uD83D\uDD0B","Home battery","Backup power, and pairs well with solar."],["insulation","\uD83C\uDFE0","Insulation","Attic, walls, or crawlspace \u2014 often the best first upgrade."],["water-heater","\uD83D\uDCA7","Heat pump water heater","Replaces an electric or gas tank."],["windows","\uD83D\uDFEB","Windows & doors","Energy-efficient replacements."],["ev","\uD83D\uDE97","EV charger","Home Level 2 charger installation."],["thermostat","\uD83D\uDCF1","Smart thermostat","Nest, Ecobee, or similar."]];
 var chipBox=$("gq-chips");
 UPG.forEach(function(u){var l=document.createElement("label");l.className="check-item";var c=document.createElement("input");c.type="checkbox";c.value=u[0];
- c.addEventListener("change",show);l.appendChild(c);var sp=document.createElement("span");sp.className="check-label";var h=document.createElement("h4");h.textContent=u[1]+" "+u[2];var p=document.createElement("p");p.textContent=u[3];sp.appendChild(h);sp.appendChild(p);l.appendChild(sp);chipBox.appendChild(l)});
+ c.addEventListener("change",show);l.appendChild(c);var sp=document.createElement("span");sp.className="check-label";var h=document.createElement("h3");h.textContent=u[1]+" "+u[2];var p=document.createElement("p");p.textContent=u[3];sp.appendChild(h);sp.appendChild(p);l.appendChild(sp);chipBox.appendChild(l)});
 var rs=$("gq-region"),cs=$("gq-city");
 D.forEach(function(r){var o=document.createElement("option");o.value=r.code;o.textContent=r.name;rs.appendChild(o)});
 function fillCities(){cs.textContent="";var ph=document.createElement("option");ph.value="";ph.textContent="Choose your city";cs.appendChild(ph);
@@ -71,12 +71,12 @@ function show(){
  Promise.all(jobs).then(function(res){
   if(t!==token)return;var box=$("gq-list");box.textContent="";shown=[];
   res.forEach(function(g){
-   var h=document.createElement("h4");h.style.margin="14px 0 0";h.textContent=(g.s==="solar"?"Solar":"Heat pump")+" installers";box.appendChild(h);
+   var h=document.createElement("h3");h.style.margin="14px 0 0";h.textContent=(g.s==="solar"?"Solar":"Heat pump")+" installers";box.appendChild(h);
    var top=g.a.slice(0,3);
    if(!top.length){var p=document.createElement("p");p.className="gq-meta";p.textContent="We have not listed installers for this yet.";box.appendChild(p)}
    top.forEach(function(i){shown.push(i);
     var d=document.createElement("div");d.className="gq-inst";var l=document.createElement("div");
-    var n=document.createElement("h4");var ps=slug(i.name);var has=(r.profiles[city]||[]).indexOf(ps)>=0;
+    var n=document.createElement("h3");var ps=slug(i.name);var has=(r.profiles[city]||[]).indexOf(ps)>=0;
     if(has){var na=document.createElement("a");na.href=purl(r,city,ps);na.textContent=i.name;n.appendChild(na)}else n.textContent=i.name;l.appendChild(n);i._url=has?location.origin+purl(r,city,ps):"";
     var m=document.createElement("div");m.className="gq-meta";m.textContent=stars(i);l.appendChild(m);
     var k=document.createElement("div");k.className="gq-links";

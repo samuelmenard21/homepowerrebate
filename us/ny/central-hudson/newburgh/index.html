@@ -470,7 +470,7 @@ h2.big { font-size: clamp(28px, 4.5vw, 40px); margin-bottom: 16px; }
   .nav-mobile-only a { font-size: 13px !important; }
   .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
 }
-@media (max-width: 400px) {
+@media (max-width: 560px) {
   .nav-inner { justify-content: center !important; }
   .logo { flex: 1 0 100%; justify-content: center; }
   .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
@@ -594,10 +594,16 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @media (prefers-reduced-motion: reduce) { .hs-city, .hs-tile { transition: none; } .hs-city:hover, .hs-tile:hover { transform: none; } }
 
 /* logo word "Power" keeps the brand amber; at 19px bold it counts as large text for contrast (3:1) */
-@media (max-width: 768px) { .logo { font-size: 19px !important; } }
+@media (max-width: 768px) { .nav .logo, .logo { font-size: 19px !important; } }
 /* metric-matched fallbacks (measured in Chrome): text keeps its size and line height while the web fonts load, so nothing jumps */
-@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); size-adjust: 99%; ascent-override: 99%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Inter Tight Fallback'; src: local('Arial'); size-adjust: 94%; ascent-override: 103%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 400; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 500; src: local('Georgia'); size-adjust: 102.1%; ascent-override: 95.9%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 600; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 89.3%; ascent-override: 109.7%; descent-override: 29.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; font-weight: 700; src: local('Georgia Bold'), local('Georgia-Bold'); size-adjust: 92.3%; ascent-override: 106.2%; descent-override: 28.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 400; src: local('Arial'); size-adjust: 96.3%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 500; src: local('Arial'); size-adjust: 98.5%; ascent-override: 98.5%; descent-override: 24.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 600; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 94.1%; ascent-override: 103.0%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }
@@ -607,9 +613,10 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #b4590a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #9a4f08 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag, .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
-.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"] { color: #4f6f61 !important; }
+.hs-stat b small { color: #a4540a !important; }
+.finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
 .src, p.src, p.src a { color: #6b6355 !important; }
 section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited, .rebate-card .amount, .tag-fed, .installer-note .mini-list .stars, small[style*="color:var(--amber)"] { color: #a4540a !important; }
 .finder-cat a, .city-card > a { color: #a4540a; }
@@ -909,7 +916,7 @@ h1, h2 { text-wrap: balance; }
 <div class="rebate-grid">
 <p>Amounts for a single-family home. You get one line from this table, not several.</p>
 <div class="tbl"><table><thead><tr><th>What you install</th><th>Standard</th><th>In a Disadvantaged Community</th></tr></thead><tbody><tr><td>Category 2 air-source, no decommissioning</td><td>$4,000</td><td>&mdash;</td></tr><tr><td>Category 2 air-source, Weatherized Tier</td><td>$8,000</td><td>&mdash;</td></tr><tr><td>Category 2b, old system removed</td><td>$7,000</td><td>&mdash;</td></tr><tr><td>Category 2b, Weatherized Tier</td><td>$12,000</td><td>&mdash;</td></tr><tr><td>Partial to full load</td><td>$3,000</td><td>&mdash;</td></tr><tr><td>Ground-source retrofit (Weatherized Tier $20,000)</td><td>$15,000</td><td>&mdash;</td></tr><tr><td>Heat pump water heater</td><td>$1,250</td><td>&mdash;</td></tr></tbody></table></div><p style="font-size:15px">These are single-family amounts. Apartments and homes under 1,000 sq ft get about half ($2,000 / $3,500 / $1,000, or $4,000 / $6,000 in the Weatherized Tier). Central Hudson&rsquo;s table does not list a separate DAC column, and its cap is 85% of cost.</p>
-<div class="rebate-card"><span class="program-status status-open">Open</span><h4>Heat pump: NYS Clean Heat (run by Central Hudson)</h4><div class="amount">Up to $12,000</div><p style="font-size:14px;margin:8px 0 0;">Best case for a whole-home system; most homes get less, as the table shows.</p></div>
+<div class="rebate-card"><span class="program-status status-open">Open</span><h4 aria-level="3">Heat pump: NYS Clean Heat (run by Central Hudson)</h4><div class="amount">Up to $12,000</div><p style="font-size:14px;margin:8px 0 0;">Best case for a whole-home system; most homes get less, as the table shows.</p></div>
 </div>
 <h2>What makes Newburgh different</h2>
 <p>The City of Newburgh is served by Central Hudson, even though much of the rest of Orange County is on Orange &amp; Rockland. If your bill says O&amp;R, your Clean Heat amounts are O&amp;R&rsquo;s instead (up to $12,000, or $14,000 in a DAC). Parts of Newburgh are mapped as Disadvantaged Communities, which also matters for EmPower+ outreach.</p><p>Newburgh&rsquo;s East End has many large 19th-century brick row houses, often split into apartments. Owner-occupants of 1&ndash;4 unit buildings can do every unit, with the apartment amounts applying to each one.</p><p>Low-income owners and renters should apply to EmPower+ first, since it can pay for air sealing and insulation at no cost.</p>
@@ -955,7 +962,7 @@ h1, h2 { text-wrap: balance; }
     <div class="finder-grid" id="finder-grid">
       <div class="finder-card" data-cat="heat-pump">
         <div class="finder-cat">Heat pump</div>
-        <h4>Central Hudson heat pump rebate</h4>
+        <h4 aria-level="3">Central Hudson heat pump rebate</h4>
         <div class="finder-amount">Up to $8,000</div>
         <p>$8,000 if your heat pump fully replaces fossil-fuel heating (no backup), $5,000 if you keep a backup system, or $3,000 when adding to an existing forced-air system. Installed cost typically runs $13,000&ndash;$22,000.</p>
         <div class="finder-source">Source: /us/ny/central-hudson/newburgh &middot; Central Hudson</div>

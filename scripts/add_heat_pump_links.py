@@ -14,7 +14,7 @@ JOBS = {
     "programs/nova-scotia-heating-assistance-rebate-harp/index.html":
         "<b>Replacing your heating system?</b> " + A("/ca/ns/heat-pump/", "Nova Scotia heat pump rebates: $300 to $600 a ton") + " &middot; " + A("/programs/national-heat-pump-rebate/", "the new federal heat pump rebate (early 2027)") + " &middot; " + A("/ca/ns/", "all Nova Scotia rebates"),
     "ca/index.html":
-        "<b>Heat pump rebates by province:</b> " + " &middot; ".join([A("/ca/bc/heat-pump/", "BC"), A("/ca/on/heat-pump/", "Ontario"), A("/ca/ab/heat-pump/", "Alberta"), A("/ca/ns/heat-pump/", "Nova Scotia"), A("/ca/qc/heat-pump/", "Quebec") + " (" + A("/fr/qc/thermopompe/", "en fran&ccedil;ais") + ")"]) + ". " + A("/programs/national-heat-pump-rebate/", "Federal rebate guide"),
+        "<b>Heat pump rebates by province:</b> " + " &middot; ".join([A("/ca/bc/heat-pump/", "BC"), A("/ca/on/heat-pump/", "Ontario"), A("/ca/ab/heat-pump/", "Alberta"), A("/ca/mb/heat-pump/", "Manitoba"), A("/ca/ns/heat-pump/", "Nova Scotia"), A("/ca/qc/heat-pump/", "Quebec") + " (" + A("/fr/qc/thermopompe/", "en fran&ccedil;ais") + ")"]) + ". " + A("/programs/national-heat-pump-rebate/", "Federal rebate guide"),
     "index.html":
         "<b>New in Canada:</b> heat pump rebate guides for " + " &middot; ".join([A("/ca/bc/heat-pump/", "BC"), A("/ca/on/heat-pump/", "Ontario"), A("/ca/ab/heat-pump/", "Alberta"), A("/ca/ns/heat-pump/", "Nova Scotia"), A("/ca/qc/heat-pump/", "Quebec")]) + ", plus " + A("/programs/national-heat-pump-rebate/", "Ottawa's new heat pump rebate") + " and " + A("/blog/ma-ny-year-end-rebate-deadlines-2026/", "Massachusetts and New York year-end deadlines") + ".",
     "blog/ontario-smart-thermostats-100-rebate-compared/index.html":
@@ -32,7 +32,7 @@ def main():
     for rel, html in JOBS.items():
         p = ROOT / rel
         t = p.read_text(encoding="utf-8")
-        t = re.sub(re.escape(S) + r"[\s\S]*?" + re.escape(E) + r"\n?", "", t)
+        t = re.sub(r"\n?" + re.escape(S) + r"[\s\S]*?" + re.escape(E) + r"\n?", "", t)
         m = HERO.search(t)
         if not m:
             print("no hero in", rel)

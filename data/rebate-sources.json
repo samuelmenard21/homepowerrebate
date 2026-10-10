@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 534,
+ "count": 537,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -3487,7 +3487,7 @@
    "url": "https://web.archive.org/web/20260716094049/https://www.masssave.com/residential/rebates-offers-services/heating-and-cooling/heat-pumps/air-source-heat-pumps",
    "host": "web.archive.org",
    "region": "ma",
-   "check": "Mass Save ASHP rebate table 2026; Mass Save: Air-source heat pump rebates (snapshot July 16, 2026)",
+   "check": "Mass Save ASHP rebate table 2026; Mass Save air-source heat pumps (archived July 16, 2026); Mass Save: Air-source heat pump rebates (snapshot July 16, 2026)",
    "facts": [
     "ma-16-mass-save-ashp-rebate-table-2026"
    ],
@@ -3504,7 +3504,8 @@
     "/ma/quincy/heat-pump/",
     "/ma/somerville/heat-pump/",
     "/ma/springfield/heat-pump/",
-    "/ma/worcester/heat-pump/"
+    "/ma/worcester/heat-pump/",
+    "blog-refresh/ma-ny-year-end-rebate-deadlines-2026"
    ],
    "last_read": "2026-09-26"
   },
@@ -3540,6 +3541,7 @@
    ],
    "used_by_pages": [
     "/ma/newton/ev-charger/",
+    "blog-refresh/ma-ny-year-end-rebate-deadlines-2026",
     "state-topics/ma-ev-charger"
    ],
    "last_read": "2026-10-03"
@@ -3672,6 +3674,7 @@
    ],
    "used_by_pages": [
     "/ma/worcester/ev-charger/",
+    "blog-refresh/ma-ny-year-end-rebate-deadlines-2026",
     "state-topics/ma-ev-charger"
    ],
    "last_read": "2026-10-03"
@@ -3701,6 +3704,46 @@
     "/ma/worcester/ev-charger/"
    ],
    "last_read": "2026-09-26"
+  },
+  {
+   "url": "https://efficiencymb.ca/ashp-home/",
+   "host": "efficiencymb.ca",
+   "region": "mb",
+   "check": "Efficiency Manitoba air source heat pump rebate; Efficiency Manitoba: air source heat pump rebate; Manitoba Hydro Home Energy Efficiency Loan",
+   "facts": [
+    "mb-0-efficiency-manitoba-ashp-rebate",
+    "mb-3-manitoba-hydro-heel-financing"
+   ],
+   "used_by_pages": [
+    "state-topics/mb-heat-pump"
+   ],
+   "last_read": "2026-10-10"
+  },
+  {
+   "url": "https://efficiencymb.ca/gshp-home/",
+   "host": "efficiencymb.ca",
+   "region": "mb",
+   "check": "Efficiency Manitoba ground source heat pump program; Efficiency Manitoba: ground source heat pump program",
+   "facts": [
+    "mb-1-efficiency-manitoba-gshp-program"
+   ],
+   "used_by_pages": [
+    "state-topics/mb-heat-pump"
+   ],
+   "last_read": "2026-10-10"
+  },
+  {
+   "url": "https://efficiencymb.ca/my-home/energy-efficiency-assistance-program/",
+   "host": "efficiencymb.ca",
+   "region": "mb",
+   "check": "Efficiency Manitoba Energy Efficiency Assistance Program; Efficiency Manitoba: Energy Efficiency Assistance Program",
+   "facts": [
+    "mb-2-efficiency-manitoba-assistance-program"
+   ],
+   "used_by_pages": [
+    "state-topics/mb-heat-pump"
+   ],
+   "last_read": "2026-10-10"
   },
   {
    "url": "https://michigansaves.org/home-energy-improvements/",
@@ -5075,7 +5118,8 @@
     "/programs/con-edison-rebates/",
     "/programs/national-grid-rebates/",
     "/programs/nyseg-and-rge-rebates/",
-    "/programs/orange-and-rockland-rebates/"
+    "/programs/orange-and-rockland-rebates/",
+    "blog-refresh/ma-ny-year-end-rebate-deadlines-2026"
    ],
    "last_read": "2026-10-03"
   },
@@ -6688,11 +6732,13 @@
    "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/oil-heat-pump-affordability-program",
    "host": "natural-resources.canada.ca",
    "region": "qc",
-   "check": "Federal Oil to Heat Pump Affordability (Quebec); Natural Resources Canada: Oil to Heat Pump Affordability",
+   "check": "Federal Oil to Heat Pump Affordability (Manitoba); Federal Oil to Heat Pump Affordability (Quebec); Natural Resources Canada: Oil to Heat Pump Affordability",
    "facts": [
+    "mb-4-federal-oil-to-heat-pump",
     "qc-5-federal-oil-to-heat-pump"
    ],
    "used_by_pages": [
+    "state-topics/mb-heat-pump",
     "state-topics/qc-heat-pump"
    ],
    "last_read": "2026-10-10"

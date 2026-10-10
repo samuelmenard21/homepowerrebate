@@ -109,13 +109,13 @@ show();
 
 
 def city_slugs(code):
-    """City slugs for a region: installer folders, else the cities listed in data/regions.json (new regions have no installers yet)."""
+    """City slugs for a region: installer folders plus the cities listed in data/regions.json, so a region whose installers cover
+    only some cities still shows all of them. California's list holds regional hubs (bay-area, inland-empire), not cities, so it uses installer folders only."""
     base = ROOT / "installers" / code
-    found = sorted(p.name for p in base.iterdir() if p.is_dir()) if base.exists() else []
-    if found:
-        return found
-    r = regions.BY_CODE[code]
-    return sorted(h.strip("/").split("/")[-1] for h, _ in r["cities"])
+    found = {p.name for p in base.iterdir() if p.is_dir()} if base.exists() else set()
+    if code != "ca":
+        found |= {h.strip("/").split("/")[-1] for h, _ in regions.BY_CODE[code]["cities"]}
+    return sorted(found)
 
 
 def main():

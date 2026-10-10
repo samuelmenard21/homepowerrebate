@@ -240,6 +240,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     specialty = " & ".join(dict.fromkeys(inst["specialty"] for inst, _, _, _ in listings))
     image = installer["image_url"]
     escaped_name = html.escape(name)
+    photo_html = (f'<img src="{image}" alt="{escaped_name}" class="ip-photo" loading="lazy" width="760" height="380">' if image else "")
     _sp = specialty.lower()
     lb_type = "Plumber" if "plumb" in _sp else "Electrician" if "electric" in _sp else "HVACBusiness" if ("hvac" in _sp or "heat pump" in _sp) else "HomeAndConstructionBusiness"
     # Google Places review summary (optional, written by the scraper when PLACES_REVIEW_SUMMARY=1). Shown with Google's own disclosure; never used in markup.
@@ -258,11 +259,11 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     rank_lines = []
     program_cards = []
     for inst, category, rank, total in listings:
-        label = "Heat Pump & HVAC" if category == "heat-pump" else "Solar"
+        label = {"heat-pump": "Heat Pump & HVAC", "insulation": "Insulation", "battery": "Home Battery"}.get(category, "Solar")
         rank_lines.append(f"Ranked <strong>#{rank} of {total}</strong> {label.lower()} installers in {city_name} by Google rating")
         program_href = city_hub_url(region_key, city_slug, category)
         program_name = cfg["program_name"]
-        program_detail = f"See {city_name}'s current {('heat pump' if category == 'heat-pump' else 'solar')} rebate breakdown for exact numbers"
+        program_detail = f"See {city_name}'s current { {'heat-pump': 'heat pump', 'insulation': 'insulation', 'battery': 'home battery'}.get(category, 'solar') } rebate breakdown for exact numbers"
         program_cards.append(f'''    <a href="{program_href}" class="ip-program">
       <div class="ip-program-name">{program_name} ({label})</div>
       <div class="ip-program-detail">{program_detail}</div>
@@ -311,11 +312,11 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
 <meta property="og:title" content="{escaped_name} — {city_name}, {state}">
 <meta property="og:description" content="{escaped_name} in {city_name}, {state} — {rating:.1f}★ ({reviews} reviews). {specialty} installer. See which rebates their work qualifies for and get a quote.">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{image}">
+<meta property="og:image" content="{image or "https://homepowerrebate.com/og-image.jpg"}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{escaped_name} — {city_name}, {state}">
 <meta name="twitter:description" content="{escaped_name} in {city_name}, {state} — {rating:.1f}★ ({reviews} reviews). {specialty} installer.">
-<meta name="twitter:image" content="{image}">
+<meta name="twitter:image" content="{image or "https://homepowerrebate.com/og-image.jpg"}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -365,7 +366,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     <div class="ip-rating"><div class="ip-rating-num">{rating:.0f}★</div><div class="ip-rating-count">{reviews} reviews</div></div>
   </div>
 
-  <img src="{image}" alt="{escaped_name}" class="ip-photo" loading="lazy" width="760" height="380">
+  {photo_html}
 
   <p class="ip-intro">{escaped_name} is a {specialty.lower()} provider in {city_name} with a current Google Maps rating of {rating:.1f}★ from {reviews} reviews (source: Google Maps).</p>
   {rs_html}
@@ -452,6 +453,9 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
 """
 
 
+MISSING_ONLY = "--missing-only" in _sys.argv
+
+
 def build_region(region_key):
     cfg = REGIONS[region_key]
     total_pages = 0
@@ -489,6 +493,8 @@ def build_region(region_key):
             out_dir = os.path.join(cfg["profiles_dir"], city_slug, slug)
             os.makedirs(out_dir, exist_ok=True)
             out_path = os.path.join(out_dir, "index.html")
+            if MISSING_ONLY and os.path.exists(out_path):
+                continue
             html_out = render_profile(region_key, city_slug, listings, all_in_city_by_cat)
             with open(out_path, "w", encoding="utf-8") as f:
                 f.write(html_out)

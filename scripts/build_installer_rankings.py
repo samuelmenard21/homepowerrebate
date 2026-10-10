@@ -110,11 +110,14 @@ def find_hub(hubs, region, city):
 
 
 def profile_url(region, city, name):
-    city_slug, name_slug = slugify(city), slugify(name)
-    for rel in (f"installers/profiles/{city_slug}/{name_slug}",
-                f"installers/profiles/{region}/{city_slug}/{name_slug}"):
-        if (ROOT / rel / "index.html").exists():
-            return "/" + rel + "/"
+    city_slug = slugify(city)
+    # The profile generators drop "&" and "'" while slugify() turns "&" into "and"; try both spellings.
+    gen_slug = re.sub(r"[^a-z0-9]+", "-", re.sub(r"[&'’]", "", name.lower().strip())).strip("-")
+    for name_slug in dict.fromkeys((slugify(name), gen_slug)):
+        for rel in (f"installers/profiles/{city_slug}/{name_slug}",
+                    f"installers/profiles/{region}/{city_slug}/{name_slug}"):
+            if (ROOT / rel / "index.html").exists():
+                return "/" + rel + "/"
     return ""
 
 
@@ -198,6 +201,7 @@ section.body a{color:var(--teal-deep);font-weight:600;text-decoration:underline;
 .cta{background:radial-gradient(500px 200px at 90% -20%,rgba(255,255,255,.22),transparent 60%),linear-gradient(135deg,#e88a2e,#d4751c);box-shadow:0 14px 30px rgba(212,117,28,.28)}
 .rank .nm{font-weight:700;color:var(--ink);font-size:16.5px}
 .rank .nm a{color:var(--ink);text-decoration:none}
+.rank .nm a:hover{text-decoration:underline}.rank .n a{color:inherit;text-decoration:none;display:grid;place-items:center;width:100%;height:100%}
 .rank .st{font-size:14px;color:var(--ink-soft)}
 .rank .st b{color:var(--ink)}
 .rank .act{grid-column:2;font-size:14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;margin-top:6px}
@@ -564,7 +568,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
         medal = f" g{i}" if i <= 3 else ""
         items.append(
             f'<li class="rank{" top" if i <= 3 else ""}{medal}" data-rank="{i}" data-reviews="{r["reviews"]}" data-rating="{r["rating"]}">'
-            f'<div class="n">{i}</div><div class="nm">{name_html}{badge}</div>'
+            f'<div class="n">{f'<a href="{prof}" aria-label="{esc(r["name"])} profile">{i}</a>' if prof else i}</div><div class="nm">{name_html}{badge}</div>'
             f'<div class="st"><span class="rt"><span class="stars" style="--p:{pct}%" aria-hidden="true">★★★★★</span> '
             f'<b>{r["rating"]:.1f}</b></span> <span class="rv">({r["reviews"]:,} Google reviews)</span>'
             f'<div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:{bar}%"></i></div>'

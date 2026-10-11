@@ -270,8 +270,9 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     reviews = installer["reviews"]
     state = address_region_from_location(installer["location"], cfg["state"])
     specialty = " & ".join(dict.fromkeys(inst.get("specialty") or ("Solar" if cat == "solar" else "Heat pump") for inst, cat, _, _ in listings))
-    photo = installer.get("image_url") or ""
-    image = photo or "https://homepowerrebate.com/og-image.jpg"  # social/schema image falls back to the site image
+    # Google photos are never stored or linked (Places policies): add_profile_photos.py adds a block that loads one at view time.
+    photo = ""
+    image = "https://homepowerrebate.com/og-image.jpg"
     phone = installer.get("phone") or ""
     website = installer.get("website") or ""
     gmaps = installer.get("gmaps_url") or ""

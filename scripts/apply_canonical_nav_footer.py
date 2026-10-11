@@ -249,13 +249,15 @@ TPL_ASSETS = ROOT / "assets" / "tpl"
 TEMPLATE_VARIANTS = {k: (v["family"], v["hash"]) for k, v in json.loads((TEMPLATES_DIR / "variants.json").read_text()).items()} if (TEMPLATES_DIR / "variants.json").exists() else {}
 # a generator that copies its CSS from an already converted page has no inline block left: recognise it by structure
 TEMPLATE_SIGNATURE = {"article": ('<section class="hero"><div class="wrap"><div class="amount-badge">', '<article class="article">')}
+# families recognised by structure alone, whose pages keep their own CSS (the design file only adds to it)
+FAMILY_SIGNATURE = {"hub": ('<header class="hero hub-hero">', "<!-- HUB-TOP-START -->")}
 STYLE_RE = re.compile(r"<style>([\s\S]*?)</style>\n?")
 TPL_LINK_RE = re.compile(r'<link rel="stylesheet" href="/assets/tpl/([a-z0-9-]+)\.css\?v=[0-9a-f]+" data-hpr-tpl>\n?')
 
 
 def _template_css() -> str:
     out = []
-    for name in sorted({f for f, _ in TEMPLATE_VARIANTS.values()}):
+    for name in sorted({f for f, _ in TEMPLATE_VARIANTS.values()} | set(FAMILY_SIGNATURE)):
         p = TEMPLATES_DIR / f"{name}.css"
         if p.exists():
             out.append(f"/* ===== template design: {name} ({p.name}) ===== */\n" + p.read_text(encoding="utf-8"))
@@ -318,6 +320,9 @@ def _set_body_classes(content: str, add=(), drop=lambda c: False) -> str:
 
 def ensure_template(content: str) -> str:
     """Swap a known template variant's inline <style> block for its cached /assets/tpl/ file plus the family class."""
+    for fam, sig in FAMILY_SIGNATURE.items():
+        if all(x in content for x in sig):
+            return _set_body_classes(content, [f"tpl-{fam}"])
     by_hash = {h: v for v, (_, h) in TEMPLATE_VARIANTS.items()}
     for m in list(STYLE_RE.finditer(content)):
         v = by_hash.get(_norm_hash(m.group(1)))

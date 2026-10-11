@@ -113,10 +113,8 @@ def changes_box(key, cfg):
     lis = "".join(
         f'<li><b>{e(fmt(x["date"]))}: {e(x["program"])}</b> ({e(x["status"])}). {e(x["change"])} '
         f'<a href="{e(x["source"])}" rel="nofollow noopener" target="_blank">Source</a></li>' for x in items)
-    return (f'{CH_S}<section style="max-width:880px;margin:24px auto;padding:0 20px;"><div style="background:#fff;border:1px solid #d9d0c1;'
-            f'border-left:4px solid #d4751c;border-radius:10px;padding:18px 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:22px;margin:0 0 4px;">'
-            f'What changed recently in {e(cfg["name"])}</h2><p style="margin:0 0 10px;font-size:14px;color:#6b8e7f;">Checked {CHECKED_H}. '
-            f'<a href="/rebate-tracker/">See every change</a>.</p><ul style="margin:0 0 0 18px;line-height:1.6;font-size:15px;">{lis}</ul></div></section>{CH_E}')
+    return (f'{CH_S}<section class="hub-block hub-changes"><div class="hub-card"><h2>What changed recently in {e(cfg["name"])}</h2>'
+            f'<p class="hub-checked">Checked {CHECKED_H}. <a href="/rebate-tracker/">See every change</a>.</p><ul>{lis}</ul></div></section>{CH_E}')
 
 
 def unify_hero(s, cfg):
@@ -140,9 +138,8 @@ STATUS_PILL = {  # status -> (label, background, text colour); the label is alwa
 
 
 def status_pill(st):
-    label, bg, fg = STATUS_PILL[st]
-    return (f'<span class="rb-status rb-{st}" style="display:inline-block;margin-left:6px;padding:1px 8px;border-radius:99px;'
-            f'font-size:12px;font-weight:600;background:{bg};color:{fg};white-space:nowrap;">{label}</span>')
+    label = STATUS_PILL[st][0]  # colours: .rb-status rules in _partials/nav-footer.html
+    return f'<span class="rb-status rb-{st}">{label}</span>'
 
 
 def top_block(cfg):
@@ -151,14 +148,12 @@ def top_block(cfg):
     rows = "".join(f'<tr><td><b>{e(w)}</b></td><td>{f'<a href="{e(pg)}">{e(p)}</a>' if pg else e(p)}</td><td>{e(a)}{status_pill(st)}</td><td>{e(n)} <a href="{e(s)}" rel="nofollow noopener" target="_blank">Source</a></td></tr>'
                    for (w, p, a, n, s), st, pg in zip(cfg["rows"], sts, pages))
     vdate = fmt(cfg["verified"]) if cfg.get("verified") else CHECKED_H
-    return (f'{TOP_S}<section style="max-width:880px;margin:24px auto;padding:0 20px;">'
-            f'<div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;font-size:17px;line-height:1.6;"><b>Short answer:</b> {e(cfg["short"])}</p>'
-            f'<p style="margin:10px 0 0;font-size:13px;color:#6b8e7f;">Last verified {vdate} · By <a href="/about">{e(AUTHOR["name"])}</a> · Every amount links to the official program.</p></div>'
-            f'<h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin:26px 0 10px;">Rebates open in {e(cfg["name"])} right now</h2>'
-            f'<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;min-width:620px;border-collapse:collapse;font-size:15px;">'
-            f'<tr style="background:#f5efe5;text-align:left;"><th style="padding:10px;">Upgrade</th><th style="padding:10px;">Program</th><th style="padding:10px;">Amount</th><th style="padding:10px;">Rules</th></tr>'
-            + rows.replace("<td>", '<td style="padding:10px;border-bottom:1px solid #d9d0c1;vertical-align:top;">')
-            + f'</table></div></section>{TOP_E}')
+    return (f'{TOP_S}<section class="hub-block hub-top">'
+            f'<div class="hub-answer"><p><b>Short answer:</b> {e(cfg["short"])}</p>'
+            f'<p class="hub-verified">Last verified {vdate} · By <a href="/about">{e(AUTHOR["name"])}</a> · Every amount links to the official program.</p></div>'
+            f'<h2>Rebates open in {e(cfg["name"])} right now</h2>'
+            f'<div class="hub-table-wrap"><table class="hub-table"><thead><tr><th>Upgrade</th><th>Program</th><th>Amount</th><th>Rules</th></tr></thead><tbody>'
+            + rows + f'</tbody></table></div></section>{TOP_E}')
 
 
 def ca_body(cfg):

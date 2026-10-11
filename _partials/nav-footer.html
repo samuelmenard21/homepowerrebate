@@ -361,6 +361,8 @@ main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
   .page-rail .rail-cta .rail-cta-h { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 18px; font-weight: 600; color: #fff; }
   .page-rail .rail-btn { display: block; margin-top: 12px; padding: 12px 16px; border-radius: 999px; background: #b4590a; color: #fff; text-align: center; font-weight: 700; text-decoration: none; }
   .page-rail .rail-btn:hover { background: #9a4f08; }
+  /* the side panel already carries the call to action: the floating button would cover its contents */
+  body:has(main.has-rail > .page-rail) .sticky-cta { display: none !important; }
 }
 @media (min-width: 1180px) {
   main.has-wide > div.wrap, main.has-wide > section.wrap, main.has-wide > section.section > .wrap, main.has-wide > nav.toc { max-width: var(--container); }

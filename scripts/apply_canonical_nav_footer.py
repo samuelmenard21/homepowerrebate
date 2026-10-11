@@ -34,7 +34,7 @@ import regions
 PARTIAL = ROOT / "_partials" / "nav-footer.html"
 POWERSCORE_DATA = ROOT / "powerscore-data.json"
 
-EXCLUDE_DIRS = {".git", "node_modules", "scripts", ".claude", "_partials"}
+EXCLUDE_DIRS = {".git", "node_modules", "scripts", ".claude", "_partials", "dist"}
 EXCLUDE_FILES = {
     "404.html", "og-image.html", "nav-footer.html",
     "CITY_PAGE_TEMPLATE_OPTIMIZED.html", "ONTARIO_CITY_PAGE_TEMPLATE.html",
@@ -233,19 +233,48 @@ OLD_JS_BLOCK_RE = re.compile(
 )
 
 
+SITE_CSS_PATH = ROOT / "assets" / "site.css"
+SITE_CSS_LINK_RE = re.compile(r'<link rel="stylesheet" href="/assets/site\.css\?v=[0-9a-f]+" data-hpr-site-css>')
+_SITE_CSS = {}
+
+
+def site_css_body() -> str:
+    """The shared CSS as served from /assets/site.css (with the metric-matched fallback fonts in every font stack)."""
+    if "body" not in _SITE_CSS:
+        _SITE_CSS["body"] = ("/* HomePowerRebate shared styles. Generated from _partials/nav-footer.html by scripts/apply_canonical_nav_footer.py; edit the partial, not this file. */\n"
+                             + add_font_fallbacks(CSS_RAW) + "\n")
+    return _SITE_CSS["body"]
+
+
+def site_css_link() -> str:
+    h = __import__("hashlib").sha1(site_css_body().encode()).hexdigest()[:10]
+    return f'<link rel="stylesheet" href="/assets/site.css?v={h}" data-hpr-site-css>'
+
+
+def write_site_css():
+    """The shared CSS lives in one cached file (/assets/site.css) instead of a copy inside every page.
+    Source of truth stays the SHARED CSS block in _partials/nav-footer.html; the link carries a content hash so
+    browsers and Cloudflare pick up a change at once and can cache the file for a year."""
+    SITE_CSS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    body = site_css_body()
+    if not SITE_CSS_PATH.exists() or SITE_CSS_PATH.read_text() != body:
+        SITE_CSS_PATH.write_text(body)
+
+
 def ensure_shared_assets(content: str) -> str:
-    css_block = f"<style>\n{CSS_MARKER_START}\n{CSS_RAW}\n{CSS_MARKER_END}\n</style>"
     js_block = f"<script>\n{JS_MARKER_START}\n{JS_RAW}\n{JS_MARKER_END}\n</script>"
+    # the link sits exactly where the inline block was, so the cascade order is unchanged
     if OLD_CSS_BLOCK_RE.search(content):
-        content = OLD_CSS_BLOCK_RE.sub(lambda m: css_block, content, count=1)
+        content = OLD_CSS_BLOCK_RE.sub(lambda m: site_css_link(), content, count=1)
+    elif SITE_CSS_LINK_RE.search(content):
+        content = SITE_CSS_LINK_RE.sub(lambda m: site_css_link(), content, count=1)
     else:
-        content = content.replace("</head>", css_block + "\n</head>", 1)
+        content = content.replace("</head>", site_css_link() + "\n</head>", 1)
     if OLD_JS_BLOCK_RE.search(content):
         content = OLD_JS_BLOCK_RE.sub(lambda m: js_block, content, count=1)
     else:
         content = content.replace("</body>", js_block + "\n</body>", 1)
     return content
-
 
 CHROME_RE = re.compile(r"<nav\b.*?</nav>|<footer\b.*?</footer>|<script\b.*?</script>|<style\b.*?</style>|<!--.*?-->",
                        re.DOTALL | re.IGNORECASE)
@@ -582,6 +611,7 @@ def find_pages():
 
 
 def main():
+    write_site_css()
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--newsletter-copy", action="store_true", help="newsletter wording changed on purpose; do not treat as content loss")

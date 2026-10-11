@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 542,
+ "count": 545,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -2519,6 +2519,33 @@
    "last_read": ""
   },
   {
+   "url": "https://www.energizect.com/rebates-incentives/heating-cooling/heat-pumps/residential-air-source",
+   "host": "www.energizect.com",
+   "region": "ct",
+   "check": "Energize CT residential air source heat pump incentive; Energize CT: residential air source heat pump incentive",
+   "facts": [
+    "ct-1-energize-ct-air-source-standard"
+   ],
+   "used_by_pages": [
+    "state-topics/ct-heat-pump"
+   ],
+   "last_read": "2026-10-10"
+  },
+  {
+   "url": "https://www.energizect.com/rebates-incentives/heating-cooling/heat-pumps/residential-energy-optimization",
+   "host": "www.energizect.com",
+   "region": "ct",
+   "check": "Energize CT residential energy optimization heat pump incentive; Energize CT: residential energy optimization incentive; Smart-E Loan (Energize CT)",
+   "facts": [
+    "ct-0-energize-ct-energy-optimization",
+    "ct-2-ct-green-bank-smart-e-loan"
+   ],
+   "used_by_pages": [
+    "state-topics/ct-heat-pump"
+   ],
+   "last_read": "2026-10-10"
+  },
+  {
    "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-affordability-program",
    "host": "natural-resources.canada.ca",
    "region": "federal",
@@ -3512,7 +3539,7 @@
     "/ma/worcester/heat-pump/",
     "blog-refresh/ma-ny-year-end-rebate-deadlines-2026"
    ],
-   "last_read": "2026-09-26"
+   "last_read": "2026-10-10"
   },
   {
    "url": "https://web.archive.org/web/20260716095731/https://www.masssave.com/residential/rebates-offers-services/heating-and-cooling/heat-pumps/ground-source-heat-pumps",
@@ -6604,6 +6631,7 @@
     "/wa/vancouver/heat-pump/",
     "/wa/vancouver/insulation/",
     "/wa/vancouver/windows-doors/",
+    "state-topics/ct-heat-pump",
     "state-topics/ma-battery",
     "state-topics/pa-windows",
     "state-topics/vt-battery",
@@ -6930,6 +6958,17 @@
    "facts": [],
    "used_by_pages": [
     "state-topics/vt-appliances"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.energizect.com/explore-solutions/heat-pumps-and-weatherization",
+   "host": "www.energizect.com",
+   "region": "state-topics",
+   "check": "Energize CT: heat pumps and weatherization",
+   "facts": [],
+   "used_by_pages": [
+    "state-topics/ct-heat-pump"
    ],
    "last_read": ""
   },

@@ -74,8 +74,9 @@ def main():
     t = f.read_text(encoding="utf-8")
     cards = "".join(f'<a href="/blog/{s}/" class="post-card"><span class="tag">Federal rebate</span><h3>{html.escape(a)}</h3><p>{html.escape(b)}</p></a>\n' for s, a, b in POSTS)
     t = re.sub(re.escape(PS) + r"[\s\S]*?" + re.escape(PE) + r"\n?", "", t)
-    m = re.search(r'(<a href="/blog/[^"]+/" class="post-card">)', t)
-    t = t[:m.start()] + PS + cards + PE + "\n" + t[m.start():]
+    if "<!-- BLOG-INDEX-START -->" not in t:  # build_blog_index.py lists the federal posts itself
+        m = re.search(r'(<a href="/blog/[^"]+/" class="post-card">)', t)
+        t = t[:m.start()] + PS + cards + PE + "\n" + t[m.start():]
     f.write_text(t, encoding="utf-8")
     print("updated", n, "hubs and city pages plus blog index")
 

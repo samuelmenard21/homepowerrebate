@@ -22,6 +22,8 @@ Usage:
 """
 import json
 import re
+import sys
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -452,6 +454,23 @@ def build_page(city_a, city_b, same_region, generated_date):
 CATEGORY_LABELS = {}
 
 
+def published_pairs(data):
+    """The pairs already published (tracked in git), read from each page's two "full rebate guide" buttons.
+    Pair selection follows the rankings, so recomputing it after a score change would add near-duplicate pages
+    and orphan old ones; refreshing the published set keeps URLs stable. Run with --new-pairs to add pairs."""
+    by_url = {c["url"]: (rk, slug) for rk, reg in data["regions"].items() for slug, c in reg["cities"].items()}
+    files = subprocess.check_output(["git", "-C", str(ROOT), "ls-files", "powerscore/compare/*/index.html"], text=True).split()
+    pairs = []
+    for rel in sorted(files):
+        urls = re.findall(r'<a class="btn" href="([^"]+)">See ', (ROOT / rel).read_text())
+        refs = [by_url.get(u) for u in urls[:2]]
+        if len(refs) == 2 and all(refs):
+            pairs.append((refs[0], refs[1], refs[0][0] == refs[1][0]))
+        else:
+            print(f"  skipped {rel}: city not found in powerscore-data.json")
+    return pairs
+
+
 def main():
     global CATEGORY_LABELS
     data = load_data()
@@ -460,7 +479,7 @@ def main():
 
     extract_shared_markup()
 
-    pairs = build_pairs(data)
+    pairs = build_pairs(data) if "--new-pairs" in sys.argv else published_pairs(data)
     print(f"Building {len(pairs)} comparison pages...")
 
     COMPARE_DIR.mkdir(parents=True, exist_ok=True)
@@ -477,29 +496,7 @@ def main():
 
     print(f"Wrote {len(new_urls)} pages to {COMPARE_DIR}")
 
-    # ---- update sitemap.xml ----
-    sitemap_text = SITEMAP_PATH.read_text()
-    existing_urls = set(re.findall(r"<loc>(.*?)</loc>", sitemap_text))
-    added = 0
-    insertion_lines = []
-    for url in new_urls:
-        if url in existing_urls:
-            continue
-        insertion_lines.append(
-            f"  <url><loc>{url}</loc><lastmod>{generated_date}</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>\n"
-        )
-        added += 1
-
-    if insertion_lines:
-        marker = "<url><loc>https://homepowerrebate.com/powerscore/</loc>"
-        idx = sitemap_text.find(marker)
-        if idx == -1:
-            raise RuntimeError("Could not find powerscore sitemap marker to insert after.")
-        line_end = sitemap_text.find("\n", idx) + 1
-        sitemap_text = sitemap_text[:line_end] + "".join(insertion_lines) + sitemap_text[line_end:]
-        SITEMAP_PATH.write_text(sitemap_text)
-
-    print(f"Added {added} new URLs to sitemap.xml")
+    # Compare pages are noindex and stay out of sitemap.xml (generate_sitemap.py skips /powerscore/compare/).
 
 
 if __name__ == "__main__":

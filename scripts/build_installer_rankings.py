@@ -645,7 +645,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 <p class="small">Together these {n} companies average {avg:.1f}★ across {total_reviews:,} reviews. {esc(most_reviewed['name'])} has the most reviews ({most_reviewed['reviews']:,}).</p>
 
 <p class="small">Ranked by Google rating weighted by review count, collected {upd_h}. Rankings are never paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
-<p class="small"><b>Listed here?</b> <a href="/installers/badge/?r={region}&amp;c={city_slug}&amp;s={service}">Get your free top-rated badge</a> for your website.</p>
+<p class="small"><b>Listed here?</b> <a href="/installers/badge/?r={region}&amp;c={city_slug}&amp;s={service}">Get your top-rated badge</a> for your website.</p>
 
 {cost_box(region, service, city_label, hub)}
 
@@ -1094,7 +1094,7 @@ def badge_page(index):
 <header class="bdg-hero"><div class="bdg-wrap"><div>
 <p class="bdg-eyebrow">For installers</p>
 <h1>Show off your top-rated badge</h1>
-<p class="bdg-sub">If your company is on one of our city rankings, you earned it with your Google reviews. Add the badge to your website. It takes two minutes and there's no cost.</p>
+<p class="bdg-sub">If your company is on one of our city rankings, you earned it with your Google reviews. Add the badge to your website. It takes two minutes.</p>
 <ul class="bdg-points"><li>{n_cities} cities</li><li>{n_pages} ranking pages</li><li>Ranked by Google reviews</li></ul>
 </div>
 <div class="bdg-sample" aria-hidden="true"><img src="{sample}" width="480" height="192" alt=""></div>
@@ -1137,7 +1137,7 @@ def badge_page(index):
 <ul class="bdg-rules">
 <li>{tick}<div><b>Listed companies only</b><span>Only companies on a ranking page can use that page's badge.</span></div></li>
 <li>{tick}<div><b>Rankings come from Google reviews</b><span>We update them regularly. If you drop off a ranking, please take the badge down.</span></div></li>
-<li>{tick}<div><b>No cost, no effect on rank</b><span>You don't need the badge to be ranked, and showing it doesn't change your spot. <a class="bdg-link" href="/installers/how-we-rank/">How we rank</a></span></div></li>
+<li>{tick}<div><b>No effect on rank</b><span>You don't need the badge to be ranked, and showing it doesn't change your spot. <a class="bdg-link" href="/installers/how-we-rank/">How we rank</a></span></div></li>
 <li>{tick}<div><b>Questions or a fix?</b><span>Email <a class="bdg-link" href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a> and we'll sort it out.</span></div></li>
 </ul>
 <div class="bdg-extra"><div><h2>Want a rebate calculator too?</h2>

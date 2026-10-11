@@ -831,7 +831,7 @@ table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; mi
         <div class="footer-col-title">Company</div>
         <ul class="footer-col-links">
           <li><a href="/about/">About</a></li>
-          <li><a href="/partners/">Partners</a></li>
+          <li><a href="/installers/badge/">For Installers</a></li>
           <li><a href="/privacy/">Privacy</a></li>
           <li><a href="/terms/">Terms</a></li>
           <li><a href="/contact/">Contact</a></li>

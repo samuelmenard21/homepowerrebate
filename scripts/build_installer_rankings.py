@@ -645,7 +645,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 <p class="small">Together these {n} companies average {avg:.1f}★ across {total_reviews:,} reviews. {esc(most_reviewed['name'])} has the most reviews ({most_reviewed['reviews']:,}).</p>
 
 <p class="small">Ranked by Google rating weighted by review count, collected {upd_h}. Rankings are never paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
-<p class="small"><b>Listed here?</b> <a href="/installers/badge/">Get your free top-rated badge</a> for your website.</p>
+<p class="small"><b>Listed here?</b> <a href="/installers/badge/?r={region}&amp;c={city_slug}&amp;s={service}">Get your free top-rated badge</a> for your website.</p>
 
 {cost_box(region, service, city_label, hub)}
 
@@ -966,55 +966,257 @@ def badge_svg(city, service):
 """
 
 
+BADGE_CSS = """
+:root{--ink:#0a2a2e;--ink-soft:#1a3d42;--paper:#faf7f2;--paper-warm:#f5efe5;--teal:#0d4f5c;--teal-deep:#08363f;--amber:#d4751c;--amber-bright:#e88a2e;--sage:#6b8e7f;--green-money:#2d6a4f;--rule:#e3dacb}
+body{font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased;margin:0}
+.bdg *,.bdg *::before,.bdg *::after{box-sizing:border-box}
+.bdg h1,.bdg h2,.bdg h3{font-family:'Fraunces',Georgia,serif;line-height:1.12;letter-spacing:-.015em;margin:0;color:var(--ink)}
+.bdg p{margin:0}
+.bdg-wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+@media(min-width:700px){.bdg-wrap{padding:0 28px}}
+.bdg-hero{position:relative;overflow:hidden;background:radial-gradient(120% 140% at 100% 0%,#14606e 0%,var(--teal-deep) 55%,#062a31 100%);color:var(--paper);padding:40px 0 120px}
+.bdg-hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(232,138,46,.28),rgba(232,138,46,0) 70%);pointer-events:none}
+.bdg-hero .bdg-wrap{position:relative;z-index:1;display:grid;gap:28px;align-items:center}
+.bdg-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber-bright);margin-bottom:14px}
+.bdg-eyebrow::before{content:"";width:22px;height:2px;background:var(--amber-bright)}
+.bdg-hero h1{color:#fff;font-weight:600;font-size:clamp(34px,8.4vw,60px);line-height:1.04;max-width:14ch;text-wrap:balance}
+.bdg-hero .bdg-sub{margin-top:16px;max-width:46ch;font-size:clamp(17px,1.5vw,20px);line-height:1.5;color:rgba(250,247,242,.86)}
+.bdg-points{display:flex;flex-wrap:wrap;gap:8px 18px;margin:22px 0 0;padding:0;list-style:none;font-size:15px;color:rgba(250,247,242,.9)}
+.bdg-points li{display:flex;align-items:center;gap:8px}
+.bdg-points li::before{content:"";width:18px;height:18px;flex:none;border-radius:50%;background:var(--amber) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3L15 6.5' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+.bdg-sample{display:none}
+@media(min-width:900px){.bdg-hero{padding:64px 0 150px}.bdg-hero .bdg-wrap{grid-template-columns:1.15fr .85fr}
+.bdg-sample{display:block;justify-self:end;width:100%;max-width:400px;transform:rotate(-3deg);filter:drop-shadow(0 24px 40px rgba(0,0,0,.35))}
+.bdg-sample img{display:block;width:100%;height:auto;border-radius:16px}}
+.bdg-tool{position:relative;z-index:2;margin-top:-84px;background:#fff;border:1px solid var(--rule);border-radius:20px;box-shadow:0 18px 50px rgba(8,54,63,.12),0 2px 6px rgba(8,54,63,.05);display:grid}
+@media(min-width:900px){.bdg-tool{margin-top:-104px;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}}
+.bdg-steps{padding:24px 20px;border-bottom:1px solid var(--rule)}
+.bdg-out{padding:24px 20px;background:var(--paper-warm);border-radius:0 0 20px 20px}
+@media(min-width:900px){.bdg-steps{padding:36px 34px;border-bottom:0;border-right:1px solid var(--rule)}.bdg-out{padding:36px 34px;border-radius:0 20px 20px 0}}
+.bdg h2{font-size:clamp(24px,3vw,30px);font-weight:600}
+.bdg-steps>p{margin-top:6px;color:var(--ink-soft);font-size:15.5px}
+.bdg-step{margin-top:22px}
+.bdg-lbl{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15.5px;margin-bottom:8px;color:var(--ink)}
+.bdg-num{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--teal-deep);color:#fff;font-size:13px;font-weight:700;flex:none}
+.bdg-step.off .bdg-num{background:#c9c0b0}
+.bdg-step.off .bdg-lbl{color:#8a8476}
+.bdg-sel{position:relative}
+.bdg-sel select{appearance:none;-webkit-appearance:none;width:100%;min-height:50px;padding:12px 44px 12px 14px;border:1.5px solid #cfc6b6;border-radius:12px;background:#fff;font:inherit;font-size:16px;color:var(--ink);cursor:pointer}
+.bdg-sel::after{content:"";position:absolute;right:18px;top:50%;width:9px;height:9px;border-right:2px solid var(--teal);border-bottom:2px solid var(--teal);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.bdg-sel select:focus-visible{outline:none;border-color:var(--amber);box-shadow:0 0 0 4px rgba(212,117,28,.18)}
+.bdg-sel select:disabled{background:#f3efe8;color:#8a8476;cursor:not-allowed}
+.bdg-chips{display:flex;flex-wrap:wrap;gap:8px;border:0;margin:0;padding:0;min-width:0}
+.bdg-chips legend{padding:0}
+.bdg-chip{position:relative}
+.bdg-chip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.bdg-chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1.5px solid #cfc6b6;border-radius:999px;background:#fff;font-weight:600;font-size:15px;color:var(--ink-soft);transition:background .15s,border-color .15s,color .15s}
+.bdg-chip input:checked+span{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff}
+.bdg-chip input:focus-visible+span{box-shadow:0 0 0 4px rgba(212,117,28,.25)}
+.bdg-chip:hover span{border-color:var(--teal)}
+.bdg-hint{font-size:14.5px;color:#8a8476}
+.bdg-who{margin-top:22px;padding:14px 16px;border-radius:12px;background:#f1f7f3;border:1px solid #d3e6da;font-size:14.5px;color:var(--ink-soft)}
+.bdg-who b{color:var(--green-money)}
+.bdg-who a{color:var(--teal-deep);font-weight:700;text-decoration:underline;text-decoration-color:var(--amber);text-underline-offset:2px}
+.bdg-outhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.bdg-outhead h3{font-size:20px;font-weight:600}
+.bdg-bg{display:inline-flex;border:1px solid var(--rule);border-radius:999px;background:#fff;padding:3px}
+.bdg-bg button{border:0;background:none;font:inherit;font-size:13.5px;font-weight:600;color:var(--ink-soft);min-height:34px;padding:0 12px;border-radius:999px;cursor:pointer}
+.bdg-bg button[aria-pressed=true]{background:var(--teal-deep);color:#fff}
+.bdg-stage{position:relative;margin-top:14px;border-radius:16px;min-height:200px;display:grid;place-items:center;padding:28px 18px;background:#fff;border:1px solid var(--rule);transition:background .2s}
+.bdg-stage.dark{background:#1d2427;border-color:#1d2427}
+.bdg-stage img{display:block;width:100%;max-width:320px;height:auto}
+.bdg-stage .bdg-tag{position:absolute;top:12px;left:12px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--paper-warm);color:var(--ink-soft);border-radius:999px;padding:4px 10px}
+.bdg-stage.ready .bdg-tag{display:none}
+.bdg-stage:not(.ready) img{opacity:.55;filter:grayscale(.3)}
+.bdg-code{margin-top:22px}
+.bdg-codehead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.bdg-codehead label{font-weight:700;font-size:15.5px}
+.bdg-code textarea{display:block;width:100%;min-height:118px;resize:vertical;padding:14px;border:0;border-radius:12px;background:#0b2a30;color:#d9ecef;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.55}
+.bdg-code textarea:disabled{background:#d8d1c4;color:#6f695e}
+.bdg-copy{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;margin-top:12px;width:100%;padding:0 22px;border:0;border-radius:12px;background:var(--amber);color:#fff;font:inherit;font-weight:700;font-size:16px;cursor:pointer;transition:background .15s}
+.bdg-copy:hover{background:#bf6614}
+.bdg-copy:disabled{background:#cfc6b6;cursor:not-allowed}
+.bdg-copy.done{background:var(--green-money)}
+@media(min-width:560px){.bdg-copy{width:auto}}
+.bdg-sec{padding:64px 0 0}
+.bdg-sec>.bdg-wrap>p.bdg-lead{margin-top:8px;color:var(--ink-soft);font-size:16.5px;max-width:60ch}
+.bdg-how{display:grid;gap:14px;margin:26px 0 0;padding:0;list-style:none;counter-reset:how}
+@media(min-width:760px){.bdg-how{grid-template-columns:repeat(3,1fr)}}
+.bdg-how li{counter-increment:how;background:#fff;border:1px solid var(--rule);border-radius:16px;padding:22px 20px}
+.bdg-how li::before{content:counter(how);display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--paper-warm);color:var(--amber);font-family:'Fraunces',Georgia,serif;font-weight:700;font-size:18px;margin-bottom:12px}
+.bdg-how h3{font-size:18px;font-weight:600;margin-bottom:6px}
+.bdg-how p{font-size:15px;color:var(--ink-soft)}
+.bdg-rules{display:grid;gap:12px;margin:26px 0 0;padding:0;list-style:none}
+@media(min-width:760px){.bdg-rules{grid-template-columns:repeat(2,1fr)}}
+.bdg-rules li{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--rule);border-radius:16px;padding:18px}
+.bdg-rules svg{flex:none;width:36px;height:36px;padding:8px;border-radius:10px;background:#f1f7f3;color:var(--green-money)}
+.bdg-rules b{display:block;font-size:16px;color:var(--ink);margin-bottom:2px}
+.bdg-rules span{font-size:15px;color:var(--ink-soft)}
+.bdg a.bdg-link{color:var(--teal-deep);font-weight:700;text-decoration:underline;text-decoration-color:var(--amber);text-underline-offset:2px}
+.bdg-extra{margin:64px 0 72px;display:grid;gap:18px;align-items:center;background:var(--teal-deep);color:var(--paper);border-radius:20px;padding:28px 22px}
+@media(min-width:760px){.bdg-extra{grid-template-columns:1fr auto;padding:36px 40px}}
+.bdg-extra h2{color:#fff}
+.bdg-extra p{margin-top:8px;color:rgba(250,247,242,.85);font-size:16px;max-width:56ch}
+.bdg-extra a{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:12px;background:#fff;color:var(--teal-deep);font-weight:700;text-decoration:none;white-space:nowrap}
+.bdg-extra a:hover{background:var(--paper-warm)}
+#sticky-cta{display:none!important}
+.bdg .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+"""
+
+
 def badge_page(index):
     path = "/installers/badge/"
-    opts = sorted((m for m in index if m.get("indexed")), key=lambda m: (m["region"], m["city"], m["service"]))
-    data = json.dumps([{"u": m["url"], "c": m["city"], "s": SERVICES[m["service"]]["name"].lower(), "t": m["top"]} for m in opts], ensure_ascii=False)
+    order = {sv: i for i, sv in enumerate(("heat-pump", "solar", "battery", "insulation"))}
+    tree = {}
+    for m in index:
+        if not m.get("indexed"):
+            continue
+        slug = m["url"].strip("/").split("/")[2]
+        reg = tree.setdefault(m["region"], {})
+        city = reg.setdefault(slug, {"n": m["city"], "s": []})
+        city["s"].append({"k": m["service"], "n": SERVICES[m["service"]]["name"], "l": SERVICES[m["service"]]["lower"],
+                          "u": m["url"], "t": m["top"]})
+    regions_out = []
+    for code in sorted(tree, key=lambda c: (REGIONS[c][0] != "ca", REGIONS[c][3])):
+        cities = []
+        for slug, c in sorted(tree[code].items(), key=lambda kv: kv[1]["n"]):
+            c["s"].sort(key=lambda x: order.get(x["k"], 9))
+            cities.append({"k": slug, "n": c["n"], "s": c["s"]})
+        regions_out.append({"k": code, "n": REGIONS[code][3], "co": REGIONS[code][0], "c": cities})
+    data = json.dumps(regions_out, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    n_pages = sum(len(c["s"]) for r in regions_out for c in r["c"])
+    n_cities = sum(len(r["c"]) for r in regions_out)
+    sample = regions_out[0]["c"][0]["s"][0]["u"] + "badge.svg" if regions_out else ""
+    opt = lambda co: "".join(f'<option value="{r["k"]}">{esc(r["n"])}</option>' for r in regions_out if r["co"] == co)
+    tick = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/installers/">Installers</a></li><li aria-current="page">Badge</li></ol></nav>
-<header class="hero"><div class="wrap"><h1>Your Top-Rated Installer Badge</h1>
-<p>If your company appears on one of our city rankings, you've earned it from your Google reviews. Show it on your website, free.</p></div></header>
-<section class="body"><div class="wrap">
-<h2>Get your badge</h2>
-<p><label for="bdg-pick"><b>Pick your ranking page</b></label><br><select id="bdg-pick" style="width:100%;max-width:480px;padding:10px;font:inherit;font-size:16px;"></select></p>
-<p id="bdg-who" class="small"></p>
-<p id="bdg-prev"></p>
-<p><label for="bdg-code"><b>Copy this code into your website</b></label></p>
-<textarea id="bdg-code" readonly rows="4" style="width:100%;font-family:monospace;font-size:13px;padding:10px;"></textarea>
-<p><button type="button" id="bdg-copy" style="background:#d4751c;color:#fff;border:0;border-radius:8px;padding:12px 20px;font:inherit;font-weight:700;cursor:pointer;">Copy code</button></p>
-<h2>The rules</h2>
-<ul><li>Only companies listed on the ranking page can use its badge.</li>
-<li>Rankings come from Google reviews and are updated regularly. If you drop off a ranking, please remove the badge.</li>
-<li>The badge is free. You don't need to show it to be ranked, and showing it doesn't change your rank. <a href="/installers/how-we-rank/">How we rank</a>.</li>
-<li>Questions or a correction? Email <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a>.</li></ul>
+<main class="bdg">
+<header class="bdg-hero"><div class="bdg-wrap"><div>
+<p class="bdg-eyebrow">For installers</p>
+<h1>Show off your top-rated badge</h1>
+<p class="bdg-sub">If your company is on one of our city rankings, you earned it with your Google reviews. Add the badge to your website. It takes two minutes and there's no cost.</p>
+<ul class="bdg-points"><li>{n_cities} cities</li><li>{n_pages} ranking pages</li><li>Ranked by Google reviews</li></ul>
+</div>
+<div class="bdg-sample" aria-hidden="true"><img src="{sample}" width="480" height="192" alt=""></div>
+</div></header>
+
+<div class="bdg-wrap"><section class="bdg-tool" aria-labelledby="bdg-h">
+<div class="bdg-steps">
+<h2 id="bdg-h">Get your badge</h2>
+<p>Find the ranking page your company is on.</p>
+<div class="bdg-step" id="st-r"><label class="bdg-lbl" for="bdg-r"><span class="bdg-num">1</span>Province or state</label>
+<div class="bdg-sel"><select id="bdg-r"><option value="">Choose one</option><optgroup label="Canada">{opt("ca")}</optgroup><optgroup label="United States">{opt("us")}</optgroup></select></div></div>
+<div class="bdg-step off" id="st-c"><label class="bdg-lbl" for="bdg-c"><span class="bdg-num">2</span>City</label>
+<div class="bdg-sel"><select id="bdg-c" disabled><option value="">Pick a province or state first</option></select></div></div>
+<div class="bdg-step off" id="st-s"><fieldset class="bdg-chips" id="bdg-s"><legend class="bdg-lbl"><span class="bdg-num">3</span>What you install</legend><p class="bdg-hint">Pick a city first.</p></fieldset></div>
+<p class="bdg-who" id="bdg-who" hidden></p>
+</div>
+<div class="bdg-out">
+<div class="bdg-outhead"><h3>Preview</h3>
+<div class="bdg-bg" role="group" aria-label="Preview background"><button type="button" aria-pressed="true" data-bg="light">Light site</button><button type="button" aria-pressed="false" data-bg="dark">Dark site</button></div></div>
+<div class="bdg-stage" id="bdg-stage"><span class="bdg-tag">Example</span><img id="bdg-img" src="{sample}" width="320" height="128" alt="Badge preview"></div>
+<div class="bdg-code"><div class="bdg-codehead"><label for="bdg-code">Your code</label></div>
+<textarea id="bdg-code" readonly disabled spellcheck="false">Pick your city and service to get your code.</textarea>
+<button type="button" class="bdg-copy" id="bdg-copy" disabled>Copy code</button>
+<p class="sr" id="bdg-live" aria-live="polite"></p></div>
+</div>
+</section></div>
+
+<section class="bdg-sec"><div class="bdg-wrap">
+<h2>Add it to your site</h2>
+<p class="bdg-lead">The code is a plain image and link. No script, no tracking, and nothing to install.</p>
+<ol class="bdg-how">
+<li><h3>Copy your code</h3><p>Pick your city and service above, then press Copy code.</p></li>
+<li><h3>Paste it in</h3><p>Add an HTML block where you want the badge. In WordPress it's "Custom HTML", in Wix "Embed code", in Squarespace "Code".</p></li>
+<li><h3>Publish</h3><p>Save your page. The badge links to your city ranking, so customers can see where you stand.</p></li>
+</ol>
 </div></section>
+
+<section class="bdg-sec"><div class="bdg-wrap">
+<h2>The rules</h2>
+<ul class="bdg-rules">
+<li>{tick}<div><b>Listed companies only</b><span>Only companies on a ranking page can use that page's badge.</span></div></li>
+<li>{tick}<div><b>Rankings come from Google reviews</b><span>We update them regularly. If you drop off a ranking, please take the badge down.</span></div></li>
+<li>{tick}<div><b>No cost, no effect on rank</b><span>You don't need the badge to be ranked, and showing it doesn't change your spot. <a class="bdg-link" href="/installers/how-we-rank/">How we rank</a></span></div></li>
+<li>{tick}<div><b>Questions or a fix?</b><span>Email <a class="bdg-link" href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a> and we'll sort it out.</span></div></li>
+</ul>
+<div class="bdg-extra"><div><h2>Want a rebate calculator too?</h2>
+<p>Put our rebate calculator on your website so customers can see which rebates they qualify for before they call you.</p></div>
+<a href="/calculator/widget/">Get the calculator</a></div>
+</div></section>
+</main>
 <script>
-const B={data};
-const sel=document.getElementById('bdg-pick');
-B.forEach((b,i)=>{{const o=document.createElement('option');o.value=i;o.textContent=b.c+' \u2014 '+b.s;sel.appendChild(o);}});
-function show(){{const b=B[sel.value],url='{BASE}'+b.u;
-const code='<a href="'+url+'" title="Top-rated '+b.s+' installer in '+b.c+'"><img src="'+url+'badge.svg" width="320" height="128" alt="Top-rated '+b.s+' installer in '+b.c+' on HomePowerRebate"></a>';
-document.getElementById('bdg-code').value=code;
-document.getElementById('bdg-prev').innerHTML='<img src="'+b.u+'badge.svg" width="320" height="128" alt="Badge preview">';
-document.getElementById('bdg-who').textContent='Listed on this page: '+b.t.join(', ')+(b.t.length>=3?' and others':'')+'.';}}
-sel.addEventListener('change',show);
-document.getElementById('bdg-copy').addEventListener('click',()=>{{const t=document.getElementById('bdg-code');t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);}});
-show();
+(function(){{
+var R={data},BASE='{BASE}';
+var $=function(i){{return document.getElementById(i)}};
+var rs=$('bdg-r'),cs=$('bdg-c'),ss=$('bdg-s'),who=$('bdg-who'),stage=$('bdg-stage'),img=$('bdg-img'),code=$('bdg-code'),copy=$('bdg-copy'),live=$('bdg-live');
+var SAMPLE=img.getAttribute('src'),reg=null,city=null,svc=null;
+function esc(t){{var d=document.createElement('div');d.textContent=t;return d.innerHTML}}
+function step(id,on){{$(id).classList.toggle('off',!on)}}
+function sync(){{var q=new URLSearchParams();if(reg)q.set('r',reg.k);if(city)q.set('c',city.k);if(svc)q.set('s',svc.k);
+try{{history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:''))}}catch(e){{}}}}
+function render(){{
+  if(svc){{var url=BASE+svc.u,t='Top-rated '+svc.l+' installer in '+city.n;
+    var c='<a href="'+url+'" title="'+t+'"><img src="'+url+'badge.svg" width="320" height="128" alt="'+t+' on HomePowerRebate"></a>';
+    code.value=c;code.disabled=false;copy.disabled=false;img.src=svc.u+'badge.svg';img.alt=t;stage.classList.add('ready');
+    who.innerHTML='<b>On this ranking:</b> '+esc(svc.t.join(', '))+(svc.t.length>=3?' and others':'')+'. <a href="'+svc.u+'" target="_blank" rel="noopener">See the ranking page</a>';who.hidden=false;
+  }}else{{code.value='Pick your city and service to get your code.';code.disabled=true;copy.disabled=true;img.src=SAMPLE;img.alt='Badge preview';stage.classList.remove('ready');who.hidden=true;}}
+  copy.textContent='Copy code';copy.classList.remove('done');sync();
+}}
+function setSvcs(){{
+  ss.querySelectorAll('.bdg-chip,.bdg-hint').forEach(function(n){{n.remove()}});
+  if(!city){{var h=document.createElement('p');h.className='bdg-hint';h.textContent='Pick a city first.';ss.appendChild(h);step('st-s',false);return}}
+  city.s.forEach(function(s){{var l=document.createElement('label');l.className='bdg-chip';
+    l.innerHTML='<input type="radio" name="bdg-svc" value="'+s.k+'"><span>'+esc(s.n)+'</span>';
+    l.querySelector('input').addEventListener('change',function(){{svc=s;render()}});ss.appendChild(l)}});
+  step('st-s',true);
+  if(city.s.length===1){{svc=city.s[0];ss.querySelector('input').checked=true}}
+}}
+function pickRegion(k){{
+  reg=R.find(function(r){{return r.k===k}})||null;city=null;svc=null;
+  cs.innerHTML='';var o=document.createElement('option');o.value='';o.textContent=reg?'Choose your city':'Pick a province or state first';cs.appendChild(o);
+  if(reg)reg.c.forEach(function(c){{var x=document.createElement('option');x.value=c.k;x.textContent=c.n;cs.appendChild(x)}});
+  cs.disabled=!reg;step('st-c',!!reg);setSvcs();render();
+}}
+function pickCity(k){{city=reg&&reg.c.find(function(c){{return c.k===k}})||null;svc=null;setSvcs();render()}}
+rs.addEventListener('change',function(){{pickRegion(rs.value);if(reg)cs.focus()}});
+cs.addEventListener('change',function(){{pickCity(cs.value)}});
+copy.addEventListener('click',function(){{
+  var done=function(){{copy.textContent='Copied!';copy.classList.add('done');live.textContent='Code copied';}};
+  if(navigator.clipboard&&window.isSecureContext){{navigator.clipboard.writeText(code.value).then(done,function(){{code.select();document.execCommand('copy');done()}})}}
+  else{{code.select();document.execCommand('copy');done()}}
+}});
+document.querySelectorAll('.bdg-bg button').forEach(function(b){{b.addEventListener('click',function(){{
+  document.querySelectorAll('.bdg-bg button').forEach(function(x){{x.setAttribute('aria-pressed',x===b)}});
+  stage.classList.toggle('dark',b.dataset.bg==='dark')}})}});
+var q=new URLSearchParams(location.search);
+if(q.get('r')){{rs.value=q.get('r');pickRegion(rs.value);
+  if(q.get('c')){{cs.value=q.get('c');pickCity(cs.value);
+    var s=city&&city.s.find(function(x){{return x.k===q.get('s')}});
+    if(s){{svc=s;var i=ss.querySelector('input[value="'+s.k+'"]');if(i)i.checked=true}}render()}}}}
+}})();
 </script>"""
     title = "Top-Rated Installer Badge | HomePowerRebate"
-    desc = "Listed on a HomePowerRebate city ranking? Add your free top-rated installer badge to your website."
+    desc = "Listed on a HomePowerRebate city ranking? Pick your province or state, city and service, and add your top-rated installer badge to your website."
     page = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title}</title>
 <meta name="description" content="{desc}"><meta name="robots" content="noindex, follow"><link rel="canonical" href="{BASE}{path}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>{CSS}</style></head><body>
+<style>{BADGE_CSS}</style></head><body>
 {navfooter.render_nav("on", "")}
 {body}
 {navfooter.render_footer("on", "", "", path)}
 </body></html>
 """
     return path, navfooter.ensure_shared_assets(page)
+
+
+def badge_link(m):
+    """Badge page pre-set to one ranking page (for outreach emails)."""
+    slug = m["url"].strip("/").split("/")[2]
+    return f"{BASE}/installers/badge/?r={m['region']}&c={slug}&s={m['service']}"
 
 
 def outreach_list(index, rows):
@@ -1030,7 +1232,7 @@ def outreach_list(index, rows):
             continue
         seen.add((email, hub_city["url"]))
         out.append([r["name"], email, hub_city["city"], SERVICES[r["service"]]["name"], BASE + hub_city["url"],
-                    BASE + "/installers/badge/", r.get("rating", ""), r.get("reviews", "")])
+                    badge_link(hub_city), r.get("rating", ""), r.get("reviews", "")])
     with open(ROOT / "data" / "outreach-rankings.csv", "w", newline="", encoding="utf-8") as f:
         csv.writer(f).writerows(out)
     return len(out) - 1
@@ -1039,7 +1241,13 @@ def outreach_list(index, rows):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--badge-only", action="store_true", help="rebuild /installers/badge/ from installers/rankings.json")
     args = ap.parse_args()
+    if args.badge_only:
+        bp, bhtml = badge_page(json.loads((ROOT / "installers" / "rankings.json").read_text(encoding="utf-8")))
+        (ROOT / bp.strip("/") / "index.html").write_text(bhtml, encoding="utf-8")
+        print(f"Wrote {bp}")
+        return
 
     rows = load_rows()
     hubs = city_hubs()

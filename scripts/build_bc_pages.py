@@ -24,6 +24,8 @@ LABEL = {"insulation": "Insulation", "windows": "Windows & Doors", "water-heater
          "ev-charger": "EV Charger", "smart-thermostats": "Smart Thermostat", "appliances": "Appliance", "hrv": "HRV & Ventilation"}
 BUILT = ["insulation", "windows", "water-heater", "heat-pump", "solar", "battery", "ev-charger"]
 HUB = ["index"]
+# One page for the province: /ca/bc/<k>/ from data/state-topics/bc-<k>.json (build_state_topic_pages.py).
+PROVINCE_PAGES = [("smart-thermostats", "Smart thermostat rebates"), ("appliances", "Appliance rebates"), ("hrv", "HRV and ventilation rebates")]
 NAMES = {"abbotsford": "Abbotsford", "burnaby": "Burnaby", "chilliwack": "Chilliwack", "coquitlam": "Coquitlam", "fort-st-john": "Fort St. John", "kamloops": "Kamloops",
          "kelowna": "Kelowna", "langley": "Langley", "maple-ridge": "Maple Ridge", "nanaimo": "Nanaimo", "penticton": "Penticton", "prince-george": "Prince George",
          "richmond": "Richmond", "squamish": "Squamish", "surrey": "Surrey", "vancouver": "Vancouver", "vernon": "Vernon", "victoria": "Victoria"}
@@ -76,7 +78,11 @@ def build(slug, cat):
     when = date.fromisoformat(checked).strftime("%B %-d, %Y")
     sibs = [k for k in LABEL if k != cat and (ROOT / f"ca/bc/{slug}/{k}/index.html").exists()]
     sib = "".join(f'<span style="margin-right:14px;"><a href="{hub}{k}/">{LABEL[k]} Rebates in {e(name)}</a></span>\n' for k in sibs)
-    guides = ("<h2>Every rebate guide for " + e(name) + "</h2><ul>" + "".join(f'<li><a href="{hub}{k}/">{LABEL[k]} rebates in {e(name)}</a></li>' for k in sibs) + "</ul>") if is_hub else ""
+    # Categories with nothing city-specific have one BC page; the city URLs 301 there.
+    bc = [(k, t) for k, t in PROVINCE_PAGES if k != cat and (ROOT / f"ca/bc/{k}/index.html").exists()]
+    sib += "".join(f'<span style="margin-right:14px;"><a href="/ca/bc/{k}/">{t} in BC</a></span>\n' for k, t in bc)
+    guides = ("<h2>Every rebate guide for " + e(name) + "</h2><ul>" + "".join(f'<li><a href="{hub}{k}/">{LABEL[k]} rebates in {e(name)}</a></li>' for k in sibs)
+              + "".join(f'<li><a href="/ca/bc/{k}/">{t} in BC</a> (the same for every city)</li>' for k, t in bc) + "</ul>") if is_hub else ""
     cards = "".join(ca.card(x) for x in d["cards"])
     inst = "" if d.get("no_installers") else installer_html(slug, name, cat, d.get("installers_intro", ""))
     steps = "".join(f"<li>{s}</li>\n" for s in d.get("claim_steps", []))

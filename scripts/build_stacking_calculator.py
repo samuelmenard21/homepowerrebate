@@ -72,6 +72,18 @@ for region_key, region in DATA["regions"].items():
 
 cities.sort(key=lambda c: (c.region, c.label))
 print(f"Loaded {len(cities)} cities")
+TOTAL_CITIES = len(cities)
+
+
+def _has_money(c):
+    return any(d.get("status") == "open" and d.get("dollar_value") for d in c.categories.values())
+
+
+# A calculator for a city with no open dollar amount in any category would only ever add up to $0.
+# Those cities are left out (their old pages 301 to the city hub in _redirects).
+skipped = [c for c in cities if not _has_money(c)]
+cities = [c for c in cities if _has_money(c)]
+print(f"Calculator covers {len(cities)} of {TOTAL_CITIES} cities; no open dollar amount in: " + ", ".join(f"{c.region}/{c.slug}" for c in skipped))
 
 
 def available_cats(city):
@@ -656,7 +668,7 @@ def build_hub_page():
     canonical = "https://homepowerrebate.com" + url
     title = "Rebate Stacking Calculator: Combine Heat Pump, Solar & More by City | HomePowerRebate"
     description = (
-        f"See your total combined rebate stack for {len(cities)} cities across Canada and the US. "
+        f"See your total combined rebate stack for the {len(cities)} cities across Canada and the US where we found open rebate money. "
         "Pick your city, check the categories you're planning (heat pump, solar, insulation, and 5 more), "
         "and get a real dollar total from published program amounts."
     )
@@ -759,7 +771,7 @@ def build_hub_page():
   <div class="wrap">
     <div class="eyebrow">New &middot; Rebate Stacking Calculator</div>
     <h1>If you do heat pump + solar + insulation together, what's your real total?</h1>
-    <p class="lead">Most homeowners don't do one upgrade &mdash; they do two or three in the same renovation. This tool adds up the real, published rebate amounts for any combination you pick, for any of the {len(cities)} cities we cover.</p>
+    <p class="lead">Most homeowners don't do one upgrade &mdash; they do two or three in the same renovation. This tool adds up the real, published rebate amounts for any combination you pick, in the {len(cities)} of our {TOTAL_CITIES} cities where at least one rebate with a dollar amount is open today.</p>
     <div class="hero-stats">
       <div class="hero-stat"><div class="num">{len(cities)}</div><div class="lbl">Cities</div></div>
       <div class="hero-stat"><div class="num">8</div><div class="lbl">Stackable categories</div></div>

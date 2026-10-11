@@ -65,27 +65,97 @@ CARD_RE = re.compile(r'<div class="rebate-card([^"]*)">(.*?)</div>\s*</div>', re
 CARD_SPLIT_RE = re.compile(r'<div class="rebate-card')
 
 
+def _load_redirects():
+    out = {}
+    f = ROOT / "_redirects"
+    for line in (f.read_text().splitlines() if f.exists() else []):
+        parts = line.split()
+        if len(parts) >= 2 and not line.startswith("#"):
+            out[parts[0]] = parts[1]
+    return out
+
+
+REDIRECTS = _load_redirects()
+
+
 def find_category_dir(city_dir: Path, category: str):
     for alias in CATEGORY_ALIASES.get(category, [category]):
         d = city_dir / alias
         if d.is_dir() and (d / "index.html").exists():
             return d
+    # A city without its own page for this category 301s to a province or state topic page
+    # (e.g. /us/pa/pittsburgh/solar/ -> /us/pa/solar/); score what the visitor lands on.
+    # A redirect to the city hub or a sibling category is left to the hub fallback.
+    rel = "/" + str(city_dir.relative_to(ROOT)) + "/"
+    region = "/".join(city_dir.relative_to(ROOT).parts[:2])
+    for alias in CATEGORY_ALIASES.get(category, [category]):
+        target = REDIRECTS.get(f"{rel}{alias}/")
+        if target and re.fullmatch(rf"/{region}/{re.escape(alias)}/", target):
+            d = ROOT / target.strip("/")
+            if (d / "index.html").exists():
+                return d
     return None
 
 
-def extract_amounts(html: str):
-    """Return list of dollar amounts (floats) found in .amount divs."""
-    amounts = []
+# Loans and on-bill financing are not rebates: a card headed as one, or a clause of an amount that names one
+# ("Up to $2,000 plus 0% loans up to $20,000"), adds nothing to the dollar score.
+FINANCING_RE = re.compile(r"financ|loan|on-bill|repay|lends|interest|% apr|clean energy improvement|\bceip\b|\bpace\b", re.I)
+NOT_A_HOME_REBATE_RE = re.compile(r'program-status status-closed"|program-status status-[a-z]+">Info<|not for (houses|homeowners|single homes)', re.I)
+CLAUSE_SPLIT_RE = re.compile(r"\s*(?:\+|\bplus\b|,\s|;|\.\s)\s*", re.I)
+# An uncapped share of the cost ("75% to 100% off", "80% of weatherization"). It scores as that share of the dollar
+# yardstick, so no project cost is assumed; tax credits and shares of a maximum are not this kind of offer.
+PERCENT_OFFER_RE = re.compile(r"(\d{1,3})%(?:\s*(?:to|-|–|&ndash;)\s*(\d{1,3})%)?\s*(?:off\b|of (?:the )?(?:cost|weatherization|project))", re.I)
+
+
+def amount_texts(html: str):
+    """Yield the text of each .amount div that can count as a home rebate, with loan and financing clauses removed."""
     # grab each `<div class="amount...">...</div>` block
     for m in re.finditer(r'<div class="amount[^"]*">(.*?)</div>', html, re.DOTALL):
-        text = m.group(1)
-        nums = AMOUNT_RE.findall(text)
-        for n in nums:
+        card_start = html.rfind('<div class="rebate-card', 0, m.start())
+        if card_start != -1 and m.start() - card_start > 1500:  # an amount outside any card
+            card_start = -1
+        p_end = html.find("</p>", m.end(), m.end() + 800)
+        card = html[card_start:(p_end + 4 if p_end != -1 else m.end())] if card_start != -1 else ""
+        heads = re.findall(r"<h4\b[^>]*>(.*?)</h4>", html[card_start:m.start()] if card_start != -1 else "", re.DOTALL)
+        if heads and FINANCING_RE.search(re.sub(r"<[^>]+>", "", heads[-1])):
+            continue
+        if NOT_A_HOME_REBATE_RE.search(card):  # closed or expired, an info card (a fee or a rate), or not for houses
+            continue
+        clauses = CLAUSE_SPLIT_RE.split(re.sub(r"<[^>]+>", " ", m.group(1)).replace("&nbsp;", " "))
+        yield " ".join(c for c in clauses if not FINANCING_RE.search(c)).strip()
+
+
+def extract_amounts(html: str):
+    """Return list of dollar amounts (floats) found in .amount divs, leaving out loans and financing."""
+    amounts = []
+    for text in amount_texts(html):
+        if re.search(r"per (credit|srec|rec)\b", text, re.I):
+            continue  # a market price per certificate (Illinois Shines), not a rebate
+        for n in AMOUNT_RE.findall(text):
             try:
-                amounts.append(float(n.replace(",", "")))
+                v = float(n.replace(",", ""))
+                if v >= 1:  # "$0.03 per kWh" production payments are rates, not rebate amounts
+                    amounts.append(v)
             except ValueError:
                 pass
     return amounts
+
+
+def extract_percent_offers(html: str):
+    """Return (highest percent, the amount text) for each uncapped percent-of-cost offer (no dollar figure in it)."""
+    offers = []
+    for text in amount_texts(html):
+        m = PERCENT_OFFER_RE.search(text)
+        if m and "$" not in text and "credit" not in text.lower():
+            offers.append((min(100, int(m.group(2) or m.group(1))), text))
+    return offers
+
+
+def percent_words(offers):
+    """'75% off' for one offer, '75% to 100% off' when a page lists several (standard and income-qualified)."""
+    lo = min(min(int(n) for n in re.findall(r"(\d{1,3})%", t)) for _, t in offers)
+    hi = max(p for p, _ in offers)
+    return f"{hi}% off" if lo >= hi else f"{lo}% to {hi}% off"
 
 
 def count_program_cards(html: str):
@@ -163,7 +233,7 @@ def extract_city_from_hub(hub_html: str, category: str):
     status = "closed"
     found = False
     for classes, body in split_cards(hub_html):
-        heading_m = re.search(r"<h4>(.*?)</h4>", body, re.DOTALL)
+        heading_m = re.search(r"<h4\b[^>]*>(.*?)</h4>", body, re.DOTALL)
         if not heading_m:
             continue
         heading = re.sub(r"<[^>]+>", "", heading_m.group(1)).lower()
@@ -210,6 +280,20 @@ def find_city_leaves(region_path: Path):
     return leaves
 
 
+def city_dirs(region_key: str):
+    """The cities the rest of the site lists (homepage hero, get-quotes, installer finder): city_slugs() in build_get_quotes.py,
+    which reads installer folders plus data/regions.json. Each city's page is found under the region hub; where a metro hub
+    and its main city share a slug (us/ca/los-angeles/los-angeles), the deeper city folder wins."""
+    from build_get_quotes import city_slugs
+    region_path = ROOT / region_key
+    out = []
+    for slug in city_slugs(regions.CODE_BY_PATH[region_key]):
+        hits = [h for h in region_path.rglob(f"{slug}/index.html") if h.parent != region_path]
+        if hits:
+            out.append(max(hits, key=lambda h: len(h.parts)).parent)
+    return sorted(out)
+
+
 def main():
     raw = {}  # region_key -> city_slug -> category -> {amounts, programs, status}
     city_meta = {}  # region_key -> city_slug -> {label, path}
@@ -218,7 +302,7 @@ def main():
         region_path = ROOT / region_key
         if not region_path.exists():
             continue
-        leaves = find_city_leaves(region_path)
+        leaves = city_dirs(region_key)
         raw[region_key] = {}
         city_meta[region_key] = {}
         for city_dir in leaves:
@@ -238,13 +322,14 @@ def main():
             raw[region_key][slug] = {}
             for cat in CATEGORIES:
                 cat_dir = find_category_dir(city_dir, cat)
-                amounts, programs, status = [], 0, "closed"
+                amounts, percents, programs, status = [], [], 0, "closed"
                 if cat_dir:
                     cat_html = (cat_dir / "index.html").read_text(errors="ignore")
                     amounts = extract_amounts(cat_html)
+                    percents = extract_percent_offers(cat_html)
                     programs = count_program_cards(cat_html)
-                    status = detect_status(cat_html, bool(amounts))
-                if not amounts:
+                    status = detect_status(cat_html, any(a > 0 for a in amounts) or bool(percents))
+                if not amounts and not percents:
                     # dedicated subpage missing or written in prose (no .amount divs,
                     # e.g. BC category pages) — fall back to the hub page's summary card
                     fallback = extract_city_from_hub(hub_html, cat)
@@ -257,7 +342,8 @@ def main():
                         status = fallback["status"]
                 raw[region_key][slug][cat] = {
                     "amounts": amounts,
-                    "programs": max(programs, 1 if amounts else 0),
+                    "percents": percents,
+                    "programs": max(programs, 1 if amounts or percents else 0),
                     "status": status,
                 }
 
@@ -300,11 +386,16 @@ def main():
                 dollar_val = max(info["amounts"]) if info["amounts"] else 0.0
                 usd_val = usd_of(country, dollar_val)
                 dollar_score = min(100.0, 100.0 * (usd_val / yardstick[cat]))
+                pct = max(info["percents"], default=None)
+                if pct and pct[0] > dollar_score:
+                    # an uncapped percent off beats every flat amount here: score the share, show its words, add no dollars
+                    dollar_score, dollar_val, usd_val = float(pct[0]), 0.0, 0.0
                 status_score = STATUS_SCORE.get(info["status"], 0)
                 stack_score = min(100, 25 * info["programs"])
                 score = 0.60 * dollar_score + 0.25 * status_score + 0.15 * stack_score
                 cat_scores[cat] = {
                     **({"unit": "per ton"} if (region_key, cat) in PER_TON else {}),
+                    **({"percent_off": pct[0], "percent_text": percent_words(info["percents"])} if pct and dollar_val == 0 and dollar_score == pct[0] else {}),
                     "score": round(score, 1),
                     "dollar_value": dollar_val,
                     "usd_value": round(usd_val, 2),
@@ -348,6 +439,7 @@ def main():
                 "region": r["region"], "region_label": r["region_label"], "country": r["country"],
                 "slug": r["slug"], "label": r["label"], "url": r["url"],
                 "score": r["categories"][cat]["score"], "dollar_value": r["categories"][cat]["dollar_value"],
+                **({"percent_text": r["categories"][cat]["percent_text"]} if r["categories"][cat].get("percent_text") else {}),
                 "status": r["categories"][cat]["status"], "programs": r["categories"][cat]["programs"],
             }
             for r in rows

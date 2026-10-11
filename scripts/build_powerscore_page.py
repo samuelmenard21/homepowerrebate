@@ -128,7 +128,7 @@ def region_stats():
     out = {}
     for reg, rs in by.items():
         cells = [r["categories"][c] for r in rs for c in CATEGORIES]
-        quant = sum(1 for v in cells if v.get("dollar_value")) / len(cells)
+        quant = sum(1 for v in cells if v.get("dollar_value") or v.get("percent_text")) / len(cells)
         vecs = {}
         for r in rs:
             vecs.setdefault(tuple(round(r["categories"][c]["score"], 1) for c in CATEGORIES), []).append(r)
@@ -210,8 +210,8 @@ def render_podium():
     pool = [r for r in rows if region_verified(r["region"])][:3]
     for i, r in enumerate(pool):
         cur = "CA$" if r["country"] == "Canada" else "$"
-        best = sorted(((c, v) for c, v in r["categories"].items() if v.get("dollar_value")), key=lambda x: -x[1].get("usd_value", 0))[:3]
-        hl = "".join(f'<li>{esc(CAT_LABELS[c])}: up to {cur}{v["dollar_value"]:,.0f}</li>' for c, v in best)
+        best = sorted(((c, v) for c, v in r["categories"].items() if v.get("dollar_value") or v.get("percent_text")), key=lambda x: -x[1].get("usd_value", 0))[:3]
+        hl = "".join(f'<li>{esc(CAT_LABELS[c])}: ' + (f'up to {cur}{v["dollar_value"]:,.0f}' if v.get("dollar_value") else esc(v["percent_text"])) + '</li>' for c, v in best)
         cards.append(f'''<a class="pod pod-{i+1}" href="{esc(r["url"])}">
   <span class="medal m{i+1}">{i+1}</span>
   <div class="ring" style="{gauge_style(r["overall"])}"><b>{r["overall"]:.0f}</b><small>PowerScore</small></div>
@@ -245,7 +245,7 @@ def render_category_section(cat):
     for i, r in enumerate(cat_rows[:25], start=1):
         status_label = {"open": "Open", "limited": "Funding Limited", "closed": "No Rebate / Closed"}[r["status"]]
         status_class = {"open": "status-pill-open", "limited": "status-pill-limited", "closed": "status-pill-closed"}[r["status"]]
-        dollar = f"${r['dollar_value']:,.0f}" if r["dollar_value"] else "&mdash;"
+        dollar = f"${r['dollar_value']:,.0f}" if r["dollar_value"] else (esc(r["percent_text"]) if r.get("percent_text") else "&mdash;")
         items.append(f'''<tr>
   <td class="rank-cell">#{i}</td>
   <td class="city-cell"><a href="{esc(r["url"])}">{esc(r["label"])}</a><span class="region-tag">{esc(r["region_label"])}</span></td>

@@ -22,7 +22,7 @@ JOBS = {
     "blog/ontario-smart-thermostats-100-rebate-compared/index.html":
         "<b>Also in Ontario:</b> " + A("/blog/ontario-home-renovation-savings-deadlines-2026/", "Home Renovation Savings deadlines (Nov 30 and Dec 31, 2026)") + " &middot; " + A("/ca/on/heat-pump/", "Ontario heat pump rebates"),
     "us/ma/index.html":
-        "<b>Before year end:</b> " + A("/blog/ma-ny-year-end-rebate-deadlines-2026/", "Massachusetts and New York rebate deadlines for 2026") + " (EV charger rebates end Nov 1 to Dec 31). Next door: " + A("/us/me/heat-pump/", "Maine heat pump rebates") + ".",
+        "<b>Before year end:</b> " + A("/blog/ma-ny-year-end-rebate-deadlines-2026/", "Massachusetts and New York rebate deadlines for 2026") + " (EV charger rebates end Nov 1 to Dec 31). Nearby: " + A("/us/me/heat-pump/", "Maine heat pump rebates") + " &middot; " + A("/us/ct/heat-pump/", "Connecticut heat pump rebates") + ".",
     "us/ny/index.html":
         "<b>Before year end:</b> " + A("/blog/ma-ny-year-end-rebate-deadlines-2026/", "Massachusetts and New York rebate deadlines for 2026") + " (heat pump water heater offers end Nov 30 and Dec 31).",
 }

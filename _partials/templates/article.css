@@ -4,9 +4,9 @@
 body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(--paper); }
 
 /* ---------- one column, one left edge ---------- */
-.tpl-article main > *:not(.hero):not(.page-rail) { width: 100%; max-width: calc(var(--article) + 2 * var(--gut)) !important; margin-left: auto !important; margin-right: auto !important; padding-left: var(--gut) !important; padding-right: var(--gut) !important; box-sizing: border-box; }
-.tpl-article main > * > .wrap, .tpl-article main > article.article > .wrap { max-width: none; padding: 0; margin: 0; }
-.tpl-article main > article.article { padding-top: 8px; padding-bottom: 40px; }
+.tpl-article main > *:not(.hero):not(.post-header):not(.page-rail) { width: 100%; max-width: calc(var(--article) + 2 * var(--gut)) !important; margin-left: auto !important; margin-right: auto !important; padding-left: var(--gut) !important; padding-right: var(--gut) !important; box-sizing: border-box; }
+.tpl-article main > * > .wrap, .tpl-article main > article > .wrap { max-width: none; padding: 0; margin: 0; }
+.tpl-article main > article { padding-top: 36px; padding-bottom: 40px; }
 .tpl-article main > section[style] > p[style], .tpl-article main > section[style] > div[style] { max-width: none !important; }
 @media (min-width: 1180px) {
   .tpl-article main.has-rail > *:not(.hero):not(.page-rail) { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; margin-left: 0 !important; margin-right: 0 !important; }
@@ -18,28 +18,32 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
 .tpl-article .hpr-breadcrumb { padding-top: 16px; padding-bottom: 16px; font-size: 14px; }
 
 /* ---------- hero ---------- */
-.tpl-article section.hero { position: relative; overflow: hidden; padding: clamp(40px, 6vw, 88px) 0 clamp(40px, 5.4vw, 80px); color: #fff;
+.tpl-article :is(section.hero, header.post-header) { max-width: none; margin: 0; border-radius: 0; position: relative; overflow: hidden; padding: clamp(40px, 6vw, 88px) 0 clamp(40px, 5.4vw, 80px); color: #fff;
   background: radial-gradient(120% 140% at 100% 0%, rgba(232, 138, 46, .22) 0%, rgba(232, 138, 46, 0) 46%), radial-gradient(90% 120% at 0% 100%, rgba(107, 142, 127, .28) 0%, rgba(107, 142, 127, 0) 55%), var(--teal-deep); }
-.tpl-article section.hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+.tpl-article :is(section.hero, header.post-header)::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
   background-image: linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px); background-size: 48px 48px;
   -webkit-mask-image: linear-gradient(90deg, transparent 35%, #000 100%); mask-image: linear-gradient(90deg, transparent 35%, #000 100%); }
-.tpl-article section.hero > .wrap { position: relative; z-index: 1; max-width: calc(var(--article) + 2 * var(--gut)); margin: 0 auto; padding: 0 var(--gut); }
+.tpl-article :is(section.hero, header.post-header) > .wrap { position: relative; z-index: 1; max-width: calc(var(--article) + 2 * var(--gut)); margin: 0 auto; padding: 0 var(--gut); }
 @media (min-width: 1180px) {
-  .tpl-article main.has-rail > .hero { display: grid; grid-template-columns: subgrid; }
-  .tpl-article main.has-rail > .hero > .wrap { grid-column: 2 / 4; max-width: none; margin: 0; padding: 0; }
+  .tpl-article main.has-rail > :is(.hero, .post-header) { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; }
+  .tpl-article main.has-rail > :is(.hero, .post-header) > .wrap { grid-column: 2 / 4; max-width: none; margin: 0; padding: 0; }
 }
 .tpl-article .hero .amount-badge { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 22px; padding: 9px 18px 9px 14px; border: 0; border-radius: 999px;
   background: #fff; color: var(--teal-deep); font-size: clamp(15px, 1.3vw, 17px); font-weight: 700; letter-spacing: -.005em; box-shadow: 0 8px 28px rgba(0, 0, 0, .22); }
 .tpl-article .hero .amount-badge::before { content: ""; flex: none; width: 10px; height: 10px; border-radius: 50%; background: #e88a2e; box-shadow: 0 0 0 4px rgba(232, 138, 46, .25); }
-.tpl-article .hero h1 { margin: 0 0 18px; max-width: 20ch; font-size: clamp(36px, 5.2vw, 72px); font-weight: 600; line-height: 1.04; letter-spacing: -.025em; color: #fff; text-wrap: balance; }
-.tpl-article .hero p { max-width: 62ch; margin: 0; font-size: clamp(17px, 1.45vw, 21px); line-height: 1.55; color: rgba(250, 247, 242, .86); text-wrap: pretty; }
-.tpl-article .hero p a { color: #fff; }
+.tpl-article :is(.hero, .post-header) h1 { margin: 0 0 18px; max-width: 20ch; font-size: clamp(36px, 5.2vw, 72px); font-weight: 600; line-height: 1.04; letter-spacing: -.025em; color: #fff; text-wrap: balance; }
+.tpl-article :is(.hero, .post-header) p { max-width: 62ch; margin: 0; font-size: clamp(17px, 1.45vw, 21px); line-height: 1.55; color: rgba(250, 247, 242, .86); text-wrap: pretty; }
+.tpl-article :is(.hero, .post-header) p a { color: #fff; }
+/* blog post header: eyebrow and byline */
+.tpl-article header.post-header .post-eyebrow { margin: 0 0 16px; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #f5b566; }
+.tpl-article header.post-header .post-meta { margin-top: 16px; font-size: 15px; color: rgba(250, 247, 242, .74); }
+.tpl-article header.post-header .post-meta a { color: #fff !important; }
 /* a second hero line is the byline or date: smaller */
-.tpl-article section.hero p + p { margin-top: 14px; font-size: 15px; color: rgba(250, 247, 242, .74); }
+.tpl-article :is(section.hero, header.post-header) p + p { margin-top: 14px; font-size: 15px; color: rgba(250, 247, 242, .74); }
 
 /* older variants centre the hero: keep it on the column's left edge like the text below it */
-.tpl-article section.hero, .tpl-article section.hero > .wrap { text-align: left; }
-.tpl-article section.hero h1, .tpl-article section.hero p, .tpl-article section.hero .amount-badge { margin-left: 0; margin-right: 0; }
+.tpl-article :is(section.hero, header.post-header), .tpl-article :is(section.hero, header.post-header) > .wrap { text-align: left; }
+.tpl-article :is(section.hero, header.post-header) h1, .tpl-article :is(section.hero, header.post-header) p, .tpl-article :is(section.hero, header.post-header) .amount-badge { margin-left: 0; margin-right: 0; }
 
 /* ---------- reading type ---------- */
 .tpl-article main p, .tpl-article main li { font-size: var(--read); line-height: 1.7; color: var(--ink-soft); }
@@ -49,7 +53,7 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
 .tpl-article main a:not([class]):hover { color: var(--teal-deep); text-decoration-thickness: 2px; }
 .tpl-article main h2 { position: relative; max-width: 24ch; margin: 64px 0 18px; padding-top: 22px; font-size: clamp(27px, 2.5vw, 36px); font-weight: 600; line-height: 1.12; letter-spacing: -.018em; color: var(--teal-deep); text-wrap: balance; scroll-margin-top: 96px; }
 .tpl-article main h2::before { content: ""; position: absolute; top: 0; left: 0; width: 44px; height: 4px; border-radius: 4px; background: #e88a2e; }
-.tpl-article main article.article > .wrap > h2:first-child { margin-top: 32px; }
+.tpl-article main article > .wrap > h2:first-child { margin-top: 4px; }
 .tpl-article main h3 { margin: 32px 0 10px; font-size: clamp(19px, 1.5vw, 22px); line-height: 1.25; letter-spacing: -.01em; }
 .tpl-article main strong, .tpl-article main b { color: var(--ink); }
 
@@ -117,9 +121,9 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
 /* ---------- phones ---------- */
 @media (max-width: 600px) {
   body.tpl-article { --read: 17px; }
-  .tpl-article section.hero { padding: 36px 0 40px; }
+  .tpl-article :is(section.hero, header.post-header) { padding: 36px 0 40px; }
   .tpl-article .hero .amount-badge { margin-bottom: 18px; font-size: 14px; padding: 8px 14px 8px 12px; }
-  .tpl-article .hero h1 { font-size: clamp(34px, 9.4vw, 42px); max-width: none; }
+  .tpl-article :is(.hero, .post-header) h1 { font-size: clamp(34px, 9.4vw, 42px); max-width: none; }
   .tpl-article main h2 { margin-top: 52px; font-size: 27px; }
   .tpl-article main .rebate-grid { gap: 12px; }
   .tpl-article main .rebate-card { padding: 18px; }

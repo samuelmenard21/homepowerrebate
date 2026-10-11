@@ -19,7 +19,7 @@ STYLE_RE = re.compile(r"<style>([\s\S]*?)</style>")
 
 # family -> (structure every page must have, text that identifies the family's own style block)
 FAMILIES = {
-    "article": ((re.compile(r'<main[^>]*>.*?<section class="hero"[^>]*>\s*<div class="wrap">.*?<article class="article"', re.S),), ".hero"),
+    "article": ((re.compile(r'<main[^>]*>.*?(<section class="hero"[^>]*>\s*<div class="wrap">.*?<article class="article"|<header class="post-header">\s*<div class="wrap">.*?<article>)', re.S),), (".hero", ".post-header")),
 }
 
 
@@ -44,7 +44,7 @@ def main():
         s = (ROOT / f).read_text(encoding="utf-8", errors="ignore")
         if re.search(r'<body[^>]*class="[^"]*\btpl-', s) or not all(t.search(s) for t in tests):
             continue
-        blocks = [b for b in STYLE_RE.findall(s) if ident in b and "CANONICAL" not in b[:60] and "@font-face" not in b[:40]]
+        blocks = [b for b in STYLE_RE.findall(s) if any(i in b for i in ident) and "CANONICAL" not in b[:60] and "@font-face" not in b[:40]]
         if len(blocks) != 1:
             continue
         h = norm_hash(blocks[0])

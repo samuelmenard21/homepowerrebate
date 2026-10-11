@@ -532,7 +532,7 @@ def ensure_rail(content: str, rel: str, plan_href: str) -> str:
     if len(items) < 3:
         return content
     kids = top_level_children(new_body)
-    hero_idx = max((i for i, (n, a) in enumerate(kids) if re.search(r'class="[^"]*\bhero\b', a)), default=-1)
+    hero_idx = max((i for i, (n, a) in enumerate(kids) if re.search(r'class="[^"]*\b(hero|post-header)\b', a)), default=-1)
     row = hero_idx + 2  # 1-based grid row right after the last hero block
     lis = "".join(f'<li><a href="#{i}">{html.escape(l)}</a></li>' for i, l in items[:12])
     rail = (f'{RAIL_S}\n<aside class="page-rail" aria-label="On this page" style="grid-row: {row} / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol>{lis}</ol></nav>'

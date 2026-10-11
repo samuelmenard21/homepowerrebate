@@ -217,6 +217,27 @@ def replace_or_insert(s, start, end, block, after_re):
     return s[:m.end()] + "\n" + block + s[m.end():]
 
 
+MARKER_BLOCK_RE = re.compile(r"<!-- ([A-Z0-9-]+)-START -->.*?<!-- \1-END -->", re.S)
+
+
+def keep_marker_blocks(old_body, new_body):
+    """Other scripts inject their own marker blocks into the California body (CALC-LINK from build_calculator.py,
+    HUB-STATS, HUB-SHOWCASE, HUB-TOC). Carry over any the new body lacks, in their old order: those that sat
+    before HUB-TOP go back before it, the rest go after the changes box (or HUB-TOP)."""
+    top_at = old_body.find(TOP_S)
+    before, after = [], []
+    for m in MARKER_BLOCK_RE.finditer(old_body):
+        if m.group(1) in ("HUB-BODY", "HUB-TOP", "HUB-CHANGES") or f"<!-- {m.group(1)}-START -->" in new_body:
+            continue
+        (before if top_at != -1 and m.start() < top_at else after).append(m.group(0))
+    if before and TOP_S in new_body:
+        new_body = new_body.replace(TOP_S, "".join(before) + TOP_S, 1)
+    end = CH_E if CH_E in new_body else TOP_E
+    if after and end in new_body:
+        new_body = new_body.replace(end, end + "\n" + "\n".join(after), 1)
+    return new_body
+
+
 def main():
     for key, cfg in HUBS.items():
         f = ROOT / key / "index.html"
@@ -229,6 +250,7 @@ def main():
                        lambda m: "" if "Which region am I in?" in m.group(0) else m.group(0), s, flags=re.S)
             body = ca_body(cfg)
             if BODY_S in s:
+                body = keep_marker_blocks(s[s.index(BODY_S):s.index(BODY_E)], body)
                 s = re.sub(re.escape(BODY_S) + ".*?" + re.escape(BODY_E), lambda m: body, s, count=1, flags=re.S)
             else:
                 a = s.index("<!-- ============================ /NAV ============================== -->") + len("<!-- ============================ /NAV ============================== -->")

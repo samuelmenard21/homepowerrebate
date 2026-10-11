@@ -82,3 +82,6 @@ The National Heat Pump Rebate (announced Oct 8, 2026: up to $10,000 below median
 - **Guards in the shared CSS:** older pages' bare `nav {}` rules no longer reach the header, breadcrumb or contents panel; an older breadcrumb next to the shared one is hidden; the floating plan button is hidden where the side panel has one.
 - **Hubs** (`tpl-hub`, `_partials/templates/hub.css`) are recognised by structure (`header.hero.hub-hero` plus the HUB-TOP block) and keep their own CSS for older sections; `build_hub_tops.py` emits classes (`hub-top`, `hub-answer`, `hub-table`, `hub-changes`), not inline styles.
 - Not on a template yet: calculators, older program pages, Bay Area and NY utility city pages, some Ontario city hubs, installer profiles (noindex).
+
+## Blog index (added 2026-10-11)
+`/blog/` is built by `scripts/build_blog_index.py` from `data/blog-index.json` (`git add -f`): seven topic sections (not regions), a region label on every card, posts for everywhere and Canada first, then regions spread evenly. Card titles and summaries should match each post's current h1 and meta description; add a new post to the right section and rerun. City variants of BC posts (energy-saving-ideas-bc-home-<city> and similar) are not listed. `build_blog.py` no longer writes the index.

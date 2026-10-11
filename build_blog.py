@@ -677,9 +677,9 @@ def main():
 </body>
 </html>
 """
-    # blog/index.html is now maintained directly (114+ posts across every
-    # region, nav/footer restamped). Writing this old BC-only hub would wipe it.
-    print(f'- {"blog hub":38} skipped (blog/index.html is maintained directly)')
+    # blog/index.html is built by scripts/build_blog_index.py from
+    # data/blog-index.json. Writing this old BC-only hub would wipe it.
+    print(f'- {"blog hub":38} skipped (run scripts/build_blog_index.py)')
 
 if __name__ == '__main__':
     main()

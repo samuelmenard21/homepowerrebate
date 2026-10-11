@@ -63,8 +63,8 @@ def main():
     block = next(b for b in re.findall(r"<style>([\s\S]*?)</style>", s) if ident in b)
     css = re.sub(r"/\*.*?\*/", "", block, flags=re.S)
     out = ROOT / "_partials" / "templates" / f"{name}.base.css"
-    out.write_text(f"/* {name} template base: the rules each page used to carry inline (from {page}), scoped to body.tpl-{name} with no added specificity */\n"
-                   + scope(css, f"tpl-{name}") + "\n", encoding="utf-8")
+    out.write_text(f"/* {name} template base: the rules each page used to carry inline (from {page}), scoped to body.tplb-{name} with no added specificity */\n"
+                   + scope(css, f"tplb-{name}") + "\n", encoding="utf-8")
     print(hashlib.sha1(" ".join(block.split()).encode()).hexdigest())
 
 

@@ -238,20 +238,31 @@ SITE_CSS_LINK_RE = re.compile(r'<link rel="stylesheet" href="/assets/site\.css\?
 _SITE_CSS = {}
 
 
-# Page templates: a family of generated pages that used to carry the same inline <style> block now gets a body class
-# and its CSS from site.css. <name>.base.css holds the old rules (placed before the shared CSS, zero added specificity,
-# so the cascade is unchanged); <name>.css holds the template design (placed after the shared CSS).
+# Page templates. A family of generated pages that used to carry the same inline <style> block gets body classes and
+# its CSS from site.css instead:
+#   tplb-<variant>  scopes _partials/templates/<variant>.base.css, the old rules of that exact block (placed before the
+#                   shared CSS with zero added specificity, so the cascade is unchanged);
+#   tpl-<family>    scopes _partials/templates/<family>.css, the family's design (placed after the shared CSS).
+# Variants are older copies of a family's CSS; each keeps its own base, and all of them share the family design.
+# Add a variant: python3 scripts/extract_template_css.py <page> <variant> <text in the block>, then list its hash here.
 TEMPLATES_DIR = ROOT / "_partials" / "templates"
-# normalised sha1 of the inline block each template replaces
-TEMPLATE_LEGACY = {"article": {"3acfd56f5e90d70e723a66765ce6d5fcb9a96469"}, "ranking": {"12d700f20bcab841840571583927ac9425fe2f3c"}}
+TEMPLATE_VARIANTS = {  # variant -> (family, normalised sha1 of the inline block it replaces)
+    "article": ("article", "3acfd56f5e90d70e723a66765ce6d5fcb9a96469"),
+    "ranking": ("ranking", "12d700f20bcab841840571583927ac9425fe2f3c"),
+    "article-bc-appliances": ("article", "5cf352fa21b95a7ac0799d2e28ea9a1cfabbea9d"),
+    "article-bc-hrv": ("article", "4d99b4d106e5b1554479e9f3501f9fe818276432"),
+    "article-bc-smart-thermostats": ("article", "6ed2a350547b47357c9e0f4d008da3c38eaf57b2"),
+}
+# a generator that copies its CSS from an already converted page has no inline block left: recognise it by structure
 TEMPLATE_SIGNATURE = {"article": ('<section class="hero"><div class="wrap"><div class="amount-badge">', '<article class="article">')}
 STYLE_RE = re.compile(r"<style>([\s\S]*?)</style>\n?")
 
 
-def _template_css(suffix: str) -> str:
+def _template_css(kind: str) -> str:
+    names = sorted(TEMPLATE_VARIANTS) if kind == "base" else sorted({f for f, _ in TEMPLATE_VARIANTS.values()})
     out = []
-    for name in sorted(TEMPLATE_LEGACY):
-        p = TEMPLATES_DIR / f"{name}{suffix}"
+    for name in names:
+        p = TEMPLATES_DIR / (f"{name}.base.css" if kind == "base" else f"{name}.css")
         if p.exists():
             out.append(f"/* ===== template: {name} ({p.name}) ===== */\n" + p.read_text(encoding="utf-8"))
     return "\n".join(out)
@@ -261,7 +272,7 @@ def site_css_body() -> str:
     """The shared CSS as served from /assets/site.css (with the metric-matched fallback fonts in every font stack)."""
     if "body" not in _SITE_CSS:
         _SITE_CSS["body"] = ("/* HomePowerRebate shared styles. Generated from _partials/nav-footer.html and _partials/templates/ by scripts/apply_canonical_nav_footer.py; edit those, not this file. */\n"
-                             + add_font_fallbacks(_template_css(".base.css") + "\n" + CSS_RAW + "\n" + _template_css(".css")) + "\n")
+                             + add_font_fallbacks(_template_css("base") + "\n" + CSS_RAW + "\n" + _template_css("design")) + "\n")
     return _SITE_CSS["body"]
 
 
@@ -269,28 +280,38 @@ def _norm_hash(css: str) -> str:
     return __import__("hashlib").sha1(" ".join(css.split()).encode()).hexdigest()
 
 
+def _add_body_classes(content: str, classes) -> str:
+    bm = re.search(r"<body\b([^>]*)>", content)
+    if not bm:
+        return content
+    attrs = bm.group(1)
+    cm = re.search(r'\bclass="([^"]*)"', attrs)
+    have = cm.group(1).split() if cm else []
+    add = [c for c in classes if c not in have]
+    if not add:
+        return content
+    val = " ".join(have + add)
+    attrs = attrs.replace(cm.group(0), f'class="{val}"') if cm else attrs + f' class="{val}"'
+    return content[:bm.start()] + f"<body{attrs}>" + content[bm.end():]
+
+
 def ensure_template(content: str) -> str:
-    """Swap a known template's inline <style> block for a body class (its rules are in site.css)."""
-    for name, hashes in TEMPLATE_LEGACY.items():
-        found = False
-        for m in list(STYLE_RE.finditer(content)):
-            if _norm_hash(m.group(1)) in hashes:
-                content = content[:m.start()] + content[m.end():]
-                found = True
-                break
-        cls = f"tpl-{name}"
-        # a generator that copied its CSS from an already converted page has no inline block left: detect by structure
-        sig = TEMPLATE_SIGNATURE.get(name)
-        if not found and sig and all(s in content for s in sig) and not any(".amount-badge" in b for b in STYLE_RE.findall(content)):
-            found = True
-        if found or re.search(rf'<body[^>]*\bclass="[^"]*\b{cls}\b', content):
-            if not re.search(rf'<body[^>]*\bclass="[^"]*\b{cls}\b', content):
-                bm = re.search(r"<body\b([^>]*)>", content)
-                if bm:
-                    attrs = bm.group(1)
-                    cm = re.search(r'\bclass="([^"]*)"', attrs)
-                    attrs = attrs.replace(cm.group(0), f'class="{cm.group(1)} {cls}"') if cm else attrs + f' class="{cls}"'
-                    content = content[:bm.start()] + f"<body{attrs}>" + content[bm.end():]
+    """Swap a known template variant's inline <style> block for body classes (its rules are in site.css)."""
+    by_hash = {h: v for v, (_, h) in TEMPLATE_VARIANTS.items()}
+    for m in list(STYLE_RE.finditer(content)):
+        v = by_hash.get(_norm_hash(m.group(1)))
+        if v:
+            content = content[:m.start()] + content[m.end():]
+            return _add_body_classes(content, [f"tpl-{TEMPLATE_VARIANTS[v][0]}", f"tplb-{v}"])
+    if re.search(r'<body[^>]*\bclass="[^"]*\btplb-', content):
+        return content
+    # pages converted before variants had their own class (2026-10-10): tpl-<family> alone means the family's own variant
+    fam = re.search(r'<body[^>]*\bclass="[^"]*\btpl-([a-z-]+)', content)
+    if fam and fam.group(1) in TEMPLATE_VARIANTS:
+        return _add_body_classes(content, [f"tplb-{fam.group(1)}"])
+    for v, sig in TEMPLATE_SIGNATURE.items():
+        if all(x in content for x in sig) and not any(".amount-badge" in blk for blk in STYLE_RE.findall(content)):
+            return _add_body_classes(content, [f"tpl-{TEMPLATE_VARIANTS[v][0]}", f"tplb-{v}"])
     return content
 
 

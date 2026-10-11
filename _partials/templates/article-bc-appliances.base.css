@@ -1,0 +1,39 @@
+/* article-bc-appliances template base: the rules each page used to carry inline (from ca/bc/abbotsford/appliances/index.html), scoped to body.tplb-article-bc-appliances with no added specificity */
+:root { --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
+  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
+  --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1; }
+:where(body.tplb-article-bc-appliances), :where(body.tplb-article-bc-appliances) * { margin: 0; padding: 0; box-sizing: border-box; }
+html:has(> body.tplb-article-bc-appliances) { scroll-behavior: smooth; }
+body:where(.tplb-article-bc-appliances) { font-family: 'Inter Tight', 'Inter Tight Fallback', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.65; }
+:where(body.tplb-article-bc-appliances) .wrap { max-width: 800px; margin: 0 auto; padding: 0 28px; }
+:where(body.tplb-article-bc-appliances) .hero { padding: 48px 28px; background: var(--teal-deep); color: var(--paper); }
+:where(body.tplb-article-bc-appliances) .hero h1 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: clamp(30px, 5vw, 44px); color: #fff; margin-bottom: 10px; line-height: 1.15; }
+:where(body.tplb-article-bc-appliances) .hero .amount-badge { display:inline-block; background: rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.3); color:#fff; font-weight:700; padding:6px 14px; border-radius:999px; font-size:15px; margin-bottom:14px; }
+:where(body.tplb-article-bc-appliances) .hero p { color: rgba(250,247,242,.82); font-size: 16px; }
+:where(body.tplb-article-bc-appliances) .article { padding: 40px 28px 56px; }
+:where(body.tplb-article-bc-appliances) h2 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 24px; color: var(--teal-deep); margin: 32px 0 12px; }
+:where(body.tplb-article-bc-appliances) h3 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 18px; color: var(--teal-deep); margin: 22px 0 10px; font-weight: 600; }
+:where(body.tplb-article-bc-appliances) h4 { font-size: 16px; font-weight: 700; color: var(--teal-deep); margin-bottom: 8px; }
+:where(body.tplb-article-bc-appliances) p { margin-bottom: 14px; font-size: 15px; color: var(--ink-soft); }
+:where(body.tplb-article-bc-appliances) ul, :where(body.tplb-article-bc-appliances) ol { margin: 0 0 16px 22px; color: var(--ink-soft); }
+:where(body.tplb-article-bc-appliances) li { margin-bottom: 8px; line-height: 1.7; font-size: 15px; }
+:where(body.tplb-article-bc-appliances) .callout { background: var(--paper-warm); border-left: 4px solid var(--amber); padding: 16px 20px; border-radius: 8px; margin: 22px 0; }
+:where(body.tplb-article-bc-appliances) .callout p { margin-bottom: 0; }
+:where(body.tplb-article-bc-appliances) .cta { display: inline-block; background: var(--amber); color: #fff; padding: 13px 26px; border-radius: 999px; text-decoration: none; font-weight: 600; margin-top: 16px; }
+:where(body.tplb-article-bc-appliances) .cta:hover { background: var(--amber-bright); }
+:where(body.tplb-article-bc-appliances) a { color: var(--teal); }
+:where(body.tplb-article-bc-appliances) strong { color: var(--ink); }
+:where(body.tplb-article-bc-appliances) .rebate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin: 18px 0; max-width: 1180px; }
+:where(body.tplb-article-bc-appliances) .rebate-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 18px; }
+:where(body.tplb-article-bc-appliances) .rebate-card .amount { font-size: 20px; font-weight: 700; color: var(--amber); margin: 6px 0; }
+:where(body.tplb-article-bc-appliances) .rebate-card p { font-size: 13px; margin-bottom:0; }
+:where(body.tplb-article-bc-appliances) .highlight-box { background: var(--paper-warm); border-left: 4px solid var(--amber); padding: 18px 22px; border-radius: 8px; margin: 20px 0; }
+:where(body.tplb-article-bc-appliances) .highlight-box p { margin: 4px 0; font-size: 14px; }
+:where(body.tplb-article-bc-appliances) .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+:where(body.tplb-article-bc-appliances) .chip { font-size: 13px; background: #fff; border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; color: var(--ink-soft); }
+:where(body.tplb-article-bc-appliances) .faq-item { border-bottom: 1px solid var(--rule); padding: 16px 0; }
+:where(body.tplb-article-bc-appliances) .faq-item h3 { margin: 0 0 8px; }
+:where(body.tplb-article-bc-appliances) .program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
+:where(body.tplb-article-bc-appliances) .status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
+:where(body.tplb-article-bc-appliances) .status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
+:where(body.tplb-article-bc-appliances) .status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }

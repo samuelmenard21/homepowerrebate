@@ -39,8 +39,8 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
 .tpl-article main p, .tpl-article main li { font-size: var(--read); line-height: 1.7; color: var(--ink-soft); }
 .tpl-article main p { max-width: 68ch; margin-bottom: 18px; }
 .tpl-article main li { max-width: 66ch; }
-.tpl-article main a { color: var(--teal); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-.tpl-article main a:hover { color: var(--teal-deep); text-decoration-thickness: 2px; }
+.tpl-article main a:not([class]) { color: var(--teal); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.tpl-article main a:not([class]):hover { color: var(--teal-deep); text-decoration-thickness: 2px; }
 .tpl-article main h2 { position: relative; max-width: 24ch; margin: 64px 0 18px; padding-top: 22px; font-size: clamp(27px, 2.5vw, 36px); font-weight: 600; line-height: 1.12; letter-spacing: -.018em; color: var(--teal-deep); text-wrap: balance; scroll-margin-top: 96px; }
 .tpl-article main h2::before { content: ""; position: absolute; top: 0; left: 0; width: 44px; height: 4px; border-radius: 4px; background: #e88a2e; }
 .tpl-article main article.article > .wrap > h2:first-child { margin-top: 32px; }

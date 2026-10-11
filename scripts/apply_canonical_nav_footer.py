@@ -243,7 +243,7 @@ _SITE_CSS = {}
 # so the cascade is unchanged); <name>.css holds the template design (placed after the shared CSS).
 TEMPLATES_DIR = ROOT / "_partials" / "templates"
 # normalised sha1 of the inline block each template replaces
-TEMPLATE_LEGACY = {"article": {"3acfd56f5e90d70e723a66765ce6d5fcb9a96469"}}
+TEMPLATE_LEGACY = {"article": {"3acfd56f5e90d70e723a66765ce6d5fcb9a96469"}, "ranking": {"12d700f20bcab841840571583927ac9425fe2f3c"}}
 TEMPLATE_SIGNATURE = {"article": ('<section class="hero"><div class="wrap"><div class="amount-badge">', '<article class="article">')}
 STYLE_RE = re.compile(r"<style>([\s\S]*?)</style>\n?")
 

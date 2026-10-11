@@ -897,7 +897,7 @@ def quote_form(region, service, city_label, ranked):
     us = region in US_REGIONS
     postal_label, postal_ph = ("ZIP code", "e.g. 02139") if us else ("Postal code", "e.g. M4P 1E2")
     picks = "".join(
-        f'<label class="qf-pick"><input type="checkbox" name="pick" value="{i}"{" checked" if i < 3 else ""}> {esc(r["name"])} '
+        f'<label class="qf-pick"><input type="checkbox" name="pick" value="{i}"> {esc(r["name"])} '
         f'<span class="small">({r["rating"]:.1f}★, {r["reviews"]:,} reviews)</span></label>'
         for i, r in enumerate(ranked))
     ups = "".join(f'<label class="qf-pick"><input type="checkbox" name="upgrade" value="{v}"{" checked" if v == service else ""}> {esc(t)}</label>'
@@ -905,7 +905,7 @@ def quote_form(region, service, city_label, ranked):
     inst = json.dumps([{"name": r["name"], "email": r.get("email", ""), "phone": r.get("phone", "")} for r in ranked], ensure_ascii=False)
     return f"""<section class="qf" id="get-quotes" aria-labelledby="qf-h">
 <h2 id="qf-h">Get free quotes from these {svc['lower']} installers</h2>
-<p>Pick up to 3 companies and tell them what you want done. We send your request straight to them. Free, no obligation.</p>
+<p>Tick up to 3 companies and tell them what you want done. We send your request straight to them. Free, no obligation.</p>
 <form id="qf-form" novalidate>
 <fieldset><legend>Which companies should quote?</legend>{picks}</fieldset>
 <fieldset><legend>What do you want done?</legend><div class="qf-grid">{ups}</div></fieldset>

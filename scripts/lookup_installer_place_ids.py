@@ -17,6 +17,7 @@ import os
 import re
 import sys
 import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -74,7 +75,15 @@ def main():
             continue
         try:
             pid = search(q, key)
-        except Exception as ex:  # network hiccup or quota: keep what we have, re-run later
+        except urllib.error.HTTPError as ex:  # bad key, API not enabled, quota: show Google's own message
+            detail = ex.read().decode(errors="replace")
+            try:
+                detail = json.loads(detail)["error"]["message"]
+            except (ValueError, KeyError, TypeError):
+                pass
+            print(f"stopped at {rel}: HTTP {ex.code}: {detail}")
+            break
+        except Exception as ex:  # network hiccup: keep what we have, re-run later
             print(f"stopped at {rel}: {ex}")
             break
         if pid:

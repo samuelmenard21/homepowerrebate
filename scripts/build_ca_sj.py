@@ -34,6 +34,8 @@ def card(cat, link=True):
 
 
 def main():
+    if (ROOT / "data/ca/pages" / "san-jose").exists():
+        return  # hand-written pages, built by build_ca_pages.py
     latest = max(FACTS[v[2]]["verified_on"] for v in CATS.values())
     crumbs = [("Home", "/"), ("California", "/us/ca/"), ("Bay Area", "/us/ca/bay-area/")]
     unconf = ("<h2>Closed and not confirmed</h2><p>SJCE's battery storage rebate is closed to new applications (it paid $125 per kWh up to $3,250). We found no SJCE solar rebate. "

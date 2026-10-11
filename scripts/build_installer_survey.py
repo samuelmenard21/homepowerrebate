@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_furnace_pages import shell  # noqa: E402
+from build_furnace_pages import shell, page_css  # noqa: E402
 
 PATH = "/installers/survey/"
 ENDPOINT = "https://leads.homepowerrebate.com/installer-survey"
@@ -192,7 +192,7 @@ sync();
 .small{font-size:13.5px!important;color:#6b8e7f!important}"""
     page = shell("2026 Home Energy Installer Survey | HomePowerRebate",
                  "A five-minute survey for heat pump, solar, battery and insulation installers: prices, wait times and rebates.",
-                 PATH, "on", body, [])
+                 PATH, "on", body, [], css=page_css("2026-09-29"))
     page = page.replace('content="index, follow, max-snippet:-1, max-image-preview:large"', 'content="noindex, follow"', 1)
     page = page.replace("</style>", css + "</style>", 1)
     out = ROOT / PATH.strip("/") / "index.html"

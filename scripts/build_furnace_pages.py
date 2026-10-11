@@ -14,7 +14,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import apply_canonical_nav_footer as navfooter  # noqa: E402
-from build_installer_rankings import BASE, CSS  # noqa: E402
+from build_installer_rankings import BASE  # noqa: E402
+
+
+def page_css(version="2026-10-09"):
+    """Frozen page CSS (see _partials/generator-css/README.md); not the ranking pages' CSS, which keeps changing."""
+    return (ROOT / "_partials" / "generator-css" / f"{version}.css").read_text(encoding="utf-8")
+
+
+CSS = page_css()
 
 CHECKED = "October 3, 2026"
 ISO = "2026-10-03"
@@ -290,7 +298,7 @@ def hub():
                        path, "on", body, ld)
 
 
-def shell(title, desc, path, nav, body, ld):
+def shell(title, desc, path, nav, body, ld, css=None):
     lds = "".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in ld)
     out = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -301,7 +309,7 @@ def shell(title, desc, path, nav, body, ld):
 <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="article">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>{CSS}
+<style>{css or CSS}
 table{{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}}th,td{{text-align:left;padding:10px 12px;border-bottom:1px solid #d9d0c1;vertical-align:top;}}th{{background:#f5efe5;}}</style>
 {lds}</head><body>
 {navfooter.render_nav(nav, "")}

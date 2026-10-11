@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_furnace_pages import shell, CHECKED, ISO, AUTHOR  # noqa: E402
+from build_furnace_pages import shell, page_css, CHECKED, ISO, AUTHOR  # noqa: E402
 from build_installer_rankings import BASE  # noqa: E402
 
 e = html.escape
@@ -296,7 +296,7 @@ def product_page(slug, p):
     title = f"{p['name']} Specs, Backup & Rebates (2026) | HomePowerRebate"
     desc = (f"{p['name']}: {p['kwh']:g} kWh, {p['kw']:g} kW per unit. How it works, what it can back up, and battery rebates in "
             "Ontario, Massachusetts, California and BC.")
-    return path, shell(title, desc, path, "on", body, ld)
+    return path, shell(title, desc, path, "on", body, ld, css=page_css("2026-09-29"))
 
 
 def hub_page():
@@ -315,7 +315,7 @@ def hub_page():
 </div></section>"""
     return path, shell("Home Battery Guides 2026: Specs & Rebates | HomePowerRebate",
                        "Compare Tesla Powerwall 3, Enphase IQ Battery 5P, Eguana Evolve and FranklinWH aPower 2: storage, power, and battery rebates by province and state.",
-                       path, "on", body, [])
+                       path, "on", body, [], css=page_css("2026-09-29"))
 
 
 def main():

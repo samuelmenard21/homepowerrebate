@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<!-- Social share card (1200 x 630). Rendered for every page by scripts/build_og_cards.py; not published. -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1200px; height: 630px; overflow: hidden; }
+body { font-family: 'Inter Tight', sans-serif; color: #fff; -webkit-font-smoothing: antialiased;
+  background: radial-gradient(70% 90% at 100% 0%, rgba(232,138,46,.30) 0%, rgba(232,138,46,0) 60%), radial-gradient(60% 80% at 0% 100%, rgba(107,142,127,.38) 0%, rgba(107,142,127,0) 60%), #08363f; }
+.grid { position: absolute; inset: 0; opacity: .55;
+  background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 56px 56px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 100%); }
+.ring { position: absolute; right: -150px; top: 70px; width: 560px; height: 560px; border-radius: 50%; border: 92px solid rgba(232,138,46,.16); }
+.ring::after { content: ""; position: absolute; inset: 120px; border-radius: 50%; border: 2px solid rgba(255,255,255,.08); }
+.card { position: absolute; inset: 0; padding: 60px 72px 56px; display: flex; flex-direction: column; }
+.brand { display: flex; align-items: center; gap: 14px; font-family: 'Fraunces', serif; font-weight: 600; font-size: 32px; letter-spacing: -.02em; }
+.mark { width: 38px; height: 38px; border-radius: 50%; background: #e88a2e; position: relative; box-shadow: 0 4px 16px rgba(232,138,46,.45); }
+.mark::after { content: ""; position: absolute; inset: 10px; border-radius: 50%; background: #08363f; }
+.brand b { color: #f0a25a; font-weight: 700; }
+.eyebrow { margin-top: 46px; font-size: 22px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #f5b566; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+h1 { margin-top: 16px; font-family: 'Fraunces', serif; font-weight: 600; font-size: 76px; line-height: 1.02; letter-spacing: -.025em; max-width: 1000px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-wrap: balance; }
+.key { align-self: flex-start; margin-top: auto; display: inline-flex; align-items: center; gap: 14px; max-width: 1056px; padding: 16px 28px 16px 22px; border-radius: 999px;
+  background: #fff; color: #08363f; font-size: 30px; font-weight: 700; letter-spacing: -.01em; box-shadow: 0 14px 40px rgba(0,0,0,.28); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.key i { flex: none; width: 16px; height: 16px; border-radius: 50%; background: #e88a2e; box-shadow: 0 0 0 6px rgba(232,138,46,.22); }
+.key span { overflow: hidden; text-overflow: ellipsis; }
+.foot { margin-top: 26px; display: flex; justify-content: space-between; align-items: center; font-size: 22px; font-weight: 600; color: rgba(250,247,242,.78); }
+.foot .dom { color: #fff; font-weight: 700; }
+.nokey .key { display: none; }
+.nokey .foot { margin-top: auto; }
+.nokey h1 { font-size: 84px; }
+</style></head>
+<body><div class="ring"></div>
+<div class="card" id="card">
+  <div class="brand"><span class="mark"></span><span>Home<b>Power</b>Rebate</span></div>
+  <div class="eyebrow" id="eyebrow"></div>
+  <h1 id="title"></h1>
+  <div class="key"><i></i><span id="key"></span></div>
+  <div class="foot"><span id="trust"></span><span class="dom">homepowerrebate.com</span></div>
+</div>
+<script>
+window.setCard = function (d) {
+  document.getElementById('eyebrow').textContent = d.eyebrow || '';
+  const t = document.getElementById('title'); t.textContent = d.title;
+  t.style.fontSize = (d.title.length > 70 ? 60 : d.title.length > 48 ? 68 : d.key ? 76 : 84) + 'px';
+  document.getElementById('key').textContent = d.key || '';
+  document.getElementById('trust').textContent = d.trust || '';
+  document.getElementById('card').classList.toggle('nokey', !d.key);
+  return document.fonts.ready.then(() => true);
+};
+</script>
+</body></html>

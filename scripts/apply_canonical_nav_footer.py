@@ -401,9 +401,38 @@ def _write_site_css():
         SITE_CSS_PATH.write_text(body)
 
 
+OG_S, OG_E = "<!-- OG-CARD-START -->", "<!-- OG-CARD-END -->"
+OG_BLOCK_RE = re.compile(re.escape(OG_S) + r".*?" + re.escape(OG_E) + r"\n?", re.S)
+OG_OLD_RE = re.compile(r'<meta (?:property|name)="(?:og:image(?::[a-z]+)?|twitter:image(?::alt)?|twitter:card)" content="[^"]*">\n?')
+_OG_MANIFEST = {}
+
+
+def ensure_og(content: str) -> str:
+    """Point og:image and twitter:image at the page's own share card (og/<path>.jpg, scripts/build_og_cards.py)."""
+    if not _OG_MANIFEST:
+        mp = ROOT / "og" / "manifest.json"
+        _OG_MANIFEST.update(json.loads(mp.read_text()) if mp.exists() else {"": ""})
+    cm = CANON_RE.search(content)
+    if not cm:
+        return content
+    card = "og/" + (re.sub(r"\.html$", "", cm.group(1).strip("/")) or "home") + ".jpg"
+    v = _OG_MANIFEST.get(card)
+    if not v:
+        return content
+    title = html.unescape((re.search(r"<title>(.*?)</title>", content, re.S) or [None, ""])[1]).strip()
+    url = f"https://homepowerrebate.com/{card}?v={v}"
+    block = (f'{OG_S}\n<meta property="og:image" content="{url}">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n'
+             f'<meta property="og:image:type" content="image/jpeg">\n<meta property="og:image:alt" content="{html.escape(title, quote=True)}">\n'
+             f'<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:image" content="{url}">\n{OG_E}\n')
+    content = OG_BLOCK_RE.sub("", content)
+    content = OG_OLD_RE.sub("", content)
+    return content.replace("</head>", block + "</head>", 1)
+
+
 def ensure_shared_assets(content: str) -> str:
     js_block = f"<script>\n{JS_MARKER_START}\n{JS_RAW}\n{JS_MARKER_END}\n</script>"
     content = ensure_template(content)
+    content = ensure_og(content)
     # the link sits exactly where the inline block was, so the cascade order is unchanged
     if OLD_CSS_BLOCK_RE.search(content):
         content = OLD_CSS_BLOCK_RE.sub(lambda m: site_css_link(), content, count=1)

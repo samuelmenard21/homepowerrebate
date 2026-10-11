@@ -1,0 +1,9 @@
+
+#hero-find{max-width:640px;margin:20px auto 8px;background:var(--paper);color:var(--ink);border-radius:16px;padding:22px 22px 20px;text-align:left;box-shadow:0 20px 48px rgba(0,0,0,.18)}
+#hero-find .hf-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#hero-find label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;color:var(--ink-soft)}
+#hero-find select{width:100%;min-height:48px;padding:10px 12px;border:1.5px solid var(--rule);border-radius:9px;font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;font-size:16px;background:#fff;color:var(--ink)}
+#hero-find button{width:100%;margin-top:14px;min-height:50px;border:0;border-radius:999px;background:var(--amber);color:#fff;font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;font-weight:700;font-size:16px;cursor:pointer}
+#hero-find .hf-note{font-size:13px;color:var(--ink-soft);margin:10px 0 0;text-align:center}
+@media(max-width:600px){#hero-find .hf-row{grid-template-columns:1fr}#hero-find{order:2}}
+@media(max-width:600px){.hero-trust-line{flex-direction:column;align-items:center;gap:4px;flex-wrap:wrap}.hero-trust-line span.dot{display:none}.hero-trust-line span{white-space:normal}}

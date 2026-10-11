@@ -677,8 +677,9 @@ def main():
 </body>
 </html>
 """
-    (blog_dir / 'index.html').write_text(hub_html, encoding='utf-8')
-    print(f'✓ {"blog hub":38} → blog/index.html')
+    # blog/index.html is now maintained directly (114+ posts across every
+    # region, nav/footer restamped). Writing this old BC-only hub would wipe it.
+    print(f'- {"blog hub":38} skipped (blog/index.html is maintained directly)')
 
 if __name__ == '__main__':
     main()

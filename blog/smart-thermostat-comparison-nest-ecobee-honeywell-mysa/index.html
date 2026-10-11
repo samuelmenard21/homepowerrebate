@@ -37,78 +37,9 @@
 
 
 
-<style>
-:root {
-  --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
-  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
-  --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { font-family: 'Inter Tight', 'Inter Tight Fallback', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
-.nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); padding: 16px 28px; }
-.logo { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 20px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
-.logo-power { color: var(--amber); }
-.wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
-h1 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: clamp(36px, 6vw, 52px); line-height: 1.1; letter-spacing: -0.02em; color: var(--teal-deep); margin: 32px 0 18px; }
-h2 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: clamp(24px, 4vw, 36px); line-height: 1.1; letter-spacing: -0.01em; color: var(--teal-deep); margin: 36px 0 16px; }
-h3 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 20px; color: var(--teal-deep); margin: 24px 0 12px; }
-p { margin-bottom: 16px; font-size: 16px; color: var(--ink-soft); line-height: 1.7; }
-a { color: var(--teal-deep); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--amber); }
-a:hover { color: var(--amber); }
-
-.hero { padding: 48px 28px; background: var(--teal-deep); color: var(--paper); text-align: center; }
-.hero .wrap { max-width: 760px; }
-.hero h1 { color: var(--paper); margin-top: 0; }
-.hero-sub { font-size: 18px; color: rgba(250,247,242,.8); margin: 12px 0 0; }
-.meta { font-size: 13px; color: rgba(250,247,242,.6); margin-top: 12px; }
-
-.section { padding: 48px 28px; }
-.comparison-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; margin: 28px 0; font-size: 14px; }
-.comparison-table th { background: var(--paper-warm); padding: 14px; text-align: left; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); border-bottom: 1px solid var(--rule); }
-.comparison-table td { padding: 12px 14px; border-bottom: 1px solid var(--rule); }
-.comparison-table tr:last-child td { border-bottom: none; }
-.comparison-table td.label { font-weight: 600; color: var(--ink); width: 25%; }
-.comparison-table td.best { background: rgba(45,106,79,0.05); color: var(--green-money); font-weight: 600; }
-
-.rec-card { border: 2px solid var(--amber); border-radius: 12px; padding: 24px; margin: 20px 0; background: #fff; }
-.rec-title { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 18px; font-weight: 700; color: var(--teal-deep); display: flex; align-items: center; gap: 8px; }
-.rec-badge { display: inline-block; background: var(--amber); color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
-.rec-body { margin-top: 12px; line-height: 1.6; }
-.rec-body strong { color: var(--ink); }
-
-.callout { background: var(--paper-warm); border-left: 4px solid var(--amber); border-radius: 0 8px 8px 0; padding: 18px 22px; margin: 24px 0; }
-.callout strong { color: var(--ink); }
-
-.cta-box { background: var(--teal-deep); color: var(--paper); border-radius: 12px; padding: 36px; text-align: center; margin: 48px 0; }
-.cta-box h3 { color: var(--paper); }
-.cta-box p { color: rgba(250,247,242,.8); }
-.btn { display: inline-block; background: var(--amber); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; margin-top: 12px; }
-.btn:hover { background: var(--amber-bright); }
-
-footer { padding: 40px 28px; border-top: 1px solid var(--rule); background: var(--ink); color: rgba(250,247,242,.6); text-align: center; font-size: 12px; }
-footer a { color: rgba(250,247,242,.75); border-bottom: 1px solid rgba(250,247,242,.3); }
-
-@media (max-width: 768px) {
-  h1 { margin: 24px 0 14px; }
-  .comparison-table { font-size: 12px; }
-  .comparison-table th, .comparison-table td { padding: 8px 10px; }
-  .rec-card { padding: 16px; }
-}
-</style>
-<link rel="stylesheet" href="/assets/site.css?v=0422ea7911" data-hpr-site-css>
-<style>
-/* CANONICAL-BREADCRUMB-CSS-START */
-.hpr-breadcrumb { max-width: 1180px; margin: 0 auto; padding: 14px 28px; font-size: 13px; color: var(--ink-soft); }
-.hpr-breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0; margin: 0; padding: 0; }
-.hpr-breadcrumb li { display: flex; align-items: center; }
-.hpr-breadcrumb li:not(:last-child)::after { content: '/'; margin: 0 8px; color: var(--rule); }
-.hpr-breadcrumb a { color: var(--ink-soft); text-decoration: none; }
-.hpr-breadcrumb a:hover { color: var(--teal-deep); text-decoration: underline; }
-.hpr-breadcrumb li[aria-current="page"] { color: var(--ink); font-weight: 600; }
-@media (max-width: 600px) { .hpr-breadcrumb { padding: 10px 20px; font-size: 12px; } }
-/* CANONICAL-BREADCRUMB-CSS-END */
-</style>
+<link rel="stylesheet" href="/assets/tpl/page-1afbfec2.css?v=80b89f56ec" data-hpr-tpl>
+<link rel="stylesheet" href="/assets/site.css?v=5d0010cb74" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/tpl/common-5a0da5c2.css?v=c1f1fcfc0d" data-hpr-tpl>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -219,7 +150,7 @@ footer a { color: rgba(250,247,242,.75); border-bottom: 1px solid rgba(250,247,2
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Mysa vs Ecobee vs Nest 2026: Which One Fits Your Heat?", "url": "https://homepowerrebate.com/blog/smart-thermostat-comparison-nest-ecobee-honeywell-mysa/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
 <!-- AEO-SPEAKABLE-END -->
 </head>
-<body>
+<body class="tpl-page">
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- CANONICAL-NAV-START -->

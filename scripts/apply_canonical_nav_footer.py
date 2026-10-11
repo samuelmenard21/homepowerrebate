@@ -251,13 +251,13 @@ TEMPLATE_VARIANTS = {k: (v["family"], v["hash"]) for k, v in json.loads((TEMPLAT
 TEMPLATE_SIGNATURE = {"article": ('<section class="hero"><div class="wrap"><div class="amount-badge">', '<article class="article">')}
 # families recognised by structure alone, whose pages keep their own CSS (the design file only adds to it)
 FAMILY_SIGNATURE = {"hub": ('<header class="hero hub-hero">', "<!-- HUB-TOP-START -->")}
-STYLE_RE = re.compile(r"<style>([\s\S]*?)</style>\n?")
-TPL_LINK_RE = re.compile(r'<link rel="stylesheet" href="/assets/tpl/([a-z0-9-]+)\.css\?v=[0-9a-f]+" data-hpr-tpl>\n?')
+STYLE_RE = re.compile(r'<style(?: id="([\w-]+)")?>([\s\S]*?)</style>\n?')
+TPL_LINK_RE = re.compile(r'<link rel="stylesheet" href="/assets/tpl/([a-z0-9-]+)\.css\?v=[0-9a-f]+" data-hpr-tpl(?: id="[\w-]+")?>\n?')
 
 
 def _template_css() -> str:
     out = []
-    for name in sorted({f for f, _ in TEMPLATE_VARIANTS.values()} | set(FAMILY_SIGNATURE)):
+    for name in FAMILIES:
         p = TEMPLATES_DIR / f"{name}.css"
         if p.exists():
             out.append(f"/* ===== template design: {name} ({p.name}) ===== */\n" + p.read_text(encoding="utf-8"))
@@ -267,7 +267,9 @@ def _template_css() -> str:
 _TPL_LINKS = {}
 
 
-def tpl_link(variant: str) -> str:
+def tpl_link(variant: str, el_id: str = "") -> str:
+    if el_id:  # the inline block had an id that its generator looks for: keep it on the link
+        return tpl_link(variant).replace(" data-hpr-tpl>", f' data-hpr-tpl id="{el_id}">')
     if variant not in _TPL_LINKS:
         body = (TEMPLATES_DIR / "base" / f"{variant}.css").read_text(encoding="utf-8")
         h = __import__("hashlib").sha1(body.encode()).hexdigest()[:10]
@@ -318,43 +320,63 @@ def _set_body_classes(content: str, add=(), drop=lambda c: False) -> str:
     return content[:bm.start()] + f"<body{attrs}>" + content[bm.end():]
 
 
-def ensure_template(content: str) -> str:
-    """Swap a known template variant's inline <style> block for its cached /assets/tpl/ file plus the family class."""
+CANON_RE = re.compile(r'<link rel="canonical" href="https://homepowerrebate\.com(/[^"]*)"')
+# every page belongs to exactly one family (body class tpl-<family>); see page_family()
+FAMILIES = ("article", "ranking", "hub", "profile", "stacking", "powerscore", "calculator", "home", "page")
+
+
+def page_family(content: str, linked: list) -> str:
+    """The page's template family: structure first, then the variants it links, then its URL."""
     for fam, sig in FAMILY_SIGNATURE.items():
         if all(x in content for x in sig):
-            return _set_body_classes(content, [f"tpl-{fam}"])
+            return fam
+    for v in linked:
+        fam = TEMPLATE_VARIANTS.get(v, ("", ""))[0]
+        if fam in ("article", "ranking"):
+            return fam
+    if 'class="ip-wrap"' in content:
+        return "profile"
+    cm = CANON_RE.search(content)
+    path = cm.group(1) if cm else ""
+    if path in ("/", ""):
+        return "home" if 'id="hero-find"' in content else "page"
+    for prefix, fam in (("/stacking-calculator/", "stacking"), ("/powerscore/", "powerscore"), ("/calculator/", "calculator")):
+        if path.startswith(prefix):
+            return fam
+    return "page"
+
+
+def ensure_template(content: str) -> str:
+    """Swap every registered inline <style> block for its cached /assets/tpl/ file (same place, same rules) and give
+    the page its family class."""
     by_hash = {h: v for v, (_, h) in TEMPLATE_VARIANTS.items()}
-    for m in list(STYLE_RE.finditer(content)):
-        v = by_hash.get(_norm_hash(m.group(1)))
+    out, last = [], 0
+    for m in STYLE_RE.finditer(content):
+        v = by_hash.get(_norm_hash(m.group(2)))
         if v:
-            content = content[:m.start()] + tpl_link(v) + content[m.end():]
-            return _set_body_classes(content, [f"tpl-{TEMPLATE_VARIANTS[v][0]}"])
-    lm = TPL_LINK_RE.search(content)
-    if lm:  # refresh the version
-        return content[:lm.start()] + tpl_link(lm.group(1)) + content[lm.end():] if lm.group(1) in TEMPLATE_VARIANTS else content
-    # pages converted on 2026-10-10 before the /assets/tpl/ files: their base rules came from site.css under tplb-<variant>
-    bm = re.search(r'<body[^>]*\bclass="[^"]*\btplb-([a-z0-9-]+)', content)
-    v = bm.group(1) if bm and bm.group(1) in TEMPLATE_VARIANTS else None
-    if not v:
-        fam = re.search(r'<body[^>]*\bclass="[^"]*\btpl-([a-z-]+)', content)
-        v = fam.group(1) if fam and fam.group(1) in TEMPLATE_VARIANTS else None
-    if not v:
+            out.append(content[last:m.start()] + tpl_link(v, m.group(1) or ""))
+            last = m.end()
+    content = "".join(out) + content[last:]
+    # refresh versions; drop links to variants no longer registered
+    content = TPL_LINK_RE.sub(lambda m: (tpl_link(m.group(1), (re.search(r' id="([\w-]+)"', m.group(0)) or [None, ""])[1]) if m.group(1) in TEMPLATE_VARIANTS else m.group(0)), content)
+    linked = TPL_LINK_RE.findall(content)
+    # a generator that copied its CSS from an already converted page has no inline block left: recognise it by structure
+    if not linked:
         for sv, sig in TEMPLATE_SIGNATURE.items():
-            if all(x in content for x in sig) and not any(".amount-badge" in blk for blk in STYLE_RE.findall(content)):
-                v = sv
+            if all(x in content for x in sig) and not any(".amount-badge" in blk for _, blk in STYLE_RE.findall(content)):
+                pos = SITE_CSS_LINK_RE.search(content) or OLD_CSS_BLOCK_RE.search(content)
+                link = tpl_link(sv)
+                content = content[:pos.start()] + link + content[pos.start():] if pos else content.replace("</head>", link + "</head>", 1)
+                linked = [sv]
                 break
-    if not v:
-        return content
-    pos = SITE_CSS_LINK_RE.search(content) or OLD_CSS_BLOCK_RE.search(content)
-    link = tpl_link(v)
-    content = content[:pos.start()] + link + content[pos.start():] if pos else content.replace("</head>", link + "</head>", 1)
-    return _set_body_classes(content, [f"tpl-{TEMPLATE_VARIANTS[v][0]}"], drop=lambda c: c.startswith("tplb-"))
+    fam = page_family(content, linked)
+    return _set_body_classes(content, [f"tpl-{fam}"], drop=lambda c: (c.startswith("tpl-") and c != f"tpl-{fam}") or c.startswith("tplb-"))
     # pages converted before variants had their own class (2026-10-10): tpl-<family> alone means the family's own variant
     fam = re.search(r'<body[^>]*\bclass="[^"]*\btpl-([a-z-]+)', content)
     if fam and fam.group(1) in TEMPLATE_VARIANTS:
         return _add_body_classes(content, [f"tplb-{fam.group(1)}"])
     for v, sig in TEMPLATE_SIGNATURE.items():
-        if all(x in content for x in sig) and not any(".amount-badge" in blk for blk in STYLE_RE.findall(content)):
+        if all(x in content for x in sig) and not any(".amount-badge" in blk for _, blk in STYLE_RE.findall(content)):
             return _add_body_classes(content, [f"tpl-{TEMPLATE_VARIANTS[v][0]}", f"tplb-{v}"])
     return content
 
@@ -550,12 +572,20 @@ def ensure_rail(content: str, rel: str, plan_href: str) -> str:
 _WIDE_PATH = re.compile(r"^(ca|us)/[a-z]+/[a-z-]+/index\.html$")
 
 
+def page_css(content: str) -> str:
+    """The page's own CSS in cascade order: inline blocks with the /assets/tpl/ files they became put back in place."""
+    def inline(m):
+        p = TEMPLATES_DIR / "base" / f"{m.group(1)}.css"
+        return "<style>" + p.read_text(encoding="utf-8") + "</style>" if p.exists() else ""
+    return "\n".join(b for _, b in STYLE_RE.findall(TPL_LINK_RE.sub(inline, content)))
+
+
 def ensure_wide(content: str, rel: str) -> str:
     """City hubs with full-width colour bands keep their stripes but use a wider content column (main.has-wide, 1100px from 1280px). Idempotent."""
     content = content.replace('<main id="main" tabindex="-1" class="has-wide">', '<main id="main" tabindex="-1">').replace('<main id="main" class="has-wide">', '<main id="main">')
     if 'class="has-rail"' in content or not _WIDE_PATH.match(str(rel).replace("\\", "/")):
         return content
-    widths = [int(x) for x in re.findall(r"\.wrap\s*\{[^}]*max-width:\s*(\d+)px", content)]
+    widths = [int(x) for x in re.findall(r"\.wrap\s*\{[^}]*max-width:\s*(\d+)px", page_css(content))]
     if not widths or not (700 <= widths[0] <= 960):
         return content
     return re.sub(r'<main id="main"( tabindex="-1")?>', lambda m: '<main id="main"' + (m.group(1) or "") + ' class="has-wide">', content, count=1)

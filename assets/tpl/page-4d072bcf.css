@@ -1,0 +1,32 @@
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter Tight', 'Inter Tight Fallback', -apple-system, sans-serif; background: #faf7f2; color: #0a2a2e; line-height: 1.7; }
+  .container { max-width: 720px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 42px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 12px; line-height: 1.2; }
+  h2 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 28px; font-weight: 500; margin-top: 48px; margin-bottom: 16px; }
+  h3 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 22px; font-weight: 500; margin-top: 32px; margin-bottom: 12px; }
+  p { margin-bottom: 18px; }
+  strong { font-weight: 600; }
+  em { font-style: italic; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #d4751c; margin-bottom: 12px; }
+  .lede { font-size: 18px; color: #1a3d42; margin-bottom: 32px; }
+  .tldr { background: #e3efe9; padding: 24px 28px; border-left: 4px solid #2d6a4f; margin: 32px 0; border-radius: 8px; }
+  .tldr strong { color: #2d6a4f; }
+  .comparison { margin: 32px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+  .comparison-table th, .comparison-table td { padding: 14px; text-align: left; border-bottom: 1px solid #d9d0c1; }
+  .comparison-table th { background: #f5efe5; font-weight: 600; }
+  .comparison-table td { font-size: 14px; }
+  .callout { background: #f5efe5; padding: 24px 28px; border-left: 4px solid #d4751c; margin: 32px 0; border-radius: 8px; }
+  .callout p { margin-bottom: 0; }
+  a { color: #0d4f5c; text-decoration: underline; }
+  .cta { display: inline-block; background: #d4751c; color: white; padding: 14px 32px; border-radius: 999px; text-decoration: none; font-weight: 600; margin-top: 32px; }
+  .cta:hover { background: #e88a2e; }
+  .nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid #d9d0c1; padding: 14px 24px; }
+  .nav a { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 18px; font-weight: 600; color: #08363f; text-decoration: none; }
+  .nav a span { color: #d4751c; }
+  @media (max-width: 600px) {
+    h1 { font-size: 32px; }
+    h2 { font-size: 22px; }
+  }

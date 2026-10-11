@@ -35,98 +35,14 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much can a Kamloops homeowner get for heat pump + solar together?", "acceptedAnswer": {"@type": "Answer", "text": "Combining heat pump ($13,000) and solar ($10,000) in Kamloops adds up to $23,000 based on the open programs we track, before adding any other category."}}, {"@type": "Question", "name": "What's the maximum rebate stack available in Kamloops?", "acceptedAnswer": {"@type": "Answer", "text": "Adding up every open, quantified rebate category we track for Kamloops comes to $39,500 across 7 of the 8 categories."}}, {"@type": "Question", "name": "Are all these Kamloops rebates available at the same time?", "acceptedAnswer": {"@type": "Answer", "text": "They come from different programs (federal, provincial or state, utility, and municipal), so most homeowners can combine several in the same renovation project. Always confirm current stacking rules with each program before you apply, since eligibility and funding caps can change."}}, {"@type": "Question", "name": "Which rebate categories are NOT currently available in Kamloops?", "acceptedAnswer": {"@type": "Answer", "text": "Based on our data, Kamloops does not currently have an open rebate with a published dollar amount for: Smart Thermostat. This can change as programs launch or funding resets, so we recheck city pages regularly."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "How Much Can You Stack in Kamloops? Heat Pump + Solar + Insulation Rebates", "description": "See how much Kamloops homeowners can stack by combining rebates: heat pump, solar, insulation and 5 more categories, added up to a real total of $39,500 in available Kamloops rebates when every open program is combined.", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about/"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "mainEntityOfPage": "https://homepowerrebate.com/stacking-calculator/ca/bc/kamloops/", "datePublished": "2026-08-23", "dateModified": "2026-08-23"}</script>
 
-<style>
-:root {
-  --ink: #0a2a2e;
-  --ink-soft: #1a3d42;
-  --paper: #faf7f2;
-  --paper-warm: #f5efe5;
-  --teal: #0d4f5c;
-  --teal-deep: #08363f;
-  --amber: #d4751c;
-  --amber-bright: #e88a2e;
-  --green-money: #2d6a4f;
-  --red-flag: #b04545;
-  --rule: #d9d0c1;
-  --sage: #6f8f7a;
-}
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; line-height: 1.6; }
-h1, h2, h3, h4 { font-family: 'Fraunces', 'Fraunces Fallback', serif; color: var(--teal-deep); }
-.wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
-a { color: var(--teal); }
-
-.hero { background: linear-gradient(135deg, var(--teal-deep), var(--teal)); color: #fff; padding: 64px 28px 56px; text-align: center; }
-.hero .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 14px; }
-.hero h1 { color: #fff; font-size: clamp(28px, 4.6vw, 46px); line-height: 1.15; margin: 0 0 16px; max-width: 820px; margin-left: auto; margin-right: auto; }
-.hero p.lead { font-size: 17px; color: rgba(255,255,255,0.85); max-width: 660px; margin: 0 auto 20px; }
-.hero-stats { display: flex; justify-content: center; gap: 36px; flex-wrap: wrap; margin-top: 8px; }
-.hero-stat { text-align: center; }
-.hero-stat .num { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 28px; font-weight: 700; color: var(--amber-bright); }
-.hero-stat .lbl { font-size: 12px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: .05em; }
-
-.picker-section { padding: 48px 28px; }
-.picker-card { background: #fff; border: 1px solid var(--rule); border-radius: 16px; padding: 32px; box-shadow: 0 6px 24px rgba(10,42,46,0.06); }
-.picker-card h2 { margin-top: 0; font-size: 24px; }
-.picker-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
-.picker-row select { flex: 1; min-width: 240px; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--rule); font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 15px; background: #fff; color: var(--ink); }
-
-.cat-checks { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-bottom: 20px; }
-.cat-check { display: flex; align-items: center; gap: 10px; background: var(--paper-warm); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; font-size: 14px; font-weight: 600; }
-.cat-check input { width: 18px; height: 18px; accent-color: var(--amber); }
-.cat-check .amt { margin-left: auto; color: var(--green-money); font-weight: 700; }
-.cat-check.disabled { opacity: .45; }
-.cat-check .amt.zero { color: var(--sage); font-weight: 500; font-size: 12px; }
-
-.stack-total { display: flex; align-items: center; gap: 20px; padding: 22px; background: var(--teal-deep); border-radius: 12px; color: #fff; flex-wrap: wrap; }
-.stack-total .amt-big { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 40px; font-weight: 700; color: var(--amber-bright); }
-.stack-total .lbl { font-size: 13px; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: .05em; }
-
-.section { padding: 44px 0; }
-.section-title { font-size: 26px; margin-bottom: 6px; }
-.section-sub { color: var(--ink-soft); margin-bottom: 22px; max-width: 720px; }
-
-.example-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 22px 24px; margin-bottom: 16px; }
-.example-card h3 { margin: 0 0 8px; font-size: 18px; }
-.example-card .example-total { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 26px; font-weight: 700; color: var(--green-money); }
-.example-line { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--rule); font-size: 14px; }
-.example-line:last-of-type { border-bottom: none; }
-
-.city-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-.city-grid a { display: block; background: #fff; border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; text-decoration: none; color: var(--teal-deep); font-weight: 700; font-size: 14px; }
-.city-grid a:hover { border-color: var(--teal); }
-.city-grid a .amt { display: block; font-size: 12px; color: var(--green-money); font-weight: 600; margin-top: 2px; }
-.region-block { margin-bottom: 32px; }
-.region-block h3 { font-size: 18px; margin-bottom: 12px; }
-
-.status-pill { display: inline-block; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: .03em; }
-.status-pill-open { background: #eaf3ee; color: var(--green-money); }
-.status-pill-missing { background: #fdf2f0; color: var(--red-flag); }
-
-.faq-item { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; }
-.faq-item h3 { font-size: 16px; margin: 0 0 6px; }
-.faq-item p { margin: 0; color: var(--ink-soft); font-size: 14px; }
-
-.methodology { background: var(--paper-warm); padding: 44px 0; }
-.methodology .box { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 26px; }
-.methodology ul { margin: 12px 0 0; padding-left: 20px; }
-.methodology li { margin-bottom: 8px; }
-
-.breadcrumb { font-size: 13px; color: var(--sage); padding: 14px 28px 0; }
-.breadcrumb a { color: var(--sage); text-decoration: none; }
-.breadcrumb a:hover { text-decoration: underline; }
-
-@media (max-width: 640px) {
-  .stack-total { flex-direction: column; text-align: center; }
-}
-</style>
-<link rel="stylesheet" href="/assets/site.css?v=0422ea7911" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/tpl/stacking-becb5064.css?v=658b793424" data-hpr-tpl>
+<link rel="stylesheet" href="/assets/site.css?v=5d0010cb74" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
-<body>
+<body class="tpl-stacking">
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- ============================== NAV (canonical, from _partials/nav-footer.html) ============================== -->

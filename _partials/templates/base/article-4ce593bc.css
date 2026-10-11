@@ -1,0 +1,6 @@
+
+    .facts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 32px; margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--rule); }
+    .fact { text-align: center; }
+    .fact-label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+    .fact-value { font-size: 16px; font-weight: 600; color: var(--ink); }
+    

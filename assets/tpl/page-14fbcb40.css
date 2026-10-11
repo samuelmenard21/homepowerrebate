@@ -1,0 +1,19 @@
+
+.gq{max-width:820px;margin:0 auto;padding:0 20px}
+.gq-card{background:#fff;border:1px solid var(--rule);border-radius:16px;padding:24px;margin:0 0 20px}
+.gq-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.gq-row>*{min-width:0}.gq-f{display:flex;flex-direction:column;gap:6px}.gq-f.full{grid-column:1/-1}
+.gq-f label{font-size:13px;font-weight:700;color:var(--ink-soft)}
+.gq-f input,.gq-f select{font:inherit;font-size:16px;min-height:46px;padding:9px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);width:100%}
+.gq-chips{display:flex;flex-wrap:wrap;gap:8px}.gq-chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:99px;background:#fff;cursor:pointer;font-size:15px}
+.gq-chip input{accent-color:var(--amber);width:18px;height:18px}.gq-chip.on{border-color:var(--amber);background:#fff6ea}
+.gq-cta{display:inline-block;background:var(--amber);color:#fff;text-decoration:none;font-weight:700;border-radius:999px;padding:14px 24px;border:0;font:inherit;font-weight:700;cursor:pointer}
+.gq-cta[disabled]{opacity:.5;cursor:not-allowed}.gq-alt{display:inline-block;margin-left:14px;font-weight:600}
+.gq-inst{display:grid;grid-template-columns:1fr auto;gap:10px 16px;padding:14px 0;border-top:1px solid var(--rule);align-items:start}
+.gq-inst:first-of-type{border-top:0}.gq-inst h3{margin:0;font-size:17px}.gq-meta{font-size:14px;color:var(--ink-soft)}
+.gq-links{display:flex;gap:14px;flex-wrap:wrap;font-size:15px;margin-top:4px}
+.gq-pick{display:flex;align-items:center;gap:8px;font-size:14px;white-space:nowrap}.gq-pick input{width:20px;height:20px;accent-color:var(--amber)}
+.gq-h{font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:22px;color:var(--teal-deep);margin:0 0 6px}.gq-sub{font-size:14px;color:var(--ink-soft);margin:0 0 10px}
+.gq-msg{margin-top:14px;padding:14px 16px;border-radius:8px;font-size:15px;display:none}.gq-msg.show{display:block}.gq-msg.ok{background:#eaf3ee;color:#1f5a3d}.gq-msg.err{background:#fef3e6;color:#8a4a06}
+.gq details summary{cursor:pointer;font-weight:700;font-size:17px}
+@media(max-width:600px){.gq-row{grid-template-columns:1fr}.gq-inst{grid-template-columns:1fr}.gq-card{padding:18px}}

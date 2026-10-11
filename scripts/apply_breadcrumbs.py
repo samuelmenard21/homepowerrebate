@@ -156,7 +156,18 @@ def render_breadcrumb(items):
     )
 
 
+def _css_linked(content: str) -> bool:
+    """The restamp serves this block as /assets/tpl/<variant>.css: do not add it again."""
+    for v in re.findall(r'href="/assets/tpl/([a-z0-9-]+)\.css', content):
+        p = ROOT / "_partials" / "templates" / "base" / f"{v}.css"
+        if p.exists() and CSS_MARKER_START in p.read_text(encoding="utf-8"):
+            return True
+    return False
+
+
 def ensure_css(content: str) -> str:
+    if _css_linked(content):
+        return content
     if OLD_CSS_RE.search(content):
         content = OLD_CSS_RE.sub(lambda m: BREADCRUMB_CSS, content, count=1)
     else:

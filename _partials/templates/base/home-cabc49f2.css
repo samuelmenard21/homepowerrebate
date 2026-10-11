@@ -1,0 +1,5 @@
+.ps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+.ps-card{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:#111;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;position:relative}
+.ps-first{background:linear-gradient(135deg,#0d4f5c,#08363f);border:0;color:#fff}
+.ps-num{font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:38px;line-height:1.1}.ps-lab{font-size:12px;opacity:.65;margin-bottom:8px}
+.ps-city{font-size:16px}.ps-sub{font-size:13px;opacity:.75}.ps-tag{position:absolute;top:12px;right:16px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.7}

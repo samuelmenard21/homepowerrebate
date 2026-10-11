@@ -62,122 +62,7 @@
 }
 </script>
 
-<style>
-:root {
-  --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
-  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
-  --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1; --shadow: 0 1px 2px rgba(10,42,46,0.04), 0 8px 24px rgba(10,42,46,0.06);
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 72px; }
-body { font-family: 'Inter Tight', 'Inter Tight Fallback', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.65; }
-.nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
-.nav-inner { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
-.logo { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-.logo-mark { width: 30px; height: 30px; background: var(--amber); border-radius: 50%; position: relative; box-shadow: 0 2px 8px rgba(212, 117, 28, 0.3); }
-.logo-mark::after { content: ''; position: absolute; inset: 8px; background: var(--paper); border-radius: 50%; }
-.logo-power { color: var(--amber); font-weight: 700; }
-.nav-pick { display: flex; align-items: center; gap: 8px; background: var(--teal-deep); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; transition: all 0.2s; border: none; cursor: pointer; }
-.nav-pick:hover { background: var(--amber); transform: translateY(-1px); }
-.nav-desktop-only { display: flex !important; }
-.nav-mobile-only { display: none !important; }
-@media (max-width: 768px) {
-  .nav-desktop-only { display: none !important; }
-  .nav-mobile-only { display: flex !important; flex-wrap: wrap; }
-  .nav-inner { padding: 14px 20px; flex-wrap: wrap; row-gap: 8px; gap: 8px; }
-  .logo { font-size: 16px !important; }
-  .logo-mark { width: 22px !important; height: 22px !important; }
-  .nav-mobile-only a { font-size: 13px !important; }
-  .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
-}
-@media (max-width: 400px) {
-  .nav-inner { justify-content: center !important; }
-  .logo { flex: 1 0 100%; justify-content: center; }
-  .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
-}
-.footer { background: var(--ink); color: rgba(250, 247, 242, 0.65); padding: 56px 28px 32px; }
-.footer-inner { max-width: 1180px; margin: 0 auto; }
-.footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 32px; border-bottom: 1px solid rgba(250, 247, 242, 0.1); }
-.footer-brand { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 500; font-size: 22px; color: var(--paper); letter-spacing: -0.02em; margin-bottom: 12px; }
-.footer-tagline { font-size: 13px; color: rgba(250, 247, 242, 0.4); max-width: 320px; }
-.footer-col-title { font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250, 247, 242, 0.7); margin-bottom: 14px; }
-.footer-col-links { list-style: none; display: grid; gap: 8px; font-size: 14px; margin: 0; padding: 0; }
-.footer-col-links a { color: rgba(250, 247, 242, 0.45); text-decoration: none; }
-.footer-col-links a:hover { color: var(--amber); }
-.footer-bottom { padding-top: 24px; font-size: 12px; color: rgba(250, 247, 242, 0.35); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-@media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
-@media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
-#city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
-.wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
-.hero { padding: 48px 28px; background: var(--teal-deep); color: var(--paper); }
-.hero h1 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: clamp(32px, 5vw, 48px); color: #fff; margin-bottom: 14px; line-height: 1.15; }
-.hero p { color: rgba(250,247,242,.82); font-size: 16px; margin-bottom: 12px; }
-.article { padding: 40px 28px 56px; }
-h2 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 24px; color: var(--teal-deep); margin: 32px 0 12px; }
-h3 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 18px; color: var(--teal-deep); margin: 22px 0 10px; font-weight: 600; }
-h4 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 16px; color: var(--teal-deep); margin: 14px 0 8px; }
-p { margin-bottom: 14px; font-size: 15px; color: var(--ink-soft); }
-ul { margin: 0 0 16px 22px; color: var(--ink-soft); }
-li { margin-bottom: 8px; line-height: 1.7; }
-a { color: var(--teal); text-decoration: none; font-weight: 500; }
-a:hover { text-decoration: underline; }
-strong { color: var(--ink); }
-.section { padding: 48px 28px; }
-.section h2 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 24px; color: var(--teal-deep); margin: 32px 0 12px; }
-.callout { background: var(--paper-warm); border-left: 4px solid var(--amber); padding: 16px 20px; border-radius: 8px; margin: 22px 0; }
-.highlight-box { background: #dbeafe; border-left: 4px solid var(--teal); padding: 20px; margin: 24px 0; border-radius: 8px; }
-.highlight-box strong { color: var(--teal-deep); }
-.cta { display: inline-block; background: var(--amber); color: #fff; padding: 13px 26px; border-radius: 999px; text-decoration: none; font-weight: 600; margin-top: 16px; }
-.cta:hover { background: var(--amber-bright); text-decoration: none; }
-.rebate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 22px 0; }
-.rebate-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 18px; }
-.rebate-card h4 { font-size: 16px; color: var(--teal-deep); margin-bottom: 4px; }
-.rebate-card .amount { font-size: 19px; font-weight: 700; color: var(--green-money); margin-bottom: 4px; }
-.rebate-card p { font-size: 13px; margin-bottom: 0; }
-.rebate-card .src { font-size: 12px; color: var(--sage); margin-top: 6px; font-style: italic; }
-.installer-note { background: var(--paper-warm); border-left: 4px solid var(--teal); padding: 16px 20px; border-radius: 8px; margin: 22px 0; font-size: 14px; }
-.program { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 20px; margin: 16px 0; }
-.program-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 12px; }
-.program-head h4 { margin: 0; }
-.program-amount { background: var(--paper-warm); padding: 6px 12px; border-radius: 6px; font-weight: 600; color: var(--green-money); font-size: 14px; }
-.tag { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 8px; border-radius: 4px; margin-bottom: 12px; }
-.tag-util { background: var(--amber); color: #fff; }
-.how { margin-top: 12px; font-size: 14px; color: var(--ink-soft); }
-.faq-section { background: var(--paper-warm); padding: 32px 28px; margin: 48px 0; border-radius: 12px; }
-.faq-item { margin-bottom: 24px; }
-.faq-q { font-weight: 600; color: var(--teal-deep); font-size: 16px; margin-bottom: 8px; }
-.faq-a { color: var(--ink-soft); font-size: 15px; line-height: 1.7; }
-.blog-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 24px; }
-.blog-card { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 20px; text-decoration: none; transition: all 0.2s; }
-.blog-card:hover { border-color: var(--amber); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.blog-card h3 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 18px; color: var(--teal-deep); margin-bottom: 8px; }
-.blog-card p { font-size: 14px; color: var(--ink-soft); }
-footer { background: var(--ink); color: rgba(250,247,242,0.6); padding: 40px 28px; text-align: center; font-size: 13px; }
-footer a { color: rgba(250,247,242,0.75); }
-.subnote { font-size: 14px; color: var(--ink-soft); margin-top: 12px; }
-.installer-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-.installer-card .name { font-weight: 700; color: var(--ink); font-size: 15px; }
-.installer-card .stars { color: var(--amber); font-size: 13px; }
-.installer-card .site-link { font-size: 13px; }
-.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
-.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
-.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
-.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
-
-/* Rebate Finder */
-.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
-.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
-.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
-.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
-.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
-.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
-.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
-.finder-card h4 { font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-.finder-card .finder-amount { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
-.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
-.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
-.finder-card.hidden { display: none; }
-</style>
+<link rel="stylesheet" href="/assets/tpl/page-2c58d34b.css?v=965a500065" data-hpr-tpl>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -191,19 +76,8 @@ footer a { color: rgba(250,247,242,0.75); }
   ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=0422ea7911" data-hpr-site-css>
-<style>
-/* CANONICAL-BREADCRUMB-CSS-START */
-.hpr-breadcrumb { max-width: 1180px; margin: 0 auto; padding: 14px 28px; font-size: 13px; color: var(--ink-soft); }
-.hpr-breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0; margin: 0; padding: 0; }
-.hpr-breadcrumb li { display: flex; align-items: center; }
-.hpr-breadcrumb li:not(:last-child)::after { content: '/'; margin: 0 8px; color: var(--rule); }
-.hpr-breadcrumb a { color: var(--ink-soft); text-decoration: none; }
-.hpr-breadcrumb a:hover { color: var(--teal-deep); text-decoration: underline; }
-.hpr-breadcrumb li[aria-current="page"] { color: var(--ink); font-weight: 600; }
-@media (max-width: 600px) { .hpr-breadcrumb { padding: 10px 20px; font-size: 12px; } }
-/* CANONICAL-BREADCRUMB-CSS-END */
-</style>
+<link rel="stylesheet" href="/assets/site.css?v=5d0010cb74" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/tpl/common-5a0da5c2.css?v=c1f1fcfc0d" data-hpr-tpl>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -264,7 +138,7 @@ footer a { color: rgba(250,247,242,0.75); }
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Islip Heat Pump Rebates 2026: PSEG Long Island Amounts", "url": "https://homepowerrebate.com/us/ny/pseg/islip/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
 <!-- AEO-SPEAKABLE-END -->
 </head>
-<body>
+<body class="tpl-page">
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- ============================== NAV (canonical, from _partials/nav-footer.html) ============================== -->
@@ -392,20 +266,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     <p>What Islip homeowners can really get in 2026, checked against PSEG Long Island and NYSERDA on October 3, 2026.</p>
   </div>
 </section>
-<style>
-.nyv{max-width:860px;margin:0 auto;padding:8px 20px 32px;color:var(--ink);font-size:17px;line-height:1.65}
-.nyv h2{font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;line-height:1.25;margin:36px 0 12px;color:var(--ink)}
-.nyv .short{background:#fff;border-left:4px solid var(--amber);border-radius:10px;padding:16px 18px;margin:18px 0}
-.nyv table{width:100%;border-collapse:collapse;font-size:15px;margin:12px 0;background:#fff}
-.nyv th,.nyv td{border:1px solid var(--rule,#d9d0c1);padding:9px 10px;text-align:left;vertical-align:top}
-.nyv th{background:var(--paper-warm)}
-.nyv .tbl{overflow-x:auto}
-.nyv .src{font-size:14px;color:var(--ink-soft);margin-top:28px}
-.nyv .cta-box{background:var(--teal-deep);color:#fff;border-radius:12px;padding:20px;margin:28px 0}
-.nyv .cta-box a{color:#fff;font-weight:700}
-.nyv details{background:#fff;border:1px solid var(--rule,#d9d0c1);border-radius:10px;padding:12px 14px;margin:8px 0}
-.nyv summary{font-weight:600;cursor:pointer}
-</style>
+<link rel="stylesheet" href="/assets/tpl/page-64fe120b.css?v=da0c07d052" data-hpr-tpl>
 <article class="nyv">
 <div class="short"><strong>Short answer:</strong> In Islip, the main heat pump rebate is PSEG Long Island&rsquo;s heat pump rebate: $4,000 (or $5,000&ndash;$7,500 if you qualify on income or live in a DAC) for a whole-home system, taken off your contractor&rsquo;s bill. It is one rebate &mdash; not several that add up. Lower-income households can get much more through EmPower+, and the federal tax credits ended on December 31, 2025.</div>
 <h2>How much is the PSEG Long Island heat pump rebate in Islip?</h2>

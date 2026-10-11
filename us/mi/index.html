@@ -13,55 +13,8 @@
 <style>@font-face{font-family:'Fraunces';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://fonts.gstatic.com/s/fraunces/v38/6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeP2Xz5c.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Inter Tight';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsH8ahuQ2e8.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}</style>
 <!-- FONT-PRELOAD-END -->
 <link rel="stylesheet" href="/assets/tpl/article.css?v=ebfbf306a0" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=0422ea7911" data-hpr-site-css><style>
-/* CANONICAL-BREADCRUMB-CSS-START */
-.hpr-breadcrumb { max-width: 1180px; margin: 0 auto; padding: 14px 28px; font-size: 13px; color: var(--ink-soft); }
-.hpr-breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0; margin: 0; padding: 0; }
-.hpr-breadcrumb li { display: flex; align-items: center; }
-.hpr-breadcrumb li:not(:last-child)::after { content: '/'; margin: 0 8px; color: var(--rule); }
-.hpr-breadcrumb a { color: var(--ink-soft); text-decoration: none; }
-.hpr-breadcrumb a:hover { color: var(--teal-deep); text-decoration: underline; }
-.hpr-breadcrumb li[aria-current="page"] { color: var(--ink); font-weight: 600; }
-@media (max-width: 600px) { .hpr-breadcrumb { padding: 10px 20px; font-size: 12px; } }
-/* CANONICAL-BREADCRUMB-CSS-END */
-</style><style>
-.nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
-.nav-inner { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
-.logo { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-.logo-mark { width: 30px; height: 30px; background: var(--amber); border-radius: 50%; position: relative; box-shadow: 0 2px 8px rgba(212, 117, 28, 0.3); }
-.logo-mark::after { content: ''; position: absolute; inset: 8px; background: var(--paper); border-radius: 50%; }
-.logo-power { color: var(--amber); font-weight: 700; }
-.nav-pick { display: flex; align-items: center; gap: 8px; background: var(--teal-deep); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; transition: all 0.2s; }
-.nav-pick:hover { background: var(--amber); transform: translateY(-1px); }
-.nav-desktop-only { display: flex !important; }
-.nav-mobile-only { display: none !important; }
-@media (max-width: 768px) {
-  .nav-desktop-only { display: none !important; }
-  .nav-mobile-only { display: flex !important; flex-wrap: wrap; }
-  .nav-inner { padding: 14px 20px; flex-wrap: wrap; row-gap: 8px; gap: 8px; }
-  .logo { font-size: 16px !important; }
-  .logo-mark { width: 22px !important; height: 22px !important; }
-  .nav-mobile-only a { font-size: 13px !important; }
-  .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
-}
-@media (max-width: 400px) {
-  .nav-inner { justify-content: center !important; }
-  .logo { flex: 1 0 100%; justify-content: center; }
-  .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
-}
-.footer { background: var(--ink); color: rgba(250, 247, 242, 0.65); padding: 56px 28px 32px; }
-.footer-inner { max-width: 1180px; margin: 0 auto; }
-.footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 32px; border-bottom: 1px solid rgba(250, 247, 242, 0.1); }
-.footer-brand { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 500; font-size: 22px; color: var(--paper); letter-spacing: -0.02em; margin-bottom: 12px; }
-.footer-tagline { font-size: 13px; color: rgba(250, 247, 242, 0.4); max-width: 320px; }
-.footer-col-title { font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250, 247, 242, 0.7); margin-bottom: 14px; }
-.footer-col-links { list-style: none; display: grid; gap: 8px; font-size: 14px; margin: 0; padding: 0; }
-.footer-col-links a { color: rgba(250, 247, 242, 0.45); text-decoration: none; }
-.footer-col-links a:hover { color: var(--amber); }
-.footer-bottom { padding-top: 24px; font-size: 12px; color: rgba(250, 247, 242, 0.35); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-@media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
-@media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
-</style>
+<link rel="stylesheet" href="/assets/site.css?v=5d0010cb74" data-hpr-site-css><link rel="stylesheet" href="/assets/tpl/common-5a0da5c2.css?v=c1f1fcfc0d" data-hpr-tpl>
+<link rel="stylesheet" href="/assets/tpl/common-e84b5f3f.css?v=1adbab696b" data-hpr-tpl>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Michigan Home Energy Rebates 2026: DTE, Consumers, Lansing BWL and Ann Arbor", "description": "Michigan home energy rebates in 2026 by city and utility: Ann Arbor heat pump $4,000, Lansing BWL $4,000 to $5,000, DTE furnace and insulation, Consumers Energy, and the paused state program.", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/#sam", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "datePublished": "2026-10-06", "dateModified": "2026-10-06", "mainEntityOfPage": "https://homepowerrebate.com/us/mi/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com"}, {"@type": "ListItem", "position": 2, "name": "Michigan", "item": "https://homepowerrebate.com/us/mi/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is there a statewide heat pump rebate in Michigan?", "acceptedAnswer": {"@type": "Answer", "text": "Not from the utilities. The state's MiHER program covers heat pumps for lower-income households, but new income-qualified applications are paused in five districts. Ann Arbor and Lansing have local heat pump rebates."}}, {"@type": "Question", "name": "Which Michigan city pays the most for a heat pump?", "acceptedAnswer": {"@type": "Answer", "text": "Of the four cities we cover, Ann Arbor pays $4,000 ($5,500 lower income) and Lansing's Board of Water and Light pays $4,000 to $5,000 for a gas-to-heat-pump switch."}}, {"@type": "Question", "name": "Can I still get the federal tax credit?", "acceptedAnswer": {"@type": "Answer", "text": "No. The federal home energy credits ended for work finished after December 31, 2025."}}, {"@type": "Question", "name": "What is the easiest rebate to claim?", "acceptedAnswer": {"@type": "Answer", "text": "A $50 smart thermostat rebate from DTE or Lansing BWL. Consumers Energy lists $50 to $100."}}, {"@type": "Question", "name": "Where do I find free help?", "acceptedAnswer": {"@type": "Answer", "text": "The state weatherization program covers households at or below 200% of the federal poverty level, and DTE covers 250%. See our free weatherization guide."}}]}</script><meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -69,7 +22,7 @@
 <!-- AEO-SPEAKABLE-START -->
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Michigan Home Energy Rebates 2026: DTE, Consumers, Lansing BWL and Ann Arbor", "url": "https://homepowerrebate.com/us/mi/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
 <!-- AEO-SPEAKABLE-END -->
-</head><body class="tpl-article tpl-hub">
+</head><body class="tpl-hub">
 <a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
 <nav class="nav" aria-label="Main">

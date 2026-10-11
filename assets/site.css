@@ -484,86 +484,6 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
 /* pages whose breadcrumb sits outside <main>: line it up with the column */
 body.tpl-article > .hpr-breadcrumb { max-width: calc(var(--article) + 2 * var(--gut)); padding-left: var(--gut); padding-right: var(--gut); }
 
-/* ===== template design: hub (hub.css) ===== */
-/* Region hub design (body.tpl-hub): /ca/bc/, /ca/on/, /us/ma/ and the other province and state hubs.
-   The hubs keep their own legacy CSS for the older sections further down; this file sets the top of the page
-   (hero, stats, short answer and table, what changed, federal note, program links) on one container edge. */
-body.tpl-hub { --gut: clamp(20px, 3.2vw, 56px); --hub-w: min(var(--container), 100% - 2 * var(--gut)); }
-
-/* ---------- hero ---------- */
-.tpl-hub header.hub-hero { position: relative; overflow: hidden; padding: clamp(44px, 6vw, 96px) 0 clamp(88px, 8vw, 128px) !important; text-align: left !important; color: #fff;
-  background: radial-gradient(120% 140% at 100% 0%, rgba(232, 138, 46, .24) 0%, rgba(232, 138, 46, 0) 46%), radial-gradient(90% 120% at 0% 100%, rgba(107, 142, 127, .3) 0%, rgba(107, 142, 127, 0) 55%), var(--teal-deep) !important; }
-.tpl-hub header.hub-hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
-  background-image: linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px); background-size: 48px 48px;
-  -webkit-mask-image: linear-gradient(90deg, transparent 35%, #000 100%); mask-image: linear-gradient(90deg, transparent 35%, #000 100%); }
-.tpl-hub header.hub-hero > .wrap { position: relative; z-index: 1; width: var(--hub-w); max-width: none !important; margin: 0 auto !important; padding: 0 !important; text-align: left !important; }
-.tpl-hub header.hub-hero .eyebrow { margin: 0 0 18px !important; font-size: 13px !important; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #f5b566 !important; }
-.tpl-hub header.hub-hero h1 { max-width: 18ch; margin: 0 0 20px !important; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(38px, 5.4vw, 76px) !important; font-weight: 600 !important; line-height: 1.02 !important; letter-spacing: -.025em; color: #fff !important; text-wrap: balance; }
-.tpl-hub header.hub-hero .sub { max-width: 58ch !important; margin: 0 0 28px !important; font-size: clamp(17px, 1.5vw, 21px) !important; line-height: 1.5 !important; color: rgba(250, 247, 242, .88) !important; text-wrap: pretty; }
-.tpl-hub header.hub-hero .cta-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-start !important; }
-.tpl-hub header.hub-hero .cta-row .btn { display: inline-flex; align-items: center; min-height: 52px; padding: 0 26px; border-radius: 999px; font-size: 17px; font-weight: 700; }
-.tpl-hub header.hub-hero .cta-row .btn-secondary { background: rgba(255, 255, 255, .1) !important; color: #fff !important; border: 1px solid rgba(255, 255, 255, .45) !important; }
-.tpl-hub header.hub-hero .cta-row .btn-secondary:hover { background: rgba(255, 255, 255, .2) !important; }
-
-/* ---------- stats strip ---------- */
-.tpl-hub .hs-wrap:has(> .hs-stats) { width: var(--hub-w); max-width: none; margin: calc(-1 * clamp(60px, 5.4vw, 80px)) auto 0; padding: 0; position: relative; z-index: 2; }
-.tpl-hub .hs-stats { gap: clamp(10px, 1.2vw, 16px); }
-.tpl-hub .hs-stat { padding: clamp(16px, 1.8vw, 24px) clamp(16px, 1.8vw, 26px) !important; border: 0 !important; border-radius: 18px !important; text-align: left !important; background: #fff; box-shadow: 0 1px 2px rgba(10, 42, 46, .06), 0 18px 40px -18px rgba(10, 42, 46, .35) !important; }
-.tpl-hub .hs-stat b { display: block; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(26px, 2.6vw, 40px) !important; font-weight: 600 !important; line-height: 1.05; letter-spacing: -.02em; color: var(--teal-deep) !important; }
-.tpl-hub .hs-stat b small { display: block; margin-top: 4px; font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 14px !important; font-weight: 600; letter-spacing: 0; }
-.tpl-hub .hs-stat span { display: block; margin-top: 6px; font-size: 13px !important; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: #4a5f62 !important; }
-
-/* ---------- top blocks on one edge ---------- */
-.tpl-hub main > :is(.hub-block, section[style], p[style]) { width: var(--hub-w); max-width: none !important; margin-left: auto !important; margin-right: auto !important; padding-left: 0 !important; padding-right: 0 !important; box-sizing: border-box; }
-.tpl-hub .hub-top { margin-top: clamp(32px, 4vw, 56px); }
-.tpl-hub .hub-answer { padding: clamp(20px, 2.2vw, 30px) clamp(20px, 2.4vw, 34px); border: 1px solid #d5e4da; border-left: 5px solid var(--green-money); border-radius: 18px; background: #f1f7f3; }
-.tpl-hub .hub-answer p { max-width: 80ch; margin: 0; font-size: clamp(17px, 1.3vw, 19px); line-height: 1.6; color: var(--ink); }
-.tpl-hub .hub-answer p.hub-verified { margin-top: 12px; font-size: 14px; line-height: 1.5; color: #4a5f62; }
-.tpl-hub .hub-block h2 { position: relative; margin: 56px 0 20px; padding-top: 22px; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(27px, 2.5vw, 36px); font-weight: 600; line-height: 1.12; letter-spacing: -.018em; color: var(--teal-deep); }
-.tpl-hub .hub-block h2::before { content: ""; position: absolute; top: 0; left: 0; width: 44px; height: 4px; border-radius: 4px; background: #e88a2e; }
-.tpl-hub .hub-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid #e3dacb; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(10, 42, 46, .04), 0 8px 24px -14px rgba(10, 42, 46, .16); }
-.tpl-hub .hub-table { width: 100%; min-width: 680px; border-collapse: collapse; font-size: 16px; line-height: 1.5; }
-.tpl-hub .hub-table th { padding: 14px 18px; background: #f3ede2; text-align: left; font-size: 13px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--teal-deep); }
-.tpl-hub .hub-table td { padding: 16px 18px; border-top: 1px solid #eee5d6; vertical-align: top; color: var(--ink-soft); }
-.tpl-hub .hub-table td:first-child { color: var(--ink); }
-.tpl-hub .hub-table td:nth-child(3) { font-weight: 700; color: var(--green-money); }
-.tpl-hub .hub-table tbody tr:hover td { background: #fbf8f2; }
-.tpl-hub .hub-table .rb-status { margin: 4px 0 0; }
-.tpl-hub .hub-table td:nth-child(3) .rb-status { display: table; margin-top: 6px; }
-.tpl-hub .hub-changes { margin-top: 40px; }
-.tpl-hub .hub-card { padding: clamp(20px, 2.2vw, 30px) clamp(20px, 2.4vw, 34px); border: 1px solid #e3dacb; border-radius: 18px; background: #fff; }
-.tpl-hub .hub-card h2 { margin: 0 0 6px; padding-top: 0; font-size: clamp(22px, 2vw, 28px); }
-.tpl-hub .hub-card h2::before { display: none; }
-.tpl-hub .hub-card .hub-checked { margin: 0 0 14px; font-size: 14px; color: #4a5f62; }
-.tpl-hub .hub-card ul { display: grid; gap: 12px; margin: 0; padding-left: 20px; font-size: 16px; line-height: 1.6; color: var(--ink-soft); }
-@media (min-width: 1000px) { .tpl-hub .hub-card ul { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; } }
-.tpl-hub .hub-card li::marker { color: #e88a2e; }
-.tpl-hub main > section[style*="border-left:4px solid #d4751c"] { margin-top: 24px !important; padding: 20px 26px !important; border-radius: 18px !important; font-size: 16px !important; }
-.tpl-hub main > p[style] { margin-top: 20px !important; font-size: 16px; }
-
-@media (max-width: 600px) {
-  .tpl-hub header.hub-hero { padding: 36px 0 80px !important; }
-  .tpl-hub header.hub-hero h1 { font-size: clamp(34px, 9.4vw, 44px) !important; }
-  .tpl-hub header.hub-hero .cta-row .btn { flex: 1 1 auto; justify-content: center; }
-  .tpl-hub .hs-wrap:has(> .hs-stats) { margin-top: -60px; }
-}
-/* phones: each program is a card (the table always has the same four columns) */
-@media (max-width: 640px) {
-  .tpl-hub .hub-table-wrap { overflow: visible; border: 0; background: none; box-shadow: none; }
-  .tpl-hub .hub-table, .tpl-hub .hub-table tbody, .tpl-hub .hub-table tr, .tpl-hub .hub-table td { display: block; width: auto; min-width: 0; }
-  .tpl-hub .hub-table thead { display: none; }
-  .tpl-hub .hub-table tr { margin: 0 0 12px; padding: 16px 18px; border: 1px solid #e3dacb; border-radius: 16px; background: #fff; }
-  .tpl-hub .hub-table td { padding: 0; border: 0; font-size: 16px; }
-  .tpl-hub .hub-table td:first-child { margin-bottom: 4px; font-size: 18px; }
-  .tpl-hub .hub-table td:nth-child(2) { margin-bottom: 10px; font-size: 14px; color: #4a5f62; }
-  .tpl-hub .hub-table td:nth-child(3) { margin-bottom: 10px; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 22px; font-weight: 600; line-height: 1.2; }
-  .tpl-hub .hub-table td:nth-child(3) .rb-status { font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; }
-  .tpl-hub .hub-table td:nth-child(4) { font-size: 15px; }
-  .tpl-hub .hub-table tbody tr:hover td { background: none; }
-}
-.tpl-hub .hub-table .rb-status { padding: 3px 10px; font-size: 13px; line-height: 1.3; border-radius: 99px; }
-.tpl-hub .hub-block a, .tpl-hub .hub-answer a { color: var(--teal); text-underline-offset: 3px; }
-
 /* ===== template design: ranking (ranking.css) ===== */
 /* Installer ranking template design (body.tpl-ranking): /installers/<region>/<city>/<service>/.
    A bold hero, a stat strip that reads at a glance, roomy ranking cards with the rating up front, and readable prose. */
@@ -656,4 +576,84 @@ body.tpl-ranking { --gut: clamp(20px, 3.2vw, 56px); }
 .tpl-ranking .rank { opacity: 1; transform: none; }
 .tpl-ranking .rank:hover { transform: translateY(-2px); }
 @media (prefers-reduced-motion: reduce) { .tpl-ranking .rank:hover { transform: none; } }
+
+/* ===== template design: hub (hub.css) ===== */
+/* Region hub design (body.tpl-hub): /ca/bc/, /ca/on/, /us/ma/ and the other province and state hubs.
+   The hubs keep their own legacy CSS for the older sections further down; this file sets the top of the page
+   (hero, stats, short answer and table, what changed, federal note, program links) on one container edge. */
+body.tpl-hub { --gut: clamp(20px, 3.2vw, 56px); --hub-w: min(var(--container), 100% - 2 * var(--gut)); }
+
+/* ---------- hero ---------- */
+.tpl-hub header.hub-hero { position: relative; overflow: hidden; padding: clamp(44px, 6vw, 96px) 0 clamp(88px, 8vw, 128px) !important; text-align: left !important; color: #fff;
+  background: radial-gradient(120% 140% at 100% 0%, rgba(232, 138, 46, .24) 0%, rgba(232, 138, 46, 0) 46%), radial-gradient(90% 120% at 0% 100%, rgba(107, 142, 127, .3) 0%, rgba(107, 142, 127, 0) 55%), var(--teal-deep) !important; }
+.tpl-hub header.hub-hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px); background-size: 48px 48px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 35%, #000 100%); mask-image: linear-gradient(90deg, transparent 35%, #000 100%); }
+.tpl-hub header.hub-hero > .wrap { position: relative; z-index: 1; width: var(--hub-w); max-width: none !important; margin: 0 auto !important; padding: 0 !important; text-align: left !important; }
+.tpl-hub header.hub-hero .eyebrow { margin: 0 0 18px !important; font-size: 13px !important; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #f5b566 !important; }
+.tpl-hub header.hub-hero h1 { max-width: 18ch; margin: 0 0 20px !important; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(38px, 5.4vw, 76px) !important; font-weight: 600 !important; line-height: 1.02 !important; letter-spacing: -.025em; color: #fff !important; text-wrap: balance; }
+.tpl-hub header.hub-hero .sub { max-width: 58ch !important; margin: 0 0 28px !important; font-size: clamp(17px, 1.5vw, 21px) !important; line-height: 1.5 !important; color: rgba(250, 247, 242, .88) !important; text-wrap: pretty; }
+.tpl-hub header.hub-hero .cta-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-start !important; }
+.tpl-hub header.hub-hero .cta-row .btn { display: inline-flex; align-items: center; min-height: 52px; padding: 0 26px; border-radius: 999px; font-size: 17px; font-weight: 700; }
+.tpl-hub header.hub-hero .cta-row .btn-secondary { background: rgba(255, 255, 255, .1) !important; color: #fff !important; border: 1px solid rgba(255, 255, 255, .45) !important; }
+.tpl-hub header.hub-hero .cta-row .btn-secondary:hover { background: rgba(255, 255, 255, .2) !important; }
+
+/* ---------- stats strip ---------- */
+.tpl-hub .hs-wrap:has(> .hs-stats) { width: var(--hub-w); max-width: none; margin: calc(-1 * clamp(60px, 5.4vw, 80px)) auto 0; padding: 0; position: relative; z-index: 2; }
+.tpl-hub .hs-stats { gap: clamp(10px, 1.2vw, 16px); }
+.tpl-hub .hs-stat { padding: clamp(16px, 1.8vw, 24px) clamp(16px, 1.8vw, 26px) !important; border: 0 !important; border-radius: 18px !important; text-align: left !important; background: #fff; box-shadow: 0 1px 2px rgba(10, 42, 46, .06), 0 18px 40px -18px rgba(10, 42, 46, .35) !important; }
+.tpl-hub .hs-stat b { display: block; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(26px, 2.6vw, 40px) !important; font-weight: 600 !important; line-height: 1.05; letter-spacing: -.02em; color: var(--teal-deep) !important; }
+.tpl-hub .hs-stat b small { display: block; margin-top: 4px; font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 14px !important; font-weight: 600; letter-spacing: 0; }
+.tpl-hub .hs-stat span { display: block; margin-top: 6px; font-size: 13px !important; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: #4a5f62 !important; }
+
+/* ---------- top blocks on one edge ---------- */
+.tpl-hub main > :is(.hub-block, section[style], p[style]) { width: var(--hub-w); max-width: none !important; margin-left: auto !important; margin-right: auto !important; padding-left: 0 !important; padding-right: 0 !important; box-sizing: border-box; }
+.tpl-hub .hub-top { margin-top: clamp(32px, 4vw, 56px); }
+.tpl-hub .hub-answer { padding: clamp(20px, 2.2vw, 30px) clamp(20px, 2.4vw, 34px); border: 1px solid #d5e4da; border-left: 5px solid var(--green-money); border-radius: 18px; background: #f1f7f3; }
+.tpl-hub .hub-answer p { max-width: 80ch; margin: 0; font-size: clamp(17px, 1.3vw, 19px); line-height: 1.6; color: var(--ink); }
+.tpl-hub .hub-answer p.hub-verified { margin-top: 12px; font-size: 14px; line-height: 1.5; color: #4a5f62; }
+.tpl-hub .hub-block h2 { position: relative; margin: 56px 0 20px; padding-top: 22px; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(27px, 2.5vw, 36px); font-weight: 600; line-height: 1.12; letter-spacing: -.018em; color: var(--teal-deep); }
+.tpl-hub .hub-block h2::before { content: ""; position: absolute; top: 0; left: 0; width: 44px; height: 4px; border-radius: 4px; background: #e88a2e; }
+.tpl-hub .hub-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid #e3dacb; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(10, 42, 46, .04), 0 8px 24px -14px rgba(10, 42, 46, .16); }
+.tpl-hub .hub-table { width: 100%; min-width: 680px; border-collapse: collapse; font-size: 16px; line-height: 1.5; }
+.tpl-hub .hub-table th { padding: 14px 18px; background: #f3ede2; text-align: left; font-size: 13px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--teal-deep); }
+.tpl-hub .hub-table td { padding: 16px 18px; border-top: 1px solid #eee5d6; vertical-align: top; color: var(--ink-soft); }
+.tpl-hub .hub-table td:first-child { color: var(--ink); }
+.tpl-hub .hub-table td:nth-child(3) { font-weight: 700; color: var(--green-money); }
+.tpl-hub .hub-table tbody tr:hover td { background: #fbf8f2; }
+.tpl-hub .hub-table .rb-status { margin: 4px 0 0; }
+.tpl-hub .hub-table td:nth-child(3) .rb-status { display: table; margin-top: 6px; }
+.tpl-hub .hub-changes { margin-top: 40px; }
+.tpl-hub .hub-card { padding: clamp(20px, 2.2vw, 30px) clamp(20px, 2.4vw, 34px); border: 1px solid #e3dacb; border-radius: 18px; background: #fff; }
+.tpl-hub .hub-card h2 { margin: 0 0 6px; padding-top: 0; font-size: clamp(22px, 2vw, 28px); }
+.tpl-hub .hub-card h2::before { display: none; }
+.tpl-hub .hub-card .hub-checked { margin: 0 0 14px; font-size: 14px; color: #4a5f62; }
+.tpl-hub .hub-card ul { display: grid; gap: 12px; margin: 0; padding-left: 20px; font-size: 16px; line-height: 1.6; color: var(--ink-soft); }
+@media (min-width: 1000px) { .tpl-hub .hub-card ul { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; } }
+.tpl-hub .hub-card li::marker { color: #e88a2e; }
+.tpl-hub main > section[style*="border-left:4px solid #d4751c"] { margin-top: 24px !important; padding: 20px 26px !important; border-radius: 18px !important; font-size: 16px !important; }
+.tpl-hub main > p[style] { margin-top: 20px !important; font-size: 16px; }
+
+@media (max-width: 600px) {
+  .tpl-hub header.hub-hero { padding: 36px 0 80px !important; }
+  .tpl-hub header.hub-hero h1 { font-size: clamp(34px, 9.4vw, 44px) !important; }
+  .tpl-hub header.hub-hero .cta-row .btn { flex: 1 1 auto; justify-content: center; }
+  .tpl-hub .hs-wrap:has(> .hs-stats) { margin-top: -60px; }
+}
+/* phones: each program is a card (the table always has the same four columns) */
+@media (max-width: 640px) {
+  .tpl-hub .hub-table-wrap { overflow: visible; border: 0; background: none; box-shadow: none; }
+  .tpl-hub .hub-table, .tpl-hub .hub-table tbody, .tpl-hub .hub-table tr, .tpl-hub .hub-table td { display: block; width: auto; min-width: 0; }
+  .tpl-hub .hub-table thead { display: none; }
+  .tpl-hub .hub-table tr { margin: 0 0 12px; padding: 16px 18px; border: 1px solid #e3dacb; border-radius: 16px; background: #fff; }
+  .tpl-hub .hub-table td { padding: 0; border: 0; font-size: 16px; }
+  .tpl-hub .hub-table td:first-child { margin-bottom: 4px; font-size: 18px; }
+  .tpl-hub .hub-table td:nth-child(2) { margin-bottom: 10px; font-size: 14px; color: #4a5f62; }
+  .tpl-hub .hub-table td:nth-child(3) { margin-bottom: 10px; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 22px; font-weight: 600; line-height: 1.2; }
+  .tpl-hub .hub-table td:nth-child(3) .rb-status { font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; }
+  .tpl-hub .hub-table td:nth-child(4) { font-size: 15px; }
+  .tpl-hub .hub-table tbody tr:hover td { background: none; }
+}
+.tpl-hub .hub-table .rb-status { padding: 3px 10px; font-size: 13px; line-height: 1.3; border-radius: 99px; }
+.tpl-hub .hub-block a, .tpl-hub .hub-answer a { color: var(--teal); text-underline-offset: 3px; }
 

@@ -102,145 +102,9 @@
 }
 </script>
 
-<style>
-:root {
-  --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
-  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
-  --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 72px; }
-body { font-family: 'Inter Tight', 'Inter Tight Fallback', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
-.toc { max-width: 920px; margin: 0 auto; padding: 14px 28px; display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; border-bottom: 1px solid var(--rule); font-size: 13px; }
-.toc-lbl { font-weight: 700; color: var(--ink); margin-right: 2px; }
-.toc a { color: var(--teal); text-decoration: none; padding: 4px 11px; border: 1px solid var(--rule); border-radius: 999px; white-space: nowrap; }
-.toc a:hover { background: var(--paper-warm); border-color: var(--amber); color: var(--amber); }
-.wrap { max-width: 920px; margin: 0 auto; padding: 0 28px; }
-h1 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: clamp(32px, 5vw, 48px); line-height: 1.1; letter-spacing: -0.02em; color: var(--teal-deep); margin: 32px 0 16px; }
-h2 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 28px; color: var(--teal-deep); margin: 32px 0 16px; line-height: 1.2; }
-h3 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 20px; color: var(--teal-deep); margin: 24px 0 12px; font-weight: 600; }
-p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1.8; }
-.lead { font-size: 17px; }
-.snippet-answer { font-size: 17px; line-height: 1.6; background: var(--paper-warm); border-left: 4px solid var(--amber); border-radius: 8px; padding: 16px 20px; margin: 4px 0 18px; }
-.snippet-answer strong { font-weight: 600; color: var(--ink); }
-.hero { padding: 48px 28px; background: var(--teal-deep); color: var(--paper); text-align: center; }
-.hero h1 { color: #fff; margin-top: 0; }
-.hero p { color: rgba(250,247,242,.85); font-size: 16px; }
-.hero .subnote { font-size: 13px; color: rgba(250,247,242,.6); margin-top: 8px; }
-.section { padding: 40px 28px; }
-.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
-.rebate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0; max-width: 1180px; }
-.rebate-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 20px; }
-.rebate-card h4 { font-size: 16px; font-weight: 700; color: var(--teal-deep); margin-bottom: 8px; }
-.rebate-card .amount { font-size: 22px; font-weight: 700; color: var(--amber); margin: 8px 0; }
-.rebate-card p { font-size: 13px; color: var(--ink-soft); }
-.program { background: transparent; padding: 22px 0; margin: 24px 0; border-top: 1px solid var(--rule); padding-top: 28px; }
-.program-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.program-head h4 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 18px; color: var(--teal-deep); font-weight: 600; }
-.program-amount { font-weight: 700; color: var(--amber); font-size: 16px; white-space: nowrap; }
-.program p { font-size: 14px; margin: 10px 0 0; }
-.program .how { font-size: 13px; color: var(--ink); background: var(--paper-warm); border-radius: 8px; padding: 10px 14px; margin-top: 12px; }
-.program .how strong { color: var(--teal-deep); }
-.program a { color: var(--teal); font-weight: 600; }
-.tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; margin-bottom: 10px; }
-.tag-prov { background: #e3efe9; color: var(--green-money); }
-.tag-util { background: #e6eef0; color: var(--teal); }
-.tag-city { background: #eee3f3; color: #6b3fa0; }
-.highlight-box { background: var(--paper-warm); border-left: 4px solid var(--amber); padding: 20px 24px; border-radius: 8px; margin: 24px 0; }
-.highlight-box h4 { font-size: 15px; font-weight: 700; color: var(--teal-deep); margin-bottom: 8px; }
-.highlight-box p { margin: 6px 0; font-size: 14px; }
-.local-context { background: var(--paper-warm); border-radius: 8px; padding: 20px; margin: 0; border: none; }
-.local-context h4 { font-size: 15px; font-weight: 700; color: var(--teal-deep); margin-bottom: 6px; }
-.local-context p { margin: 4px 0; font-size: 14px; }
-.cta-box { background: var(--teal-deep); color: #fff; border-radius: 12px; padding: 32px; margin: 32px 0; text-align: center; }
-.cta-box h2 { color: #fff; }
-.cta-box p { color: rgba(250,247,242,.85); margin-bottom: 20px; }
-.btn-primary { display: inline-block; background: var(--amber); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; }
-.btn-primary:hover { background: var(--amber-bright); }
-@media (max-width: 768px) {
-  .wrap { padding: 0 16px; }
-  .rebate-grid { grid-template-columns: 1fr; }
-  h1 { font-size: 28px; }
-}
-
-/* ===== Canonical sitewide nav/footer CSS (from _partials/nav-footer.html) ===== */
-.nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
-.nav-inner { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
-.logo { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-.logo-mark { width: 30px; height: 30px; background: var(--amber); border-radius: 50%; position: relative; box-shadow: 0 2px 8px rgba(212, 117, 28, 0.3); }
-.logo-mark::after { content: ''; position: absolute; inset: 8px; background: var(--paper); border-radius: 50%; }
-.logo-power { color: var(--amber); font-weight: 700; }
-.nav-pick { display: flex; align-items: center; gap: 8px; background: var(--teal-deep); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; transition: all 0.2s; border: none; cursor: pointer; }
-.nav-pick:hover { background: var(--amber); transform: translateY(-1px); }
-.nav-desktop-only { display: flex !important; }
-.nav-mobile-only { display: none !important; }
-@media (max-width: 768px) {
-  .nav-desktop-only { display: none !important; }
-  .nav-mobile-only { display: flex !important; flex-wrap: wrap; }
-  .nav-inner { padding: 14px 20px; flex-wrap: wrap; row-gap: 8px; gap: 8px; }
-  .logo { font-size: 16px !important; }
-  .logo-mark { width: 22px !important; height: 22px !important; }
-  .nav-mobile-only a { font-size: 13px !important; }
-  .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
-}
-@media (max-width: 400px) {
-  .nav-inner { justify-content: center !important; }
-  .logo { flex: 1 0 100%; justify-content: center; }
-  .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
-}
-@media (max-width: 640px) {
-  .nav-inner { flex-wrap: nowrap; gap: 6px; padding: 12px 14px; }
-  .logo { font-size: 15px !important; }
-  .logo-mark { width: 22px !important; height: 22px !important; }
-  .nav-mobile-only a { font-size: 12px !important; }
-  .nav-pick { font-size: 12px !important; padding: 7px 10px !important; white-space: nowrap; }
-}
-
-.footer { background: var(--ink); color: rgba(250, 247, 242, 0.65); padding: 56px 28px 32px; }
-.footer-inner { max-width: 1180px; margin: 0 auto; }
-.footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 32px; border-bottom: 1px solid rgba(250, 247, 242, 0.1); }
-.footer-brand { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 500; font-size: 22px; color: var(--paper); letter-spacing: -0.02em; margin-bottom: 12px; }
-.footer-tagline { font-size: 13px; color: rgba(250, 247, 242, 0.4); max-width: 320px; }
-.footer-col-title { font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250, 247, 242, 0.7); margin-bottom: 14px; }
-.footer-col-links { list-style: none; display: grid; gap: 8px; font-size: 14px; margin: 0; padding: 0; }
-.footer-col-links a { color: rgba(250, 247, 242, 0.45); text-decoration: none; }
-.footer-col-links a:hover { color: var(--amber); }
-.footer-bottom { padding-top: 24px; font-size: 12px; color: rgba(250, 247, 242, 0.35); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-@media (max-width: 880px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; } }
-@media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
-#city-dropdown-modal a.city-current { background: var(--amber); color: #fff; font-weight: 700; border-radius: 6px; }
-.program-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 8px; }
-.status-open { background: #eaf3ee; color: var(--green-money, #2d6a4f); }
-.status-limited { background: #fdf3e7; color: var(--amber, #d4751c); }
-.status-closed { background: #fdf2f0; color: var(--red-flag, #b04545); }
-
-/* Rebate Finder */
-.finder-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
-.finder-filter-btn { background: #fff; border: 1.5px solid var(--rule); color: var(--ink-soft); font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
-.finder-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
-.finder-filter-btn.active { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
-.finder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
-.finder-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
-.finder-card .finder-cat { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
-.finder-card h4 { font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-.finder-card .finder-amount { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 21px; font-weight: 700; color: var(--green-money); margin-bottom: 8px; }
-.finder-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
-.finder-card .finder-source { font-size: 11px; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
-.finder-card.hidden { display: none; }
-</style>
-<link rel="stylesheet" href="/assets/site.css?v=0422ea7911" data-hpr-site-css>
-<style>
-/* CANONICAL-BREADCRUMB-CSS-START */
-.hpr-breadcrumb { max-width: 1180px; margin: 0 auto; padding: 14px 28px; font-size: 13px; color: var(--ink-soft); }
-.hpr-breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0; margin: 0; padding: 0; }
-.hpr-breadcrumb li { display: flex; align-items: center; }
-.hpr-breadcrumb li:not(:last-child)::after { content: '/'; margin: 0 8px; color: var(--rule); }
-.hpr-breadcrumb a { color: var(--ink-soft); text-decoration: none; }
-.hpr-breadcrumb a:hover { color: var(--teal-deep); text-decoration: underline; }
-.hpr-breadcrumb li[aria-current="page"] { color: var(--ink); font-weight: 600; }
-@media (max-width: 600px) { .hpr-breadcrumb { padding: 10px 20px; font-size: 12px; } }
-/* CANONICAL-BREADCRUMB-CSS-END */
-</style>
+<link rel="stylesheet" href="/assets/tpl/page-e68940a2.css?v=2fbd20ff48" data-hpr-tpl>
+<link rel="stylesheet" href="/assets/site.css?v=5d0010cb74" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/tpl/common-5a0da5c2.css?v=c1f1fcfc0d" data-hpr-tpl>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -249,7 +113,7 @@ p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Whitby Home Energy Rebates 2026 | HomePowerRebate", "url": "https://homepowerrebate.com/ca/on/whitby/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
 <!-- AEO-SPEAKABLE-END -->
 </head>
-<body>
+<body class="tpl-page">
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- ============================== NAV (canonical, from _partials/nav-footer.html) ============================== -->
@@ -759,16 +623,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
     </div>
   </div>
   <div class="unified-carousel-dots" style="display: flex; gap: 6px; align-items: center; justify-content: center; margin-top: 28px;"></div>
-  <style>
-    @media (max-width: 768px) {
-      .unified-carousel-prev, .unified-carousel-next { display: none !important; }
-      .unified-carousel-mobile-nav { display: flex !important; }
-    }
-    @media (max-width: 768px) {
-      .unified-carousel-section { padding: 40px 16px !important; margin: 40px 0 !important; }
-      .unified-carousel-container { padding: 24px 16px !important; min-height: 380px !important; }
-    }
-  </style>
+  <link rel="stylesheet" href="/assets/tpl/common-1c4fdac1.css?v=e5e6e1610f" data-hpr-tpl>
 </section>
 <!-- RANKINGS-LINK-START -->
 <section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in Whitby</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/on/whitby/heat-pump/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated heat pump installers in Whitby &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">12 local companies ranked by 5,668 Google reviews. Top picks: Propel Heating and Cooling, Lazzaro Gas HVAC, Sharpe Advantage Heating And Air Conditioning.</span></a><a href="/installers/on/whitby/battery/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated home battery installers in Whitby &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">10 local companies ranked by 714 Google reviews. Top picks: Wilson Electric Installations Inc, North Electrik Inc | 24/7 Whitby Electrician, GT electrical Inc.</span></a></div></section>

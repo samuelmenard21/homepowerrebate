@@ -98,7 +98,7 @@ def build():
 <div class="sv-give"><h2 style="margin-top:0">What you get for taking part</h2><ul>
 <li><b>A "Survey contributor" mark</b> next to your company on our top-rated rankings. It shows you share real information with homeowners. It never changes your rank.</li>
 <li><b>Credit in the 2026 Installer Report</b>, with your company name and a link to your website, if we quote your answer. You choose below.</li>
-<li><b>Your free top-rated badge</b>, if you're ranked. <a href="/installers/badge/">Get it here</a>.</li>
+<li><b>Your top-rated badge</b>, if you're ranked. <a href="/installers/badge/">Get it here</a>.</li>
 </ul><p class="small">We only publish totals and ranges by region. Your prices are never shown next to your name.</p></div>
 
 <form id="sv" class="qf" novalidate>

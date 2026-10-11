@@ -211,7 +211,7 @@ def picker(specs):
     body = f"""<header class="hero"><div class="wrap"><h1>Home Rebate Calculators</h1><p>Pick your province or state, answer a few questions and see the rebates you can claim, with the official source for every amount. Free for homeowners, and we show top-rated installers in your city.</p></div></header>
 <section class="body"><div class="wrap rc-wrap"><h2>Canada</h2><ul>{ca}</ul><h2>United States</h2><ul>{us}</ul>{coming}
 <h2>How these calculators work</h2><p>Each amount comes from the program's own page, and every result shows the date we last checked it. We only add up programs that are open today. Programs on a waitlist, paused or closed are shown but never counted. Nobody pays to be included.</p>
-<h2>Are you an installer?</h2><p>Add a free rebate calculator to your website. It links back to us and nothing else changes. <a href="/calculator/widget/">See how</a>.</p></div></section>"""
+<h2>Are you an installer?</h2><p>Add our rebate calculator to your website. It links back to us and nothing else changes. <a href="/calculator/widget/">See how</a>.</p></div></section>"""
     return shell("Home Rebate Calculators: Heat Pump, Solar and Battery | HomePowerRebate",
                  "Free home rebate calculators for 10 provinces and states. Choose yours to see the rebates you can claim, with an official source for every amount.",
                  "/calculator/", "bc", body, [])
@@ -224,18 +224,18 @@ def widget_page(specs):
                f'style="max-width:820px;border:1px solid #d9d0c1;border-radius:12px;" loading="lazy"></iframe>\n'
                f'<p><a href="https://homepowerrebate.com/calculator/{code}/">Rebate calculator by HomePowerRebate</a></p>')
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/calculator/">Calculators</a></li><li aria-current="page">Installer widget</li></ol></nav>
-<header class="hero"><div class="wrap"><h1>Free Rebate Calculator for Your Website</h1><p>Let your customers check which rebates they qualify for, without leaving your site.</p></div></header>
+<header class="hero"><div class="wrap"><h1>A Rebate Calculator for Your Website</h1><p>Let your customers check which rebates they qualify for, without leaving your site.</p></div></header>
 <section class="body"><div class="wrap rc-wrap"><h2>Copy and paste</h2>
 <pre style="background:#0a2a2e;color:#fff;padding:14px;border-radius:8px;overflow-x:auto;white-space:pre-wrap;">{e(snippet)}</pre>
 <p>Change <code>{code}</code> in both places to your region's code: {names}.</p>
 <h2>What you get</h2><ul><li>A working calculator for your province or state. It shows top-rated installers in the visitor's city, ranked by Google reviews.</li>
 <li>Rebate amounts that update on their own when a program changes. You never edit them.</li>
-<li>No script to install, no tracking, no cookies, no ads, and no fee.</li></ul>
+<li>No script to install, no tracking, no cookies and no ads.</li></ul>
 <h2>What we ask</h2><p>Leave the "Rebate calculator by HomePowerRebate" link under the frame. It is a normal link. Listing here never changes where your company ranks: installers are ranked by Google reviews only.</p>
 <h2>Preview</h2><iframe src="/calculator/embed/{code}/" title="Rebate calculator preview" width="100%" height="760" style="max-width:820px;border:1px solid #d9d0c1;border-radius:12px;" loading="lazy"></iframe>
 </div></section>"""
-    return shell("Free Rebate Calculator Widget for Installers | HomePowerRebate",
-                 "Add a free home rebate calculator to your installer website. Amounts update automatically and it links back to HomePowerRebate.",
+    return shell("Rebate Calculator Widget for Installers | HomePowerRebate",
+                 "Add a home rebate calculator to your installer website. Amounts update automatically and it links back to HomePowerRebate.",
                  "/calculator/widget/", "bc", body, [])
 
 

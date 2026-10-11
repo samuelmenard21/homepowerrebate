@@ -392,6 +392,15 @@ body:has(nav.hpr-breadcrumb) div.breadcrumb, nav.hpr-breadcrumb + div[style]:has
 .rb-active { background: #e3f1e8; color: #1f5a3d; }
 .rb-upcoming, .rb-waitlist { background: #fdeccf; color: #8a4a06; }
 .rb-paused, .rb-closed { background: #f3dcdc; color: #8a2b2b; }
+/* breadcrumb base (some pages never had the breadcrumb CSS block) */
+.hpr-breadcrumb { margin: 0 auto; padding: 14px 28px; font-size: 13px; color: var(--ink-soft); }
+.hpr-breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0; margin: 0; padding: 0; }
+.hpr-breadcrumb li { display: flex; align-items: center; margin: 0; }
+.hpr-breadcrumb li:not(:last-child)::after { content: '/'; margin: 0 8px; color: var(--rule); }
+.hpr-breadcrumb a { color: var(--ink-soft); text-decoration: none; }
+.hpr-breadcrumb a:hover { color: var(--teal-deep); text-decoration: underline; }
+.hpr-breadcrumb li[aria-current="page"] { color: var(--ink); font-weight: 600; }
+@media (max-width: 600px) { .hpr-breadcrumb { padding: 10px 20px; } }
 /* skip link: first tab stop, visible on focus */
 .skip-link { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--teal-deep, #08363f); color: #fff; padding: 12px 18px; border-radius: 0 0 10px 10px; font-weight: 700; text-decoration: none; transition: top .15s; }
 .skip-link:focus { top: 0; }

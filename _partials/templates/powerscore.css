@@ -1,0 +1,49 @@
+/* PowerScore design (body.tpl-powerscore): /powerscore/ and the city comparison pages.
+   Bold left-aligned hero with stat cards, a prominent city picker, readable podium rings and region cards. */
+body.tpl-powerscore { --gut: clamp(20px, 3.2vw, 56px); }
+.tpl-powerscore main .wrap { max-width: var(--container); padding-left: var(--gut); padding-right: var(--gut); }
+
+/* ---------- hero ---------- */
+.tpl-powerscore header.hero { position: relative; overflow: hidden; padding: clamp(44px, 6vw, 96px) 0 clamp(40px, 4.4vw, 64px); text-align: left;
+  background: radial-gradient(120% 140% at 100% 0%, rgba(232, 138, 46, .24) 0%, rgba(232, 138, 46, 0) 46%), radial-gradient(90% 120% at 0% 100%, rgba(107, 142, 127, .3) 0%, rgba(107, 142, 127, 0) 55%), var(--teal-deep); }
+.tpl-powerscore header.hero::after { content: ""; position: absolute; right: -120px; top: 40px; width: 460px; height: 460px; border-radius: 50%; border: 76px solid rgba(232, 138, 46, .12); pointer-events: none; }
+.tpl-powerscore header.hero > .wrap { position: relative; z-index: 1; }
+.tpl-powerscore .hero .eyebrow { margin: 0 0 18px; font-size: 13px; letter-spacing: .1em; color: #f5b566; }
+.tpl-powerscore .hero h1 { max-width: 16ch; margin: 0 0 20px; font-size: clamp(38px, 5.6vw, 80px); font-weight: 600; line-height: 1.02; letter-spacing: -.025em; text-wrap: balance; }
+.tpl-powerscore .hero p.lead, .tpl-powerscore .hero > .wrap > p { max-width: 58ch; margin: 0; font-size: clamp(17px, 1.5vw, 21px); line-height: 1.5; color: rgba(250, 247, 242, .88); text-wrap: pretty; }
+.tpl-powerscore .hero-stats { display: grid; margin-top: clamp(28px, 3.4vw, 48px) !important; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(10px, 1.2vw, 16px); margin: 0; }
+.tpl-powerscore .hero-stat { padding: clamp(16px, 1.8vw, 24px) clamp(16px, 1.8vw, 26px); border-radius: 18px; background: #fff; text-align: left; box-shadow: 0 1px 2px rgba(10, 42, 46, .06), 0 18px 40px -18px rgba(10, 42, 46, .35); }
+.tpl-powerscore .hero-stat .num { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(26px, 2.6vw, 40px); font-weight: 600; line-height: 1.05; letter-spacing: -.02em; color: var(--teal-deep); }
+.tpl-powerscore .hero-stat .lbl { margin-top: 6px; font-size: 13px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: #4a5f62; }
+
+/* ---------- picker ---------- */
+.tpl-powerscore .picker-section { padding-top: 8px; }
+.tpl-powerscore .picker-card { padding: clamp(22px, 2.6vw, 36px); border: 1px solid #cfdcd9; border-radius: 22px; background: #fff; box-shadow: 0 1px 2px rgba(10, 42, 46, .05), 0 24px 48px -24px rgba(10, 42, 46, .3); }
+.tpl-powerscore .picker-card h2 { font-size: clamp(24px, 2.2vw, 32px); font-weight: 600; margin-bottom: 16px; }
+.tpl-powerscore .picker-row select { min-height: 56px; font-size: 17px; border-radius: 14px; }
+.tpl-powerscore .picker-row button { min-height: 56px; padding: 0 28px; border-radius: 999px; font-size: 17px; font-weight: 700; }
+
+/* ---------- headings and type ---------- */
+.tpl-powerscore main h2.section-title { position: relative; padding-top: 22px; font-size: clamp(28px, 2.6vw, 38px); font-weight: 600; line-height: 1.1; letter-spacing: -.018em; color: var(--teal-deep); }
+.tpl-powerscore main h2.section-title::before { content: ""; position: absolute; top: 0; left: 0; width: 44px; height: 4px; border-radius: 4px; background: #e88a2e; }
+.tpl-powerscore main h2.section-title[style*="inline"] { display: inline-block !important; }
+.tpl-powerscore main .section-sub, .tpl-powerscore main section p { font-size: 17px; line-height: 1.65; }
+.tpl-powerscore main li { font-size: 16px; line-height: 1.6; }
+
+/* ---------- podium rings and region cards ---------- */
+.tpl-powerscore .ring { width: 136px; height: 136px; }
+.tpl-powerscore .ring b { font-size: 40px; }
+.tpl-powerscore .ring small { margin-top: 4px; font-size: 13px !important; text-transform: none; letter-spacing: 0; color: #4a5f62 !important; }
+.tpl-powerscore .rg-card { border-radius: 16px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+.tpl-powerscore .rg-card:hover { transform: translateY(-2px); box-shadow: 0 16px 32px -18px rgba(10, 42, 46, .3); }
+
+@media (max-width: 760px) {
+  .tpl-powerscore .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tpl-powerscore .hero h1 { font-size: clamp(34px, 9.4vw, 44px); }
+  .tpl-powerscore .picker-section { padding-top: 28px; }
+}
+.tpl-powerscore .picker-section { padding-left: 0 !important; padding-right: 0 !important; }
+.tpl-powerscore .picker-card { margin-left: 0; margin-right: 0; max-width: none; }
+/* ring label: "/ 100" fits inside the ring at every size (the word stays for screen readers) */
+.tpl-powerscore .ring small { font-size: 0 !important; line-height: 0; }
+.tpl-powerscore .ring small::after { content: "/ 100"; font-size: 14px; line-height: 1.4; font-weight: 600; color: #4a5f62; }

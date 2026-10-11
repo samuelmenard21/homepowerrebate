@@ -32,6 +32,9 @@ into a chat with an assistant):
   python3 scripts/rehost_installer_photos.py             # prompts for the key (input hidden, never saved)
   python3 scripts/rehost_installer_photos.py --limit 20  # test on a small batch first
 """
+import sys as _retired
+_retired.exit("Retired 2026-10-11: Google Places policies forbid storing Places photos. Profiles load them at view time "
+              "through photo-worker/ (see scripts/add_profile_photos.py).")
 import argparse
 import getpass
 import html

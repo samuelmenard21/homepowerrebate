@@ -3,6 +3,9 @@
 Fetch installer images from Google Places API and update JSON files.
 Usage: python3 fetch_installer_images.py YOUR_API_KEY
 """
+import sys as _retired
+_retired.exit("Retired 2026-10-11: Google Places policies forbid storing Places photos. Profiles load them at view time "
+              "through photo-worker/ (see scripts/add_profile_photos.py).")
 
 import json
 import requests

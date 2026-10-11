@@ -727,7 +727,7 @@ h1, h2 { text-wrap: balance; }
 </form>
 </section>
 <script>
-(function(){const I=[{"name": "Solar Shades window tinting", "email": "solarshades1@gmail.com", "phone": "(248) 956-1551"}, {"name": "Streamline Electric, Inc.", "email": "", "phone": "(877) 830-2377"}, {"name": "Strawberry Solar", "email": "sales@strawberrysolar.com", "phone": "(313) 960-7900"}],f=document.getElementById('qf-form'),m=document.getElementById('qf-msg');
+(function(){const I=[{"name": "Solar Shades window tinting", "email": "", "phone": "(248) 956-1551"}, {"name": "Streamline Electric, Inc.", "email": "", "phone": "(877) 830-2377"}, {"name": "Strawberry Solar", "email": "sales@strawberrysolar.com", "phone": "(313) 960-7900"}],f=document.getElementById('qf-form'),m=document.getElementById('qf-msg');
 f.addEventListener('change',e=>{if(e.target.name==='pick'&&f.querySelectorAll('input[name=pick]:checked').length>3)e.target.checked=false;});
 f.addEventListener('submit',async e=>{e.preventDefault();const d=new FormData(f),picks=d.getAll('pick').map(i=>I[+i]),ups=d.getAll('upgrade');
 if(!picks.length){m.textContent='Pick at least one company.';return;}

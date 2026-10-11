@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Generate /powerscore/index.html from powerscore-data.json.
 
-Reads the computed PowerScore data (see scripts/build_powerscore.py) and
-renders a static, data-driven leaderboard page using the site's existing
-nav/footer partial, palette, and typography.
+Reads the computed PowerScore data (see scripts/build_powerscore.py) and renders the page:
+hero with the region gap and a city search (shareable ?city= scorecard), key findings, a strip
+chart of every region and city, a region x upgrade heatmap, best places per upgrade (ties grouped),
+the full sortable ranking with per-city breakdowns, method, reliability notes and a press box.
+The shared nav and footer are restamped afterwards by apply_canonical_nav_footer.py.
 """
 import html
 import re
@@ -169,7 +171,7 @@ def render_reliability():
 reliability_rows_html = render_reliability()
 unverified = ", ".join(st["label"] for st in REGION_STATS.values() if not st["verified"]) or "none"
 
-# ---------- Overall leaderboard rows ----------
+# ---------- shared helpers ----------
 def comp_ranks():
     """Competition ranking: cities with the same score share a rank (T-6), instead of an arbitrary order."""
     scores = [round(r["overall"], 1) for r in rows]
@@ -180,109 +182,219 @@ def comp_ranks():
     return out
 
 
-def render_overall_rows():
-    out = []
-    ranks = comp_ranks()
-    for i, r in enumerate(rows):
-        rank, tied = ranks[i]
-        cells = "".join(
-            f'<span class="cc {score_band(r["categories"][c]["score"])}" title="{esc(CAT_LABELS[c])}: {r["categories"][c]["score"]:.0f}/100">'
-            f'<i>{CAT_EMOJI[c]}</i><b>{r["categories"][c]["score"]:.0f}</b><small>{esc(CAT_LABELS[c])}</small></span>'
-            for c in CATEGORIES
-        )
-        data_cat = " ".join(f'data-c-{c}="{r["categories"][c]["score"]:.1f}"' for c in CATEGORIES)
-        data_cat += f' data-c-potential="{r.get("potential_usd", 0)}"'
-        ov = r["overall"]
-        out.append(f'''<tr id="city-{esc(r["region"]).replace("/", "-")}-{esc(r["slug"]).replace("/", "-")}" data-slug="{esc(r["region"])}/{esc(r["slug"])}" data-overall="{ov}" data-region="{esc(r["region"])}" data-name="{esc(r["label"]).lower()}" data-order="{i}" {data_cat}>
-  <td class="rank-cell">{"T-" if tied else "#"}{rank}</td>
-  <td class="city-cell"><a href="{esc(r["url"])}">{esc(r["label"])}</a><span class="region-tag">{esc(r["region_label"])}</span>{conf_tag(r["region"])}</td>
-  <td class="overall-cell"><span class="overall-badge {score_band(ov)}">{ov:.0f}</span><span class="meter"><i class="{score_band(ov)}" style="width:{max(2, min(100, ov)):.0f}%"></i></span></td>
-  <td class="pills-cell"><div class="cc-grid">{cells}</div></td>
-  <td class="pot-cell"><b>US${r.get("potential_usd", 0):,.0f}</b><small>{r.get("open_count", 0)} of 8 open</small></td>
-  <td class="energy-cell">{energy_cost_for(r)}</td>
-</tr>''')
-    return "\n".join(out)
+RANKS = comp_ranks()
+SHORT_LABELS = {
+    "heat-pump": "Heat pump", "insulation": "Insulation", "solar": "Solar", "battery": "Battery",
+    "water-heater": "Water heater", "smart-thermostats": "Thermostat", "ev-charger": "EV charger",
+    "windows-doors": "Windows",
+}
 
 
-def render_podium():
-    cards = []
-    ranks = comp_ranks()
-    pool = [r for r in rows if region_verified(r["region"])][:3]
-    for i, r in enumerate(pool):
-        cur = "CA$" if r["country"] == "Canada" else "$"
-        best = sorted(((c, v) for c, v in r["categories"].items() if v.get("dollar_value") or v.get("percent_text")), key=lambda x: -x[1].get("usd_value", 0))[:3]
-        hl = "".join(f'<li>{esc(CAT_LABELS[c])}: ' + (f'up to {cur}{v["dollar_value"]:,.0f}' if v.get("dollar_value") else esc(v["percent_text"])) + '</li>' for c, v in best)
-        cards.append(f'''<a class="pod pod-{i+1}" href="{esc(r["url"])}">
-  <span class="medal m{i+1}">{i+1}</span>
-  <div class="ring" style="{gauge_style(r["overall"])}"><b>{r["overall"]:.0f}</b><small>PowerScore</small></div>
-  <h3>{esc(r["label"])}</h3><p class="rg">{esc(r["region_label"])}</p>
-  <ul class="hl">{hl}</ul>
-  <span class="go">See {esc(r["label"])} rebates &rarr;</span>
-</a>''')
-    return "\n".join(cards)
+def money(amount, country):
+    return f'{"CA$" if country == "Canada" else "US$"}{amount:,.0f}'
 
 
-def render_regions():
+def band_word(score):
+    return "excellent" if score >= 75 else "solid" if score >= 50 else "limited" if score >= 25 else "thin"
+
+
+def by_region():
     by = {}
     for r in rows:
         by.setdefault(r["region"], []).append(r)
-    cards = []
-    for reg, rs in sorted(by.items(), key=lambda kv: -sum(x["overall"] for x in kv[1]) / len(kv[1])):
-        avg = sum(x["overall"] for x in rs) / len(rs)
-        top = max(rs, key=lambda x: x["overall"])
-        cards.append(f'''<button type="button" class="rg-card" data-region="{esc(reg)}"><b>{esc(rs[0]["region_label"])}</b>{conf_tag(reg)}
-  <span class="avg"><em>{avg:.0f}</em> avg score</span>
-  <span class="meter"><i class="{score_band(avg)}" style="width:{max(2, min(100, avg)):.0f}%"></i></span>
-  <small>{len(rs)} cities &middot; best: {esc(top["label"])} ({top["overall"]:.0f})</small></button>''')
-    chips = "".join(f'<button type="button" class="chip" data-region="{esc(reg)}">{esc(rs[0]["region_label"])}</button>' for reg, rs in by.items())
-    return "\n".join(cards), chips
+    return dict(sorted(by.items(), key=lambda kv: -sum(x["overall"] for x in kv[1]) / len(kv[1])))
 
 
-# ---------- Per-category leaderboards ----------
-def render_category_section(cat):
-    cat_rows = DATA["leaderboard_by_category"][cat]
-    items = []
-    for i, r in enumerate(cat_rows[:25], start=1):
-        status_label = {"open": "Open", "limited": "Funding Limited", "closed": "No Rebate / Closed"}[r["status"]]
-        status_class = {"open": "status-pill-open", "limited": "status-pill-limited", "closed": "status-pill-closed"}[r["status"]]
-        dollar = f"${r['dollar_value']:,.0f}" if r["dollar_value"] else (esc(r["percent_text"]) if r.get("percent_text") else "&mdash;")
-        items.append(f'''<tr>
-  <td class="rank-cell">#{i}</td>
-  <td class="city-cell"><a href="{esc(r["url"])}">{esc(r["label"])}</a><span class="region-tag">{esc(r["region_label"])}</span></td>
-  <td><span class="overall-badge small {score_band(r["score"])}">{r["score"]:.0f}</span></td>
-  <td>{dollar}</td>
-  <td><span class="status-pill {status_class}">{status_label}</span></td>
-  <td class="energy-cell">{energy_cost_for(r)}</td>
-</tr>''')
-    return "\n".join(items)
+BY_REGION = by_region()
+REGION_AVG = {reg: sum(x["overall"] for x in rs) / len(rs) for reg, rs in BY_REGION.items()}
+TOP_REG, BOT_REG = next(iter(BY_REGION)), list(BY_REGION)[-1]
+TOP_LABEL, BOT_LABEL = BY_REGION[TOP_REG][0]["region_label"], BY_REGION[BOT_REG][0]["region_label"]
+GAP_RATIO = REGION_AVG[TOP_REG] / max(REGION_AVG[BOT_REG], 1)
+CA_AVG = sum(r["overall"] for r in rows if r["country"] == "Canada") / max(1, sum(1 for r in rows if r["country"] == "Canada"))
+US_AVG = sum(r["overall"] for r in rows if r["country"] != "Canada") / max(1, sum(1 for r in rows if r["country"] != "Canada"))
+# the largest region whose cities all land within a few points of each other
+TIGHT_REG = min((reg for reg, rs in BY_REGION.items() if len(rs) >= 10),
+                key=lambda reg: max(x["overall"] for x in BY_REGION[reg]) - min(x["overall"] for x in BY_REGION[reg]))
+TIGHT = BY_REGION[TIGHT_REG]
 
 
-def render_category_tabs():
-    buttons = []
-    panels = []
-    for i, cat in enumerate(CATEGORIES):
-        active = " active" if i == 0 else ""
-        buttons.append(f'<button type="button" class="cat-tab{active}" data-cat="{cat}" onclick="showCategory(\'{cat}\')">{CAT_EMOJI[cat]} {esc(CAT_LABELS[cat])}</button>')
-        panels.append(f'''<div class="cat-panel{active}" id="panel-{cat}">
-  <h3>Best cities for {esc(CAT_LABELS[cat])} rebates</h3>
-  <div class="table-wrap">
-  <table class="score-table">
-    <thead><tr><th>Rank</th><th>City</th><th>Score</th><th>Top $ Available</th><th>Status</th><th>Est. Energy Cost</th></tr></thead>
-    <tbody>
-{render_category_section(cat)}
-    </tbody>
-  </table>
-  </div>
-</div>''')
-    return "\n".join(buttons), "\n".join(panels)
+def score_bar(score, cls=""):
+    return f'<span class="ps-bar {cls}"><i style="width:{max(2, min(100, score)):.0f}%"></i></span>'
 
 
-# ---------- City picker options ----------
-def render_city_options():
+# ---------- hero gap card ----------
+def render_gap():
+    regs = list(BY_REGION.items())
+    pick = regs[:3] + regs[-3:]
     out = []
-    for r in rows:
-        out.append(f'<option value="{esc(r["region"])}/{esc(r["slug"])}">{esc(r["label"])}, {esc(r["region_label"])}</option>')
+    for i, (reg, rs) in enumerate(pick):
+        avg = REGION_AVG[reg]
+        if i == 3:
+            out.append('<li class="ps-gap-sep" aria-hidden="true"><span></span></li>')
+        out.append(f'<li><span class="ps-gap-name">{esc(rs[0]["region_label"])}</span>'
+                   f'<span class="ps-gap-track"><i class="{"hi" if i < 3 else "lo"}" style="width:{avg:.0f}%"></i></span>'
+                   f'<b>{avg:.0f}</b></li>')
     return "\n".join(out)
+
+
+# ---------- key findings ----------
+def render_findings():
+    tight_lo = min(x["overall"] for x in TIGHT)
+    tight_hi = max(x["overall"] for x in TIGHT)
+    same = round(tight_lo) == round(tight_hi)
+    tight_name = f"{len(TIGHT)} {esc(TIGHT[0]['region_label'])} cities"
+    tight_intro = (f"All {tight_name} get the same score, {tight_lo:.0f}. " if same
+                   else f"All {tight_name} score between {tight_lo:.0f} and {tight_hi:.0f}. ")
+    cards = [
+        ("The gap", f"{GAP_RATIO:.1f}&times;",
+         f"{esc(TOP_LABEL)} cities average a PowerScore of {REGION_AVG[TOP_REG]:.0f}. {esc(BOT_LABEL)} cities average {REGION_AVG[BOT_REG]:.0f}. "
+         "Same upgrades, very different help."),
+        ("Canada vs the US", f"{CA_AVG:.0f} vs {US_AVG:.0f}",
+         "Canadian cities average higher scores than US cities. Big province-wide programs cover every city at once, "
+         "while many US rebates depend on your utility."),
+        ("Province beats postcode", f"{len(TIGHT)} cities, 1 score" if same else f"{tight_hi - tight_lo:.1f} points",
+         tight_intro +
+         f"Across all {total_cities} cities there are only {distinct_scores} different scores. Where you live is mostly about your province or state."),
+    ]
+    return "\n".join(
+        f'<article class="ps-find"><p class="ps-find-k">{k}</p><p class="ps-find-n">{n}</p><p class="ps-find-t">{t}</p></article>'
+        for k, n, t in cards)
+
+
+# ---------- every region, every city (strip chart) ----------
+def render_strip():
+    out = []
+    for reg, rs in BY_REGION.items():
+        avg = REGION_AVG[reg]
+        lo, hi = min(x["overall"] for x in rs), max(x["overall"] for x in rs)
+        best = max(rs, key=lambda x: x["overall"])
+        dots = "".join(f'<i class="ps-dot" style="left:{x["overall"]:.1f}%" title="{esc(x["label"])}: {x["overall"]:.0f}"></i>' for x in rs)
+        flag = "CA" if rs[0]["country"] == "Canada" else "US"
+        out.append(f'''<button type="button" class="ps-strip-row" data-region="{esc(reg)}" aria-label="{esc(rs[0]["region_label"])}: average {avg:.0f}, {len(rs)} cities. Show these cities in the full ranking.">
+  <span class="ps-strip-name"><b>{esc(rs[0]["region_label"])}</b><small>{flag} &middot; {len(rs)} {"city" if len(rs) == 1 else "cities"} &middot; best: {esc(best["label"])}</small>{conf_tag(reg)}</span>
+  <span class="ps-strip-track"><span class="ps-range" style="left:{lo:.1f}%;width:{max(.6, hi - lo):.1f}%"></span>{dots}<span class="ps-avg" style="left:{avg:.1f}%"></span></span>
+  <span class="ps-strip-num">{avg:.0f}</span>
+</button>''')
+    return "\n".join(out)
+
+
+# ---------- heatmap: region average per category ----------
+def heat_cell(score):
+    s = max(0, min(100, score))
+    return f'<td style="--h:{s:.0f}%" class="{"dk" if s >= 55 else ""}" title="{s:.0f} out of 100">{s:.0f}</td>'
+
+
+def render_heatmap():
+    head = "".join(f'<th scope="col">{esc(SHORT_LABELS[c])}</th>' for c in CATEGORIES)
+    body = []
+    for reg, rs in BY_REGION.items():
+        cells = "".join(heat_cell(sum(x["categories"][c]["score"] for x in rs) / len(rs)) for c in CATEGORIES)
+        body.append(f'<tr><th scope="row">{esc(rs[0]["region_label"])}</th>{cells}<td class="ps-heat-all">{REGION_AVG[reg]:.0f}</td></tr>')
+    return f'<thead><tr><th scope="col"><span class="sr">Region</span></th>{head}<th scope="col">Overall</th></tr></thead><tbody>{"".join(body)}</tbody>'
+
+
+# ---------- best places for each upgrade (ties grouped by region) ----------
+PERCENT = {(r["region"], r["slug"], c): v["percent_text"] for r in rows for c, v in r["categories"].items() if v.get("percent_text")}
+
+
+def category_groups(cat, limit=5):
+    groups = []
+    for r in DATA["leaderboard_by_category"][cat]:
+        if r["score"] <= 0:
+            continue
+        key = (r["region"], round(r["score"], 1), r["dollar_value"])
+        if groups and groups[-1]["key"] == key:
+            groups[-1]["cities"].append(r)
+        else:
+            if len(groups) == limit:
+                break
+            groups.append({"key": key, "cities": [r]})
+    return groups
+
+
+def render_champions():
+    cards = []
+    for cat in CATEGORIES:
+        groups = category_groups(cat)
+        if not groups:
+            continue
+        top = groups[0]["cities"][0]
+        n0 = len(groups[0]["cities"])
+        lead_name = esc(top["label"]) if n0 == 1 else esc(top["region_label"])
+        lead_who = f'{esc(top["region_label"])}, score {top["score"]:.0f}' if n0 == 1 else f'{n0} cities tie at {top["score"]:.0f}'
+        items = []
+        for g in groups:
+            c0 = g["cities"][0]
+            ctry = DATA["regions"][c0["region"]]["country"]
+            names = (", ".join(esc(x["label"]) for x in g["cities"]) if len(g["cities"]) <= 2
+                     else f'{esc(g["cities"][0]["label"])} and {len(g["cities"]) - 1} more')
+            amt = money(c0["dollar_value"], ctry) if c0["dollar_value"] else esc(PERCENT.get((c0["region"], c0["slug"], cat), ""))
+            items.append(f'<li><span class="ps-ch-who"><a href="{esc(c0["url"])}">{names}</a><small>{esc(c0["region_label"])}{" &middot; " + amt if amt else ""}</small></span>'
+                         f'{score_bar(c0["score"])}<b>{c0["score"]:.0f}</b></li>')
+        cards.append(f'''<article class="ps-ch">
+  <header><h3>{esc(SHORT_LABELS[cat])}</h3><p class="ps-ch-amt">{lead_name}</p><p class="ps-ch-lead">{lead_who}</p></header>
+  <ol>{"".join(items)}</ol>
+</article>''')
+    return "\n".join(cards)
+
+
+# ---------- full ranking ----------
+def mini_profile(r):
+    return '<span class="ps-prof" aria-hidden="true">' + "".join(
+        f'<i style="height:{max(6, r["categories"][c]["score"]):.0f}%" title="{esc(SHORT_LABELS[c])}: {r["categories"][c]["score"]:.0f}"></i>'
+        for c in CATEGORIES) + "</span>"
+
+
+def render_rows():
+    out = []
+    for i, r in enumerate(rows):
+        rank, tied = RANKS[i]
+        key = f'{r["region"]}/{r["slug"]}'
+        data_cat = " ".join(f'data-c-{c}="{r["categories"][c]["score"]:.1f}"' for c in CATEGORIES)
+        out.append(f'''<tr id="city-{esc(key).replace("/", "-")}" data-key="{esc(key)}" data-overall="{r["overall"]}" data-potential="{r.get("potential_usd", 0)}" data-region="{esc(r["region"])}" data-name="{esc(r["label"]).lower()}" data-order="{i}" {data_cat}>
+  <td class="ps-rk">{"T-" if tied else ""}{rank}</td>
+  <td class="ps-city"><a href="{esc(r["url"])}">{esc(r["label"])}</a><small>{esc(r["region_label"])}</small>{conf_tag(r["region"])}</td>
+  <td class="ps-sc"><b>{r["overall"]:.0f}</b>{score_bar(r["overall"])}</td>
+  <td class="ps-pf">{mini_profile(r)}</td>
+  <td class="ps-pot">US${r.get("potential_usd", 0):,.0f}<small>{r.get("open_count", 0)} of 8 open</small></td>
+  <td class="ps-more"><button type="button" class="ps-open" aria-expanded="false" aria-label="Show the {esc(r["label"])} breakdown">Details</button></td>
+</tr>''')
+    return "\n".join(out)
+
+
+# ---------- comparisons and further reading ----------
+COMPARE_PICKS = ["vancouver-vs-toronto", "toronto-vs-boston", "vancouver-vs-boston", "toronto-vs-new-york-city",
+                 "new-york-city-vs-los-angeles", "calgary-vs-vancouver", "halifax-vs-toronto", "ottawa-vs-victoria",
+                 "edmonton-vs-toronto", "boston-vs-new-york-city"]
+
+
+def render_compare_links():
+    links = []
+    for slug in COMPARE_PICKS:
+        if (ROOT / "powerscore" / "compare" / slug / "index.html").exists():
+            a, b = slug.split("-vs-")
+            nice = lambda s: " ".join(w.capitalize() for w in s.split("-"))
+            links.append(f'<a href="/powerscore/compare/{slug}/">{nice(a)} vs {nice(b)}</a>')
+    return "".join(links)
+
+
+# ---------- data for the page script ----------
+def page_rows_json():
+    out = []
+    for i, r in enumerate(rows):
+        rank, tied = RANKS[i]
+        rs = BY_REGION[r["region"]]
+        reg_rank = 1 + sum(1 for x in rs if round(x["overall"], 1) > round(r["overall"], 1))
+        reg_tied = sum(1 for x in rs if round(x["overall"], 1) == round(r["overall"], 1)) > 1
+        ec = energy_cost_for(r)
+        out.append({
+            "k": f'{r["region"]}/{r["slug"]}', "n": r["label"], "r": r["region_label"], "rg": r["region"],
+            "cur": "CA$" if r["country"] == "Canada" else "US$", "s": round(r["overall"], 1), "u": r["url"],
+            "rk": rank, "t": tied, "rr": reg_rank, "rt": reg_tied, "rn": len(rs), "p": r.get("potential_usd", 0), "o": r.get("open_count", 0),
+            "e": "" if ec == "&mdash;" else html.unescape(ec),
+            "c": [[round(r["categories"][c]["score"]), r["categories"][c]["dollar_value"], r["categories"][c]["status"][0], r["categories"][c].get("percent_text", "")] for c in CATEGORIES],
+        })
+    return json.dumps(out, separators=(",", ":"))
 
 
 # ---------- JSON-LD ----------
@@ -296,8 +408,8 @@ def render_jsonld():
         "creator": {"@type": "Organization", "name": "HomePowerRebate"},
         "variableMeasured": ["Overall PowerScore"] + [CAT_LABELS[c] + " PowerScore" for c in CATEGORIES],
         "temporalCoverage": "2026",
+        "dateModified": DATA["generated"],
     }
-    top5 = rows[:5]
     article = {
         "@context": "https://schema.org",
         "@type": "Article",
@@ -307,7 +419,7 @@ def render_jsonld():
         "publisher": {"@type": "Organization", "name": "HomePowerRebate"},
         "mainEntityOfPage": "https://homepowerrebate.com/powerscore/",
         "datePublished": "2026-08-23",
-        "dateModified": "2026-08-23",
+        "dateModified": DATA["generated"],
     }
     return (
         '<script type="application/ld+json">' + json.dumps(dataset) + "</script>\n"
@@ -315,104 +427,357 @@ def render_jsonld():
     )
 
 
-overall_rows_html = render_overall_rows()
-podium_html = render_podium()
-region_cards_html, region_chips_html = render_regions()
-tie_count = max((sum(1 for r in rows if round(r["overall"], 1) == round(x["overall"], 1)) for x in rows), default=1)
 distinct_scores = len({round(r['overall'], 1) for r in rows})
 data_date = DATA['generated']
 cad = DATA.get('cad_to_usd', 0.73)
-
 _ys = DATA.get("yardstick_usd", {})
-yardstick_table_html = ('<div class="table-wrap" style="margin:14px 0;"><table class="score-table" style="min-width:0;"><thead><tr><th>Category</th><th>Earns a full dollar score at</th></tr></thead><tbody>'
-    + "".join(f'<tr><td>{esc(CAT_LABELS[c])}</td><td>US${_ys.get(c, 0):,.0f} (about CA${_ys.get(c, 0) / cad:,.0f})</td></tr>' for c in CATEGORIES)
-    + '</tbody></table></div>')
-sort_options_html = '<option value="overall">Overall PowerScore</option><option value="potential">Rebate potential (US$, open programs)</option>' + "".join(f'<option value="{c}">{esc(CAT_LABELS[c])} score</option>' for c in CATEGORIES)
-cat_buttons_html, cat_panels_html = render_category_tabs()
-city_options_html = render_city_options()
+yardstick_rows_html = "".join(f'<tr><td>{esc(CAT_LABELS[c])}</td><td>US${_ys.get(c, 0):,.0f} (about CA${_ys.get(c, 0) / cad:,.0f})</td></tr>' for c in CATEGORIES)
+sort_options_html = '<option value="overall">PowerScore</option><option value="potential">Open rebate money</option>' + "".join(f'<option value="{c}">{esc(SHORT_LABELS[c])} score</option>' for c in CATEGORIES)
+region_options_html = '<option value="all">All regions</option>' + "".join(f'<option value="{esc(reg)}">{esc(rs[0]["region_label"])}</option>' for reg, rs in sorted(BY_REGION.items(), key=lambda kv: kv[1][0]["region_label"]))
+profile_key_html = "".join(f"<li>{esc(SHORT_LABELS[c])}</li>" for c in CATEGORIES)
 jsonld_html = render_jsonld()
+date_nice = __import__("datetime").date.fromisoformat(data_date).strftime("%B %-d, %Y")
 
-TOP_CITY = next(r for r in rows if region_verified(r['region']))
-BOTTOM_REGION_COUNT = total_regions
 
-NEW_CSS = r""".chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
-.chip{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--rule);background:#fff;color:var(--ink);border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer}
-.chip.on{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff}
-.lb-controls{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 12px}
-.lb-controls input,.lb-controls select{flex:1;min-width:200px;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;font:inherit;font-size:16px;background:#fff}
-.lb-count{font-size:14px;color:var(--ink-soft);margin:4px 0 10px}
-.more-btn{display:block;margin:18px auto 0;padding:13px 26px;background:var(--teal-deep);color:#fff;border:0;border-radius:999px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;min-height:46px}
-.meter{display:block;height:6px;border-radius:6px;background:#efe8db;overflow:hidden;min-width:70px}
-.meter i{display:block;height:100%;border-radius:6px}
-.meter i.band-great{background:var(--green-money)}.meter i.band-good{background:var(--teal)}.meter i.band-fair{background:var(--amber)}.meter i.band-low{background:var(--red-flag)}
-.overall-cell{display:flex;align-items:center;gap:10px;min-width:150px}.overall-cell .meter{flex:1}
-.cc-grid{display:grid;grid-template-columns:repeat(8,minmax(38px,1fr));gap:4px}
-.cc{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;padding:4px 2px;color:#fff;line-height:1.1}
-.cc i{font-style:normal;font-size:13px}.cc b{font-size:13px}.cc small{display:none}
-.cc.band-great{background:var(--green-money)}.cc.band-good{background:var(--teal)}.cc.band-fair{background:var(--amber)}.cc.band-low{background:var(--red-flag)}
-.podium{display:grid;grid-template-columns:1fr 1.12fr 1fr;gap:16px;align-items:end;margin-top:26px}
-.pod{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;background:#fff;border:1px solid var(--rule);border-radius:18px;padding:34px 20px 22px;text-decoration:none;color:var(--ink);box-shadow:0 8px 24px rgba(10,42,46,.07);transition:transform .18s,box-shadow .18s}
-.pod:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(10,42,46,.12)}
-.pod-1{order:2;padding-top:44px;border-color:#e6c766;background:linear-gradient(180deg,#fffaf0,#fff 60%)}.pod-2{order:1}.pod-3{order:3}
-.medal{position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:700;border:2px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.18)}
-.m1{background:linear-gradient(135deg,#f6d67a,#d9a521);color:#4a3200}.m2{background:linear-gradient(135deg,#eef1f3,#b9c2c9);color:#37424a}.m3{background:linear-gradient(135deg,#f0cfae,#c98b52);color:#4a2a0d}
-.ring{--score-deg:0deg;position:relative;width:124px;height:124px;border-radius:50%;background:conic-gradient(var(--amber) var(--score-deg),#eee 0);display:grid;place-items:center;margin-bottom:10px}
-.ring::before{content:'';position:absolute;inset:10px;background:#fff;border-radius:50%}
-.ring b,.ring small{position:relative;display:block;text-align:center}.ring b{font-family:'Fraunces',serif;font-size:34px;color:var(--teal-deep);line-height:1}.ring small{font-size:9px;text-transform:uppercase;letter-spacing:.03em;color:var(--sage);white-space:nowrap}
-.pod h3{margin:4px 0 0;font-size:22px}.pod .rg{margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--sage)}
-.pod .hl{list-style:none;margin:0 0 12px;padding:0;font-size:14px;color:var(--ink-soft)}.pod .hl li{margin:2px 0}
-.pod .go{font-weight:700;font-size:14px;color:var(--amber)}
-.rg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
-.rg-card{display:flex;flex-direction:column;gap:6px;text-align:left;background:#fff;border:1px solid var(--rule);border-radius:14px;padding:14px 16px;font:inherit;cursor:pointer;color:var(--ink);transition:transform .15s,border-color .15s}
-.rg-card:hover{transform:translateY(-2px);border-color:var(--amber)}.rg-card b{font-family:'Fraunces',serif;font-size:17px;color:var(--teal-deep)}
-.rg-card .avg{font-size:13px;color:var(--ink-soft)}.rg-card .avg em{font-style:normal;font-family:'Fraunces',serif;font-size:22px;color:var(--teal-deep);margin-right:2px}
-.rg-card small{font-size:12.5px;color:var(--sage)}
-.ps-podium-sec{padding:48px 0 12px}.ps-regions{padding:24px 0 36px}
-.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-soft);margin-top:14px}.legend span::before{content:"";display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
-
-.pot-cell b{display:block;font-family:'Fraunces',serif;color:var(--green-money)}.pot-cell small{color:var(--sage);font-size:12px}
-.conf{display:inline-block;margin-left:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:999px;background:#fdf2f0;color:var(--red-flag);border:1px solid #efc9c4;vertical-align:1px}
-.rg-card .conf{align-self:flex-start;margin-left:0}
-.ps-reliable{padding:8px 0 28px}
-.rel-box{background:#fff;border:1px solid var(--rule);border-left:5px solid var(--amber);border-radius:14px;padding:24px 24px 18px}
-.rel-list{margin:0 0 18px 18px;padding:0}.rel-list li{margin-bottom:8px;font-size:15.5px;color:var(--ink-soft)}
-.rel-table{min-width:760px}.lvl{font-size:13.5px}.lvl.low{color:var(--red-flag);font-weight:600}.lvl.mid{color:#8a5a00}.lvl.high{color:var(--green-money);font-weight:600}
-.conf-no{color:var(--red-flag);font-weight:700}
-tr.hide{display:none}
-@media(max-width:820px){.podium{grid-template-columns:1fr;gap:26px}.pod-1{order:1}.pod-2{order:2}.pod-3{order:3}}
-@media(max-width:700px){
- .score-table{min-width:0!important}.score-table thead{display:none}
- .score-table tbody tr{display:grid;grid-template-columns:44px 1fr auto;gap:6px 10px;padding:12px 12px 14px;border-bottom:1px solid var(--rule)}
- .score-table tbody tr.hide{display:none}
- .score-table td{border:0!important;padding:0!important}
- .rank-cell{grid-row:1;grid-column:1}.city-cell{grid-row:1;grid-column:2}.overall-cell{grid-row:1;grid-column:3;min-width:0!important}.overall-cell .meter{display:none}
- .pills-cell{grid-column:1/-1;grid-row:2;min-width:0!important}.pot-cell{grid-column:1/-1;grid-row:3}.energy-cell{grid-column:1/-1;grid-row:4;font-size:13px;color:var(--sage)}
- .cc-grid{grid-template-columns:repeat(4,1fr)}.cc small{display:block;font-size:9.5px;text-align:center;opacity:.92}
+PS_CSS = r"""/* kept in this exact form: build_powerscore_compare.py copies this :root block into the compare pages */
+:root {
+  --ink: #0a2a2e;
+  --ink-soft: #1a3d42;
+  --paper: #faf7f2;
+  --paper-warm: #f5efe5;
+  --teal: #0d4f5c;
+  --teal-deep: #08363f;
+  --amber: #d4751c;
+  --amber-bright: #e88a2e;
+  --green-money: #2d6a4f;
+  --red-flag: #b04545;
+  --rule: #d9d0c1;
+  --sage: #6f8f7a;
 }
-@media (prefers-reduced-motion:reduce){.pod,.rg-card{transition:none}.pod:hover,.rg-card:hover{transform:none}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter Tight',sans-serif;line-height:1.6}
+.ps{--gut:clamp(16px,3.2vw,56px);--rule:#e2d9ca;--sage:#6b8e7f;--muted:#4a5f62}
+.ps .ps-wrap{max-width:1200px;margin:0 auto;padding:0 var(--gut)}
+.ps .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.ps h1,.ps h2,.ps h3{font-family:'Fraunces',Georgia,serif;color:var(--teal-deep);margin:0}
+.ps .ps-sec{padding:clamp(48px,6vw,88px) 0}
+.ps .ps-sec.warm{background:var(--paper-warm)}
+.ps .ps-sec.white{background:#fff}
+.ps .ps-kicker{margin:0 0 10px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+.ps .ps-h2{font-size:clamp(28px,3.2vw,44px);font-weight:600;line-height:1.08;letter-spacing:-.02em;max-width:22ch;text-wrap:balance}
+.ps .ps-sec p.ps-intro{margin:14px 0 0;max-width:62ch;font-size:clamp(16px,1.3vw,18px);line-height:1.6;color:var(--muted)}
+.ps .ps-head{margin-bottom:clamp(24px,3vw,40px)}
+
+/* hero */
+.ps .ps-hero{position:relative;overflow:hidden;color:#fff;padding:clamp(40px,6vw,96px) 0 clamp(40px,5vw,80px);
+ background:radial-gradient(110% 130% at 100% 0%,rgba(232,138,46,.22) 0%,rgba(232,138,46,0) 50%),radial-gradient(90% 120% at 0% 100%,rgba(107,142,127,.28) 0%,rgba(107,142,127,0) 55%),var(--teal-deep)}
+.ps .ps-hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(28px,5vw,72px);align-items:center}
+.ps .ps-hero .ps-kicker{color:#f5b566}
+.ps .ps-hero h1{color:#fff;font-size:clamp(36px,5.4vw,76px);font-weight:600;line-height:1.02;letter-spacing:-.028em;max-width:15ch;text-wrap:balance}
+.ps .ps-hero h1 em{font-style:normal;color:var(--amber-bright)}
+.ps .ps-hero p.ps-lead{margin:20px 0 0;max-width:54ch;font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:rgba(250,247,242,.88)}
+.ps .ps-find-box{position:relative;margin-top:clamp(24px,3vw,36px);max-width:560px}
+.ps .ps-find-box label{display:block;font-size:14px;font-weight:700;color:#f5b566;margin-bottom:8px}
+.ps .ps-search{width:100%;min-height:60px;padding:0 20px 0 52px;border:0;border-radius:16px;font:inherit;font-size:18px;color:var(--ink);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none' stroke='%230d4f5c' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='9.5' cy='9.5' r='7'/%3E%3Cpath d='m15 15 5.5 5.5'/%3E%3C/svg%3E") no-repeat 18px 50%;box-shadow:0 20px 44px -18px rgba(0,0,0,.5)}
+.ps .ps-search:focus{outline:3px solid var(--amber-bright);outline-offset:2px}
+.ps .ps-list{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 6px);margin:0;padding:6px;list-style:none;background:#fff;border-radius:14px;box-shadow:0 24px 48px -12px rgba(0,0,0,.35);max-height:340px;overflow:auto}
+.ps .ps-list[hidden]{display:none}
+.ps .ps-list li{display:flex;justify-content:space-between;gap:12px;padding:11px 14px;border-radius:10px;cursor:pointer;color:var(--ink);font-size:16px}
+.ps .ps-list li small{color:var(--muted);font-size:14px}
+.ps .ps-list li[aria-selected="true"],.ps .ps-list li:hover{background:var(--paper-warm)}
+.ps .ps-list li b{font-family:'Fraunces',serif;color:var(--teal-deep)}
+.ps .ps-hint{margin:10px 0 0;font-size:14px;color:rgba(250,247,242,.7)}
+.ps .ps-hint button{font:inherit;color:#fff;background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.ps .ps-gap{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:clamp(20px,2.4vw,30px)}
+.ps .ps-gap h2{color:#fff;font-size:clamp(20px,1.8vw,24px);font-weight:600;line-height:1.2}
+.ps .ps-gap p.ps-gap-sub{margin:6px 0 18px;font-size:14px;color:rgba(250,247,242,.72)}
+.ps .ps-gap ol{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ps .ps-gap li{display:grid;grid-template-columns:minmax(0,9.5em) 1fr 2.2em;align-items:center;gap:12px;font-size:15px}
+.ps .ps-gap-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:rgba(250,247,242,.92)}
+.ps .ps-gap-track{height:12px;border-radius:12px;background:rgba(255,255,255,.1);overflow:hidden}
+.ps .ps-gap-track i{display:block;height:100%;border-radius:12px}
+.ps .ps-gap-track i.hi{background:var(--amber-bright)}.ps .ps-gap-track i.lo{background:#8fb1a4}
+.ps .ps-gap li b{font-family:'Fraunces',serif;font-size:20px;text-align:right}
+.ps .ps-gap li.ps-gap-sep{display:block;height:14px}
+.ps .ps-gap li.ps-gap-sep span{display:block;margin:6px 0 0;border-top:1px dashed rgba(255,255,255,.28)}
+.ps .ps-gap-foot{margin:16px 0 0;font-size:13px;color:rgba(250,247,242,.6)}
+.ps .ps-gap-foot a{color:#fff}
+
+/* scorecard */
+.ps .ps-card-sec{padding:clamp(28px,4vw,48px) 0 0}
+.ps #your-score,.ps #ranking,.ps #regions{scroll-margin-top:88px}
+.ps .ps-card-sec[hidden]{display:none}
+.ps .ps-card{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,3vw,44px);background:#fff;border:1px solid var(--rule);border-radius:24px;padding:clamp(20px,3vw,40px);box-shadow:0 30px 60px -36px rgba(10,42,46,.4)}
+.ps .ps-card-close{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid var(--rule);background:#fff;font-size:22px;line-height:1;color:var(--muted);cursor:pointer}
+.ps .ps-card-left{display:flex;flex-direction:column;align-items:center;text-align:center;min-width:200px}
+.ps .ps-ring{position:relative;width:176px;height:176px}
+.ps .ps-ring svg{display:block;transform:rotate(-90deg)}
+.ps .ps-ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ps .ps-ring .num b{font-family:'Fraunces',serif;font-size:56px;font-weight:600;line-height:1;color:var(--teal-deep)}
+.ps .ps-ring .num small{font-size:14px;font-weight:600;color:var(--muted)}
+.ps .ps-band{margin-top:12px;display:inline-block;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.ps .ps-band.excellent{background:#e3f0e8;color:var(--green-money)}.ps .ps-band.solid{background:#e2eef0;color:var(--teal)}.ps .ps-band.limited{background:#fbeedd;color:#9a520f}.ps .ps-band.thin{background:#f8e5e2;color:var(--red-flag)}
+.ps .ps-card h2{font-size:clamp(28px,3vw,40px);font-weight:600;line-height:1.05;padding-right:44px}
+.ps .ps-card p.ps-card-reg{margin:4px 0 0;font-size:15px;color:var(--muted)}
+.ps .ps-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
+.ps .ps-facts div{background:var(--paper);border-radius:14px;padding:12px 14px}
+.ps .ps-facts b{display:block;font-family:'Fraunces',serif;font-size:clamp(20px,2vw,26px);line-height:1.1;color:var(--teal-deep)}
+.ps .ps-facts span{font-size:13px;color:var(--muted)}
+.ps .ps-cats{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 28px}
+.ps .ps-cats li{display:grid;grid-template-columns:7.5em 1fr 2em;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #efe8db;font-size:15px}
+.ps .ps-cats li .lab{font-weight:600}
+.ps .ps-cats li .amt{grid-column:2/4;font-size:13px;color:var(--muted);margin-top:-6px}
+.ps .ps-cats li b{text-align:right;font-family:'Fraunces',serif;font-size:17px}
+.ps .ps-cats .st{display:inline-block;margin-left:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:1px 7px;border-radius:999px}
+.ps .ps-cats .st.l{background:#fbeedd;color:#9a520f}.ps .ps-cats .st.c{background:#f8e5e2;color:var(--red-flag)}
+.ps .ps-card-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:20px}
+.ps .ps-btn{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;background:var(--amber);color:#fff;font-weight:700;font-size:16px;text-decoration:none;border:0;cursor:pointer;font-family:inherit}
+.ps .ps-btn:hover{background:var(--amber-bright)}
+.ps .ps-btn.ghost{background:transparent;color:var(--teal-deep);border:1.5px solid var(--rule)}
+.ps .ps-btn.ghost:hover{border-color:var(--teal)}
+.ps .ps-note{margin:12px 0 0;font-size:13px;color:var(--muted)}
+
+/* bars */
+.ps .ps-bar{display:block;height:8px;border-radius:8px;background:#ece4d6;overflow:hidden}
+.ps .ps-bar i{display:block;height:100%;border-radius:8px;background:var(--teal)}
+
+/* findings */
+.ps .ps-finds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.ps .ps-find{background:#fff;border:1px solid var(--rule);border-radius:20px;padding:clamp(20px,2.2vw,28px)}
+.ps .ps-sec p.ps-find-k{margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage)}
+.ps .ps-sec p.ps-find-n{margin:8px 0 10px;font-family:'Fraunces',serif;font-size:clamp(34px,3.6vw,52px);font-weight:600;line-height:1;letter-spacing:-.02em;color:var(--amber)}
+.ps .ps-sec p.ps-find-t{margin:0;font-size:16px;line-height:1.55;color:var(--ink-soft)}
+
+/* strip chart */
+.ps .ps-strip{display:grid;gap:2px}
+.ps .ps-strip-axis{display:grid;grid-template-columns:240px 1fr 48px;gap:18px;font-size:12px;color:var(--muted);padding:0 12px 6px}
+.ps .ps-strip-axis span:nth-child(2){display:flex;justify-content:space-between}
+.ps .ps-strip-row{display:grid;grid-template-columns:240px 1fr 48px;gap:18px;align-items:center;width:100%;padding:10px 12px;border:0;border-radius:14px;background:transparent;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.ps .ps-strip-row:hover,.ps .ps-strip-row:focus-visible{background:var(--paper-warm)}
+.ps .ps-strip-name b{display:block;font-size:16px;color:var(--teal-deep)}
+.ps .ps-strip-name small{font-size:13px;color:var(--muted)}
+.ps .ps-strip-track{position:relative;height:28px;border-radius:8px;background:repeating-linear-gradient(90deg,#ece4d6 0 1px,transparent 1px 25%) ,#f6f1e8}
+.ps .ps-range{position:absolute;top:50%;height:6px;margin-top:-3px;border-radius:6px;background:rgba(13,79,92,.18)}
+.ps .ps-dot{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:rgba(13,79,92,.45);border:1.5px solid #fff}
+.ps .ps-avg{position:absolute;top:2px;bottom:2px;width:4px;margin-left:-2px;border-radius:4px;background:var(--amber)}
+.ps .ps-strip-num{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--teal-deep);text-align:right}
+.ps .ps-legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin:16px 12px 0;font-size:14px;color:var(--muted)}
+.ps .ps-legend span{display:inline-flex;align-items:center;gap:8px}
+.ps .ps-legend .k-dot{width:12px;height:12px;border-radius:50%;background:rgba(13,79,92,.45)}
+.ps .ps-legend .k-avg{width:4px;height:16px;border-radius:4px;background:var(--amber)}
+.ps .ps-legend .k-rng{width:22px;height:6px;border-radius:6px;background:rgba(13,79,92,.18)}
+.ps .conf{display:inline-block;margin-top:4px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:999px;background:#fdf2f0;color:var(--red-flag);border:1px solid #efc9c4}
+
+/* heatmap */
+.ps .ps-heat-wrap{overflow-x:auto;border-radius:18px;border:1px solid var(--rule);background:#fff}
+.ps .ps-heat{width:100%;border-collapse:separate;border-spacing:3px;font-size:15px;min-width:760px}
+.ps .ps-heat th{font-weight:600;font-size:13px;color:var(--muted);padding:10px 6px;text-align:center;vertical-align:bottom;line-height:1.25}
+.ps .ps-heat tbody th{vertical-align:middle;text-align:left;font-size:15px;color:var(--teal-deep);white-space:nowrap;padding:0 12px;position:sticky;left:0;background:#fff;z-index:1}
+.ps .ps-heat td{text-align:center;padding:12px 4px;border-radius:8px;font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink);background:color-mix(in srgb,var(--teal) var(--h),#f6f1e8)}
+.ps .ps-heat td.dk{color:#fff}
+.ps .ps-heat td.ps-heat-all{background:var(--paper-warm);font-family:'Fraunces',serif;font-size:18px;color:var(--teal-deep)}
+.ps .ps-heat-key{display:flex;align-items:center;gap:10px;margin:14px 0 0;font-size:13px;color:var(--muted)}
+.ps .ps-heat-key i{display:block;width:160px;height:10px;border-radius:10px;background:linear-gradient(90deg,#f6f1e8,var(--teal))}
+
+/* champions */
+.ps .ps-chs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:clamp(12px,1.6vw,18px)}
+.ps .ps-ch{background:#fff;border:1px solid var(--rule);border-radius:20px;padding:20px 20px 12px}
+.ps .ps-ch h3{font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage)}
+.ps .ps-sec p.ps-ch-amt{margin:6px 0 0;font-family:'Fraunces',serif;font-size:26px;font-weight:600;line-height:1.1;color:var(--amber)}
+.ps .ps-sec p.ps-ch-lead{margin:2px 0 12px;font-size:14px;color:var(--muted)}
+.ps .ps-ch ol{list-style:none;margin:0;padding:0;counter-reset:c}
+.ps .ps-ch li{display:grid;grid-template-columns:minmax(0,1fr) 64px 2em;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #efe8db;font-size:15px}
+.ps .ps-ch-who a{display:block;font-weight:600;color:var(--teal-deep);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ps .ps-ch-who a:hover{text-decoration:underline}
+.ps .ps-ch-who small{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ps .ps-ch li b{text-align:right;font-family:'Fraunces',serif;font-size:17px;color:var(--teal-deep)}
+
+/* ranking table */
+.ps .ps-controls{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:12px}
+.ps .ps-controls input,.ps .ps-controls select{width:100%;min-height:50px;padding:0 14px;border:1px solid var(--rule);border-radius:12px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}
+.ps .ps-count{font-size:14px;color:var(--muted);margin:0 0 10px}
+.ps .ps-table-wrap{border:1px solid var(--rule);border-radius:18px;background:#fff;overflow:hidden}
+.ps .ps-table{width:100%;border-collapse:collapse;font-size:15px}
+.ps .ps-table thead th{text-align:left;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:14px 16px;background:var(--paper);border-bottom:1px solid var(--rule)}
+.ps .ps-table td{padding:12px 16px;border-bottom:1px solid #efe8db;vertical-align:middle}
+.ps .ps-table tbody tr.hide{display:none}
+.ps .ps-table tbody tr.on td{background:#fffaf2}
+.ps .ps-rk{width:56px;font-weight:700;color:var(--sage);font-variant-numeric:tabular-nums}
+.ps .ps-city a{font-weight:700;color:var(--teal-deep);text-decoration:none;font-size:16px}
+.ps .ps-city a:hover{text-decoration:underline}
+.ps .ps-city small{display:block;font-size:13px;color:var(--muted)}
+.ps .ps-sc{width:190px}
+.ps .ps-sc{white-space:nowrap}
+.ps .ps-sc b{display:inline-block;width:2em;font-family:'Fraunces',serif;font-size:20px;color:var(--teal-deep);vertical-align:middle}
+.ps .ps-sc .ps-bar{display:inline-block;width:110px;vertical-align:middle}
+.ps .ps-prof{display:inline-flex;align-items:flex-end;gap:3px;height:28px;vertical-align:middle}
+.ps .ps-prof i{display:block;width:7px;border-radius:2px 2px 0 0;background:var(--teal)}
+.ps .ps-prof i:nth-child(odd){background:#3f7c87}
+.ps .ps-pot{font-weight:700;color:var(--green-money);white-space:nowrap}
+.ps .ps-pot small{display:block;font-weight:500;font-size:13px;color:var(--muted)}
+.ps .ps-more{width:100px;text-align:right}
+.ps .ps-open{font:inherit;font-size:14px;font-weight:600;color:var(--teal);background:none;border:1px solid var(--rule);border-radius:999px;padding:7px 14px;cursor:pointer}
+.ps .ps-open[aria-expanded="true"]{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff}
+.ps .ps-table tr.ps-detail td{background:var(--paper);padding:18px}
+.ps .ps-table tr.ps-detail .ps-card{box-shadow:none}
+.ps .ps-profile-key{display:flex;flex-wrap:wrap;gap:4px 14px;margin:12px 4px 0;padding:0;list-style:none;font-size:13px;color:var(--muted)}
+.ps .ps-profile-key li:first-child::before{content:"Bars, left to right: ";font-weight:600}
+.ps .ps-more-btn{display:block;margin:20px auto 0}
+
+/* method */
+.ps .ps-method{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
+.ps .ps-formula{display:flex;height:56px;border-radius:14px;overflow:hidden;margin:20px 0 18px;font-weight:700;font-size:15px;color:#fff}
+.ps .ps-formula span{display:flex;align-items:center;justify-content:center}
+.ps .ps-formula .f1{flex:60;background:var(--teal-deep)}.ps .ps-formula .f2{flex:25;background:var(--teal)}.ps .ps-formula .f3{flex:15;background:var(--amber)}
+.ps .ps-parts{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.ps .ps-parts li{font-size:16px;line-height:1.55;color:var(--ink-soft);padding-left:18px;border-left:4px solid var(--teal-deep)}
+.ps .ps-parts li:nth-child(2){border-color:var(--teal)}.ps .ps-parts li:nth-child(3){border-color:var(--amber)}
+.ps .ps-sec p.ps-body{margin:14px 0 0;font-size:16px;line-height:1.6;color:var(--ink-soft)}
+.ps details.ps-fold{background:#fff;border:1px solid var(--rule);border-radius:16px;padding:0 20px;margin-bottom:12px}
+.ps details.ps-fold summary{cursor:pointer;padding:16px 0;font-weight:700;font-size:16px;color:var(--teal-deep);list-style:none;display:flex;justify-content:space-between;gap:12px}
+.ps details.ps-fold summary::-webkit-details-marker{display:none}
+.ps details.ps-fold summary::after{content:"+";font-size:22px;line-height:1;color:var(--amber)}
+.ps details.ps-fold[open] summary::after{content:"\2013"}
+.ps details.ps-fold .in{padding:0 0 18px}
+.ps details.ps-fold ul{margin:0 0 14px 18px;padding:0}
+.ps details.ps-fold li{margin-bottom:8px;font-size:15px;color:var(--ink-soft)}
+.ps details.ps-fold p{font-size:15px;color:var(--ink-soft)}
+.ps .ps-mini{width:100%;border-collapse:collapse;font-size:14px}
+.ps .ps-mini th,.ps .ps-mini td{text-align:left;padding:8px 10px;border-bottom:1px solid #efe8db;vertical-align:top}
+.ps .ps-mini th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.ps .ps-scroll{overflow-x:auto}
+.ps .lvl.low{color:var(--red-flag);font-weight:600}.ps .lvl.mid{color:#8a5a00}.ps .lvl.high{color:var(--green-money);font-weight:600}
+.ps .conf-no{color:var(--red-flag);font-weight:700}
+
+/* media + comparisons */
+.ps .ps-press{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(16px,2vw,24px)}
+.ps .ps-press-box{border-radius:22px;padding:clamp(22px,2.6vw,34px);background:var(--teal-deep);color:#fff}
+.ps .ps-press-box h2{color:#fff;font-size:clamp(24px,2.4vw,32px);font-weight:600}
+.ps .ps-sec .ps-press-box p{margin:12px 0 0;font-size:16px;line-height:1.6;color:rgba(250,247,242,.86)}
+.ps .ps-press-box a{color:#f5b566}
+.ps .ps-cite{margin:16px 0 0;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.08);font-size:15px;line-height:1.5;color:#fff}
+.ps .ps-links{border-radius:22px;padding:clamp(22px,2.6vw,34px);background:#fff;border:1px solid var(--rule)}
+.ps .ps-links h2{font-size:clamp(22px,2vw,26px);font-weight:600}
+.ps .ps-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.ps .ps-chips a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--rule);font-size:14px;font-weight:600;color:var(--teal-deep);text-decoration:none}
+.ps .ps-chips a:hover{border-color:var(--amber);color:var(--amber)}
+
+@media (max-width:980px){
+ .ps .ps-hero-grid,.ps .ps-method,.ps .ps-press{grid-template-columns:1fr}
+ .ps .ps-finds{grid-template-columns:1fr}
+ .ps .ps-controls{grid-template-columns:1fr 1fr}.ps .ps-controls input{grid-column:1/-1}
+}
+@media (max-width:760px){
+ .ps .ps-card{grid-template-columns:1fr}
+ .ps .ps-card-left{flex-direction:row;gap:16px;text-align:left;min-width:0}
+ .ps .ps-ring{width:120px;height:120px}.ps .ps-ring svg{width:120px;height:120px}.ps .ps-ring .num b{font-size:40px}
+ .ps .ps-cats{grid-template-columns:1fr}
+ .ps .ps-facts{grid-template-columns:1fr 1fr;gap:8px}.ps .ps-facts div{padding:10px}.ps .ps-facts div:nth-child(3){grid-column:1/-1}
+ .ps .ps-strip-axis{display:none}
+ .ps .ps-heat{min-width:600px;font-size:13px;border-spacing:2px}.ps .ps-heat td{padding:9px 2px}.ps .ps-heat th{font-size:12px;padding:8px 2px}.ps .ps-heat tbody th{font-size:13px;padding:0 8px}.ps .ps-heat td.ps-heat-all{font-size:15px}
+ .ps .ps-strip-row{grid-template-columns:1fr 2.4em;gap:6px 12px;padding:10px 6px}
+ .ps .ps-strip-name{grid-column:1;grid-row:1}.ps .ps-strip-num{grid-column:2;grid-row:1/3;align-self:center}
+ .ps .ps-strip-track{grid-column:1;grid-row:2;height:22px}
+ .ps .ps-table thead{display:none}
+ .ps .ps-table,.ps .ps-table tbody{display:block}
+ .ps .ps-table tbody tr:not(.ps-detail){display:grid;grid-template-columns:34px minmax(0,1fr) auto auto;gap:6px 10px;align-items:center;padding:12px 12px;border-bottom:1px solid #efe8db}
+ .ps .ps-table tbody tr.hide{display:none}
+ .ps .ps-table tr.ps-detail{display:block}.ps .ps-table tr.ps-detail td{display:block}
+ .ps .ps-table td{border:0;padding:0}
+ .ps .ps-rk{grid-column:1;grid-row:1/3;width:auto;font-size:14px}
+ .ps .ps-city{grid-column:2/4;grid-row:1}
+ .ps .ps-sc{grid-column:4;grid-row:1;width:auto;text-align:right}.ps .ps-sc .ps-bar{display:none}
+ .ps .ps-pf{grid-column:2;grid-row:2}
+ .ps .ps-pot{grid-column:3;grid-row:2;text-align:right;font-size:14px}.ps .ps-pot small{display:none}
+ .ps .ps-more{grid-column:4;grid-row:2;width:auto}
+ .ps .ps-open{padding:5px 11px;font-size:13px}
+ .ps .ps-table tbody tr.on{background:#fffaf2}.ps .ps-table tbody tr.on td{background:none}
+ .ps .ps-table tr.ps-detail td{padding:10px}
+}
+@media (max-width:420px){
+ .ps .ps-gap li{grid-template-columns:minmax(0,7.5em) 1fr 2em;gap:8px;font-size:14px}
+ .ps .ps-facts b{font-size:18px}
+}
 """
-NEW_JS = r"""(function(){var tbody=document.querySelector('#leaderboard-table tbody');if(!tbody)return;
-var rowsEl=[].slice.call(tbody.rows),state={region:'all',q:'',sort:'overall',all:false},LIMIT=25;
-var count=document.getElementById('lb-count'),more=document.getElementById('lb-more');
-function key(){return state.sort==='overall'?'data-overall':'data-c-'+state.sort;}
-function apply(){
- var vis=rowsEl.filter(function(r){return (state.region==='all'||r.dataset.region===state.region)&&(!state.q||r.dataset.name.indexOf(state.q)>-1);});
- var k=key();
+
+
+PS_JS = r"""(function(){
+var D=window.PS_ROWS,CATS=window.PS_CATS,BY={};D.forEach(function(r){BY[r.k]=r;});
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function band(s){return s>=75?'excellent':s>=50?'solid':s>=25?'limited':'thin';}
+function fmt(n){return Math.round(n).toLocaleString('en-US');}
+function card(r,inTable){
+ var C=2*Math.PI*78,off=C*(1-Math.min(100,r.s)/100),cats='';
+ r.c.forEach(function(v,i){
+  var st=v[2]==='l'?'<span class="st l">Limited</span>':v[2]==='c'?'<span class="st c">Closed</span>':'';
+  var amt=v[1]>0?'up to '+r.cur+fmt(v[1]):v[3]?esc(v[3]):'No open rebate found';
+  cats+='<li><span class="lab">'+CATS[i]+st+'</span><span class="ps-bar"><i style="width:'+Math.max(2,v[0])+'%"></i></span><b>'+v[0]+'</b><span class="amt">'+amt+'</span></li>';
+ });
+ return '<div class="ps-card">'+(inTable?'':'<button type="button" class="ps-card-close" aria-label="Close">&times;</button>')+
+  '<div class="ps-card-left"><div class="ps-ring"><svg width="176" height="176" viewBox="0 0 176 176"><circle cx="88" cy="88" r="78" fill="none" stroke="#ece4d6" stroke-width="14"/><circle cx="88" cy="88" r="78" fill="none" stroke="#d4751c" stroke-width="14" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'"/></svg><div class="num"><b>'+Math.round(r.s)+'</b><small>out of 100</small></div></div>'+
+  '<div><span class="ps-band '+band(r.s)+'">'+band(r.s)+'</span></div></div>'+
+  '<div><h2>'+esc(r.n)+'</h2><p class="ps-card-reg">'+esc(r.r)+'</p>'+
+  '<div class="ps-facts"><div><b>'+(r.t?'T-':'#')+r.rk+'</b><span>of '+D.length+' cities</span></div><div><b>'+(r.rt?'T-':'#')+r.rr+'</b><span>of '+r.rn+' in '+esc(r.r)+'</span></div><div><b>US$'+fmt(r.p)+'</b><span>top open rebates, '+r.o+' of 8 upgrades</span></div></div>'+
+  '<ul class="ps-cats">'+cats+'</ul>'+
+  '<div class="ps-card-actions"><a class="ps-btn" href="'+esc(r.u)+'">See '+esc(r.n)+' rebates</a>'+(inTable?'':'<button type="button" class="ps-btn ghost ps-copy">Copy link to this score</button>')+'</div>'+
+  '<p class="ps-note">Open rebate money adds the top open rebate in each upgrade. Most homes will not qualify for all of them.'+(r.e?' Typical yearly energy bill in this area (estimate, not part of the score): '+esc(r.e)+'.':'')+'</p></div></div>';
+}
+var sec=document.getElementById('your-score'),slot=document.getElementById('ps-card-slot');
+function show(key,scroll){var r=BY[key];if(!r)return;slot.innerHTML=card(r,false);sec.hidden=false;
+ try{history.replaceState(null,'','?city='+encodeURIComponent(key)+'#your-score');}catch(e){}
+ if(scroll)sec.scrollIntoView({behavior:'smooth',block:'start'});
+ if(window.gtag)gtag('event','powerscore_lookup',{city:key});}
+slot.addEventListener('click',function(e){
+ if(e.target.closest('.ps-card-close')){sec.hidden=true;try{history.replaceState(null,'',location.pathname);}catch(x){}}
+ var b=e.target.closest('.ps-copy');if(b){var u=location.href;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){b.textContent='Link copied';},function(){b.textContent=u;});}
+});
+/* search box */
+var inp=document.getElementById('ps-search'),list=document.getElementById('ps-list'),act=-1,hits=[];
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]/g,'');}
+function render(){var q=norm(inp.value.trim());if(!q){list.hidden=true;inp.setAttribute('aria-expanded','false');return;}
+ hits=D.filter(function(r){return norm(r.n+' '+r.r).indexOf(q)>-1;}).sort(function(a,b){return (norm(a.n).indexOf(q)===0?0:1)-(norm(b.n).indexOf(q)===0?0:1);}).slice(0,8);
+ act=hits.length?0:-1;
+ list.innerHTML=hits.length?hits.map(function(r,i){return '<li role="option" id="ps-opt-'+i+'" data-k="'+esc(r.k)+'" aria-selected="'+(i===act)+'"><span>'+esc(r.n)+' <small>'+esc(r.r)+'</small></span><b>'+Math.round(r.s)+'</b></li>';}).join(''):'<li aria-disabled="true"><span>No match yet. We cover '+D.length+' cities.</span></li>';
+ list.hidden=false;inp.setAttribute('aria-expanded','true');}
+function pick(k){inp.value=BY[k].n+', '+BY[k].r;list.hidden=true;inp.setAttribute('aria-expanded','false');show(k,true);}
+inp.addEventListener('input',render);
+inp.addEventListener('keydown',function(e){
+ if(list.hidden)return;
+ if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();act=(act+(e.key==='ArrowDown'?1:-1)+hits.length)%hits.length;
+  [].forEach.call(list.children,function(li,i){li.setAttribute('aria-selected',i===act);});inp.setAttribute('aria-activedescendant','ps-opt-'+act);}
+ else if(e.key==='Enter'){e.preventDefault();if(hits[act])pick(hits[act].k);}
+ else if(e.key==='Escape'){list.hidden=true;}
+});
+list.addEventListener('mousedown',function(e){var li=e.target.closest('li[data-k]');if(li){e.preventDefault();pick(li.dataset.k);}});
+inp.addEventListener('blur',function(){setTimeout(function(){list.hidden=true;},120);});
+[].forEach.call(document.querySelectorAll('[data-try]'),function(b){b.addEventListener('click',function(){pick(b.dataset.try);});});
+/* full ranking */
+var tbody=document.querySelector('#ps-table tbody'),rowsEl=[].slice.call(tbody.querySelectorAll('tr[data-key]')),
+ st={region:'all',q:'',sort:'overall',all:false},LIMIT=20,count=document.getElementById('ps-count'),more=document.getElementById('ps-more'),
+ regSel=document.getElementById('ps-region');
+function closeDetails(){[].forEach.call(tbody.querySelectorAll('tr.ps-detail'),function(d){d.remove();});
+ [].forEach.call(tbody.querySelectorAll('.ps-open[aria-expanded="true"]'),function(b){b.setAttribute('aria-expanded','false');b.textContent='Details';b.closest('tr').classList.remove('on');});}
+function apply(){closeDetails();
+ var vis=rowsEl.filter(function(r){return (st.region==='all'||r.dataset.region===st.region)&&(!st.q||r.dataset.name.indexOf(st.q)>-1);});
+ var k=st.sort==='overall'?'data-overall':st.sort==='potential'?'data-potential':'data-c-'+st.sort;
  vis.sort(function(a,b){return (parseFloat(b.getAttribute(k))-parseFloat(a.getAttribute(k)))||(a.dataset.order-b.dataset.order);});
- var lim=(state.all||state.q||state.region!=='all')?vis.length:LIMIT;
+ var lim=(st.all||st.q||st.region!=='all')?vis.length:LIMIT;
  rowsEl.forEach(function(r){r.classList.add('hide');});
  vis.forEach(function(r,i){tbody.appendChild(r);r.classList.toggle('hide',i>=lim);});
- count.textContent='Showing '+Math.min(lim,vis.length)+' of '+vis.length+' cities'+(state.region!=='all'?' in the selected region':'')+'.';
- more.style.display=(vis.length>lim)?'':'none';
-}
-function setRegion(r){state.region=r;[].forEach.call(document.querySelectorAll('#lb-chips .chip'),function(c){c.classList.toggle('on',c.dataset.region===r);});apply();}
-[].forEach.call(document.querySelectorAll('#lb-chips .chip'),function(c){c.addEventListener('click',function(){setRegion(c.dataset.region);});});
-[].forEach.call(document.querySelectorAll('.rg-card'),function(c){c.addEventListener('click',function(){setRegion(c.dataset.region);document.getElementById('leaderboard').scrollIntoView({behavior:'smooth',block:'start'});});});
-document.getElementById('lb-search').addEventListener('input',function(e){state.q=e.target.value.trim().toLowerCase();apply();});
-document.getElementById('lb-sort').addEventListener('change',function(e){state.sort=e.target.value;apply();});
-more.addEventListener('click',function(){state.all=true;apply();});
-window.lbReveal=function(){state.all=true;state.region='all';state.q='';apply();};
+ count.textContent='Showing '+Math.min(lim,vis.length)+' of '+vis.length+' cities.';
+ more.style.display=vis.length>lim?'':'none';}
+tbody.addEventListener('click',function(e){var b=e.target.closest('.ps-open');if(!b)return;var tr=b.closest('tr'),open=b.getAttribute('aria-expanded')==='true';
+ closeDetails();if(open)return;
+ var d=document.createElement('tr');d.className='ps-detail';d.innerHTML='<td colspan="6">'+card(BY[tr.dataset.key],true)+'</td>';tr.after(d);
+ b.setAttribute('aria-expanded','true');b.textContent='Close';tr.classList.add('on');});
+document.getElementById('ps-filter').addEventListener('input',function(e){st.q=e.target.value.trim().toLowerCase();apply();});
+regSel.addEventListener('change',function(){st.region=regSel.value;apply();});
+document.getElementById('ps-sort').addEventListener('change',function(e){st.sort=e.target.value;apply();});
+more.addEventListener('click',function(){st.all=true;apply();});
+[].forEach.call(document.querySelectorAll('.ps-strip-row'),function(b){b.addEventListener('click',function(){
+ st.region=b.dataset.region;regSel.value=st.region;apply();document.getElementById('ranking').scrollIntoView({behavior:'smooth',block:'start'});});});
 apply();
+var q=new URLSearchParams(location.search).get('city');if(q&&BY[q])show(q,true);
 })();
 """
 
@@ -432,10 +797,10 @@ page = f'''<!DOCTYPE html>
   gtag('config', 'G-W33G4TGRHD');
 </script>
 
-<meta name="description" content="Every city HomePowerRebate covers, scored 0-100 on rebate dollar value, program status, and stackability. See how your city ranks for heat pump, solar, battery, and 5 more categories.">
+<meta name="description" content="We scored {total_cities} cities in {total_regions} provinces and states on home energy rebates, 0 to 100. {esc(TOP_LABEL)} cities average {REGION_AVG[TOP_REG]:.0f}; {esc(BOT_LABEL)} averages {REGION_AVG[BOT_REG]:.0f}. Find your city's score.">
 <link rel="canonical" href="https://homepowerrebate.com/powerscore/">
 <meta property="og:title" content="PowerScore: City Rebate Rankings 2026 | HomePowerRebate">
-<meta property="og:description" content="We scored {total_cities} cities across {total_regions} regions on rebate value, status, and stackability. See how your city ranks.">
+<meta property="og:description" content="Where you live decides how much rebate help you get. {total_cities} cities scored 0 to 100. Find yours.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
 <meta property="og:image:width" content="1200">
@@ -448,112 +813,184 @@ page = f'''<!DOCTYPE html>
 {jsonld_html}
 
 <style>
-:root {{
-  --ink: #0a2a2e;
-  --ink-soft: #1a3d42;
-  --paper: #faf7f2;
-  --paper-warm: #f5efe5;
-  --teal: #0d4f5c;
-  --teal-deep: #08363f;
-  --amber: #d4751c;
-  --amber-bright: #e88a2e;
-  --green-money: #2d6a4f;
-  --red-flag: #b04545;
-  --rule: #d9d0c1;
-  --sage: #6f8f7a;
-}}
-* {{ box-sizing: border-box; }}
-body {{ margin: 0; background: var(--paper); color: var(--ink); font-family: 'Inter Tight', sans-serif; line-height: 1.6; }}
-h1, h2, h3, h4 {{ font-family: 'Fraunces', serif; color: var(--teal-deep); }}
-.wrap {{ max-width: 1180px; margin: 0 auto; padding: 0 28px; }}
-a {{ color: var(--teal); }}
-
-/* ---- hero ---- */
-.hero {{ background: linear-gradient(135deg, var(--teal-deep), var(--teal)); color: #fff; padding: 64px 28px 56px; text-align: center; }}
-.hero .eyebrow {{ font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 14px; }}
-.hero h1 {{ color: #fff; font-size: clamp(32px, 5vw, 50px); line-height: 1.12; margin: 0 0 16px; max-width: 780px; margin-left: auto; margin-right: auto; }}
-.hero p.lead {{ font-size: 17px; color: rgba(255,255,255,0.85); max-width: 620px; margin: 0 auto 28px; }}
-.hero-stats {{ display: flex; justify-content: center; gap: 36px; flex-wrap: wrap; margin-top: 8px; }}
-.hero-stat {{ text-align: center; }}
-.hero-stat .num {{ font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700; color: var(--amber-bright); }}
-.hero-stat .lbl {{ font-size: 12px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: .05em; }}
-
-/* ---- city picker + gauge ---- */
-.picker-section {{ padding: 48px 28px; }}
-.picker-card {{ background: #fff; border: 1px solid var(--rule); border-radius: 16px; padding: 32px; box-shadow: 0 6px 24px rgba(10,42,46,0.06); }}
-.picker-card h2 {{ margin-top: 0; font-size: 24px; }}
-.picker-row {{ display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }}
-.picker-row select {{ flex: 1; min-width: 240px; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--rule); font-family: 'Inter Tight', sans-serif; font-size: 15px; background: #fff; color: var(--ink); }}
-.picker-row button {{ padding: 12px 22px; background: var(--amber); color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px; }}
-.picker-row button:hover {{ background: var(--amber-bright); }}
-
-.result-box {{ display: none; margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--rule); align-items: center; gap: 32px; flex-wrap: wrap; }}
-.result-box.show {{ display: flex; }}
-.gauge {{ --score-deg: 0deg; width: 148px; height: 148px; border-radius: 50%; flex-shrink: 0; background: conic-gradient(var(--amber) var(--score-deg), #eee var(--score-deg)); display: flex; align-items: center; justify-content: center; position: relative; }}
-.gauge::before {{ content: ''; position: absolute; inset: 12px; background: #fff; border-radius: 50%; }}
-.gauge .gauge-num {{ position: relative; font-family: 'Fraunces', serif; font-weight: 700; font-size: 38px; color: var(--teal-deep); }}
-.gauge .gauge-sub {{ position: relative; font-size: 11px; color: var(--sage); text-transform: uppercase; letter-spacing: .04em; margin-top: -6px; }}
-.result-text h3 {{ margin: 0 0 6px; font-size: 22px; }}
-.result-text p {{ margin: 0 0 12px; color: var(--ink-soft); font-size: 15px; }}
-.result-text a.cta {{ display: inline-block; padding: 10px 20px; background: var(--teal-deep); color: #fff; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; }}
-
-/* ---- category badges/pills ---- */
-.overall-badge {{ display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; border-radius: 50%; font-family: 'Fraunces', serif; font-weight: 700; font-size: 16px; color: #fff; }}
-.overall-badge.small {{ min-width: 32px; height: 32px; font-size: 13px; }}
-.band-great {{ background: var(--green-money); }}
-.band-good {{ background: var(--teal); }}
-.band-fair {{ background: var(--amber); }}
-.band-low {{ background: var(--red-flag); }}
-
-.cat-pill {{ display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 700; padding: 3px 7px; border-radius: 999px; margin: 2px; color: #fff; white-space: nowrap; }}
-.cat-pill.band-great {{ background: rgba(45,106,79,0.9); }}
-.cat-pill.band-good {{ background: rgba(13,79,92,0.9); }}
-.cat-pill.band-fair {{ background: rgba(212,117,28,0.9); }}
-.cat-pill.band-low {{ background: rgba(176,69,69,0.85); }}
-
-.status-pill {{ display: inline-block; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: .03em; }}
-.status-pill-open {{ background: #eaf3ee; color: var(--green-money); }}
-.status-pill-limited {{ background: #fdf3e7; color: var(--amber); }}
-.status-pill-closed {{ background: #fdf2f0; color: var(--red-flag); }}
-
-/* ---- leaderboard table ---- */
-.section {{ padding: 48px 0; }}
-.section-title {{ font-size: 28px; margin-bottom: 6px; }}
-.section-sub {{ color: var(--ink-soft); margin-bottom: 24px; max-width: 700px; }}
-.table-wrap {{ overflow-x: auto; border: 1px solid var(--rule); border-radius: 12px; background: #fff; }}
-table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px; }}
-.score-table thead th {{ text-align: left; background: var(--paper-warm); color: var(--teal-deep); font-weight: 700; padding: 12px 14px; border-bottom: 1px solid var(--rule); position: sticky; top: 0; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }}
-.score-table td {{ padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: middle; }}
-.score-table tbody tr:hover {{ background: var(--paper-warm); }}
-.score-table tbody tr:last-child td {{ border-bottom: none; }}
-.rank-cell {{ color: var(--sage); font-weight: 700; width: 48px; }}
-.city-cell a {{ font-weight: 700; text-decoration: none; color: var(--teal-deep); }}
-.city-cell a:hover {{ text-decoration: underline; }}
-.region-tag {{ display: block; font-size: 11px; color: var(--sage); text-transform: uppercase; letter-spacing: .03em; }}
-.pills-cell {{ min-width: 320px; }}
-
-/* ---- category tabs ---- */
-.cat-tabs {{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }}
-.cat-tab {{ padding: 10px 16px; border-radius: 999px; border: 1px solid var(--rule); background: #fff; font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; color: var(--ink); }}
-.cat-tab.active {{ background: var(--teal-deep); color: #fff; border-color: var(--teal-deep); }}
-.cat-panel {{ display: none; }}
-.cat-panel.active {{ display: block; }}
-.cat-panel h3 {{ font-size: 20px; margin-bottom: 14px; }}
-
-.methodology {{ background: var(--paper-warm); padding: 48px 0; }}
-.methodology .box {{ background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 28px; }}
-.methodology ul {{ margin: 12px 0 0; padding-left: 20px; }}
-.methodology li {{ margin-bottom: 8px; }}
-
-@media (max-width: 640px) {{
-  .result-box {{ flex-direction: column; text-align: center; }}
-  .pills-cell {{ min-width: 240px; }}
-}}
-{NEW_CSS}
+{PS_CSS}
 </style>
 </head>
 <body>
+'''
 
+MAIN = f'''
+<div class="ps">
+<header class="ps-hero">
+  <div class="ps-wrap ps-hero-grid">
+    <div>
+      <p class="ps-kicker">PowerScore &middot; updated {date_nice}</p>
+      <h1>Where you live decides your <em>rebate</em>.</h1>
+      <p class="ps-lead">We scored every city we cover on the same 0 to 100 scale: how much rebate money there is, whether it is open today, and how many programs stack. The best region scores {GAP_RATIO:.1f} times higher than the lowest.</p>
+      <div class="ps-find-box" role="search">
+        <label for="ps-search">Find your city's score</label>
+        <input id="ps-search" class="ps-search" type="text" placeholder="Type your city" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="ps-list" aria-autocomplete="list">
+        <ul id="ps-list" class="ps-list" role="listbox" hidden></ul>
+        <p class="ps-hint">Try <button type="button" data-try="{esc(rows[0]["region"])}/{esc(rows[0]["slug"])}">{esc(rows[0]["label"])}</button>, <button type="button" data-try="{esc(TIGHT[0]["region"])}/{esc(TIGHT[0]["slug"])}">{esc(TIGHT[0]["label"])}</button> or <button type="button" data-try="{esc(BY_REGION[BOT_REG][0]["region"])}/{esc(BY_REGION[BOT_REG][0]["slug"])}">{esc(BY_REGION[BOT_REG][0]["label"])}</button>.</p>
+      </div>
+    </div>
+    <aside class="ps-gap" aria-labelledby="ps-gap-h">
+      <h2 id="ps-gap-h">The rebate gap</h2>
+      <p class="ps-gap-sub">Average PowerScore, top 3 and bottom 3 of {total_regions} regions</p>
+      <ol>
+{render_gap()}
+      </ol>
+      <p class="ps-gap-foot"><a href="#regions">See all {total_regions} regions</a></p>
+    </aside>
+  </div>
+</header>
+
+<section class="ps-card-sec" id="your-score" hidden>
+  <div class="ps-wrap" id="ps-card-slot" aria-live="polite"></div>
+</section>
+<script>(function(){{var s=document.getElementById('your-score');if(new URLSearchParams(location.search).get('city'))s.hidden=false;}})();</script>
+
+<section class="ps-sec">
+  <div class="ps-wrap">
+    <div class="ps-head">
+      <p class="ps-kicker">What the numbers show</p>
+      <h2 class="ps-h2">Three things we learned scoring {total_cities} cities</h2>
+    </div>
+    <div class="ps-finds">
+{render_findings()}
+    </div>
+  </div>
+</section>
+
+<section class="ps-sec white" id="regions">
+  <div class="ps-wrap">
+    <div class="ps-head">
+      <p class="ps-kicker">Every region, every city</p>
+      <h2 class="ps-h2">Your province or state sets the bar</h2>
+      <p class="ps-intro">Each dot is one city. Most dots in a region sit on top of each other, because the biggest rebates come from province-wide or state-wide programs. Tap a region to see its cities in the full ranking.</p>
+    </div>
+    <div class="ps-strip">
+      <div class="ps-strip-axis" aria-hidden="true"><span></span><span><i>0</i><i>25</i><i>50</i><i>75</i><i>100</i></span><span>Avg</span></div>
+{render_strip()}
+    </div>
+    <div class="ps-legend"><span><i class="k-dot"></i>One city</span><span><i class="k-avg"></i>Region average</span><span><i class="k-rng"></i>Lowest to highest city</span></div>
+  </div>
+</section>
+
+<section class="ps-sec">
+  <div class="ps-wrap">
+    <div class="ps-head">
+      <p class="ps-kicker">Strengths and gaps</p>
+      <h2 class="ps-h2">What each region does best</h2>
+      <p class="ps-intro">Average score for each upgrade, out of 100. Darker means more rebate help. Scroll sideways on a phone.</p>
+    </div>
+    <div class="ps-heat-wrap"><table class="ps-heat">{render_heatmap()}</table></div>
+    <p class="ps-heat-key">0 <i></i> 100</p>
+  </div>
+</section>
+
+<section class="ps-sec warm">
+  <div class="ps-wrap">
+    <div class="ps-head">
+      <p class="ps-kicker">Upgrade by upgrade</p>
+      <h2 class="ps-h2">The best places for each upgrade</h2>
+      <p class="ps-intro">The top five spots for each upgrade. Cities that tie with the same programs are grouped together. Amounts are the largest single rebate we list, in local dollars.</p>
+    </div>
+    <div class="ps-chs">
+{render_champions()}
+    </div>
+  </div>
+</section>
+
+<section class="ps-sec white">
+  <div class="ps-wrap">
+    <div class="ps-head">
+      <p class="ps-kicker">Full ranking</p>
+      <h2 class="ps-h2" id="ranking">All {total_cities} cities, ranked</h2>
+      <p class="ps-intro">Cities with the same score share a rank (shown as T-). Tap Details for the upgrade-by-upgrade breakdown.</p>
+    </div>
+    <div class="ps-controls">
+      <input type="search" id="ps-filter" placeholder="Filter by city name" aria-label="Filter the ranking by city name">
+      <select id="ps-region" aria-label="Show one region">{region_options_html}</select>
+      <select id="ps-sort" aria-label="Sort the ranking by">{sort_options_html}</select>
+    </div>
+    <p class="ps-count" id="ps-count" aria-live="polite"></p>
+    <div class="ps-table-wrap">
+      <table class="ps-table" id="ps-table">
+        <thead><tr><th>Rank</th><th>City</th><th>PowerScore</th><th>By upgrade</th><th>Open rebates</th><th><span class="sr">Details</span></th></tr></thead>
+        <tbody>
+{render_rows()}
+        </tbody>
+      </table>
+    </div>
+    <ul class="ps-profile-key">{profile_key_html}</ul>
+    <button type="button" id="ps-more" class="ps-btn ghost ps-more-btn">Show all {total_cities} cities</button>
+  </div>
+</section>
+
+<section class="ps-sec" id="method">
+  <div class="ps-wrap ps-method">
+    <div>
+      <p class="ps-kicker">Method</p>
+      <h2 class="ps-h2">How PowerScore works</h2>
+      <p class="ps-body">Each city gets a score from 0 to 100 for each of 8 upgrades. The overall PowerScore is the plain average of those 8. Every number comes from the rebate amounts on our own city pages, which we check against official program pages.</p>
+      <div class="ps-formula" aria-hidden="true"><span class="f1">60% money</span><span class="f2">25% open</span><span class="f3">15%</span></div>
+      <ul class="ps-parts">
+        <li><b>60% Money.</b> The top rebate for that upgrade, in US dollars, compared with a common yardstick: what the best-funded tenth of cities offer. Matching the yardstick earns full marks.</li>
+        <li><b>25% Open today.</b> Open programs get full credit. Funding limited or unclear programs get half. Closed or missing programs get zero.</li>
+        <li><b>15% Stacking.</b> How many separate programs apply (federal, provincial or state, utility, city). More layers score higher, up to four.</li>
+      </ul>
+    </div>
+    <div>
+      <details class="ps-fold" id="reliability">
+        <summary>How reliable is this ranking?</summary>
+        <div class="in">
+          <ul>
+            <li><b>One yardstick for every city.</b> A city's money score compares its top rebate with what the best-funded tenth of cities offer, not with the best city in its own province or state.</li>
+            <li><b>Currency is approximate.</b> Canadian amounts are converted at {cad} US dollars per Canadian dollar, only to put both countries on one scale.</li>
+            <li><b>Open rebate money is not a promise.</b> It adds the top open rebate in each upgrade. Most homes will not qualify for all of them, and some programs cannot be combined.</li>
+            <li><b>Ties are real.</b> Only {distinct_scores} different overall scores exist across {total_cities} cities, because most rebate programs cover a whole province or state.</li>
+            <li><b>Not every region has been verified.</b> Regions marked "Not yet" ({unverified}) have not had each program checked against its official page.</li>
+            <li><b>Data last rebuilt {date_nice}.</b> Amounts change. The <a href="/rebate-tracker/">rebate tracker</a> lists what has ended or moved.</li>
+          </ul>
+          <div class="ps-scroll"><table class="ps-mini">
+            <thead><tr><th>Region</th><th>Cities</th><th>Facts verified</th><th>Cells with a $ amount</th><th>Cities scoring alike</th><th>How to read it</th></tr></thead>
+            <tbody>{reliability_rows_html}</tbody>
+          </table></div>
+        </div>
+      </details>
+      <details class="ps-fold">
+        <summary>Full-score yardstick for each upgrade</summary>
+        <div class="in"><table class="ps-mini"><thead><tr><th>Upgrade</th><th>Earns a full money score at</th></tr></thead><tbody>{yardstick_rows_html}</tbody></table></div>
+      </details>
+      <details class="ps-fold">
+        <summary>About the energy bill estimate</summary>
+        <div class="in"><p>The city breakdown shows an estimated yearly electricity and heating fuel cost for a 2,500 sq ft home, based on utility rate schedules and typical regional usage. It is not a quoted bill and plays no part in the PowerScore. Nova Scotia and Massachusetts show a range because many homes there heat with oil, which costs more. Figures marked with an asterisk (*) use a neighbouring utility's rates where we could not find a local one.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="ps-sec white">
+  <div class="ps-wrap ps-press">
+    <div class="ps-press-box">
+      <p class="ps-kicker" style="color:#f5b566">For reporters and researchers</p>
+      <h2>Using PowerScore in a story?</h2>
+      <p>PowerScore is an independent ranking of home energy rebates across {total_cities} cities in Canada and the US, rebuilt each time our city pages change. Please link to this page when you cite it.</p>
+      <p class="ps-cite">HomePowerRebate PowerScore, data as of {date_nice}. homepowerrebate.com/powerscore</p>
+      <p>Questions about the data or the method? Email <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a>. Read <a href="/blog/powerscore-how-we-rank-every-city/">how we rank every city</a>.</p>
+    </div>
+    <div class="ps-links">
+      <h2>Head to head</h2>
+      <p class="ps-body">Side-by-side comparisons of two cities, upgrade by upgrade.</p>
+      <div class="ps-chips">{render_compare_links()}</div>
+    </div>
+  </div>
+</section>
+</div>
+'''
+
+page += f'''
 <!-- ============================== NAV (canonical, from _partials/nav-footer.html) ============================== -->
 <nav class="nav">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
@@ -640,137 +1077,9 @@ table.score-table {{ width: 100%; border-collapse: collapse; font-size: 14px; mi
   </div>
 </nav>
 <!-- ============================== /NAV ============================== -->
-
-<header class="hero">
-  <div class="wrap">
-    <div class="eyebrow">New &middot; PowerScore</div>
-    <h1>See how your city's rebates stack up</h1>
-    <p class="lead">We scored every city we cover &mdash; {total_cities} in all, across {total_regions} regions &mdash; on rebate dollar value, program status, and how many funding layers stack. Find your city below.</p>
-    <div class="hero-stats">
-      <div class="hero-stat"><div class="num">{total_cities}</div><div class="lbl">Cities Scored</div></div>
-      <div class="hero-stat"><div class="num">8</div><div class="lbl">Categories</div></div>
-      <div class="hero-stat"><div class="num">{total_regions}</div><div class="lbl">Regions</div></div>
-      <div class="hero-stat"><div class="num">{TOP_CITY['label']}</div><div class="lbl">#1 Overall</div></div>
-    </div>
-  </div>
-</header>
-
-<section class="picker-section">
-  <div class="wrap">
-    <div class="picker-card">
-      <h2>Find your city's PowerScore</h2>
-      <div class="picker-row">
-        <select id="city-select" aria-label="Choose your city">
-          <option value="">Choose your city&hellip;</option>
-          {city_options_html}
-        </select>
-        <button type="button" onclick="lookupCity()">Show my score</button>
-      </div>
-      <div class="result-box" id="result-box">
-        <div class="gauge" id="result-gauge"><span class="gauge-num" id="result-num">0</span></div>
-        <div class="result-text">
-          <h3 id="result-title">&mdash;</h3>
-          <p id="result-desc">&mdash;</p>
-          <a class="cta" id="result-cta" href="#">See the full rebate guide &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="ps-podium-sec">
-  <div class="wrap">
-    <h2 class="section-title">The top of the table</h2>
-    <p class="section-sub">The three highest PowerScores among regions where we have checked each program against its official page. Each ring is the city's overall score out of 100. Cities with the same score are listed in the order shown.</p>
-    <div class="podium">
-{podium_html}
-    </div>
-  </div>
-</section>
-
-<section class="ps-regions">
-  <div class="wrap">
-    <h2 class="section-title">How each region compares</h2>
-    <p class="section-sub">Average PowerScore across every city we cover in the region. Tap a region to filter the leaderboard below.</p>
-    <div class="rg-grid">
-{region_cards_html}
-    </div>
-  </div>
-</section>
-
-<section class="ps-reliable">
-  <div class="wrap">
-    <details class="rel-box" id="rel-details">
-      <summary style="cursor:pointer;list-style:none"><h2 class="section-title" id="reliability" style="display:inline">Read this first: how reliable is this ranking? <span style="font-size:15px;color:var(--amber)">(tap to read)</span></h2></summary>
-      <p class="section-sub">PowerScore is built from the rebate numbers on our own city pages, not from a separate survey. That makes it transparent, but it also has limits you should know about.</p>
-      <ul class="rel-list">
-        <li><b>One yardstick for every city.</b> A city's dollar score is its top rebate in that category, in US dollars, compared with what the best-funded tenth of cities offer. It is no longer measured against the best city in its own province or state.</li>
-        <li><b>Currency is approximate.</b> Canadian amounts are converted at {cad} US dollars per Canadian dollar, a rough rate used only to put the two countries on one scale.</li>
-        <li><b>Rebate potential is not a promise.</b> It adds up the top open rebate in each upgrade category. Most homes will not qualify for all of them, and some programs cannot be combined.</li>
-        <li><b>Ties are real.</b> Only {distinct_scores} different overall scores exist across {total_cities} cities, because most rebate programs are province-wide.</li>
-        <li><b>Not every region has been verified.</b> Regions marked below as "Not yet" ({unverified}) have not had each program checked against its official page, so treat their scores as a rough guide.</li>
-        <li><b>Data last rebuilt {data_date}.</b> Amounts change; the rebate tracker lists what has ended or moved.</li>
-      </ul>
-      <div class="table-wrap"><table class="score-table rel-table">
-        <thead><tr><th>Region</th><th>Cities</th><th>Facts verified</th><th>Category cells with a $ amount</th><th>Cities scoring alike</th><th>How to read the ranking</th></tr></thead>
-        <tbody>{reliability_rows_html}</tbody>
-      </table></div>
-    </details>
-    <script>if(window.innerWidth>=900)document.getElementById("rel-details").open=true;</script>
-  </div>
-</section>
-
-<section class="section" style="background:#fff;">
-  <div class="wrap">
-    <h2 class="section-title" id="leaderboard">Full PowerScore leaderboard</h2>
-    <p class="section-sub">Ranked by overall PowerScore, the average of all 8 category scores. Cities with the same score share a rank (marked T-). Cities in the same province often score alike because the main rebate programs apply province-wide; local programs are what set them apart.</p>
-    <div class="lb-controls">
-      <input type="search" id="lb-search" placeholder="Search for your city" aria-label="Search for your city">
-      <select id="lb-sort" aria-label="Sort the leaderboard by">{sort_options_html}</select>
-    </div>
-    <div class="chips" id="lb-chips"><button type="button" class="chip on" data-region="all">All regions</button>{region_chips_html}</div>
-    <p class="lb-count" id="lb-count" aria-live="polite"></p>
-    <div class="table-wrap">
-      <table class="score-table" id="leaderboard-table">
-        <thead><tr><th>Overall rank</th><th>City</th><th>PowerScore</th><th>Category breakdown</th><th>Rebate potential</th><th>Est. Energy Cost</th></tr></thead>
-        <tbody>
-{overall_rows_html}
-        </tbody>
-      </table>
-    </div>
-    <button type="button" id="lb-more" class="more-btn">Show all {total_cities} cities</button>
-    <div class="legend"><span style="--c:var(--green-money)">75+ excellent</span><span style="--c:var(--teal)">50 to 74 solid</span><span style="--c:var(--amber)">25 to 49 limited</span><span style="--c:var(--red-flag)">under 25 thin</span></div>
-  </div>
-</section>
-
-<section class="section" style="background: var(--paper-warm);">
-  <div class="wrap">
-    <h2 class="section-title" id="by-category">Best cities by category</h2>
-    <p class="section-sub">Same scoring, one category at a time &mdash; the top 25 cities for each. Great for shopping around if you're flexible on where you'll do the work (or just bragging rights).</p>
-    <div class="cat-tabs">
-{cat_buttons_html}
-    </div>
-{cat_panels_html}
-  </div>
-</section>
-
-<section class="methodology">
-  <div class="wrap">
-    <div class="box">
-      <h2 style="margin-top:0; font-size:24px;">How PowerScore is calculated</h2>
-      <p>Every city gets a score from 0&ndash;100 in each of 8 categories, built entirely from the rebate numbers already published on each city's page &mdash; nothing here is estimated or invented.</p>
-      <ul>
-        <li><strong>60% Dollar value</strong> &mdash; the top rebate amount available in that category, in US dollars, compared with a common yardstick: the 90th-percentile amount across every city we cover (shown below). Matching the yardstick earns full marks.</li>
-        <li><strong>25% Program status</strong> &mdash; Open programs get full credit, Funding Limited/Unclear programs get partial credit, and Closed or nonexistent programs get zero.</li>
-        <li><strong>15% Stackability</strong> &mdash; how many distinct funding layers apply (federal, provincial/state, utility, municipal) &mdash; more layers that stack together score higher.</li>
-      </ul>
-      {yardstick_table_html}
-      <p>A city's <strong>overall PowerScore</strong> is the plain average of its 8 category scores. We recalculate this whenever the underlying city pages are updated with new rebate figures.</p>
-      <p><strong>Est. Energy Cost</strong> is estimated average annual electricity + heating fuel cost for a 2,500 sq ft home, based on utility rate schedules and typical regional usage &mdash; not a quoted bill, and it plays no role in the PowerScore calculation above. Nova Scotia and Massachusetts show a range instead of a single figure because both regions have a significant share of oil-heated homes, which run meaningfully higher than gas or electric heat, alongside their other heating types. Figures marked with an asterisk (*) are approximated from a neighboring utility territory where a precise regional rate wasn't available.</p>
-    </div>
-  </div>
-</section>
-
+'''
+page += MAIN
+page += f'''
 <!-- ============================ FOOTER ============================= -->
 <section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div class="wrap" style="text-align: center; color: #fff; max-width: 600px;">
@@ -893,46 +1202,9 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
 }});
 
 /* ---- PowerScore page-specific JS ---- */
-const POWERSCORE_ROWS = {json.dumps([{"key": r["region"] + "/" + r["slug"], "label": r["label"], "region": r["region_label"], "overall": r["overall"], "url": r["url"], "rank": i + 1} for i, r in enumerate(rows)])};
-const POWERSCORE_TOTAL = {total_cities};
-
-function bandWord(score) {{
-  if (score >= 75) return 'excellent';
-  if (score >= 50) return 'solid';
-  if (score >= 25) return 'limited';
-  return 'thin';
-}}
-
-function lookupCity() {{
-  const sel = document.getElementById('city-select');
-  const key = sel.value;
-  if (!key) return;
-  const item = POWERSCORE_ROWS.find(r => r.key === key);
-  if (!item) return;
-  const regionTotal = POWERSCORE_ROWS.filter(r => r.region === item.region).length;
-  const regionRank = POWERSCORE_ROWS.filter(r => r.region === item.region).sort((a,b)=>b.overall-a.overall).findIndex(r => r.key === key) + 1;
-
-  document.getElementById('result-box').classList.add('show');
-  document.getElementById('result-num').textContent = Math.round(item.overall);
-  document.getElementById('result-gauge').style.setProperty('--score-deg', (item.overall * 3.6) + 'deg');
-  document.getElementById('result-title').textContent = item.label + ': ' + Math.round(item.overall) + ' / 100';
-  document.getElementById('result-desc').textContent = item.label + ' ranks #' + regionRank + ' of ' + regionTotal + ' in ' + item.region + ' (#' + item.rank + ' of ' + POWERSCORE_TOTAL + ' overall) — ' + bandWord(item.overall) + ' rebate coverage.';
-  document.getElementById('result-cta').href = item.url;
-
-  const rowId = 'city-' + key.replace(/\\//g, '-');
-  const row = document.getElementById(rowId);
-  if (row) {{
-    if (window.lbReveal) window.lbReveal();
-    document.querySelectorAll('.score-table tbody tr').forEach(tr => tr.style.background = '');
-    row.style.background = 'var(--paper-warm)';
-  }}
-}}
-
-function showCategory(cat) {{
-  document.querySelectorAll('.cat-tab').forEach(btn => btn.classList.toggle('active', btn.dataset.cat === cat));
-  document.querySelectorAll('.cat-panel').forEach(panel => panel.classList.toggle('active', panel.id === 'panel-' + cat));
-}}
-{NEW_JS}
+window.PS_ROWS = {page_rows_json()};
+window.PS_CATS = {json.dumps([SHORT_LABELS[c] for c in CATEGORIES])};
+{PS_JS}
 </script>
 
 </body>

@@ -264,10 +264,10 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* ===== fluid layout system =====
    One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
-:root { --container: clamp(1180px, 90vw, 1880px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 1020px); --rail: clamp(300px, 21vw, 380px); }
+:root { --container: clamp(1180px, 90vw, 1440px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 900px); --rail: clamp(300px, 21vw, 340px); }
 html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
 html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
-main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide > .section-warm-inner, main.layout-wide > .section-dark-inner { max-width: var(--container); }
+main.layout-home > .section, main.layout-home > section.hero, main.layout-home > .section-warm-inner, main.layout-home > .section-dark-inner { max-width: var(--container); }
 @media (min-width: 769px) {
   main.layout-wide .what-grid, main.layout-wide .future-grid, main.layout-wide .philosophy-pillars, main.layout-wide .trust-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
   main.layout-wide .what-grid.what-grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
@@ -281,7 +281,7 @@ main.layout-wide > .section, main.layout-wide > section.hero, main.layout-wide >
   main.layout-wide .region-grid { align-items: start !important; }
 }
 /* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
-main.layout-wide p, main.layout-wide li { max-width: min(90ch, 100%); }
+main.layout-wide p { max-width: min(90ch, 100%); }
 main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
 @media (min-width: 900px) {
   main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }

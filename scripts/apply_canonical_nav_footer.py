@@ -418,10 +418,11 @@ _LAYOUT_WIDE_PATH = re.compile(r"^(index\.html|installers/index\.html|installers
 
 def ensure_layout_wide(content: str, rel: str) -> str:
     """Homepage, installer directory and installer ranking pages use the fluid container (main.layout-wide). Idempotent."""
-    content = re.sub(r'(<main id="main"(?: tabindex="-1")?) class="layout-wide">', r"\1>", content)
+    content = re.sub(r'(<main id="main"(?: tabindex="-1")?) class="layout-wide(?: layout-home)?">', r"\1>", content)
     if not _LAYOUT_WIDE_PATH.match(str(rel).replace("\\", "/")):
         return content
-    return re.sub(r'<main id="main"( tabindex="-1")?>', lambda m: '<main id="main"' + (m.group(1) or "") + ' class="layout-wide">', content, count=1)
+    cls = "layout-wide layout-home" if str(rel).replace("\\", "/") == "index.html" else "layout-wide"
+    return re.sub(r'<main id="main"( tabindex="-1")?>', lambda m: '<main id="main"' + (m.group(1) or "") + ' class="' + cls + '">', content, count=1)
 
 
 def ensure_fast_head(content: str) -> str:

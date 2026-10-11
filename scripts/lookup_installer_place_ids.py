@@ -8,9 +8,10 @@ Resumable: profiles already in the file are skipped (pass --refresh to redo all)
 python3 scripts/add_profile_photos.py and `git add -f data/installer-place-ids.json`.
 
 Usage (in your own terminal; never paste the key into a chat):
-  GOOGLE_PLACES_KEY=... python3 scripts/lookup_installer_place_ids.py
+  python3 scripts/lookup_installer_place_ids.py      (asks for the key; typing is hidden)
 The key needs "Places API (New)" enabled. The query is the business name plus its street address from the profile page.
 """
+import getpass
 import html
 import json
 import os
@@ -59,9 +60,12 @@ def search(query, key):
 
 
 def main():
-    key = os.environ.get("GOOGLE_PLACES_KEY", "")
+    key = os.environ.get("GOOGLE_PLACES_KEY", "").strip()
     if not key:
-        sys.exit("Set GOOGLE_PLACES_KEY in your own terminal first.")
+        # asked in the terminal, not echoed and never saved
+        key = getpass.getpass("Google API key (Places API (New)), then Enter: ").strip()
+    if not key:
+        sys.exit("No key given.")
     ids = {} if "--refresh" in sys.argv or not OUT.exists() else json.loads(OUT.read_text(encoding="utf-8"))
     pages = sorted((ROOT / "installers" / "profiles").rglob("index.html"))
     found = missed = 0

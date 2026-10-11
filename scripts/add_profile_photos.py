@@ -76,7 +76,7 @@ def block(name, meta, place, cfg):
            f'<figcaption class="ipf-cap" hidden></figcaption></figure>')
     if live:
         logo = cfg.get("google_logo") or ""
-        logo_js = (repr(f' <img class="ipf-g" src="{logo}" alt="Google" width="59" height="18">') if logo
+        logo_js = (repr(f' <img class="ipf-g" src="{logo}" alt="Google Maps" width="98" height="18" translate="no">') if logo
                    else repr(' <span class="ipf-gt" translate="no">Google Maps</span>'))
         out += SCRIPT % {"worker": json.dumps(worker), "logo": logo_js}
     return out + "\n<!-- PROFILE-PHOTO-END -->\n"

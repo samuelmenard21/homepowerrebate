@@ -13,7 +13,7 @@ counts Place Photo requests and stops at 1,000, so it never costs anything unles
 1. Google Cloud Console (same project as the roof check is fine): enable **Places API (New)**, create an API key
    restricted to Places API (New). Under the API's Quotas set a daily limit (about 100 a day for Place Photo).
 2. Find the place IDs (free; run in your own terminal, never paste the key into chat):
-   `GOOGLE_PLACES_KEY=... python3 scripts/lookup_installer_place_ids.py`
+   `python3 scripts/lookup_installer_place_ids.py` (it asks for the key; typing is hidden)
    then `git add -f data/installer-place-ids.json`.
 3. `cd photo-worker && npx wrangler kv namespace create USAGE` and paste the id into wrangler.toml.
 4. `npx wrangler secret put GOOGLE_API_KEY` (paste the key at the prompt) and `npx wrangler deploy`.

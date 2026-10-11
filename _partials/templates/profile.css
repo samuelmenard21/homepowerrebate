@@ -13,5 +13,6 @@
 .tpl-profile .ipf-img { display: block; width: 100%; height: auto; max-height: 380px; aspect-ratio: 16 / 7; object-fit: cover; border-radius: 14px; background: #f5efe5; }
 .tpl-profile .ipf-cap { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 8px 2px 0; font-size: 13px; color: #5e5e5e; }
 .tpl-profile .ipf-cap a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
-.tpl-profile .ipf-g { height: 18px; width: auto; margin: 5px 0 0 10px; }
+/* Google attribution logo: 16 to 19px tall, clear space 10px left, right and top, 5px bottom (Places policies) */
+.tpl-profile .ipf-g { height: 18px; width: auto; margin: 10px 10px 5px; }
 .tpl-profile .ipf-gt { font-family: Roboto, Arial, sans-serif; font-weight: 400; font-size: 13px; color: #5e5e5e; margin-left: 4px; }

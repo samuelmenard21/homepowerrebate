@@ -1104,6 +1104,9 @@ def main():
                 if "@" in em:
                     allowed.add(em)
         allowed = sorted(e for e in allowed if not re.search(r"@(domain|example)\.(com|org)$", e))
+        _blk = ROOT / "data" / "blocked-installer-emails.json"  # placeholder or non-installer addresses never to email
+        if _blk.exists():
+            allowed = [e for e in allowed if e not in {x.lower() for x in json.loads(_blk.read_text())}]
         (ROOT / "installers" / "allowed-installer-emails.json").write_text(json.dumps(allowed, indent=0) + "\n", encoding="utf-8")
         bp, bhtml = badge_page(index)
         (ROOT / bp.strip("/")).mkdir(parents=True, exist_ok=True)

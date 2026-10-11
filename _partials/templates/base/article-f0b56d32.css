@@ -1,0 +1,29 @@
+
+:root {
+  --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
+  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --danger: #dc2626;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter Tight', 'Inter Tight Fallback', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.8; }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid #d9d0c1; padding: 14px 24px; }
+.logo { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 18px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
+.logo-power { color: var(--amber); }
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 28px; }
+.hero { background: var(--teal-deep); color: #fff; padding: 48px 28px; }
+.hero h1 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: clamp(32px, 5vw, 48px); margin-bottom: 16px; line-height: 1.2; }
+.hero p { font-size: 16px; color: rgba(250,247,242,0.85); }
+.eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(250,247,242,0.7); margin-bottom: 8px; font-weight: 600; }
+.article { padding: 48px 28px; }
+h2 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 28px; color: var(--teal-deep); margin: 40px 0 16px; }
+h3 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 20px; color: var(--teal-deep); margin: 28px 0 12px; }
+p { margin-bottom: 16px; font-size: 16px; line-height: 1.8; color: var(--ink-soft); }
+strong { color: var(--ink); font-weight: 600; }
+ul { margin-bottom: 16px; margin-left: 20px; }
+li { margin-bottom: 8px; }
+.towns-list { background: #fff; border: 1px solid #d9d0c1; border-radius: 8px; padding: 20px; margin: 24px 0; }
+.towns-list ul { margin: 0; margin-left: 20px; }
+.towns-list li { margin-bottom: 6px; font-size: 15px; }
+.alert { background: #fee2e2; padding: 20px; border-radius: 8px; border-left: 4px solid var(--danger); margin: 24px 0; }
+.highlight { background: #fef3c7; padding: 20px; border-radius: 8px; border-left: 4px solid var(--amber); margin: 24px 0; }
+footer { background: var(--ink); color: rgba(250,247,242,0.6); padding: 40px 28px; text-align: center; font-size: 13px; margin-top: 60px; }

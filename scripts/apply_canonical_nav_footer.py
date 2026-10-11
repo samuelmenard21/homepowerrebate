@@ -238,41 +238,60 @@ SITE_CSS_LINK_RE = re.compile(r'<link rel="stylesheet" href="/assets/site\.css\?
 _SITE_CSS = {}
 
 
-# Page templates. A family of generated pages that used to carry the same inline <style> block gets body classes and
-# its CSS from site.css instead:
-#   tplb-<variant>  scopes _partials/templates/<variant>.base.css, the old rules of that exact block (placed before the
-#                   shared CSS with zero added specificity, so the cascade is unchanged);
-#   tpl-<family>    scopes _partials/templates/<family>.css, the family's design (placed after the shared CSS).
-# Variants are older copies of a family's CSS; each keeps its own base, and all of them share the family design.
-# Add a variant: python3 scripts/extract_template_css.py <page> <variant> <text in the block>, then list its hash here.
+# Page templates. A family of generated pages that used to carry the same inline <style> block (a "variant": older
+# generators left several slightly different copies) now links that block as a cached file, /assets/tpl/<variant>.css,
+# in exactly the same place (verbatim rules, same cascade position: rendering cannot change), and gets the body class
+# tpl-<family>, which scopes the family's shared design in _partials/templates/<family>.css (part of site.css).
+# Sources: _partials/templates/base/<variant>.css, registered in _partials/templates/variants.json with the normalised
+# sha1 of the block. Add variants with scripts/adopt_template_variants.py.
 TEMPLATES_DIR = ROOT / "_partials" / "templates"
-TEMPLATE_VARIANTS = {  # variant -> (family, normalised sha1 of the inline block it replaces)
-    "article": ("article", "3acfd56f5e90d70e723a66765ce6d5fcb9a96469"),
-    "ranking": ("ranking", "12d700f20bcab841840571583927ac9425fe2f3c"),
-    "article-bc-appliances": ("article", "5cf352fa21b95a7ac0799d2e28ea9a1cfabbea9d"),
-    "article-bc-hrv": ("article", "4d99b4d106e5b1554479e9f3501f9fe818276432"),
-    "article-bc-smart-thermostats": ("article", "6ed2a350547b47357c9e0f4d008da3c38eaf57b2"),
-}
+TPL_ASSETS = ROOT / "assets" / "tpl"
+TEMPLATE_VARIANTS = {k: (v["family"], v["hash"]) for k, v in json.loads((TEMPLATES_DIR / "variants.json").read_text()).items()} if (TEMPLATES_DIR / "variants.json").exists() else {}
 # a generator that copies its CSS from an already converted page has no inline block left: recognise it by structure
 TEMPLATE_SIGNATURE = {"article": ('<section class="hero"><div class="wrap"><div class="amount-badge">', '<article class="article">')}
 STYLE_RE = re.compile(r"<style>([\s\S]*?)</style>\n?")
+TPL_LINK_RE = re.compile(r'<link rel="stylesheet" href="/assets/tpl/([a-z0-9-]+)\.css\?v=[0-9a-f]+" data-hpr-tpl>\n?')
 
 
-def _template_css(kind: str) -> str:
-    names = sorted(TEMPLATE_VARIANTS) if kind == "base" else sorted({f for f, _ in TEMPLATE_VARIANTS.values()})
+def _template_css() -> str:
     out = []
-    for name in names:
-        p = TEMPLATES_DIR / (f"{name}.base.css" if kind == "base" else f"{name}.css")
+    for name in sorted({f for f, _ in TEMPLATE_VARIANTS.values()}):
+        p = TEMPLATES_DIR / f"{name}.css"
         if p.exists():
-            out.append(f"/* ===== template: {name} ({p.name}) ===== */\n" + p.read_text(encoding="utf-8"))
+            out.append(f"/* ===== template design: {name} ({p.name}) ===== */\n" + p.read_text(encoding="utf-8"))
     return "\n".join(out)
+
+
+_TPL_LINKS = {}
+
+
+def tpl_link(variant: str) -> str:
+    if variant not in _TPL_LINKS:
+        body = (TEMPLATES_DIR / "base" / f"{variant}.css").read_text(encoding="utf-8")
+        h = __import__("hashlib").sha1(body.encode()).hexdigest()[:10]
+        _TPL_LINKS[variant] = f'<link rel="stylesheet" href="/assets/tpl/{variant}.css?v={h}" data-hpr-tpl>\n'
+    return _TPL_LINKS[variant]
+
+
+def write_tpl_assets():
+    TPL_ASSETS.mkdir(parents=True, exist_ok=True)
+    keep = set()
+    for v in TEMPLATE_VARIANTS:
+        body = (TEMPLATES_DIR / "base" / f"{v}.css").read_text(encoding="utf-8")
+        out = TPL_ASSETS / f"{v}.css"
+        keep.add(out.name)
+        if not out.exists() or out.read_text(encoding="utf-8") != body:
+            out.write_text(body, encoding="utf-8")
+    for f in TPL_ASSETS.glob("*.css"):
+        if f.name not in keep:
+            f.unlink()
 
 
 def site_css_body() -> str:
     """The shared CSS as served from /assets/site.css (with the metric-matched fallback fonts in every font stack)."""
     if "body" not in _SITE_CSS:
         _SITE_CSS["body"] = ("/* HomePowerRebate shared styles. Generated from _partials/nav-footer.html and _partials/templates/ by scripts/apply_canonical_nav_footer.py; edit those, not this file. */\n"
-                             + add_font_fallbacks(_template_css("base") + "\n" + CSS_RAW + "\n" + _template_css("design")) + "\n")
+                             + add_font_fallbacks(CSS_RAW + "\n" + _template_css()) + "\n")
     return _SITE_CSS["body"]
 
 
@@ -280,31 +299,51 @@ def _norm_hash(css: str) -> str:
     return __import__("hashlib").sha1(" ".join(css.split()).encode()).hexdigest()
 
 
-def _add_body_classes(content: str, classes) -> str:
+def _set_body_classes(content: str, add=(), drop=lambda c: False) -> str:
     bm = re.search(r"<body\b([^>]*)>", content)
     if not bm:
         return content
     attrs = bm.group(1)
     cm = re.search(r'\bclass="([^"]*)"', attrs)
     have = cm.group(1).split() if cm else []
-    add = [c for c in classes if c not in have]
-    if not add:
+    new = [c for c in have if not drop(c)] + [c for c in add if c not in have]
+    if new == have:
         return content
-    val = " ".join(have + add)
-    attrs = attrs.replace(cm.group(0), f'class="{val}"') if cm else attrs + f' class="{val}"'
+    if cm:
+        attrs = attrs.replace(cm.group(0), f'class="{" ".join(new)}"') if new else attrs.replace(" " + cm.group(0), "")
+    else:
+        attrs += f' class="{" ".join(new)}"'
     return content[:bm.start()] + f"<body{attrs}>" + content[bm.end():]
 
 
 def ensure_template(content: str) -> str:
-    """Swap a known template variant's inline <style> block for body classes (its rules are in site.css)."""
+    """Swap a known template variant's inline <style> block for its cached /assets/tpl/ file plus the family class."""
     by_hash = {h: v for v, (_, h) in TEMPLATE_VARIANTS.items()}
     for m in list(STYLE_RE.finditer(content)):
         v = by_hash.get(_norm_hash(m.group(1)))
         if v:
-            content = content[:m.start()] + content[m.end():]
-            return _add_body_classes(content, [f"tpl-{TEMPLATE_VARIANTS[v][0]}", f"tplb-{v}"])
-    if re.search(r'<body[^>]*\bclass="[^"]*\btplb-', content):
+            content = content[:m.start()] + tpl_link(v) + content[m.end():]
+            return _set_body_classes(content, [f"tpl-{TEMPLATE_VARIANTS[v][0]}"])
+    lm = TPL_LINK_RE.search(content)
+    if lm:  # refresh the version
+        return content[:lm.start()] + tpl_link(lm.group(1)) + content[lm.end():] if lm.group(1) in TEMPLATE_VARIANTS else content
+    # pages converted on 2026-10-10 before the /assets/tpl/ files: their base rules came from site.css under tplb-<variant>
+    bm = re.search(r'<body[^>]*\bclass="[^"]*\btplb-([a-z0-9-]+)', content)
+    v = bm.group(1) if bm and bm.group(1) in TEMPLATE_VARIANTS else None
+    if not v:
+        fam = re.search(r'<body[^>]*\bclass="[^"]*\btpl-([a-z-]+)', content)
+        v = fam.group(1) if fam and fam.group(1) in TEMPLATE_VARIANTS else None
+    if not v:
+        for sv, sig in TEMPLATE_SIGNATURE.items():
+            if all(x in content for x in sig) and not any(".amount-badge" in blk for blk in STYLE_RE.findall(content)):
+                v = sv
+                break
+    if not v:
         return content
+    pos = SITE_CSS_LINK_RE.search(content) or OLD_CSS_BLOCK_RE.search(content)
+    link = tpl_link(v)
+    content = content[:pos.start()] + link + content[pos.start():] if pos else content.replace("</head>", link + "</head>", 1)
+    return _set_body_classes(content, [f"tpl-{TEMPLATE_VARIANTS[v][0]}"], drop=lambda c: c.startswith("tplb-"))
     # pages converted before variants had their own class (2026-10-10): tpl-<family> alone means the family's own variant
     fam = re.search(r'<body[^>]*\bclass="[^"]*\btpl-([a-z-]+)', content)
     if fam and fam.group(1) in TEMPLATE_VARIANTS:
@@ -321,6 +360,11 @@ def site_css_link() -> str:
 
 
 def write_site_css():
+    write_tpl_assets()
+    _write_site_css()
+
+
+def _write_site_css():
     """The shared CSS lives in one cached file (/assets/site.css) instead of a copy inside every page.
     Source of truth stays the SHARED CSS block in _partials/nav-footer.html; the link carries a content hash so
     browsers and Cloudflare pick up a change at once and can cache the file for a year."""

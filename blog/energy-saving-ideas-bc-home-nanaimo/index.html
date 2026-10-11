@@ -34,63 +34,7 @@
 <style>@font-face{font-family:'Fraunces';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://fonts.gstatic.com/s/fraunces/v38/6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeP2Xz5c.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Inter Tight';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsH8ahuQ2e8.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}</style>
 <!-- FONT-PRELOAD-END -->
 
-<style>
-:root {
-  --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5;
-  --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;
-  --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { font-family: 'Inter Tight', 'Inter Tight Fallback', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
-
-.nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); padding: 16px 28px; }
-.logo { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 20px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
-.logo-power { color: var(--amber); }
-
-.wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
-h1 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: clamp(32px, 5vw, 48px); line-height: 1.1; letter-spacing: -0.02em; color: var(--teal-deep); margin: 32px 0 16px; }
-h2 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 28px; line-height: 1.2; color: var(--teal-deep); margin: 32px 0 16px; }
-h3 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 20px; color: var(--teal-deep); margin: 24px 0 12px; font-weight: 600; }
-p { margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); line-height: 1.8; }
-ul, ol { margin: 0 0 16px 22px; color: var(--ink-soft); }
-li { margin-bottom: 8px; line-height: 1.7; }
-
-.hero { padding: 48px 28px; background: var(--teal-deep); color: var(--paper); text-align: center; }
-.hero .wrap { max-width: 760px; }
-.hero h1 { color: var(--paper); margin-top: 0; }
-.hero p { color: rgba(250,247,242,.85); font-size: 16px; }
-
-.article { padding: 40px 28px; }
-.article .wrap { max-width: 760px; }
-.meta { font-size: 14px; color: var(--ink-soft); margin-bottom: 32px; }
-
-.callout { background: var(--paper-warm); border-left: 4px solid var(--amber); padding: 20px; border-radius: 8px; margin: 28px 0; }
-.callout h4 { font-size: 15px; font-weight: 700; color: var(--teal-deep); margin-bottom: 8px; }
-.callout p { margin: 0; font-size: 14px; }
-
-.table-box { overflow-x: auto; margin: 20px 0; }
-.table-box table { width: 100%; border-collapse: collapse; }
-.table-box th { background: var(--teal-deep); color: #fff; padding: 12px; text-align: left; font-weight: 600; font-size: 14px; }
-.table-box td { padding: 12px; border-bottom: 1px solid var(--rule); font-size: 14px; }
-.table-box tr:hover { background: var(--paper-warm); }
-
-.btn-primary { display: inline-block; background: var(--amber); color: #fff; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 600; margin-top: 16px; }
-.btn-primary:hover { background: var(--amber-bright); }
-a { color: var(--teal); }
-
-.cta-box { background: var(--teal-deep); color: #fff; border-radius: 12px; padding: 32px; margin: 40px 0; text-align: center; }
-.cta-box h2 { color: #fff; margin-top: 0; }
-.cta-box p { color: rgba(250,247,242,.85); }
-
-.related { border-top: 1px solid var(--rule); margin-top: 48px; padding-top: 32px; }
-.related h4 { font-size: 14px; text-transform: uppercase; letter-spacing: .05em; color: var(--sage); margin-bottom: 16px; }
-.related a { display: block; color: var(--ink); font-weight: 600; text-decoration: none; padding: 10px 0; border-bottom: 1px solid var(--rule); }
-.related a:hover { color: var(--amber); }
-
-footer { padding: 40px 28px; border-top: 1px solid var(--rule); background: var(--ink); color: rgba(250,247,242,.6); text-align: center; font-size: 12px; }
-footer a { color: rgba(250,247,242,.75); text-decoration: none; }
-</style>
+<link rel="stylesheet" href="/assets/tpl/article-a3bf3ffa.css?v=424f33a2b1" data-hpr-tpl>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -170,7 +114,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
   ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=9d65ec61a6" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=17596f8450" data-hpr-site-css>
 <style>
 /* CANONICAL-BREADCRUMB-CSS-START */
 .hpr-breadcrumb { max-width: 1180px; margin: 0 auto; padding: 14px 28px; font-size: 13px; color: var(--ink-soft); }
@@ -200,7 +144,7 @@ footer a { color: rgba(250,247,242,.75); text-decoration: none; }
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Cut Your Power Bill in Nanaimo: Free and Cheap Ideas", "url": "https://homepowerrebate.com/blog/energy-saving-ideas-bc-home-nanaimo/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
 <!-- AEO-SPEAKABLE-END -->
 </head>
-<body>
+<body class="tpl-article">
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- CANONICAL-NAV-START -->

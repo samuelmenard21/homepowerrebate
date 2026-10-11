@@ -34,6 +34,12 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
 .tpl-article .hero h1 { margin: 0 0 18px; max-width: 20ch; font-size: clamp(36px, 5.2vw, 72px); font-weight: 600; line-height: 1.04; letter-spacing: -.025em; color: #fff; text-wrap: balance; }
 .tpl-article .hero p { max-width: 62ch; margin: 0; font-size: clamp(17px, 1.45vw, 21px); line-height: 1.55; color: rgba(250, 247, 242, .86); text-wrap: pretty; }
 .tpl-article .hero p a { color: #fff; }
+/* a second hero line is the byline or date: smaller */
+.tpl-article section.hero p + p { margin-top: 14px; font-size: 15px; color: rgba(250, 247, 242, .74); }
+
+/* older variants centre the hero: keep it on the column's left edge like the text below it */
+.tpl-article section.hero, .tpl-article section.hero > .wrap { text-align: left; }
+.tpl-article section.hero h1, .tpl-article section.hero p, .tpl-article section.hero .amount-badge { margin-left: 0; margin-right: 0; }
 
 /* ---------- reading type ---------- */
 .tpl-article main p, .tpl-article main li { font-size: var(--read); line-height: 1.7; color: var(--ink-soft); }

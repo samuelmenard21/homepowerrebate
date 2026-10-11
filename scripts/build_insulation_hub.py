@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_furnace_pages import shell, AUTHOR  # noqa: E402
+from build_furnace_pages import shell, page_css, AUTHOR  # noqa: E402
 
 e = html.escape
 BASE = "https://homepowerrebate.com"
@@ -144,7 +144,7 @@ def main():
             {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
             {"@type": "ListItem", "position": 2, "name": "Insulation rebates"}]},
     ]
-    out = shell(title + " | HomePowerRebate", desc, PATH, "bc", body(), ld)
+    out = shell(title + " | HomePowerRebate", desc, PATH, "bc", body(), ld, css=page_css("2026-09-29"))
     out = out.replace("</style>", ".tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.tw table{min-width:760px}</style>", 1)
     f = ROOT / PATH.strip("/") / "index.html"
     f.parent.mkdir(parents=True, exist_ok=True)

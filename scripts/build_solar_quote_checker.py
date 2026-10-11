@@ -19,7 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_furnace_pages import shell, CHECKED, ISO, AUTHOR  # noqa: E402
+from build_furnace_pages import shell, page_css, CHECKED, ISO, AUTHOR  # noqa: E402
 from build_installer_rankings import BASE  # noqa: E402
 
 PATH = "/solar-quote-checker/"
@@ -199,7 +199,7 @@ def build():
     ]
     page = shell("Solar Quote Checker: Is Your Quote Fair? (2026) | HomePowerRebate",
                  "Check your solar quote free: price per watt vs real market data, rebates you actually qualify for, honest payback, and red flags like the ended 30% tax credit.",
-                 PATH, "on", body, ld)
+                 PATH, "on", body, ld, css=page_css("2026-09-28"))
     page = page.replace("</style>", CSS + "</style>", 1)
     f = ROOT / PATH.strip("/") / "index.html"
     f.parent.mkdir(parents=True, exist_ok=True)

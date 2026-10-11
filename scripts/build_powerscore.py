@@ -73,6 +73,51 @@ def find_category_dir(city_dir: Path, category: str):
     return None
 
 
+# Loans and financing are not rebates. Judged on a card's title and amount only, so a rebate card that
+# merely mentions a loan in its description still counts; "$1,350 rebate" alongside financing also counts.
+LOAN_RE = re.compile(r"\bloans?\b|financing|\bAPR\b|on-bill repayment|interest.free|\bCEIP\b|clean energy improvement program"
+                     r"|\bPACE\b|solar city|% fixed|repaid on", re.I)
+CASH_RE = re.compile(r"\$[\d,]+ rebate", re.I)
+
+
+def card_spans(html: str):
+    """(start, end) of every rebate-card div, matched by div depth."""
+    spans = []
+    for m in re.finditer(r'<div class="rebate-card[^"]*">', html):
+        depth, pos = 1, m.end()
+        for t in re.finditer(r"<div\b|</div>", html[pos:]):
+            depth += 1 if t.group(0) == "<div" else -1
+            if depth == 0:
+                spans.append((m.start(), pos + t.end()))
+                break
+    return spans
+
+
+def is_loan_card(card_html: str) -> bool:
+    m = re.search(r'<div class="amount[^"]*">.*?</div>', card_html, re.DOTALL)
+    head = card_html[:m.end()] if m else card_html[:400]
+    text = " ".join(re.sub(r"<[^>]+>", " ", head).split())
+    amount = re.sub(r"<[^>]+>", " ", m.group(0)) if m else ""
+    if CASH_RE.search(amount):
+        return False
+    title = " ".join(re.sub(r"<[^>]+>", " ", card_html[:m.start()]).split()) if m else ""
+    if re.search(r"\b(incentive|rebate)\b", title, re.I) and not re.search(r"loan|financ|%", amount, re.I):
+        return False  # e.g. "St. Albert CEIP incentive: $1,400", cash taken off the balance
+    return bool(LOAN_RE.search(text))
+
+
+def drop_loan_cards(html: str) -> str:
+    """Loans and financing are not rebates: remove their cards before reading amounts, counts or status."""
+    out, last = [], 0
+    for a, b in card_spans(html):
+        if a < last:
+            continue
+        if is_loan_card(html[a:b]):
+            out.append(html[last:a])
+            last = b
+    return "".join(out) + html[last:]
+
+
 def extract_amounts(html: str):
     """Return list of dollar amounts (floats) found in .amount divs."""
     amounts = []
@@ -223,7 +268,7 @@ def main():
         city_meta[region_key] = {}
         for city_dir in leaves:
             hub_file = city_dir / "index.html"
-            hub_html = hub_file.read_text(errors="ignore")
+            hub_html = drop_loan_cards(hub_file.read_text(errors="ignore"))
             rel = city_dir.relative_to(ROOT)
             slug = "/".join(rel.parts[2:]) if len(rel.parts) > 2 else city_dir.name
             # human label: prefer the dir name (clean, short); h1/title text on these
@@ -241,6 +286,7 @@ def main():
                 amounts, programs, status = [], 0, "closed"
                 if cat_dir:
                     cat_html = (cat_dir / "index.html").read_text(errors="ignore")
+                    cat_html = drop_loan_cards(cat_html)
                     amounts = extract_amounts(cat_html)
                     programs = count_program_cards(cat_html)
                     status = detect_status(cat_html, bool(amounts))

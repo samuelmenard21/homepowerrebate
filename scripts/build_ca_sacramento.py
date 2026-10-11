@@ -68,6 +68,8 @@ def wrap(path, title, desc, h1, lead, crumbs, body, latest):
 def main():
     latest = max(FACTS[PROGS[i]["fact"]]["verified_on"] for _, ids, _ in CATS.values() for i in ids)
     for slug, (name, intro) in CITIES.items():
+        if (ROOT / "data/ca/pages" / slug).exists():
+            continue  # hand-written pages, built by build_ca_pages.py
         base = ROOT / "us" / "ca" / "sacramento" / slug
         cards = "".join(card(slug, c) for c in CATS) + solar_card(slug)
         city_body = (f"<div style='background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;'><p style='margin:0;'><b>Short answer:</b> {e(intro)} SMUD pays up to $3,000 for a heat pump, "

@@ -85,3 +85,9 @@ The National Heat Pump Rebate (announced Oct 8, 2026: up to $10,000 below median
 
 ## Blog index (added 2026-10-11)
 `/blog/` is built by `scripts/build_blog_index.py` from `data/blog-index.json` (`git add -f`): seven topic sections (not regions), a region label on every card, posts for everywhere and Canada first, then regions spread evenly. Card titles and summaries should match each post's current h1 and meta description; add a new post to the right section and rerun. City variants of BC posts (energy-saving-ideas-bc-home-<city> and similar) are not listed. `build_blog.py` no longer writes the index.
+
+## Generator sync (added 2026-10-11)
+- The ~17 generators that use `build_furnace_pages.shell()` (calculators, program pages, furnace, battery, technology, rebate tracker, strata, search, survey, solar quote checker, CA regions and others) no longer borrow the ranking pages' CSS. Their CSS is frozen in `_partials/generator-css/<date>.css` (see its README), picked with `shell(..., css=page_css("2026-09-29"))`. Never edit those files; restyle these pages through their template family CSS.
+- `python3 scripts/check_generator_sync.py` re-runs every shell generator plus the post-steps in a scratch worktree and lists any page that would change (STYLE = loses its template variant, LOST = loses visible words). Run it before committing a change to a shell generator or to `build_installer_rankings.py`.
+- Post-steps after any generator, in this order: `build_internal_boosts.py` (its link boxes are wiped by a rebuild), restamp, `fix_seo_meta.py`, `add_aeo_markup.py`, `link_orphans.py`, `fix_redirected_links.py`, `follow_official_sources.py`, then the restamp twice (a fresh generator `<style>` block is matched to its template file only on the second pass, after font fallbacks are added).
+- `build_ca_sacramento.py`, `build_ca_sf.py` and `build_ca_sj.py` now skip cities with hand-written `data/ca/pages/<city>` folders (they used to overwrite them).

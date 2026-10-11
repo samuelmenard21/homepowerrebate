@@ -33,6 +33,8 @@ def card(cat, link=True):
 
 
 def main():
+    if (ROOT / "data/ca/pages" / "san-francisco").exists():
+        return  # hand-written pages, built by build_ca_pages.py
     latest = max(FACTS[v[2]]["verified_on"] for v in CATS.values())
     crumbs = [("Home", "/"), ("California", "/us/ca/"), ("Bay Area", "/us/ca/bay-area/")]
     unconf = ("<h2>What we could not confirm</h2><p>BayREN and state programs help with weatherization and sign-ups, but pay no fixed cash amount we could verify for San Francisco. "

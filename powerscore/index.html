@@ -30,13 +30,273 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "HomePowerRebate PowerScore City Rebate Rankings", "description": "A calculated 0-100 score for every city HomePowerRebate covers, ranking how much home-energy rebate money is available, how many programs stack, and whether funding is open, based on published rebate amounts.", "url": "https://homepowerrebate.com/powerscore/", "creator": {"@type": "Organization", "name": "HomePowerRebate"}, "variableMeasured": ["Overall PowerScore", "Heat Pump PowerScore", "Insulation PowerScore", "Solar PowerScore", "Battery Storage PowerScore", "Water Heater PowerScore", "Smart Thermostat PowerScore", "EV Charger PowerScore", "Windows & Doors PowerScore"], "temporalCoverage": "2026", "dateModified": "2026-10-11"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "PowerScore: See How Your City's Home Energy Rebates Rank", "description": "We scored all 144 cities HomePowerRebate covers across 15 regions on rebate dollar value, program status, and stackability to build a 0-100 PowerScore leaderboard.", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about/"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "mainEntityOfPage": "https://homepowerrebate.com/powerscore/", "datePublished": "2026-08-23", "dateModified": "2026-10-11"}</script>
 
-<link rel="stylesheet" href="/assets/tpl/powerscore-c5a4bfe5.css?v=96c319d6ae" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=d72e070943" data-hpr-site-css>
+<style>
+/* kept in this exact form: build_powerscore_compare.py copies this :root block into the compare pages */
+:root {
+  --ink: #0a2a2e;
+  --ink-soft: #1a3d42;
+  --paper: #faf7f2;
+  --paper-warm: #f5efe5;
+  --teal: #0d4f5c;
+  --teal-deep: #08363f;
+  --amber: #d4751c;
+  --amber-bright: #e88a2e;
+  --green-money: #2d6a4f;
+  --red-flag: #b04545;
+  --rule: #d9d0c1;
+  --sage: #6f8f7a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;line-height:1.6}
+.ps{--gut:clamp(16px,3.2vw,56px);--rule:#e2d9ca;--sage:#6b8e7f;--muted:#4a5f62}
+.ps .ps-wrap{max-width:1200px;margin:0 auto;padding:0 var(--gut)}
+.ps .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.ps h1,.ps h2,.ps h3{font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;color:var(--teal-deep);margin:0}
+.ps .ps-sec{padding:clamp(48px,6vw,88px) 0}
+.ps .ps-sec.warm{background:var(--paper-warm)}
+.ps .ps-sec.white{background:#fff}
+.ps .ps-kicker{margin:0 0 10px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+.ps .ps-h2{font-size:clamp(28px,3.2vw,44px);font-weight:600;line-height:1.08;letter-spacing:-.02em;max-width:22ch;text-wrap:balance}
+.ps .ps-sec p.ps-intro{margin:14px 0 0;max-width:62ch;font-size:clamp(16px,1.3vw,18px);line-height:1.6;color:var(--muted)}
+.ps .ps-head{margin-bottom:clamp(24px,3vw,40px)}
+
+/* hero */
+.ps .ps-hero{position:relative;overflow:hidden;color:#fff;padding:clamp(40px,6vw,96px) 0 clamp(40px,5vw,80px);
+ background:radial-gradient(110% 130% at 100% 0%,rgba(232,138,46,.22) 0%,rgba(232,138,46,0) 50%),radial-gradient(90% 120% at 0% 100%,rgba(107,142,127,.28) 0%,rgba(107,142,127,0) 55%),var(--teal-deep)}
+.ps .ps-hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(28px,5vw,72px);align-items:center}
+.ps .ps-hero .ps-kicker{color:#f5b566}
+.ps .ps-hero h1{color:#fff;font-size:clamp(36px,5.4vw,76px);font-weight:600;line-height:1.02;letter-spacing:-.028em;max-width:15ch;text-wrap:balance}
+.ps .ps-hero h1 em{font-style:normal;color:var(--amber-bright)}
+.ps .ps-hero p.ps-lead{margin:20px 0 0;max-width:54ch;font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:rgba(250,247,242,.88)}
+.ps .ps-find-box{position:relative;margin-top:clamp(24px,3vw,36px);max-width:560px}
+.ps .ps-find-box label{display:block;font-size:14px;font-weight:700;color:#f5b566;margin-bottom:8px}
+.ps .ps-search{width:100%;min-height:60px;padding:0 20px 0 52px;border:0;border-radius:16px;font:inherit;font-size:18px;color:var(--ink);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none' stroke='%230d4f5c' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='9.5' cy='9.5' r='7'/%3E%3Cpath d='m15 15 5.5 5.5'/%3E%3C/svg%3E") no-repeat 18px 50%;box-shadow:0 20px 44px -18px rgba(0,0,0,.5)}
+.ps .ps-search:focus{outline:3px solid var(--amber-bright);outline-offset:2px}
+.ps .ps-list{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 6px);margin:0;padding:6px;list-style:none;background:#fff;border-radius:14px;box-shadow:0 24px 48px -12px rgba(0,0,0,.35);max-height:340px;overflow:auto}
+.ps .ps-list[hidden]{display:none}
+.ps .ps-list li{display:flex;justify-content:space-between;gap:12px;padding:11px 14px;border-radius:10px;cursor:pointer;color:var(--ink);font-size:16px}
+.ps .ps-list li small{color:var(--muted);font-size:14px}
+.ps .ps-list li[aria-selected="true"],.ps .ps-list li:hover{background:var(--paper-warm)}
+.ps .ps-list li b{font-family:'Fraunces', 'Fraunces Fallback',serif;color:var(--teal-deep)}
+.ps .ps-hint{margin:10px 0 0;font-size:14px;color:rgba(250,247,242,.7)}
+.ps .ps-hint button{font:inherit;color:#fff;background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.ps .ps-gap{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:clamp(20px,2.4vw,30px)}
+.ps .ps-gap h2{color:#fff;font-size:clamp(20px,1.8vw,24px);font-weight:600;line-height:1.2}
+.ps .ps-gap p.ps-gap-sub{margin:6px 0 18px;font-size:14px;color:rgba(250,247,242,.72)}
+.ps .ps-gap ol{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ps .ps-gap li{display:grid;grid-template-columns:minmax(0,9.5em) 1fr 2.2em;align-items:center;gap:12px;font-size:15px}
+.ps .ps-gap-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:rgba(250,247,242,.92)}
+.ps .ps-gap-track{height:12px;border-radius:12px;background:rgba(255,255,255,.1);overflow:hidden}
+.ps .ps-gap-track i{display:block;height:100%;border-radius:12px}
+.ps .ps-gap-track i.hi{background:var(--amber-bright)}.ps .ps-gap-track i.lo{background:#8fb1a4}
+.ps .ps-gap li b{font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:20px;text-align:right}
+.ps .ps-gap li.ps-gap-sep{display:block;height:14px}
+.ps .ps-gap li.ps-gap-sep span{display:block;margin:6px 0 0;border-top:1px dashed rgba(255,255,255,.28)}
+.ps .ps-gap-foot{margin:16px 0 0;font-size:13px;color:rgba(250,247,242,.6)}
+.ps .ps-gap-foot a{color:#fff}
+
+/* scorecard */
+.ps .ps-card-sec{padding:clamp(28px,4vw,48px) 0 0}
+.ps #your-score,.ps #ranking,.ps #regions{scroll-margin-top:88px}
+.ps .ps-card-sec[hidden]{display:none}
+.ps .ps-card{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,3vw,44px);background:#fff;border:1px solid var(--rule);border-radius:24px;padding:clamp(20px,3vw,40px);box-shadow:0 30px 60px -36px rgba(10,42,46,.4)}
+.ps .ps-card-close{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid var(--rule);background:#fff;font-size:22px;line-height:1;color:var(--muted);cursor:pointer}
+.ps .ps-card-left{display:flex;flex-direction:column;align-items:center;text-align:center;min-width:200px}
+.ps .ps-ring{position:relative;width:176px;height:176px}
+.ps .ps-ring svg{display:block;transform:rotate(-90deg)}
+.ps .ps-ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ps .ps-ring .num b{font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:56px;font-weight:600;line-height:1;color:var(--teal-deep)}
+.ps .ps-ring .num small{font-size:14px;font-weight:600;color:var(--muted)}
+.ps .ps-band{margin-top:12px;display:inline-block;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.ps .ps-band.excellent{background:#e3f0e8;color:var(--green-money)}.ps .ps-band.solid{background:#e2eef0;color:var(--teal)}.ps .ps-band.limited{background:#fbeedd;color:#9a520f}.ps .ps-band.thin{background:#f8e5e2;color:var(--red-flag)}
+.ps .ps-card h2{font-size:clamp(28px,3vw,40px);font-weight:600;line-height:1.05;padding-right:44px}
+.ps .ps-card p.ps-card-reg{margin:4px 0 0;font-size:15px;color:var(--muted)}
+.ps .ps-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
+.ps .ps-facts div{background:var(--paper);border-radius:14px;padding:12px 14px}
+.ps .ps-facts b{display:block;font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:clamp(20px,2vw,26px);line-height:1.1;color:var(--teal-deep)}
+.ps .ps-facts span{font-size:13px;color:var(--muted)}
+.ps .ps-cats{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 28px}
+.ps .ps-cats li{display:grid;grid-template-columns:7.5em 1fr 2em;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #efe8db;font-size:15px}
+.ps .ps-cats li .lab{font-weight:600}
+.ps .ps-cats li .amt{grid-column:2/4;font-size:13px;color:var(--muted);margin-top:-6px}
+.ps .ps-cats li b{text-align:right;font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:17px}
+.ps .ps-cats .st{display:inline-block;margin-left:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:1px 7px;border-radius:999px}
+.ps .ps-cats .st.l{background:#fbeedd;color:#9a520f}.ps .ps-cats .st.c{background:#f8e5e2;color:var(--red-flag)}
+.ps .ps-card-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:20px}
+.ps .ps-btn{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;background:var(--amber);color:#fff;font-weight:700;font-size:16px;text-decoration:none;border:0;cursor:pointer;font-family:inherit}
+.ps .ps-btn:hover{background:var(--amber-bright)}
+.ps .ps-btn.ghost{background:transparent;color:var(--teal-deep);border:1.5px solid var(--rule)}
+.ps .ps-btn.ghost:hover{border-color:var(--teal)}
+.ps .ps-note{margin:12px 0 0;font-size:13px;color:var(--muted)}
+
+/* bars */
+.ps .ps-bar{display:block;height:8px;border-radius:8px;background:#ece4d6;overflow:hidden}
+.ps .ps-bar i{display:block;height:100%;border-radius:8px;background:var(--teal)}
+
+/* findings */
+.ps .ps-finds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.ps .ps-find{background:#fff;border:1px solid var(--rule);border-radius:20px;padding:clamp(20px,2.2vw,28px)}
+.ps .ps-sec p.ps-find-k{margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage)}
+.ps .ps-sec p.ps-find-n{margin:8px 0 10px;font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:clamp(34px,3.6vw,52px);font-weight:600;line-height:1;letter-spacing:-.02em;color:var(--amber)}
+.ps .ps-sec p.ps-find-t{margin:0;font-size:16px;line-height:1.55;color:var(--ink-soft)}
+
+/* strip chart */
+.ps .ps-strip{display:grid;gap:2px}
+.ps .ps-strip-axis{display:grid;grid-template-columns:240px 1fr 48px;gap:18px;font-size:12px;color:var(--muted);padding:0 12px 6px}
+.ps .ps-strip-axis span:nth-child(2){display:flex;justify-content:space-between}
+.ps .ps-strip-row{display:grid;grid-template-columns:240px 1fr 48px;gap:18px;align-items:center;width:100%;padding:10px 12px;border:0;border-radius:14px;background:transparent;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.ps .ps-strip-row:hover,.ps .ps-strip-row:focus-visible{background:var(--paper-warm)}
+.ps .ps-strip-name b{display:block;font-size:16px;color:var(--teal-deep)}
+.ps .ps-strip-name small{font-size:13px;color:var(--muted)}
+.ps .ps-strip-track{position:relative;height:28px;border-radius:8px;background:repeating-linear-gradient(90deg,#ece4d6 0 1px,transparent 1px 25%) ,#f6f1e8}
+.ps .ps-range{position:absolute;top:50%;height:6px;margin-top:-3px;border-radius:6px;background:rgba(13,79,92,.18)}
+.ps .ps-dot{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:rgba(13,79,92,.45);border:1.5px solid #fff}
+.ps .ps-avg{position:absolute;top:2px;bottom:2px;width:4px;margin-left:-2px;border-radius:4px;background:var(--amber)}
+.ps .ps-strip-num{font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:24px;font-weight:600;color:var(--teal-deep);text-align:right}
+.ps .ps-legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin:16px 12px 0;font-size:14px;color:var(--muted)}
+.ps .ps-legend span{display:inline-flex;align-items:center;gap:8px}
+.ps .ps-legend .k-dot{width:12px;height:12px;border-radius:50%;background:rgba(13,79,92,.45)}
+.ps .ps-legend .k-avg{width:4px;height:16px;border-radius:4px;background:var(--amber)}
+.ps .ps-legend .k-rng{width:22px;height:6px;border-radius:6px;background:rgba(13,79,92,.18)}
+.ps .conf{display:inline-block;margin-top:4px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:999px;background:#fdf2f0;color:var(--red-flag);border:1px solid #efc9c4}
+
+/* heatmap */
+.ps .ps-heat-wrap{overflow-x:auto;border-radius:18px;border:1px solid var(--rule);background:#fff}
+.ps .ps-heat{width:100%;border-collapse:separate;border-spacing:3px;font-size:15px;min-width:760px}
+.ps .ps-heat th{font-weight:600;font-size:13px;color:var(--muted);padding:10px 6px;text-align:center;vertical-align:bottom;line-height:1.25}
+.ps .ps-heat tbody th{vertical-align:middle;text-align:left;font-size:15px;color:var(--teal-deep);white-space:nowrap;padding:0 12px;position:sticky;left:0;background:#fff;z-index:1}
+.ps .ps-heat td{text-align:center;padding:12px 4px;border-radius:8px;font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink);background:color-mix(in srgb,var(--teal) var(--h),#f6f1e8)}
+.ps .ps-heat td.dk{color:#fff}
+.ps .ps-heat td.ps-heat-all{background:var(--paper-warm);font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:18px;color:var(--teal-deep)}
+.ps .ps-heat-key{display:flex;align-items:center;gap:10px;margin:14px 0 0;font-size:13px;color:var(--muted)}
+.ps .ps-heat-key i{display:block;width:160px;height:10px;border-radius:10px;background:linear-gradient(90deg,#f6f1e8,var(--teal))}
+
+/* champions */
+.ps .ps-chs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:clamp(12px,1.6vw,18px)}
+.ps .ps-ch{background:#fff;border:1px solid var(--rule);border-radius:20px;padding:20px 20px 12px}
+.ps .ps-ch h3{font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage)}
+.ps .ps-sec p.ps-ch-amt{margin:6px 0 0;font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:26px;font-weight:600;line-height:1.1;color:var(--amber)}
+.ps .ps-sec p.ps-ch-lead{margin:2px 0 12px;font-size:14px;color:var(--muted)}
+.ps .ps-ch ol{list-style:none;margin:0;padding:0;counter-reset:c}
+.ps .ps-ch li{display:grid;grid-template-columns:minmax(0,1fr) 64px 2em;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #efe8db;font-size:15px}
+.ps .ps-ch-who a{display:block;font-weight:600;color:var(--teal-deep);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ps .ps-ch-who a:hover{text-decoration:underline}
+.ps .ps-ch-who small{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ps .ps-ch li b{text-align:right;font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:17px;color:var(--teal-deep)}
+
+/* ranking table */
+.ps .ps-controls{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:12px}
+.ps .ps-controls input,.ps .ps-controls select{width:100%;min-height:50px;padding:0 14px;border:1px solid var(--rule);border-radius:12px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}
+.ps .ps-count{font-size:14px;color:var(--muted);margin:0 0 10px}
+.ps .ps-table-wrap{border:1px solid var(--rule);border-radius:18px;background:#fff;overflow:hidden}
+.ps .ps-table{width:100%;border-collapse:collapse;font-size:15px}
+.ps .ps-table thead th{text-align:left;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:14px 16px;background:var(--paper);border-bottom:1px solid var(--rule)}
+.ps .ps-table td{padding:12px 16px;border-bottom:1px solid #efe8db;vertical-align:middle}
+.ps .ps-table tbody tr.hide{display:none}
+.ps .ps-table tbody tr.on td{background:#fffaf2}
+.ps .ps-rk{width:56px;font-weight:700;color:var(--sage);font-variant-numeric:tabular-nums}
+.ps .ps-city a{font-weight:700;color:var(--teal-deep);text-decoration:none;font-size:16px}
+.ps .ps-city a:hover{text-decoration:underline}
+.ps .ps-city small{display:block;font-size:13px;color:var(--muted)}
+.ps .ps-sc{width:190px}
+.ps .ps-sc{white-space:nowrap}
+.ps .ps-sc b{display:inline-block;width:2em;font-family:'Fraunces', 'Fraunces Fallback',serif;font-size:20px;color:var(--teal-deep);vertical-align:middle}
+.ps .ps-sc .ps-bar{display:inline-block;width:110px;vertical-align:middle}
+.ps .ps-prof{display:inline-flex;align-items:flex-end;gap:3px;height:28px;vertical-align:middle}
+.ps .ps-prof i{display:block;width:7px;border-radius:2px 2px 0 0;background:var(--teal)}
+.ps .ps-prof i:nth-child(odd){background:#3f7c87}
+.ps .ps-pot{font-weight:700;color:var(--green-money);white-space:nowrap}
+.ps .ps-pot small{display:block;font-weight:500;font-size:13px;color:var(--muted)}
+.ps .ps-more{width:100px;text-align:right}
+.ps .ps-open{font:inherit;font-size:14px;font-weight:600;color:var(--teal);background:none;border:1px solid var(--rule);border-radius:999px;padding:7px 14px;cursor:pointer}
+.ps .ps-open[aria-expanded="true"]{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff}
+.ps .ps-table tr.ps-detail td{background:var(--paper);padding:18px}
+.ps .ps-table tr.ps-detail .ps-card{box-shadow:none}
+.ps .ps-profile-key{display:flex;flex-wrap:wrap;gap:4px 14px;margin:12px 4px 0;padding:0;list-style:none;font-size:13px;color:var(--muted)}
+.ps .ps-profile-key li:first-child::before{content:"Bars, left to right: ";font-weight:600}
+.ps .ps-more-btn{display:block;margin:20px auto 0}
+
+/* method */
+.ps .ps-method{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
+.ps .ps-formula{display:flex;height:56px;border-radius:14px;overflow:hidden;margin:20px 0 18px;font-weight:700;font-size:15px;color:#fff}
+.ps .ps-formula span{display:flex;align-items:center;justify-content:center}
+.ps .ps-formula .f1{flex:60;background:var(--teal-deep)}.ps .ps-formula .f2{flex:25;background:var(--teal)}.ps .ps-formula .f3{flex:15;background:var(--amber)}
+.ps .ps-parts{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.ps .ps-parts li{font-size:16px;line-height:1.55;color:var(--ink-soft);padding-left:18px;border-left:4px solid var(--teal-deep)}
+.ps .ps-parts li:nth-child(2){border-color:var(--teal)}.ps .ps-parts li:nth-child(3){border-color:var(--amber)}
+.ps .ps-sec p.ps-body{margin:14px 0 0;font-size:16px;line-height:1.6;color:var(--ink-soft)}
+.ps details.ps-fold{background:#fff;border:1px solid var(--rule);border-radius:16px;padding:0 20px;margin-bottom:12px}
+.ps details.ps-fold summary{cursor:pointer;padding:16px 0;font-weight:700;font-size:16px;color:var(--teal-deep);list-style:none;display:flex;justify-content:space-between;gap:12px}
+.ps details.ps-fold summary::-webkit-details-marker{display:none}
+.ps details.ps-fold summary::after{content:"+";font-size:22px;line-height:1;color:var(--amber)}
+.ps details.ps-fold[open] summary::after{content:"\2013"}
+.ps details.ps-fold .in{padding:0 0 18px}
+.ps details.ps-fold ul{margin:0 0 14px 18px;padding:0}
+.ps details.ps-fold li{margin-bottom:8px;font-size:15px;color:var(--ink-soft)}
+.ps details.ps-fold p{font-size:15px;color:var(--ink-soft)}
+.ps .ps-mini{width:100%;border-collapse:collapse;font-size:14px}
+.ps .ps-mini th,.ps .ps-mini td{text-align:left;padding:8px 10px;border-bottom:1px solid #efe8db;vertical-align:top}
+.ps .ps-mini th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.ps .ps-scroll{overflow-x:auto}
+.ps .lvl.low{color:var(--red-flag);font-weight:600}.ps .lvl.mid{color:#8a5a00}.ps .lvl.high{color:var(--green-money);font-weight:600}
+.ps .conf-no{color:var(--red-flag);font-weight:700}
+
+/* media + comparisons */
+.ps .ps-press{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(16px,2vw,24px)}
+.ps .ps-press-box{border-radius:22px;padding:clamp(22px,2.6vw,34px);background:var(--teal-deep);color:#fff}
+.ps .ps-press-box h2{color:#fff;font-size:clamp(24px,2.4vw,32px);font-weight:600}
+.ps .ps-sec .ps-press-box p{margin:12px 0 0;font-size:16px;line-height:1.6;color:rgba(250,247,242,.86)}
+.ps .ps-press-box a{color:#f5b566}
+.ps .ps-cite{margin:16px 0 0;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.08);font-size:15px;line-height:1.5;color:#fff}
+.ps .ps-links{border-radius:22px;padding:clamp(22px,2.6vw,34px);background:#fff;border:1px solid var(--rule)}
+.ps .ps-links h2{font-size:clamp(22px,2vw,26px);font-weight:600}
+.ps .ps-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.ps .ps-chips a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--rule);font-size:14px;font-weight:600;color:var(--teal-deep);text-decoration:none}
+.ps .ps-chips a:hover{border-color:var(--amber);color:var(--amber)}
+
+@media (max-width:980px){
+ .ps .ps-hero-grid,.ps .ps-method,.ps .ps-press{grid-template-columns:1fr}
+ .ps .ps-finds{grid-template-columns:1fr}
+ .ps .ps-controls{grid-template-columns:1fr 1fr}.ps .ps-controls input{grid-column:1/-1}
+}
+@media (max-width:760px){
+ .ps .ps-card{grid-template-columns:1fr}
+ .ps .ps-card-left{flex-direction:row;gap:16px;text-align:left;min-width:0}
+ .ps .ps-ring{width:120px;height:120px}.ps .ps-ring svg{width:120px;height:120px}.ps .ps-ring .num b{font-size:40px}
+ .ps .ps-cats{grid-template-columns:1fr}
+ .ps .ps-facts{grid-template-columns:1fr 1fr;gap:8px}.ps .ps-facts div{padding:10px}.ps .ps-facts div:nth-child(3){grid-column:1/-1}
+ .ps .ps-strip-axis{display:none}
+ .ps .ps-heat{min-width:600px;font-size:13px;border-spacing:2px}.ps .ps-heat td{padding:9px 2px}.ps .ps-heat th{font-size:12px;padding:8px 2px}.ps .ps-heat tbody th{font-size:13px;padding:0 8px}.ps .ps-heat td.ps-heat-all{font-size:15px}
+ .ps .ps-strip-row{grid-template-columns:1fr 2.4em;gap:6px 12px;padding:10px 6px}
+ .ps .ps-strip-name{grid-column:1;grid-row:1}.ps .ps-strip-num{grid-column:2;grid-row:1/3;align-self:center}
+ .ps .ps-strip-track{grid-column:1;grid-row:2;height:22px}
+ .ps .ps-table thead{display:none}
+ .ps .ps-table,.ps .ps-table tbody{display:block}
+ .ps .ps-table tbody tr:not(.ps-detail){display:grid;grid-template-columns:34px minmax(0,1fr) auto auto;gap:6px 10px;align-items:center;padding:12px 12px;border-bottom:1px solid #efe8db}
+ .ps .ps-table tbody tr.hide{display:none}
+ .ps .ps-table tr.ps-detail{display:block}.ps .ps-table tr.ps-detail td{display:block}
+ .ps .ps-table td{border:0;padding:0}
+ .ps .ps-rk{grid-column:1;grid-row:1/3;width:auto;font-size:14px}
+ .ps .ps-city{grid-column:2/4;grid-row:1}
+ .ps .ps-sc{grid-column:4;grid-row:1;width:auto;text-align:right}.ps .ps-sc .ps-bar{display:none}
+ .ps .ps-pf{grid-column:2;grid-row:2}
+ .ps .ps-pot{grid-column:3;grid-row:2;text-align:right;font-size:14px}.ps .ps-pot small{display:none}
+ .ps .ps-more{grid-column:4;grid-row:2;width:auto}
+ .ps .ps-open{padding:5px 11px;font-size:13px}
+ .ps .ps-table tbody tr.on{background:#fffaf2}.ps .ps-table tbody tr.on td{background:none}
+ .ps .ps-table tr.ps-detail td{padding:10px}
+}
+@media (max-width:420px){
+ .ps .ps-gap li{grid-template-columns:minmax(0,7.5em) 1fr 2em;gap:8px;font-size:14px}
+ .ps .ps-facts b{font-size:18px}
+}
+
+</style>
+<link rel="stylesheet" href="/assets/site.css?v=5fbb2ceb0e" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<!-- BREADCRUMB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com/"}, {"@type": "ListItem", "position": 2, "name": "PowerScore", "item": "https://homepowerrebate.com/powerscore/"}]}</script><!-- BREADCRUMB-LD-END -->
 <!-- OG-CARD-START -->
 <meta property="og:image" content="https://homepowerrebate.com/og/powerscore.jpg?v=52f5a66768ee">
 <meta property="og:image:width" content="1200">
@@ -79,82 +339,74 @@
     </button>
   </div>
 
-  <div id="city-dropdown-modal" style="display:none; position:absolute; top:56px; right:20px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:49; max-width:300px; max-height:70vh; overflow-y:auto;">
+  <div id="city-dropdown-modal" style="display:none;">
     <div style="padding:16px 16px 0;">
       <a href="/powerscore/" style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; margin-bottom:12px; border-radius:8px; background:linear-gradient(135deg, var(--teal-deep), #08363f); color:#fff; text-decoration:none; font-weight:700; font-size:13px; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">
         <span>&#9889; See your city's PowerScore</span>
         <span style="opacity:.7;">&rarr;</span>
       </a>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Ontario</button>
-        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">British Columbia</button>
-        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">California (US)</button>
-      </div>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Alberta</button>
-        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Nova Scotia</button>
-        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Massachusetts</button>
-      </div>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">New York</button>
-        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Pennsylvania</button>
-        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Colorado</button>
-      </div>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Vermont</button>
-        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Michigan</button>
-        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">New Jersey</button>
-      </div>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Illinois</button>
-        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Washington</button>
-        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Minnesota</button>
+      <div class="nav-region-tabs">
+        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" class="nav-region-tab is-on" aria-pressed="true">Ontario</button>
+        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" class="nav-region-tab" aria-pressed="false">British Columbia</button>
+        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" class="nav-region-tab" aria-pressed="false">California</button>
+        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" class="nav-region-tab" aria-pressed="false">Alberta</button>
+        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" class="nav-region-tab" aria-pressed="false">Nova Scotia</button>
+        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" class="nav-region-tab" aria-pressed="false">Massachusetts</button>
+        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" class="nav-region-tab" aria-pressed="false">New York</button>
+        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" class="nav-region-tab" aria-pressed="false">Pennsylvania</button>
+        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" class="nav-region-tab" aria-pressed="false">Colorado</button>
+        <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" class="nav-region-tab" aria-pressed="false">Vermont</button>
+        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" class="nav-region-tab" aria-pressed="false">Michigan</button>
+        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" class="nav-region-tab" aria-pressed="false">New Jersey</button>
+        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" class="nav-region-tab" aria-pressed="false">Illinois</button>
+        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" class="nav-region-tab" aria-pressed="false">Washington</button>
+        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" class="nav-region-tab" aria-pressed="false">Minnesota</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
-    <div id="province-cities-on" style="display:grid; gap:8px;">
+    <div id="province-cities-on" class="nav-region-cities">
       <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
     </div>
-    <div id="province-cities-bc" style="display:none; gap:8px;">
+    <div id="province-cities-bc" class="nav-region-cities" hidden>
       <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
     </div>
-    <div id="province-cities-ca" style="display:none; gap:8px;">
+    <div id="province-cities-ca" class="nav-region-cities" hidden>
       <a href="/us/ca/los-angeles/">Los Angeles</a><a href="/us/ca/sacramento/">Sacramento</a><a href="/us/ca/bay-area/">Bay Area</a><a href="/us/ca/san-diego/">San Diego</a><a href="/us/ca/inland-empire/">Inland Empire</a>
     </div>
-    <div id="province-cities-ab" style="display:none; gap:8px;">
+    <div id="province-cities-ab" class="nav-region-cities" hidden>
       <a href="/ca/ab/calgary/">Calgary</a><a href="/ca/ab/edmonton/">Edmonton</a><a href="/ca/ab/red-deer/">Red Deer</a><a href="/ca/ab/lethbridge/">Lethbridge</a><a href="/ca/ab/st-albert/">St. Albert</a>
     </div>
-    <div id="province-cities-ns" style="display:none; gap:8px;">
+    <div id="province-cities-ns" class="nav-region-cities" hidden>
       <a href="/ca/ns/halifax/">Halifax</a>
     </div>
-    <div id="province-cities-ma" style="display:none; gap:8px;">
+    <div id="province-cities-ma" class="nav-region-cities" hidden>
       <a href="/us/ma/boston/">Boston</a><a href="/us/ma/worcester/">Worcester</a><a href="/us/ma/springfield/">Springfield</a><a href="/us/ma/cambridge/">Cambridge</a><a href="/us/ma/lowell/">Lowell</a><a href="/us/ma/brockton/">Brockton</a><a href="/us/ma/new-bedford/">New Bedford</a><a href="/us/ma/quincy/">Quincy</a><a href="/us/ma/lynn/">Lynn</a><a href="/us/ma/fall-river/">Fall River</a><a href="/us/ma/newton/">Newton</a><a href="/us/ma/somerville/">Somerville</a>
     </div>
-    <div id="province-cities-ny" style="display:none; gap:8px;">
+    <div id="province-cities-ny" class="nav-region-cities" hidden>
       <a href="/us/ny/con-edison/new-york-city/">New York City</a><a href="/us/ny/con-edison/yonkers/">Yonkers</a><a href="/us/ny/con-edison/mount-vernon/">Mount Vernon</a><a href="/us/ny/con-edison/new-rochelle/">New Rochelle</a><a href="/us/ny/con-edison/white-plains/">White Plains</a><a href="/us/ny/pseg/brookhaven/">Brookhaven</a><a href="/us/ny/pseg/islip/">Islip</a><a href="/us/ny/pseg/babylon/">Babylon</a><a href="/us/ny/pseg/huntington/">Huntington</a><a href="/us/ny/pseg/smithtown/">Smithtown</a><a href="/us/ny/pseg/oyster-bay/">Oyster Bay</a><a href="/us/ny/pseg/southampton/">Southampton</a><a href="/us/ny/central-hudson/poughkeepsie/">Poughkeepsie</a><a href="/us/ny/central-hudson/newburgh/">Newburgh</a><a href="/us/ny/central-hudson/kingston/">Kingston</a><a href="/us/ny/central-hudson/beacon/">Beacon</a><a href="/us/ny/central-hudson/saugerties/">Saugerties</a><a href="/us/ny/national-grid/albany/">Albany</a><a href="/us/ny/national-grid/buffalo/">Buffalo</a><a href="/us/ny/national-grid/rochester/">Rochester</a><a href="/us/ny/national-grid/syracuse/">Syracuse</a>
     </div>
-    <div id="province-cities-pa" style="display:none; gap:8px;">
+    <div id="province-cities-pa" class="nav-region-cities" hidden>
       <a href="/us/pa/philadelphia/">Philadelphia</a><a href="/us/pa/pittsburgh/">Pittsburgh</a><a href="/us/pa/allentown/">Allentown</a><a href="/us/pa/erie/">Erie</a>
     </div>
-    <div id="province-cities-co" style="display:none; gap:8px;">
+    <div id="province-cities-co" class="nav-region-cities" hidden>
       <a href="/us/co/denver/">Denver</a><a href="/us/co/colorado-springs/">Colorado Springs</a><a href="/us/co/aurora/">Aurora</a><a href="/us/co/fort-collins/">Fort Collins</a><a href="/us/co/boulder/">Boulder</a>
     </div>
-    <div id="province-cities-vt" style="display:none; gap:8px;">
+    <div id="province-cities-vt" class="nav-region-cities" hidden>
       <a href="/us/vt/burlington/">Burlington</a><a href="/us/vt/south-burlington/">South Burlington</a><a href="/us/vt/rutland/">Rutland</a><a href="/us/vt/barre/">Barre</a><a href="/us/vt/montpelier/">Montpelier</a>
     </div>
-    <div id="province-cities-mi" style="display:none; gap:8px;">
+    <div id="province-cities-mi" class="nav-region-cities" hidden>
       <a href="/us/mi/detroit/">Detroit</a><a href="/us/mi/grand-rapids/">Grand Rapids</a><a href="/us/mi/ann-arbor/">Ann Arbor</a><a href="/us/mi/lansing/">Lansing</a>
     </div>
-    <div id="province-cities-nj" style="display:none; gap:8px;">
+    <div id="province-cities-nj" class="nav-region-cities" hidden>
       <a href="/us/nj/newark/">Newark</a><a href="/us/nj/jersey-city/">Jersey City</a><a href="/us/nj/toms-river/">Toms River</a><a href="/us/nj/atlantic-city/">Atlantic City</a>
     </div>
-    <div id="province-cities-il" style="display:none; gap:8px;">
+    <div id="province-cities-il" class="nav-region-cities" hidden>
       <a href="/us/il/chicago/">Chicago</a><a href="/us/il/aurora/">Aurora</a><a href="/us/il/naperville/">Naperville</a><a href="/us/il/peoria/">Peoria</a>
     </div>
-    <div id="province-cities-wa" style="display:none; gap:8px;">
+    <div id="province-cities-wa" class="nav-region-cities" hidden>
       <a href="/us/wa/seattle/">Seattle</a><a href="/us/wa/spokane/">Spokane</a><a href="/us/wa/tacoma/">Tacoma</a><a href="/us/wa/vancouver/">Vancouver</a><a href="/us/wa/bellevue/">Bellevue</a>
     </div>
-    <div id="province-cities-mn" style="display:none; gap:8px;">
+    <div id="province-cities-mn" class="nav-region-cities" hidden>
       <a href="/us/mn/minneapolis/">Minneapolis</a><a href="/us/mn/saint-paul/">Saint Paul</a><a href="/us/mn/rochester/">Rochester</a><a href="/us/mn/duluth/">Duluth</a>
     </div>
     </div>
@@ -1827,7 +2079,10 @@ var q=new URLSearchParams(location.search).get('city');if(q&&BY[q])show(q,true);
 /* CANONICAL-NAV-FOOTER-JS-START */
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
-  if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
+  if (!modal) return;
+  var btn = document.querySelector('.nav-pick');
+  if (btn) modal.style.top = (btn.getBoundingClientRect().bottom - modal.parentElement.getBoundingClientRect().top + 8) + 'px';
+  modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
   const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
@@ -1835,9 +2090,9 @@ function showProvinceCities(prov) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);
     if (!panel || !tab) return;
-    panel.style.display = (prov === r) ? 'grid' : 'none';
-    tab.style.background = (prov === r) ? 'var(--teal-deep)' : '#fff';
-    tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
+    panel.hidden = prov !== r;
+    tab.classList.toggle('is-on', prov === r);
+    tab.setAttribute('aria-pressed', prov === r ? 'true' : 'false');
   });
 }
 document.addEventListener('DOMContentLoaded', function () {

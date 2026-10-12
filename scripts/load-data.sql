@@ -38,7 +38,7 @@ INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_d
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_windsor', 'on', 'Windsor', 'CA', 'Enwin Utilities', 4800);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('ab_calgary', 'ab', 'Calgary', 'CA', 'Enmax', 5500);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('ab_edmonton', 'ab', 'Edmonton', 'CA', 'EPCOR', 5800);
-INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('ab_fort_mcmurray', 'ab', 'Fort Mcmurray', 'CA', 'Northland Utilities', 6500);
+INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('ab_fort_mcmurray', 'ab', 'Fort McMurray', 'CA', 'Northland Utilities', 6500);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('ab_lethbridge', 'ab', 'Lethbridge', 'CA', 'Fortis Alberta', 5200);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('ab_red_deer', 'ab', 'Red Deer', 'CA', 'EPCOR', 5900);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('ab_st_albert', 'ab', 'St Albert', 'CA', 'EPCOR', 5900);

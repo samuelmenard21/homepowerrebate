@@ -57,7 +57,7 @@ def main():
                     return (f'<div class="ip-program-name">{html.escape(lk.get("utility") or x.group(1))}</div>'
                             f'<div class="ip-program-detail">{html.escape(amt)} <span style="color:#7a7264">(see the city page for eligibility and sources)</span></div>')
                 h = re.sub(r'<div class="ip-program-name">([^<]*?) \(([^)]*)\)</div>\s*<div class="ip-program-detail">See [^<]*</div>', card, h)
-            cname = city.replace("-", " ").title()
+            cname = city.replace("-", " ").title().replace("Mcmurray", "McMurray")
             h = h.replace("<p>We'll pass your details along and follow up with your rebate breakdown.</p>",
                           f"<p>Tell them you're in {cname}. We'll pass your details along and follow up with your {cname} rebate breakdown. Free, and nobody pays to be listed.</p>")
         if h != o:

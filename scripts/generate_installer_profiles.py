@@ -248,7 +248,7 @@ def city_hub_url(region_key, city_slug, category):
 
 
 def city_display_name(city_slug):
-    return city_slug.replace("-", " ").title()
+    return city_slug.replace("-", " ").title().replace("Mcmurray", "McMurray")
 
 
 def address_region_from_location(location, fallback_state):

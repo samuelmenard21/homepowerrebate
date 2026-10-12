@@ -49,6 +49,20 @@ def profile_query(html_text):
 
 
 def search(query, key):
+    """Retries dropped connections and Google's 429/5xx a few times with a growing pause before giving up."""
+    for attempt in range(5):
+        try:
+            return _search(query, key)
+        except urllib.error.HTTPError as ex:
+            if ex.code not in (429, 500, 502, 503, 504) or attempt == 4:
+                raise
+        except (urllib.error.URLError, ConnectionError, TimeoutError, OSError):
+            if attempt == 4:
+                raise
+        time.sleep(2 ** attempt)
+
+
+def _search(query, key):
     req = urllib.request.Request(
         "https://places.googleapis.com/v1/places:searchText",
         data=json.dumps({"textQuery": query, "pageSize": 1}).encode(),

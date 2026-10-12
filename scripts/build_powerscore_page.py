@@ -238,23 +238,53 @@ def render_gap():
 
 
 # ---------- key findings ----------
+# why a city stands out, only where a verified page says so
+TOP_REASON = {"us/vt/burlington": "It has its own city-owned power company, Burlington Electric, which runs its own heat pump and EV charger rebates."}
+CAT_WORD = {"heat-pump": "heat pump", "insulation": "insulation", "solar": "solar", "battery": "battery", "water-heater": "water heater",
+            "smart-thermostats": "smart thermostat", "ev-charger": "EV charger", "windows-doors": "windows and doors"}
+
+
+def local_money(usd, country):
+    """potential_usd back in the city's own currency."""
+    return money(usd / DATA["cad_to_usd"] if country == "Canada" else usd, country)
+
+
 def render_findings():
-    tight_lo = min(x["overall"] for x in TIGHT)
-    tight_hi = max(x["overall"] for x in TIGHT)
-    same = round(tight_lo) == round(tight_hi)
-    tight_name = f"{len(TIGHT)} {esc(TIGHT[0]['region_label'])} cities"
-    tight_intro = (f"All {tight_name} get the same score, {tight_lo:.0f}. " if same
-                   else f"All {tight_name} score between {tight_lo:.0f} and {tight_hi:.0f}. ")
+    # 1. the city with the most open money
+    top = max(rows, key=lambda r: r["potential_usd"])
+    top_open = top["open_count"]
+    bigger = [r for r in rows if r["region"] != top["region"] and r["potential_usd"] < top["potential_usd"]]
+    named = [n for n in ("New York City", "Vancouver", "Toronto", "Los Angeles", "Boston") if any(r["label"] == n for r in bigger)][:2]
+    t1 = (f"{esc(top['label'])}, {esc(top['region_label'])} has more open rebate money than any of the {total_cities} cities: "
+          f"up to {local_money(top['potential_usd'], top['country'])} across {top_open} upgrades"
+          + (f", more than {' or '.join(named)}" if named else "") + ". "
+          + TOP_REASON.get(f"{top['region']}/{top['slug']}", ""))
+    # 2. the widest gap between two cities in the same state or province
+    best_pair = None
+    for reg, rs in BY_REGION.items():
+        hi = max(rs, key=lambda r: r["potential_usd"])
+        lo = min(rs, key=lambda r: r["potential_usd"])
+        if lo["potential_usd"] > 0 and (best_pair is None or hi["potential_usd"] / lo["potential_usd"] > best_pair[0]):
+            best_pair = (hi["potential_usd"] / lo["potential_usd"], hi, lo)
+    ratio, hi, lo = best_pair
+    t2 = (f"In {esc(hi['region_label'])}, homes in {esc(hi['label'])} can find up to {local_money(hi['potential_usd'], hi['country'])} in open rebates. "
+          f"In {esc(lo['label'])}, it is {local_money(lo['potential_usd'], lo['country'])}. Same state. The local utility and city programs make the difference.")
+    # 3. the weakest region's best city: what is actually open there
+    bot_best = max(BY_REGION[BOT_REG], key=lambda r: r["potential_usd"])
+    open_cats = [(c, v) for c, v in bot_best["categories"].items() if v.get("status") == "open" and v.get("dollar_value", 0) > 0]
+    if len(open_cats) == 1:
+        c, v = open_cats[0]
+        n3 = money(v["dollar_value"], bot_best["country"])
+        t3 = (f"{esc(bot_best['label'])} is the best-scoring city in {esc(BOT_LABEL)}, and the only rebate open there today is "
+              f"{n3} for a {CAT_WORD.get(c, c)}. Most {esc(BOT_LABEL)} programs are closed or limited.")
+    else:
+        n3 = local_money(bot_best["potential_usd"], bot_best["country"])
+        t3 = (f"{esc(bot_best['label'])} is the best-scoring city in {esc(BOT_LABEL)}, with {n3} in open rebates across "
+              f"{len(open_cats)} upgrades. Most {esc(BOT_LABEL)} programs are closed or limited.")
     cards = [
-        ("The gap", f"{GAP_RATIO:.1f}&times;",
-         f"{esc(TOP_LABEL)} cities average a PowerScore of {REGION_AVG[TOP_REG]:.0f}. {esc(BOT_LABEL)} cities average {REGION_AVG[BOT_REG]:.0f}. "
-         "Same upgrades, very different help."),
-        ("Canada vs the US", f"{CA_AVG:.0f} vs {US_AVG:.0f}",
-         "Canadian cities average higher scores than US cities. Big province-wide programs cover every city at once, "
-         "while many US rebates depend on your utility."),
-        ("Province beats postcode", f"{len(TIGHT)} cities, 1 score" if same else f"{tight_hi - tight_lo:.1f} points",
-         tight_intro +
-         f"Across all {total_cities} cities there are only {distinct_scores} different scores. Where you live is mostly about your province or state."),
+        ("Most money on the table", local_money(top["potential_usd"], top["country"]), t1),
+        (f"{esc(hi['label'])} vs {esc(lo['label'])}", f"{ratio:.0f}&times; more", t2),
+        (f"Best of {esc(BOT_LABEL)}", n3, t3),
     ]
     return "\n".join(
         f'<article class="ps-find"><p class="ps-find-k">{k}</p><p class="ps-find-n">{n}</p><p class="ps-find-t">{t}</p></article>'
@@ -464,7 +494,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter Tight'
 .ps .ps-sec.warm{background:var(--paper-warm)}
 .ps .ps-sec.white{background:#fff}
 .ps .ps-kicker{margin:0 0 10px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
-.ps .ps-h2{font-size:clamp(28px,3.2vw,44px);font-weight:600;line-height:1.08;letter-spacing:-.02em;max-width:22ch;text-wrap:balance}
+.ps .ps-h2{font-size:clamp(28px,3.2vw,44px);font-weight:600;line-height:1.08;letter-spacing:-.02em;max-width:none;text-wrap:balance}
 .ps .ps-sec p.ps-intro{margin:14px 0 0;max-width:62ch;font-size:clamp(16px,1.3vw,18px);line-height:1.6;color:var(--muted)}
 .ps .ps-head{margin-bottom:clamp(24px,3vw,40px)}
 

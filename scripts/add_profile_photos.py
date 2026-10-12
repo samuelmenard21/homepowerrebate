@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 BLOCK_RE = re.compile(r"<!-- PROFILE-PHOTO-START -->.*?<!-- PROFILE-PHOTO-END -->\n*", re.S)
 OLD_IMG_RE = re.compile(r'[ \t]*<img [^>]*class="ip-photo"[^>]*>\n?')
 LD_IMAGE_RE = re.compile(r'("image":\s*)"(?:https://lh3\.googleusercontent\.com/[^"]*|https://homepowerrebate\.com/installers/photos/[^"]*|)"')
-ANCHOR = '  <p class="ip-intro">'
+ANCHOR_RE = re.compile(r'^[ \t]*<p class="ip-intro">', re.M)
 STOP = {"the", "and", "of", "inc", "inc.", "ltd", "ltd.", "llc", "co", "co.", "corp", "&", "-", "|", "a"}
 
 ICONS = {
@@ -90,10 +90,12 @@ def apply(s, rel, ids=None, cfg=None):
     s = LD_IMAGE_RE.sub(r'\1"https://homepowerrebate.com/og-image.jpg"', s)
     h1 = re.search(r"<h1>(.*?)</h1>", s, re.S)
     meta = re.search(r'<p class="ip-hero-meta">(.*?)</p>', s, re.S)
-    if not h1 or ANCHOR not in s:
+    at = ANCHOR_RE.search(s)
+    if not h1 or not at:
         return s
     name = re.sub(r"<[^>]+>", "", h1.group(1)).strip()
-    return s.replace(ANCHOR, block(name, meta.group(1) if meta else "", ids.get(rel, ""), cfg) + "\n" + ANCHOR, 1)
+    place = "" if rel in cfg.get("skip", []) else ids.get(rel, "")  # skip: place ID shared with a different business
+    return s[:at.start()] + block(name, meta.group(1) if meta else "", place, cfg) + "\n" + s[at.start():]
 
 
 def main():

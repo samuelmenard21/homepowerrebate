@@ -225,7 +225,15 @@
 
 
 <!-- PROFILE-PHOTO-START -->
-  <figure class="ipf"><div class="ipf-tile" aria-hidden="true"><span class="ipf-init">SS</span><span class="ipf-svc"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M4.2 7.2l1.4 1.4M18.4 15.4l1.4 1.4M3 12h2M19 12h2M4.2 16.8l1.4-1.4M18.4 8.6l1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>Solar</span></div><figcaption class="ipf-cap" hidden></figcaption></figure>
+  <figure class="ipf" data-place="ChIJjc5Q_aU-3YkRE4tvnE7UWh8" data-name="Solar Shades Window Tinting"><div class="ipf-tile" aria-hidden="true"><span class="ipf-init">SS</span><span class="ipf-svc"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M4.2 7.2l1.4 1.4M18.4 15.4l1.4 1.4M3 12h2M19 12h2M4.2 16.8l1.4-1.4M18.4 8.6l1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>Solar</span></div><figcaption class="ipf-cap" hidden></figcaption></figure><script>(function(){var f=document.currentScript.previousElementSibling;if(!f||!('IntersectionObserver' in window))return;
+var io=new IntersectionObserver(function(es){if(!es[0].isIntersecting)return;io.disconnect();
+fetch("https://photos.homepowerrebate.com"+'/photo?id='+encodeURIComponent(f.dataset.place)+'&w=900').then(function(r){return r.json()}).then(function(d){if(!d||!d.src)return;
+var i=new Image();i.alt=f.dataset.name;i.className='ipf-img';i.decoding='async';i.referrerPolicy='no-referrer';
+i.onload=function(){f.insertBefore(i,f.firstChild);f.classList.add('has-photo');var c=f.querySelector('.ipf-cap'),h='';
+var e=function(t){var x=document.createElement('span');x.textContent=t;return x.innerHTML};
+if(d.author)h+='Photo: '+(d.authorUri?'<a href="'+e(d.authorUri)+'" target="_blank" rel="noopener nofollow">'+e(d.author)+'</a>':e(d.author));
+if(d.mapsUri)h+=(h?' &middot; ':'')+'<a href="'+e(d.mapsUri)+'" target="_blank" rel="noopener nofollow">View on Google Maps</a>';
+h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps" width="98" height="18" translate="no">';c.innerHTML=h;c.hidden=false};i.src=d.src}).catch(function(){})},{rootMargin:'300px'});io.observe(f)})();</script>
 <!-- PROFILE-PHOTO-END -->
 
   <p class="ip-intro">Solar Shades Window Tinting is a solar installation provider in Poughkeepsie with a current Google Maps rating of 4.8★ from 141 reviews (source: Google Maps).</p>

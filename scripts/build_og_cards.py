@@ -29,7 +29,8 @@ TRUST = {
 
 
 def text(s):
-    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", s or ""))).strip()
+    t = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", s or ""))).strip()
+    return re.sub(r" ([.,!?;:])", r"\1", t)  # "your <em>rebate</em>." must not read "rebate ."
 
 
 def first(pattern, s, flags=re.S):
@@ -68,6 +69,12 @@ def page_data(rel, s):
         eyebrow = first(r'<header class="hero hub-hero"><div class="wrap"><div class="eyebrow">(.*?)</div>', s)
         big = re.search(r'<div class="hs-stat"><b>([^<]*)<small>([^<]*)</small></b><span>biggest single rebate</span>', s)
         key = f"Biggest open rebate: {text(big.group(1))} ({text(big.group(2)).lower()})" if big else ""
+    elif 'class="ps-gap"' in s:  # /powerscore/: the rebate gap, best region vs lowest
+        gap = re.findall(r'<span class="ps-gap-name">(.*?)</span>.*?<b>(\d+)</b>', s, re.S)
+        n = first(r'Three things we learned scoring (\d+) cities', s)
+        if len(gap) >= 2:
+            key = f"{text(gap[0][0])} {gap[0][1]} vs {text(gap[-1][0])} {gap[-1][1]}, average PowerScore"
+        eyebrow = f"PowerScore · {n} cities ranked" if n else "PowerScore"
     else:
         badge = first(r'class="amount-badge">(.*?)</div>', s)
         key = badge if badge and len(badge) <= 70 else ""

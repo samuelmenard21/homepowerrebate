@@ -32,7 +32,7 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Which city has the better overall PowerScore, Boston or Newton?", "acceptedAnswer": {"@type": "Answer", "text": "Boston and Newton are tied on overall PowerScore, both at 40.6/100. PowerScore is a 0-100 average of 8 rebate categories built from real published rebate amounts, program status, and how many programs stack \u2014 check the category breakdown below to see where each city is actually stronger."}}, {"@type": "Question", "name": "Which city has better solar rebates, Boston or Newton?", "acceptedAnswer": {"@type": "Answer", "text": "Boston and Newton are tied on solar, both at 0.0 out of 100. Boston's strongest category overall is smart thermostats at 88.8, while Newton's strongest is smart thermostats at 88.8."}}, {"@type": "Question", "name": "Is it fair to compare Boston and Newton directly?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Every city's PowerScore is measured against one shared yardstick in US dollars, so Boston (Massachusetts) and Newton (Massachusetts) are on the same scale. Canadian amounts are converted at an approximate rate, and programs have different rules, so treat scores within a few points of each other as a tie."}}]}</script>
 
 <link rel="stylesheet" href="/assets/tpl/powerscore-387a4e2f.css?v=fe1db59e97" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=2235afa512" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=d72e070943" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -62,12 +62,17 @@
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
       <a href="/get-quotes/?city=&province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Get my plan</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
-      <a href="/search/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Search</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
       <a href="/get-quotes/?city=&province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Get my plan</a>
     </div>
+    <form class="nav-search" action="/search/" method="get" role="search">
+      <svg class="nav-search-glass" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <label for="nav-search-q" class="nav-search-label">Search the site</label>
+      <input id="nav-search-q" type="search" name="q" placeholder="Ask a question here" autocomplete="off" enterkeyhint="search">
+      <button type="submit" class="nav-search-go" aria-label="Search">Go</button>
+    </form>
     <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
       Pick your city
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>

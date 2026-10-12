@@ -30,7 +30,7 @@ def name_of(rel_dir):
             t = re.split(r"\s*[:(|]\s*", t)[0].strip()
             if 3 <= len(t) <= 70:
                 return t
-    return rel_dir.rstrip("/").split("/")[-1].replace("-", " ").title()
+    return rel_dir.rstrip("/").split("/")[-1].replace("-", " ").title().replace("Mcmurray", "McMurray")
 
 
 def main():

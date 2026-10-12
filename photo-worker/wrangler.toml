@@ -1,0 +1,16 @@
+name = "homepowerrebate-photos"
+main = "index.js"
+compatibility_date = "2026-07-01"
+
+# Custom domain creates the DNS record. Profile pages call https://photos.homepowerrebate.com/photo?id=<place id>
+routes = [
+  { pattern = "photos.homepowerrebate.com", custom_domain = true }
+]
+
+[vars]
+MONTHLY_CAP = "1000"   # Place Photo requests per month; Google's free allowance is 1,000, then $7 per 1,000
+IP_HOURLY = "60"
+
+[[kv_namespaces]]
+binding = "USAGE"
+id = "1d767a2335ae44e6b8ecca9085ebb1bb"   # PHOTO_USAGE namespace (separate from the roof check counter)

@@ -56,7 +56,7 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=d081244362" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=d72e070943" data-hpr-site-css>
 <link rel="stylesheet" href="/assets/tpl/common-5a0da5c2.css?v=c1f1fcfc0d" data-hpr-tpl>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much is the smart thermostat rebate in Ontario?", "acceptedAnswer": {"@type": "Answer", "text": "$125 through the Home Renovation Savings program, on eligible models from ecobee, Google Nest, Honeywell Home, Copeland Sensi, Mysa and Sinopé. It does not change with the brand you pick."}}, {"@type": "Question", "name": "Who qualifies for the Ontario smart thermostat rebate?", "acceptedAnswer": {"@type": "Answer", "text": "You qualify if you are an Enbridge Gas customer who heats mainly with a natural gas furnace or boiler, or if you are connected to the Ontario electricity grid and heat or cool your home electrically. You must live in a single or semi-detached home, a row house or townhome, or a mobile home on a permanent foundation. Cornwall Electric customers are excluded, and you cannot have received a thermostat rebate, discount or device from Enbridge Gas, Save on Energy or the program before."}}, {"@type": "Question", "name": "Is the smart thermostat free in Ontario?", "acceptedAnswer": {"@type": "Answer", "text": "No. The program takes $125 off the price, so the thermostat is only free if it costs $125 or less. Ask for a code before you shop so the discount comes off at checkout."}}, {"@type": "Question", "name": "Do I claim before or after I buy?", "acceptedAnswer": {"@type": "Answer", "text": "Either. Before you buy, request a $125 code on the program site and use it at The Home Depot, Best Buy, or the ecobee, Copeland Sensi or Mysa website. After you buy, upload your receipt within 60 days to get the $125 back."}}, {"@type": "Question", "name": "Can I also get paid for joining Peak Perks?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Once your thermostat is installed, Peak Perks pays $75 when you sign up and $20 each year after, in return for small scheduled temperature changes during peak demand from June to September."}}, {"@type": "Question", "name": "Does Mysa qualify for the Ontario rebate?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mysa is on the program's eligible list. Check the compatibility notes first, because Mysa's baseboard models are for electric baseboard heaters and its central model is for furnaces."}}]}</script>
 <link rel="stylesheet" href="/assets/tpl/article-ce18d2cc.css?v=ce18d2cc21" data-hpr-tpl>
@@ -91,12 +91,17 @@
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
       <a href="/get-quotes/?city=&province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Get my plan</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
-      <a href="/search/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Search</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
       <a href="/get-quotes/?city=&province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Get my plan</a>
     </div>
+    <form class="nav-search" action="/search/" method="get" role="search">
+      <svg class="nav-search-glass" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <label for="nav-search-q" class="nav-search-label">Search the site</label>
+      <input id="nav-search-q" type="search" name="q" placeholder="Ask a question here" autocomplete="off" enterkeyhint="search">
+      <button type="submit" class="nav-search-go" aria-label="Search">Go</button>
+    </form>
     <button onclick="toggleCityDropdown()" class="nav-pick" style="border:none; cursor:pointer;">
       Pick your city
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>

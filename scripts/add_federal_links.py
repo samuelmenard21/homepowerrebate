@@ -35,7 +35,7 @@ CITY = {
     "ns": "Efficiency Nova Scotia pays per ton now, and Ottawa says the federal rebate can be combined with provincial programs.",
 }
 HPPAGE = {"bc": ("BC", "/ca/bc/heat-pump/"), "on": ("Ontario", "/ca/on/heat-pump/"), "ab": ("Alberta", "/ca/ab/heat-pump/"), "ns": ("Nova Scotia", "/ca/ns/heat-pump/")}
-NAMES = {"st-albert": "St. Albert", "fort-st-john": "Fort St. John", "niagara-falls": "Niagara Falls", "sault-ste-marie": "Sault Ste. Marie"}
+NAMES = {"st-albert": "St. Albert", "fort-st-john": "Fort St. John", "fort-mcmurray": "Fort McMurray", "niagara-falls": "Niagara Falls", "sault-ste-marie": "Sault Ste. Marie"}
 POSTS = [("should-you-wait-federal-heat-pump-rebate", "Should You Wait for the Federal Heat Pump Rebate?", "The rebate launches early 2027. Deadlines that are real today and a simple rule for deciding."),
          ("federal-heat-pump-rebate-stacking-by-province", "Federal + Provincial Heat Pump Rebates: What Stacks", "BC, Ontario, Nova Scotia and Alberta, with sample stacks."),
          ("heat-pump-natural-gas-home-federal-rebate", "Heat Pump on a Natural Gas Home: Is It Worth It?", "Run your own numbers, and why dual fuel can make sense."),

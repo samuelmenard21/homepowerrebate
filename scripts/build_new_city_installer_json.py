@@ -96,7 +96,7 @@ for csv_rel, out_dir_rel, specialty, desc_tpl, target_cities in JOBS:
                 "recommended": (row.get("HomePowerRebate Recommended") or "").strip().lower() == "yes",
                 "specialty": specialty,
                 "description": desc_tpl.format(city=city, rating=rating, reviews=reviews),
-                "image_url": (row.get("Image URL") or "").strip(),
+                "image_url": "",  # Google photos are never stored or linked (Places policies); profiles load them at view time
             })
 
     os.makedirs(out_dir, exist_ok=True)

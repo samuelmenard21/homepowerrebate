@@ -211,7 +211,7 @@ def build(job):
                 "recommended": (row.get("HomePowerRebate Recommended") or "").strip().lower() == "yes",
                 "specialty": job["specialty"],
                 "description": job["description_tpl"].format(city=city, rating=rating, reviews=reviews),
-                "image_url": (row.get("Image URL") or "").strip(),
+                "image_url": "",  # Google photos are never stored or linked (Places policies); profiles load them at view time
             })
 
     os.makedirs(job["out_dir"], exist_ok=True)

@@ -359,7 +359,8 @@ def main():
             # pages is a full SEO sentence, not a city name.
             label = city_dir.name.replace("-", " ").title()
             label = (label.replace("St ", "St. ").replace("Ny ", "NY ")
-                     .replace("Bc ", "BC ").replace("Ev ", "EV "))
+                     .replace("Bc ", "BC ").replace("Ev ", "EV ")
+                     .replace("Mcmurray", "McMurray"))
             city_meta[region_key][slug] = {
                 "label": label,
                 "url": "/" + str(rel) + "/",

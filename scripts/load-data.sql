@@ -28,7 +28,7 @@ INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_d
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_mississauga', 'on', 'Mississauga', 'CA', 'Alectra Utilities', 4500);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_niagara_falls', 'on', 'Niagara Falls', 'CA', 'Alectra Utilities', 4600);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_ottawa', 'on', 'Ottawa', 'CA', 'Hydro Ottawa', 4900);
-INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_peterborough', 'on', 'Peterborough', 'CA', 'Peterborough Utilities Commission', 5200);
+INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_peterborough', 'on', 'Peterborough', 'CA', 'Hydro One', 5200);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_sault_ste_marie', 'on', 'Sault Ste Marie', 'CA', 'Sault Ste. Marie Public Utilities', 5900);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_sudbury', 'on', 'Sudbury', 'CA', 'Greater Sudbury Utilities', 5800);
 INSERT INTO cities (id, region, city, country, primary_utility, heating_degree_days) VALUES ('on_thunder_bay', 'on', 'Thunder Bay', 'CA', 'Thunder Bay Hydro', 6200);

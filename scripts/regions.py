@@ -33,28 +33,19 @@ def region_dirs_exclusion():
     return {"ca", "us"} | set(CODES) | {"stacking-calculator"}
 
 
-_BTN = ("flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:%s; color:%s; font-weight:600; "
-        "font-size:13px; cursor:pointer; font-family:'Inter Tight',sans-serif;")
-
-
 def nav_tabs_html(indent="      "):
-    """Province/state tab buttons, three per row; the first (Ontario) is the default-highlighted tab."""
-    rows = []
-    for i in range(0, len(REGIONS), 3):
-        btns = []
-        for j, r in enumerate(REGIONS[i:i + 3]):
-            style = _BTN % (("var(--teal-deep)", "#fff") if i + j == 0 else ("#fff", "var(--ink)"))
-            btns.append(f"{indent}  <button type=\"button\" onclick=\"showProvinceCities('{r['code']}')\" id=\"province-tab-{r['code']}\" "
-                        f"style=\"{style}\">{r['tab_label']}</button>")
-        rows.append(f"{indent}<div style=\"display:flex; gap:6px; margin-bottom:12px;\">\n" + "\n".join(btns) + f"\n{indent}</div>")
-    return "\n".join(rows)
+    """Province/state tab buttons in one wrapping row; the first (Ontario) is the default-highlighted tab."""
+    btns = [f"{indent}  <button type=\"button\" onclick=\"showProvinceCities('{r['code']}')\" id=\"province-tab-{r['code']}\" "
+            f"class=\"nav-region-tab{' is-on' if i == 0 else ''}\" aria-pressed=\"{'true' if i == 0 else 'false'}\">{r['tab_label']}</button>"
+            for i, r in enumerate(REGIONS)]
+    return f"{indent}<div class=\"nav-region-tabs\">\n" + "\n".join(btns) + f"\n{indent}</div>"
 
 
 def nav_panels_html(indent="    "):
     out = []
     for i, r in enumerate(REGIONS):
         links = "".join(f'<a href="{h}">{l}</a>' for h, l in r["cities"])
-        out.append(f'{indent}<div id="province-cities-{r["code"]}" style="display:{"grid" if i == 0 else "none"}; gap:8px;">\n'
+        out.append(f'{indent}<div id="province-cities-{r["code"]}" class="nav-region-cities"{"" if i == 0 else " hidden"}>\n'
                    f'{indent}  {links}\n{indent}</div>')
     return "\n".join(out)
 

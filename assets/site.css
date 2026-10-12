@@ -336,6 +336,16 @@ h1, h2 { text-wrap: balance; }
   .nav-pick { font-size: 13px !important; padding: 0 14px !important; }
 }
 /* search box in the menu, on every page */
+#city-dropdown-modal { position: absolute; top: 56px; right: 20px; z-index: 49; width: min(360px, calc(100vw - 32px)); max-height: 75vh; overflow-y: auto; background: #fff; border: 1px solid var(--rule, #e3dccf); border-radius: 12px; box-shadow: 0 8px 24px rgba(10, 42, 46, 0.12); text-align: left; }
+.nav-region-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.nav-region-tab { flex: 0 0 auto; padding: 7px 11px; border: 1px solid var(--rule, #e3dccf); border-radius: 999px; background: #fff; color: var(--ink); font: 600 13px/1.2 'Inter Tight', sans-serif; white-space: nowrap; cursor: pointer; }
+.nav-region-tab:hover { border-color: var(--teal); }
+.nav-region-tab.is-on { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+.nav-region-cities { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; border-top: 1px solid var(--rule, #e3dccf); padding-top: 12px; }
+.nav-region-cities[hidden] { display: none; }
+.nav-region-cities a { display: block; padding: 8px 10px; border-radius: 8px; background: var(--paper, #faf7f2); color: var(--ink); font: 600 14px/1.25 'Inter Tight', sans-serif; text-decoration: none; }
+.nav-region-cities a:hover, .nav-region-cities a:focus-visible { background: var(--paper-warm, #f5efe5); color: var(--teal-deep); }
+@media (max-width: 600px) { #city-dropdown-modal { right: 16px; } }
 .nav-search { position: relative; display: flex; align-items: center; flex: 0 1 230px; min-width: 150px; margin: 0 14px; }
 .nav-search-glass { position: absolute; left: 13px; color: var(--teal); pointer-events: none; }
 .nav-search-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -685,6 +695,12 @@ body.tpl-hub { --gut: clamp(20px, 3.2vw, 56px); --hub-w: min(var(--container), 1
 }
 .tpl-hub .hub-table .rb-status { padding: 3px 10px; font-size: 13px; line-height: 1.3; border-radius: 99px; }
 .tpl-hub .hub-block a, .tpl-hub .hub-answer a { color: var(--teal); text-underline-offset: 3px; }
+
+/* ---------- "On this page" contents (some hubs' legacy CSS never styled it) ---------- */
+.tpl-hub main > nav.toc { width: var(--hub-w); max-width: none; margin: 24px auto 0; padding: 14px 0; display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; border-bottom: 1px solid var(--rule); font-size: 13px; box-sizing: border-box; }
+.tpl-hub nav.toc .toc-lbl { font-weight: 700; color: var(--ink); margin-right: 2px; }
+.tpl-hub nav.toc a { color: var(--teal); text-decoration: none; padding: 4px 11px; border: 1px solid var(--rule); border-radius: 999px; white-space: nowrap; }
+.tpl-hub nav.toc a:hover { background: var(--paper-warm); border-color: var(--amber); color: var(--amber); }
 
 /* ===== template design: profile (profile.css) ===== */
 /* Installer profile pages (body.tpl-profile): photo block from scripts/add_profile_photos.py.

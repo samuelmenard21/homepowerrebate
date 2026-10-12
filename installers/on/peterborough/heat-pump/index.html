@@ -190,7 +190,7 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=d72e070943" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=5fbb2ceb0e" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -235,82 +235,74 @@
     </button>
   </div>
 
-  <div id="city-dropdown-modal" style="display:none; position:absolute; top:56px; right:20px; background:#fff; border:1px solid var(--rule); border-radius:12px; box-shadow:0 8px 24px rgba(10,42,46,0.12); z-index:49; max-width:300px; max-height:70vh; overflow-y:auto;">
+  <div id="city-dropdown-modal" style="display:none;">
     <div style="padding:16px 16px 0;">
       <a href="/powerscore/" style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; margin-bottom:12px; border-radius:8px; background:linear-gradient(135deg, var(--teal-deep), #08363f); color:#fff; text-decoration:none; font-weight:700; font-size:13px; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">
         <span>&#9889; See your city's PowerScore</span>
         <span style="opacity:.7;">&rarr;</span>
       </a>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--teal-deep); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Ontario</button>
-        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">British Columbia</button>
-        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">California (US)</button>
-      </div>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Alberta</button>
-        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Nova Scotia</button>
-        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Massachusetts</button>
-      </div>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">New York</button>
-        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Pennsylvania</button>
-        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Colorado</button>
-      </div>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Vermont</button>
-        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Michigan</button>
-        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">New Jersey</button>
-      </div>
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Illinois</button>
-        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Washington</button>
-        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" style="flex:1; padding:9px; border-radius:8px; border:1px solid var(--rule); background:#fff; color:var(--ink); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter Tight', 'Inter Tight Fallback',sans-serif;">Minnesota</button>
+      <div class="nav-region-tabs">
+        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" class="nav-region-tab is-on" aria-pressed="true">Ontario</button>
+        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" class="nav-region-tab" aria-pressed="false">British Columbia</button>
+        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" class="nav-region-tab" aria-pressed="false">California</button>
+        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" class="nav-region-tab" aria-pressed="false">Alberta</button>
+        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" class="nav-region-tab" aria-pressed="false">Nova Scotia</button>
+        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" class="nav-region-tab" aria-pressed="false">Massachusetts</button>
+        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" class="nav-region-tab" aria-pressed="false">New York</button>
+        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" class="nav-region-tab" aria-pressed="false">Pennsylvania</button>
+        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" class="nav-region-tab" aria-pressed="false">Colorado</button>
+        <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" class="nav-region-tab" aria-pressed="false">Vermont</button>
+        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" class="nav-region-tab" aria-pressed="false">Michigan</button>
+        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" class="nav-region-tab" aria-pressed="false">New Jersey</button>
+        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" class="nav-region-tab" aria-pressed="false">Illinois</button>
+        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" class="nav-region-tab" aria-pressed="false">Washington</button>
+        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" class="nav-region-tab" aria-pressed="false">Minnesota</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
-    <div id="province-cities-on" style="display:grid; gap:8px;">
+    <div id="province-cities-on" class="nav-region-cities">
       <a href="/ca/on/toronto/">Toronto</a><a href="/ca/on/ottawa/">Ottawa</a><a href="/ca/on/mississauga/">Mississauga</a><a href="/ca/on/brampton/">Brampton</a><a href="/ca/on/hamilton/">Hamilton</a><a href="/ca/on/markham/">Markham</a><a href="/ca/on/vaughan/">Vaughan</a><a href="/ca/on/richmond-hill/">Richmond Hill</a><a href="/ca/on/barrie/">Barrie</a><a href="/ca/on/london/">London</a><a href="/ca/on/kitchener/">Kitchener</a><a href="/ca/on/windsor/">Windsor</a><a href="/ca/on/oakville/">Oakville</a><a href="/ca/on/oshawa/">Oshawa</a><a href="/ca/on/whitby/">Whitby</a><a href="/ca/on/burlington/">Burlington</a><a href="/ca/on/cambridge/">Cambridge</a><a href="/ca/on/greater-sudbury/">Greater Sudbury</a>
     </div>
-    <div id="province-cities-bc" style="display:none; gap:8px;">
+    <div id="province-cities-bc" class="nav-region-cities" hidden>
       <a href="/ca/bc/abbotsford/">Abbotsford</a><a href="/ca/bc/burnaby/">Burnaby</a><a href="/ca/bc/chilliwack/">Chilliwack</a><a href="/ca/bc/coquitlam/">Coquitlam</a><a href="/ca/bc/fort-st-john/">Fort St. John</a><a href="/ca/bc/kamloops/">Kamloops</a><a href="/ca/bc/kelowna/">Kelowna</a><a href="/ca/bc/langley/">Langley</a><a href="/ca/bc/maple-ridge/">Maple Ridge</a><a href="/ca/bc/nanaimo/">Nanaimo</a><a href="/ca/bc/penticton/">Penticton</a><a href="/ca/bc/prince-george/">Prince George</a><a href="/ca/bc/richmond/">Richmond</a><a href="/ca/bc/squamish/">Squamish</a><a href="/ca/bc/surrey/">Surrey</a><a href="/ca/bc/vancouver/">Vancouver</a><a href="/ca/bc/vernon/">Vernon</a><a href="/ca/bc/victoria/">Victoria</a>
     </div>
-    <div id="province-cities-ca" style="display:none; gap:8px;">
+    <div id="province-cities-ca" class="nav-region-cities" hidden>
       <a href="/us/ca/los-angeles/">Los Angeles</a><a href="/us/ca/sacramento/">Sacramento</a><a href="/us/ca/bay-area/">Bay Area</a><a href="/us/ca/san-diego/">San Diego</a><a href="/us/ca/inland-empire/">Inland Empire</a>
     </div>
-    <div id="province-cities-ab" style="display:none; gap:8px;">
+    <div id="province-cities-ab" class="nav-region-cities" hidden>
       <a href="/ca/ab/calgary/">Calgary</a><a href="/ca/ab/edmonton/">Edmonton</a><a href="/ca/ab/red-deer/">Red Deer</a><a href="/ca/ab/lethbridge/">Lethbridge</a><a href="/ca/ab/st-albert/">St. Albert</a>
     </div>
-    <div id="province-cities-ns" style="display:none; gap:8px;">
+    <div id="province-cities-ns" class="nav-region-cities" hidden>
       <a href="/ca/ns/halifax/">Halifax</a>
     </div>
-    <div id="province-cities-ma" style="display:none; gap:8px;">
+    <div id="province-cities-ma" class="nav-region-cities" hidden>
       <a href="/us/ma/boston/">Boston</a><a href="/us/ma/worcester/">Worcester</a><a href="/us/ma/springfield/">Springfield</a><a href="/us/ma/cambridge/">Cambridge</a><a href="/us/ma/lowell/">Lowell</a><a href="/us/ma/brockton/">Brockton</a><a href="/us/ma/new-bedford/">New Bedford</a><a href="/us/ma/quincy/">Quincy</a><a href="/us/ma/lynn/">Lynn</a><a href="/us/ma/fall-river/">Fall River</a><a href="/us/ma/newton/">Newton</a><a href="/us/ma/somerville/">Somerville</a>
     </div>
-    <div id="province-cities-ny" style="display:none; gap:8px;">
+    <div id="province-cities-ny" class="nav-region-cities" hidden>
       <a href="/us/ny/con-edison/new-york-city/">New York City</a><a href="/us/ny/con-edison/yonkers/">Yonkers</a><a href="/us/ny/con-edison/mount-vernon/">Mount Vernon</a><a href="/us/ny/con-edison/new-rochelle/">New Rochelle</a><a href="/us/ny/con-edison/white-plains/">White Plains</a><a href="/us/ny/pseg/brookhaven/">Brookhaven</a><a href="/us/ny/pseg/islip/">Islip</a><a href="/us/ny/pseg/babylon/">Babylon</a><a href="/us/ny/pseg/huntington/">Huntington</a><a href="/us/ny/pseg/smithtown/">Smithtown</a><a href="/us/ny/pseg/oyster-bay/">Oyster Bay</a><a href="/us/ny/pseg/southampton/">Southampton</a><a href="/us/ny/central-hudson/poughkeepsie/">Poughkeepsie</a><a href="/us/ny/central-hudson/newburgh/">Newburgh</a><a href="/us/ny/central-hudson/kingston/">Kingston</a><a href="/us/ny/central-hudson/beacon/">Beacon</a><a href="/us/ny/central-hudson/saugerties/">Saugerties</a><a href="/us/ny/national-grid/albany/">Albany</a><a href="/us/ny/national-grid/buffalo/">Buffalo</a><a href="/us/ny/national-grid/rochester/">Rochester</a><a href="/us/ny/national-grid/syracuse/">Syracuse</a>
     </div>
-    <div id="province-cities-pa" style="display:none; gap:8px;">
+    <div id="province-cities-pa" class="nav-region-cities" hidden>
       <a href="/us/pa/philadelphia/">Philadelphia</a><a href="/us/pa/pittsburgh/">Pittsburgh</a><a href="/us/pa/allentown/">Allentown</a><a href="/us/pa/erie/">Erie</a>
     </div>
-    <div id="province-cities-co" style="display:none; gap:8px;">
+    <div id="province-cities-co" class="nav-region-cities" hidden>
       <a href="/us/co/denver/">Denver</a><a href="/us/co/colorado-springs/">Colorado Springs</a><a href="/us/co/aurora/">Aurora</a><a href="/us/co/fort-collins/">Fort Collins</a><a href="/us/co/boulder/">Boulder</a>
     </div>
-    <div id="province-cities-vt" style="display:none; gap:8px;">
+    <div id="province-cities-vt" class="nav-region-cities" hidden>
       <a href="/us/vt/burlington/">Burlington</a><a href="/us/vt/south-burlington/">South Burlington</a><a href="/us/vt/rutland/">Rutland</a><a href="/us/vt/barre/">Barre</a><a href="/us/vt/montpelier/">Montpelier</a>
     </div>
-    <div id="province-cities-mi" style="display:none; gap:8px;">
+    <div id="province-cities-mi" class="nav-region-cities" hidden>
       <a href="/us/mi/detroit/">Detroit</a><a href="/us/mi/grand-rapids/">Grand Rapids</a><a href="/us/mi/ann-arbor/">Ann Arbor</a><a href="/us/mi/lansing/">Lansing</a>
     </div>
-    <div id="province-cities-nj" style="display:none; gap:8px;">
+    <div id="province-cities-nj" class="nav-region-cities" hidden>
       <a href="/us/nj/newark/">Newark</a><a href="/us/nj/jersey-city/">Jersey City</a><a href="/us/nj/toms-river/">Toms River</a><a href="/us/nj/atlantic-city/">Atlantic City</a>
     </div>
-    <div id="province-cities-il" style="display:none; gap:8px;">
+    <div id="province-cities-il" class="nav-region-cities" hidden>
       <a href="/us/il/chicago/">Chicago</a><a href="/us/il/aurora/">Aurora</a><a href="/us/il/naperville/">Naperville</a><a href="/us/il/peoria/">Peoria</a>
     </div>
-    <div id="province-cities-wa" style="display:none; gap:8px;">
+    <div id="province-cities-wa" class="nav-region-cities" hidden>
       <a href="/us/wa/seattle/">Seattle</a><a href="/us/wa/spokane/">Spokane</a><a href="/us/wa/tacoma/">Tacoma</a><a href="/us/wa/vancouver/">Vancouver</a><a href="/us/wa/bellevue/">Bellevue</a>
     </div>
-    <div id="province-cities-mn" style="display:none; gap:8px;">
+    <div id="province-cities-mn" class="nav-region-cities" hidden>
       <a href="/us/mn/minneapolis/">Minneapolis</a><a href="/us/mn/saint-paul/">Saint Paul</a><a href="/us/mn/rochester/">Rochester</a><a href="/us/mn/duluth/">Duluth</a>
     </div>
     </div>
@@ -521,7 +513,10 @@ setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600)
 /* CANONICAL-NAV-FOOTER-JS-START */
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
-  if (modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
+  if (!modal) return;
+  var btn = document.querySelector('.nav-pick');
+  if (btn) modal.style.top = (btn.getBoundingClientRect().bottom - modal.parentElement.getBoundingClientRect().top + 8) + 'px';
+  modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
   const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
@@ -529,9 +524,9 @@ function showProvinceCities(prov) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);
     if (!panel || !tab) return;
-    panel.style.display = (prov === r) ? 'grid' : 'none';
-    tab.style.background = (prov === r) ? 'var(--teal-deep)' : '#fff';
-    tab.style.color = (prov === r) ? '#fff' : 'var(--ink)';
+    panel.hidden = prov !== r;
+    tab.classList.toggle('is-on', prov === r);
+    tab.setAttribute('aria-pressed', prov === r ? 'true' : 'false');
   });
 }
 document.addEventListener('DOMContentLoaded', function () {

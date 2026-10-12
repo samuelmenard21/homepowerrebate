@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_furnace_pages import shell  # noqa: E402
+from build_furnace_pages import shell, page_css  # noqa: E402
 
 PATH = "/search/"
 
@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded',function(){
 
 
 def main():
-    out = shell("Search | HomePowerRebate", "Search HomePowerRebate for rebates, cities, installers and guides.", PATH, "bc", BODY, [])
+    out = shell("Search | HomePowerRebate", "Search HomePowerRebate for rebates, cities, installers and guides.", PATH, "bc", BODY, [], css=page_css("2026-09-29"))
     out = out.replace('<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">',
                       '<meta name="robots" content="noindex, follow">', 1)
     out = out.replace("<body", '<body data-pagefind-ignore="all"', 1)

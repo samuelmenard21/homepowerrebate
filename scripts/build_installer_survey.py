@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_furnace_pages import shell  # noqa: E402
+from build_furnace_pages import shell, page_css  # noqa: E402
 
 PATH = "/installers/survey/"
 ENDPOINT = "https://leads.homepowerrebate.com/installer-survey"
@@ -98,7 +98,7 @@ def build():
 <div class="sv-give"><h2 style="margin-top:0">What you get for taking part</h2><ul>
 <li><b>A "Survey contributor" mark</b> next to your company on our top-rated rankings. It shows you share real information with homeowners. It never changes your rank.</li>
 <li><b>Credit in the 2026 Installer Report</b>, with your company name and a link to your website, if we quote your answer. You choose below.</li>
-<li><b>Your free top-rated badge</b>, if you're ranked. <a href="/installers/badge/">Get it here</a>.</li>
+<li><b>Your top-rated badge</b>, if you're ranked. <a href="/installers/badge/">Get it here</a>.</li>
 </ul><p class="small">We only publish totals and ranges by region. Your prices are never shown next to your name.</p></div>
 
 <form id="sv" class="qf" novalidate>
@@ -192,7 +192,7 @@ sync();
 .small{font-size:13.5px!important;color:#6b8e7f!important}"""
     page = shell("2026 Home Energy Installer Survey | HomePowerRebate",
                  "A five-minute survey for heat pump, solar, battery and insulation installers: prices, wait times and rebates.",
-                 PATH, "on", body, [])
+                 PATH, "on", body, [], css=page_css("2026-09-29"))
     page = page.replace('content="index, follow, max-snippet:-1, max-image-preview:large"', 'content="noindex, follow"', 1)
     page = page.replace("</style>", css + "</style>", 1)
     out = ROOT / PATH.strip("/") / "index.html"

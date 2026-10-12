@@ -335,6 +335,26 @@ h1, h2 { text-wrap: balance; }
   .nav-mobile-only a { padding: 0 10px; }
   .nav-pick { font-size: 13px !important; padding: 0 14px !important; }
 }
+/* search box in the menu, on every page */
+.nav-search { position: relative; display: flex; align-items: center; flex: 0 1 230px; min-width: 150px; margin: 0 14px; }
+.nav-search-glass { position: absolute; left: 13px; color: var(--teal); pointer-events: none; }
+.nav-search-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.nav-search input { width: 100%; min-height: 44px; padding: 0 14px 0 40px; border: 1.5px solid var(--rule, #e3dccf); border-radius: 999px; background: #fff; color: var(--ink); font: 500 15px 'Inter Tight', sans-serif; -webkit-appearance: none; appearance: none; }
+.nav-search input::placeholder { color: #6b7a7c; }
+.nav-search input:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px rgba(212, 117, 28, 0.18); }
+.nav-search-go { display: none; }
+body:has(#hpr-search) .nav-search { display: none; }
+@media (min-width: 769px) and (max-width: 1023px) {
+  .nav-inner { flex-wrap: wrap; row-gap: 6px; }
+  .nav-desktop-only a, .nav-pick { white-space: nowrap; }
+  .nav-search { order: 10; flex: 1 0 100%; margin: 0 0 4px; }
+}
+@media (max-width: 768px) {
+  .nav-search { order: 10; flex: 1 0 100%; margin: 2px 0 6px; min-width: 0; }
+  .nav-search input { font-size: 16px; }
+  .nav-search-go { display: inline-flex; align-items: center; position: absolute; right: 4px; min-height: 36px; padding: 0 14px; border: none; border-radius: 999px; background: var(--teal-deep); color: var(--paper); font: 700 14px 'Inter Tight', sans-serif; cursor: pointer; }
+  .nav-search input { padding-right: 64px; }
+}
 .footer-tagline { color: rgba(250, 247, 242, 0.7); font-size: 14px; }
 .footer-col-title { font-size: 13px; color: rgba(250, 247, 242, 0.82); }
 .footer-col-links { gap: 2px; font-size: 15px; }
@@ -665,6 +685,26 @@ body.tpl-hub { --gut: clamp(20px, 3.2vw, 56px); --hub-w: min(var(--container), 1
 }
 .tpl-hub .hub-table .rb-status { padding: 3px 10px; font-size: 13px; line-height: 1.3; border-radius: 99px; }
 .tpl-hub .hub-block a, .tpl-hub .hub-answer a { color: var(--teal); text-underline-offset: 3px; }
+
+/* ===== template design: profile (profile.css) ===== */
+/* Installer profile pages (body.tpl-profile): photo block from scripts/add_profile_photos.py.
+   An initials tile is always there; a Google photo, when one loads at view time, covers it. */
+.tpl-profile .ipf { position: relative; margin: 18px 0 0; }
+.tpl-profile .ipf-tile { display: flex; align-items: center; gap: clamp(14px, 3vw, 24px); padding: clamp(18px, 4vw, 28px);
+  border-radius: 14px; background: radial-gradient(520px 220px at 100% 0%, rgba(212, 117, 28, .28), transparent 62%), linear-gradient(135deg, #0d4f5c 0%, #08363f 75%);
+  color: #faf7f2; min-height: 120px; }
+.tpl-profile .ipf-init { flex: none; display: grid; place-items: center; width: clamp(64px, 14vw, 88px); height: clamp(64px, 14vw, 88px); border-radius: 50%;
+  background: #d4751c; color: #fff; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-weight: 700; font-size: clamp(24px, 5.4vw, 34px); letter-spacing: .02em;
+  box-shadow: 0 0 0 4px rgba(250, 247, 242, .18); }
+.tpl-profile .ipf-svc { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; color: rgba(250, 247, 242, .92); }
+.tpl-profile .ipf-svc svg { width: 26px; height: 26px; color: #f5b566; }
+.tpl-profile .ipf.has-photo .ipf-tile { display: none; }
+.tpl-profile .ipf-img { display: block; width: 100%; height: auto; max-height: 380px; aspect-ratio: 16 / 7; object-fit: cover; border-radius: 14px; background: #f5efe5; }
+.tpl-profile .ipf-cap { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 8px 2px 0; font-size: 13px; color: #5e5e5e; }
+.tpl-profile .ipf-cap a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+/* Google attribution logo: 16 to 19px tall, clear space 10px left, right and top, 5px bottom (Places policies) */
+.tpl-profile .ipf-g { height: 18px; width: auto; margin: 10px 10px 5px; }
+.tpl-profile .ipf-gt { font-family: Roboto, Arial, sans-serif; font-weight: 400; font-size: 13px; color: #5e5e5e; margin-left: 4px; }
 
 /* ===== template design: powerscore (powerscore.css) ===== */
 /* PowerScore design (body.tpl-powerscore): /powerscore/ and the city comparison pages.

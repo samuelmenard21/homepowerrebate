@@ -104,7 +104,7 @@ def main():
                 "Tell us at <a href='mailto:hello@homepowerrebate.com'>hello@homepowerrebate.com</a> if you find a current one.</p>"
                 "<h2>Statewide programs</h2>" + table(STATEWIDE) +
                 "<p>The federal 25C and 25D tax credits ended for spending after December 31, 2025, so we do not count them.</p>"
-                f"<p><a href='/calculator/ca/'>California rebate calculator</a> · <a href='/get-quotes/?province=ca&city={slug}'>Get my plan and top-rated installers</a> · <a href='/installers/ca/{slug}/heat-pump/'>Heat pump installers in {e(name)}</a></p>")
+                f"<p><a href='/calculator/ca/'>California rebate calculator</a> · <a href='/get-quotes/?province=ca&city={slug}'>See my rebates and top-rated installers</a> · <a href='/installers/ca/{slug}/heat-pump/'>Heat pump installers in {e(name)}</a></p>")
         (d / "index.html").write_text(wrap(base, f"{name} Home Energy Rebates 2026: What Is Open", f"What {name}, California homeowners can claim in 2026 from their utility, with a source and date for every amount.",
                                            f"{name} Home Energy Rebates 2026: What Is Open", c["intro"], crumbs + [(name, base)], body, latest), encoding="utf-8")
         for cat in ALL_CATS:

@@ -108,7 +108,7 @@ def page(slug, r):
 {"".join(secs)}
 <h2>Statewide programs</h2>{state}
 <p>The federal 25C and 25D tax credits ended for spending after December 31, 2025, so we do not count them.</p>
-<h2>Check your own numbers</h2><p><a href="/calculator/ca/">California rebate calculator</a> · <a href="/get-quotes/?province=ca">Get my plan and top-rated installers</a></p>
+<h2>Check your own numbers</h2><p><a href="/calculator/ca/">California rebate calculator</a> · <a href="/get-quotes/?province=ca">See my rebates and top-rated installers</a></p>
 {"" if r.get("path") else "<h2>Cities in this area</h2><ul>" + cities + "</ul>"}
 {"<h2>Top-rated installers</h2><ul>" + inst + "</ul>" if inst else ""}
 <p class="small">Installers are ranked by Google reviews only. Nobody pays to be listed.</p>

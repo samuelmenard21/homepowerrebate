@@ -219,7 +219,7 @@ main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
 main .toc-mobile ol li { margin: 0; max-width: none; font-size: 16px; line-height: 1.35; }
 .toc-mobile a { display: flex; align-items: center; min-height: 44px; color: var(--teal-deep); font-weight: 600; text-decoration: none; }
 @media (min-width: 1180px) { .toc-mobile { display: none; } }
-/* the desktop menu always shows "Get my plan", so the floating button only covered tables and links there (2026-10-13) */
+/* the desktop menu always shows "See my rebates", so the floating button only covered tables and links there (2026-10-13) */
 @media (min-width: 769px) { .sticky-cta, .sticky-cta.on, .sticky-cta.show { display: none !important; } }
 /* hover colours on light backgrounds use the darker amber (4.5:1 on white and paper) */
 .rank .btn-call:hover { background: #a4540a; }

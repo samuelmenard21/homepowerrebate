@@ -77,7 +77,7 @@ def main():
                      "is fully reserved and takes new requests on hold only.</p></div>"
                      f"<h2>What SMUD pays</h2>{cards}"
                      "<h2>Every SMUD program in the calculator</h2>" + table([i for i in PROGS if PROGS[i].get('when', {}).get('utility') == ['smud']]) +
-                     f"<p><a href='/calculator/ca/?utility=smud&city={slug}'>Estimate your {e(name)} rebates</a> · <a href='/get-quotes/?province=ca&city={slug}'>Get my plan and top-rated installers</a> · <a href='/installers/ca/{slug}/heat-pump/'>Heat pump installers in {e(name)}</a></p>"
+                     f"<p><a href='/calculator/ca/?utility=smud&city={slug}'>Estimate your {e(name)} rebates</a> · <a href='/get-quotes/?province=ca&city={slug}'>See my rebates and top-rated installers</a> · <a href='/installers/ca/{slug}/heat-pump/'>Heat pump installers in {e(name)}</a></p>"
                      "<h2>Statewide programs</h2>" + table(STATEWIDE) +
                      "<p>The federal 25C and 25D tax credits ended for spending after December 31, 2025, so we do not count them.</p>")
         path = f"/us/ca/sacramento/{slug}/"

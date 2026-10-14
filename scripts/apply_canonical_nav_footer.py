@@ -620,7 +620,7 @@ def ensure_rail(content: str, rel: str, plan_href: str) -> str:
     lis = "".join(f'<li><a href="#{i}">{html.escape(l)}</a></li>' for i, l in items[:12])
     rail = (f'{RAIL_S}\n<aside class="page-rail" aria-label="On this page" style="grid-row: {row} / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol>{lis}</ol></nav>'
             f'<div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p>'
-            f'<a class="rail-btn" href="{plan_href}">Get my plan</a></div></aside>\n{RAIL_E}\n')
+            f'<a class="rail-btn" href="{plan_href}">See my rebates</a></div></aside>\n{RAIL_E}\n')
     cut = child_end(new_body, hero_idx) if hero_idx >= 0 else -1
     if cut > 0:
         mtoc = (f'\n{MTOC_S}\n<details class="toc-mobile"><summary>On this page</summary><ol>{lis}</ol></details>\n{MTOC_E}\n')

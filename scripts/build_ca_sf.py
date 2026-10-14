@@ -46,7 +46,7 @@ def main():
             "<h2>What CleanPowerSF pays</h2>" + "".join(card(c) for c in CATS) + unconf +
             "<h2>Statewide programs</h2>" + table(STATEWIDE) +
             "<p>The federal 25C and 25D tax credits ended for spending after December 31, 2025, so we do not count them.</p>"
-            "<p><a href='/calculator/ca/'>California rebate calculator</a> · <a href='/get-quotes/?province=ca&city=san-francisco'>Get my plan and top-rated installers</a> · "
+            "<p><a href='/calculator/ca/'>California rebate calculator</a> · <a href='/get-quotes/?province=ca&city=san-francisco'>See my rebates and top-rated installers</a> · "
             "<a href='/installers/ca/san-francisco/heat-pump/'>Heat pump installers in San Francisco</a></p>")
     d = ROOT / "us/ca/bay-area/san-francisco"
     (d / "index.html").write_text(wrap(PATH, "San Francisco Home Energy Rebates 2026: CleanPowerSF Credits", "What San Francisco homeowners can claim from CleanPowerSF in 2026: bill credits for heat pumps and water heaters, with a source and date for every amount.",

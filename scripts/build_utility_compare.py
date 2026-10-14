@@ -14,7 +14,8 @@ import build_state_topic_pages as st  # noqa: E402
 
 e = html.escape
 U = {p.stem: json.loads(p.read_text()) for p in (ROOT / "data/utilities").glob("*.json")}
-PILL = {"active": "Open", "check": "Check first", "closed": "Closed", "waitlist": "On hold", "upcoming": "Coming", "paused": "Paused", "info": "Info"}
+from status_pills import STATUS as _STATUS  # noqa: E402  (one status vocabulary site-wide)
+PILL = {k: v[0] for k, v in _STATUS.items()}
 
 
 def card(slug, title):

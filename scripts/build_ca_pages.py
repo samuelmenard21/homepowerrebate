@@ -29,8 +29,8 @@ UTILITY_PAGE = {"ladwp": ("ladwp-rebates", "LADWP"), "smud": ("smud-rebates", "S
                 "sjce": ("san-jose-clean-energy-rebates", "San Jose Clean Energy"), "cleanpowersf": ("cleanpowersf-rebates", "CleanPowerSF"), "sdge": ("san-diego-community-power-rebates", "San Diego Community Power"),
                 "pge": ("pge-rebates", "PG&E"), "ava": ("pge-rebates", "PG&E")}
 INSTALLER_SET = {"heat-pump": "hvac", "water-heater": "hvac", "hrv": "hvac", "smart-thermostats": "hvac", "solar": "solar", "battery": "solar"}
-PILL = {"active": ("status-open", "Open"), "check": ("status-limited", "Check first"), "closed": ("status-closed", "Closed"), "waitlist": ("status-limited", "On hold"),
-        "upcoming": ("status-limited", "Coming"), "paused": ("status-limited", "Paused"), "info": ("status-open", "Info")}
+from status_pills import STATUS as _STATUS  # noqa: E402  (one status vocabulary site-wide)
+PILL = {k: (cls, label) for k, (label, _tone, cls) in _STATUS.items()}
 
 
 def installers(slug, kind):

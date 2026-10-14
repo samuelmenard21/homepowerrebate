@@ -162,6 +162,62 @@
     {
       "find": "Pick your city and get matched with an installer who handles everything—including rebate paperwork. They'll recommend the best thermostat for your system and Peak Saver setup.",
       "replace": "Pick your city to see the top-rated installers near you. Ask them which thermostat suits your system and Peak Saver, and who handles the rebate paperwork."
+    },
+    {
+      "regex": true,
+      "find": "(<span class=\"program-status status-[a-z]+\">)Coming<",
+      "replace": "\\1Starts soon<"
+    },
+    {
+      "regex": true,
+      "find": "(<span class=\"program-status status-[a-z]+\">)Not Yet Open<",
+      "replace": "\\1Starts soon<"
+    },
+    {
+      "regex": true,
+      "find": "(<span class=\"program-status status-[a-z]+\">)Expired<",
+      "replace": "\\1Closed<"
+    },
+    {
+      "regex": true,
+      "find": "(<span class=\"program-status status-[a-z]+\">)(?:Funding Limited / Unclear|Limited)<",
+      "replace": "\\1Check first<"
+    },
+    {
+      "regex": true,
+      "find": "(<span class=\"rb-status rb-check\">)Confirm status<",
+      "replace": "\\1Check first<"
+    },
+    {
+      "regex": true,
+      "find": "(<span class=\"rb-status rb-waitlist\">)Waitlist<",
+      "replace": "\\1On hold<"
+    },
+    {
+      "regex": true,
+      "find": "(<span class=\"rb-status rb-info\">)Note<",
+      "replace": "\\1Info<"
     }
-  ]
+  ],
+  "pill_labels": {
+    "_about": "Program status pills (rebate cards and hub tables) use only these words; the mapping from fact status lives in scripts/status_pills.py. French labels are the Quebec page's.",
+    "allowed": [
+      "Open",
+      "Starts soon",
+      "On hold",
+      "Paused",
+      "Check first",
+      "Closed",
+      "Info"
+    ],
+    "allowed_fr": [
+      "Ouvert",
+      "À vérifier",
+      "Fermé",
+      "En attente",
+      "À venir",
+      "Suspendu",
+      "Info"
+    ]
+  }
 }

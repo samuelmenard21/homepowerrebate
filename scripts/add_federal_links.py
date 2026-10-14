@@ -34,6 +34,11 @@ CITY = {
     "ab": "Alberta has no province-wide heat pump rebate we could verify, so the federal rebate may be the main one.",
     "ns": "Efficiency Nova Scotia pays per ton now, and Ottawa says the federal rebate can be combined with provincial programs.",
 }
+# FortisBC electricity areas: BC Hydro's heat pump rebate does not apply there (fact bc-blog-22, FortisBC electric and Penticton municipal customers)
+CITY_OVERRIDE = {
+    ("bc", "kelowna"): "FortisBC's heat pump rebate for homes replacing electric heat can already be claimed, and Ottawa says the federal rebate can be combined with provincial programs.",
+    ("bc", "penticton"): "FortisBC's heat pump rebate for homes replacing electric heat can already be claimed, and Ottawa says the federal rebate can be combined with provincial programs.",
+}
 HPPAGE = {"bc": ("BC", "/ca/bc/heat-pump/"), "on": ("Ontario", "/ca/on/heat-pump/"), "ab": ("Alberta", "/ca/ab/heat-pump/"), "ns": ("Nova Scotia", "/ca/ns/heat-pump/")}
 NAMES = {"st-albert": "St. Albert", "fort-st-john": "Fort St. John", "fort-mcmurray": "Fort McMurray", "niagara-falls": "Niagara Falls", "sault-ste-marie": "Sault Ste. Marie"}
 POSTS = [("should-you-wait-federal-heat-pump-rebate", "Should You Wait for the Federal Heat Pump Rebate?", "The rebate launches early 2027. Deadlines that are real today and a simple rule for deciding."),
@@ -86,7 +91,7 @@ def main():
             continue
         city = NAMES.get(slug, slug.replace("-", " ").title())
         t = f.read_text(encoding="utf-8")
-        txt = f'<b>{html.escape(city)}: {LEAD}</b>{CITY[code]} <a href="{P}">Read what is confirmed</a> or <a href="/blog/should-you-wait-federal-heat-pump-rebate/">decide whether to wait</a>.'
+        txt = f'<b>{html.escape(city)}: {LEAD}</b>{CITY_OVERRIDE.get((code, slug), CITY[code])} <a href="{P}">Read what is confirmed</a> or <a href="/blog/should-you-wait-federal-heat-pump-rebate/">decide whether to wait</a>.'
         out = after_grid(t, f'<div class="callout fed-callout"><p>{txt}</p></div>')
         f.write_text(out if out is not None else put(t, f'<p {BOX}>{txt}</p>'), encoding="utf-8"); n += 1
     f = ROOT / "blog" / "index.html"

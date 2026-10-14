@@ -38,7 +38,7 @@
     },
     {
       "id": "vetted-installer",
-      "pattern": "\\bvetted installers?\\b",
+      "pattern": "\\b(?:pre-)?vetted (?:installers?|contractors?)\\b",
       "use": "top-rated installers",
       "why": "Retired model: we rank by Google reviews, we do not vet."
     },
@@ -56,7 +56,7 @@
     },
     {
       "id": "we-connect-you",
-      "pattern": "\\b(?:we'll|we will) connect you with an installer\\b|\\bmatches you with a single\\b",
+      "pattern": "\\b(?:we'll|we will) connect you with an installer\\b|\\bmatch(?:es)? you with (?:a single|one|installers who)\\b|\\bget matched with\\b",
       "use": "show you the top-rated installers; you choose who to call",
       "why": "We list top-rated installers; we do not assign one (locked decision)."
     }
@@ -154,6 +154,14 @@
       "regex": true,
       "find": "(<a\\b[^>]*href=\"/get-quotes/[^\"]*\"[^>]*>)\\s*(?:Estimate your battery rebate|Estimate your solar \\+ battery rebate)(\\s*(?:→|&rarr;))?\\s*</a>",
       "replace": "\\1Estimate my rebates\\2</a>"
+    },
+    {
+      "find": "Check your city's heat pump rebate and get matched with a certified installer.",
+      "replace": "Check your city's heat pump rebate and see the top-rated installers near you."
+    },
+    {
+      "find": "Pick your city and get matched with an installer who handles everything—including rebate paperwork. They'll recommend the best thermostat for your system and Peak Saver setup.",
+      "replace": "Pick your city to see the top-rated installers near you. Ask them which thermostat suits your system and Peak Saver, and who handles the rebate paperwork."
     }
   ]
 }

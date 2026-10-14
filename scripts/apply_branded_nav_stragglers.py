@@ -55,7 +55,7 @@ ABOUT_OLD = '''<nav class="nav">
   <a href="/" class="logo">Home<span class="logo-power">Power</span>Rebate</a>
   <div class="nav-links">
     <a href="/about-us/">About</a>
-    <a href="/how-we-vet-installers/">Vetting</a>
+    <a href="/installers/how-we-rank/">How we rank</a>
   </div>
 </nav>'''
 ABOUT_NEW = f'''<nav class="nav" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
@@ -63,7 +63,7 @@ ABOUT_NEW = f'''<nav class="nav" style="display:flex; align-items:center; justif
   <div style="display:flex; align-items:center; gap:20px;">
     <div class="nav-links">
       <a href="/about-us/">About</a>
-      <a href="/how-we-vet-installers/">Vetting</a>
+      <a href="/installers/how-we-rank/">How we rank</a>
     </div>
 {PICKER}
   </div>

@@ -81,4 +81,4 @@ body.tpl-hub { --gut: clamp(20px, 3.2vw, 56px); --hub-w: min(var(--container), 1
 .tpl-hub main > nav.toc { width: var(--hub-w); max-width: none; margin: 24px auto 0; padding: 14px 0; display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; border-bottom: 1px solid var(--rule); font-size: 13px; box-sizing: border-box; }
 .tpl-hub nav.toc .toc-lbl { font-weight: 700; color: var(--ink); margin-right: 2px; }
 .tpl-hub nav.toc a { color: var(--teal); text-decoration: none; padding: 4px 11px; border: 1px solid var(--rule); border-radius: 999px; white-space: nowrap; }
-.tpl-hub nav.toc a:hover { background: var(--paper-warm); border-color: var(--amber); color: var(--amber); }
+.tpl-hub nav.toc a:hover { background: var(--paper-warm); border-color: var(--amber); color: #a4540a; }

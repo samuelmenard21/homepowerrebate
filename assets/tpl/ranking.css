@@ -99,10 +99,4 @@ body .wrap section.body>p,body .wrap section.body>ul li,body .wrap section.body>
 .hpr-toc{max-width:none!important}
 @media(min-width:900px){.rank-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}.rank-list .rank{margin-bottom:0!important}.hero .wrap>p{max-width:760px}.stats{max-width:900px;margin-left:auto;margin-right:auto}}
 @media(max-width:600px){.wrap{padding:0 20px}}
-.hpr-breadcrumb{max-width:1180px;margin:0 auto;padding:14px 28px;font-size:13px;color:var(--ink-soft)}
-.hpr-breadcrumb ol{list-style:none;display:flex;flex-wrap:wrap;margin:0;padding:0}
-.hpr-breadcrumb li{display:flex;align-items:center}
-.hpr-breadcrumb li:not(:last-child)::after{content:'/';margin:0 8px;color:var(--rule)}
-.hpr-breadcrumb a{color:var(--ink-soft);text-decoration:none}
-.hpr-breadcrumb li[aria-current="page"]{color:var(--ink);font-weight:600}
-@media (max-width:600px){.hpr-breadcrumb{padding:10px 20px;font-size:12px}}
+

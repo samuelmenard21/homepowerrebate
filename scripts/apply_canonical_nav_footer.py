@@ -522,6 +522,9 @@ _FONT_HEAD_RE = re.compile(r"<!-- FONT-PRELOAD-START -->.*?<!-- FONT-PRELOAD-END
 
 RAIL_S, RAIL_E = "<!-- PAGE-RAIL-START -->", "<!-- PAGE-RAIL-END -->"
 _RAIL_RE = re.compile(re.escape(RAIL_S) + r".*?" + re.escape(RAIL_E) + r"\n?", re.S)
+# the same 'On this page' list for phones and tablets, folded, right under the hero (hidden where the side panel shows)
+MTOC_S, MTOC_E = "<!-- MOBILE-TOC-START -->", "<!-- MOBILE-TOC-END -->"
+_MTOC_RE = re.compile(re.escape(MTOC_S) + r".*?" + re.escape(MTOC_E) + r"\n?", re.S)
 # long-form templates that get the desktop side panel (page types with no full-width colour bands)
 _RAIL_PATH = re.compile(r"^(blog/[^/]+/|guides/[^/]+/|questions/[^/]+/|programs/(?!utility-comparison)[^/]+/|(ca|us)/[a-z]+/([a-z-]+/)?[a-z-]+/[a-z-]+/|(ca|us)/[a-z]+/[a-z-]+/)index\.html$|^blog-[^/]+\.html$")
 
@@ -553,10 +556,34 @@ def top_level_children(body: str):
     return kids
 
 
+def child_end(body: str, idx: int) -> int:
+    """Offset just after the idx-th direct child of a fragment (same masking as top_level_children); -1 if not found."""
+    masked = re.sub(r"<script\b.*?</script>|<style\b.*?</style>|<!--.*?-->", lambda m: " " * len(m.group(0)), body, flags=re.S | re.I)
+    n, depth = -1, 0
+    for m in re.finditer(r"<(/?)([a-zA-Z][\w-]*)([^<>]*?)(/?)>", masked):
+        close, name, attrs, selfclose = m.groups()
+        name = name.lower()
+        if name in _VOID_TAGS or selfclose:
+            if depth == 0:
+                n += 1
+                if n == idx:
+                    return m.end()
+            continue
+        if not close:
+            if depth == 0:
+                n += 1
+            depth += 1
+        else:
+            depth = max(0, depth - 1)
+            if depth == 0 and n == idx:
+                return m.end()
+    return -1
+
+
 def ensure_rail(content: str, rel: str, plan_href: str) -> str:
     """Desktop side panel for long-form pages: an 'On this page' list built from the page's own h2 headings plus a rebate-plan call to action.
     Static HTML (no layout shift); hidden below 1180px. Idempotent: the block lives between PAGE-RAIL markers and main gets class has-rail."""
-    content = _RAIL_RE.sub("", content)
+    content = _MTOC_RE.sub("", _RAIL_RE.sub("", content))
     m = re.search(r'<main id="main"( tabindex="-1")?( class="has-rail")?>', content)
     if not m or not _RAIL_PATH.match(str(rel).replace("\\", "/")):
         return content
@@ -594,6 +621,10 @@ def ensure_rail(content: str, rel: str, plan_href: str) -> str:
     rail = (f'{RAIL_S}\n<aside class="page-rail" aria-label="On this page" style="grid-row: {row} / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol>{lis}</ol></nav>'
             f'<div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p>'
             f'<a class="rail-btn" href="{plan_href}">Get my plan</a></div></aside>\n{RAIL_E}\n')
+    cut = child_end(new_body, hero_idx) if hero_idx >= 0 else -1
+    if cut > 0:
+        mtoc = (f'\n{MTOC_S}\n<details class="toc-mobile"><summary>On this page</summary><ol>{lis}</ol></details>\n{MTOC_E}\n')
+        new_body = new_body[:cut] + mtoc + new_body[cut:].lstrip("\n")
     new_main_open = '<main id="main"' + (m.group(1) or "") + ' class="has-rail">'
     return content[:m.start()] + new_main_open + new_body + rail + content[end:]
 

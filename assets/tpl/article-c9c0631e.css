@@ -1,10 +1,1 @@
-
-.nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
-.nav-inner { max-width: 1180px; margin: 0 auto; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
-.logo { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-.logo-mark { width: 30px; height: 30px; background: var(--amber); border-radius: 50%; position: relative; box-shadow: 0 2px 8px rgba(212, 117, 28, 0.3); }
-.logo-mark::after { content: ''; position: absolute; inset: 8px; background: var(--paper); border-radius: 50%; }
-.logo-power { color: var(--amber); font-weight: 700; }
-@media (max-width: 768px) {
-  .nav-desktop-only { display: none !important; }
-}
+/* Old copy of the shared menu and footer CSS; /assets/site.css styles them now. */

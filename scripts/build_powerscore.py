@@ -161,7 +161,7 @@ def amount_texts(html: str):
             card_start = -1
         p_end = html.find("</p>", m.end(), m.end() + 800)
         card = html[card_start:(p_end + 4 if p_end != -1 else m.end())] if card_start != -1 else ""
-        heads = re.findall(r"<h4\b[^>]*>(.*?)</h4>", html[card_start:m.start()] if card_start != -1 else "", re.DOTALL)
+        heads = re.findall(r"<h[34]\b[^>]*>(.*?)</h[34]>", html[card_start:m.start()] if card_start != -1 else "", re.DOTALL)
         if heads and FINANCING_RE.search(re.sub(r"<[^>]+>", "", heads[-1])):
             continue
         if NOT_A_HOME_REBATE_RE.search(card):  # closed or expired, an info card (a fee or a rate), or not for houses
@@ -278,7 +278,7 @@ def extract_city_from_hub(hub_html: str, category: str):
     status = "closed"
     found = False
     for classes, body in split_cards(hub_html):
-        heading_m = re.search(r"<h4\b[^>]*>(.*?)</h4>", body, re.DOTALL)
+        heading_m = re.search(r"<h[34]\b[^>]*>(.*?)</h[34]>", body, re.DOTALL)
         if not heading_m:
             continue
         heading = re.sub(r"<[^>]+>", "", heading_m.group(1)).lower()

@@ -53,7 +53,7 @@ def build(slug):
 {steps}</ol>
 {f'<h2>Our pages for {e(d["short"])} customers</h2><ul>{cities}</ul>' if cities else ''}
 {f'<h2>Guides</h2><ul>{guides}</ul>' if guides else ''}
-<div class="callout"><strong>Want your exact number?</strong> Run our <a href="{calc_url}" style="color:var(--teal,#0d4f5c); font-weight:600;">{calc_name} rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
+<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="{calc_url}" style="color:var(--teal,#0d4f5c); font-weight:600;">{calc_name} rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
 <h2>Common questions</h2>
 {faq}
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {sources}. <a href="/programs/">All rebate programs &rarr;</a></p>"""

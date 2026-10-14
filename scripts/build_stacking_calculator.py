@@ -643,7 +643,7 @@ def build_city_page(city):
 <section class="section" style="background: var(--paper-warm);">
   <div class="wrap" style="text-align:center;">
     <h2 style="margin-top:0;">See the full {esc(city.label)} rebate guide</h2>
-    <p style="max-width:520px; margin:0 auto 20px; color:var(--ink-soft);">Every program explained in plain language, income tiers, local context, and a free assessment tool.</p>
+    <p style="max-width:520px; margin:0 auto 20px; color:var(--ink-soft);">Every program explained in plain language, income tiers, local context, and a free rebate finder.</p>
     <a href="{esc(city.url)}" style="display:inline-block; padding:14px 28px; background: var(--amber); color:#fff; border-radius:8px; text-decoration:none; font-weight:700;">Open the {esc(city.label)} guide &rarr;</a>
   </div>
 </section>

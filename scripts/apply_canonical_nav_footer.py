@@ -619,7 +619,7 @@ def ensure_rail(content: str, rel: str, plan_href: str) -> str:
     row = hero_idx + 2  # 1-based grid row right after the last hero block
     lis = "".join(f'<li><a href="#{i}">{html.escape(l)}</a></li>' for i, l in items[:12])
     rail = (f'{RAIL_S}\n<aside class="page-rail" aria-label="On this page" style="grid-row: {row} / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol>{lis}</ol></nav>'
-            f'<div class="rail-cta"><p class="rail-cta-h">Get your free rebate plan</p><p>See which rebates you qualify for. Free, and no sales calls.</p>'
+            f'<div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p>'
             f'<a class="rail-btn" href="{plan_href}">See my rebates</a></div></aside>\n{RAIL_E}\n')
     cut = child_end(new_body, hero_idx) if hero_idx >= 0 else -1
     if cut > 0:
@@ -788,7 +788,9 @@ def process_file(path: Path, dry_run: bool):
     baseline = NEWSLETTER_SECTION_RE.sub("", original) if ('id="newsletter-form"' in outside_footer or "--newsletter-copy" in sys.argv) else original
     if "--newsletter-copy" in sys.argv:
         baseline = re.sub(r'<a id="sticky-cta".*?</a>', '', baseline, flags=re.S)
-    lost = content_loss(baseline, content)
+    # the side panel and the phone contents list are written by this script (ensure_rail), so their wording is not page content
+    own = lambda t: _MTOC_RE.sub("", _RAIL_RE.sub("", t))
+    lost = content_loss(own(baseline), own(content))
     if lost:
         return {"path": str(rel), "province": prov, "city": city_label,
                 "actions": action + ["SKIPPED:would-remove-content"], "changed": False, "lost": lost}

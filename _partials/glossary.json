@@ -1,0 +1,159 @@
+{
+  "_about": "One name per thing across HomePowerRebate. scripts/check_consistency.py checks every page against this file and fails when a rule's count goes above _partials/consistency-baseline.json. Add a rule here when you find a new inconsistency; fix pages through their generator or a post-step normalizer (fix_redirected_links.py), never by hand.",
+  "cta_labels": {
+    "_about": "Button-like links (class btn/cta/button, or text ending in an arrow) to these pages must use one of these labels. Prose links inside a sentence are not checked here.",
+    "/get-quotes/": [
+      "See my rebates",
+      "See My Rebates",
+      "See my rebates and installers",
+      "Estimate my rebates",
+      "re:Compare top-rated .+ installers"
+    ]
+  },
+  "terms": [
+    {
+      "id": "assessment-tool",
+      "pattern": "\\b(?:our|HomePowerRebate's)\\s+(?:free\\s+)?assessment(?:\\s+tool)?\\b|\\bfree assessment tool\\b|\\bassessment tool\\b",
+      "use": "rebate finder",
+      "why": "The finder is not an assessment; in Ontario and Massachusetts 'assessment' means a real home energy audit."
+    },
+    {
+      "id": "get-my-plan",
+      "pattern": "\\bGet [Mm]y [Pp]lan\\b",
+      "use": "See my rebates",
+      "why": "Retired label (2026-10-14)."
+    },
+    {
+      "id": "get-quotes-finder",
+      "pattern": "<a\\b[^>]*href=\"/get-quotes/[^\"]*\"[^>]*>\\s*Get [Qq]uotes",
+      "use": "See my rebates",
+      "why": "The finder does not send quote requests; installer ranking forms do ('Request my quotes').",
+      "html": true
+    },
+    {
+      "id": "exact-amount",
+      "pattern": "\\b(?:for|see|confirm|get) your exact (?:rebate )?(?:number|amount)\\b",
+      "use": "your estimate",
+      "why": "The finder estimates; only the program confirms the exact amount."
+    },
+    {
+      "id": "vetted-installer",
+      "pattern": "\\bvetted installers?\\b",
+      "use": "top-rated installers",
+      "why": "Retired model: we rank by Google reviews, we do not vet."
+    },
+    {
+      "id": "address-lookup",
+      "pattern": "\\bRun your address through\\b",
+      "use": "Pick your city in",
+      "why": "The finder asks for a city, not an address."
+    },
+    {
+      "id": "energy-bill-input",
+      "pattern": "\\b(?:Plug in|Enter|Add) your (?:current )?(?:heating|energy|power|utility) bill\\b",
+      "use": "(remove)",
+      "why": "We do not ask for energy bills (owner, 2026-10-14)."
+    },
+    {
+      "id": "we-connect-you",
+      "pattern": "\\b(?:we'll|we will) connect you with an installer\\b|\\bmatches you with a single\\b",
+      "use": "show you the top-rated installers; you choose who to call",
+      "why": "We list top-rated installers; we do not assign one (locked decision)."
+    }
+  ],
+  "headings": {
+    "_about": "One h1 per page; no jump from h2 to h4 inside main unless the h4 carries aria-level=\"3\"."
+  },
+  "fixes": [
+    {
+      "find": "Want your exact number?",
+      "replace": "Want a number for your home?"
+    },
+    {
+      "find": "Run your address through <a href=\"/get-quotes/\">HomePowerRebate's assessment tool</a> to ",
+      "replace": "Pick your city in <a href=\"/get-quotes/\">our free rebate finder</a> to "
+    },
+    {
+      "find": "Run your address through HomePowerRebate's assessment tool to ",
+      "replace": "Pick your city in our free rebate finder to "
+    },
+    {
+      "find": "<a href=\"/get-quotes/\">Fill out our free assessment</a>. We'll calculate your exact rebate amount based on your utility territory, income, and location. Then we'll connect you with an installer who knows how to claim all 6 programs.",
+      "replace": "<a href=\"/get-quotes/\">See your rebates</a> for your city, plus the top-rated installers near you. You choose who to call."
+    },
+    {
+      "find": "<a href=\"/get-quotes/\">Fill out our free assessment</a> and we'll calculate your exact payback timeline based on your home, your utility territory, and current rebates. Then we'll connect you with an installer in your city.",
+      "replace": "<a href=\"/get-quotes/\">See your rebates</a> for your city, plus the top-rated installers near you. You choose who to call."
+    },
+    {
+      "find": "<a href=\"/get-quotes/\">Run our free assessment</a> to see your exact payback timeline for heat pump vs. solar in your New York city. We factor in your utility, income, region, and roof type.",
+      "replace": "<a href=\"/get-quotes/\">See your rebates</a> for heat pumps and solar in your New York city."
+    },
+    {
+      "find": "Use our assessment tool →",
+      "replace": "See my rebates →"
+    },
+    {
+      "find": "<p>Use our assessment tool to see what upgrades make sense for your home and income tier.</p>",
+      "replace": "<p>Pick your city to see the open rebates for each upgrade.</p>"
+    },
+    {
+      "find": "<strong>Get your exact number:</strong> Our free assessment tool calculates your specific rebate based on your home, location, and income.",
+      "replace": "<strong>Get your number:</strong> Our free rebate finder shows the open rebates for your city."
+    },
+    {
+      "find": "Get your exact rebate amount before talking to installers. Use <a href=\"/get-quotes/\">HomePowerRebate's free assessment tool</a> to see your rebate based on your home and income. This takes 2 minutes and gives installers clear numbers to quote against.",
+      "replace": "Know your rebates before talking to installers. Use <a href=\"/get-quotes/\">our free rebate finder</a> to see the open rebates for your city. It gives installers clear numbers to quote against."
+    },
+    {
+      "find": "connect you with vetted installers who'll work on your terms",
+      "replace": "show you the top-rated installers near you, so you choose who to call"
+    },
+    {
+      "find": "We show you all vetted installers in your city, and you pick who you want to connect with",
+      "replace": "We show you the top-rated installers in your city, ranked by Google reviews, and you pick who you want to connect with"
+    },
+    {
+      "find": "Get matched with vetted installers →",
+      "replace": "See my rebates and installers →"
+    },
+    {
+      "find": "find a vetted installer near you.",
+      "replace": "find a top-rated installer near you."
+    },
+    {
+      "find": "to get matched with vetted installers in your area.",
+      "replace": "to see the top-rated installers in your area."
+    },
+    {
+      "find": "to confirm your exact rebate amount",
+      "replace": "to see the open rebates"
+    },
+    {
+      "find": "for your exact number.",
+      "replace": "for your estimate."
+    },
+    {
+      "find": "to see your exact number.",
+      "replace": "to see your estimate."
+    },
+    {
+      "find": ">Estimate my rebate →<",
+      "replace": ">Estimate my rebates →<"
+    },
+    {
+      "find": ">Estimate my rebate &rarr;<",
+      "replace": ">Estimate my rebates &rarr;<"
+    },
+    {
+      "regex": true,
+      "find": "(<a\\b[^>]*href=\"/get-quotes/[^\"]*\"[^>]*>)\\s*(?:See what your home qualifies for|Get my retrofit roadmap|See your annual output estimate|Check my rebates|Calculate your BC heat pump rebate|Calculate your exact rebate and savings|Calculate your rebate|Calculate my rebate)(\\s*(?:→|&rarr;))?\\s*</a>",
+      "replace": "\\1See my rebates\\2</a>"
+    },
+    {
+      "regex": true,
+      "find": "(<a\\b[^>]*href=\"/get-quotes/[^\"]*\"[^>]*>)\\s*(?:Estimate your battery rebate|Estimate your solar \\+ battery rebate)(\\s*(?:→|&rarr;))?\\s*</a>",
+      "replace": "\\1Estimate my rebates\\2</a>"
+    }
+  ]
+}

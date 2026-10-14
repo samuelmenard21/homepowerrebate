@@ -3,6 +3,7 @@
 Also swaps the retired /retrofit-assessment/ page for /get-quotes/ (anchor labels included). Safe to re-run; run after any generator that may link to removed pages."""
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -55,3 +56,9 @@ for f in files:
         p.write_text(s, encoding="utf-8")
         changed += 1
 print("files changed", changed, "links rewritten", links)
+
+# glossary wording fixes (_partials/glossary.json 'fixes'): generators that still emit a retired phrase are corrected here,
+# since this script already runs after every generator
+sys.path.insert(0, str(ROOT / "scripts"))
+from check_consistency import apply_fixes  # noqa: E402
+print("glossary fixes applied to", apply_fixes(), "pages")

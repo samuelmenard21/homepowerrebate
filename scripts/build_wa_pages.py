@@ -89,7 +89,7 @@ def build(slug, cat):
 {guides}
 {inst}
 {claim}
-<div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/wa/" style="color:var(--teal,#0d4f5c); font-weight:600;">Washington rebate calculator</a> and pick {e(name)} to see what your utility pays.</div>
+<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/wa/" style="color:var(--teal,#0d4f5c); font-weight:600;">Washington rebate calculator</a> and pick {e(name)} to see what your utility pays.</div>
 <h2>Common questions</h2>
 {faq}
 <h2>What to do next</h2>
@@ -161,7 +161,7 @@ def build_state_hub():
     faq = "".join(f'<div class="faq-item"><h3>{e(q)}</h3><p>{a}</p></div>\n' for q, a in d["faq"])
     sources = " ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>' + ("," if i < len(d["refs"]) - 1 else "") for i, (t, u) in enumerate(d["refs"]))
     article = f"""{secs}
-<div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/wa/" style="color:var(--teal,#0d4f5c); font-weight:600;">Washington rebate calculator</a>.</div>
+<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/wa/" style="color:var(--teal,#0d4f5c); font-weight:600;">Washington rebate calculator</a>.</div>
 <h2 id="quick-questions">Quick Questions</h2>
 {faq}
 <h2 id="sources">Sources</h2>

@@ -29,7 +29,7 @@ def build(slug):
     rel = "".join(f'<li><a href="{u}">{t}</a></li>' for t, u in [PILLAR] + d["related"])
     article = f"""<p class="byline">By <a href="/about">Sam Menard</a> · Updated {nice}</p>
 {''.join(f"<h2>{h}</h2>{b}" for h, b in d['sections'])}
-<div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/on/" style="color:var(--teal,#0d4f5c); font-weight:600;">rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
+<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/on/" style="color:var(--teal,#0d4f5c); font-weight:600;">rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
 <h2>Common questions</h2>
 {faq}
 <h2>More on the federal heat pump rebate</h2>

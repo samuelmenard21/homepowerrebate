@@ -53,7 +53,7 @@ def build(name):
 <ul>
 <li><a href="{hub}">{e(hub_name)} home rebates: every program in one place</a></li>
 {links}</ul>
-<div class="callout"><strong>Want your exact number?</strong> Run our <a href="{calc}" style="color:var(--teal,#0d4f5c); font-weight:600;">{e(calc_label)}</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
+<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="{calc}" style="color:var(--teal,#0d4f5c); font-weight:600;">{e(calc_label)}</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
 <h2>Common questions</h2>
 {faq}
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {sources}.</p>"""

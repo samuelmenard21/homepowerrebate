@@ -112,3 +112,6 @@ Google's Places policies forbid storing Places photos (place IDs are the only ex
 - `fix_redirected_links.py` (already a post-step after every generator) applies the glossary `fixes`, so a generator that still emits an old phrase is corrected on every run. Also change the phrase in the generator itself.
 - Found a new inconsistency? Add a `terms` rule (and a `fixes` entry when the rewrite is mechanical) instead of hand-editing pages.
 - The restamp's content guard ignores the side panel and phone contents list (it writes them itself); `--newsletter-copy` lets it change the newsletter and floating-button wording on purpose.
+
+## Design system (added 2026-10-14)
+`DESIGN.md` (repo root, not published) is the design spec: tokens, type scale, components and do's and don'ts. Brand colours and shared tokens (`--card-rule`, `--muted`, `--amber-text`, `--radius-card`, `--shadow-card`) are now defined once in the shared CSS `:root`; use them in new CSS instead of hex. Program status pills have one vocabulary and one design: `scripts/status_pills.py` maps a fact status to a label and tone, and `build_ca_pages.py` (all city builders), `build_hub_tops.py` and `build_utility_compare.py` read it. PowerScore reads the card classes (`status-open/limited/closed`) and an "Info" label, so keep those. `check_consistency.py` fails on any pill label outside the list.

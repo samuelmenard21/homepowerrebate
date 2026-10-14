@@ -79,6 +79,11 @@ def check(rel: str, raw: str):
             core = re.sub(r"\s*(→|»|->)$", "", label).strip()
             if core and not allowed_label(core, allowed):
                 yield "cta:" + dest, core
+    pills = GLOSSARY.get("pill_labels", {})
+    ok_pills = set(pills.get("allowed", [])) | set(pills.get("allowed_fr", []))
+    for lab in re.findall(r'<span class="(?:program-status|rb-status)[^"]*">([^<]*)<', t):
+        if ok_pills and html.unescape(lab).strip() not in ok_pills:
+            yield "pill:label", lab.strip()
     if len(re.findall(r"<h1\b", t, re.I)) != 1 and "<html" in t[:400].lower():
         yield "heading:h1-count", str(len(re.findall(r"<h1\b", t, re.I)))
     main = re.search(r"<main\b.*?</main>", t, re.S | re.I)

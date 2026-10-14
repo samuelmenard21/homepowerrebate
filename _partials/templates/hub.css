@@ -42,7 +42,7 @@ body.tpl-hub { --gut: clamp(20px, 3.2vw, 56px); --hub-w: min(var(--container), 1
 .tpl-hub .hub-table td:nth-child(3) { font-weight: 700; color: var(--green-money); }
 .tpl-hub .hub-table tbody tr:hover td { background: #fbf8f2; }
 .tpl-hub .hub-table .rb-status { margin: 4px 0 0; }
-.tpl-hub .hub-table td:nth-child(3) .rb-status { display: table; margin-top: 6px; }
+.tpl-hub .hub-table td:nth-child(3) .rb-status { display: flex; width: fit-content; margin-top: 6px; }
 .tpl-hub .hub-changes { margin-top: 40px; }
 .tpl-hub .hub-card { padding: clamp(20px, 2.2vw, 30px) clamp(20px, 2.4vw, 34px); border: 1px solid #e3dacb; border-radius: 18px; background: #fff; }
 .tpl-hub .hub-card h2 { margin: 0 0 6px; padding-top: 0; font-size: clamp(22px, 2vw, 28px); }

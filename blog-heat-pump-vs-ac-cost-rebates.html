@@ -25,7 +25,7 @@
 <!-- FONT-PRELOAD-END -->
 
 <link rel="stylesheet" href="/assets/tpl/page-15c03f88.css?v=43e90841a0" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=5fbb2ceb0e" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=e007ba82f2" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -283,9 +283,9 @@
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
-<section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
+<section class="hpr-newsletter" style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div class="wrap" style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">
-    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
+    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #f2b77a; margin-bottom: 14px;">From Sam</div>
     <h2 style="font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get the monthly rebate update</h2>
     <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Once a month: new and changing rebate programs across every province and state we cover, plus what's new in heat pumps, solar and batteries. Short, sourced, no marketing.</p>
     <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
@@ -428,6 +428,19 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.textContent = originalText;
   }
 });
+(function () {
+  var n = document.querySelector('.nav'), y = window.scrollY, f = 0;
+  if (!n || !window.matchMedia) return;
+  var mq = window.matchMedia('(max-width: 768px)');
+  function upd() {
+    f = 0;
+    var now = window.scrollY, open = document.getElementById('city-dropdown-modal');
+    var busy = n.contains(document.activeElement) || (open && open.style.display && open.style.display !== 'none');
+    n.classList.toggle('nav-away', mq.matches && !busy && now > 160 && now > y);
+    y = now;
+  }
+  window.addEventListener('scroll', function () { if (!f) { f = 1; requestAnimationFrame(upd); } }, { passive: true });
+})();
 (function () {
   var b = document.getElementById('sticky-cta');
   if (!b || /^\/(get-quotes|privacy|terms|unsubscribe)/.test(location.pathname)) return;

@@ -58,7 +58,7 @@ def installer_html(slug, name, kind, intro):
 
 def card(c):
     cls, label = PILL[c.get("status", "active")]
-    return (f'<div class="rebate-card"><span class="program-status {cls}">{label}</span><h4>{(f"<a href='{c['href']}'>" + e(c["title"]) + "</a>") if c.get("href") else e(c["title"])}</h4><div class="amount">{e(c["amount"])}</div>'
+    return (f'<div class="rebate-card"><span class="program-status {cls}">{label}</span><h3>{(f"<a href='{c['href']}'>" + e(c["title"]) + "</a>") if c.get("href") else e(c["title"])}</h3><div class="amount">{e(c["amount"])}</div>'
             f'<p style="font-size:14px;margin:8px 0 0;">{c["note"]}</p></div>')
 
 

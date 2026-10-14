@@ -46,7 +46,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/article-c0947b3c.css?v=7b04af6753" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=5fbb2ceb0e" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=e007ba82f2" data-hpr-site-css>
 <link rel="stylesheet" href="/assets/tpl/common-5a0da5c2.css?v=8a2483c44f" data-hpr-tpl>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Home Energy Rebates in Lynn, MA (2026)", "description": "Lynn homes (National Grid) get Mass Save rebates: heat pumps up to $8,500 ($16,000 income-qualified), 75-100% off insulation, $750 water heaters, 0% HEAT Loan.", "datePublished": "2026-08-13", "dateModified": "2026-09-26", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com/"}, "mainEntityOfPage": "https://homepowerrebate.com/us/ma/lynn/"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What home energy rebates can Lynn residents get?", "acceptedAnswer": {"@type": "Answer", "text": "Lynn is a National Grid town, so Mass Save applies: a no-cost home energy assessment, 75-100% off insulation and air sealing, heat pumps up to $8,500 (up to $16,000 if income-qualified), a $750 heat pump water heater rebate, and the 0% HEAT Loan up to $25,000."}}, {"@type": "Question", "name": "How much is the heat pump rebate in Lynn?", "acceptedAnswer": {"@type": "Answer", "text": "Whole-home air-source systems get $2,650 per ton, up to $8,500. Partial-home systems get $1,125 per ton, up to $8,500. Income-qualified households can get up to $16,000, or no cost."}}, {"@type": "Question", "name": "Are there insulation rebates for Lynn residents?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. After a Mass Save assessment, most households get 75% off insulation and air sealing. Income-qualified households can get up to 100% off."}}, {"@type": "Question", "name": "Can Lynn landlords get HVAC rebates?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mass Save has assessment paths for landlords of 1-4 unit and 5+ unit buildings, and heat pump rebates apply to rental properties served by a Mass Save utility."}}, {"@type": "Question", "name": "Is Lynnfield eligible for Mass Save?", "acceptedAnswer": {"@type": "Answer", "text": "Not for electric-side rebates. Lynnfield is served by the Reading and Peabody municipal light plants. Ask them about their own rebates and the state's 0% MLP Z-Loan."}}]}</script>
@@ -630,9 +630,9 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Lynn where relevant -->
-<section style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
+<section class="hpr-newsletter" style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">
   <div class="wrap" style="text-align: center; color: #fff; max-width: 600px; margin: 0 auto;">
-    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(212, 117, 28, 0.9); margin-bottom: 14px;">From Sam</div>
+    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #f2b77a; margin-bottom: 14px;">From Sam</div>
     <h2 style="font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 32px; line-height: 1.2; margin-bottom: 14px; color: #fff;">Get the monthly rebate update</h2>
     <p style="font-size: 15px; color: rgba(250, 247, 242, 0.85); margin-bottom: 24px;">Once a month: new and changing rebate programs across every province and state we cover, plus what's new in heat pumps, solar and batteries. Short, sourced, no marketing.</p>
     <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
@@ -779,6 +779,19 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.textContent = originalText;
   }
 });
+(function () {
+  var n = document.querySelector('.nav'), y = window.scrollY, f = 0;
+  if (!n || !window.matchMedia) return;
+  var mq = window.matchMedia('(max-width: 768px)');
+  function upd() {
+    f = 0;
+    var now = window.scrollY, open = document.getElementById('city-dropdown-modal');
+    var busy = n.contains(document.activeElement) || (open && open.style.display && open.style.display !== 'none');
+    n.classList.toggle('nav-away', mq.matches && !busy && now > 160 && now > y);
+    y = now;
+  }
+  window.addEventListener('scroll', function () { if (!f) { f = 1; requestAnimationFrame(upd); } }, { passive: true });
+})();
 (function () {
   var b = document.getElementById('sticky-cta');
   if (!b || /^\/(get-quotes|privacy|terms|unsubscribe)/.test(location.pathname)) return;

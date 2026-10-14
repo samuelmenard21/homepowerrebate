@@ -53,6 +53,24 @@ def put(t, block, s=S, e=E):
     return t[:i] + s + block + e + "\n" + t[i:] if i >= 0 else t
 
 
+def after_grid(t, block):
+    """City heat pump pages: the federal note goes right after the rebate cards, so readers see what they can claim today first
+    (2026-10-13). Falls back to the old place (after the hero) when a page has no rebate grid."""
+    t = re.sub(re.escape(S) + r"[\s\S]*?" + re.escape(E) + r"\n?", "", t)
+    m = re.search(r'<div class="rebate-grid">', t)
+    if not m:
+        return None
+    depth, i = 0, m.start()
+    for tag in re.finditer(r"<(/?)div\b[^>]*>", t[m.start():]):
+        depth += -1 if tag.group(1) else 1
+        if depth == 0:
+            i = m.start() + tag.end()
+            break
+    else:
+        return None
+    return t[:i] + "\n" + S + block + E + t[i:]
+
+
 def main():
     n = 0
     for code, (text, links) in HUB.items():
@@ -68,8 +86,9 @@ def main():
             continue
         city = NAMES.get(slug, slug.replace("-", " ").title())
         t = f.read_text(encoding="utf-8")
-        blk = f'<p {BOX}><b>{html.escape(city)}: {LEAD}</b>{CITY[code]} <a href="{P}">Read what is confirmed</a> or <a href="/blog/should-you-wait-federal-heat-pump-rebate/">decide whether to wait</a>.</p>'
-        f.write_text(put(t, blk), encoding="utf-8"); n += 1
+        txt = f'<b>{html.escape(city)}: {LEAD}</b>{CITY[code]} <a href="{P}">Read what is confirmed</a> or <a href="/blog/should-you-wait-federal-heat-pump-rebate/">decide whether to wait</a>.'
+        out = after_grid(t, f'<div class="callout fed-callout"><p>{txt}</p></div>')
+        f.write_text(out if out is not None else put(t, f'<p {BOX}>{txt}</p>'), encoding="utf-8"); n += 1
     f = ROOT / "blog" / "index.html"
     t = f.read_text(encoding="utf-8")
     cards = "".join(f'<a href="/blog/{s}/" class="post-card"><span class="tag">Federal rebate</span><h3>{html.escape(a)}</h3><p>{html.escape(b)}</p></a>\n' for s, a, b in POSTS)

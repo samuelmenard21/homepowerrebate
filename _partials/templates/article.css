@@ -28,10 +28,12 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
   .tpl-article main.has-rail > :is(.hero, .post-header) { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; }
   .tpl-article main.has-rail > :is(.hero, .post-header) > .wrap { grid-column: 2 / 4; max-width: none; margin: 0; padding: 0; }
 }
-.tpl-article .hero .amount-badge { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 22px; padding: 9px 18px 9px 14px; border: 0; border-radius: 999px;
-  background: #fff; color: var(--teal-deep); font-size: clamp(15px, 1.3vw, 17px); font-weight: 700; letter-spacing: -.005em; box-shadow: 0 8px 28px rgba(0, 0, 0, .22); }
-.tpl-article .hero .amount-badge::before { content: ""; flex: none; width: 10px; height: 10px; border-radius: 50%; background: #e88a2e; box-shadow: 0 0 0 4px rgba(232, 138, 46, .25); }
+/* the amount leads (2026-10-13): what this page can pay you is the headline, the page title sits under it */
+.tpl-article .hero .amount-badge { display: block; max-width: 18ch; margin: 0 0 16px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+  font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(34px, 4.6vw, 64px); font-weight: 600; line-height: 1.04; letter-spacing: -.025em; color: #f5b566; text-wrap: balance; }
+.tpl-article .hero .amount-badge::before { content: none; }
 .tpl-article :is(.hero, .post-header) h1 { margin: 0 0 18px; max-width: 20ch; font-size: clamp(36px, 5.2vw, 72px); font-weight: 600; line-height: 1.04; letter-spacing: -.025em; color: #fff; text-wrap: balance; }
+.tpl-article .hero .amount-badge + h1 { max-width: 28ch; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.18; letter-spacing: -.012em; color: #fff; }
 .tpl-article :is(.hero, .post-header) p { max-width: 62ch; margin: 0; font-size: clamp(17px, 1.45vw, 21px); line-height: 1.55; color: rgba(250, 247, 242, .86); text-wrap: pretty; }
 .tpl-article :is(.hero, .post-header) p a { color: #fff; }
 /* blog post header: eyebrow and byline */
@@ -60,7 +62,7 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
 /* ---------- related-page chips under the hero ---------- */
 .tpl-article main div[style*="line-height:2.2"] { display: flex; flex-wrap: wrap; gap: 8px; line-height: 1.3 !important; padding-top: 8px; }
 .tpl-article main div[style*="line-height:2.2"] > span { margin: 0 !important; }
-.tpl-article main div[style*="line-height:2.2"] > span > a { min-height: 40px; padding: 8px 16px; font-size: 14px; font-weight: 600; background: #fff; border-color: var(--rule); color: var(--teal-deep); transition: border-color .15s, background .15s; }
+.tpl-article main div[style*="line-height:2.2"] > span > a { min-height: 44px; padding: 8px 16px; font-size: 14px; font-weight: 600; background: #fff; border-color: var(--rule); color: var(--teal-deep); transition: border-color .15s, background .15s; }
 .tpl-article main div[style*="line-height:2.2"] > span > a:hover { border-color: var(--teal); background: #f1f6f5; text-decoration: none; }
 .tpl-article main div[style*="line-height:2.2"] > span:first-child > a { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
 
@@ -81,13 +83,19 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
 .tpl-article main .rebate-card:hover { transform: translateY(-2px); border-color: #cfc2ad; box-shadow: 0 2px 4px rgba(10, 42, 46, .05), 0 18px 36px -16px rgba(10, 42, 46, .24); }
 .tpl-article main .rebate-card .program-status { align-self: flex-start; margin: 0 0 14px; padding: 4px 10px; font-size: 12px; letter-spacing: .06em; }
 .tpl-article main .rebate-card .program-status::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: currentColor; vertical-align: 1px; }
-.tpl-article main .rebate-card h4 { order: 2; margin: 0 0 8px; font-size: 16px; line-height: 1.35; font-weight: 700; color: var(--ink); }
-.tpl-article main .rebate-card h4 a { color: inherit; text-decoration: none; }
-.tpl-article main .rebate-card h4 a::after { content: ""; position: absolute; inset: 0; border-radius: 18px; }
+.tpl-article main .rebate-card :is(h3, h4) { order: 2; margin: 0 0 8px; font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 16px; line-height: 1.35; font-weight: 700; letter-spacing: 0; color: var(--ink); }
+.tpl-article main .rebate-card :is(h3, h4) a { color: inherit; text-decoration: none; }
+.tpl-article main .rebate-card :is(h3, h4) a::after { content: ""; position: absolute; inset: 0; border-radius: 18px; }
 .tpl-article main .rebate-card .amount { order: 1; margin: 0 0 10px; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(26px, 2.2vw, 32px); font-weight: 600; line-height: 1.08; letter-spacing: -.02em; color: var(--green-money) !important; text-wrap: balance; }
 .tpl-article main .rebate-card p { order: 3; margin: 0 !important; max-width: none; font-size: 15px !important; line-height: 1.55; color: #3c5357; }
 .tpl-article main .rebate-card .program-status { order: 0; }
 .tpl-article main .status-open { background: #e3f1e8; color: #1f5a3f; }
+/* the first open card is the one most homes start with: full width, bigger number; the rest read as add-ons */
+.tpl-article main .rebate-grid > .rebate-card:first-child:not(:only-child):not(:has(.status-closed, .status-limited)) { grid-column: 1 / -1; padding: 26px 28px 24px; border-color: #cfe0d6; background: linear-gradient(180deg, #fff 0%, #f6faf7 100%); }
+.tpl-article main .rebate-grid > .rebate-card:first-child:not(:only-child):not(:has(.status-closed, .status-limited)) .amount { font-size: clamp(34px, 3.4vw, 44px); }
+.tpl-article main .rebate-grid > .rebate-card:first-child:not(:only-child):not(:has(.status-closed, .status-limited)) :is(h3, h4) { font-size: 18px; }
+.tpl-article main .rebate-grid > .rebate-card:first-child:not(:only-child):not(:has(.status-closed, .status-limited)) p { max-width: 70ch; }
+.tpl-article main .fed-callout { margin: 0 0 32px; }
 .tpl-article main .rebate-card:has(.status-limited) .amount, .tpl-article main .rebate-card:has(.status-closed) .amount { color: #5f5849 !important; }
 
 /* ---------- numbered claim steps ---------- */
@@ -122,8 +130,9 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
 @media (max-width: 600px) {
   body.tpl-article { --read: 17px; }
   .tpl-article :is(section.hero, header.post-header) { padding: 36px 0 40px; }
-  .tpl-article .hero .amount-badge { margin-bottom: 18px; font-size: 14px; padding: 8px 14px 8px 12px; }
+  .tpl-article .hero .amount-badge { margin-bottom: 12px; font-size: clamp(32px, 9vw, 40px); max-width: none; }
   .tpl-article :is(.hero, .post-header) h1 { font-size: clamp(34px, 9.4vw, 42px); max-width: none; }
+  .tpl-article .hero .amount-badge + h1 { font-size: 22px; }
   .tpl-article main h2 { margin-top: 52px; font-size: 27px; }
   .tpl-article main .rebate-grid { gap: 12px; }
   .tpl-article main .rebate-card { padding: 18px; }

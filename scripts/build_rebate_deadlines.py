@@ -39,7 +39,8 @@ def facts():
     return out
 
 
-def build(today=None):
+def open_rows(today=None):
+    """Deadlines not yet passed whose fact is active, soonest first. Shared with build_home_feed.py and add_deadline_notes.py."""
     today = today or date.today().isoformat()
     fx = facts()
     rows = []
@@ -50,7 +51,12 @@ def build(today=None):
         if f.get("status") != "active" or r["date"] < today:
             continue
         rows.append({**r, "source": f["source_url"], "verified": f["verified_on"], "program": f["program"]})
-    rows.sort(key=lambda r: (r["date"], r["region"]))
+    return sorted(rows, key=lambda r: (r["date"], r["region"]))
+
+
+def build(today=None):
+    today = today or date.today().isoformat()
+    rows = open_rows(today)
     if not rows:
         sys.exit("No open deadlines; not writing an empty page.")
 

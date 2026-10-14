@@ -57,8 +57,13 @@ def main():
     recent = sorted([x for x in d if x["status"] != "coming"], key=lambda x: x["date"], reverse=True)[:5]
     items = "".join(item(x) for x in coming + recent)
     tops = "".join(f'<a href="/calculator/{c}/"><b>{html.escape(n)}: up to ${v:,}</b>{html.escape(pn)}</a>' for v, n, c, pn in top_programs())
-    dl = [x for x in d if x.get("deadline")]
-    banner = "".join(f'<div class="hf-close" data-deadline="{x["deadline"]}"><b>Closing soon:</b> {html.escape(x["program"])} ends <span class="hf-when">{x["deadline"]}</span>. <a href="{HUB.get(x["region"], "/rebate-tracker/")}">Details</a></div>' for x in dl)
+    from build_rebate_deadlines import open_rows, fmt, REGIONS as DL_REGIONS
+    dl = open_rows()[:5]
+    banner = ('<div style="background:#fdeccf;border-left:4px solid #d4751c;border-radius:8px;padding:14px 16px;margin:0 0 18px;color:#5a3306;">'
+              '<p style="margin:0 0 6px;font-weight:700;color:#5a3306;">Deadlines coming up</p><ul style="margin:0;padding:0 0 0 18px;font-size:15px;line-height:1.5;">'
+              + "".join(f'<li class="hf-close" data-deadline="{x["date"]}" style="margin:4px 0;"><b><span class="hf-when">{html.escape(fmt(x["date"]))}</span>:</b> '
+                        f'<a href="{x["page"]}">{html.escape(x["program"])}</a> ({html.escape(DL_REGIONS[x["region"]])})</li>' for x in dl)
+              + '</ul><p style="margin:8px 0 0;font-size:15px;"><a href="/rebate-deadlines/"><b>All upcoming deadlines &rarr;</b></a></p></div>') if dl else ""
     checked = json.loads((ROOT / "rebate-tracker" / "changes.json").read_text())["checked"]
     block = f"""{S}
 <style>.hf-i{{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid #e5e0d6;list-style:none}}
@@ -86,7 +91,7 @@ def main():
     <a href="/how-we-vet-installers"><b>How we rank installers</b>Google reviews only. Free for you, and nobody pays to be listed.</a>
   </div>
 </section>
-<script>document.querySelectorAll(".hf-close").forEach(function(e){{var t=new Date(e.dataset.deadline+"T23:59:59");var d=Math.ceil((t-new Date())/864e5);var w=e.querySelector(".hf-when");if(d<0)e.style.display="none";else w.textContent=e.dataset.deadline+" ("+(d===0?"today":d+" day"+(d>1?"s":"")+" left")+")"}});</script>
+<script>document.querySelectorAll(".hf-close").forEach(function(e){{var t=new Date(e.dataset.deadline+"T23:59:59");var d=Math.ceil((t-new Date())/864e5);var w=e.querySelector(".hf-when");if(d<0)e.style.display="none";else w.textContent+=" ("+(d===0?"today":d+" day"+(d>1?"s":"")+" left")+")"}});</script>
 {E}"""
     f = ROOT / "index.html"
     s = f.read_text(encoding="utf-8")

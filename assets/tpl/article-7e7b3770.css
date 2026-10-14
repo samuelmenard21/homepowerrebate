@@ -2,9 +2,7 @@
 :root {--ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5; --teal: #0d4f5c; --teal-deep: #08363f; --amber: #d4751c; --amber-bright: #e88a2e;}
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Inter Tight', 'Inter Tight Fallback', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; }
-.nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); border-bottom: 1px solid #d9d0c1; padding: 16px 28px; }
-.logo { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 20px; font-weight: 600; color: var(--teal-deep); text-decoration: none; }
-.logo-power { color: var(--amber); }
+
 .wrap { max-width: 720px; margin: 0 auto; padding: 0 28px; }
 .hero { padding: 48px 28px 32px; background: linear-gradient(135deg, var(--teal-deep) 0%, #0d5563 100%); color: var(--paper); }
 .hero h1 { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: clamp(28px, 5vw, 40px); margin-bottom: 12px; line-height: 1.2; }
@@ -24,5 +22,4 @@ li { margin-bottom: 8px; }
 .city-link:hover { background: var(--teal-deep); }
 a { color: var(--teal); text-decoration: none; }
 a:hover { text-decoration: underline; }
-.footer { background: var(--ink); color: rgba(250,247,242,.65); padding: 40px 28px; text-align: center; font-size: 13px; }
-.footer a { color: var(--amber); }
+

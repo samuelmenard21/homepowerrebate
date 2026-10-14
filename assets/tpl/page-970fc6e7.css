@@ -3,9 +3,7 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; scroll-padding-top:72px; }
 body { font-family:'Inter Tight', 'Inter Tight Fallback',-apple-system,sans-serif; background:var(--paper); color:var(--ink); line-height:1.6; }
-.nav { position:sticky; top:0; z-index:50; background:rgba(250,247,242,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--rule); padding:14px 24px; }
-.logo { font-family:'Fraunces', 'Fraunces Fallback',serif; font-size:18px; font-weight:600; color:var(--teal-deep); text-decoration:none; }
-.logo-power { color:var(--amber); }
+
 .wrap { max-width:920px; margin:0 auto; padding:0 28px; }
 .hero { padding:48px 28px; background:var(--teal-deep); color:var(--paper); text-align:center; }
 .hero h1 { font-family:'Fraunces', 'Fraunces Fallback',serif; font-size:clamp(32px,5vw,48px); line-height:1.1; letter-spacing:-0.02em; color:#fff; margin:0 0 16px; }
@@ -62,7 +60,6 @@ body .is-433de30b.is-433de30b.is-433de30b { font-size:16px; }
 .installer-card { position:relative; cursor:pointer; }
 .installer-card .installer-cta { align-self:flex-start; padding:9px 16px; border:2px solid var(--teal-deep); border-radius:999px; font-size:14px; background:#fff; }
 .installer-card:hover .installer-cta { background:var(--teal-deep); color:#fff; }
-
 
 .city-tabs { display:flex; gap:8px; flex-wrap:wrap; margin:24px 0; }
 .city-tab { background:#fff; border:1.5px solid var(--rule); color:var(--ink); padding:10px 16px; border-radius:8px; font-weight:600; font-size:13px; cursor:pointer; transition:all 0.2s; }

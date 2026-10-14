@@ -23,9 +23,7 @@
   a { color: #0d4f5c; text-decoration: underline; }
   .cta { display: inline-block; background: #d4751c; color: white; padding: 14px 32px; border-radius: 999px; text-decoration: none; font-weight: 600; margin-top: 32px; }
   .cta:hover { background: #e88a2e; }
-  .nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid #d9d0c1; padding: 14px 24px; }
-  .nav a { font-family: 'Fraunces', 'Fraunces Fallback', serif; font-size: 18px; font-weight: 600; color: #08363f; text-decoration: none; }
-  .nav a span { color: #d4751c; }
+
   @media (max-width: 600px) {
     h1 { font-size: 32px; }
     h2 { font-size: 22px; }

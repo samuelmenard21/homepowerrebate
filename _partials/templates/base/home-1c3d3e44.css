@@ -31,48 +31,6 @@ h1, h2, h3, h4, h5, h6 {
   font-display: swap;
 }
 
-/* Nav */
-.nav {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(250, 247, 242, 0.92);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--rule);
-}
-.nav-inner {
-  max-width: 1180px; margin: 0 auto;
-  padding: 18px 28px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.logo {
-  font-family: 'Fraunces', 'Fraunces Fallback', serif;
-  font-weight: 600; font-size: 22px;
-  letter-spacing: -0.02em;
-  color: var(--teal-deep);
-  text-decoration: none;
-  display: flex; align-items: center; gap: 10px;
-}
-.logo-mark {
-  width: 30px; height: 30px;
-  background: var(--amber); border-radius: 50%;
-  position: relative;
-  box-shadow: 0 2px 8px rgba(212, 117, 28, 0.3);
-}
-.logo-mark::after {
-  content: ''; position: absolute; inset: 8px;
-  background: var(--paper); border-radius: 50%;
-}
-.logo-go { font-style: italic; color: var(--amber); font-weight: 500; margin-right: -2px; }
-.logo-power { color: var(--amber); font-weight: 700; }
-.nav-pick {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--teal-deep);
-  color: var(--paper);
-  padding: 11px 20px; border-radius: 999px;
-  text-decoration: none; font-weight: 600; font-size: 15px;
-  transition: all 0.2s;
-}
-.nav-pick:hover { background: var(--amber); transform: translateY(-1px); }
-
 /* HERO - homepage-specific, no breadcrumb */
 .hero {
   padding: 64px 28px 80px;
@@ -581,59 +539,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 .final-cta .btn-primary { font-size: 18px; padding: 20px 36px; }
 
-/* Footer */
-.footer {
-  background: var(--ink);
-  color: rgba(250, 247, 242, 0.65);
-  padding: 56px 28px 32px;
-}
-.footer-inner { max-width: 1180px; margin: 0 auto; }
-.footer-top {
-  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
-  gap: 36px;
-  padding-bottom: 32px;
-  border-bottom: 1px solid rgba(250, 247, 242, 0.1);
-}
-.footer-brand {
-  font-family: 'Fraunces', 'Fraunces Fallback', serif;
-  font-weight: 500; font-size: 22px;
-  color: var(--paper);
-  letter-spacing: -0.02em;
-  margin-bottom: 12px;
-}
-.footer-tagline {
-  font-size: 13px; color: rgba(250, 247, 242, 0.4);
-  max-width: 320px;
-}
-.footer-col-title {
-  font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif;
-  font-size: 12px; font-weight: 700;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: rgba(250, 247, 242, 0.7);
-  margin-bottom: 14px;
-}
-.footer-col-links {
-  list-style: none;
-  display: grid; gap: 8px;
-  font-size: 14px;
-}
-.footer-col-links a {
-  color: rgba(250, 247, 242, 0.45);
-  text-decoration: none;
-}
-.footer-col-links a:hover { color: var(--amber); }
-.footer-bottom {
-  padding-top: 24px;
-  font-size: 12px;
-  color: rgba(250, 247, 242, 0.35);
-  display: flex; justify-content: space-between; flex-wrap: wrap;
-  gap: 12px;
-}
-
-/* Mobile/Desktop nav toggles - Desktop first (default) */
-.nav-desktop-only { display: flex !important; }
-.nav-mobile-only { display: none !important; }
-
 /* Responsive */
 @media (max-width: 880px) {
   .hero { padding: 40px 22px 56px; }
@@ -645,19 +550,8 @@ h1, h2, h3, h4, h5, h6 {
   .philosophy { padding: 48px 28px; border-radius: 20px; }
   .philosophy-pillars { grid-template-columns: 1fr; gap: 16px; }
   .waitlist { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+
   .trust-card { padding: 24px; gap: 16px; }
-  /* Mobile nav */
-  .nav-desktop-only { display: none !important; }
-  .nav-mobile-only { display: flex !important; flex-wrap: wrap; }
-  .nav-inner { gap: 8px; padding: 12px 14px; flex-wrap: wrap; row-gap: 8px; }
-  .logo { font-size: 14px !important; }
-  .logo-mark { width: 20px !important; height: 20px !important; }
-  .nav-mobile-only a { font-size: 13px !important; }
-  .nav-pick { font-size: 12px; padding: 7px 10px; white-space: nowrap; }
+
 }
-@media (max-width: 400px) {
-  .nav-inner { justify-content: center !important; }
-  .logo { flex: 1 0 100%; justify-content: center; }
-  .nav-mobile-only { flex: 1 1 auto; justify-content: center; }
-}
+

@@ -47,12 +47,5 @@ p.small .reg{border:0;padding:0;margin:0;cursor:auto}
 .cta h3{color:#fff;font-size:21px;margin-bottom:8px}
 .cta p{color:rgba(255,255,255,.92)!important;margin-bottom:14px}
 .cta a{display:inline-block;background:var(--ink);color:#fff!important;text-decoration:none!important;padding:12px 24px;border-radius:999px;font-weight:700}
-.hpr-breadcrumb{max-width:1180px;margin:0 auto;padding:14px 28px;font-size:13px;color:var(--ink-soft)}
-.hpr-breadcrumb ol{list-style:none;display:flex;flex-wrap:wrap;margin:0;padding:0}
-.hpr-breadcrumb li{display:flex;align-items:center}
-.hpr-breadcrumb li:not(:last-child)::after{content:'/';margin:0 8px;color:var(--rule)}
-.hpr-breadcrumb a{color:var(--ink-soft);text-decoration:none}
-.hpr-breadcrumb li[aria-current="page"]{color:var(--ink);font-weight:600}
-@media (max-width:600px){.hpr-breadcrumb{padding:10px 20px;font-size:12px}}
 
 table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid #d9d0c1;vertical-align:top;}th{background:#f5efe5;}.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.tw table{min-width:520px}section.body h3{font-size:20px;margin:24px 0 6px}

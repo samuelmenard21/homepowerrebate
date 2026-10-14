@@ -44,8 +44,6 @@
   .checklist-item { margin-bottom: 8px; font-size: 13px; display: flex; gap: 8px; }
   .checkbox { flex-shrink: 0; width: 16px; height: 16px; border: 1px solid #2d6a4f; border-radius: 3px; }
 
-  .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #d9d0c1; font-size: 11px; color: #666; }
-
   @media (max-width: 768px) {
     .container { max-width: 100%; }
     .grid { grid-template-columns: 1fr; }

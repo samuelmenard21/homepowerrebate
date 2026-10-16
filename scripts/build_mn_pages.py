@@ -175,7 +175,7 @@ def build_state_hub():
     # borrow the hub template's stylesheets (inline <style> blocks are gone since the 2026-10-11 template move)
     css = "\n".join(re.findall(r'<link rel="stylesheet" href="/assets/tpl/(?:hub|common)-[^"]+" data-hpr-tpl>', vt[:vt.find("</head>")]))
     cards = "".join(
-        f'<div class="rebate-card"><h4>{e(NAMES[s])}</h4><p style="margin-bottom:8px;">{e(u)}</p><p><a href="/us/mn/{s}/">View {e(NAMES[s])} rebates &rarr;</a></p></div>'
+        f'<div class="rebate-card"><h4 aria-level="3">{e(NAMES[s])}</h4><p style="margin-bottom:8px;">{e(u)}</p><p><a href="/us/mn/{s}/">View {e(NAMES[s])} rebates &rarr;</a></p></div>'
         for s, u in [("minneapolis", "City rebate, Xcel Energy and CenterPoint Energy"), ("saint-paul", "Xcel Energy and CenterPoint Energy"),
                      ("rochester", "Rochester Public Utilities (city-owned electric company)"), ("duluth", "Minnesota Power")])
     secs = "".join(f"<h2>{h}</h2>{b.replace('{cards}', cards)}" for h, b in d["sections"])

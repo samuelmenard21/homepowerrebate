@@ -96,30 +96,13 @@
 /us/ca/folsom/ /us/ca/sacramento/folsom/ 301
 /us/ca/folsom /us/ca/sacramento/folsom/ 301
 # Placeholder hubs removed 2026-09-29 (no rebate pages behind them; Winnipeg was misfiled under Ontario)
-/ca/on/durham/* /ca/on/ 301
-/ca/on/pickering/* /ca/on/ 301
-/ca/on/st-catharines/* /ca/on/ 301
-/ca/on/waterloo/* /ca/on/ 301
-/ca/on/winnipeg/* / 301
-/stacking-calculator/ca/on/durham/* /ca/on/ 301
-/stacking-calculator/ca/on/pickering/* /ca/on/ 301
-/stacking-calculator/ca/on/st-catharines/* /ca/on/ 301
-/stacking-calculator/ca/on/waterloo/* /ca/on/ 301
-/stacking-calculator/ca/on/winnipeg/* / 301
 # Stacking calculator: cities with no open dollar amount in any category (2026-10-11) go to the city hub
-/stacking-calculator/ca/ab/fort-mcmurray/* /ca/ab/fort-mcmurray/ 301
 /stacking-calculator/ca/ab/fort-mcmurray /ca/ab/fort-mcmurray/ 301
-/stacking-calculator/ca/ab/lethbridge/* /ca/ab/lethbridge/ 301
 /stacking-calculator/ca/ab/lethbridge /ca/ab/lethbridge/ 301
-/stacking-calculator/ca/ab/st-albert/* /ca/ab/st-albert/ 301
 /stacking-calculator/ca/ab/st-albert /ca/ab/st-albert/ 301
-/stacking-calculator/us/ca/bay-area/berkeley/* /us/ca/bay-area/berkeley/ 301
 /stacking-calculator/us/ca/bay-area/berkeley /us/ca/bay-area/berkeley/ 301
-/stacking-calculator/us/ca/bay-area/fremont/* /us/ca/bay-area/fremont/ 301
 /stacking-calculator/us/ca/bay-area/fremont /us/ca/bay-area/fremont/ 301
-/stacking-calculator/us/ca/bay-area/oakland/* /us/ca/bay-area/oakland/ 301
 /stacking-calculator/us/ca/bay-area/oakland /us/ca/bay-area/oakland/ 301
-/stacking-calculator/us/ca/san-diego/escondido/* /us/ca/san-diego/escondido/ 301
 /stacking-calculator/us/ca/san-diego/escondido /us/ca/san-diego/escondido/ 301
 
 /blog/bosch-vs-mitsubishi-heat-pump /blog/heat-pump-brands-comparison-mitsubishi-daikin-bosch/ 301
@@ -713,11 +696,8 @@
 /us/pa/pittsburgh/windows-doors /us/pa/windows/ 301
 
 # Massachusetts: battery, solar, EV charger, smart thermostat, water heater and windows pages had the same statewide offer in every city and nothing local to add; they go to the city hub (build_ma_pages.py, 2026-10-03)
-/us/ma/:city/battery/ /us/ma/battery/ 301
-/us/ma/:city/battery /us/ma/battery/ 301
 /us/ma/boston/ev-charger/ /us/ma/ev-charger/ 301
 /us/ma/boston/ev-charger /us/ma/ev-charger/ 301
-/us/ma/:city/smart-thermostats/ /us/ma/:city/ 301
 /us/ma/boston/smart-thermostats /us/ma/boston/ 301
 /us/ma/boston/solar/ /us/ma/boston/ 301
 /us/ma/boston/solar /us/ma/boston/ 301
@@ -831,8 +811,6 @@
 /us/ma/worcester/windows-doors /us/ma/worcester/ 301
 
 # BC battery pages merged into the solar and battery page; EV charger pages kept only where a local top-up exists (2026-10-03)
-/ca/bc/:city/battery/ /ca/bc/:city/solar/ 301
-/ca/bc/:city/battery /ca/bc/:city/solar/ 301
 /ca/bc/abbotsford/ev-charger/ /ca/bc/abbotsford/ 301
 /ca/bc/abbotsford/ev-charger /ca/bc/abbotsford/ 301
 /ca/bc/burnaby/ev-charger/ /ca/bc/burnaby/ 301
@@ -864,12 +842,6 @@
 /ca/bc/victoria/ev-charger/ /ca/bc/victoria/ 301
 /ca/bc/victoria/ev-charger /ca/bc/victoria/ 301
 # BC appliances, HRV and smart thermostats: one province page each (2026-10-11); the city pages had nothing city-specific beyond utility and BC Hydro community postal codes
-/ca/bc/:city/appliances/ /ca/bc/appliances/ 301
-/ca/bc/:city/appliances /ca/bc/appliances/ 301
-/ca/bc/:city/hrv/ /ca/bc/hrv/ 301
-/ca/bc/:city/hrv /ca/bc/hrv/ 301
-/ca/bc/:city/smart-thermostats/ /ca/bc/smart-thermostats/ 301
-/ca/bc/:city/smart-thermostats /ca/bc/smart-thermostats/ 301
 
 # New York: categories with no program or no local difference go to the city hub (build_ny_pages.py, 2026-10-03)
 /us/ny/central-hudson/beacon/appliances/ /us/ny/central-hudson/beacon/ 301
@@ -1330,10 +1302,6 @@
 /ca/ab/st-albert/windows /ca/ab/st-albert/ 301
 /ca/ab/fort-mcmurray/hrv/ /ca/ab/fort-mcmurray/ 301
 /ca/ab/fort-mcmurray/hrv /ca/ab/fort-mcmurray/ 301
-/ca/on/:city/ev-charger/ /ca/on/ev-charger/ 301
-/ca/on/:city/ev-charger /ca/on/ev-charger/ 301
-/ca/on/:city/hrv/ /ca/on/hrv/ 301
-/ca/on/:city/hrv /ca/on/hrv/ 301
 /us/ny/central-hudson/beacon/heat-pump/ /us/ny/central-hudson/beacon/ 301
 /us/ny/central-hudson/beacon/heat-pump /us/ny/central-hudson/beacon/ 301
 /us/ny/central-hudson/kingston/heat-pump/ /us/ny/central-hudson/kingston/ 301
@@ -1780,3 +1748,37 @@
 /questions/electric-vehicle-charging-setup /questions/ev-charger-rebate-bc-2026/ 301
 /questions/heat-pumps-explained-bc /questions/heat-pump-winter-performance-cold-bc/ 301
 /blog/heat-pump-vs-ac-cost-rebates-bc /ca/bc/heat-pump/ 301
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+/ca/on/durham/* /ca/on/ 301
+/ca/on/pickering/* /ca/on/ 301
+/ca/on/st-catharines/* /ca/on/ 301
+/ca/on/waterloo/* /ca/on/ 301
+/ca/on/winnipeg/* / 301
+/stacking-calculator/ca/on/durham/* /ca/on/ 301
+/stacking-calculator/ca/on/pickering/* /ca/on/ 301
+/stacking-calculator/ca/on/st-catharines/* /ca/on/ 301
+/stacking-calculator/ca/on/waterloo/* /ca/on/ 301
+/stacking-calculator/ca/on/winnipeg/* / 301
+/stacking-calculator/ca/ab/fort-mcmurray/* /ca/ab/fort-mcmurray/ 301
+/stacking-calculator/ca/ab/lethbridge/* /ca/ab/lethbridge/ 301
+/stacking-calculator/ca/ab/st-albert/* /ca/ab/st-albert/ 301
+/stacking-calculator/us/ca/bay-area/berkeley/* /us/ca/bay-area/berkeley/ 301
+/stacking-calculator/us/ca/bay-area/fremont/* /us/ca/bay-area/fremont/ 301
+/stacking-calculator/us/ca/bay-area/oakland/* /us/ca/bay-area/oakland/ 301
+/stacking-calculator/us/ca/san-diego/escondido/* /us/ca/san-diego/escondido/ 301
+/us/ma/:city/battery/ /us/ma/battery/ 301
+/us/ma/:city/battery /us/ma/battery/ 301
+/us/ma/:city/smart-thermostats/ /us/ma/:city/ 301
+/ca/bc/:city/battery/ /ca/bc/:city/solar/ 301
+/ca/bc/:city/battery /ca/bc/:city/solar/ 301
+/ca/bc/:city/appliances/ /ca/bc/appliances/ 301
+/ca/bc/:city/appliances /ca/bc/appliances/ 301
+/ca/bc/:city/hrv/ /ca/bc/hrv/ 301
+/ca/bc/:city/hrv /ca/bc/hrv/ 301
+/ca/bc/:city/smart-thermostats/ /ca/bc/smart-thermostats/ 301
+/ca/bc/:city/smart-thermostats /ca/bc/smart-thermostats/ 301
+/ca/on/:city/ev-charger/ /ca/on/ev-charger/ 301
+/ca/on/:city/ev-charger /ca/on/ev-charger/ 301
+/ca/on/:city/hrv/ /ca/on/hrv/ 301
+/ca/on/:city/hrv /ca/on/hrv/ 301

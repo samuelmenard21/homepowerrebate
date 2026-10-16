@@ -135,6 +135,10 @@ def main():
             out.extend(first_at[idx])
         if k == "rule" and idx in keep:
             out.append(" ".join(x))
+    # Pages expects static rules before dynamic ones; move every dynamic rule to the end.
+    dyn = [l for l in out if l.strip() and not l.strip().startswith("#") and is_dynamic(l.split()[0])]
+    out = [l for l in out if l not in dyn]
+    out += ["", "# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages."] + dyn
     final = [tuple(l.split()) for l in out if l.strip() and not l.strip().startswith("#")]
     st, dy = counts(final)
     print(f"before: {before[0]} static, {before[1]} dynamic; after: {st} static, {dy} dynamic")

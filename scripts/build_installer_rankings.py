@@ -453,7 +453,7 @@ def faq_items(region, service, city_label, hub, ranked, n, total_reviews, avg, m
     items.append((f"How are the {low} installers in {city_label} ranked?",
                   f"We list {n} {low} {'company' if n == 1 else 'companies'} in {city_label}, ranked by Google rating weighted by review count. "
                   f"Together they have {total_reviews:,} Google reviews and average {avg:.1f} stars, collected {upd_h}. "
-                  f"{most_reviewed['name']} has the most reviews ({most_reviewed['reviews']:,}). No company pays to be listed or ranked."))
+                  f"{display_name(most_reviewed['name'])} has the most reviews ({most_reviewed['reviews']:,}). No company pays to be listed or ranked."))
     # cost and rebates (same logic and sources as the cost box on the page)
     us = REGIONS[region][0] == "us"
     price = (US_HP_COST if us else CA_HP_COST) if service == "heat-pump" else (US_SOLAR_COST if us and service == "solar" else None)
@@ -540,15 +540,17 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
     title = f"Best {svc['name']} Installers in {city_label}, {short} (2026)"
     desc = (f"The top-rated {svc['lower']} installers in {city_label}, {short}, ranked by "
             f"{total_reviews:,} Google reviews. Compare {n} local companies, plus what to ask before you hire.")
-    top_line = ", ".join(f"{r['name']} ({r['rating']:.1f}★, {r['reviews']:,} reviews)" for r in top3)
+    top_line = ", ".join(f"{display_name(r['name'])} ({r['rating']:.1f}★, {r['reviews']:,} reviews)" for r in top3)
 
     items = []
     reg_used = {}
     labels = best_for(ranked, other_names or {})
     for i, r in enumerate(ranked, 1):
         prof = profile_url(region, r["city"], r["name"])
-        name_html = f'<a href="{prof}">{esc(r["name"])}</a>' if prof else esc(r["name"])
-        badge = '<span class="badge">Top pick</span>' if i <= 3 else ""
+        shown = display_name(r["name"])
+        name_html = f'<a href="{prof}">{esc(shown)}</a>' if prof else esc(shown)
+        # one top pick per list (2026-10-14): three "Top pick" badges out of six diluted the word
+        badge = '<span class="badge">Top pick</span>' if i == 1 else ""
         badge += "".join(f'<span class="bf">{esc(t)}</span>' for t in labels.get(r["name"], []))
         prog = REGISTERED.get((region, service, r["name"]))
         if prog:
@@ -559,23 +561,20 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
         if r["phone"]:
             tel = re.sub(r"[^\d+]", "", r["phone"])
             call = f'<a class="btn-call" href="tel:{tel}">Call {esc(r["phone"])}</a>'
-        if r["website"]:
-            acts.append(f'<a class="lnk" href="{esc(r["website"])}" rel="nofollow noopener" target="_blank">Website</a>')
-        if r["gmaps"]:
-            acts.append(f'<a class="lnk" href="{esc(r["gmaps"])}" rel="nofollow noopener" target="_blank">Google reviews</a>')
+        # the same small action set on every card (2026-10-14): call, the profile (or the website when there is no
+        # profile), and the Google reviews the ranking comes from; email and directions live on the profile page
         if prof:
             acts.append(f'<a class="btn-prof" href="{prof}">View profile</a>')
-        if r["email"]:
-            acts.append(f'<a class="lnk em" href="mailto:{esc(r["email"])}" aria-label="Email {esc(r["name"])}">Email</a>')
+        elif r["website"]:
+            acts.append(f'<a class="btn-prof" href="{esc(r["website"])}" rel="nofollow noopener" target="_blank">Website</a>')
+        if r["gmaps"]:
+            acts.append(f'<a class="lnk" href="{esc(r["gmaps"])}" rel="nofollow noopener" target="_blank">Google reviews</a>')
         pct = max(0, min(100, round(r["rating"] / 5 * 100)))
         bar = max(4, round(r["reviews"] / max(most_reviewed["reviews"], 1) * 100))
-        if r["address"]:
-            from urllib.parse import quote_plus
-            acts.insert(len(acts) - (1 if r["email"] else 0), f'<a class="lnk" href="https://www.google.com/maps/dir/?api=1&amp;destination={quote_plus(r["address"])}" rel="nofollow noopener" target="_blank">Directions</a>')
-        medal = f" g{i}" if i <= 3 else ""
+        medal = " g1" if i == 1 else ""
         items.append(
-            f'<li class="rank{" top" if i <= 3 else ""}{medal}{" has-prof" if prof else ""}" data-rank="{i}" data-reviews="{r["reviews"]}" data-rating="{r["rating"]}">'
-            f'<div class="n">{f'<a href="{prof}" aria-label="{esc(r["name"])} profile">{i}</a>' if prof else i}</div><div class="nm">{name_html}{badge}</div>'
+            f'<li class="rank{" top" if i == 1 else ""}{medal}{" has-prof" if prof else ""}" data-rank="{i}" data-reviews="{r["reviews"]}" data-rating="{r["rating"]}">'
+            f'<div class="n">{f'<a href="{prof}" aria-label="{esc(shown)} profile">{i}</a>' if prof else i}</div><div class="nm">{name_html}{badge}</div>'
             f'<div class="st"><span class="rt"><span class="stars" style="--p:{pct}%" aria-hidden="true">★★★★★</span> '
             f'<b>{r["rating"]:.1f}</b></span> <span class="rv">({r["reviews"]:,} Google reviews)</span>'
             f'<div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:{bar}%"></i></div>'
@@ -636,7 +635,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 <div class="trust"><span>Ranked by Google reviews</span><span>Never paid for</span><span>Free to compare</span></div>
 <div class="callout"><p><strong>Short answer:</strong> The top-rated {svc['lower']} installers in {esc(city_label)} are {esc(top_line)}.</p></div>
 
-<h2 class="sec-h">{svc['name']} installers in {esc(city_label)}, ranked <span class="chip">{n} listed</span></h2>
+<h2 class="sec-h">{svc['name']} installers in {esc(city_label)}, ranked <span class="chip" aria-hidden="true">{n} listed</span></h2>
 <div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button></div>
 <ol class="rank-list">
 {chr(10).join(items)}
@@ -897,7 +896,7 @@ def quote_form(region, service, city_label, ranked):
     us = region in US_REGIONS
     postal_label, postal_ph = ("ZIP code", "e.g. 02139") if us else ("Postal code", "e.g. M4P 1E2")
     picks = "".join(
-        f'<label class="qf-pick"><input type="checkbox" name="pick" value="{i}"> {esc(r["name"])} '
+        f'<label class="qf-pick"><input type="checkbox" name="pick" value="{i}"> {esc(display_name(r["name"]))} '
         f'<span class="small">({r["rating"]:.1f}★, {r["reviews"]:,} reviews)</span></label>'
         for i, r in enumerate(ranked))
     ups = "".join(f'<label class="qf-pick"><input type="checkbox" name="upgrade" value="{v}"{" checked" if v == service else ""}> {esc(t)}</label>'
@@ -1327,6 +1326,12 @@ def main():
     print(f"{len(held)} held back as noindex (>=90% similar to a sibling): {', '.join(sorted(held))}")
     if no_hub:
         print(f"{len(no_hub)} without a matching city hub (no rebate link): {', '.join(no_hub[:12])}")
+
+
+def display_name(name: str) -> str:
+    """Google listing names sometimes repeat themselves ("HEAT Squad HEAT Squad"): show them once."""
+    w = name.split()
+    return " ".join(w[:len(w) // 2]) if len(w) >= 2 and len(w) % 2 == 0 and w[:len(w) // 2] == w[len(w) // 2:] else name
 
 
 if __name__ == "__main__":

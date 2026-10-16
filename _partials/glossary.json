@@ -8,6 +8,23 @@
       "See my rebates and installers",
       "Estimate my rebates",
       "re:Compare top-rated .+ installers"
+    ],
+    "/calculator/": [
+      "Estimate my rebates",
+      "re:.+ rebate calculator",
+      "Rebate calculators"
+    ],
+    "/powerscore": [
+      "⚡ See your city's PowerScore",
+      "See your city's PowerScore",
+      "See the full leaderboard",
+      "re:← Back to the full PowerScore leaderboard"
+    ],
+    "/stacking-calculator/": [
+      "re:(?:💬 )?Rebate Stacking Calculator for .+",
+      "Rebate Stacking Calculator",
+      "Use the stacking calculator",
+      "See your city's rebate stack"
     ]
   },
   "terms": [
@@ -197,6 +214,21 @@
       "regex": true,
       "find": "(<span class=\"rb-status rb-info\">)Note<",
       "replace": "\\1Info<"
+    },
+    {
+      "regex": true,
+      "find": "(<a\\b[^>]*href=\"/calculator/[^\"]*\"[^>]*>)\\s*Check my rebates(\\s*(?:→|&rarr;))?\\s*</a>",
+      "replace": "\\1Estimate my rebates\\2</a>"
+    },
+    {
+      "regex": true,
+      "find": "(<a\\b[^>]*href=\"/powerscore[^\"]*\"[^>]*>)\\s*(?:Check your PowerScore|Look up your city's PowerScore)(\\s*(?:→|&rarr;))?\\s*</a>",
+      "replace": "\\1See your city's PowerScore\\2</a>"
+    },
+    {
+      "regex": true,
+      "find": "(<a\\b[^>]*href=\"/powerscore[^\"]*\"[^>]*>)\\s*Look it up on the full PowerScore leaderboard(\\s*(?:→|&rarr;))?\\s*</a>",
+      "replace": "\\1See the full leaderboard\\2</a>"
     }
   ],
   "pill_labels": {

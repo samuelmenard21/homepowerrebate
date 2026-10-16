@@ -163,7 +163,7 @@ def build_state_hub():
     head = mn[:mn.find("</head>")]
     css = "\n".join(re.findall(r'<link rel="stylesheet" href="/assets/tpl/(?:hub|common)-[^"]+" data-hpr-tpl>', head))
     cards = "".join(
-        f'<div class="rebate-card"><h4>{e(NAMES[s])}</h4><p style="margin-bottom:8px;">{e(u)}</p><p><a href="/ca/nl/{s}/">View {e(NAMES[s])} rebates &rarr;</a></p></div>'
+        f'<div class="rebate-card"><h4 aria-level="3">{e(NAMES[s])}</h4><p style="margin-bottom:8px;">{e(u)}</p><p><a href="/ca/nl/{s}/">View {e(NAMES[s])} rebates &rarr;</a></p></div>'
         for s, u in [("st-johns", "Newfoundland Power, takeCHARGE and the City's Shift program")])
     secs = "".join(f"<h2>{h}</h2>{b.replace('{cards}', cards)}" for h, b in d["sections"])
     faq = "".join(f'<h3>{e(q)}</h3><p>{e(a)}</p>' for q, a in d["faq"])

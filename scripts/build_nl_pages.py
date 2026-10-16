@@ -24,7 +24,7 @@ LABEL = {"insulation": "Insulation", "windows": "Windows & Doors", "water-heater
          "ev-charger": "EV Charger", "smart-thermostats": "Smart Thermostat", "appliances": "Appliance", "hrv": "HRV & Ventilation"}
 BUILT = []
 HUB = ["index"]
-NAMES = {"st-johns": "St. John's"}
+NAMES = {"st-johns": "St. John's", "mount-pearl": "Mount Pearl", "paradise": "Paradise", "corner-brook": "Corner Brook", "labrador-city": "Labrador City"}
 HP_ROWS = [r for r in rank.load_rows() if r["region"] == "nl" and r["service"] == "heat-pump"]
 
 
@@ -164,7 +164,8 @@ def build_state_hub():
     css = "\n".join(re.findall(r'<link rel="stylesheet" href="/assets/tpl/(?:hub|common)-[^"]+" data-hpr-tpl>', head))
     cards = "".join(
         f'<div class="rebate-card"><h4 aria-level="3">{e(NAMES[s])}</h4><p style="margin-bottom:8px;">{e(u)}</p><p><a href="/ca/nl/{s}/">View {e(NAMES[s])} rebates &rarr;</a></p></div>'
-        for s, u in [("st-johns", "Newfoundland Power, takeCHARGE and the City's Shift program")])
+        for s, u in [("st-johns", "Newfoundland Power, takeCHARGE and the City's Shift program"), ("mount-pearl", "1970s and 80s homes, many with a basement apartment"),
+                     ("paradise", "Newer homes: check the 2014 insulation rule"), ("corner-brook", "Older homes on the west coast"), ("labrador-city", "NL Hydro customers in Labrador West")])
     secs = "".join(f"<h2>{h}</h2>{b.replace('{cards}', cards)}" for h, b in d["sections"])
     faq = "".join(f'<h3>{e(q)}</h3><p>{e(a)}</p>' for q, a in d["faq"])
     src = "<ul>" + "".join(f'<li><a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a></li>' for t, u in d["refs"]) + "</ul>"

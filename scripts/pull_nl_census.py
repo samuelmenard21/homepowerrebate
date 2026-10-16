@@ -4,7 +4,7 @@ Same fields as data/bc-housing-census2021.json. Results are keyed by the echoed 
 import json, urllib.request
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
-GEO = {"st-johns": 93, "province": 2}  # census subdivision 1001519 and Newfoundland and Labrador
+GEO = {"st-johns": 93, "province": 2, "mount-pearl": 94, "paradise": 92, "conception-bay-south": 83, "corner-brook": 194, "gander": 209, "grand-falls-windsor": 214, "happy-valley-goose-bay": 371, "labrador-city": 373}  # StatCan 98-10-0233-01 geography members
 def coord(g, p=1, s=1, c=1, t=1): return f"{g}.{p}.{s}.1.{c}.{t}.0.0.0.0"
 req = {}
 for slug, g in GEO.items():

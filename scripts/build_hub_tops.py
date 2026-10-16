@@ -130,15 +130,11 @@ def unify_hero(s, cfg):
     return s[:m.start()] + hero + s[m.end():]
 
 
-STATUS_PILL = {  # status -> (label, background, text colour); the label is always a word, never colour alone
-    "active": ("Open", "#e3f1e8", "#1f5a3d"), "upcoming": ("Starts soon", "#fdeccf", "#8a4a06"),
-    "waitlist": ("Waitlist", "#fdeccf", "#8a4a06"), "paused": ("Paused", "#f3dcdc", "#8a2b2b"),
-    "closed": ("Closed", "#f3dcdc", "#8a2b2b"), "check": ("Confirm status", "#e8e8e8", "#444"), "info": ("Note", "#e8e8e8", "#444"),
-}
+from status_pills import STATUS as STATUS_PILL  # noqa: E402  (status -> (label, tone, card class); one vocabulary site-wide)
 
 
 def status_pill(st):
-    label = STATUS_PILL[st][0]  # colours: .rb-status rules in _partials/nav-footer.html
+    label = STATUS_PILL[st][0]  # colours: program status pill rules in _partials/nav-footer.html
     return f'<span class="rb-status rb-{st}">{label}</span>'
 
 

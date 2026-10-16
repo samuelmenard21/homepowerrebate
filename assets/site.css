@@ -153,6 +153,12 @@ header.hub-hero .btn.btn-secondary { background: #fff; color: var(--ink, #0a2a2e
 @font-face { font-family: 'Inter Tight Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial-BoldMT'); size-adjust: 96.2%; ascent-override: 100.8%; descent-override: 24.9%; line-gap-override: 0%; }
 /* ===== fluid layout system =====
    One container width that grows with the screen instead of a fixed 1180px: header, footer, breadcrumbs, hubs, rankings and the homepage all share it. */
+/* design tokens (2026-10-14): the brand colours every page used to get only from its own older CSS copy, plus shared
+   values the template CSS repeats. Same values as before; DESIGN.md documents them. Use these in new CSS instead of hex. */
+:root { --ink: #0a2a2e; --ink-soft: #1a3d42; --paper: #faf7f2; --paper-warm: #f5efe5; --teal: #0d4f5c; --teal-deep: #08363f;
+  --amber: #d4751c; --amber-bright: #e88a2e; --amber-text: #a4540a; --amber-text-deep: #8a4607; --sage: #6b8e7f; --green-money: #2d6a4f; --rule: #d9d0c1;
+  --card-rule: #e3dacb; --muted: #4a5f62; --radius-card: 18px; --radius-box: 14px; --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgba(10, 42, 46, .04), 0 8px 24px -12px rgba(10, 42, 46, .14); }
 :root { --container: clamp(1180px, 90vw, 1440px); --gutter: clamp(16px, 3.2vw, 56px); --article: clamp(800px, 56vw, 900px); --rail: clamp(300px, 21vw, 340px); }
 html .nav-inner, html .footer-inner, html .hpr-breadcrumb, html .footer-grid, html .footer-bottom { max-width: var(--container); }
 html .hs-wrap, html .rebate-grid, html .wrap-wide, html .container, html header.hub-hero .wrap, main.layout-wide .wrap { max-width: var(--container); }
@@ -253,11 +259,15 @@ nav.hpr-breadcrumb, nav.rail-toc { display: block; }
 nav.rail-toc { max-width: none; margin: 0; padding-top: 0; padding-bottom: 0; padding-right: 0; }
 /* pages that still carry an older breadcrumb next to the shared one: show the shared one only */
 body:has(nav.hpr-breadcrumb) div.breadcrumb, nav.hpr-breadcrumb + div[style]:has(> div[style] > a[href="/"]:first-child) { display: none; }
-/* program status pills (hub tables): the label is always a word, never colour alone */
-.rb-status { display: inline-block; margin-left: 6px; padding: 2px 9px; border-radius: 99px; font-size: 13px; font-weight: 600; white-space: nowrap; background: #e8e8e8; color: #444; }
-.rb-active { background: #e3f1e8; color: #1f5a3d; }
-.rb-upcoming, .rb-waitlist { background: #fdeccf; color: #8a4a06; }
-.rb-paused, .rb-closed { background: #f3dcdc; color: #8a2b2b; }
+/* program status pills, one design for rebate cards and hub tables (2026-10-14). Labels and tones: scripts/status_pills.py.
+   The label is always a word, never colour alone. Tones: open green, soon amber, closed red, info grey (all 4.5:1 or more). */
+.rb-status, .program-status { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 99px; font-size: 13px; font-weight: 700; line-height: 1.3; letter-spacing: 0; text-transform: none; white-space: nowrap; background: #e8e8e8; color: #444; }
+.rb-status::before, .program-status::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.rb-status { margin-left: 6px; }
+.rb-active, .program-status.status-open { background: #e3f1e8; color: #1f5a3d; }
+.rb-upcoming, .rb-waitlist, .rb-paused, .rb-check, .program-status.status-limited { background: #fdeccf; color: #8a4a06; }
+.rb-closed, .program-status.status-closed { background: #f3dcdc; color: #8a2b2b; }
+.rb-info { background: #e8e8e8; color: #444; }
 /* breadcrumb base (some pages never had the breadcrumb CSS block) */
 .hpr-breadcrumb { margin: 0 auto; padding: 14px 28px; font-size: 13px; color: var(--ink-soft); }
 .hpr-breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0; margin: 0; padding: 0; }
@@ -276,7 +286,7 @@ main:focus { outline: none; }
 .btn:not(.btn-secondary), .btn-primary, a.cta, .cta, .gq-cta, .sticky-cta, .qf-btn, .filter-btn.active, #hero-find button, .nl button, #newsletter-form button,
 a[style*="background:var(--amber)"], a[style*="background: var(--amber)"], button[style*="background:var(--amber)"], button[style*="background: var(--amber)"], button[style*="background: #d4751c"], a[style*="background: #d4751c"], a[style*="background:#d4751c"] { background: #a4540a !important; color: #fff !important; }
 .btn:not(.btn-secondary):hover, .btn-primary:hover, a.cta:hover, .cta:hover, .gq-cta:hover, .sticky-cta:hover, .qf-btn:hover, #hero-find button:hover, .nl button:hover, #newsletter-form button:hover { background: #8a4607 !important; }
-.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-status.status-limited, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
+.section-eyebrow, .finder-cat, .rr-eyebrow, .fact-label, .eyebrow-dark, .quick-answer-label, .popular-label, .program-amount, .tag:not([class*="tag-"]), .stat-num, .go, .hero-eyebrow,
 [style*="color:var(--amber)"], [style*="color: var(--amber)"], [style*="color:#d4751c"], [style*="color: #d4751c"] { color: #a4540a !important; }
 .hs-stat b small { color: #a4540a !important; }
 .finder-source, .region-tag, .rank-cell, .adr, td small, p.small, span.small:not(.overall-badge), [style*="color:var(--sage)"], [style*="color: var(--sage)"], [style*="color:#6b8e7f"], [style*="color: #6b8e7f"] { color: #4f6f61 !important; }
@@ -486,15 +496,13 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
 .tpl-article main .rebate-card { position: relative; display: flex; flex-direction: column; padding: 22px 22px 20px; border: 1px solid #e3dacb; border-radius: 18px; background: #fff;
   box-shadow: 0 1px 2px rgba(10, 42, 46, .04), 0 8px 24px -12px rgba(10, 42, 46, .14); transition: transform .18s ease, box-shadow .18s ease, border-color .18s; }
 .tpl-article main .rebate-card:hover { transform: translateY(-2px); border-color: #cfc2ad; box-shadow: 0 2px 4px rgba(10, 42, 46, .05), 0 18px 36px -16px rgba(10, 42, 46, .24); }
-.tpl-article main .rebate-card .program-status { align-self: flex-start; margin: 0 0 14px; padding: 4px 10px; font-size: 12px; letter-spacing: .06em; }
-.tpl-article main .rebate-card .program-status::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: currentColor; vertical-align: 1px; }
+.tpl-article main .rebate-card .program-status { align-self: flex-start; margin: 0 0 14px; text-transform: none; letter-spacing: 0; }
 .tpl-article main .rebate-card :is(h3, h4) { order: 2; margin: 0 0 8px; font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 16px; line-height: 1.35; font-weight: 700; letter-spacing: 0; color: var(--ink); }
 .tpl-article main .rebate-card :is(h3, h4) a { color: inherit; text-decoration: none; }
 .tpl-article main .rebate-card :is(h3, h4) a::after { content: ""; position: absolute; inset: 0; border-radius: 18px; }
 .tpl-article main .rebate-card .amount { order: 1; margin: 0 0 10px; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(26px, 2.2vw, 32px); font-weight: 600; line-height: 1.08; letter-spacing: -.02em; color: var(--green-money) !important; text-wrap: balance; }
 .tpl-article main .rebate-card p { order: 3; margin: 0 !important; max-width: none; font-size: 15px !important; line-height: 1.55; color: #3c5357; }
 .tpl-article main .rebate-card .program-status { order: 0; }
-.tpl-article main .status-open { background: #e3f1e8; color: #1f5a3f; }
 /* the first open card is the one most homes start with: full width, bigger number; the rest read as add-ons */
 .tpl-article main .rebate-grid > .rebate-card:first-child:not(:only-child):not(:has(.status-closed, .status-limited)) { grid-column: 1 / -1; padding: 26px 28px 24px; border-color: #cfe0d6; background: linear-gradient(180deg, #fff 0%, #f6faf7 100%); }
 .tpl-article main .rebate-grid > .rebate-card:first-child:not(:only-child):not(:has(.status-closed, .status-limited)) .amount { font-size: clamp(34px, 3.4vw, 44px); }
@@ -694,7 +702,7 @@ body.tpl-hub { --gut: clamp(20px, 3.2vw, 56px); --hub-w: min(var(--container), 1
 .tpl-hub .hub-table td:nth-child(3) { font-weight: 700; color: var(--green-money); }
 .tpl-hub .hub-table tbody tr:hover td { background: #fbf8f2; }
 .tpl-hub .hub-table .rb-status { margin: 4px 0 0; }
-.tpl-hub .hub-table td:nth-child(3) .rb-status { display: table; margin-top: 6px; }
+.tpl-hub .hub-table td:nth-child(3) .rb-status { display: flex; width: fit-content; margin-top: 6px; }
 .tpl-hub .hub-changes { margin-top: 40px; }
 .tpl-hub .hub-card { padding: clamp(20px, 2.2vw, 30px) clamp(20px, 2.4vw, 34px); border: 1px solid #e3dacb; border-radius: 18px; background: #fff; }
 .tpl-hub .hub-card h2 { margin: 0 0 6px; padding-top: 0; font-size: clamp(22px, 2vw, 28px); }

@@ -88,7 +88,7 @@ def main():
   <div class="hf-strip">
     <a href="/calculator/"><b>Rebate calculators</b>Pick your province or state and see what you could get back.</a>
     <a href="/powerscore/"><b>PowerScore</b>See how your city ranks on open rebate money.</a>
-    <a href="/how-we-vet-installers"><b>How we rank installers</b>Google reviews only. Free for you, and nobody pays to be listed.</a>
+    <a href="/installers/how-we-rank/"><b>How we rank installers</b>Google reviews only. Free for you, and nobody pays to be listed.</a>
   </div>
 </section>
 <script>document.querySelectorAll(".hf-close").forEach(function(e){{var t=new Date(e.dataset.deadline+"T23:59:59");var d=Math.ceil((t-new Date())/864e5);var w=e.querySelector(".hf-when");if(d<0)e.style.display="none";else w.textContent+=" ("+(d===0?"today":d+" day"+(d>1?"s":"")+" left")+")"}});</script>

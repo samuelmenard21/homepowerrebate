@@ -29,8 +29,8 @@ UTILITY_PAGE = {"ladwp": ("ladwp-rebates", "LADWP"), "smud": ("smud-rebates", "S
                 "sjce": ("san-jose-clean-energy-rebates", "San Jose Clean Energy"), "cleanpowersf": ("cleanpowersf-rebates", "CleanPowerSF"), "sdge": ("san-diego-community-power-rebates", "San Diego Community Power"),
                 "pge": ("pge-rebates", "PG&E"), "ava": ("pge-rebates", "PG&E")}
 INSTALLER_SET = {"heat-pump": "hvac", "water-heater": "hvac", "hrv": "hvac", "smart-thermostats": "hvac", "solar": "solar", "battery": "solar"}
-PILL = {"active": ("status-open", "Open"), "check": ("status-limited", "Check first"), "closed": ("status-closed", "Closed"), "waitlist": ("status-limited", "On hold"),
-        "upcoming": ("status-limited", "Coming"), "paused": ("status-limited", "Paused"), "info": ("status-open", "Info")}
+from status_pills import STATUS as _STATUS  # noqa: E402  (one status vocabulary site-wide)
+PILL = {k: (cls, label) for k, (label, _tone, cls) in _STATUS.items()}
 
 
 def installers(slug, kind):
@@ -103,7 +103,7 @@ def build(slug, cat):
 {''.join(f"<h2>{h}</h2>{b}" for h, b in d['sections'])}
 {inst}
 {claim}
-<div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city={slug}" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in {e(name)}</a>.</div>
+<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city={slug}" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in {e(name)}</a>.</div>
 <h2>Common questions</h2>
 {faq}
 <h2>What to do next</h2>

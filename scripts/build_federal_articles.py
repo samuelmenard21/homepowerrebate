@@ -29,7 +29,7 @@ def build(slug):
     rel = "".join(f'<li><a href="{u}">{t}</a></li>' for t, u in [PILLAR] + d["related"])
     article = f"""<p class="byline">By <a href="/about">Sam Menard</a> · Updated {nice}</p>
 {''.join(f"<h2>{h}</h2>{b}" for h, b in d['sections'])}
-<div class="callout"><strong>Want your exact number?</strong> Run our <a href="/calculator/on/" style="color:var(--teal,#0d4f5c); font-weight:600;">rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
+<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="{d.get('calc', '/calculator/on/')}" style="color:var(--teal,#0d4f5c); font-weight:600;">rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
 <h2>Common questions</h2>
 {faq}
 <h2>More on the federal heat pump rebate</h2>
@@ -69,15 +69,16 @@ def build(slug):
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 {ca.CSS}
+{navfooter.tpl_link("article")}
 <style>.faq-item{{border-bottom:1px solid #d9d0c1;padding:14px 0}}.faq-item h3{{margin:0 0 6px;font-size:18px}}.faq-item p{{margin:0}}.byline{{font-size:14px;color:#5a5348;margin:0 0 16px}}</style>
 {lds}</head><body>
-{navfooter.render_nav("on", "")}
+{navfooter.render_nav(d.get("nav", "on"), "")}
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">{e(d['h1'])}</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">{e(d['badge'])}</div><h1>{e(d['h1'])}</h1><p>{d['lead']}</p></div></section>
 <article class="article"><div class="wrap">
 {article}
 </div></article>
-{navfooter.render_footer("on", "", "", path)}
+{navfooter.render_footer(d.get("nav", "on"), "", "", path)}
 </body></html>
 """
     out = ROOT / path.strip("/") / "index.html"

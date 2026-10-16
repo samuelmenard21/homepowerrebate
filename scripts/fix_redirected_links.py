@@ -3,6 +3,7 @@
 Also swaps the retired /retrofit-assessment/ page for /get-quotes/ (anchor labels included). Safe to re-run; run after any generator that may link to removed pages."""
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -32,6 +33,14 @@ for f in files:
     s = p.read_text(encoding="utf-8", errors="ignore")
     o = s
     s = re.sub(r'(href="/retrofit-assessment/"[^>]*>)(Assessment|Retrofit Assessment)(<)', lambda m: m.group(1).replace("/retrofit-assessment/", "/get-quotes/") + "See my rebates" + m.group(3), s)
+    # one name per action (2026-10-14): /get-quotes/ shows rebates and top-rated installers for a city; it is not an
+    # assessment, gives estimates rather than exact amounts, and does not send quote requests (installer ranking forms do)
+    s = re.sub(r'(<a\b[^>]*href="/get-quotes/[^"]*"[^>]*>)\s*(?:Start your assessment|Run your free assessment|Get quotes|Get Quotes)\s*(&rarr;|→)?\s*(</a>)',
+               lambda m: m.group(1) + "See my rebates" + (" " + m.group(2) if m.group(2) else "") + m.group(3), s)
+    s = re.sub(r'(<a\b[^>]*href="/get-quotes/[^"]*"[^>]*>)\s*Get your exact rebate amount\s*(&rarr;|→)?\s*(</a>)',
+               lambda m: m.group(1) + "Estimate my rebates" + (" " + m.group(2) if m.group(2) else "") + m.group(3), s)
+    s = re.sub(r"Get an exact number:(</strong>)? Fill out our free assessment tool to see your", lambda m: "Get your number:" + (m.group(1) or "") + " Pick your city in our free rebate finder to see your", s)
+    s = s.replace("local context, and a free assessment tool.", "local context, and a free rebate finder.").replace("in our free assessment tool for an estimate", "in our free rebate finder for an estimate")
 
     def sub(m):
         global links
@@ -47,3 +56,9 @@ for f in files:
         p.write_text(s, encoding="utf-8")
         changed += 1
 print("files changed", changed, "links rewritten", links)
+
+# glossary wording fixes (_partials/glossary.json 'fixes'): generators that still emit a retired phrase are corrected here,
+# since this script already runs after every generator
+sys.path.insert(0, str(ROOT / "scripts"))
+from check_consistency import apply_fixes  # noqa: E402
+print("glossary fixes applied to", apply_fixes(), "pages")

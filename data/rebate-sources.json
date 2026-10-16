@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 559,
+ "count": 565,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -1583,7 +1583,7 @@
    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810023301",
    "host": "www150.statcan.gc.ca",
    "region": "bc-pages",
-   "check": "Statistics Canada 2021 Census, table 98-10-0233-01; Statistics Canada, 2021 Census table 98-10-0233-01",
+   "check": "Statistics Canada 2021 Census table 98-10-0233-01; Statistics Canada 2021 Census, table 98-10-0233-01; Statistics Canada, 2021 Census table 98-10-0233-01",
    "facts": [],
    "used_by_pages": [
     "/ab/calgary/",
@@ -1910,6 +1910,7 @@
     "/ca/on/windsor/solar/",
     "/ca/on/windsor/water-heater/",
     "/ca/on/windsor/windows-doors/",
+    "/nl/st-johns/",
     "/ns/cape-breton/",
     "/ns/cape-breton/heat-pump/",
     "/ns/cape-breton/insulation/",
@@ -5018,10 +5019,23 @@
    "last_read": ""
   },
   {
+   "url": "https://takechargenl.ca/greenerhomes/",
+   "host": "takechargenl.ca",
+   "region": "nl",
+   "check": "TakeCharge Greener Homes Program; TakeCharge Greener Homes Program (income-eligible)",
+   "facts": [
+    "nl-10-takecharge-greener-homes"
+   ],
+   "used_by_pages": [
+    "/nl/st-johns/"
+   ],
+   "last_read": "2026-10-16"
+  },
+  {
    "url": "https://takechargenl.ca/oiltoelectric/",
    "host": "takechargenl.ca",
    "region": "nl",
-   "check": "Oil to Electric Incentive Program (takeCHARGE); Oil to Electric Incentive Program income chart; Oil to Electric Incentive Program rules; takeCHARGE Oil to Electric Incentive Program; takeCHARGE insula",
+   "check": "Oil to Electric Incentive Program (takeCHARGE); Oil to Electric Incentive Program income chart; Oil to Electric Incentive Program rules; takeCHARGE Oil to Electric; takeCHARGE Oil to Electric Incentiv",
    "facts": [
     "nl-0-oil-to-electric-amounts",
     "nl-1-oil-to-electric-income-chart",
@@ -5029,7 +5043,69 @@
     "nl-3-takecharge-insulation-hrv"
    ],
    "used_by_pages": [
+    "/nl/st-johns/",
     "/programs/newfoundland-oil-to-electric-rebate/"
+   ],
+   "last_read": "2026-10-16"
+  },
+  {
+   "url": "https://takechargenl.ca/residential/government-programs/",
+   "host": "takechargenl.ca",
+   "region": "nl",
+   "check": "On-bill financing, HESP and St. John's Shift; Shift and other programs",
+   "facts": [
+    "nl-11-financing-and-other"
+   ],
+   "used_by_pages": [
+    "/nl/st-johns/"
+   ],
+   "last_read": "2026-10-16"
+  },
+  {
+   "url": "https://takechargenl.ca/residential/rebate-programs/air-sealing-rebate/",
+   "host": "takechargenl.ca",
+   "region": "nl",
+   "check": "takeCHARGE air sealing rebate",
+   "facts": [
+    "nl-7-takecharge-air-sealing"
+   ],
+   "used_by_pages": [
+    "/nl/st-johns/"
+   ],
+   "last_read": "2026-10-16"
+  },
+  {
+   "url": "https://takechargenl.ca/residential/rebate-programs/duct-insulation-rebate-electric/",
+   "host": "takechargenl.ca",
+   "region": "nl",
+   "check": "takeCHARGE duct insulation rebate",
+   "facts": [
+    "nl-9-takecharge-duct-insulation"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-16"
+  },
+  {
+   "url": "https://takechargenl.ca/residential/rebate-programs/hrv-rebate/",
+   "host": "takechargenl.ca",
+   "region": "nl",
+   "check": "takeCHARGE HRV rebate",
+   "facts": [
+    "nl-8-takecharge-hrv"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-16"
+  },
+  {
+   "url": "https://takechargenl.ca/residential/rebate-programs/insulation-rebate/",
+   "host": "takechargenl.ca",
+   "region": "nl",
+   "check": "takeCHARGE insulation rebate",
+   "facts": [
+    "nl-6-takecharge-insulation"
+   ],
+   "used_by_pages": [
+    "/nl/st-johns/"
    ],
    "last_read": "2026-10-16"
   },
@@ -5050,11 +5126,12 @@
    "url": "https://www.gov.nl.ca/releases/2026/fin/0716n04/",
    "host": "www.gov.nl.ca",
    "region": "nl",
-   "check": "Home Heating Supplement Program (furnace and stove oil), Government of Newfoundland and Labrador; Home Heating Supplement Program, Government of NL",
+   "check": "Home Heating Supplement; Home Heating Supplement Program (furnace and stove oil), Government of Newfoundland and Labrador; Home Heating Supplement Program, Government of NL",
    "facts": [
     "nl-4-home-heating-supplement"
    ],
    "used_by_pages": [
+    "/nl/st-johns/",
     "/programs/newfoundland-oil-to-electric-rebate/"
    ],
    "last_read": "2026-10-16"

@@ -40,7 +40,7 @@ def build(slug):
     steps = "".join(f"<li>{s}</li>\n" for s in d["claim_steps"])
     faq = "".join(f'<div class="faq-item"><h3>{e(q)}</h3><p>{a}</p></div>\n' for q, a in d["faq"])
     sources = " ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>' + ("," if i < len(d["refs"]) - 1 else "") for i, (t, u) in enumerate(d["refs"]))
-    calc_url, calc_name = CALC.get(nav, CALC["ca"])
+    calc_url, calc_name = CALC.get(nav, ("/calculator/", "home") if d.get("no_region_calc") else CALC["ca"])
     article = f"""<h2>{d['cards_heading']}</h2>
 {d['cards_intro']}
 <div class="rebate-grid">

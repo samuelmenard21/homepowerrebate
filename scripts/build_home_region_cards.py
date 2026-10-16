@@ -1,53 +1,41 @@
 #!/usr/bin/env python3
-"""Homepage "Choose your region" grid: add a card for every region in data/regions.json that has a home_blurb and no hand-made card.
-Cards go between the HOME-REGION-CARDS markers, so re-runs replace them. Add a region to data/regions.json (with home_blurb) and run this."""
-import re
-from pathlib import Path
+"""llms.txt "Regions covered" section, rebuilt from data/regions.json (name, home_blurb, cities, hub path) on every run.
+The homepage region cards, meta region lists and city counts are rebuilt by build_home_hero.py (sync_regions).
+Both run from scripts/sync_regions.py, the one command to run after adding a region or a city."""
+import html as _h
 import sys
+from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import regions
+import regions  # noqa: E402
+from build_get_quotes import city_slugs  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-S, E = "<!-- HOME-REGION-CARDS-START -->", "<!-- HOME-REGION-CARDS-END -->"
-STYLE = ("display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; "
-         "transition:all .2s; box-shadow:var(--shadow);")
-p = ROOT / "index.html"
-html = p.read_text()
-html = re.sub(re.escape(S) + r".*?" + re.escape(E) + r"\n?", "", html, flags=re.S)
-cards = []
-for r in regions.REGIONS:
-    if not r.get("home_blurb"):
-        continue
-    href = f'/{r["path"]}/'
-    if f'<a href="{href}" style="display:block' in html:
-        continue
-    country = "Canada" if r["country"] == "ca" else "United States"
-    cards.append(f'''    <a href="{href}" style="{STYLE}" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-      <div style="font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;">{country} &middot; {len(r["cities"])} cities</div>
-      <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--teal-deep); margin-bottom:8px;">{r["name"]}</h3>
-      <p style="font-size:14px; color:var(--ink-soft);">{r["home_blurb"]}</p>
-    </a>
-''')
-anchor = "  </div>\n</div>\n\n<!-- REBATE BREAKDOWN"
-assert anchor in html, "region grid anchor not found"
-html = html.replace(anchor, S + "\n" + "\n".join(cards) + E + "\n\n" + anchor, 1)
-p.write_text(html)
-print(len(cards), "region cards added")
+FEDERAL = ("- Canada (federal) — National Heat Pump Rebate announced Oct 8, 2026: up to $10,000 below the median income, $2,000 otherwise, "
+           "launch expected early 2027, eligibility rules not yet published. /programs/national-heat-pump-rebate/ and guides at "
+           "/blog/should-you-wait-federal-heat-pump-rebate/, /blog/federal-heat-pump-rebate-stacking-by-province/")
 
-# llms.txt: one line per region with a home_blurb that is not listed yet (kept between markers so re-runs replace it)
-import html as _h
-lp = ROOT / "llms.txt"
-t = lp.read_text()
-LS, LE = "<!-- REGIONS-AUTO-START -->", "<!-- REGIONS-AUTO-END -->"
-t = re.sub(re.escape(LS) + r".*?" + re.escape(LE) + r"\n?", "", t, flags=re.S)
-lines = []
-for r in regions.REGIONS:
-    if r.get("home_blurb") and f'/{r["path"]}/' not in t:
-        names = ", ".join(c[1] for c in r["cities"])
-        lines.append(f'- {r["name"]} — {_h.unescape(r["home_blurb"])} {len(r["cities"])} cities: {names}. /{r["path"]}/')
-if lines:
-    anchor = "\nNote: as of 2026, the federal 25C/25D"
-    assert anchor in t
-    t = t.replace(anchor, "\n" + LS + "\n" + "\n".join(lines) + "\n" + LE + "\n" + anchor, 1)
-    lp.write_text(t)
-print(len(lines), "llms.txt lines")
+
+def line(r):
+    names = ", ".join(c[1] for c in r["cities"])
+    n = len(city_slugs(r["code"]))
+    return f'- {r["name"]} — {_h.unescape(r.get("home_blurb") or "")} {n} {"city" if n == 1 else "cities"}, including {names}. /{r["path"]}/'
+
+
+def main():
+    lp = ROOT / "llms.txt"
+    t = lp.read_text()
+    ca = [line(r) for r in regions.REGIONS if r["country"] == "ca"] + [FEDERAL]
+    us = [line(r) for r in regions.REGIONS if r["country"] == "us"]
+    sec = (f"## Regions covered ({len(regions.REGIONS)})\n\n**Canada**\n" + "\n".join(ca)
+           + "\n\n**United States**\n" + "\n".join(us) + "\n\n")
+    a = t.index("## Regions covered")
+    b = t.index("Note: as of 2026, the federal 25C/25D", a)
+    new = t[:a] + sec + t[b:]
+    if new != t:
+        lp.write_text(new)
+    print("llms.txt regions:", len(regions.REGIONS))
+
+
+if __name__ == "__main__":
+    main()

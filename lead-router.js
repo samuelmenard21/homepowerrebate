@@ -548,7 +548,7 @@ async function handleContactSubmit(request, env) {
 // ===========================================================================
 // Stores answers in OUTCOMES_DB.installer_survey (schema-installer-survey.sql),
 // logs to the Sheet (record_type 'installer_survey') and alerts ops.
-const SURVEY_REGIONS = ['bc', 'on', 'ab', 'ns', 'ma', 'ny', 'ca', 'co', 'pa', 'vt', 'other'];
+const SURVEY_REGIONS = ['bc', 'on', 'ab', 'ns', 'nl', 'ma', 'ny', 'ca', 'co', 'pa', 'vt', 'mi', 'nj', 'il', 'wa', 'mn', 'other'];
 const SURVEY_FIELDS = ['name', 'company_site', 'price_hp_ducted', 'price_hp_minisplit', 'price_solar_watt', 'price_battery',
   'price_attic', 'price_trend', 'tariff_impact', 'tariff_switch', 'lead_time', 'rebate_share', 'rebate_other', 'rebate_pain', 'blocker', 'wish', 'page_url'];
 const SURVEY_LISTS = ['services', 'rebates', 'also_ask', 'tariff_items'];
@@ -972,7 +972,8 @@ async function handleLeadFollowupResponse(request, env) {
 // static installer JSON from the Pages site (heat-pump + solar merged).
 async function loadInstallersForCityServer(city, province, env) {
   const REGION_PATH_PREFIX = { BC: '', ON: 'on', AB: 'ab', NS: 'ns', MA: 'ma', CA: 'ca', NY: 'ny', PA: 'pa', CO: 'co', VT: 'vt' };
-  const prefix = REGION_PATH_PREFIX[(province || 'BC').toUpperCase()] ?? '';
+  // Regions not listed use their own code as the folder (installers/json/<code>/), as every region added since VT does.
+  const prefix = REGION_PATH_PREFIX[(province || 'BC').toUpperCase()] ?? String(province).toLowerCase();
   const base = prefix ? `https://homepowerrebate.com/installers/json/${prefix}` : `https://homepowerrebate.com/installers/json`;
   const slug = String(city || '').toLowerCase().replace(/\s+/g, '-');
 

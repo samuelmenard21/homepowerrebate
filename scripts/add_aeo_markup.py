@@ -130,14 +130,14 @@ def process(rel, dry):
     if not canon or not title or "</head>" not in s:
         return None
     original = s
-    # keep the blocks where they already sit (2026-10-16): removing them and re-adding before </head> moved them on
-    # every run once other post-steps had added tags to the head, which showed up as JSON-LD drift
-    m = BLOCK(SP_S, SP_E).search(s) or BLOCK(FQ_S, FQ_E).search(s)
-    anchor = "<!-- AEO-ANCHOR -->"
-    if m:
-        s = s[:m.start()] + anchor + s[m.end():]
+    # one fixed place (2026-10-16): right after the canonical link. Re-adding the blocks before </head> moved them every
+    # time another post-step added a head tag, and keeping them in place made fresh and old pages differ (JSON-LD drift)
     s = BLOCK(SP_S, SP_E).sub("", s)
     s = BLOCK(FQ_S, FQ_E).sub("", s)
+    cm = re.search(r'<link rel="canonical" href="[^"]+"\s*/?>\n?', s)
+    anchor = "<!-- AEO-ANCHOR -->"
+    if cm:
+        s = s[:cm.end()] + ("" if s[cm.end() - 1] == "\n" else "\n") + anchor + s[cm.end():]
     root = parse(re.sub(r"<(script|style)\b.*?</\1>", "", s, flags=re.S | re.I))
     add = []
     if hero_ok(root):

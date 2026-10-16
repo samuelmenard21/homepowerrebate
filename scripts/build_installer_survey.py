@@ -20,9 +20,10 @@ PATH = "/installers/survey/"
 ENDPOINT = "https://leads.homepowerrebate.com/installer-survey"
 e = html.escape
 
-REGIONS = [("bc", "British Columbia", "CAD"), ("on", "Ontario", "CAD"), ("ab", "Alberta", "CAD"), ("ns", "Nova Scotia", "CAD"),
-           ("ma", "Massachusetts", "USD"), ("ny", "New York", "USD"), ("ca", "California", "USD"), ("co", "Colorado", "USD"),
-           ("pa", "Pennsylvania", "USD"), ("vt", "Vermont", "USD"), ("other", "Somewhere else", "")]
+import regions as _regions  # noqa: E402
+
+# Every region in data/regions.json, so a new region appears here without editing this file.
+REGIONS = [(r["code"], r["name"], "CAD" if r["country"] == "ca" else "USD") for r in _regions.REGIONS] + [("other", "Somewhere else", "")]
 
 # Rebate programs homeowners use, by region (options only; "other" is always offered).
 REBATES = {
@@ -36,7 +37,11 @@ REBATES = {
     "co": ["Xcel Energy rebates", "City or utility rebate", "State income-qualified program"],
     "pa": ["Utility rebate (PECO, PPL, Duquesne...)", "State income-qualified program"],
     "vt": ["Efficiency Vermont", "Utility rebate (e.g. Green Mountain Power)"],
+    "nl": ["takeCHARGE Oil to Electric", "takeCHARGE insulation or HRV rebate", "TakeCharge Greener Homes (income-qualified)"],
 }
+# Regions without a hand-written list offer their program pages from data/regions.json plus a generic utility option.
+for _r in _regions.REGIONS:
+    REBATES.setdefault(_r["code"], [label for _, label in _r.get("programs", [])] + ["Utility or city rebate"])
 
 SERVICES = [("heat-pump", "Heat pumps"), ("solar", "Solar"), ("battery", "Home batteries"), ("insulation", "Insulation")]
 

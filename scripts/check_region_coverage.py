@@ -41,6 +41,9 @@ def main():
     picker = {r["c"]: {c for c, _ in r["k"]} for r in json.loads(m.group(1))} if m else {}
     m = re.search(r"const SURVEY_REGIONS = \[([^\]]*)\]", router)
     survey = set(re.findall(r"'([a-z]+)'", m.group(1))) if m else set()
+    if "import REGION_DATA from './data/regions.json'" in router and "REGION_LIST.map(r => r.code)" in router:
+        survey = {r["code"] for r in regions.REGIONS}  # the Worker reads data/regions.json itself
+    survey_page = read("installers/survey/index.html")
     gaps = []
     total = 0
     for r in regions.REGIONS:
@@ -58,6 +61,7 @@ def main():
             "footer": f'<a href="{hub}">' in sample,
             "sitemap": f"{BASE}{hub}" in sitemap,
             "installer survey (lead-router.js)": code in survey,
+            "installer survey page": f'<option value="{code}"' in survey_page,
         }
         if r.get("calc_label"):
             need["calculator index"] = f"/calculator/{code}/" in calc

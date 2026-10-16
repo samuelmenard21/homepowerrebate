@@ -562,13 +562,15 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
             tel = re.sub(r"[^\d+]", "", r["phone"])
             call = f'<a class="btn-call" href="tel:{tel}">Call {esc(r["phone"])}</a>'
         # the same small action set on every card (2026-10-14): call, the profile (or the website when there is no
-        # profile), and the Google reviews the ranking comes from; email and directions live on the profile page
+        # profile), the Google reviews the ranking comes from, and email when we have one; directions live on the profile page
         if prof:
             acts.append(f'<a class="btn-prof" href="{prof}">View profile</a>')
         elif r["website"]:
             acts.append(f'<a class="btn-prof" href="{esc(r["website"])}" rel="nofollow noopener" target="_blank">Website</a>')
         if r["gmaps"]:
             acts.append(f'<a class="lnk" href="{esc(r["gmaps"])}" rel="nofollow noopener" target="_blank">Google reviews</a>')
+        if r["email"]:  # owner, 2026-10-16: show email when we have one
+            acts.append(f'<a class="lnk em" href="mailto:{esc(r["email"])}" aria-label="Email {esc(shown)}">Email</a>')
         pct = max(0, min(100, round(r["rating"] / 5 * 100)))
         bar = max(4, round(r["reviews"] / max(most_reviewed["reviews"], 1) * 100))
         medal = " g1" if i == 1 else ""

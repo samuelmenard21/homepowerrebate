@@ -130,6 +130,12 @@ def process(rel, dry):
     if not canon or not title or "</head>" not in s:
         return None
     original = s
+    # keep the blocks where they already sit (2026-10-16): removing them and re-adding before </head> moved them on
+    # every run once other post-steps had added tags to the head, which showed up as JSON-LD drift
+    m = BLOCK(SP_S, SP_E).search(s) or BLOCK(FQ_S, FQ_E).search(s)
+    anchor = "<!-- AEO-ANCHOR -->"
+    if m:
+        s = s[:m.start()] + anchor + s[m.end():]
     s = BLOCK(SP_S, SP_E).sub("", s)
     s = BLOCK(FQ_S, FQ_E).sub("", s)
     root = parse(re.sub(r"<(script|style)\b.*?</\1>", "", s, flags=re.S | re.I))
@@ -143,8 +149,11 @@ def process(rel, dry):
         if len(pairs) >= 2:
             add.append(FQ_S + "\n" + ld({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
                 {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in pairs]}) + "\n" + FQ_E)
-    if add:
+    if add and anchor in s:
+        s = s.replace(anchor, "\n".join(add) + "\n", 1)
+    elif add:
         s = s.replace("</head>", "\n".join(add) + "\n</head>", 1)
+    s = s.replace(anchor, "")
     if s != original and not dry:
         p.write_text(s, encoding="utf-8")
     return ("speakable" in "".join(add), "FAQPage" in "".join(add), s != original)

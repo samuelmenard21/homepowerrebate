@@ -17,6 +17,9 @@
 
 <meta name="description" content="Can you get a free heat pump in Victoria? If your income qualifies, ECAP or CleanBC can cover most or all of it. Income limits and 2026 amounts.">
 <link rel="canonical" href="https://homepowerrebate.com/blog/free-heat-pump-bc-income-qualified-victoria/">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Free Heat Pump in Victoria? Income-Qualified Rebates 2026", "url": "https://homepowerrebate.com/blog/free-heat-pump-bc-income-qualified-victoria/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
 <meta property="og:title" content="Free Heat Pump in Victoria? Income-Qualified Rebates 2026">
 <meta property="og:description" content="Can you get a free heat pump in Victoria? If your income qualifies, ECAP or CleanBC can cover most or all of it. Income limits and 2026 amounts.">
 <meta property="og:type" content="article">
@@ -117,9 +120,6 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<!-- AEO-SPEAKABLE-START -->
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Free Heat Pump in Victoria? Income-Qualified Rebates 2026", "url": "https://homepowerrebate.com/blog/free-heat-pump-bc-income-qualified-victoria/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
-<!-- AEO-SPEAKABLE-END -->
 <!-- OG-CARD-START -->
 <meta property="og:image" content="https://homepowerrebate.com/og/blog/free-heat-pump-bc-income-qualified-victoria.jpg?v=2b8a148cd26d">
 <meta property="og:image:width" content="1200">
@@ -173,6 +173,7 @@
         <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" class="nav-region-tab" aria-pressed="false">California</button>
         <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" class="nav-region-tab" aria-pressed="false">Alberta</button>
         <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" class="nav-region-tab" aria-pressed="false">Nova Scotia</button>
+        <button type="button" onclick="showProvinceCities('nl')" id="province-tab-nl" class="nav-region-tab" aria-pressed="false">Newfoundland</button>
         <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" class="nav-region-tab" aria-pressed="false">Massachusetts</button>
         <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" class="nav-region-tab" aria-pressed="false">New York</button>
         <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" class="nav-region-tab" aria-pressed="false">Pennsylvania</button>
@@ -200,6 +201,9 @@
     </div>
     <div id="province-cities-ns" class="nav-region-cities" hidden>
       <a href="/ca/ns/halifax/">Halifax</a>
+    </div>
+    <div id="province-cities-nl" class="nav-region-cities" hidden>
+      <a href="/ca/nl/st-johns/">St. John's</a><a href="/ca/nl/mount-pearl/">Mount Pearl</a><a href="/ca/nl/paradise/">Paradise</a><a href="/ca/nl/corner-brook/">Corner Brook</a><a href="/ca/nl/labrador-city/">Labrador City</a>
     </div>
     <div id="province-cities-ma" class="nav-region-cities" hidden>
       <a href="/us/ma/boston/">Boston</a><a href="/us/ma/worcester/">Worcester</a><a href="/us/ma/springfield/">Springfield</a><a href="/us/ma/cambridge/">Cambridge</a><a href="/us/ma/lowell/">Lowell</a><a href="/us/ma/brockton/">Brockton</a><a href="/us/ma/new-bedford/">New Bedford</a><a href="/us/ma/quincy/">Quincy</a><a href="/us/ma/lynn/">Lynn</a><a href="/us/ma/fall-river/">Fall River</a><a href="/us/ma/newton/">Newton</a><a href="/us/ma/somerville/">Somerville</a>
@@ -306,6 +310,7 @@
           <li><a href="/ca/bc/">British Columbia</a></li>
           <li><a href="/ca/ab/">Alberta</a></li>
           <li><a href="/ca/ns/">Nova Scotia</a></li>
+          <li><a href="/ca/nl/">Newfoundland and Labrador</a></li>
         </ul>
       </div>
       <div>
@@ -375,7 +380,7 @@ function toggleCityDropdown() {
   modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

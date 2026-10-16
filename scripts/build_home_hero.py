@@ -13,17 +13,71 @@ from build_get_quotes import REG, OV, city_slugs  # noqa: E402
 S, E = "<!-- HOME-HERO-START -->", "<!-- HOME-HERO-END -->"
 
 
-NEW_REGIONS = ["Michigan", "New Jersey", "Illinois", "Washington", "Minnesota"]
+import html as _html  # noqa: E402
+import regions  # noqa: E402
+
+GRID_S, GRID_E = "<!-- REGION-GRID-START -->", "<!-- REGION-GRID-END -->"
+CHIP = ("font-size:12px; color:var(--teal); border:1px solid var(--rule); border-radius:999px; padding:4px 10px; text-decoration:none;")
+CARD = ("display:block; background:var(--paper); border:1px solid var(--rule); border-radius:16px; padding:26px; text-decoration:none; "
+        "transition:all .2s; box-shadow:var(--shadow);")
 
 
-def sync_region_text(s):
-    """Meta descriptions and JSON-LD name every region; keep them in step with data/regions.json (idempotent)."""
-    s = s.replace("Colorado, and Vermont", "Colorado, Vermont, " + ", ".join(NEW_REGIONS[:-1]) + ", and " + NEW_REGIONS[-1])
-    if '"Minnesota, United States"' not in s:
-        add = "".join(f', {{"@type": "AdministrativeArea", "name": "{n}, United States"}}' for n in NEW_REGIONS)
-        s = s.replace('"name": "Vermont, United States"}', '"name": "Vermont, United States"}' + add, 1)
-        add2 = "".join(f',\n   {{ "@type": "AdministrativeArea", "name": "{n}, United States" }}' for n in NEW_REGIONS)
-        s = s.replace('{ "@type": "AdministrativeArea", "name": "Vermont, United States" }', '{ "@type": "AdministrativeArea", "name": "Vermont, United States" }' + add2, 1)
+def _short(r):
+    return "BC" if r["code"] == "bc" else r["name"]
+
+
+def _series(names):
+    return ", ".join(names[:-1]) + ", and " + names[-1]
+
+
+def region_grid():
+    """The homepage "Choose your region" cards: one per region in data/regions.json (name, home_blurb, city count, first cities)."""
+    cards = []
+    for r in regions.REGIONS:
+        n = len(city_slugs(r["code"]))
+        country = "Canada" if r["country"] == "ca" else "United States"
+        chips = "".join(f'<a href="{h}" onclick="event.stopPropagation()" style="{CHIP}">{_html.escape(t)}</a>\n        ' for h, t in r["cities"][:4])
+        cards.append(f'''    <div style="{CARD}">
+      <div class="is-1f3bab59">{country} &middot; {n} {"city" if n == 1 else "cities"}</div>
+      <h3 class="is-ab1b25e3"><a href="/{r["path"]}/" class="is-48711be5">{_html.escape(r["name"])}</a></h3>
+      <p class="is-26757191">{_html.escape(r.get("home_blurb") or "")}</p>
+      <div class="is-f1e97509">
+        {chips}</div>
+    </div>''')
+    return GRID_S + '\n  <div class="region-grid is-c0839a60">\n' + "\n".join(cards) + "\n  </div>\n" + GRID_E
+
+
+def sync_regions(s):
+    """Everything on the homepage that names regions or counts cities, rebuilt from data/regions.json (idempotent):
+    meta and JSON-LD region lists, areaServed, the page count, and the region cards."""
+    names = [r["name"] for r in regions.REGIONS]
+    canada = [r for r in regions.REGIONS if r["country"] == "ca"]
+    us = [r for r in regions.REGIONS if r["country"] == "us"]
+    alt = "|".join(re.escape(x) for x in sorted(set(names + ["BC", "British Columbia"]), key=len, reverse=True))
+    run = re.compile(rf"(?:BC|British Columbia), (?:(?:{alt}), )+(?:and )?(?:{alt})(?![A-Za-z])")
+    s = run.sub(lambda m: _series([("British Columbia" if m.group(0).startswith("British") and r["code"] == "bc" else _short(r)) for r in canada + us]), s)
+    # areaServed: every run of AdministrativeArea objects, rewritten in the style it was written in
+    area = re.compile(r'(\{ ?"@type": "AdministrativeArea", "name": "[^"]+" ?\})((?:,\s*\{ ?"@type": "AdministrativeArea", "name": "[^"]+" ?\})+)')
+
+    def redo(m):
+        first = m.group(1)
+        sep = re.match(r",\s*", m.group(2)).group(0)
+        tpl = first.replace(re.search(r'"name": "([^"]+)"', first).group(1), "{}")
+        return sep.join(tpl.replace("{}", f'{r["name"]}, {"Canada" if r["country"] == "ca" else "United States"}') for r in canada + us)
+    s = area.sub(redo, s)
+    total = sum(len(city_slugs(r["code"])) for r in regions.REGIONS)
+    s = re.sub(r"Covers \d+ city and utility-territory pages", f"Covers {total} city and utility-territory pages", s)
+    if GRID_S in s:
+        s = s[:s.index(GRID_S)] + region_grid() + s[s.index(GRID_E) + len(GRID_E):]
+    else:
+        a = s.index('<div class="region-grid is-c0839a60">')
+        depth, end = 0, None
+        for m in re.finditer(r"<div\b|</div>", s[a:]):
+            depth += -1 if m.group(0) == "</div>" else 1
+            if depth == 0:
+                end = a + m.end()
+                break
+        s = s[:a] + region_grid() + s[end:]
     return s
 
 
@@ -84,7 +138,7 @@ var r=D.filter(function(x){{return x.c===p.value}})[0];if(r)r.k.forEach(function
         a = s.rfind("<script>", 0, i)
         b = s.index("</script>", i) + len("</script>")
         s = s[:a] + s[b:]
-    s = sync_region_text(s)
+    s = sync_regions(s)
     f.write_text(s, encoding="utf-8")
     print("Homepage hero rebuilt")
 

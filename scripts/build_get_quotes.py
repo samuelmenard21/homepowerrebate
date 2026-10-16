@@ -13,7 +13,7 @@ import regions
 ROOT = Path(__file__).resolve().parent.parent
 S, E = "<!-- GQ-START -->", "<!-- GQ-END -->"
 REG = [(r["code"], r["name"], r["abbr"], "" if r["code"] == "bc" else r["code"]) for r in regions.REGIONS]
-OV = {"st-albert": "St. Albert", "fort-st-john": "Fort St. John", "fort-mcmurray": "Fort McMurray", "sault-ste-marie": "Sault Ste. Marie"}
+OV = {"st-albert": "St. Albert", "fort-st-john": "Fort St. John", "fort-mcmurray": "Fort McMurray", "sault-ste-marie": "Sault Ste. Marie", "st-johns": "St. John's"}
 CSS = """
 .gq{max-width:820px;margin:0 auto;padding:0 20px}
 .gq-card{background:#fff;border:1px solid var(--rule);border-radius:16px;padding:24px;margin:0 0 20px}

@@ -1,0 +1,433 @@
+{
+  "code": "nl",
+  "name": "Newfoundland and Labrador",
+  "country": "ca",
+  "currency": "CAD",
+  "hub": "/ca/nl/",
+  "installers": "/installers/",
+  "installers_dir": "nl",
+  "city_page": "ca/nl/{c}",
+  "title": "Newfoundland and Labrador Rebate Calculator 2026: Oil to Electric and takeCHARGE",
+  "h1": "Newfoundland and Labrador Rebate Calculator 2026: What You Could Get Back",
+  "desc": "Free Newfoundland and Labrador rebate calculator. Up to $22,000 to switch from oil to a heat pump, takeCHARGE insulation, air sealing and HRV rebates, with the official source for every amount.",
+  "intro": "Answer a few questions and see which Newfoundland and Labrador rebates fit your home, with a source for every number.",
+  "short": "Homes heated with oil or propane can get up to $22,000 to switch to a central heat pump through the Oil to Electric program if their income qualifies, or up to $9,000 if not. Homes already on electric heat can get takeCHARGE rebates of up to $3,000 for insulation and up to $750 for air sealing. Lower-income homes can apply for no-cost upgrades.",
+  "faq": [
+    [
+      "How much can I get to switch from oil to a heat pump in Newfoundland?",
+      "Up to $22,000 for a central heat pump if your household is income-qualified, or up to $9,000 if not. A multi-split or several mini-splits get up to $18,000 or $6,500, and an electric furnace or boiler up to $10,000 or $5,000."
+    ],
+    [
+      "Is there a heat pump rebate if my home already has electric heat?",
+      "We found no takeCHARGE heat pump rebate for homes already heated by electricity. Newfoundland Power and NL Hydro offer on-bill financing for heat pumps instead, and lower-income homes can apply to the TakeCharge Greener Homes Program."
+    ],
+    [
+      "Who qualifies for the takeCHARGE insulation rebate?",
+      "Homeowners whose main heat is electric, in homes built and connected before January 1, 2014. It pays 75% of the insulation cost up to $1,000 each for the attic and basement, plus up to $500 each for labour."
+    ],
+    [
+      "Is there a solar or battery rebate in Newfoundland and Labrador?",
+      "We found no takeCHARGE solar or battery rebate for homeowners."
+    ]
+  ],
+  "questions": [
+    {
+      "id": "city",
+      "label": "Which city is closest to your home?",
+      "type": "select",
+      "options": [
+        {
+          "value": "st-johns",
+          "label": "St. John's"
+        },
+        {
+          "value": "mount-pearl",
+          "label": "Mount Pearl"
+        },
+        {
+          "value": "paradise",
+          "label": "Paradise"
+        },
+        {
+          "value": "corner-brook",
+          "label": "Corner Brook"
+        },
+        {
+          "value": "labrador-city",
+          "label": "Labrador City"
+        },
+        {
+          "value": "other",
+          "label": "Somewhere else in Newfoundland and Labrador"
+        }
+      ],
+      "optional": true,
+      "help": "Used to link your city page."
+    },
+    {
+      "id": "heating",
+      "label": "What heats your home now?",
+      "type": "select",
+      "options": [
+        {
+          "value": "oil",
+          "label": "Oil"
+        },
+        {
+          "value": "propane",
+          "label": "Propane"
+        },
+        {
+          "value": "electric",
+          "label": "Electricity"
+        },
+        {
+          "value": "other",
+          "label": "Wood or something else"
+        }
+      ]
+    },
+    {
+      "id": "hp_type",
+      "label": "What would you install?",
+      "type": "select",
+      "options": [
+        {
+          "value": "central",
+          "label": "Central ducted heat pump"
+        },
+        {
+          "value": "multi",
+          "label": "Multi-split or several mini-splits"
+        },
+        {
+          "value": "single",
+          "label": "One mini-split"
+        },
+        {
+          "value": "furnace",
+          "label": "Electric furnace or boiler"
+        }
+      ],
+      "for": [
+        "heat-pump"
+      ]
+    },
+    {
+      "id": "household",
+      "label": "How many people live in your home?",
+      "type": "select",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5 or more"
+        }
+      ],
+      "optional": true
+    },
+    {
+      "id": "income",
+      "label": "Household income after tax (optional)",
+      "type": "money",
+      "optional": true,
+      "help": "Net income minus tax payable, for you and your spouse or partner. Only used to check income-based programs. It never leaves your device."
+    }
+  ],
+  "derived": {
+    "income_level": {
+      "from": [
+        "household",
+        "income"
+      ],
+      "source_fact": "nl-1-oil-to-electric-income-chart",
+      "limits": {
+        "L1": [
+          37375,
+          73600,
+          104650,
+          131100,
+          136850,
+          136850,
+          136850
+        ]
+      }
+    }
+  },
+  "pools": [],
+  "upgrades": [
+    {
+      "id": "heat-pump",
+      "label": "Heat pump or electric heat"
+    },
+    {
+      "id": "insulation",
+      "label": "Insulation and air sealing"
+    },
+    {
+      "id": "hrv",
+      "label": "HRV (fresh air system)"
+    },
+    {
+      "id": "support",
+      "label": "Free help or income-based help"
+    }
+  ],
+  "programs": [
+    {
+      "id": "o2e-central-iq",
+      "fact": "nl-0-oil-to-electric-amounts",
+      "name": "Oil to Electric: central heat pump (income-qualified)",
+      "upgrade": "heat-pump",
+      "amount": {
+        "max": 22000
+      },
+      "rules": "Oil to Electric Incentive Program. Whole-home heating, participating installer, pre-approval before work. Paid to your installer. Income-qualified households only.",
+      "when": {
+        "heating": [
+          "oil",
+          "propane"
+        ],
+        "hp_type": [
+          "central"
+        ],
+        "income_level": [
+          "L1"
+        ]
+      },
+      "group": "hp"
+    },
+    {
+      "id": "o2e-central",
+      "fact": "nl-0-oil-to-electric-amounts",
+      "name": "Oil to Electric: central heat pump",
+      "upgrade": "heat-pump",
+      "amount": {
+        "max": 9000
+      },
+      "rules": "Oil to Electric Incentive Program. Whole-home heating, participating installer, pre-approval before work. Paid to your installer.",
+      "when": {
+        "heating": [
+          "oil",
+          "propane"
+        ],
+        "hp_type": [
+          "central"
+        ]
+      },
+      "group": "hp"
+    },
+    {
+      "id": "o2e-multi-iq",
+      "fact": "nl-0-oil-to-electric-amounts",
+      "name": "Oil to Electric: multi-split or mini-splits (income-qualified)",
+      "upgrade": "heat-pump",
+      "amount": {
+        "max": 18000
+      },
+      "rules": "Oil to Electric Incentive Program. Whole-home heating, participating installer, pre-approval before work. Paid to your installer. Income-qualified households only.",
+      "when": {
+        "heating": [
+          "oil",
+          "propane"
+        ],
+        "hp_type": [
+          "multi"
+        ],
+        "income_level": [
+          "L1"
+        ]
+      },
+      "group": "hp"
+    },
+    {
+      "id": "o2e-multi",
+      "fact": "nl-0-oil-to-electric-amounts",
+      "name": "Oil to Electric: multi-split or mini-splits",
+      "upgrade": "heat-pump",
+      "amount": {
+        "max": 6500
+      },
+      "rules": "Oil to Electric Incentive Program. Whole-home heating, participating installer, pre-approval before work. Paid to your installer.",
+      "when": {
+        "heating": [
+          "oil",
+          "propane"
+        ],
+        "hp_type": [
+          "multi"
+        ]
+      },
+      "group": "hp"
+    },
+    {
+      "id": "o2e-furnace-iq",
+      "fact": "nl-0-oil-to-electric-amounts",
+      "name": "Oil to Electric: electric furnace or boiler (income-qualified)",
+      "upgrade": "heat-pump",
+      "amount": {
+        "max": 10000
+      },
+      "rules": "Oil to Electric Incentive Program. Whole-home heating, participating installer, pre-approval before work. Paid to your installer. Income-qualified households only.",
+      "when": {
+        "heating": [
+          "oil",
+          "propane"
+        ],
+        "hp_type": [
+          "furnace"
+        ],
+        "income_level": [
+          "L1"
+        ]
+      },
+      "group": "hp"
+    },
+    {
+      "id": "o2e-furnace",
+      "fact": "nl-0-oil-to-electric-amounts",
+      "name": "Oil to Electric: electric furnace or boiler",
+      "upgrade": "heat-pump",
+      "amount": {
+        "max": 5000
+      },
+      "rules": "Oil to Electric Incentive Program. Whole-home heating, participating installer, pre-approval before work. Paid to your installer.",
+      "when": {
+        "heating": [
+          "oil",
+          "propane"
+        ],
+        "hp_type": [
+          "furnace"
+        ]
+      },
+      "group": "hp"
+    },
+    {
+      "id": "nrcan-250",
+      "fact": "nl-0-oil-to-electric-amounts",
+      "name": "Natural Resources Canada one-time payment",
+      "upgrade": "heat-pump",
+      "amount": {
+        "max": 250
+      },
+      "rules": "Mailed to income-qualified Oil to Electric customers pre-approved for a central, multi-split or several mini-split heat pumps.",
+      "when": {
+        "heating": [
+          "oil",
+          "propane"
+        ],
+        "hp_type": [
+          "central",
+          "multi"
+        ],
+        "income_level": [
+          "L1"
+        ]
+      }
+    },
+    {
+      "id": "tc-insulation",
+      "fact": "nl-6-takecharge-insulation",
+      "name": "takeCHARGE insulation rebate",
+      "upgrade": "insulation",
+      "amount": {
+        "max": 3000
+      },
+      "rules": "75% of cost up to $1,000 attic and $1,000 basement, plus up to $500 labour each with a participating installer. Main heat must be electric; home built before 2014.",
+      "when": {
+        "heating": [
+          "electric"
+        ]
+      }
+    },
+    {
+      "id": "tc-airseal",
+      "fact": "nl-7-takecharge-air-sealing",
+      "name": "takeCHARGE air sealing rebate",
+      "upgrade": "insulation",
+      "amount": {
+        "max": 750
+      },
+      "rules": "$200 to $750 based on blower door results. Main heat must be electric and the home needs an HRV or air exchanger.",
+      "when": {
+        "heating": [
+          "electric"
+        ]
+      }
+    },
+    {
+      "id": "tc-hrv",
+      "fact": "nl-8-takecharge-hrv",
+      "name": "takeCHARGE HRV rebate",
+      "upgrade": "hrv",
+      "amount": {
+        "max": 225
+      },
+      "rules": "Eligible high-efficiency model installed by an HRAI certified installer. Any heat source. Paid as a bill credit."
+    },
+    {
+      "id": "tc-ghp",
+      "fact": "nl-10-takecharge-greener-homes",
+      "name": "TakeCharge Greener Homes Program (no-cost upgrades)",
+      "upgrade": "support",
+      "amount": {
+        "label": "Up to 100% of the cost",
+        "max": 0
+      },
+      "rules": "Income-qualified homeowners. A limited number of no-cost heat pumps, HRVs, insulation and air sealing upgrades after a home energy assessment.",
+      "when": {
+        "income_level": [
+          "L1"
+        ]
+      }
+    },
+    {
+      "id": "hhs",
+      "fact": "nl-4-home-heating-supplement",
+      "name": "Home Heating Supplement (oil)",
+      "upgrade": "support",
+      "amount": {
+        "label": "$200 to $500",
+        "max": 0
+      },
+      "rules": "Provincial payment for people who bought at least 250 litres of furnace or stove oil in 2026, with 2025 family income of $150,000 or less. Apply by January 15, 2027. Not an upgrade rebate, so it is not added to your total.",
+      "when": {
+        "heating": [
+          "oil"
+        ]
+      }
+    },
+    {
+      "id": "fed-hp",
+      "fact": "federal-0-national-heat-pump-rebate",
+      "name": "National Heat Pump Rebate (federal, not open yet)",
+      "upgrade": "heat-pump",
+      "amount": {
+        "label": "Up to $10,000 or $2,000",
+        "max": 0
+      },
+      "rules": "Announced October 8, 2026 and expected to launch in early 2027. The income line, eligible homes and how it combines with provincial programs are not published, so this is shown but not added to your total."
+    }
+  ],
+  "closed_facts": [],
+  "notes": [
+    "We found no takeCHARGE heat pump rebate for homes already on electric heat, and no homeowner solar or battery rebate.",
+    "Amounts are the most a program pays. Your rebate depends on your quote and final invoice."
+  ]
+}

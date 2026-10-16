@@ -4,6 +4,9 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W33G4TGRHD');</script>
 <meta name="description" content="Add a home rebate calculator to your installer website. Amounts update automatically and it links back to HomePowerRebate."><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large"><link rel="canonical" href="https://homepowerrebate.com/calculator/widget/">
+<!-- AEO-SPEAKABLE-START -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Rebate Calculator Widget for Installers | HomePowerRebate", "url": "https://homepowerrebate.com/calculator/widget/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
+<!-- AEO-SPEAKABLE-END -->
 <meta property="og:title" content="Rebate Calculator Widget for Installers | HomePowerRebate"><meta property="og:description" content="Add a home rebate calculator to your installer website. Amounts update automatically and it links back to HomePowerRebate."><meta property="og:url" content="https://homepowerrebate.com/calculator/widget/"><meta property="og:type" content="article">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- FONT-PRELOAD-START -->
@@ -20,9 +23,6 @@
 <!-- ADDED-BREADCRUMB-LD-START -->
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com/"}, {"@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://homepowerrebate.com/calculator/"}, {"@type": "ListItem", "position": 3, "name": "Installer widget", "item": "https://homepowerrebate.com/calculator/widget/"}]}</script>
 <!-- ADDED-BREADCRUMB-LD-END -->
-<!-- AEO-SPEAKABLE-START -->
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Rebate Calculator Widget for Installers | HomePowerRebate", "url": "https://homepowerrebate.com/calculator/widget/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
-<!-- AEO-SPEAKABLE-END -->
 <!-- OG-CARD-START -->
 <meta property="og:image" content="https://homepowerrebate.com/og/calculator/widget.jpg?v=bb9b59215434">
 <meta property="og:image:width" content="1200">
@@ -74,6 +74,7 @@
         <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" class="nav-region-tab" aria-pressed="false">California</button>
         <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" class="nav-region-tab" aria-pressed="false">Alberta</button>
         <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" class="nav-region-tab" aria-pressed="false">Nova Scotia</button>
+        <button type="button" onclick="showProvinceCities('nl')" id="province-tab-nl" class="nav-region-tab" aria-pressed="false">Newfoundland</button>
         <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" class="nav-region-tab" aria-pressed="false">Massachusetts</button>
         <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" class="nav-region-tab" aria-pressed="false">New York</button>
         <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" class="nav-region-tab" aria-pressed="false">Pennsylvania</button>
@@ -101,6 +102,9 @@
     </div>
     <div id="province-cities-ns" class="nav-region-cities" hidden>
       <a href="/ca/ns/halifax/">Halifax</a>
+    </div>
+    <div id="province-cities-nl" class="nav-region-cities" hidden>
+      <a href="/ca/nl/st-johns/">St. John's</a><a href="/ca/nl/mount-pearl/">Mount Pearl</a><a href="/ca/nl/paradise/">Paradise</a><a href="/ca/nl/corner-brook/">Corner Brook</a><a href="/ca/nl/labrador-city/">Labrador City</a>
     </div>
     <div id="province-cities-ma" class="nav-region-cities" hidden>
       <a href="/us/ma/boston/">Boston</a><a href="/us/ma/worcester/">Worcester</a><a href="/us/ma/springfield/">Springfield</a><a href="/us/ma/cambridge/">Cambridge</a><a href="/us/ma/lowell/">Lowell</a><a href="/us/ma/brockton/">Brockton</a><a href="/us/ma/new-bedford/">New Bedford</a><a href="/us/ma/quincy/">Quincy</a><a href="/us/ma/lynn/">Lynn</a><a href="/us/ma/fall-river/">Fall River</a><a href="/us/ma/newton/">Newton</a><a href="/us/ma/somerville/">Somerville</a>
@@ -142,7 +146,7 @@
 <section class="body"><div class="wrap rc-wrap"><h2>Copy and paste</h2>
 <pre style="background:#0a2a2e;color:#fff;padding:14px;border-radius:8px;overflow-x:auto;white-space:pre-wrap;">&lt;iframe src=&quot;https://homepowerrebate.com/calculator/embed/ab/&quot; title=&quot;Rebate calculator&quot; width=&quot;100%&quot; height=&quot;760&quot; style=&quot;max-width:820px;border:1px solid #d9d0c1;border-radius:12px;&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
 &lt;p&gt;&lt;a href=&quot;https://homepowerrebate.com/calculator/ab/&quot;&gt;Rebate calculator by HomePowerRebate&lt;/a&gt;&lt;/p&gt;</pre>
-<p>Change <code>ab</code> in both places to your region's code: Alberta (<code>ab</code>), British Columbia (<code>bc</code>), California (<code>ca</code>), Colorado (<code>co</code>), Illinois (<code>il</code>), Massachusetts (<code>ma</code>), Michigan (<code>mi</code>), Minnesota (<code>mn</code>), New Jersey (<code>nj</code>), Nova Scotia (<code>ns</code>), New York (<code>ny</code>), Ontario (<code>on</code>), Pennsylvania (<code>pa</code>), Vermont (<code>vt</code>), Washington (<code>wa</code>).</p>
+<p>Change <code>ab</code> in both places to your region's code: Alberta (<code>ab</code>), British Columbia (<code>bc</code>), California (<code>ca</code>), Colorado (<code>co</code>), Illinois (<code>il</code>), Massachusetts (<code>ma</code>), Michigan (<code>mi</code>), Minnesota (<code>mn</code>), New Jersey (<code>nj</code>), Newfoundland and Labrador (<code>nl</code>), Nova Scotia (<code>ns</code>), New York (<code>ny</code>), Ontario (<code>on</code>), Pennsylvania (<code>pa</code>), Vermont (<code>vt</code>), Washington (<code>wa</code>).</p>
 <h2>What you get</h2><ul><li>A working calculator for your province or state. It shows top-rated installers in the visitor's city, ranked by Google reviews.</li>
 <li>Rebate amounts that update on their own when a program changes. You never edit them.</li>
 <li>No script to install, no tracking, no cookies and no ads.</li></ul>
@@ -183,6 +187,7 @@
           <li><a href="/ca/bc/">British Columbia</a></li>
           <li><a href="/ca/ab/">Alberta</a></li>
           <li><a href="/ca/ns/">Nova Scotia</a></li>
+          <li><a href="/ca/nl/">Newfoundland and Labrador</a></li>
         </ul>
       </div>
       <div>
@@ -251,7 +256,7 @@ function toggleCityDropdown() {
   modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

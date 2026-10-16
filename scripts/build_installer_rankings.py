@@ -562,13 +562,15 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
             tel = re.sub(r"[^\d+]", "", r["phone"])
             call = f'<a class="btn-call" href="tel:{tel}">Call {esc(r["phone"])}</a>'
         # the same small action set on every card (2026-10-14): call, the profile (or the website when there is no
-        # profile), and the Google reviews the ranking comes from; email and directions live on the profile page
+        # profile), the Google reviews the ranking comes from, and email when we have one; directions live on the profile page
         if prof:
             acts.append(f'<a class="btn-prof" href="{prof}">View profile</a>')
         elif r["website"]:
             acts.append(f'<a class="btn-prof" href="{esc(r["website"])}" rel="nofollow noopener" target="_blank">Website</a>')
         if r["gmaps"]:
             acts.append(f'<a class="lnk" href="{esc(r["gmaps"])}" rel="nofollow noopener" target="_blank">Google reviews</a>')
+        if r["email"]:  # owner, 2026-10-16: show email when we have one
+            acts.append(f'<a class="lnk em" href="mailto:{esc(r["email"])}" aria-label="Email {esc(shown)}">Email</a>')
         pct = max(0, min(100, round(r["rating"] / 5 * 100)))
         bar = max(4, round(r["reviews"] / max(most_reviewed["reviews"], 1) * 100))
         medal = " g1" if i == 1 else ""
@@ -613,7 +615,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
             for i, (t, u) in enumerate(crumbs, 1)]},
         {"@context": "https://schema.org", "@type": "ItemList", "name": title, "numberOfItems": n,
          "itemListElement": [
-             {"@type": "ListItem", "position": i, "name": r["name"],
+             {"@type": "ListItem", "position": i, "name": display_name(r["name"]),
               **({"url": BASE + profile_url(region, r["city"], r["name"])} if profile_url(region, r["city"], r["name"]) else {})}
              for i, r in enumerate(ranked, 1)]},
     ]
@@ -699,7 +701,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 """
     page = navfooter.ensure_shared_assets(page)
     return path, page, {"region": region, "service": service, "city": city_label, "url": path,
-                        "count": n, "reviews": total_reviews, "rebate_registered": reg_count, "top": [r["name"] for r in top3]}
+                        "count": n, "reviews": total_reviews, "rebate_registered": reg_count, "top": [display_name(r["name"]) for r in top3]}
 
 
 def body_text(html_out, city_label):
@@ -901,7 +903,7 @@ def quote_form(region, service, city_label, ranked):
         for i, r in enumerate(ranked))
     ups = "".join(f'<label class="qf-pick"><input type="checkbox" name="upgrade" value="{v}"{" checked" if v == service else ""}> {esc(t)}</label>'
                   for v, t in UPGRADES)
-    inst = json.dumps([{"name": r["name"], "email": r.get("email", ""), "phone": r.get("phone", "")} for r in ranked], ensure_ascii=False)
+    inst = json.dumps([{"name": display_name(r["name"]), "email": r.get("email", ""), "phone": r.get("phone", "")} for r in ranked], ensure_ascii=False)
     return f"""<section class="qf" id="get-quotes" aria-labelledby="qf-h">
 <h2 id="qf-h">Get free quotes from these {svc['lower']} installers</h2>
 <p>Tick up to 3 companies and tell them what you want done. We send your request straight to them. Free, no obligation.</p>

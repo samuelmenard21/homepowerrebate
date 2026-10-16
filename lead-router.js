@@ -30,6 +30,12 @@
 // city/state/province goes live, add a CSV row, regenerate this JSON, and
 // add a PROVINCE_CONTEXT entry below for any new region.
 import CITY_REBATE_LOOKUP from './city-rebate-lookup.json';
+import REGION_DATA from './data/regions.json';
+
+// Region lists come from data/regions.json (the site's one list of regions), so a new region works here without editing this file.
+const REGION_LIST = REGION_DATA.regions;
+const CA_PROVINCES = new Set(REGION_LIST.filter(r => r.country === 'ca').map(r => r.abbr));
+const US_STATE_CODES = new Set(REGION_LIST.filter(r => r.country === 'us').map(r => r.abbr));
 // Every installer email we list (written by scripts/build_installer_rankings.py).
 // /estimate-lead only emails a homeowner-selected installer whose address is on
 // this list, so the route can't be used to send mail to arbitrary addresses.
@@ -289,8 +295,7 @@ async function handleLeadSubmit(request, env) {
 
   // Postal code format — Canadian FSA pattern for CA provinces, US ZIP for
   // US states now served by the site.
-  const US_STATES = new Set(['MA', 'NY', 'CA', 'PA', 'CO', 'VT']);
-  const isUsState = US_STATES.has(cleanString(payload.province || '').toUpperCase());
+  const isUsState = US_STATE_CODES.has(cleanString(payload.province || '').toUpperCase());
   const postalValid = isUsState
     ? /^\d{5}(-\d{4})?$/.test(payload.postal)
     : /^[A-Za-z][0-9][A-Za-z][ -]?[0-9][A-Za-z][0-9]$/.test(payload.postal);
@@ -548,7 +553,7 @@ async function handleContactSubmit(request, env) {
 // ===========================================================================
 // Stores answers in OUTCOMES_DB.installer_survey (schema-installer-survey.sql),
 // logs to the Sheet (record_type 'installer_survey') and alerts ops.
-const SURVEY_REGIONS = ['bc', 'on', 'ab', 'ns', 'ma', 'ny', 'ca', 'co', 'pa', 'vt', 'other'];
+const SURVEY_REGIONS = [...REGION_LIST.map(r => r.code), 'other'];
 const SURVEY_FIELDS = ['name', 'company_site', 'price_hp_ducted', 'price_hp_minisplit', 'price_solar_watt', 'price_battery',
   'price_attic', 'price_trend', 'tariff_impact', 'tariff_switch', 'lead_time', 'rebate_share', 'rebate_other', 'rebate_pain', 'blocker', 'wish', 'page_url'];
 const SURVEY_LISTS = ['services', 'rebates', 'also_ask', 'tariff_items'];
@@ -972,7 +977,8 @@ async function handleLeadFollowupResponse(request, env) {
 // static installer JSON from the Pages site (heat-pump + solar merged).
 async function loadInstallersForCityServer(city, province, env) {
   const REGION_PATH_PREFIX = { BC: '', ON: 'on', AB: 'ab', NS: 'ns', MA: 'ma', CA: 'ca', NY: 'ny', PA: 'pa', CO: 'co', VT: 'vt' };
-  const prefix = REGION_PATH_PREFIX[(province || 'BC').toUpperCase()] ?? '';
+  // Regions not listed use their own code as the folder (installers/json/<code>/), as every region added since VT does.
+  const prefix = REGION_PATH_PREFIX[(province || 'BC').toUpperCase()] ?? String(province).toLowerCase();
   const base = prefix ? `https://homepowerrebate.com/installers/json/${prefix}` : `https://homepowerrebate.com/installers/json`;
   const slug = String(city || '').toLowerCase().replace(/\s+/g, '-');
 
@@ -1047,6 +1053,13 @@ const PROVINCE_CONTEXT = {
       { href: 'https://homepowerrebate.com/blog/nova-scotia-heat-pump-rebate-disappeared/', label: 'Nova Scotia Heat Pump Rebate Guide' },
       { href: 'https://homepowerrebate.com/blog/water-heater-buying-guide-ns/', label: 'Nova Scotia Water Heater Buying Guide' },
       { href: 'https://homepowerrebate.com/blog/energy-saving-ideas-ns-home/', label: 'Energy Saving Ideas for Your Nova Scotia Home' }
+    ]
+  },
+  NL: {
+    programName: 'takeCHARGE Oil to Electric and home rebates',
+    links: [
+      { href: 'https://homepowerrebate.com/ca/nl/', label: 'Newfoundland and Labrador Home Energy Rebates' },
+      { href: 'https://homepowerrebate.com/programs/newfoundland-oil-to-electric-rebate/', label: 'Oil to Electric Rebate: Up to $22,000' }
     ]
   },
   MA: {
@@ -1234,7 +1247,6 @@ function citySlug(s) {
 }
 
 // Provinces use /ca/{province}/{city}; US states use /us/{state}/{city}.
-const CA_PROVINCES = new Set(['BC', 'ON', 'AB', 'NS']);
 
 function stackingCalculatorUrl(sub) {
   const province = String(sub.province || 'BC').toUpperCase();

@@ -130,8 +130,14 @@ def process(rel, dry):
     if not canon or not title or "</head>" not in s:
         return None
     original = s
+    # one fixed place (2026-10-16): right after the canonical link. Re-adding the blocks before </head> moved them every
+    # time another post-step added a head tag, and keeping them in place made fresh and old pages differ (JSON-LD drift)
     s = BLOCK(SP_S, SP_E).sub("", s)
     s = BLOCK(FQ_S, FQ_E).sub("", s)
+    cm = re.search(r'<link rel="canonical" href="[^"]+"\s*/?>\n?', s)
+    anchor = "<!-- AEO-ANCHOR -->"
+    if cm:
+        s = s[:cm.end()] + ("" if s[cm.end() - 1] == "\n" else "\n") + anchor + s[cm.end():]
     root = parse(re.sub(r"<(script|style)\b.*?</\1>", "", s, flags=re.S | re.I))
     add = []
     if hero_ok(root):
@@ -143,8 +149,11 @@ def process(rel, dry):
         if len(pairs) >= 2:
             add.append(FQ_S + "\n" + ld({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
                 {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in pairs]}) + "\n" + FQ_E)
-    if add:
+    if add and anchor in s:
+        s = s.replace(anchor, "\n".join(add) + "\n", 1)
+    elif add:
         s = s.replace("</head>", "\n".join(add) + "\n</head>", 1)
+    s = s.replace(anchor, "")
     if s != original and not dry:
         p.write_text(s, encoding="utf-8")
     return ("speakable" in "".join(add), "FAQPage" in "".join(add), s != original)

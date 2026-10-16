@@ -25,6 +25,7 @@ HUB = [
     "apply_canonical_nav_footer.py",
 ]
 POST = [
+    "add_deadline_notes.py",
     "build_internal_boosts.py",
     "apply_canonical_nav_footer.py",
     "fix_seo_meta.py",

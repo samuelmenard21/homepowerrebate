@@ -277,7 +277,7 @@ async function handleLeadSubmit(request, env) {
   }
 
   // ---- Validation ----
-  const required = ['firstname', 'lastname', 'email', 'phone', 'postal', 'city'];
+  const required = ['firstname', 'lastname', 'email', 'phone', 'city'];
   const missing = required.filter(f => !payload[f]);
   if (missing.length) {
     return jsonResponse({ error: `Missing fields: ${missing.join(', ')}` }, 400);
@@ -296,9 +296,10 @@ async function handleLeadSubmit(request, env) {
   // Postal code format — Canadian FSA pattern for CA provinces, US ZIP for
   // US states now served by the site.
   const isUsState = US_STATE_CODES.has(cleanString(payload.province || '').toUpperCase());
-  const postalValid = isUsState
+  // We ask only for province/state and city now; a postal code from an older cached page is checked only if sent.
+  const postalValid = !payload.postal || (isUsState
     ? /^\d{5}(-\d{4})?$/.test(payload.postal)
-    : /^[A-Za-z][0-9][A-Za-z][ -]?[0-9][A-Za-z][0-9]$/.test(payload.postal);
+    : /^[A-Za-z][0-9][A-Za-z][ -]?[0-9][A-Za-z][0-9]$/.test(payload.postal));
   if (!postalValid) {
     return jsonResponse({ error: 'Invalid postal code' }, 400);
   }
@@ -341,7 +342,7 @@ async function handleLeadSubmit(request, env) {
     lastname: cleanString(payload.lastname),
     email: cleanString(payload.email),
     phone: cleanString(payload.phone),
-    postal: cleanString(payload.postal),
+    postal: cleanString(payload.postal || ''),
     // The retrofit-assessment checklist sends flat fields, not a calc_result
     // object — that mismatch previously meant every field below silently
     // fell back to 'unknown' no matter what the homeowner selected.
@@ -1567,7 +1568,7 @@ async function handleOutcomeSubmit(request, env) {
 
   if (p.website) return jsonResponse({ success: true }, 200); // honeypot
 
-  const required = ['email', 'category', 'postal', 'city', 'province', 'install_month', 'total_cost'];
+  const required = ['email', 'category', 'city', 'province', 'install_month', 'total_cost'];
   const missing = required.filter(f => p[f] === undefined || p[f] === null || p[f] === '');
   if (missing.length) return jsonResponse({ error: `Missing fields: ${missing.join(', ')}` }, 400);
 
@@ -1580,8 +1581,8 @@ async function handleOutcomeSubmit(request, env) {
     return jsonResponse({ error: `Unknown category: ${category}` }, 400);
   }
 
-  const postalFsa = extractFsa(p.postal, p.province);
-  if (!postalFsa) return jsonResponse({ error: 'Invalid postal/zip code' }, 400);
+  // Postal code is optional (we ask for province and city); keep only the area part if one is sent.
+  const postalFsa = p.postal ? (extractFsa(p.postal, p.province) || '') : '';
 
   if (!/^\d{4}-\d{2}$/.test(String(p.install_month))) {
     return jsonResponse({ error: 'install_month must be YYYY-MM' }, 400);
@@ -1786,7 +1787,7 @@ async function sendOpsOutcomeAlert(record, env) {
       <p>New verified-outcomes submission.</p>
       <ul>
         <li><strong>Category:</strong> ${escapeHtml(record.category)}</li>
-        <li><strong>Location:</strong> ${escapeHtml(capitalize(record.city))}, ${escapeHtml(record.province)} (${escapeHtml(record.postal_fsa)})</li>
+        <li><strong>Location:</strong> ${escapeHtml(capitalize(record.city))}, ${escapeHtml(record.province)}${record.postal_fsa ? ` (${escapeHtml(record.postal_fsa)})` : ''}</li>
         <li><strong>Install month:</strong> ${escapeHtml(record.install_month)}</li>
         <li><strong>Total cost:</strong> $${record.total_cost}</li>
         <li><strong>Rebates received:</strong> $${record.rebates_received}</li>
@@ -1981,8 +1982,8 @@ async function sendInstallerEmail(lead, installer, env) {
           <tr><td style="padding:6px 0;color:#1a3d42;width:140px;">Name</td><td style="padding:6px 0;font-weight:600;">${lead.firstname} ${lead.lastname}</td></tr>
           <tr><td style="padding:6px 0;color:#1a3d42;">Email</td><td style="padding:6px 0;font-weight:600;"><a href="mailto:${lead.email}">${lead.email}</a></td></tr>
           <tr><td style="padding:6px 0;color:#1a3d42;">Phone</td><td style="padding:6px 0;font-weight:600;"><a href="tel:${lead.phone}">${lead.phone}</a></td></tr>
-          <tr><td style="padding:6px 0;color:#1a3d42;">Postal code</td><td style="padding:6px 0;font-weight:600;">${lead.postal}</td></tr>
-          <tr><td style="padding:6px 0;color:#1a3d42;">City</td><td style="padding:6px 0;font-weight:600;">${capitalize(lead.city)}, BC</td></tr>
+          ${lead.postal ? `<tr><td style="padding:6px 0;color:#1a3d42;">Postal code</td><td style="padding:6px 0;font-weight:600;">${lead.postal}</td></tr>` : ''}
+          <tr><td style="padding:6px 0;color:#1a3d42;">City</td><td style="padding:6px 0;font-weight:600;">${capitalize(lead.city)}, ${escapeHtml(lead.province || 'BC')}</td></tr>
         </table>
 
         <h2 style="margin:24px 0 12px;font-size:18px;color:#08363f;">What they want</h2>
@@ -2066,7 +2067,7 @@ async function sendOpsEmail(lead, env) {
         <li><strong>Name:</strong> ${lead.firstname} ${lead.lastname}</li>
         <li><strong>Email:</strong> ${lead.email}</li>
         <li><strong>Phone:</strong> ${lead.phone}</li>
-        <li><strong>Postal:</strong> ${lead.postal}</li>
+        ${lead.postal ? `<li><strong>Postal:</strong> ${lead.postal}</li>` : ''}
         <li><strong>Utility:</strong> ${lead.utility}</li>
         <li><strong>Upgrades wanted:</strong> ${lead.upgrades || 'none specified'}</li>
         <li><strong>Current heat:</strong> ${lead.current_heat}</li>

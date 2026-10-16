@@ -31,7 +31,7 @@ def note(rows):
 
 
 def strip(t):
-    return re.sub(re.escape(S) + r"[\s\S]*?" + re.escape(E) + r"\n?", "", t)
+    return re.sub(r"\n?" + re.escape(S) + r"[\s\S]*?" + re.escape(E) + r"\n?", "", t)
 
 
 def put(t, block):

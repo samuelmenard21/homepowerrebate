@@ -19,7 +19,7 @@ from build_installer_rankings import BASE  # noqa: E402
 
 PATH = "/rebate-deadlines/"
 e = html.escape
-REGIONS = {"BC": "British Columbia", "AB": "Alberta", "ON": "Ontario", "MA": "Massachusetts", "NY": "New York", "CA": "California",
+REGIONS = {"BC": "British Columbia", "AB": "Alberta", "NL": "Newfoundland and Labrador", "ON": "Ontario", "MA": "Massachusetts", "NY": "New York", "CA": "California",
            "CT": "Connecticut", "ME": "Maine", "VT": "Vermont", "NJ": "New Jersey", "IL": "Illinois", "MI": "Michigan",
            "MN": "Minnesota", "CO": "Colorado", "WA": "Washington"}
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]

@@ -28,7 +28,7 @@
         var i = Math.min(hh, 7) - 1;
         v.income_level = "none";
         ["L1", "L2", "L3"].some(function (L) {
-          if (inc <= d.limits[L][i]) { v.income_level = L; return true; }
+          if (d.limits[L] && inc <= d.limits[L][i]) { v.income_level = L; return true; }
           return false;
         });
       }

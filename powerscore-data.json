@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-11",
+  "generated": "2026-10-16",
   "regions": {
     "ca/on": {
       "label": "Ontario",
@@ -4903,6 +4903,77 @@
               "usd_value": 3650.0,
               "status": "open",
               "programs": 3
+            }
+          }
+        }
+      }
+    },
+    "ca/nl": {
+      "label": "Newfoundland and Labrador",
+      "country": "Canada",
+      "cities": {
+        "st-johns": {
+          "label": "St. John's",
+          "url": "/ca/nl/st-johns/",
+          "overall": 16.1,
+          "potential_usd": 18250,
+          "open_count": 2,
+          "categories": {
+            "heat-pump": {
+              "score": 88.8,
+              "dollar_value": 22000.0,
+              "usd_value": 16060.0,
+              "status": "open",
+              "programs": 1
+            },
+            "insulation": {
+              "score": 39.7,
+              "dollar_value": 3000.0,
+              "usd_value": 2190.0,
+              "status": "open",
+              "programs": 1
+            },
+            "solar": {
+              "score": 0.0,
+              "dollar_value": 0.0,
+              "usd_value": 0.0,
+              "status": "closed",
+              "programs": 0
+            },
+            "battery": {
+              "score": 0.0,
+              "dollar_value": 0.0,
+              "usd_value": 0.0,
+              "status": "closed",
+              "programs": 0
+            },
+            "water-heater": {
+              "score": 0.0,
+              "dollar_value": 0.0,
+              "usd_value": 0.0,
+              "status": "closed",
+              "programs": 0
+            },
+            "smart-thermostats": {
+              "score": 0.0,
+              "dollar_value": 0.0,
+              "usd_value": 0.0,
+              "status": "closed",
+              "programs": 0
+            },
+            "ev-charger": {
+              "score": 0.0,
+              "dollar_value": 0.0,
+              "usd_value": 0.0,
+              "status": "closed",
+              "programs": 0
+            },
+            "windows-doors": {
+              "score": 0.0,
+              "dollar_value": 0.0,
+              "usd_value": 0.0,
+              "status": "closed",
+              "programs": 0
             }
           }
         }
@@ -17180,6 +17251,75 @@
       }
     },
     {
+      "region": "ca/nl",
+      "region_label": "Newfoundland and Labrador",
+      "country": "Canada",
+      "slug": "st-johns",
+      "label": "St. John's",
+      "url": "/ca/nl/st-johns/",
+      "overall": 16.1,
+      "potential_usd": 18250,
+      "open_count": 2,
+      "categories": {
+        "heat-pump": {
+          "score": 88.8,
+          "dollar_value": 22000.0,
+          "usd_value": 16060.0,
+          "status": "open",
+          "programs": 1
+        },
+        "insulation": {
+          "score": 39.7,
+          "dollar_value": 3000.0,
+          "usd_value": 2190.0,
+          "status": "open",
+          "programs": 1
+        },
+        "solar": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "battery": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "water-heater": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "smart-thermostats": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "ev-charger": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        },
+        "windows-doors": {
+          "score": 0.0,
+          "dollar_value": 0.0,
+          "usd_value": 0.0,
+          "status": "closed",
+          "programs": 0
+        }
+      }
+    },
+    {
       "region": "us/pa",
       "region_label": "Pennsylvania",
       "country": "United States",
@@ -19626,6 +19766,18 @@
         "dollar_value": 14000.0,
         "status": "open",
         "programs": 6
+      },
+      {
+        "region": "ca/nl",
+        "region_label": "Newfoundland and Labrador",
+        "country": "Canada",
+        "slug": "st-johns",
+        "label": "St. John's",
+        "url": "/ca/nl/st-johns/",
+        "score": 88.8,
+        "dollar_value": 22000.0,
+        "status": "open",
+        "programs": 1
       },
       {
         "region": "us/vt",
@@ -22319,6 +22471,18 @@
         "programs": 3
       },
       {
+        "region": "ca/nl",
+        "region_label": "Newfoundland and Labrador",
+        "country": "Canada",
+        "slug": "st-johns",
+        "label": "St. John's",
+        "url": "/ca/nl/st-johns/",
+        "score": 39.7,
+        "dollar_value": 3000.0,
+        "status": "open",
+        "programs": 1
+      },
+      {
         "region": "us/il",
         "region_label": "Illinois",
         "country": "United States",
@@ -24313,6 +24477,18 @@
         "programs": 0
       },
       {
+        "region": "ca/nl",
+        "region_label": "Newfoundland and Labrador",
+        "country": "Canada",
+        "slug": "st-johns",
+        "label": "St. John's",
+        "url": "/ca/nl/st-johns/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
@@ -26223,6 +26399,18 @@
         "programs": 0
       },
       {
+        "region": "ca/nl",
+        "region_label": "Newfoundland and Labrador",
+        "country": "Canada",
+        "slug": "st-johns",
+        "label": "St. John's",
+        "url": "/ca/nl/st-johns/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
@@ -27719,6 +27907,18 @@
         "slug": "los-angeles/santa-monica",
         "label": "Santa Monica",
         "url": "/us/ca/los-angeles/santa-monica/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
+        "region": "ca/nl",
+        "region_label": "Newfoundland and Labrador",
+        "country": "Canada",
+        "slug": "st-johns",
+        "label": "St. John's",
+        "url": "/ca/nl/st-johns/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -29485,6 +29685,18 @@
         "slug": "saint-paul",
         "label": "Saint Paul",
         "url": "/us/mn/saint-paul/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
+        "region": "ca/nl",
+        "region_label": "Newfoundland and Labrador",
+        "country": "Canada",
+        "slug": "st-johns",
+        "label": "St. John's",
+        "url": "/ca/nl/st-johns/",
         "score": 0.0,
         "dollar_value": 0.0,
         "status": "closed",
@@ -31317,6 +31529,18 @@
         "programs": 0
       },
       {
+        "region": "ca/nl",
+        "region_label": "Newfoundland and Labrador",
+        "country": "Canada",
+        "slug": "st-johns",
+        "label": "St. John's",
+        "url": "/ca/nl/st-johns/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
         "region": "us/ny",
         "region_label": "New York",
         "country": "United States",
@@ -32939,6 +33163,18 @@
         "programs": 0
       },
       {
+        "region": "ca/nl",
+        "region_label": "Newfoundland and Labrador",
+        "country": "Canada",
+        "slug": "st-johns",
+        "label": "St. John's",
+        "url": "/ca/nl/st-johns/",
+        "score": 0.0,
+        "dollar_value": 0.0,
+        "status": "closed",
+        "programs": 0
+      },
+      {
         "region": "us/ca",
         "region_label": "California",
         "country": "United States",
@@ -33323,8 +33559,8 @@
     "windows-doors": "Windows & Doors"
   },
   "stats": {
-    "total_cities": 144,
-    "total_regions": 15,
+    "total_cities": 145,
+    "total_regions": 16,
     "categories": 8
   }
 }

@@ -118,3 +118,7 @@ Google's Places policies forbid storing Places photos (place IDs are the only ex
 
 ## Redirect limit (added 2026-10-16)
 Cloudflare Pages accepts at most 2,000 static and 100 dynamic `_redirects` rules. Over that it silently ignores most of the file: on 2026-10-16 the file had 2,645 static rules, only about 175 worked live, and Search Console showed 110 merged pages as 404. `python3 scripts/compact_redirects.py` drops `.html` duplicates and collapses identical per-city rules into `:city` rules (never where a page exists), and refuses to write a file still over the limit. Run it after any script that appends to `_redirects`, as the last redirect step before `check_internal_links.py`.
+
+## Installer corrections by email (added 2026-10-16)
+- A company that says it does not offer a service: delete its row from `installers/<region>-<service>-installers-real.csv`, log it in `data/installer-cleanup-log.csv`, rerun `build_installer_rankings.py` and its post-steps, delete a profile that no longer has any ranking (301 it to the ranking page) and remove it from sibling profiles' "Other installers" lists (nothing rebuilds those).
+- Extra facts a company gives us (other cities, other services) go in `data/installer-owner-notes.json` (`git add -f`); `python3 scripts/add_owner_notes.py` stamps them under the profile intro between OWNER-NOTES markers. Re-run it after any profile regeneration. A city we have no Google listing for is mentioned on the profile only, never added to a ranking.

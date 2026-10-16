@@ -229,6 +229,12 @@
       "regex": true,
       "find": "(<a\\b[^>]*href=\"/powerscore[^\"]*\"[^>]*>)\\s*Look it up on the full PowerScore leaderboard(\\s*(?:→|&rarr;))?\\s*</a>",
       "replace": "\\1See the full leaderboard\\2</a>"
+    },
+    {
+      "regex": true,
+      "find": "(<a\\b[^>]*>)([^<]{2,60}?) \\2(</a>)",
+      "replace": "\\1\\2\\3",
+      "why": "Google listing names that repeat themselves (HEAT Squad HEAT Squad) show once in link text."
     }
   ],
   "pill_labels": {

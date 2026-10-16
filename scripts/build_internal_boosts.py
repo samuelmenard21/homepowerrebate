@@ -70,6 +70,20 @@ JOBS += [
 CATS = ("heat-pump", "water-heater", "smart-thermostats", "ev-charger", "insulation", "appliances")
 
 
+def _norm_block(b: str) -> str:
+    """A block as later post-steps leave it: the restamp adds ids to h2 headings and follow_official_sources drops
+    nofollow on official links. Comparing normalised text stops this script and those steps undoing each other."""
+    b = re.sub(r'(<h2\b[^>]*?) id="[^"]*"', r"\1", b)
+    return b.replace('rel="nofollow noopener"', 'rel="noopener"').replace('rel="noopener nofollow"', 'rel="noopener"')
+
+
+def _replace_block(t: str, S: str, E: str, block: str) -> str:
+    m = re.search(re.escape(S) + ".*?" + re.escape(E) + r"\n?", t, flags=re.S)
+    if m and _norm_block(m.group(0)).rstrip("\n") == _norm_block(block).rstrip("\n"):
+        return t
+    return re.sub(re.escape(S) + ".*?" + re.escape(E) + r"\n?", lambda _: block, t, count=1, flags=re.S)
+
+
 def _city(region, city):
     base = ROOT / "us" / region / city
     return [str((base / "index.html").relative_to(ROOT))] + [f"us/{region}/{city}/{c}/index.html" for c in CATS]
@@ -143,7 +157,7 @@ def ottawa_eap():
     t = f.read_text(encoding="utf-8")
     S, E = "<!-- OTTAWA-EAP-START -->", "<!-- OTTAWA-EAP-END -->"
     if S in t:
-        new = re.sub(re.escape(S) + ".*?" + re.escape(E) + r"\n?", lambda m: OTTAWA_EAP, t, count=1, flags=re.S)
+        new = _replace_block(t, S, E, OTTAWA_EAP)
     else:
         m = re.search(r"<h2[^>]*>\s*How much you get", t)
         if not m:
@@ -168,7 +182,7 @@ def peak_section():
     t = f.read_text(encoding="utf-8")
     S, E = "<!-- PEAK-WORTH-SECTION-START -->", "<!-- PEAK-WORTH-SECTION-END -->"
     if S in t:
-        new = re.sub(re.escape(S) + ".*?" + re.escape(E) + r"\n?", lambda m: PEAK_WORTH, t, count=1, flags=re.S)
+        new = _replace_block(t, S, E, PEAK_WORTH)
     else:
         m = re.search(r"<h2[^>]*>\s*What it pays", t)
         if not m:
@@ -206,7 +220,7 @@ def rvalue_section():
     t = f.read_text(encoding="utf-8")
     S, E = "<!-- CANADA-RVALUES-START -->", "<!-- CANADA-RVALUES-END -->"
     if S in t:
-        new = re.sub(re.escape(S) + ".*?" + re.escape(E) + r"\n?", lambda m: RVALUE_BLOCK, t, count=1, flags=re.S)
+        new = _replace_block(t, S, E, RVALUE_BLOCK)
     else:
         m = re.search(r"<h2[^>]*>\s*Why air sealing comes first", t)
         if not m:
@@ -224,7 +238,7 @@ def attic_section():
     t = f.read_text(encoding="utf-8")
     S, E = "<!-- ATTIC-REBATES-START -->", "<!-- ATTIC-REBATES-END -->"
     if S in t:
-        new = re.sub(re.escape(S) + ".*?" + re.escape(E) + r"\n?", lambda m: ATTIC_BLOCK, t, count=1, flags=re.S)
+        new = _replace_block(t, S, E, ATTIC_BLOCK)
     else:
         m = re.search(r"<h2[^>]*>\s*What to do next", t)
         if not m:
@@ -242,7 +256,7 @@ def greener_section():
     t = f.read_text(encoding="utf-8")
     S, E = "<!-- GREENER-PROVINCES-START -->", "<!-- GREENER-PROVINCES-END -->"
     if S in t:
-        new = re.sub(re.escape(S) + ".*?" + re.escape(E) + r"\n?", lambda m: GREENER_BLOCK, t, count=1, flags=re.S)
+        new = _replace_block(t, S, E, GREENER_BLOCK)
     else:
         m = re.search(r"<h2[^>]*>\s*The takeaway", t)
         if not m:

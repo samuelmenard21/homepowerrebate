@@ -21,8 +21,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import apply_canonical_nav_footer as nf  # noqa: E402
 # needs arguments or is not a page builder
 SKIP = {"build_monthly_rebate_report"}
-POST_STEPS = ["build_internal_boosts", "apply_canonical_nav_footer", "fix_seo_meta", "add_aeo_markup", "link_orphans", "fix_redirected_links",
-              "follow_official_sources", "apply_canonical_nav_footer", "apply_canonical_nav_footer"]
+from post_steps import STEPS as POST_STEPS  # noqa: E402  (one list, shared with scripts/post_steps.py)
 # (the restamp converts a fresh generator <style> block to its template file on its second pass, after adding font fallbacks)
 TPL_RE = re.compile(r'/assets/tpl/([\w-]+)\.css')
 EXTRA = ["build_ca_sacramento", "build_ca_sf", "build_ca_sj", "build_ca_la"]
@@ -68,7 +67,7 @@ def main():
                 print(f"{g}: FAILED\n{r.stderr.strip()[-400:]}")
             for line in git("status", "--porcelain", cwd=wt).splitlines():
                 owner.setdefault(line[3:], g)
-        # the same post-steps the pipeline runs after any generator (CLAUDE.md)
+        # the same post-steps the pipeline runs after any generator (scripts/post_steps.py)
         for step in POST_STEPS:
             rs = subprocess.run([sys.executable, f"scripts/{step}.py"], cwd=wt, capture_output=True, text=True)
             if rs.returncode:

@@ -60,14 +60,14 @@ def sections(d):
     return "".join(f"<h2>{h}</h2>{b}" for h, b in d["sections"])
 
 
-def callout(calc_url, calc_label, quotes_url, city_name):
+def callout(calc_url, calc_label, quotes_url, city_name, near_you=False):
     """The calculator box; with no quotes_url it asks the reader to pick their city in the calculator instead."""
     if quotes_url is None:
         return (f'<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="{calc_url}" style="color:var(--teal,#0d4f5c); font-weight:600;">'
                 f'{calc_label} rebate calculator</a> and pick {e(city_name)} to see what your utility pays.</div>')
     return (f'<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="{calc_url}" style="color:var(--teal,#0d4f5c); font-weight:600;">'
             f'{calc_label} rebate calculator</a>, or <a href="{quotes_url}" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated '
-            f'installers in {e(city_name)}</a>.</div>')
+            f'installers {"near you" if near_you else "in " + e(city_name)}</a>.</div>')
 
 
 def quality_gate(article, d, path, extra=()):
@@ -104,10 +104,10 @@ def article_ld(title, desc, iso, path):
             "datePublished": iso, "dateModified": iso, "mainEntityOfPage": BASE + path}
 
 
-def breadcrumb_ld(trail):
-    """trail: [(name, path)] from Home to this page."""
+def breadcrumb_ld(trail, home_slash=False):
+    """trail: [(name, path)] from Home to this page. home_slash: the Home item is BASE + "/" (New Jersey's pages)."""
     return {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": i + 1, "name": n, "item": BASE + p if p != "/" else BASE} for i, (n, p) in enumerate(trail)]}
+        {"@type": "ListItem", "position": i + 1, "name": n, "item": BASE + p if (p != "/" or home_slash) else BASE} for i, (n, p) in enumerate(trail)]}
 
 
 def ld_scripts(items):
@@ -121,8 +121,8 @@ def breadcrumb(trail):
             + f'<li aria-current="page">{cur}</li></ol></nav>')
 
 
-def hero(d):
-    return f"<section class=\"hero\"><div class=\"wrap\"><div class=\"amount-badge\">{e(d['badge'])}</div><h1>{e(d['h1'])}</h1><p>{d['lead']}</p></div></section>"
+def hero(d, tag="section"):
+    return f"<{tag} class=\"hero\"><div class=\"wrap\"><div class=\"amount-badge\">{e(d['badge'])}</div><h1>{e(d['h1'])}</h1><p>{d['lead']}</p></div></{tag}>"
 
 
 def head(title, desc, path, lds):

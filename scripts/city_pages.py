@@ -41,8 +41,22 @@ class Region:
         self.code, self.name, self.path = code, r["name"], r["path"]
         self.cfg = r["city_pages"]
         self.calc_label = self.cfg.get("calc_label", r.get("calc_label", r["name"]))
-        self.labels = {k: v for k, v in LABEL.items() if k in self.cfg.get("label_keys", LABEL)}
-        self.names = self.cfg["names"]
+        self.labels = {k: LABEL[k] for k in self.cfg.get("label_keys", LABEL)}  # in the region's order (sibling links follow it)
+        self.groups = self.cfg.get("groups", {})
+        self.group_of = {}
+        if self.groups:  # cities live under a group folder (New York utilities); names come from the folders
+            over = self.cfg.get("name_overrides", {})
+            for g in self.groups:
+                for c in sorted((ROOT / self.path / g).iterdir()) if (ROOT / self.path / g).is_dir() else []:
+                    if (c / "index.html").exists():
+                        self.group_of[c.name] = g
+            self.names = {c: over.get(c, c.replace("-", " ").title()) for c in sorted(self.group_of)}
+        else:
+            self.names = self.cfg["names"]
+
+    def city_dir(self, slug):
+        g = self.group_of.get(slug)
+        return f"{self.path}/{g}/{slug}" if g else f"{self.path}/{slug}"
 
     # ---- installers ----
     def installers(self, slug, cat):
@@ -77,7 +91,14 @@ class Region:
     def siblings(self, slug, cat):
         if self.cfg.get("siblings_from") == "data":
             return [k for k in self.labels if k != cat and (ROOT / "data" / self.code / "pages" / slug / f"{k}.json").exists()]
-        return [k for k in self.labels if k != cat and (ROOT / self.path / slug / k / "index.html").exists()]
+        sibs = [k for k in self.labels if k != cat and (ROOT / self.city_dir(slug) / k / "index.html").exists()]
+        if self.cfg.get("siblings_from") == "page_and_data":  # a built page that also has prose JSON (or is always kept)
+            sibs = [k for k in sibs if k in self.cfg.get("siblings_always", []) or (self.data_dir(slug) / f"{k}.json").exists()]
+        return sibs
+
+    def data_dir(self, slug):
+        g = self.group_of.get(slug)
+        return ROOT / "data" / self.code / "pages" / (f"{g}/{slug}" if g else slug)
 
     def region_pages(self, cat):
         rp = self.cfg.get("region_pages")
@@ -92,19 +113,21 @@ class Region:
         if "from_page" in p:
             u, t = d.get("program_url", p["from_page"][0]), d.get("program_label", p["from_page"][1])
             return f'<a href="{u}">{e(t)} &rarr;</a>'
-        links = p.get("cities", {}).get(slug, p.get("default", []))
+        g = self.group_of.get(slug)
+        links = p.get("cities", {}).get(slug) or (self.groups[g]["program_links"] if g else None) or p.get("default", [])
         out = " ".join(f'<a href="{u}">{t} &rarr;</a>' for u, t in links)
-        out += "".join(f' <a href="{u}">{t} &rarr;</a>' for u, t in p.get("categories", {}).get(cat, []))
+        out += "".join(f' <a href="{u}">{t} &rarr;</a>' for u, t in p.get("categories", {}).get(cat, []) + p.get("extra", []))
         return out
 
     # ---- page ----
     def build(self, slug, cat):
         name = self.names[slug]
-        pj = ROOT / "data" / self.code / "pages" / slug / f"{cat}.json"
+        pj = self.data_dir(slug) / f"{cat}.json"
         if not pj.exists():
             return None
         d = json.loads(pj.read_text())
-        hub = f"/{self.path}/{slug}/"
+        state = slug == self.cfg.get("state_page", {}).get("slug")  # the region hub built as a pseudo-city (Illinois)
+        hub = f"/{self.path}/" if state else f"/{self.city_dir(slug)}/"
         is_hub = cat == "index"
         path = hub if is_hub else f"{hub}{cat}/"
         fids = kit.fact_ids(d)
@@ -113,14 +136,19 @@ class Region:
                 if cd.get("facts") and "status" not in cd:
                     cd["status"] = kit.FACTS[cd["facts"][0]]["status"]
         iso, when = kit.checked(fids)
-        sibs = self.siblings(slug, cat)
-        rp = self.region_pages(cat)
+        sibs = [] if state else self.siblings(slug, cat)
+        rp = [] if state else self.region_pages(cat)
         rpc = self.cfg.get("region_pages", {})
         sib = "".join(f'<span style="margin-right:14px;"><a href="{hub}{k}/">{self.labels[k]} Rebates in {e(name)}</a></span>\n' for k in sibs)
-        sib += "".join('<span style="margin-right:14px;">' + rpc["link"].format(url=f"/{self.path}/{k}/", t=t, tl=t.lower()) + "</span>\n" for k, t in rp)
+        sib += "".join('<span style="margin-right:14px;">' + rpc["link"].format(url=f"/{self.path}/{k}/", t=t, tl=t.lower()) + "</span>\n" for k, t in rp if rpc.get("link"))
         show_guides = is_hub and (sibs or not self.cfg.get("guides_need_siblings"))
-        guides = ("<h2>Every rebate guide for " + e(name) + "</h2><ul>" + "".join(f'<li><a href="{hub}{k}/">{self.labels[k]} rebates in {e(name)}</a></li>' for k in sibs)
+        guides = ("<h2>" + self.cfg.get("guides_heading", "Every rebate guide for {name}").format(name=e(name)) + "</h2><ul>" + "".join(f'<li><a href="{hub}{k}/">{self.labels[k]} rebates in {e(name)}</a></li>' for k in sibs)
                   + "".join("<li>" + rpc["guide"].format(url=f"/{self.path}/{k}/", t=t, tl=t.lower()) + "</li>" for k, t in rp) + "</ul>") if show_guides else ""
+        if state:
+            sp = self.cfg["state_page"]
+            topics = [(k, t) for k, t in sp["topics"] if (ROOT / self.path / k / "index.html").exists()]
+            guides = (f"<h2>{sp['guides_heading']}</h2><ul>" + "".join(f'<li><a href="/{self.path}/{c}/">{n} rebates</a></li>' for c, n in self.names.items() if c != slug and (ROOT / self.path / c / "index.html").exists())
+                      + "".join("<li>" + sp["topic_link"].format(url=f"/{self.path}/{k}/", t=t, tl=t.lower()) + "</li>" for k, t in topics) + "</ul>")
         inst = "" if d.get("no_installers") else self.installer_html(slug, name, cat, d.get("installers_intro", ""))
         q = self.cfg.get("quotes", "/get-quotes/?province={code}&amp;city={slug}")  # null: no quote link (the calculator box asks for the city)
         quotes = q.format(code=self.code, slug=slug) if q else None
@@ -132,9 +160,8 @@ class Region:
 {d.get('after_cards', '')}
 {kit.sections(d)}
 {guides}
-{inst}
-{kit.claim(d)}
-{kit.callout(f"/calculator/{self.code}/", self.calc_label, quotes, name)}
+{inst + chr(10) if self.cfg.get("installer_block", True) else ""}{kit.claim(d)}
+{kit.callout(f"/calculator/{self.code}/", self.calc_label, quotes, name, self.cfg.get("callout_near_you", False))}
 <h2>Common questions</h2>
 {kit.faq(d)}
 <h2>What to do next</h2>
@@ -142,12 +169,15 @@ class Region:
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}. <a href="{hub}">All {e(name)} rebates &rarr;</a> {self.program_links(slug, cat, d)}</p>"""
         bans = [((lambda a, b=b: re.search(b["if"], a) and not any(u in a for u in b.get("unless", []))), b["msg"]) for b in self.cfg.get("bans", [])]
         w = kit.quality_gate(article, d, path, bans)
-        trail = [("Home", "/"), (self.name, f"/{self.path}/"), (name, hub)] + ([] if is_hub else [(self.labels[cat], path)])
-        lds = kit.ld_scripts([kit.article_ld(d["title"], d["desc"], iso, path), kit.breadcrumb_ld(trail), kit.faq_ld(d)])
+        g = self.group_of.get(slug)
+        group = [(self.groups[g]["name"], f"/{self.path}/{g}/")] if g else []
+        trail = [("Home", "/")] + ([(name, hub)] if state else [(self.name, f"/{self.path}/")] + group + [(name, hub)]) + ([] if is_hub else [(self.labels[cat], path)])
+        lds = kit.ld_scripts([kit.article_ld(d["title"], d["desc"], iso, path), kit.breadcrumb_ld(trail, self.cfg.get("ld_home_slash", False)), kit.faq_ld(d)])
         crumb = kit.breadcrumb([(e(n), p) for n, p in trail[:-1]] + [(e(name) if is_hub else self.labels[cat], path)])
-        top = "" if is_hub else f'<span style="margin-right:14px;"><a href="{hub}">&larr; Back to {e(name)} rebate hub</a></span>' + "\n" + sib
-        kit.write_page(path, d["title"], d["desc"], lds, navfooter.render_nav(self.code, slug), crumb, kit.hero(d), top, article,
-                       navfooter.render_footer(self.code, slug, name, path))
+        top = (f'<span style="margin-right:14px;"><a href="/{self.path}/">&larr; All {self.name} rebates</a></span>' if self.cfg.get("hub_back_link") else "") if is_hub else f'<span style="margin-right:14px;"><a href="{hub}">&larr; Back to {e(name)} rebate hub</a></span>' + "\n" + sib
+        nslug, nname = ("", "") if state else (slug, name)
+        kit.write_page(path, d["title"], d["desc"], lds, navfooter.render_nav(self.code, nslug), crumb, kit.hero(d, "header" if state else "section"), top, article,
+                       navfooter.render_footer(self.code, nslug, nname, path))
         return path, w
 
 
@@ -156,7 +186,7 @@ def main(code, argv=None):
     reg = Region(code)
     only = {a for a in argv if not a.startswith("--")}
     cats = ["index"] if "--hubs" in argv else reg.cfg["built"]
-    for slug in reg.names:
+    for slug in (sorted(reg.names) if reg.groups else reg.names):
         if only and slug not in only:
             continue
         for cat in cats:

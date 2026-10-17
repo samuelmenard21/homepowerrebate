@@ -22,6 +22,7 @@ S, E = "<!-- FED-ALERT-START -->", "<!-- FED-ALERT-END -->"
 # Submit handler, inline because new .js files 403 at Cloudflare and only these pages need it.
 JS = 'document.querySelectorAll(\'.fed-alert-form\').forEach(function (f) { f.addEventListener(\'submit\', async function (e) { e.preventDefault(); var box = f.closest(\'.fed-alert\'), done = box.querySelector(\'.fed-alert-done\'), b = f.querySelector(\'button\'), sel = f.querySelector(\'select\'); var t = b.textContent; b.disabled = true; b.textContent = \'Saving...\'; try { var r = await fetch(\'https://leads.homepowerrebate.com/alert\', { method: \'POST\', headers: { \'Content-Type\': \'application/json\' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector(\'input[type="email"]\').value, province: (sel && sel.value) || f.dataset.province || \'\', city: f.dataset.city || \'\', page: location.pathname, website: f.querySelector(\'.fed-alert-hp\').value }) }); if (!r.ok) throw new Error(\'alert signup failed\'); f.hidden = true; done.textContent = "You\'re on the list. Check your inbox for a short note from us."; } catch (err) { done.textContent = \'That did not go through. Please try again, or email hello@homepowerrebate.com.\'; b.disabled = false; b.textContent = t; } done.hidden = false; }); });'
 FED_HP_END = "<!-- FED-HP-END -->"
+HERE = "<!-- FED-ALERT-HERE -->"
 OTTAWA = "https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html"
 PROVINCES = [("AB", "Alberta"), ("BC", "British Columbia"), ("MB", "Manitoba"), ("NB", "New Brunswick"), ("NL", "Newfoundland and Labrador"),
              ("NS", "Nova Scotia"), ("ON", "Ontario"), ("PE", "Prince Edward Island"), ("QC", "Quebec"), ("SK", "Saskatchewan"),
@@ -38,6 +39,10 @@ HARP = ("Getting the heating rebate? A bigger one may be coming.",
         f"Ottawa plans a heat pump rebate of {AMOUNTS}, starting in early 2027. It says homes moving off oil, propane or "
         "electric resistance heat (like baseboards) save over $1,400 a year on average. The income line is not published yet, so nobody can say "
         "who gets $10,000.")
+CLOSED = ("The old program closed. A new one is coming.",
+          f"Ottawa plans a heat pump rebate of {AMOUNTS}, starting in early 2027. Applications are not open yet.")
+# posts about closed programs (Greener Homes, the Greener Homes Loan in Ontario, Nova Scotia's OHPA); box goes at <!-- FED-ALERT-HERE -->
+CLOSED_PAGES = [("blog/greener-homes-grant-explained", ""), ("blog/ontario-loan-closed", "ON"), ("blog/nova-scotia-heat-pump-rebate-disappeared", "NS")]
 HARP_PAGES = ["programs/nova-scotia-heating-assistance-rebate-harp", "blog/nova-scotia-harp-heating-assistance-rebate-explained",
               "blog/nova-scotia-heating-rebate-2026-27-payment-dates-status"]
 FEDERAL_PAGES = ["programs/national-heat-pump-rebate", "blog/should-you-wait-federal-heat-pump-rebate",
@@ -71,6 +76,10 @@ def place(t, blk):
     # drop it so running both scripts again changes nothing.
     t = t.replace(FED_HP_END + "\n" + S, FED_HP_END + S)
     t = re.sub(re.escape(S) + r"[\s\S]*?" + re.escape(E) + r"\n?", "", t)
+    a = t.find(HERE)  # hand-edited posts mark the spot themselves
+    if a >= 0:
+        a += len(HERE)
+        return t[:a] + blk + t[a:]
     i = t.find(FED_HP_END)
     if i >= 0:
         i += len(FED_HP_END)
@@ -86,7 +95,7 @@ def place(t, blk):
 
 
 def main():
-    jobs = [(p, FEDERAL, "", "") for p in FEDERAL_PAGES] + [(p, HARP, "NS", "") for p in HARP_PAGES]
+    jobs = [(p, FEDERAL, "", "") for p in FEDERAL_PAGES] + [(p, HARP, "NS", "") for p in HARP_PAGES] + [(p, CLOSED, pr, "") for p, pr in CLOSED_PAGES]
     for f in sorted((ROOT / "ca").glob("*/heat-pump/index.html")):
         jobs.append((str(f.parent.relative_to(ROOT)), FEDERAL, f.parts[-3].upper(), ""))
     for f in sorted((ROOT / "ca").glob("*/*/heat-pump/index.html")):

@@ -49,7 +49,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/article-c0947b3c.css?v=7b04af6753" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=68698f8f2c" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=57417cd7da" data-hpr-site-css>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Home Energy Rebates in Lynn, MA (2026)", "description": "Lynn homes (National Grid) get Mass Save rebates: heat pumps up to $8,500 ($16,000 income-qualified), 75-100% off insulation, $750 water heaters, 0% HEAT Loan.", "datePublished": "2026-08-13", "dateModified": "2026-09-26", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com/"}, "mainEntityOfPage": "https://homepowerrebate.com/us/ma/lynn/"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What home energy rebates can Lynn residents get?", "acceptedAnswer": {"@type": "Answer", "text": "Lynn is a National Grid town, so Mass Save applies: a no-cost home energy assessment, 75-100% off insulation and air sealing, heat pumps up to $8,500 (up to $16,000 if income-qualified), a $750 heat pump water heater rebate, and the 0% HEAT Loan up to $25,000."}}, {"@type": "Question", "name": "How much is the heat pump rebate in Lynn?", "acceptedAnswer": {"@type": "Answer", "text": "Whole-home air-source systems get $2,650 per ton, up to $8,500. Partial-home systems get $1,125 per ton, up to $8,500. Income-qualified households can get up to $16,000, or no cost."}}, {"@type": "Question", "name": "Are there insulation rebates for Lynn residents?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. After a Mass Save assessment, most households get 75% off insulation and air sealing. Income-qualified households can get up to 100% off."}}, {"@type": "Question", "name": "Can Lynn landlords get HVAC rebates?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mass Save has assessment paths for landlords of 1-4 unit and 5+ unit buildings, and heat pump rebates apply to rental properties served by a Mass Save utility."}}, {"@type": "Question", "name": "Is Lynnfield eligible for Mass Save?", "acceptedAnswer": {"@type": "Answer", "text": "Not for electric-side rebates. Lynnfield is served by the Reading and Peabody municipal light plants. Ask them about their own rebates and the state's 0% MLP Z-Loan."}}]}</script>
 <meta name="theme-color" content="#faf7f2">
@@ -782,35 +782,86 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.textContent = originalText;
   }
 });
-// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; the handler lives here once for every page).
-// A box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
-document.addEventListener('submit', async function (e) {
-  var f = e.target;
-  if (!f.classList || !f.classList.contains('fed-alert-form')) return;
-  e.preventDefault();
-  var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
-  b.disabled = true; b.textContent = 'Saving...';
-  try {
-    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) });
-    if (!r.ok) throw new Error('alert signup failed');
-    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
-  } catch (err) {
-    done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; this code lives here once for every page).
+// - src: ?src= or ?utm_source= on arrival is kept for the visit and sent with the signup and the view count, so the weekly
+//   report (scripts/federal_alert_report.py) shows which shared or installer links bring people in.
+// - view: one anonymous ping to /alert/seen the first time a box is half on screen (no IP, cookie or person stored).
+// - count: "Join N people already on the list" once the list has 50 or more; cached 10 minutes in the tab.
+// - a box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
+// - after a signup the box shows its share row; share links carry their own src.
+(function () {
+  var boxes = document.querySelectorAll('.fed-alert');
+  if (!boxes.length) return;
+  var API = 'https://leads.homepowerrebate.com', q = new URLSearchParams(location.search), src = q.get('src') || q.get('utm_source') || '';
+  try { if (src) sessionStorage.setItem('hpr-src', src); else src = sessionStorage.getItem('hpr-src') || ''; } catch (e) {}
+  var page = location.pathname + (src ? '?src=' + encodeURIComponent(src).slice(0, 60) : '');
+  function ev(name, extra) { if (window.gtag) window.gtag('event', name, Object.assign({ page_path: location.pathname, alert_src: src || '(none)' }, extra || {})); }
+  if ('IntersectionObserver' in window && location.hostname === 'homepowerrebate.com') {  // local previews never count
+    var seen = 0, io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (!en.isIntersecting || seen) return;
+        seen = 1; io.disconnect();
+        var body = JSON.stringify({ list: 'federal-hp', page: page });
+        if (navigator.sendBeacon) navigator.sendBeacon(API + '/alert/seen', body);
+        else fetch(API + '/alert/seen', { method: 'POST', body: body, keepalive: true }).catch(function () {});
+        ev('fed_alert_view');
+      });
+    }, { threshold: 0.5 });
+    boxes.forEach(function (b) { io.observe(b); });
   }
-  done.hidden = false;
-});
-document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
-  var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), c = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
-  if (!r) return;
-  function upd() {
-    var on = ca.indexOf(r.value) >= 0;
-    box.hidden = !on;
-    f.dataset.province = on ? r.value.toUpperCase() : '';
-    f.dataset.city = on && c && c.value ? c.options[c.selectedIndex].text : '';
+  function showCount(n) {
+    if (!(n >= 50)) return;
+    document.querySelectorAll('.fed-alert-count').forEach(function (p) { p.textContent = 'Join ' + n.toLocaleString('en-CA') + ' people already on the list'; p.hidden = false; });
   }
-  r.addEventListener('change', upd); if (c) c.addEventListener('change', upd);
-  new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
-});
+  var c = null;
+  try { c = JSON.parse(sessionStorage.getItem('hpr-fed-count') || 'null'); } catch (e) {}
+  if (c && Date.now() - c.t < 600000) showCount(c.n);
+  else fetch(API + '/alert/count?list=federal-hp').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d) return;
+    try { sessionStorage.setItem('hpr-fed-count', JSON.stringify({ n: d.count, t: Date.now() })); } catch (e) {}
+    showCount(d.count);
+  }).catch(function () {});
+  document.addEventListener('submit', async function (e) {
+    var f = e.target;
+    if (!f.classList || !f.classList.contains('fed-alert-form')) return;
+    e.preventDefault();
+    var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), share = box.querySelector('.fed-alert-share'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
+    b.disabled = true; b.textContent = 'Saving...';
+    try {
+      var r = await fetch(API + '/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: page, website: f.querySelector('.fed-alert-hp').value }) });
+      if (!r.ok) throw new Error('alert signup failed');
+      f.hidden = true; done.textContent = "You're on the list! Check your inbox for a short note from us.";
+      if (share) share.hidden = false;
+      ev('fed_alert_signup');
+    } catch (err) {
+      done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+    }
+    done.hidden = false;
+  });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('.fed-alert-share a, .fed-alert-share button');
+    if (!a) return;
+    ev('fed_alert_share', { method: a.dataset.method || '' });
+    if (a.dataset.copy) {
+      e.preventDefault();
+      var done = function () { a.textContent = 'Link copied!'; };
+      if (navigator.clipboard) navigator.clipboard.writeText(a.dataset.copy).then(done, function () { prompt('Copy this link:', a.dataset.copy); });
+      else prompt('Copy this link:', a.dataset.copy);
+    }
+  });
+  document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
+    var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), cs = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
+    if (!r) return;
+    function upd() {
+      var on = ca.indexOf(r.value) >= 0;
+      box.hidden = !on;
+      f.dataset.province = on ? r.value.toUpperCase() : '';
+      f.dataset.city = on && cs && cs.value ? cs.options[cs.selectedIndex].text : '';
+    }
+    r.addEventListener('change', upd); if (cs) cs.addEventListener('change', upd);
+    new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
+  });
+})();
 (function () {
   var n = document.querySelector('.nav'), y = window.scrollY, f = 0;
   if (!n || !window.matchMedia) return;

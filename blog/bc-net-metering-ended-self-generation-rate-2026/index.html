@@ -113,7 +113,7 @@
 }
 </script>
 <link rel="stylesheet" href="/assets/tpl/page-84517ff2.css?v=d9128bee04" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=3d1fd7d047" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=a7170a32da" data-hpr-site-css>
 <link rel="stylesheet" href="/assets/tpl/common-7b6053bb.css?v=041f4c934f" data-hpr-tpl id="bcblog-css">
 <link rel="stylesheet" href="/assets/tpl/common-e032dc05.css?v=bc48c864f1" data-hpr-tpl id="bcblog-post-css">
 <meta name="theme-color" content="#faf7f2">
@@ -381,6 +381,8 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       else prompt('Copy this link:', a.dataset.copy);
     }
   });
+  function stackOn(box, code) { box.querySelectorAll('.fed-alert-stack-list li').forEach(function (li) { li.classList.toggle('is-on', !!code && li.dataset.prov === code); }); }
+  document.addEventListener('change', function (e) { var s = e.target; if (s.tagName === 'SELECT' && s.closest('.fed-alert-form')) stackOn(s.closest('.fed-alert'), s.value); });
   document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
     var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), cs = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
     if (!r) return;
@@ -389,6 +391,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       box.hidden = !on;
       f.dataset.province = on ? r.value.toUpperCase() : '';
       f.dataset.city = on && cs && cs.value ? cs.options[cs.selectedIndex].text : '';
+      stackOn(box, f.dataset.province);
     }
     r.addEventListener('change', upd); if (cs) cs.addEventListener('change', upd);
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();

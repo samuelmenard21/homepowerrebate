@@ -67,6 +67,9 @@ def block(copy, province="", city=""):
 
 
 def place(t, blk):
+    # add_federal_links re-inserts its callout with a newline in front, which lands between the callout and this box;
+    # drop it so running both scripts again changes nothing.
+    t = t.replace(FED_HP_END + "\n" + S, FED_HP_END + S)
     t = re.sub(re.escape(S) + r"[\s\S]*?" + re.escape(E) + r"\n?", "", t)
     i = t.find(FED_HP_END)
     if i >= 0:

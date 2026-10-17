@@ -70,17 +70,18 @@ def callout(calc_url, calc_label, quotes_url, city_name, near_you=False):
             f'installers {"near you" if near_you else "in " + e(city_name)}</a>.</div>')
 
 
-def quality_gate(article, d, path, extra=()):
+def quality_gate(article, d, path, extra=(), loose_refs=False, min_words=750):
     """The shared gate: 750 words (or the page's min_words), 4 FAQs, 3 outside references, at most one em dash, no PowerScore
-    status words. extra: (regex or callable, message) pairs for a region's own bans. Raises SystemExit with every problem."""
+    status words. extra: (regex or callable, message) pairs for a region's own bans. loose_refs: count every outside link
+    (topic pages), not only deep links. Raises SystemExit with every problem."""
     w = ca.words(article)
     ext = {m for m in re.findall(r'href="(https?://[^"]+)"', article)}
     problems = []
-    if w < d.get("min_words", 750):
-        problems.append(f"{w} words (<750)")
+    if w < d.get("min_words", min_words):
+        problems.append(f"{w} words (<{d.get('min_words', min_words)})")
     if len(d["faq"]) < 4:
         problems.append("fewer than 4 FAQ items")
-    if len([u for u in ext if "homepowerrebate" not in u and not re.search(r"(maps\.google|^https?://[^/]*$)", u)]) < 3:
+    if len([u for u in ext if "homepowerrebate" not in u and (loose_refs or not re.search(r"(maps\.google|^https?://[^/]*$)", u))]) < 3:
         problems.append("fewer than 3 external references")
     dashes = article.count("—") + article.count("&mdash;")
     if dashes > 1:
@@ -99,9 +100,10 @@ def faq_ld(d):
     return {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", html.unescape(a))}} for q, a in d["faq"]]}
 
 
-def article_ld(title, desc, iso, path):
+def article_ld(title, desc, iso, path, published=None):
+    """published: the first publish date when it differs from the last update (blog articles)."""
     return {"@context": "https://schema.org", "@type": "Article", "headline": title, "description": desc, "author": AUTHOR, "publisher": {"@type": "Organization", "name": "HomePowerRebate"},
-            "datePublished": iso, "dateModified": iso, "mainEntityOfPage": BASE + path}
+            "datePublished": published or iso, "dateModified": iso, "mainEntityOfPage": BASE + path}
 
 
 def breadcrumb_ld(trail, home_slash=False):
@@ -125,29 +127,30 @@ def hero(d, tag="section"):
     return f"<{tag} class=\"hero\"><div class=\"wrap\"><div class=\"amount-badge\">{e(d['badge'])}</div><h1>{e(d['h1'])}</h1><p>{d['lead']}</p></div></{tag}>"
 
 
-def head(title, desc, path, lds):
+def head(title, desc, path, lds, extra_head="", extra_css=""):
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{e(title)}</title>
 {GA}
-<meta name="description" content="{e(desc)}"><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large"><link rel="canonical" href="{BASE}{path}">
+<meta name="description" content="{e(desc)}"><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large"><link rel="canonical" href="{BASE}{path}">{extra_head}
 <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="article">
 <meta property="og:image" content="{BASE}/og-image.jpg">
 {FONTS}
-{ca.CSS}
+{ca.CSS}{chr(10) + extra_css if extra_css else ""}
 {lds}</head><body>"""
 
 
-def write_page(path, title, desc, lds, nav, crumb, hero_html, top, article, footer):
+def write_page(path, title, desc, lds, nav, crumb, hero_html, top, article, footer, extra_head="", extra_css=""):
     """Assemble and write /path/index.html. nav and footer come from navfooter.render_nav/render_footer; top is the
-    link row under the hero (may be empty)."""
-    page = f"""{head(title, desc, path, lds)}
+    link row under the hero (may be empty; None leaves the row out, as on topic pages)."""
+    row = "" if top is None else f"""<section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
+{top}</div></section>
+"""
+    page = f"""{head(title, desc, path, lds, extra_head, extra_css)}
 {nav}
 {crumb}
 {hero_html}
-<section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
-{top}</div></section>
-<article class="article"><div class="wrap">
+{row}<article class="article"><div class="wrap">
 {article}
 </div></article>
 {footer}

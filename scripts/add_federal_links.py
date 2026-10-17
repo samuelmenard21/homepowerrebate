@@ -61,7 +61,7 @@ def put(t, block, s=S, e=E):
 def after_grid(t, block):
     """City heat pump pages: the federal note goes right after the rebate cards, so readers see what they can claim today first
     (2026-10-13). Falls back to the old place (after the hero) when a page has no rebate grid."""
-    t = re.sub(re.escape(S) + r"[\s\S]*?" + re.escape(E) + r"\n?", "", t)
+    t = re.sub(r"\n?" + re.escape(S) + r"[\s\S]*?" + re.escape(E), "", t)  # the block is inserted as "\n" + S...E
     m = re.search(r'<div class="rebate-grid">', t)
     if not m:
         return None

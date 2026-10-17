@@ -267,6 +267,22 @@ def _template_css() -> str:
 _TPL_LINKS = {}
 
 
+def dead_css(css: str) -> bool:
+    """True for CSS that does nothing: only comments, or only copies of the two latin @font-face rules that the
+    FONT-PRELOAD block already declares (generators that copy a converted page's <style> blocks pick those up, and
+    add_font_fallbacks then makes the copy invalid). Such blocks and variant links are dropped, not served."""
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    css = re.sub(r"@font-face\s*\{[^}]*\}", lambda m: "" if any(u in m.group(0) for u in FONT_FILES) else m.group(0), css)
+    return not css.strip()
+
+
+def drop_dead_css(content: str) -> str:
+    """Remove dead inline <style> blocks (outside the FONT-PRELOAD markers) and links to dead variants."""
+    parts = re.split(r"(<!-- FONT-PRELOAD-START -->.*?<!-- FONT-PRELOAD-END -->)", content, flags=re.S)
+    parts = [p if i % 2 else STYLE_RE.sub(lambda m: "" if dead_css(m.group(2)) else m.group(0), p) for i, p in enumerate(parts)]
+    return TPL_LINK_RE.sub(lambda m: "" if m.group(1) in DEAD_VARIANTS else m.group(0), "".join(parts))
+
+
 def tpl_link(variant: str, el_id: str = "") -> str:
     if el_id:  # the inline block had an id that its generator looks for: keep it on the link
         return tpl_link(variant).replace(" data-hpr-tpl>", f' data-hpr-tpl id="{el_id}">')
@@ -281,6 +297,8 @@ def write_tpl_assets():
     TPL_ASSETS.mkdir(parents=True, exist_ok=True)
     keep = set()
     for v in TEMPLATE_VARIANTS:
+        if v in DEAD_VARIANTS:
+            continue
         body = (TEMPLATES_DIR / "base" / f"{v}.css").read_text(encoding="utf-8")
         out = TPL_ASSETS / f"{v}.css"
         keep.add(out.name)
@@ -334,6 +352,10 @@ def page_family(content: str, linked: list) -> str:
         fam = TEMPLATE_VARIANTS.get(v, ("", ""))[0]
         if fam in ("article", "ranking"):
             return fam
+    # a page whose only family evidence was a dead variant link (see drop_dead_css) keeps the family it had
+    prev = re.search(r'<body[^>]*\bclass="[^"]*\btpl-(article|ranking)\b', content)
+    if prev:
+        return prev.group(1)
     if 'class="ip-wrap"' in content:
         return "profile"
     cm = CANON_RE.search(content)
@@ -349,7 +371,8 @@ def page_family(content: str, linked: list) -> str:
 def ensure_template(content: str) -> str:
     """Swap every registered inline <style> block for its cached /assets/tpl/ file (same place, same rules) and give
     the page its family class."""
-    by_hash = {h: v for v, (_, h) in TEMPLATE_VARIANTS.items()}
+    content = drop_dead_css(content)
+    by_hash = {h: v for v, (_, h) in TEMPLATE_VARIANTS.items() if v not in DEAD_VARIANTS}
     out, last = [], 0
     for m in STYLE_RE.finditer(content):
         v = by_hash.get(_norm_hash(m.group(2)))
@@ -518,6 +541,8 @@ FONT_HEAD = (
     "<!-- FONT-PRELOAD-END -->"
 )
 _FONT_HEAD_RE = re.compile(r"<!-- FONT-PRELOAD-START -->.*?<!-- FONT-PRELOAD-END -->", re.S)
+# registered variants whose CSS does nothing (see dead_css); their links are dropped and their files not served
+DEAD_VARIANTS = {v for v in TEMPLATE_VARIANTS if dead_css((TEMPLATES_DIR / "base" / f"{v}.css").read_text(encoding="utf-8"))}
 
 
 RAIL_S, RAIL_E = "<!-- PAGE-RAIL-START -->", "<!-- PAGE-RAIL-END -->"

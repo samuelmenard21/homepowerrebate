@@ -253,9 +253,7 @@ def federal():
     """Canada: the shared federal alert box (add_federal_alert.block, FED-ALERT markers, right after HOME-HERO-END, so the
     alert post-step can replace it in place). US: the 25C/25D note from fact general-8."""
     import add_federal_alert as fa
-    copy = getattr(fa, "HOME", None) or fa.FEDERAL
-    box = fa.block(copy).strip()
-    box = box.replace('<section class="fed-alert"', '<section id="federal-alert" class="fed-alert"', 1)
+    box = fa.block(fa.HOME, anchor="federal-alert", big=True, wrap=True).strip()  # same call as add_federal_alert.canadian_pages()
     us = FACTS["general-8-us-federal-25c-25d-tax-credits"]
     return f'''{box}
 <section class="hm-usfed" aria-labelledby="hm-usfed-h">

@@ -114,7 +114,7 @@
 }
 </script>
 <link rel="stylesheet" href="/assets/tpl/article-5ab8e817.css?v=d9aebca5e0" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=a0a5889441" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=739c67caed" data-hpr-site-css>
 <link rel="stylesheet" href="/assets/tpl/common-7b6053bb.css?v=041f4c934f" data-hpr-tpl id="bcblog-css">
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -260,6 +260,7 @@
 <p>There is no longer one "BC heat pump rebate" for everyone. What you can get depends on three things: who your electric utility is, what heats your home now, and your household income. This guide walks through each one in plain language.</p>
 <h2 id="which-heat-pump-rebate-fits-your-home-in-bc">Which heat pump rebate fits your home in BC?</h2>
 <div class="hpr-table"><table><thead><tr><th>Your home now</th><th>Who pays</th><th>How much</th></tr></thead><tbody><tr><td>Electric baseboards or electric furnace (any income)</td><td>BC Hydro</td><td>Up to $4,000 whole home, $1,500 partial, plus up to $1,000 bonus for installs done Aug 1 - Oct 31, 2026</td></tr><tr><td>Gas, oil or propane, income-qualified</td><td>CleanBC Energy Savings Program</td><td>Up to $13,000 (Level 1), $7,000 (Level 2), $3,500 (Level 3) for a central or 3-head system</td></tr><tr><td>Electric heat, income Level 1</td><td>CleanBC Energy Savings Program</td><td>Up to $5,000 (Level 1 only)</td></tr><tr><td>Gas, oil or propane, not income-qualified</td><td>None right now</td><td>The general fuel-switching rebate ended April 11, 2025</td></tr><tr><td>FortisBC electric customer (Kelowna, Penticton), electric heat</td><td>FortisBC</td><td>Up to $4,000 whole home, $1,500 partial</td></tr><tr><td>FortisBC electric customer, income-qualified</td><td>FortisBC</td><td>Up to $12,000 central ducted, $9,000 mini/multi-split, $5,000 partial</td></tr></tbody></table></div>
+<!-- FED-ALERT-START --><section class="fed-alert" aria-label="Federal heat pump rebate email alert"><div class="fed-alert-top"><p class="fed-alert-eyebrow">New federal heat pump rebate</p><p class="fed-alert-badge"><span aria-hidden="true"></span>Opens early 2027</p></div><div class="fed-alert-amounts"><p><b>$10,000</b><span>if your household earns below the median income</span></p><p><b>$2,000</b><span>for other homeowners who qualify</span></p></div><p class="fed-alert-title">Be first in line. Get an email the day it opens.</p><p class="fed-alert-body">Applications are not open yet. Ottawa says they open in early 2027, and that you can add this rebate on top of provincial ones.</p><p class="fed-alert-more"><a href="/programs/national-heat-pump-rebate/">Read everything we know so far &rarr;</a></p><form class="fed-alert-form" data-list="federal-hp" data-province="BC"><label for="fed-alert-email">Email</label><input id="fed-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email"><input class="fed-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">Email me when it opens</button></form><p class="fed-alert-done" role="status" hidden></p><p class="fed-alert-note"><b>What you get:</b> a quick hello now, one email the day applications open, and one when Ottawa says who gets $10,000. That&#x27;s it. No spam, unsubscribe anytime. Ottawa also has <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html">its own sign-up</a>.</p></section><!-- FED-ALERT-END -->
 <h2 id="what-whole-home-really-means-for-bc-hydro">What "whole home" really means for BC Hydro</h2><p>To get the full $4,000, the heat pump has to meet <strong>100% of your home's heating at -5°C</strong>. The contractor proves this with a heat load calculation. If it covers at least half your heating, you get the $1,500 partial rebate instead. Other rules: your installer must be a member of BC Hydro's Home Performance Contractor Network (HPCN), and the unit must be on BC Hydro's eligible list (variable-speed, with an AHRI number, HSPF2 of 8.5 or more and SEER2 of 15.2 or more). Apply within six months of your invoice.</p>
 <h2 id="how-fortisbc-s-heat-pump-rebate-works">How FortisBC's heat pump rebate works</h2><p>FortisBC's rebate is for replacing electric heat. For the $4,000 whole-home amount, the heat pump must be NEEP cold-climate certified and sized from a heat load calculation. A single mini-split only counts for homes of 1,200 sq. ft. or less. FortisBC also pays a $300 bonus when you do a second eligible upgrade, like insulation.</p>
 <h2 id="income-qualified-check-this-first">Income-qualified? Check this first</h2><p>If your household income is under the CleanBC limits, you may get most or all of the cost covered. For a family of four, Level 1 is up to $94,900, Level 2 up to $118,600 and Level 3 up to $189,800 (combined pre-tax income). See <a href="/blog/free-heat-pump-bc-income-qualified/">can you get a free heat pump</a> for the full table.</p>
@@ -424,6 +425,35 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.disabled = false;
     button.textContent = originalText;
   }
+});
+// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; the handler lives here once for every page).
+// A box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('fed-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) });
+    if (!r.ok) throw new Error('alert signup failed');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+  } catch (err) {
+    done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+  }
+  done.hidden = false;
+});
+document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
+  var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), c = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
+  if (!r) return;
+  function upd() {
+    var on = ca.indexOf(r.value) >= 0;
+    box.hidden = !on;
+    f.dataset.province = on ? r.value.toUpperCase() : '';
+    f.dataset.city = on && c && c.value ? c.options[c.selectedIndex].text : '';
+  }
+  r.addEventListener('change', upd); if (c) c.addEventListener('change', upd);
+  new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
 });
 (function () {
   var n = document.querySelector('.nav'), y = window.scrollY, f = 0;

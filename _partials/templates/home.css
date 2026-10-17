@@ -77,7 +77,8 @@ body.tpl-home { --hm-w: min(1200px, 100% - 2 * var(--gutter)); background: var(-
 @keyframes hm-print { from { opacity: 0; transform: translateY(6px); clip-path: inset(0 0 100% 0); } to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); } }
 
 /* ---------- federal ---------- */
-.tpl-home .fed-alert { width: var(--hm-w); max-width: none; margin: clamp(32px, 4vw, 56px) auto 0; box-sizing: border-box; }
+.tpl-home .hp-fed-wrap { width: var(--hm-w); max-width: none; margin: clamp(32px, 4vw, 56px) auto 0; padding: 0; box-sizing: border-box; }
+.tpl-home .hp-fed-wrap .fed-alert { margin: 0; }
 .tpl-home .hm-usfed { padding: clamp(28px, 3vw, 40px) 0 clamp(8px, 1vw, 16px); }
 .tpl-home .hm-usfed-in { padding: 22px 26px; border: 1px solid var(--card-rule); border-radius: var(--radius-card, 18px); background: #fff; }
 .tpl-home .hm-usfed h2 { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 8px; font-family: 'Fraunces', Georgia, serif; font-size: 23px; font-weight: 600; line-height: 1.25; color: var(--ink); }

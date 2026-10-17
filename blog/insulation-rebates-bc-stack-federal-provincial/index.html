@@ -19,7 +19,7 @@
   gtag('config', 'G-W33G4TGRHD');
 </script>
 
-<link rel="stylesheet" href="/assets/site.css?v=a0a5889441" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=739c67caed" data-hpr-site-css>
 <link rel="stylesheet" href="/assets/tpl/common-7b6053bb.css?v=041f4c934f" data-hpr-tpl id="bcblog-css">
 <link rel="stylesheet" href="/assets/tpl/common-e032dc05.css?v=bc48c864f1" data-hpr-tpl id="bcblog-post-css">
 <script type="application/ld+json">
@@ -210,6 +210,7 @@
 <div class="callout hpr-short"><p><strong>Short answer:</strong> In 2026, BC insulation rebates come from <strong>BC Hydro</strong> (for electrically heated homes) or <strong>FortisBC</strong> (gas or FortisBC electric customers). Both pay by area and R-value added: up to <strong>$900</strong> for an attic and up to <strong>$1,200</strong> each for walls and basement. Doing a second upgrade can add a bonus. The federal Greener Homes Grant is closed, and the July 2026 CleanBC income-qualified rules don't include insulation.</p>
 <p><strong>Total cap:</strong> Across all areas, BC Hydro pays up to <strong>$5,500</strong> for insulation, and doing several upgrades together can add a bonus of up to <strong>$2,000</strong>. An HPCN member must do the work, and you apply within six months of the invoice (<a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-insulation.html" target="_blank" rel="noopener">BC Hydro</a>, checked September 27, 2026).</p></div>
 <h2>How much: the insulation rebate formula</h2><div class="hpr-table"><table><thead><tr><th>Where</th><th>Rebate formula</th><th>Max</th></tr></thead><tbody><tr><td>Attic (flat or cathedral)</td><td>$0.02 x R-value added x sq. ft.</td><td>$900</td></tr><tr><td>Exterior wall cavities</td><td>$0.09 x R-value added x sq. ft.</td><td>$1,200</td></tr><tr><td>Exterior wall sheathing</td><td>$0.09 x R-value added x sq. ft.</td><td>$1,200</td></tr><tr><td>Basement or crawlspace walls</td><td>$0.09 x R-value added x sq. ft.</td><td>$1,200</td></tr><tr><td>Other (exposed floor, floor over crawlspace, headers)</td><td>$0.07 x R-value added x sq. ft.</td><td>$1,000</td></tr></tbody></table></div><p>Example: a 1,000 sq. ft. attic topped up by R-40 works out to $0.02 x 40 x 1,000 = $800. Minimum R-value added: R-12 for attics and wall cavities, R-3.8 for sheathing, R-10 for basement walls, R-20 for other areas.</p>
+<!-- FED-ALERT-START --><section class="fed-alert" aria-label="Federal heat pump rebate email alert"><div class="fed-alert-top"><p class="fed-alert-eyebrow">New federal heat pump rebate</p><p class="fed-alert-badge"><span aria-hidden="true"></span>Opens early 2027</p></div><div class="fed-alert-amounts"><p><b>$10,000</b><span>if your household earns below the median income</span></p><p><b>$2,000</b><span>for other homeowners who qualify</span></p></div><p class="fed-alert-title">Be first in line. Get an email the day it opens.</p><p class="fed-alert-body">Applications are not open yet. Ottawa says they open in early 2027, and that you can add this rebate on top of provincial ones.</p><p class="fed-alert-more"><a href="/programs/national-heat-pump-rebate/">Read everything we know so far &rarr;</a></p><form class="fed-alert-form" data-list="federal-hp" data-province="BC"><label for="fed-alert-email">Email</label><input id="fed-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email"><input class="fed-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">Email me when it opens</button></form><p class="fed-alert-done" role="status" hidden></p><p class="fed-alert-note"><b>What you get:</b> a quick hello now, one email the day applications open, and one when Ottawa says who gets $10,000. That&#x27;s it. No spam, unsubscribe anytime. Ottawa also has <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html">its own sign-up</a>.</p></section><!-- FED-ALERT-END -->
 <h2>BC Hydro or FortisBC: which one do you use?</h2><ul><li><strong>BC Hydro:</strong> for BC Hydro customers with electrically heated homes. Your contractor must be a Home Performance Contractor Network (HPCN) member.</li><li><strong>FortisBC:</strong> for FortisBC natural gas customers and FortisBC electric customers (plus Penticton, Summerland, Grand Forks and Nelson Hydro).</li></ul><p>Apply within six months of your invoice. Self-installs don't qualify.</p>
 <h2>Bonuses for doing more</h2><p>BC Hydro offers a bonus of up to $2,000 for completing more than one upgrade. FortisBC pays a $300 two-upgrade bonus, or $20 per 1% EnerGuide rating improvement ($750 to $2,000) if you do before-and-after evaluations.</p>
 <h2>Income-qualified?</h2><p>ECAP (run by BC Hydro and FortisBC) can install insulation for free in some homes after a free evaluation. FortisBC also has an income-qualified insulation rebate.</p>
@@ -384,6 +385,35 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.disabled = false;
     button.textContent = originalText;
   }
+});
+// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; the handler lives here once for every page).
+// A box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('fed-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) });
+    if (!r.ok) throw new Error('alert signup failed');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+  } catch (err) {
+    done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+  }
+  done.hidden = false;
+});
+document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
+  var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), c = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
+  if (!r) return;
+  function upd() {
+    var on = ca.indexOf(r.value) >= 0;
+    box.hidden = !on;
+    f.dataset.province = on ? r.value.toUpperCase() : '';
+    f.dataset.city = on && c && c.value ? c.options[c.selectedIndex].text : '';
+  }
+  r.addEventListener('change', upd); if (c) c.addEventListener('change', upd);
+  new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
 });
 (function () {
   var n = document.querySelector('.nav'), y = window.scrollY, f = 0;

@@ -21,7 +21,7 @@ DIST = ROOT / "dist"
 
 PUBLIC_EXT = {".html", ".css", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".gif", ".ico", ".avif",
               ".woff", ".woff2", ".ttf", ".otf", ".xml", ".webmanifest", ".mp4", ".webm", ".pdf"}
-PUBLIC_FILES = {"robots.txt", "llms.txt", "_redirects", "_headers", "form-handlers.js",
+PUBLIC_FILES = {"robots.txt", "llms.txt", "_redirects", "_headers", "_routes.json", "form-handlers.js",
                 "form-handlers-with-installer-select.js", "128e460777465d0f18b1a1d82780a08b.txt"}
 PUBLIC_PREFIXES = ("installers/json/", "rebate-tracker/changes.json")
 PRIVATE_DIRS = {"scripts", "data", "reports", ".claude", ".github", "node_modules", "_partials", "dist",

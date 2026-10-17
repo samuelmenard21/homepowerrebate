@@ -21,7 +21,11 @@ BASE = "https://homepowerrebate.com"
 AUTHOR = {"@type": "Person", "@id": f"{BASE}/#sam", "name": "Sam Menard", "url": f"{BASE}/about"}
 FACTS = load_facts()
 TEMPLATE = (ROOT / "ca/on/kitchener/heat-pump/index.html").read_text(encoding="utf-8")
-CSS = "".join(re.findall(r"<style[\s\S]*?</style>", TEMPLATE))
+# the template's CSS as the restamp leaves it: its family stylesheet link plus any inline <style> blocks, minus the
+# font faces (the restamp adds those as the FONT-PRELOAD block) and dead blocks (navfooter.dead_css)
+_TPL_HEAD = re.sub(r"<!-- FONT-PRELOAD-START -->.*?<!-- FONT-PRELOAD-END -->", "", TEMPLATE, flags=re.S).split("</head>")[0]
+CSS = "".join([navfooter.tpl_link(v).rstrip("\n") for v in navfooter.TPL_LINK_RE.findall(_TPL_HEAD) if v in navfooter.TEMPLATE_VARIANTS and v not in navfooter.DEAD_VARIANTS]
+              + [m.group(0) for m in navfooter.STYLE_RE.finditer(_TPL_HEAD) if not navfooter.dead_css(m.group(2))])
 LABEL = {"heat-pump": "Heat Pump", "water-heater": "Water Heater", "solar": "Solar", "battery": "Battery Storage", "ev-charger": "EV Charger", "insulation": "Insulation",
          "smart-thermostats": "Smart Thermostat", "appliances": "Appliance", "windows-doors": "Windows & Doors", "hrv": "HRV & Ventilation"}
 UTILITY_PAGE = {"ladwp": ("ladwp-rebates", "LADWP"), "smud": ("smud-rebates", "SMUD"), "sce": ("sce-rebates", "Southern California Edison"), "pwp": ("pasadena-water-and-power-rebates", "Pasadena Water and Power"),

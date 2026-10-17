@@ -803,6 +803,7 @@ def update_installers_hub(index):
 
 LINK_START, LINK_END = "<!-- RANKINGS-LINK-START -->", "<!-- RANKINGS-LINK-END -->"
 CAROUSEL_RE = re.compile(r'<section class="unified-carousel-section".*?</section>', re.S)
+ARTICLE_END_RE = re.compile(r"</article>")  # category pages: the box sits right after the article body
 
 
 def rankings_block(city, entries):
@@ -829,7 +830,7 @@ def rankings_block(city, entries):
 def inject_block(s, block, anchor_re=None):
     if LINK_START in s:
         return re.sub(re.escape(LINK_START) + r".*?" + re.escape(LINK_END), lambda m: block, s, count=1, flags=re.S)
-    m = anchor_re.search(s) if anchor_re else None
+    m = next((m for r in (anchor_re if isinstance(anchor_re, (list, tuple)) else [anchor_re]) if r for m in [r.search(s)] if m), None)
     if m:
         return s[:m.end()] + "\n" + block + s[m.end():]
     i = navfooter.content_insert_point(s)
@@ -845,8 +846,8 @@ def link_city_pages(index, hubs):
             by_hub.setdefault(hub["url"], (hub["label"], {}))[1][e["service"]] = e
     changed = 0
     for hub_url, (city, entries) in by_hub.items():
-        targets = [(hub_url, entries, CAROUSEL_RE)]
-        targets += [(f"{hub_url}{sv}/", {sv: e}, None) for sv, e in entries.items()]
+        targets = [(hub_url, entries, [CAROUSEL_RE, ARTICLE_END_RE])]
+        targets += [(f"{hub_url}{sv}/", {sv: e}, ARTICLE_END_RE) for sv, e in entries.items()]
         for url, ents, anchor in targets:
             f = ROOT / url.strip("/") / "index.html"
             if not f.exists():
@@ -1240,7 +1241,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--badge-only", action="store_true", help="rebuild /installers/badge/ from installers/rankings.json")
+    ap.add_argument("--links-only", action="store_true", help="re-stamp the RANKINGS-LINK boxes on city pages from installers/rankings.json (a post-step)")
     args = ap.parse_args()
+    if args.links_only:
+        index = json.loads((ROOT / "installers" / "rankings.json").read_text(encoding="utf-8"))
+        print(f"{link_city_pages(index, city_hubs())} city pages linked to their rankings.")
+        return
     if args.badge_only:
         bp, bhtml = badge_page(json.loads((ROOT / "installers" / "rankings.json").read_text(encoding="utf-8")))
         (ROOT / bp.strip("/") / "index.html").write_text(bhtml, encoding="utf-8")

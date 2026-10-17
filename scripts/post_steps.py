@@ -18,8 +18,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-STEPS = ["apply_canonical_nav_footer", "build_internal_boosts", "add_deadline_notes", "add_federal_links", "add_federal_alert", "add_breadcrumb_jsonld", "add_breadcrumb_ld",
-         "fix_seo_meta", "add_aeo_markup", "link_orphans", "fix_redirected_links", "follow_official_sources",
+STEPS = ["apply_canonical_nav_footer", "build_internal_boosts", "build_installer_rankings --links-only", "add_deadline_notes", "add_federal_links", "add_federal_alert",
+         "add_breadcrumb_jsonld", "add_breadcrumb_ld", "fix_seo_meta", "add_aeo_markup", "link_orphans", "link_discovered", "fix_redirected_links", "follow_official_sources",
          "apply_canonical_nav_footer", "apply_canonical_nav_footer"]
 
 
@@ -27,7 +27,8 @@ def run(cwd: Path = ROOT, quiet: bool = True) -> list:
     """Run every step in cwd; returns the names of steps that failed."""
     failed = []
     for step in STEPS:
-        r = subprocess.run([sys.executable, f"scripts/{step}.py"], cwd=cwd, capture_output=quiet, text=True)
+        name, *args = step.split()
+        r = subprocess.run([sys.executable, f"scripts/{name}.py", *args], cwd=cwd, capture_output=quiet, text=True)
         if r.returncode:
             failed.append(step)
             if quiet:

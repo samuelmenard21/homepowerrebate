@@ -241,6 +241,11 @@ async function handleFetch(request, env, ctx) {
         ? handleUnsubscribe(request, env)
         : jsonResponse({ error: 'Method not allowed' }, 405);
     }
+    if (path === '/alert/count') {
+      return request.method === 'GET'
+        ? handleAlertCount(request, env)
+        : jsonResponse({ error: 'Method not allowed' }, 405);
+    }
     if (path === '/lead-followup') {
       return request.method === 'GET'
         ? handleLeadFollowupResponse(request, env)
@@ -255,6 +260,7 @@ async function handleFetch(request, env, ctx) {
     if (path === '/waitlist') return handleWaitlistSubmit(request, env);
     if (path === '/newsletter') return handleNewsletter(request, env);
     if (path === '/alert') return handleAlertSignup(request, env);
+    if (path === '/alert/seen') return handleAlertSeen(request, env);
     if (path === '/estimate-lead') return handleEstimateLead(request, env);
     if (path === '/outcomes/submit') return handleOutcomeSubmit(request, env);
     if (path === '/contact') return handleContactSubmit(request, env);
@@ -825,6 +831,42 @@ async function handleAlertSignup(request, env) {
   const failures = (await Promise.allSettled(tasks)).filter(r => r.status === 'rejected');
   if (failures.length) console.error('Alert signup partial failure:', failures.map(f => f.reason?.message || f.reason));
   return jsonResponse({ success: true }, 200);
+}
+
+// GET /alert/count?list=federal-hp — how many people are on a list, for the "Join N Canadians" line on the box.
+// Only the count leaves the database. Cached five minutes at the edge and in the browser.
+async function handleAlertCount(request, env) {
+  const url = new URL(request.url);
+  const list = cleanString(url.searchParams.get('list') || 'federal-hp');
+  if (!ALERT_LISTS.has(list)) return jsonResponse({ error: 'Unknown list' }, 400);
+  const cache = caches.default;
+  const key = new Request(`https://leads.homepowerrebate.com/alert/count?list=${list}`);
+  const hit = await cache.match(key);
+  if (hit) return hit;
+  if (!env.OUTCOMES_DB) return jsonResponse({ error: 'Not configured' }, 500);
+  const row = await env.OUTCOMES_DB.prepare('SELECT COUNT(*) AS n FROM alerts WHERE list = ? AND unsubscribed = 0').bind(list).first();
+  const res = new Response(JSON.stringify({ list, count: row?.n || 0 }), {
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=300', ...CORS_HEADERS }
+  });
+  await cache.put(key, res.clone());
+  return res;
+}
+
+// POST /alert/seen — the box was at least half on screen (sent once per page view by the shared JS with sendBeacon).
+// Stored as one counter per day, list and page (table alert_views, schema-alerts.sql): no IP, no cookie, no person.
+// Read by scripts/federal_alert_report.py, which puts views next to signups for each page and source.
+async function handleAlertSeen(request, env) {
+  let p;
+  try { p = JSON.parse(await request.text()); } catch (e) { return new Response(null, { status: 204, headers: CORS_HEADERS }); }
+  const list = cleanString(p.list || 'federal-hp');
+  const page = cleanString(p.page).slice(0, 200);
+  if (!ALERT_LISTS.has(list) || !page.startsWith('/') || !env.OUTCOMES_DB) return new Response(null, { status: 204, headers: CORS_HEADERS });
+  const day = new Date().toISOString().slice(0, 10);
+  await env.OUTCOMES_DB.prepare(
+    `INSERT INTO alert_views (day, list, page, views) VALUES (?, ?, ?, 1)
+     ON CONFLICT(day, list, page) DO UPDATE SET views = views + 1`
+  ).bind(day, list, page).run();
+  return new Response(null, { status: 204, headers: CORS_HEADERS });
 }
 
 // What each province pays today, from the same verified facts as add_federal_links.py (bc-*, on-0/1, ns-*, ab-*).

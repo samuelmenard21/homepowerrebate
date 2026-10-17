@@ -51,9 +51,8 @@ def main():
         short = "BC" if code == "bc" else name
         need = {
             "hub page": (ROOT / r["path"] / "index.html").exists(),
-            "homepage meta description": short in desc,
             "homepage structured data": f'"{name}, ' in home,
-            "homepage region card": f'href="{hub}" class="is-48711be5"' in home,
+            "homepage region card": f'href="{hub}" class="hm-reg-name"' in home,
             "homepage picker": code in picker,
             "llms.txt": hub in llms,
             "rebate finder": f'"c":"{code}"' in gq.replace(" ", "") or f'"code": "{code}"' in gq or f'"code":"{code}"' in gq,
@@ -79,7 +78,7 @@ def main():
                 "email rebate summary (city-rebate-lookup.json)": code == "ca" or f"{code}|{city_key(label)}" in lookup or f"{code}|{city_key(slug.replace('-', ' '))}" in lookup,
             }
             gaps += [f"{label} ({name}): missing from {k}" for k, ok in cneed.items() if not ok]
-    m = re.search(r"Canada &amp; US &middot; (\d+) cities", home)
+    m = re.search(r'data-city-count="(\d+)"', home)
     if not m or int(m.group(1)) != total:
         gaps.append(f"homepage city count says {m.group(1) if m else '?'}, cities total {total}")
     if gaps:

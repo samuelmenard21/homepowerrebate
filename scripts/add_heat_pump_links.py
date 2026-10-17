@@ -17,8 +17,7 @@ JOBS = {
         "<b>HARP heating rebate:</b> " + A("/programs/nova-scotia-heating-assistance-rebate-harp/", "check your HARP status and payment dates") + " &middot; " + A("/blog/nova-scotia-harp-heating-assistance-rebate-explained/", "what HARP is and who qualifies") + ".",
     "ca/index.html":
         "<b>Heat pump rebates by province:</b> " + " &middot; ".join([A("/ca/bc/heat-pump/", "BC"), A("/ca/on/heat-pump/", "Ontario"), A("/ca/ab/heat-pump/", "Alberta"), A("/ca/mb/heat-pump/", "Manitoba"), A("/ca/ns/heat-pump/", "Nova Scotia"), A("/ca/qc/heat-pump/", "Quebec") + " (" + A("/fr/qc/thermopompe/", "en fran&ccedil;ais") + ")"]) + ". " + A("/programs/national-heat-pump-rebate/", "Federal rebate guide"),
-    "index.html":
-        "<b>New in Canada:</b> heat pump rebate guides for " + " &middot; ".join([A("/ca/bc/heat-pump/", "BC"), A("/ca/on/heat-pump/", "Ontario"), A("/ca/ab/heat-pump/", "Alberta"), A("/ca/ns/heat-pump/", "Nova Scotia"), A("/ca/qc/heat-pump/", "Quebec")]) + ", plus " + A("/programs/national-heat-pump-rebate/", "Ottawa's new heat pump rebate") + " and " + A("/blog/ma-ny-year-end-rebate-deadlines-2026/", "Massachusetts and New York year-end deadlines") + ".",
+    # the homepage links these itself (scripts/build_home.py, "Heat pump rebates by province" and the guides list)
     "blog/ontario-smart-thermostats-100-rebate-compared/index.html":
         "<b>Also in Ontario:</b> " + A("/blog/ontario-home-renovation-savings-deadlines-2026/", "Home Renovation Savings deadlines (Nov 30 and Dec 31, 2026)") + " &middot; " + A("/ca/on/heat-pump/", "Ontario heat pump rebates"),
     "us/ma/index.html":

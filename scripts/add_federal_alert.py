@@ -132,7 +132,7 @@ def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=F
     gets = "".join(f"<li>{x}</li>" for x in GETS)
     return (f'{S}{pre}<section class="fed-alert{" fed-alert-big" if big else ""}"{attrs} aria-label="Heat pump rebate email alert"><div class="fed-alert-in">'
             '<div class="fed-alert-main">'
-            f'<div class="fed-alert-head">{UNIT}<p class="fed-alert-title">{html.escape(HEADLINE)}</p></div>'
+            f'<div class="fed-alert-head">{UNIT}<p class="fed-alert-title">{html.escape(HEADLINE).replace("heat pump rebate", "<em>heat pump rebate</em>")}</p></div>'
             f'<p class="fed-alert-body">{html.escape(lead)}</p>'
             '<dl class="fed-alert-amounts"><div><dt>Up to $10,000</dt><dd>if your household earns below the median income</dd></div>'
             '<div><dt>$2,000</dt><dd>for other homeowners who qualify</dd></div></dl></div>'

@@ -811,36 +811,36 @@
 /us/ma/worcester/windows-doors /us/ma/worcester/ 301
 
 # BC battery pages merged into the solar and battery page; EV charger pages kept only where a local top-up exists (2026-10-03)
-/ca/bc/abbotsford/ev-charger/ /ca/bc/abbotsford/ 301
-/ca/bc/abbotsford/ev-charger /ca/bc/abbotsford/ 301
-/ca/bc/burnaby/ev-charger/ /ca/bc/burnaby/ 301
-/ca/bc/burnaby/ev-charger /ca/bc/burnaby/ 301
-/ca/bc/chilliwack/ev-charger/ /ca/bc/chilliwack/ 301
-/ca/bc/chilliwack/ev-charger /ca/bc/chilliwack/ 301
-/ca/bc/coquitlam/ev-charger/ /ca/bc/coquitlam/ 301
-/ca/bc/coquitlam/ev-charger /ca/bc/coquitlam/ 301
-/ca/bc/fort-st-john/ev-charger/ /ca/bc/fort-st-john/ 301
-/ca/bc/fort-st-john/ev-charger /ca/bc/fort-st-john/ 301
-/ca/bc/kelowna/ev-charger/ /ca/bc/kelowna/ 301
-/ca/bc/kelowna/ev-charger /ca/bc/kelowna/ 301
-/ca/bc/langley/ev-charger/ /ca/bc/langley/ 301
-/ca/bc/langley/ev-charger /ca/bc/langley/ 301
-/ca/bc/maple-ridge/ev-charger/ /ca/bc/maple-ridge/ 301
-/ca/bc/maple-ridge/ev-charger /ca/bc/maple-ridge/ 301
-/ca/bc/nanaimo/ev-charger/ /ca/bc/nanaimo/ 301
-/ca/bc/nanaimo/ev-charger /ca/bc/nanaimo/ 301
-/ca/bc/penticton/ev-charger/ /ca/bc/penticton/ 301
-/ca/bc/penticton/ev-charger /ca/bc/penticton/ 301
-/ca/bc/prince-george/ev-charger/ /ca/bc/prince-george/ 301
-/ca/bc/prince-george/ev-charger /ca/bc/prince-george/ 301
-/ca/bc/richmond/ev-charger/ /ca/bc/richmond/ 301
-/ca/bc/richmond/ev-charger /ca/bc/richmond/ 301
-/ca/bc/surrey/ev-charger/ /ca/bc/surrey/ 301
-/ca/bc/surrey/ev-charger /ca/bc/surrey/ 301
-/ca/bc/vernon/ev-charger/ /ca/bc/vernon/ 301
-/ca/bc/vernon/ev-charger /ca/bc/vernon/ 301
-/ca/bc/victoria/ev-charger/ /ca/bc/victoria/ 301
-/ca/bc/victoria/ev-charger /ca/bc/victoria/ 301
+/ca/bc/abbotsford/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/abbotsford/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/burnaby/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/burnaby/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/chilliwack/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/chilliwack/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/coquitlam/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/coquitlam/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/fort-st-john/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/fort-st-john/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/kelowna/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/kelowna/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/langley/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/langley/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/maple-ridge/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/maple-ridge/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/nanaimo/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/nanaimo/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/penticton/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/penticton/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/prince-george/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/prince-george/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/richmond/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/richmond/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/surrey/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/surrey/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/vernon/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/vernon/ev-charger /ca/bc/ev-charger/ 301
+/ca/bc/victoria/ev-charger/ /ca/bc/ev-charger/ 301
+/ca/bc/victoria/ev-charger /ca/bc/ev-charger/ 301
 # BC appliances, HRV and smart thermostats: one province page each (2026-10-11); the city pages had nothing city-specific beyond utility and BC Hydro community postal codes
 
 # New York: categories with no program or no local difference go to the city hub (build_ny_pages.py, 2026-10-03)
@@ -1752,6 +1752,8 @@
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 /installers/profiles/ab/red-deer/express-plumbing-heating-inc/ /installers/ab/red-deer/heat-pump/ 301
 /installers/profiles/ab/red-deer/express-plumbing-heating-inc /installers/ab/red-deer/heat-pump/ 301
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 /ca/on/durham/* /ca/on/ 301

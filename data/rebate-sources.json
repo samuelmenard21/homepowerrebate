@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 567,
+ "count": 571,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -812,6 +812,17 @@
    "last_read": "2026-10-03"
   },
   {
+   "url": "https://www.epcor.com/ca/en/ab/edmonton/conservation/incentives.html",
+   "host": "www.epcor.com",
+   "region": "ab",
+   "check": "EPCOR conservation incentives (Edmonton)",
+   "facts": [
+    "ab-22-epcor-no-ev-or-lighting-incentive"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-16"
+  },
+  {
    "url": "https://www.epcor.com/ca/en/ab/edmonton/conservation/incentives/peak-rewards-thermostats.html",
    "host": "www.epcor.com",
    "region": "ab",
@@ -946,20 +957,6 @@
     "/ca/bc/victoria/solar/"
    ],
    "last_read": "2026-09-26"
-  },
-  {
-   "url": "https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/local-rebate-top-ups.html",
-   "host": "www.bchydro.com",
-   "region": "bc-blog",
-   "check": "BC Hydro EV charger local top-ups; BC Hydro local rebate top-ups",
-   "facts": [
-    "bc-blog-15-bc-hydro-ev-charger-local-top-ups"
-   ],
-   "used_by_pages": [
-    "/ca/bc/kamloops/ev-charger/",
-    "/ca/bc/squamish/ev-charger/"
-   ],
-   "last_read": "2026-10-03"
   },
   {
    "url": "https://www.bchydro.com/powersmart/ineligible-product-information.html",
@@ -1216,10 +1213,27 @@
    "last_read": "2026-09-26"
   },
   {
+   "url": "https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/local-rebate-top-ups.html",
+   "host": "www.bchydro.com",
+   "region": "bc-pages",
+   "check": "BC EV charger rebate top-ups; BC EV charger rebates for multi-unit buildings and workplaces; BC Hydro EV charger local top-ups; BC Hydro local rebate top-ups; BC Hydro: Charger rebate top-ups",
+   "facts": [
+    "bc-blog-15-bc-hydro-ev-charger-local-top-ups",
+    "bc-pages-40-bc-ev-charger-local-top-ups",
+    "bc-pages-41-bc-ev-charger-multi-unit-workplace"
+   ],
+   "used_by_pages": [
+    "/ca/bc/kamloops/ev-charger/",
+    "/ca/bc/squamish/ev-charger/",
+    "state-topics/bc-ev-charger"
+   ],
+   "last_read": "2026-10-16"
+  },
+  {
    "url": "https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/rebates-home-chargers.html",
    "host": "www.bchydro.com",
    "region": "bc-pages",
-   "check": "BC Hydro EV charger rebate; BC Hydro home charger rebates",
+   "check": "BC Hydro EV charger rebate; BC Hydro home charger rebates; BC Hydro: EV charger rebate for single-family homes",
    "facts": [
     "bc-blog-14-bc-hydro-ev-charger-rebate",
     "bc-pages-13-bc-hydro-ev-charger-rebate"
@@ -1227,15 +1241,42 @@
    "used_by_pages": [
     "/ca/bc/kamloops/ev-charger/",
     "/ca/bc/squamish/ev-charger/",
-    "/ca/bc/vancouver/ev-charger/"
+    "/ca/bc/vancouver/ev-charger/",
+    "state-topics/bc-ev-charger"
    ],
-   "last_read": "2026-10-03"
+   "last_read": "2026-10-16"
+  },
+  {
+   "url": "https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/rebates-home-chargers/rebates-ev-power-management-devices.html",
+   "host": "www.bchydro.com",
+   "region": "bc-pages",
+   "check": "BC Hydro EV power management device rebate; BC Hydro: EV power management device rebate",
+   "facts": [
+    "bc-pages-39-bc-hydro-ev-power-management-device"
+   ],
+   "used_by_pages": [
+    "state-topics/bc-ev-charger"
+   ],
+   "last_read": "2026-10-16"
+  },
+  {
+   "url": "https://www.bchydro.com/powersmart/residential/rebates-programs.html",
+   "host": "www.bchydro.com",
+   "region": "bc-pages",
+   "check": "BC Hydro residential rebates list; BC Hydro: Residential rebates and free programs",
+   "facts": [
+    "bc-pages-43-bc-hydro-no-lighting-or-service-upgrade-rebate"
+   ],
+   "used_by_pages": [
+    "state-topics/bc-ev-charger"
+   ],
+   "last_read": "2026-10-16"
   },
   {
    "url": "https://www.bchydro.com/powersmart/residential/rebates-programs/community-based-offers.html",
    "host": "www.bchydro.com",
    "region": "bc-pages",
-   "check": "BC Hydro community-based offers; BC Hydro: Community-based offers and incentives",
+   "check": "BC Hydro community-based offers; BC Hydro: Community-based offers; BC Hydro: Community-based offers and incentives",
    "facts": [
     "bc-pages-32-bc-hydro-community-based-offers"
    ],
@@ -1254,7 +1295,8 @@
     "/ca/bc/vernon/index/",
     "/ca/bc/victoria/heat-pump/",
     "/ca/bc/victoria/index/",
-    "state-topics/bc-appliances"
+    "state-topics/bc-appliances",
+    "state-topics/bc-ev-charger"
    ],
    "last_read": "2026-10-11"
   },
@@ -1439,6 +1481,19 @@
     "/ca/bc/victoria/windows/"
    ],
    "last_read": ""
+  },
+  {
+   "url": "https://www.fortisbc.com/rebates/detail/ev-charging-stations-for-homes",
+   "host": "www.fortisbc.com",
+   "region": "bc-pages",
+   "check": "FortisBC home EV charger rebate (CleanBC Go Electric); FortisBC: EV charging stations for homes",
+   "facts": [
+    "bc-pages-42-fortisbc-home-ev-charger"
+   ],
+   "used_by_pages": [
+    "state-topics/bc-ev-charger"
+   ],
+   "last_read": "2026-10-16"
   },
   {
    "url": "https://www.fortisbc.com/rebates/detail/heat-pump-water-heater-rebate",

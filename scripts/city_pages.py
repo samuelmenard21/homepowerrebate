@@ -51,10 +51,17 @@ class Region:
                     if (c / "index.html").exists():
                         self.group_of[c.name] = g
             self.names = {c: over.get(c, c.replace("-", " ").title()) for c in sorted(self.group_of)}
+        elif self.cfg.get("city_source") == "ca_cities":  # California: cities, metro folders and utilities in scripts/ca_cities.py
+            from ca_cities import CITIES
+            self.meta = CITIES
+            self.names = {c: v["name"] for c, v in CITIES.items()}
+            self.dirs = {c: (v.get("hub") or f"/{self.path}/{v['area']}/{c}/").strip("/") for c, v in CITIES.items()}
         else:
             self.names = self.cfg["names"]
 
     def city_dir(self, slug):
+        if getattr(self, "dirs", None):
+            return self.dirs[slug]
         g = self.group_of.get(slug)
         return f"{self.path}/{g}/{slug}" if g else f"{self.path}/{slug}"
 
@@ -71,7 +78,28 @@ class Region:
         rows.sort(key=lambda r: -rank.score(r))
         return rows[:5]
 
+    def installer_html_ca(self, slug, name, cat, intro):
+        """California: installers/json/ca[/solar]/<city>.json, highest rating first, always linking the full list."""
+        ic = self.cfg["installers_ca"]
+        kind = ic["kinds"].get(cat)
+        if not kind:
+            return ""
+        p = ROOT / "installers/json" / self.code / ("solar" if kind == "solar" else "") / f"{slug}.json"
+        rows = [r for r in json.loads(p.read_text()) if r.get("rating") and r.get("reviews", 0) >= ic["min"]] if p.exists() else []
+        rows = sorted(rows, key=lambda r: (-r["rating"], -r["reviews"]))[:5]
+        if not rows:
+            return ""
+        out = ""
+        for r in rows:
+            site = re.sub(r"[?&]utm_[^&]*", "", r.get("website") or "").rstrip("?")
+            link = f'<a class="site-link" href="{e(site)}" target="_blank" rel="noopener">Visit site &rarr;</a>' if site else ""
+            out += f'<div class="installer-card"><div><div class="name">{e(r["name"])}</div><div class="stars">&#9733; {r["rating"]:.1f} ({r["reviews"]:,} reviews)</div></div>{link}</div>\n'
+        return (f"<h2>Installers in {e(name)}</h2><p>{intro}</p>\n{out}"
+                f'<p style="margin-top:8px;"><a href="/installers/{self.code}/{slug}/{"solar" if kind == "solar" else "heat-pump"}/">See all {e(name)} installers &rarr;</a></p>')
+
     def installer_html(self, slug, name, cat, intro):
+        if "installers_ca" in self.cfg:
+            return self.installer_html_ca(slug, name, cat, intro)
         rows = self.installers(slug, cat)
         if not rows:
             return ""
@@ -113,6 +141,12 @@ class Region:
         if "from_page" in p:
             u, t = d.get("program_url", p["from_page"][0]), d.get("program_label", p["from_page"][1])
             return f'<a href="{u}">{e(t)} &rarr;</a>'
+        if "by_city_utility" in p:  # California: the page of the city's utility
+            u = self.meta[slug]["utility"]
+            if u not in p["by_city_utility"] or slug in p.get("skip", []):
+                return ""
+            ps, label = p["by_city_utility"][u]
+            return f'<a href="/programs/{ps}/">Every {e(label)} rebate &rarr;</a>'
         g = self.group_of.get(slug)
         links = p.get("cities", {}).get(slug) or (self.groups[g]["program_links"] if g else None) or p.get("default", [])
         out = " ".join(f'<a href="{u}">{t} &rarr;</a>' for u, t in links)
@@ -152,6 +186,7 @@ class Region:
         inst = "" if d.get("no_installers") else self.installer_html(slug, name, cat, d.get("installers_intro", ""))
         q = self.cfg.get("quotes", "/get-quotes/?province={code}&amp;city={slug}")  # null: no quote link (the calculator box asks for the city)
         quotes = q.format(code=self.code, slug=slug) if q else None
+        pl = self.program_links(slug, cat, d)
         article = f"""<h2>{d['cards_heading']}</h2>
 {d['cards_intro']}
 <div class="rebate-grid">
@@ -159,14 +194,13 @@ class Region:
 </div>
 {d.get('after_cards', '')}
 {kit.sections(d)}
-{guides}
-{inst + chr(10) if self.cfg.get("installer_block", True) else ""}{kit.claim(d)}
+{"" if self.cfg.get("no_guides") else guides + chr(10)}{inst + chr(10) if self.cfg.get("installer_block", True) else ""}{kit.claim(d)}
 {kit.callout(f"/calculator/{self.code}/", self.calc_label, quotes, name, self.cfg.get("callout_near_you", False))}
 <h2>Common questions</h2>
 {kit.faq(d)}
 <h2>What to do next</h2>
 {d['next']}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}. <a href="{hub}">All {e(name)} rebates &rarr;</a> {self.program_links(slug, cat, d)}</p>"""
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}. <a href="{hub}">All {e(name)} rebates &rarr;</a>{(" " + pl) if pl else ""}</p>"""
         bans = [((lambda a, b=b: re.search(b["if"], a) and not any(u in a for u in b.get("unless", []))), b["msg"]) for b in self.cfg.get("bans", [])]
         w = kit.quality_gate(article, d, path, bans)
         g = self.group_of.get(slug)
@@ -178,6 +212,10 @@ class Region:
         nslug, nname = ("", "") if state else (slug, name)
         if state:  # the region hub has no city link row under the hero
             top = None
+        elif is_hub and self.cfg.get("hub_top_blank_line"):
+            top = "\n"
+        if not self.cfg.get("nav_city", True):
+            nslug, nname = "", ""
         kit.write_page(path, d["title"], d["desc"], lds, navfooter.render_nav(self.code, nslug), crumb, kit.hero(d, "header" if state else "section"), top, article,
                        navfooter.render_footer(self.code, nslug, nname, path))
         return path, w
@@ -236,7 +274,7 @@ def main(code, argv=None):
         print("built", *reg.state_hub())
         return
     only = {a for a in argv if not a.startswith("--")}
-    cats = ["index"] if "--hubs" in argv else reg.cfg["built"]
+    cats = ["index"] if "--hubs" in argv else (["index"] + reg.cfg["built"] if reg.cfg.get("hubs_with_cities") else reg.cfg["built"])
     for slug in (sorted(reg.names) if reg.groups else reg.names):
         if only and slug not in only:
             continue

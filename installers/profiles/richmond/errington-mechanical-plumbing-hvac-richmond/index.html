@@ -326,6 +326,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
 
   <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked 2026-07-21. Spot an error? <a href="/contact/?subject=Correction: Errington Mechanical - Plumbing &amp; HVAC Richmond">Let us know</a>.</p>
 </div>
+<!-- PROFILE-QUOTE-START -->
 <script>
 (function() {
   var form = document.getElementById('ip-quote-form');
@@ -341,10 +342,13 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
         firstname: document.getElementById('ip-name').value,
         email: document.getElementById('ip-email').value,
         phone: document.getElementById('ip-phone').value,
+        page_url: location.pathname,
         city: "Richmond",
         province: "BC",
-        source: 'installer-errington-mechanical-plumbing-hvac-richmond',
-        installer: "Errington Mechanical - Plumbing & HVAC Richmond"
+        service: "heat-pump",
+        source: "installer-errington-mechanical-plumbing-hvac-richmond",
+        installer_name: "Errington Mechanical - Plumbing & HVAC Richmond",
+        installer_email: "info@erringtonmech.ca"
       })
     }).catch(function(err) { console.error('quote request error', err); })
       .finally(function() {
@@ -354,6 +358,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
   });
 })();
 </script>
+<!-- PROFILE-QUOTE-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Richmond where relevant -->

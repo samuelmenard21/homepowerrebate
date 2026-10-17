@@ -309,6 +309,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
 <!-- PROFILE-BADGE-END -->
   <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked 2026-08-27. Spot an error? <a href="/contact/?subject=Correction: Schuler Service, Inc.">Let us know</a>.</p>
 </div>
+<!-- PROFILE-QUOTE-START -->
 <script>
 (function() {
   var form = document.getElementById('ip-quote-form');
@@ -316,7 +317,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
     e.preventDefault();
     if (document.getElementById('ip-hp').value) return;
     var btn = document.getElementById('ip-quote-btn');
-    btn.disabled = true; btn.textContent = 'Sending&hellip;';
+    btn.disabled = true; btn.textContent = 'Sending…';
     fetch('https://leads.homepowerrebate.com/estimate-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -324,10 +325,13 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
         firstname: document.getElementById('ip-name').value,
         email: document.getElementById('ip-email').value,
         phone: document.getElementById('ip-phone').value,
+        page_url: location.pathname,
         city: "Allentown",
         province: "PA",
-        source: 'installer-schuler-service-inc',
-        installer: "Schuler Service, Inc."
+        service: "heat-pump",
+        source: "installer-schuler-service-inc",
+        installer_name: "Schuler Service, Inc.",
+        installer_email: ""
       })
     }).catch(function(err) { console.error('quote request error', err); })
       .finally(function() {
@@ -337,6 +341,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
   });
 })();
 </script>
+<!-- PROFILE-QUOTE-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Allentown where relevant -->

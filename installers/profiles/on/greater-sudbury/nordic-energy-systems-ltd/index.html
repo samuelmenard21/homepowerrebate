@@ -325,6 +325,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
 <!-- PROFILE-BADGE-END -->
   <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked 2026-08-09. Spot an error? <a href="/contact/?subject=Correction: Nordic Energy Systems Ltd">Let us know</a>.</p>
 </div>
+<!-- PROFILE-QUOTE-START -->
 <script>
 (function() {
   var form = document.getElementById('ip-quote-form');
@@ -340,10 +341,13 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
         firstname: document.getElementById('ip-name').value,
         email: document.getElementById('ip-email').value,
         phone: document.getElementById('ip-phone').value,
+        page_url: location.pathname,
         city: "Greater Sudbury",
         province: "ON",
-        source: 'installer-nordic-energy-systems-ltd',
-        installer: "Nordic Energy Systems Ltd"
+        service: "solar",
+        source: "installer-nordic-energy-systems-ltd",
+        installer_name: "Nordic Energy Systems Ltd",
+        installer_email: "sales@nordicenergy.ca"
       })
     }).catch(function(err) { console.error('quote request error', err); })
       .finally(function() {
@@ -353,6 +357,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
   });
 })();
 </script>
+<!-- PROFILE-QUOTE-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Greater Sudbury where relevant -->

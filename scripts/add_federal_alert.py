@@ -6,8 +6,9 @@ Pages: the federal pillar page and articles, every Canadian province and city he
 Added 2026-10-17 (the launch list is the top metric, so the box goes wherever a Canadian reads about rebates): the homepage
 (right under the hero, with id="federal-alert" for the hero link), /ca/, every Canadian province hub (after the open-programs
 table), every Canadian city hub and city or province category page (after the rebate cards), the Canadian calculators (after
-the calculator), Canadian program pages, Canadian rebate and heat pump blog posts, and the rebate finder (/get-quotes/, shown
-only when a Canadian province is picked).
+the calculator), Canadian program pages, Canadian rebate and heat pump blog posts, the rebate finder (/get-quotes/, shown
+only when a Canadian province is picked) and the share page /heat-pump-rebate-alert/ (share row always open there; elsewhere
+it opens after a signup).
 The form posts to the lead router's /alert route (table `alerts`, schema-alerts.sql). One shared component: this script writes
 plain HTML from block(), styles are .fed-alert in _partials/nav-footer.html, and the submit handler sits once in the same partial's
 SHARED JS (stamped on every page), so a change to the box is one edit here or there, never per page. Which pages get it, with
@@ -18,6 +19,7 @@ one (add_federal_links.py), otherwise before the second <h2> of the article, so 
 Usage: python3 scripts/add_federal_alert.py"""
 import html
 import json
+from urllib.parse import quote
 import re
 import sys
 from pathlib import Path
@@ -30,6 +32,9 @@ S, E = "<!-- FED-ALERT-START -->", "<!-- FED-ALERT-END -->"
 FED_HP_END = "<!-- FED-HP-END -->"
 HERE = "<!-- FED-ALERT-HERE -->"
 GUIDE = "/programs/national-heat-pump-rebate/"
+SHARE_PAGE = "/heat-pump-rebate-alert/"  # short page made for sharing (scripts/build_alert_page.py); noindex
+SHARE_URL = "https://homepowerrebate.com" + SHARE_PAGE
+SHARE_TEXT = "Ottawa is bringing in a heat pump rebate of up to $10,000. Get an email the day it opens:"
 OTTAWA = "https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html"
 PROVINCES = [("AB", "Alberta"), ("BC", "British Columbia"), ("MB", "Manitoba"), ("NB", "New Brunswick"), ("NL", "Newfoundland and Labrador"),
              ("NS", "Nova Scotia"), ("ON", "Ontario"), ("PE", "Prince Edward Island"), ("QC", "Quebec"), ("SK", "Saskatchewan"),
@@ -81,7 +86,19 @@ STEPS = [("Apply online", "when your heating breaks or gets old"), ("Approved in
          ("Payment approved in 5 days", "sent by direct deposit after you upload receipts")]
 
 
-def block(copy, province="", city="", follow=False, anchor="", big=False, wrap=False, more=True):
+def share_row(open_=False):
+    """Share buttons. Hidden until a signup on every page except the share page itself; each link carries its own src."""
+    u = lambda s: f"{SHARE_URL}?src={s}"
+    links = [("Facebook", "facebook", f"https://www.facebook.com/sharer/sharer.php?u={quote(u('share-facebook'), safe='')}"),
+             ("Email", "email", f"mailto:?subject={quote('Heat pump rebate of up to $10,000 is coming')}&body={quote(SHARE_TEXT + ' ' + u('share-email'))}"),
+             ("Text message", "text", f"sms:?&body={quote(SHARE_TEXT + ' ' + u('share-text'))}")]
+    btns = "".join(f'<a href="{html.escape(h)}" data-method="{m}" rel="noopener" target="_blank">{n}</a>' for n, m, h in links)
+    btns += f'<button type="button" data-method="copy" data-copy="{u("share-link")}">Copy link</button>'
+    lead = "Know someone with old heating? Send them this." if not open_ else "Tell a friend or neighbour:"
+    return f'<div class="fed-alert-share"{"" if open_ else " hidden"}><p>{lead}</p><div>{btns}</div></div>'
+
+
+def block(copy, province="", city="", follow=False, anchor="", big=False, wrap=False, more=True, share_open=False):
     """The one alert box. province "" shows a province picker; follow=True is the rebate finder version, hidden until a
     Canadian province is picked there (the shared JS reads data-follow). big=True adds "how it will work" (homepage, hubs,
     federal and heat pump pages). wrap=True centres it on full-width pages (homepage, hubs).
@@ -109,11 +126,12 @@ def block(copy, province="", city="", follow=False, anchor="", big=False, wrap=F
             '<p><b>$2,000</b><span>for other homeowners who qualify</span></p></div>'
             f'<p class="fed-alert-title">{html.escape(title)}</p>'
             f'<p class="fed-alert-body">{html.escape(body)}</p>{steps}{link}'
+            '<p class="fed-alert-count" hidden></p>'
             f'<form class="fed-alert-form" data-list="federal-hp"{data}>'
             '<label for="fed-alert-email">Email</label><input id="fed-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email">'
             f'{sel}<input class="fed-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
             '<button type="submit">Email me when it opens</button></form>'
-            '<p class="fed-alert-done" role="status" hidden></p>'
+            f'<p class="fed-alert-done" role="status" hidden></p>{share_row(share_open)}'
             '<p class="fed-alert-note"><b>What you get:</b> a quick hello now, one email the day applications open, and one when Ottawa says who gets $10,000. That&#x27;s it. No spam, unsubscribe anytime. '
             f'Ottawa also has <a href="{OTTAWA}">its own sign-up</a>.</p></section>{post}{E}\n')
 
@@ -197,6 +215,7 @@ def canadian_pages():
     ca = [r for r in regions if r["country"] == "ca"]
     city_dirs = {(r["code"], c[0].strip("/").split("/")[-1]): c[1] for r in ca for c in r["cities"]}
     out = [("index.html", HOME, "", "", ("after:<!-- HOME-HERO-END -->",), {"anchor": "federal-alert", "big": True, "wrap": True}),
+           (SHARE_PAGE.strip("/"), HOME, "", "", ("here",), {"anchor": "federal-alert", "big": True, "share_open": True}),
            ("ca", (HUB[0], HUB[1].replace("the {province} rebates", "provincial rebates")), "", "", ("after:<!-- HP-LINKS-END -->", "h2"), {"big": True, "wrap": True}),
            ("get-quotes", NOT_COUNTED, "", "", ("finder",), {"follow": True})]
     for r in ca:

@@ -14,8 +14,9 @@
 <style>@font-face{font-family:'Fraunces';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://fonts.gstatic.com/s/fraunces/v38/6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeP2Xz5c.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Inter Tight';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsH8ahuQ2e8.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}</style>
 <!-- FONT-PRELOAD-END -->
 <link rel="stylesheet" href="/assets/tpl/article.css?v=ebfbf306a0" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=739c67caed" data-hpr-site-css><link rel="stylesheet" href="/assets/tpl/article-2a13bcb7.css?v=05461c5972" data-hpr-tpl>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Where do the roof numbers come from?", "acceptedAnswer": {"@type": "Answer", "text": "From Google's Solar API, which models your roof from aerial imagery: how many panels fit, how much sun each roof section gets and the yearly output of different layouts. Coverage is not complete, and imagery can be a few years old."}}, {"@type": "Question", "name": "Is my address stored?", "acceptedAnswer": {"@type": "Answer", "text": "We do not save your address or your results. The address goes to Google to find your roof. To stop abuse we keep a running count of lookups and a visitor's IP address for up to an hour, nothing more."}}, {"@type": "Question", "name": "Why does Ontario ask for my electricity use?", "acceptedAnswer": {"@type": "Answer", "text": "Ontario's solar rebate does not allow a system under a net metering agreement, so the system must be sized to the electricity you use at home. Without your use we can only show the biggest system your roof could hold, which may be larger than the program allows."}}, {"@type": "Question", "name": "Is this a quote?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is an estimate from satellite data and published program rules. A licensed installer has to measure your roof, check shade and your electrical panel, and design the system."}}, {"@type": "Question", "name": "Why does it sometimes say there is no data?", "acceptedAnswer": {"@type": "Answer", "text": "Google does not have roof data for every address, especially in some smaller communities. In that case the rebate rules for your region are still on our rebate calculator."}}]}</script><meta name="theme-color" content="#faf7f2">
+<link rel="stylesheet" href="/assets/tpl/article-2a13bcb7.css?v=05461c5972" data-hpr-tpl>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Where do the roof numbers come from?", "acceptedAnswer": {"@type": "Answer", "text": "From Google's Solar API, which models your roof from aerial imagery: how many panels fit, how much sun each roof section gets and the yearly output of different layouts. Coverage is not complete, and imagery can be a few years old."}}, {"@type": "Question", "name": "Is my address stored?", "acceptedAnswer": {"@type": "Answer", "text": "We do not save your address or your results. The address goes to Google to find your roof. To stop abuse we keep a running count of lookups and a visitor's IP address for up to an hour, nothing more."}}, {"@type": "Question", "name": "Why does Ontario ask for my electricity use?", "acceptedAnswer": {"@type": "Answer", "text": "Ontario's solar rebate does not allow a system under a net metering agreement, so the system must be sized to the electricity you use at home. Without your use we can only show the biggest system your roof could hold, which may be larger than the program allows."}}, {"@type": "Question", "name": "Is this a quote?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is an estimate from satellite data and published program rules. A licensed installer has to measure your roof, check shade and your electrical panel, and design the system."}}, {"@type": "Question", "name": "Why does it sometimes say there is no data?", "acceptedAnswer": {"@type": "Answer", "text": "Google does not have roof data for every address, especially in some smaller communities. In that case the rebate rules for your region are still on our rebate calculator."}}]}</script><link rel="stylesheet" href="/assets/site.css?v=eb67898d82" data-hpr-site-css>
+<meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -149,7 +150,7 @@
 <div><label for="rc-use">Yearly electricity use in kWh (optional)</label><input id="rc-use" type="number" min="0" step="100" placeholder="e.g. 9000" inputmode="numeric"></div></div>
 <div><label for="rc-addr">Street address</label><input id="rc-addr" type="text" maxlength="200" placeholder="123 Main St, Salem, MA" required></div>
 <button id="rc-go" type="submit">Check my roof</button>
-<p class="rc-small" style="margin:0">Your use is on your electricity bill (monthly kWh times 12). Rebate amounts last verified October 3, 2026. Roof data: Google Solar API.</p></form>
+<p class="rc-small" style="margin:0">Your use is on your electricity bill (monthly kWh times 12). Rebate amounts last verified October 6, 2026. Roof data: Google Solar API.</p></form>
 <div id="rc-out" aria-live="polite"></div>
 <h2>How this works</h2>
 <p>Google models your roof from aerial imagery. We take its panel count and yearly output, then apply published program rules for your province or state. Each rebate shows its source and the date we last read it. Where we have not verified a program, we say so and show no number.</p>
@@ -251,7 +252,7 @@
 <!-- CANONICAL-FOOTER-END -->
 <script>
 (function(){
-var D={"assume": {"ac_factor": 0.85, "ac_note": "Google reports yearly output as DC energy. We multiply by 0.85 as a typical allowance for inverter and wiring losses. This is our assumption, not Google's or a program's number; an installer's design will differ."}, "unverified": "We have not verified solar incentives for {region} yet, so we do not show a rebate. Your roof numbers above are still real.", "federal": {"US": {"text": "The federal 25D residential solar credit applies only to systems installed through December 31, 2025, so it does not apply to a 2026 install.", "src": [{"t": "Federal 25C / 25D tax credits", "u": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit", "d": "2026-09-26", "s": "closed"}]}, "CA": {"text": "The federal Canada Greener Homes Loan is closed to new applicants, so there is no federal home solar program to count on.", "src": [{"t": "Canada Greener Homes Loan", "u": "https://www.cghli.ca/", "d": "2026-09-26", "s": "closed"}]}}, "regions": {"CA-ON": {"name": "Ontario", "page": "/ca/on/toronto/solar/", "sizeToUsage": true, "programs": [{"kind": "per_kw", "name": "Home Renovation Savings solar", "rate": 1000, "cap": 5000, "note": "$1,000 per kW DC, up to $5,000, and never more than 50% of eligible cost. The system must be sized to your own use (no net metering), on the roof, and a first-time install.", "src": [{"t": "Home Renovation Savings solar and storage stream rules", "u": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Solar-and-Storage-Program-Stream-Requirements.pdf", "d": "2026-10-03", "s": "active"}, {"t": "Home Renovation Savings (HRS) - solar and battery", "u": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Solar-and-Storage-Program-Stream-Requirements.pdf", "d": "2026-10-03", "s": "active"}]}]}, "CA-BC": {"name": "British Columbia", "page": "/ca/bc/vancouver/solar/", "sizeToUsage": false, "programs": [{"kind": "per_kw", "name": "BC Hydro solar rebate", "rate": 1000, "cap": 5000, "note": "$1,000 per kW DC, up to $5,000, and never more than 50% of installed cost.", "src": [{"t": "BC Hydro solar rebate", "u": "https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html", "d": "2026-10-03", "s": "active"}]}, {"kind": "info", "name": "Selling power back", "note": "Net metering is closed to new BC Hydro customers. The new self-generation rate pays 10 cents per kWh for exports.", "src": [{"t": "BC Hydro self-generation rate", "u": "https://www.bchydro.com/toolbar/about/strategies-plans-regulatory/rate-design/self-generation-rate-updates.html", "d": "2026-09-26", "s": "info"}]}]}, "US-MA": {"name": "Massachusetts", "page": "/us/ma/", "sizeToUsage": false, "programs": [{"kind": "per_kwh", "name": "SMART 3.0", "rate": 0.03, "note": "A flat $0.03 per kWh generated (low-income customers $0.06) for systems up to 25 kW, in National Grid, Eversource and Unitil territory. Municipal light plant towns are not covered. The payment term is not confirmed on the page we read.", "src": [{"t": "SMART 3.0 (small residential)", "u": "https://www.mass.gov/info-details/smart-30-program-details", "d": "2026-09-26", "s": "active"}]}, {"kind": "pct_cap", "name": "State solar tax credit", "pct": 15, "cap": 1000, "note": "15% of the system cost, up to $1,000.", "src": [{"t": "MA state solar tax credit", "u": "https://goclean.masscec.com/homeowners/solar-electricity/", "d": "2026-09-26", "s": "active"}]}]}, "US-NY": {"name": "New York", "page": "/us/ny/", "sizeToUsage": false, "programs": [{"kind": "info", "name": "NY-Sun and state tax credit", "note": "NY-Sun incentives come through a participating contractor, depend on project size and location and phase down over time. New York also has a 25% state personal tax credit for panels at your residence. We do not compute these because the per-watt amount changes by block.", "src": [{"t": "NY-Sun incentive, NY solar tax credit and property tax exemption", "u": "https://www.nyserda.ny.gov/All-Programs/NY-Sun/On-site-Solar/Homes/Paying-for-Solar", "d": "2026-10-03", "s": "active"}]}]}, "US-CO": {"name": "Colorado", "page": "/us/co/", "sizeToUsage": false, "programs": [{"kind": "per_kw_cond", "name": "Xcel Solar*Rewards", "rate": 1000, "maxkw": 10, "note": "In 2026 the upfront $1 per watt, up to 10 kW, is only for income-qualified and Disproportionately Impacted Community households. Everyone else gets net metering only.", "src": [{"t": "Xcel Energy Solar*Rewards (residential, 2026)", "u": "https://co.my.xcelenergy.com/s/renewable/solar-rewards", "d": "2026-09-29", "s": "active"}]}]}, "US-PA": {"name": "Pennsylvania", "page": "/us/pa/", "sizeToUsage": false, "programs": [{"kind": "info", "name": "No open solar rebate", "note": "The state Sunshine program stopped taking applications in 2013 and the PECO solar rebate window closed.", "src": [{"t": "PA Sunshine Solar Program", "u": "https://www.dep.pa.gov/Business/Energy/OfficeofPollutionPrevention/Pages/default.aspx", "d": "2026-09-29", "s": "closed"}, {"t": "PECO Act 129 solar rebate", "u": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts", "d": "2026-09-29", "s": "closed"}]}]}, "CA-NS": {"name": "Nova Scotia", "page": "/ca/ns/", "sizeToUsage": false, "programs": [{"kind": "info", "name": "Closed to homeowners", "note": "The SolarHomes rebate stopped taking applications in April 2025. Halifax offers Solar City financing, which is a loan, not a rebate.", "src": [{"t": "SolarHomes (residential)", "u": "https://www.efficiencyns.ca/programs-rebates/solarhomes", "d": "2026-09-26", "s": "closed"}, {"t": "Halifax Solar City", "u": "https://www.halifax.ca/home-property/solar-projects/about-solar-city", "d": "2026-10-03", "s": "active"}]}]}, "US-CA": {"name": "California", "page": "/us/ca/", "sizeToUsage": false, "programs": [{"kind": "info", "name": "Net billing", "note": "Customers of PG&E, SCE and SDG&E who apply for new solar are on the Net Billing Tariff, which pays less for exports than the old net metering. Several municipal utilities have their own rebates, so check your utility.", "src": [{"t": "Net Billing Tariff (NEM 3.0)", "u": "https://www.cpuc.ca.gov/nbt", "d": "2026-09-26", "s": "info"}]}]}}}, W="https://roof.homepowerrebate.com";
+var D={"assume": {"ac_factor": 0.85, "ac_note": "Google reports yearly output as DC energy. We multiply by 0.85 as a typical allowance for inverter and wiring losses. This is our assumption, not Google's or a program's number; an installer's design will differ."}, "unverified": "We have not verified solar incentives for {region} yet, so we do not show a rebate. Your roof numbers above are still real.", "federal": {"US": {"text": "The federal 25D residential solar credit applies only to systems installed through December 31, 2025, so it does not apply to a 2026 install.", "src": [{"t": "Federal 25C / 25D tax credits", "u": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit", "d": "2026-09-26", "s": "closed"}]}, "CA": {"text": "The federal Canada Greener Homes Loan is closed to new applicants, so there is no federal home solar program to count on.", "src": [{"t": "Canada Greener Homes Loan", "u": "https://www.cghli.ca/", "d": "2026-09-26", "s": "closed"}]}}, "regions": {"CA-ON": {"name": "Ontario", "page": "/ca/on/toronto/solar/", "sizeToUsage": true, "programs": [{"kind": "per_kw", "name": "Home Renovation Savings solar", "rate": 1000, "cap": 5000, "note": "$1,000 per kW DC, up to $5,000, and never more than 50% of eligible cost. The system must be sized to your own use (no net metering), on the roof, and a first-time install.", "src": [{"t": "Home Renovation Savings solar and storage stream rules", "u": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Solar-and-Storage-Program-Stream-Requirements.pdf", "d": "2026-10-03", "s": "active"}, {"t": "Home Renovation Savings (HRS) - solar and battery", "u": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Solar-and-Storage-Program-Stream-Requirements.pdf", "d": "2026-10-03", "s": "active"}]}]}, "CA-BC": {"name": "British Columbia", "page": "/ca/bc/vancouver/solar/", "sizeToUsage": false, "programs": [{"kind": "per_kw", "name": "BC Hydro solar rebate", "rate": 1000, "cap": 5000, "note": "$1,000 per kW DC, up to $5,000, and never more than 50% of installed cost.", "src": [{"t": "BC Hydro solar rebate", "u": "https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html", "d": "2026-10-03", "s": "active"}]}, {"kind": "info", "name": "Selling power back", "note": "Net metering is closed to new BC Hydro customers. The new self-generation rate pays 10 cents per kWh for exports.", "src": [{"t": "BC Hydro self-generation rate", "u": "https://www.bchydro.com/toolbar/about/strategies-plans-regulatory/rate-design/self-generation-rate-updates.html", "d": "2026-09-26", "s": "info"}]}]}, "US-MA": {"name": "Massachusetts", "page": "/us/ma/", "sizeToUsage": false, "programs": [{"kind": "per_kwh", "name": "SMART 3.0", "rate": 0.03, "note": "A flat $0.03 per kWh generated (low-income customers $0.06) for systems up to 25 kW, in National Grid, Eversource and Unitil territory. Municipal light plant towns are not covered. The payment term is not confirmed on the page we read.", "src": [{"t": "SMART 3.0 (small residential)", "u": "https://www.mass.gov/info-details/smart-30-program-details", "d": "2026-09-26", "s": "active"}]}, {"kind": "pct_cap", "name": "State solar tax credit", "pct": 15, "cap": 1000, "note": "15% of the system cost, up to $1,000.", "src": [{"t": "MA state solar tax credit", "u": "https://goclean.masscec.com/homeowners/solar-electricity/", "d": "2026-09-26", "s": "active"}]}]}, "US-NY": {"name": "New York", "page": "/us/ny/", "sizeToUsage": false, "programs": [{"kind": "info", "name": "NY-Sun and state tax credit", "note": "NY-Sun incentives come through a participating contractor, depend on project size and location and phase down over time. New York also has a 25% state personal tax credit for panels at your residence. We do not compute these because the per-watt amount changes by block.", "src": [{"t": "NY-Sun incentive, NY solar tax credit and property tax exemption", "u": "https://www.nyserda.ny.gov/All-Programs/NY-Sun/On-site-Solar/Homes/Paying-for-Solar", "d": "2026-10-03", "s": "active"}]}]}, "US-CO": {"name": "Colorado", "page": "/us/co/", "sizeToUsage": false, "programs": [{"kind": "per_kw_cond", "name": "Xcel Solar*Rewards", "rate": 1000, "maxkw": 10, "note": "In 2026 the upfront $1 per watt, up to 10 kW, is only for income-qualified and Disproportionately Impacted Community households. Everyone else gets net metering only.", "src": [{"t": "Xcel Energy Solar*Rewards (residential, 2026)", "u": "https://co.my.xcelenergy.com/s/renewable/solar-rewards", "d": "2026-09-29", "s": "active"}]}]}, "US-PA": {"name": "Pennsylvania", "page": "/us/pa/", "sizeToUsage": false, "programs": [{"kind": "info", "name": "No open solar rebate", "note": "The state Sunshine program stopped taking applications in 2013 and the PECO solar rebate window closed.", "src": [{"t": "PA Sunshine Solar Program", "u": "https://www.dep.pa.gov/Business/Energy/OfficeofPollutionPrevention/Pages/default.aspx", "d": "2026-10-05", "s": "closed"}, {"t": "PECO Act 129 solar rebate", "u": "https://pecohomerebateprogram.com/solar-rebates.html", "d": "2026-10-06", "s": "active"}]}]}, "CA-NS": {"name": "Nova Scotia", "page": "/ca/ns/", "sizeToUsage": false, "programs": [{"kind": "info", "name": "Closed to homeowners", "note": "The SolarHomes rebate stopped taking applications in April 2025. Halifax offers Solar City financing, which is a loan, not a rebate.", "src": [{"t": "SolarHomes (residential)", "u": "https://www.efficiencyns.ca/programs-rebates/solarhomes", "d": "2026-10-05", "s": "closed"}, {"t": "Halifax Solar City", "u": "https://www.halifax.ca/home-property/solar-projects/about-solar-city", "d": "2026-10-03", "s": "active"}]}]}, "US-CA": {"name": "California", "page": "/us/ca/", "sizeToUsage": false, "programs": [{"kind": "info", "name": "Net billing", "note": "Customers of PG&E, SCE and SDG&E who apply for new solar are on the Net Billing Tariff, which pays less for exports than the old net metering. Several municipal utilities have their own rebates, so check your utility.", "src": [{"t": "Net Billing Tariff (NEM 3.0)", "u": "https://www.cpuc.ca.gov/nbt", "d": "2026-09-26", "s": "info"}]}]}}}, W="https://roof.homepowerrebate.com";
 var $=function(i){return document.getElementById(i)};
 function esc(s){var d=document.createElement('div');d.textContent=String(s==null?'':s);return d.innerHTML}
 function money(n){return '$'+Math.round(n).toLocaleString('en-US')}
@@ -374,35 +375,86 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.textContent = originalText;
   }
 });
-// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; the handler lives here once for every page).
-// A box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
-document.addEventListener('submit', async function (e) {
-  var f = e.target;
-  if (!f.classList || !f.classList.contains('fed-alert-form')) return;
-  e.preventDefault();
-  var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
-  b.disabled = true; b.textContent = 'Saving...';
-  try {
-    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) });
-    if (!r.ok) throw new Error('alert signup failed');
-    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
-  } catch (err) {
-    done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; this code lives here once for every page).
+// - src: ?src= or ?utm_source= on arrival is kept for the visit and sent with the signup and the view count, so the weekly
+//   report (scripts/federal_alert_report.py) shows which shared or installer links bring people in.
+// - view: one anonymous ping to /alert/seen the first time a box is half on screen (no IP, cookie or person stored).
+// - count: "Join N people already on the list" once the list has 50 or more; cached 10 minutes in the tab.
+// - a box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
+// - after a signup the box shows its share row; share links carry their own src.
+(function () {
+  var boxes = document.querySelectorAll('.fed-alert');
+  if (!boxes.length) return;
+  var API = 'https://leads.homepowerrebate.com', q = new URLSearchParams(location.search), src = q.get('src') || q.get('utm_source') || '';
+  try { if (src) sessionStorage.setItem('hpr-src', src); else src = sessionStorage.getItem('hpr-src') || ''; } catch (e) {}
+  var page = location.pathname + (src ? '?src=' + encodeURIComponent(src).slice(0, 60) : '');
+  function ev(name, extra) { if (window.gtag) window.gtag('event', name, Object.assign({ page_path: location.pathname, alert_src: src || '(none)' }, extra || {})); }
+  if ('IntersectionObserver' in window && location.hostname === 'homepowerrebate.com') {  // local previews never count
+    var seen = 0, io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (!en.isIntersecting || seen) return;
+        seen = 1; io.disconnect();
+        var body = JSON.stringify({ list: 'federal-hp', page: page });
+        if (navigator.sendBeacon) navigator.sendBeacon(API + '/alert/seen', body);
+        else fetch(API + '/alert/seen', { method: 'POST', body: body, keepalive: true }).catch(function () {});
+        ev('fed_alert_view');
+      });
+    }, { threshold: 0.5 });
+    boxes.forEach(function (b) { io.observe(b); });
   }
-  done.hidden = false;
-});
-document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
-  var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), c = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
-  if (!r) return;
-  function upd() {
-    var on = ca.indexOf(r.value) >= 0;
-    box.hidden = !on;
-    f.dataset.province = on ? r.value.toUpperCase() : '';
-    f.dataset.city = on && c && c.value ? c.options[c.selectedIndex].text : '';
+  function showCount(n) {
+    if (!(n >= 50)) return;
+    document.querySelectorAll('.fed-alert-count').forEach(function (p) { p.textContent = 'Join ' + n.toLocaleString('en-CA') + ' people already on the list'; p.hidden = false; });
   }
-  r.addEventListener('change', upd); if (c) c.addEventListener('change', upd);
-  new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
-});
+  var c = null;
+  try { c = JSON.parse(sessionStorage.getItem('hpr-fed-count') || 'null'); } catch (e) {}
+  if (c && Date.now() - c.t < 600000) showCount(c.n);
+  else fetch(API + '/alert/count?list=federal-hp').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d) return;
+    try { sessionStorage.setItem('hpr-fed-count', JSON.stringify({ n: d.count, t: Date.now() })); } catch (e) {}
+    showCount(d.count);
+  }).catch(function () {});
+  document.addEventListener('submit', async function (e) {
+    var f = e.target;
+    if (!f.classList || !f.classList.contains('fed-alert-form')) return;
+    e.preventDefault();
+    var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), share = box.querySelector('.fed-alert-share'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
+    b.disabled = true; b.textContent = 'Saving...';
+    try {
+      var r = await fetch(API + '/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: page, website: f.querySelector('.fed-alert-hp').value }) });
+      if (!r.ok) throw new Error('alert signup failed');
+      f.hidden = true; done.textContent = "You're on the list! Check your inbox for a short note from us.";
+      if (share) share.hidden = false;
+      ev('fed_alert_signup');
+    } catch (err) {
+      done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+    }
+    done.hidden = false;
+  });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('.fed-alert-share a, .fed-alert-share button');
+    if (!a) return;
+    ev('fed_alert_share', { method: a.dataset.method || '' });
+    if (a.dataset.copy) {
+      e.preventDefault();
+      var done = function () { a.textContent = 'Link copied!'; };
+      if (navigator.clipboard) navigator.clipboard.writeText(a.dataset.copy).then(done, function () { prompt('Copy this link:', a.dataset.copy); });
+      else prompt('Copy this link:', a.dataset.copy);
+    }
+  });
+  document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
+    var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), cs = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
+    if (!r) return;
+    function upd() {
+      var on = ca.indexOf(r.value) >= 0;
+      box.hidden = !on;
+      f.dataset.province = on ? r.value.toUpperCase() : '';
+      f.dataset.city = on && cs && cs.value ? cs.options[cs.selectedIndex].text : '';
+    }
+    r.addEventListener('change', upd); if (cs) cs.addEventListener('change', upd);
+    new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
+  });
+})();
 (function () {
   var n = document.querySelector('.nav'), y = window.scrollY, f = 0;
   if (!n || !window.matchMedia) return;

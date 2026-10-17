@@ -32,7 +32,7 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Which city has the better overall PowerScore, Boston or Fall River?", "acceptedAnswer": {"@type": "Answer", "text": "Boston and Fall River are tied on overall PowerScore, both at 56.7/100. PowerScore is a 0-100 average of 8 rebate categories built from real published rebate amounts, program status, and how many programs stack \u2014 check the category breakdown below to see where each city is actually stronger."}}, {"@type": "Question", "name": "Which city has better solar rebates, Boston or Fall River?", "acceptedAnswer": {"@type": "Answer", "text": "Boston and Fall River are tied on solar, both at 3.8 out of 100. Boston's strongest category overall is heat pump at 100.0, while Fall River's strongest is heat pump at 100.0."}}, {"@type": "Question", "name": "Is it fair to compare Boston and Fall River directly?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Every city's PowerScore is measured against one shared yardstick in US dollars, so Boston (Massachusetts) and Fall River (Massachusetts) are on the same scale. Canadian amounts are converted at an approximate rate, and programs have different rules, so treat scores within a few points of each other as a tie."}}]}</script>
 
 <link rel="stylesheet" href="/assets/tpl/powerscore-387a4e2f.css?v=fe1db59e97" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=3d1fd7d047" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=0ce71e81f6" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -421,6 +421,8 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       else prompt('Copy this link:', a.dataset.copy);
     }
   });
+  function stackOn(box, code) { box.querySelectorAll('.fed-alert-stack-list li').forEach(function (li) { li.classList.toggle('is-on', !!code && li.dataset.prov === code); }); }
+  document.addEventListener('change', function (e) { var s = e.target; if (s.tagName === 'SELECT' && s.closest('.fed-alert-form')) stackOn(s.closest('.fed-alert'), s.value); });
   document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
     var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), cs = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
     if (!r) return;
@@ -429,6 +431,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       box.hidden = !on;
       f.dataset.province = on ? r.value.toUpperCase() : '';
       f.dataset.city = on && cs && cs.value ? cs.options[cs.selectedIndex].text : '';
+      stackOn(box, f.dataset.province);
     }
     r.addEventListener('change', upd); if (cs) cs.addEventListener('change', upd);
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();

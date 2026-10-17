@@ -86,6 +86,51 @@ STEPS = [("Apply online", "when your heating breaks or gets old"), ("Approved in
          ("Payment approved in 5 days", "sent by direct deposit after you upload receipts")]
 
 
+_STACK = None
+
+
+def stack_rows():
+    """{code: row} for every Canadian region in data/regions.json: the active provincial heat pump rebate the homepage sheet
+    shows (build_home.region_rows: data/calc/<code>.json with status, amount and source from the facts files), or None when
+    no provincial heat pump rebate is open. Ottawa says its rebate can be combined with provincial ones (fact federal-3)."""
+    global _STACK
+    if _STACK is None:
+        import build_home
+        _STACK = {}
+        for r in json.loads((ROOT / "data" / "regions.json").read_text(encoding="utf-8"))["regions"]:
+            if r["country"] != "ca":
+                continue
+            rows, _ = build_home.region_rows(r["code"])
+            hp = [x for x in rows if x["cat"] == "heat-pump" and not x.get("fed") and x["st"] == "active"]
+            page = f"/ca/{r['code']}/heat-pump/" if (ROOT / "ca" / r["code"] / "heat-pump" / "index.html").exists() else f"/{r['path']}/"
+            _STACK[r["code"].upper()] = {"name": r["name"], "link": page, "row": hp[0] if hp else None}
+    return _STACK
+
+
+def stack(province=""):
+    """"Stack it" table: the reader's province only on province and city pages, every covered province elsewhere (the
+    province picker highlights the one picked). Empty for provinces we do not cover."""
+    data = stack_rows()
+    codes = [province] if province else list(data)
+    codes = [c for c in codes if c in data]
+    if not codes:
+        return ""
+    lis = ""
+    for c in codes:
+        d, x = data[c], data[c]["row"]
+        if x:
+            prog = html.escape(x["name"]) + (f' <span class="fs-more">{html.escape(x["more"])}</span>' if x.get("more") else "")
+            amt = f'<b class="fs-amt">{html.escape(x["amt"])}</b>'
+        else:
+            prog, amt = "No provincial heat pump rebate open today", '<b class="fs-amt fs-none">None open</b>'
+        lis += (f'<li data-prov="{c}"><a href="{d["link"]}"><span class="fs-what"><span class="fs-prov">{html.escape(d["name"])}</span>'
+                f'<span class="fs-prog">{prog}</span></span>{amt}</a></li>')
+    head = (f"Stack it with the {html.escape(data[codes[0]]['name'])} rebate open today" if province
+            else "Stack it with the provincial rebate open today")
+    return (f'<div class="fed-alert-stack"><p class="fed-alert-stack-h">{head}</p><ul class="fed-alert-stack-list">{lis}</ul>'
+            '<p class="fed-alert-stack-note">Ottawa says you can combine its rebate with provincial ones. Each provincial program has its own rules.</p></div>')
+
+
 def share_row(open_=False):
     """Share buttons. Hidden until a signup on every page except the share page itself; each link carries its own src."""
     u = lambda s: f"{SHARE_URL}?src={s}"
@@ -131,11 +176,12 @@ def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=F
     how = f'<div class="fed-alert-how">{steps}{link}</div>' if steps or link else ""
     gets = "".join(f"<li>{x}</li>" for x in GETS)
     return (f'{S}{pre}<section class="fed-alert{" fed-alert-big" if big else ""}"{attrs} aria-label="Heat pump rebate email alert"><div class="fed-alert-in">'
-            '<div class="fed-alert-main">'
+            '<div class="fed-alert-left"><div class="fed-alert-main">'
             f'<div class="fed-alert-head">{UNIT}<p class="fed-alert-title">{html.escape(HEADLINE).replace("heat pump rebate", "<em>heat pump rebate</em>")}</p></div>'
             f'<p class="fed-alert-body">{html.escape(lead)}</p>'
             '<dl class="fed-alert-amounts"><div><dt>Up to $10,000</dt><dd>if your household earns below the median income</dd></div>'
             '<div><dt>$2,000</dt><dd>for other homeowners who qualify</dd></div></dl></div>'
+            f'{stack(province)}</div>'
             '<div class="fed-alert-stub">'
             '<p class="fed-alert-badge"><span aria-hidden="true"></span>Applications open early 2027</p>'
             '<p class="fed-alert-ask">Join the launch alert</p>'
@@ -147,7 +193,7 @@ def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=F
             '<button type="submit">Email me when it opens</button></form>'
             f'<p class="fed-alert-done" role="status" hidden></p>{share_row(share_open)}'
             '<p class="fed-alert-note">Just these emails. No spam, no sales calls, unsubscribe anytime. '
-            f'Ottawa also has <a href="{OTTAWA}">its own sign-up</a>.</p></div>{how}</div></section>{post}{E}\n')
+            f'Ottawa also has <a href="{OTTAWA}">its own sign-up</a>.</p></div></div>{how}</section>{post}{E}\n')
 
 
 def _after_grid(t):

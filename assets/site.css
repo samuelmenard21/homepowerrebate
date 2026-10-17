@@ -413,14 +413,29 @@ body:has(#hpr-search) .nav-search { display: none; }
 .hp-links { max-width: 880px; margin: 18px auto; padding: 14px 20px; background: #f5efe5; border-left: 4px solid #d4751c; border-radius: 8px; font-size: 15px; line-height: 1.6; }
 @media (max-width: 912px) { .hp-links { margin: 18px 16px; } }
 /* Federal heat pump rebate alert box (scripts/add_federal_alert.py), 2026-10-17 v3: one module on every page. A warm light card (headline naming the heat pump rebate with those words in amber, lead line, the two amounts as a ledger) holds a rounded dark teal sign-up panel (what you get, form), and "how it will work" runs along the bottom. Layout is plain flex-wrap, no container queries or subgrid (those rendered stacked and squeezed in Safari): the panel sits beside the copy when the card is wide and drops under it when narrow. Child rules carry the .fed-alert prefix to beat .tpl-article main p/a. */
-.fed-alert { position: relative; margin: 28px 0 32px; color: var(--ink); background: radial-gradient(70% 90% at 0% 0%, rgba(232, 138, 46, .10), rgba(232, 138, 46, 0) 60%), #f6f0e6; border: 1px solid var(--card-rule); border-radius: var(--radius-card); box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 16px 40px rgba(10, 42, 46, .10); overflow: hidden; }
+.fed-alert { position: relative; margin: 28px 0 32px; color: var(--ink); background: radial-gradient(70% 90% at 0% 0%, rgba(232, 138, 46, .10), rgba(232, 138, 46, 0) 60%), #f6f0e6; border: 1px solid var(--card-rule); border-radius: var(--radius-card); box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 16px 40px rgba(10, 42, 46, .10); overflow: hidden; overflow: clip; }
 .fed-alert[hidden] { display: none; }
 .fed-alert p { max-width: none; }
 .fed-alert-in { display: flex; flex-wrap: wrap; align-items: stretch; gap: 26px 34px; padding: 12px; }
-.fed-alert-main { flex: 2 1 330px; min-width: 0; padding: 22px 0 6px 22px; }
-.fed-alert-stub { flex: 1 1 300px; align-self: flex-start; max-width: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; padding: 24px 24px 22px; color: var(--paper); background: radial-gradient(80% 60% at 100% 0%, rgba(232, 138, 46, .18), rgba(232, 138, 46, 0) 65%), linear-gradient(165deg, #0f5361 0%, #08363f 55%, #062c33 100%); border-radius: 14px; box-shadow: 0 12px 28px rgba(8, 54, 63, .22); }
+.fed-alert-left { flex: 2 1 330px; min-width: 0; display: flex; flex-direction: column; gap: 26px; padding: 22px 0 6px 22px; }
+.fed-alert-main { min-width: 0; }
+.fed-alert .fed-alert-stack-h { margin: 0 0 10px; font-size: 15px; font-weight: 700; color: var(--ink); }
+.fed-alert .fed-alert-stack-list { margin: 0; padding: 0; list-style: none; }
+.fed-alert .fed-alert-stack-list li { margin: 0; padding: 0; list-style: none; border: 0 !important; background: none; }
+.fed-alert .fed-alert-stack-list a, .tpl-article main .fed-alert .fed-alert-stack-list a { display: flex; align-items: center; justify-content: space-between; gap: 6px 16px; padding: 10px 12px; margin: 0 -12px; color: var(--ink) !important; text-decoration: none !important; border-radius: 10px; transition: background-color .2s; }
+.fed-alert .fed-alert-stack-list li + li a { box-shadow: 0 -1px 0 var(--card-rule); }
+.fed-alert .fed-alert-stack-list a:hover { background: rgba(13, 79, 92, .06); }
+.fed-alert .fed-alert-stack-list li.is-on a, .fed-alert .fed-alert-stack-list li:only-child a { background: #fff; box-shadow: 0 0 0 1px var(--card-rule), 0 4px 12px rgba(10, 42, 46, .06); }
+.fed-alert .fs-what { display: flex; flex-direction: column; min-width: 0; }
+.fed-alert .fs-prov { font-size: 16px; font-weight: 700; line-height: 1.3; }
+.fed-alert .fs-prog { font-size: 14px; line-height: 1.4; color: var(--muted); }
+.fed-alert .fs-more { display: block; color: var(--green-money); font-weight: 600; }
+.fed-alert .fs-amt { flex: 0 0 auto; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 21px; font-weight: 600; line-height: 1.1; color: var(--green-money); font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+.fed-alert .fs-amt.fs-none { font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; font-size: 14px; font-weight: 700; color: var(--muted); }
+.fed-alert .fed-alert-stack-note { margin: 10px 0 0; font-size: 14px; line-height: 1.5; color: var(--muted); }
+.fed-alert-stub { flex: 1 1 300px; align-self: flex-start; position: sticky; top: 88px; max-width: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; padding: 24px 24px 22px; color: var(--paper); background: radial-gradient(80% 60% at 100% 0%, rgba(232, 138, 46, .18), rgba(232, 138, 46, 0) 65%), linear-gradient(165deg, #0f5361 0%, #08363f 55%, #062c33 100%); border-radius: 14px; box-shadow: 0 12px 28px rgba(8, 54, 63, .22); }
 .fed-alert-stub ::selection { color: var(--ink); background: var(--amber-bright); }
-.fed-alert-how { flex: 1 1 100%; margin: 0 10px 10px; padding-top: 22px; border-top: 1px solid var(--card-rule); }
+.fed-alert-how { margin: 4px 22px 22px; padding-top: 22px; border-top: 1px solid var(--card-rule); }
 .fed-alert .fed-alert-head { display: flex; align-items: flex-start; gap: 16px; margin: 0 0 12px; }
 .fed-alert .fed-alert-unit { flex: 0 0 auto; width: 52px; height: 46px; margin-top: 3px; color: var(--teal); }
 .fed-alert .fed-alert-fan { transform-box: view-box; transform-origin: 26px 26px; animation: fed-fan 7s linear infinite; }
@@ -474,8 +489,12 @@ body:has(#hpr-search) .nav-search { display: none; }
 .fed-alert .fed-alert-share a:hover, .fed-alert .fed-alert-share button:hover { background: rgba(250, 247, 242, .22); }
 @media (max-width: 720px) {
   .fed-alert-in { gap: 20px; padding: 10px; }
-  .fed-alert-main { padding: 14px 8px 0; }
-  .fed-alert-how { margin: 0 8px 8px; }
+  .fed-alert-left { display: contents; }
+  .fed-alert-main { order: 1; padding: 14px 8px 0; }
+  .fed-alert-stub { order: 2; position: static; }
+  .fed-alert-stack { order: 3; padding: 4px 8px 0; }
+  .fed-alert-how { margin: 0 18px 18px; }
+  .fed-alert .fed-alert-stack-list a, .tpl-article main .fed-alert .fed-alert-stack-list a { margin: 0 -8px; padding: 10px 8px; }
   .fed-alert .fed-alert-amounts dt { min-width: 0; }
   .fed-alert .fed-alert-steps { grid-template-columns: minmax(0, 1fr); margin-left: 13px; }
   .fed-alert .fed-alert-steps li { padding: 0 0 18px 26px; border-top: 0 !important; border-left: 2px solid var(--card-rule) !important; }

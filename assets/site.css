@@ -983,7 +983,7 @@ body.tpl-home { --hm-w: min(1200px, 100% - 2 * var(--gutter)); background: var(-
 .tpl-home .hp-fed-wrap { width: var(--hm-w); max-width: none; margin: clamp(32px, 4vw, 56px) auto 0; padding: 0; box-sizing: border-box; }
 .tpl-home .hp-fed-wrap .fed-alert { margin: 0; }
 .tpl-home .hm-usfed { padding: clamp(28px, 3vw, 40px) 0 clamp(8px, 1vw, 16px); }
-.tpl-home .hm-usfed-in { padding: 22px 26px; border: 1px solid var(--card-rule); border-radius: var(--radius-card, 18px); background: #fff; }
+.tpl-home .hm-usfed-in { box-sizing: border-box; padding: 22px 26px; border: 1px solid var(--card-rule); border-radius: var(--radius-card, 18px); background: #fff; }
 .tpl-home .hm-usfed h2 { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 8px; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: 23px; font-weight: 600; line-height: 1.25; color: var(--ink); }
 .tpl-home .hm-usfed h2 .rb-status { margin: 0; font-family: 'Inter Tight', 'Inter Tight Fallback', sans-serif; }
 .tpl-home .hm-usfed p { max-width: 78ch; margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink-soft); }
@@ -1116,4 +1116,20 @@ body.tpl-home { --hm-w: min(1200px, 100% - 2 * var(--gutter)); background: var(-
   .tpl-home .hm-sheet.hm-in .hm-row { animation: none; }
   .tpl-home .hm-posts a, .tpl-home .hm-ar { transition: none; }
 }
+
+/* Visitor's country first (2026-10-17). <html data-country> comes from the edge function (IP) or the time zone fallback in
+   build_home.country_script(). Both countries' content is always on the page; only the order changes. No attribute: source order. */
+.tpl-home .hm-for-us { display: none; }
+html[data-country="US"] .tpl-home .hm-for-us { display: inline-flex; }
+html[data-country="US"] .tpl-home .hm-for-ca { display: none; }
+html[data-country="US"] .tpl-home main.layout-home, html[data-country="CA"] .tpl-home main.layout-home { display: flex; flex-direction: column; }
+html[data-country="US"] .tpl-home main.layout-home > *, html[data-country="CA"] .tpl-home main.layout-home > * { order: 10; }
+html[data-country] .tpl-home main.layout-home > .hm-hero { order: 0; }
+html[data-country="US"] .tpl-home main.layout-home > .hm-usfed { order: 1; }
+html[data-country="CA"] .tpl-home main.layout-home > .hp-fed-wrap { order: 1; }
+html[data-country] .tpl-home main.layout-home > .hm-how { order: 2; }
+html[data-country] .tpl-home main.layout-home > .hm-ledger { order: 3; }
+html[data-country="US"] .tpl-home main.layout-home > .hp-fed-wrap { order: 4; margin-bottom: clamp(32px, 4vw, 56px); }
+html[data-country="CA"] .tpl-home main.layout-home > .hm-usfed { order: 4; padding-bottom: clamp(28px, 3vw, 40px); }
+html[data-country="US"] .tpl-home .hm-col-us, html[data-country="US"] .tpl-home .hm-ps-us { order: -1; }
 

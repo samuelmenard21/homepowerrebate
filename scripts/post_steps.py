@@ -5,7 +5,7 @@ check_generator_sync.py runs this same list, so what you run by hand and what th
 Order matters:
 - the restamp first, so a freshly generated page has its footer markers before anything is placed relative to them
   (build_internal_boosts used to run first and skipped fresh pages, so its boxes vanished after every rebuild);
-- marker-based injectors next (internal link boxes, deadline notes, breadcrumb JSON-LD: the visible-trail version
+- marker-based injectors next (internal link boxes, deadline notes, the federal callout then its email alert box, breadcrumb JSON-LD: the visible-trail version
   before the URL-path version, because each skips pages that already have a BreadcrumbList);
 - SEO and link fixes, then the restamp twice (the second pass matches a fresh <style> block to its template file).
 Every step is idempotent: running the whole list twice changes nothing the second time.
@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-STEPS = ["apply_canonical_nav_footer", "build_internal_boosts", "add_deadline_notes", "add_breadcrumb_jsonld", "add_breadcrumb_ld",
+STEPS = ["apply_canonical_nav_footer", "build_internal_boosts", "add_deadline_notes", "add_federal_links", "add_federal_alert", "add_breadcrumb_jsonld", "add_breadcrumb_ld",
          "fix_seo_meta", "add_aeo_markup", "link_orphans", "fix_redirected_links", "follow_official_sources",
          "apply_canonical_nav_footer", "apply_canonical_nav_footer"]
 

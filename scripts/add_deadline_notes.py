@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Put a "Deadline coming up" note on each page a row in data/rebate-deadlines.json points to.
+"""Put a "Deadline coming up" note on each page a row in data/rebate-deadlines.json points to (its "page", plus any "notes_on" globs).
 
 The note sits between DEADLINE-NOTE-START/END markers: on hubs right after the HUB-TOP block, elsewhere right after the hero.
 Every run removes old notes first, so a passed deadline or a closed program disappears on the next run.
@@ -44,7 +44,13 @@ def put(t, block):
 def main():
     by_page = {}
     for r in open_rows():
-        by_page.setdefault(r["page"], []).append(r)
+        pages = [r["page"]]
+        # optional "notes_on": glob patterns of more pages that get the note, e.g. "/ca/on/*/insulation/" (2026-10-17);
+        # the tracker still links only "page"
+        for pat in r.get("notes_on", []):
+            pages += ["/" + str(f.parent.relative_to(ROOT)) + "/" for f in sorted(ROOT.glob(pat.strip("/") + "/index.html"))]
+        for pg in dict.fromkeys(pages):
+            by_page.setdefault(pg, []).append(r)
     changed = 0
     for f in ROOT.glob("**/index.html"):
         rel = "/" + str(f.parent.relative_to(ROOT)).replace("\\", "/") + "/"

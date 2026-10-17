@@ -230,3 +230,12 @@ Money first: the status pill, then the amount in Fraunces green, then the progra
 - **Don't** invent a new pill colour, label or button wording; add it to the glossary or `status_pills.py` first.
 - **Don't** paste shared CSS into pages or style the menu, footer or breadcrumb from a template variant (`strip_variant_chrome.py --check` fails).
 - **Don't** use decorative gradient text, side-stripe borders on cards, or stock imagery; the brand is in the numbers.
+
+## Homepage (added 2026-10-17)
+
+The homepage (`body.tpl-home`, `_partials/templates/home.css`, built by `scripts/build_home.py`) shows the ledger instead of describing it.
+- **Rebate sheet (signature):** a paper card in the teal hero with a 4px amber tab on top. Picking a province fills it with that region's biggest open program per upgrade (icon, upgrade, program name linked to its official source, Fraunces green amount, status pill). A row leads with the amount most homes can get; a lower-income amount sits under it in green. The rows "print" in once (staggered clip and rise, none with reduced motion). The default region comes from the browser time zone.
+- **Ledger rows, not card grids:** regions, PowerScore and the change feed are hairline rows under a 2px ink rule. Cards are kept only for the three featured posts.
+- **One accent:** the amber button appears in the hero and in the closing band, never twice on one phone screen.
+- **Icons:** one drawn 24px stroke set (1.7 stroke), inline as an SVG sprite; no emoji.
+- Don't add eyebrow labels above homepage headings; the heading carries itself.

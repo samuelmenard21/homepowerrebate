@@ -44,14 +44,14 @@ def ld(total, by):
     org = {"@type": "Organization", "@id": f"{SITE}/#org", "name": "HomePowerRebate", "url": f"{SITE}/",
            "description": (f"Independent guide to home energy rebates in {total} cities across Canada and the United States. Every amount links to the "
                            "official program and is re-checked monthly. Installers are ranked by Google reviews; nobody pays to be listed."),
-           "founder": {"@id": f"{SITE}/#sam"}, "foundingLocation": "Ontario, Canada", "areaServed": area}
-    person = {"@type": "Person", "@id": f"{SITE}/#sam", "name": "Sam Menard", "jobTitle": "Founder", "worksFor": {"@id": f"{SITE}/#org"},
+           "founder": {"@id": f"{SITE}/about#sam-menard"}, "foundingLocation": "Ontario, Canada", "areaServed": area}
+    person = {"@type": "Person", "@id": f"{SITE}/about#sam-menard", "name": "Sam Menard", "jobTitle": "Founder", "worksFor": {"@id": f"{SITE}/#org"},
               "alumniOf": {"@type": "CollegeOrUniversity", "name": "Wilfrid Laurier University"},
               "knowsAbout": ["home-energy rebates", "heat pump rebates", "residential solar and battery rebates", "utility incentive programs"],
               "description": ("Sam Menard is a business and analytics professional who built HomePowerRebate as an independent, plain-English guide "
                               "to home-energy rebate programs across Canada and the US."),
               "sameAs": ["https://ca.linkedin.com/in/sammenard"]}
-    page = {"@type": "AboutPage", "url": f"{SITE}/about", "name": "About HomePowerRebate", "about": {"@id": f"{SITE}/#org"}, "mainEntity": {"@id": f"{SITE}/#sam"}}
+    page = {"@type": "AboutPage", "url": f"{SITE}/about", "name": "About HomePowerRebate", "about": {"@id": f"{SITE}/#org"}, "mainEntity": {"@id": f"{SITE}/about#sam-menard"}}
     return ('<script type="application/ld+json">\n'
             + json.dumps({"@context": "https://schema.org", "@graph": [org, person, page]}, indent=1, ensure_ascii=False) + "\n</script>")
 

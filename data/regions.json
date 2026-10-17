@@ -449,7 +449,107 @@
    "facts_files": [
     "us-ca"
    ],
-   "home_blurb": "Most statewide programs are closed. Your utility, such as SMUD, LADWP or a city utility, decides what is open."
+   "home_blurb": "Most statewide programs are closed. Your utility, such as SMUD, LADWP or a city utility, decides what is open.",
+   "city_pages": {
+    "city_source": "ca_cities",
+    "built": [
+     "heat-pump",
+     "water-heater",
+     "solar",
+     "battery",
+     "ev-charger",
+     "insulation",
+     "smart-thermostats",
+     "appliances",
+     "windows-doors",
+     "hrv"
+    ],
+    "label_keys": [
+     "heat-pump",
+     "water-heater",
+     "solar",
+     "battery",
+     "ev-charger",
+     "insulation",
+     "smart-thermostats",
+     "appliances",
+     "windows-doors",
+     "hrv"
+    ],
+    "calc_label": "California",
+    "siblings_from": "data",
+    "no_guides": true,
+    "hub_top_blank_line": true,
+    "nav_city": false,
+    "hubs_with_cities": true,
+    "installers_ca": {
+     "min": 10,
+     "kinds": {
+      "heat-pump": "hvac",
+      "water-heater": "hvac",
+      "hrv": "hvac",
+      "smart-thermostats": "hvac",
+      "solar": "solar",
+      "battery": "solar",
+      "index": "hvac"
+     }
+    },
+    "program_links": {
+     "by_city_utility": {
+      "ladwp": [
+       "ladwp-rebates",
+       "LADWP"
+      ],
+      "smud": [
+       "smud-rebates",
+       "SMUD"
+      ],
+      "sce": [
+       "sce-rebates",
+       "Southern California Edison"
+      ],
+      "pwp": [
+       "pasadena-water-and-power-rebates",
+       "Pasadena Water and Power"
+      ],
+      "gwp": [
+       "glendale-water-and-power-rebates",
+       "Glendale Water and Power"
+      ],
+      "bwp": [
+       "burbank-water-and-power-rebates",
+       "Burbank Water and Power"
+      ],
+      "rpu": [
+       "riverside-public-utilities-rebates",
+       "Riverside Public Utilities"
+      ],
+      "sjce": [
+       "san-jose-clean-energy-rebates",
+       "San Jose Clean Energy"
+      ],
+      "cleanpowersf": [
+       "cleanpowersf-rebates",
+       "CleanPowerSF"
+      ],
+      "sdge": [
+       "san-diego-community-power-rebates",
+       "San Diego Community Power"
+      ],
+      "pge": [
+       "pge-rebates",
+       "PG&E"
+      ],
+      "ava": [
+       "pge-rebates",
+       "PG&E"
+      ]
+     },
+     "skip": [
+      "escondido"
+     ]
+    }
+   }
   },
   {
    "code": "ab",

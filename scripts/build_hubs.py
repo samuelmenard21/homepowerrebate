@@ -24,29 +24,18 @@ HUB = [
     "apply_canonical_nav_footer.py",
     "apply_canonical_nav_footer.py",
 ]
-POST = [
-    "add_deadline_notes.py",
-    "build_internal_boosts.py",
-    "apply_canonical_nav_footer.py",
-    "fix_seo_meta.py",
-    "add_aeo_markup.py",
-    "link_orphans.py",
-    "link_discovered.py",
-    "fix_redirected_links.py",
-    "follow_official_sources.py",
-    # og:image:alt follows the title, so restamp after fix_seo_meta; twice so a
-    # fresh <style> block is matched to its template on the second pass.
-    "apply_canonical_nav_footer.py",
-    "apply_canonical_nav_footer.py",
-    "check_hub_layout.py",
-]
+# the post-steps are the shared list in post_steps.py (one list for every generator), then the hub layout check
+sys.path.insert(0, str(ROOT / "scripts"))
+from post_steps import STEPS as POST_STEPS  # noqa: E402
+POST = [s.split()[0] + ".py" + "".join(" " + a for a in s.split()[1:]) for s in POST_STEPS] + ["check_hub_layout.py"]
 
 
 def main():
     steps = (POWERSCORE if "--powerscore" in sys.argv else []) + HUB + POST
     for i, script in enumerate(steps, 1):
         print(f"[{i}/{len(steps)}] {script}", flush=True)
-        r = subprocess.run([sys.executable, str(ROOT / "scripts" / script)], cwd=ROOT)
+        name, *args = script.split()
+        r = subprocess.run([sys.executable, str(ROOT / "scripts" / name), *args], cwd=ROOT)
         if r.returncode:
             sys.exit(f"FAILED: {script} (exit {r.returncode})")
     print("Hubs rebuilt. Next: check_internal_links.py, generate_sitemap.py.")

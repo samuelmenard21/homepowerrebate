@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Do the shared-shell generators still reproduce the live pages?
 
-Every generator that builds pages with build_furnace_pages.shell() is re-run in a scratch git worktree (HEAD plus
+Every generator that builds pages with build_furnace_pages.shell() or the build_ca_pages city shell (in each mode) is re-run in a scratch git worktree (HEAD plus
 this checkout's uncommitted and git-ignored data files), followed by the nav/footer restamp. Any page that would
 change is listed, and a page whose CSS no longer matches its registered template variant is flagged STYLE (its
 design would change). Exit status 1 if anything would change. Nothing in this checkout is touched.
@@ -22,6 +22,7 @@ import apply_canonical_nav_footer as nf  # noqa: E402
 # needs arguments or is not a page builder
 SKIP = {"build_monthly_rebate_report"}
 from post_steps import run as run_post_steps  # noqa: E402  (one list, shared with scripts/post_steps.py)
+from build_hubs import HUB as HUB_STEPS  # noqa: E402
 # (the restamp converts a fresh generator <style> block to its template file on its second pass, after adding font fallbacks)
 TPL_RE = re.compile(r'/assets/tpl/([\w-]+)\.css')
 EXTRA = ["build_ca_sacramento", "build_ca_sf", "build_ca_sj", "build_ca_la"]
@@ -32,11 +33,20 @@ def git(*a, cwd=ROOT, check=True):
 
 
 def generators():
+    """Every page generator to re-run, as command strings: the furnace-shell generators, plus every builder on the
+    shared city-page shell (build_ca_pages) once per mode it supports (cities, --hubs, --state/--state-hub)."""
     gens = {"build_furnace_pages"}
     for p in (ROOT / "scripts").glob("build_*.py"):
         if re.search(r"^from build_furnace_pages import .*\bshell\b", p.read_text(encoding="utf-8"), re.M):
             gens.add(p.stem)
-    return sorted((gens | set(EXTRA)) - SKIP)
+    runs = sorted((gens | set(EXTRA)) - SKIP)
+    for p in sorted((ROOT / "scripts").glob("*.py")):
+        t = p.read_text(encoding="utf-8")
+        if p.stem in SKIP or p.stem in gens or not (p.stem == "build_ca_pages" or re.search(r"^import build_ca_pages\b", t, re.M)) or "<!DOCTYPE" not in t:
+            continue
+        runs.append(p.stem)
+        runs += [f"{p.stem} {flag}" for flag in ("--hubs", "--state", "--state-hub") if f'"{flag}"' in t]
+    return runs
 
 
 def main():
@@ -62,12 +72,16 @@ def main():
             "-m", "baseline", cwd=wt)
         owner = {}
         for g in gens:
-            r = subprocess.run([sys.executable, f"scripts/{g}.py"], cwd=wt, capture_output=True, text=True)
+            name, *args = g.split()
+            r = subprocess.run([sys.executable, f"scripts/{name}.py", *args], cwd=wt, capture_output=True, text=True)
             if r.returncode:
                 print(f"{g}: FAILED\n{r.stderr.strip()[-400:]}")
             for line in git("status", "--porcelain", cwd=wt).splitlines():
                 owner.setdefault(line[3:], g)
         # the same post-steps the pipeline runs after any generator (scripts/post_steps.py)
+        if any(" --state" in g for g in gens):  # a region hub base page needs the hub blocks before the post-steps
+            for step in HUB_STEPS:
+                subprocess.run([sys.executable, f"scripts/{step}"], cwd=wt, capture_output=True, text=True)
         run_post_steps(cwd=wt)
         diffs = [l[3:] for l in git("status", "--porcelain", cwd=wt).splitlines()]
         bad = 0

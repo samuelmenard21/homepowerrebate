@@ -12,17 +12,35 @@ from datetime import date
 from pathlib import Path
 
 import apply_canonical_nav_footer as navfooter
-import build_ca_pages as ca
+from build_calculator import load_facts
+from status_pills import STATUS as _STATUS  # one status vocabulary site-wide
 
 ROOT = Path(__file__).resolve().parent.parent
-BASE = ca.BASE
-FACTS = ca.FACTS
-AUTHOR = ca.AUTHOR
+BASE = "https://homepowerrebate.com"
+AUTHOR = {"@type": "Person", "@id": f"{BASE}/about#sam-menard", "name": "Sam Menard", "url": f"{BASE}/about"}
+FACTS = load_facts()
+# The article family's CSS as the restamp leaves it, read from a built article page: its family stylesheet link plus any
+# inline <style> blocks, minus the font faces (the restamp adds those as the FONT-PRELOAD block) and dead blocks.
+TEMPLATE = (ROOT / "ca/on/kitchener/heat-pump/index.html").read_text(encoding="utf-8")
+_TPL_HEAD = re.sub(r"<!-- FONT-PRELOAD-START -->.*?<!-- FONT-PRELOAD-END -->", "", TEMPLATE, flags=re.S).split("</head>")[0]
+CSS = "".join([navfooter.tpl_link(v).rstrip("\n") for v in navfooter.TPL_LINK_RE.findall(_TPL_HEAD) if v in navfooter.TEMPLATE_VARIANTS and v not in navfooter.DEAD_VARIANTS]
+              + [m.group(0) for m in navfooter.STYLE_RE.finditer(_TPL_HEAD) if not navfooter.dead_css(m.group(2))])
+PILL = {k: (cls, label) for k, (label, _tone, cls) in _STATUS.items()}
 e = html.escape
 GA = """<script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W33G4TGRHD');</script>"""
 FONTS = """<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">"""
+
+
+def card(c):
+    cls, label = PILL[c.get("status", "active")]
+    return (f'<div class="rebate-card"><span class="program-status {cls}">{label}</span><h3>{(f"<a href='{c['href']}'>" + e(c["title"]) + "</a>") if c.get("href") else e(c["title"])}</h3><div class="amount">{e(c["amount"])}</div>'
+            f'<p style="font-size:14px;margin:8px 0 0;">{c["note"]}</p></div>')
+
+
+def words(h):
+    return len(re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", h))).split())
 
 
 def fact_ids(d):
@@ -40,7 +58,7 @@ def checked(fids):
 
 
 def cards(d):
-    return "".join(ca.card(x) for x in d["cards"])
+    return "".join(card(x) for x in d["cards"])
 
 
 def claim(d):
@@ -74,7 +92,7 @@ def quality_gate(article, d, path, extra=(), loose_refs=False, min_words=750):
     """The shared gate: 750 words (or the page's min_words), 4 FAQs, 3 outside references, at most one em dash, no PowerScore
     status words. extra: (regex or callable, message) pairs for a region's own bans. loose_refs: count every outside link
     (topic pages), not only deep links. Raises SystemExit with every problem."""
-    w = ca.words(article)
+    w = words(article)
     ext = {m for m in re.findall(r'href="(https?://[^"]+)"', article)}
     problems = []
     if w < d.get("min_words", min_words):
@@ -136,7 +154,7 @@ def head(title, desc, path, lds, extra_head="", extra_css=""):
 <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="article">
 <meta property="og:image" content="{BASE}/og-image.jpg">
 {FONTS}
-{ca.CSS}{chr(10) + extra_css if extra_css else ""}
+{CSS}{chr(10) + extra_css if extra_css else ""}
 {lds}</head><body>"""
 
 

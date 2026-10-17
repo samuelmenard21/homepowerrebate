@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 STEPS = [
-    "build_get_quotes", "build_home_hero", "build_home_region_cards", "build_calculator",
+    "build_get_quotes", "build_home_hero", "build_home_region_cards", "build_about_coverage", "build_calculator",
     "build_powerscore", "build_powerscore_page", "update_powerscore_badges",
     "build_hub_tops", "build_hub_showcase", "build_hub_tidy", "apply_canonical_nav_footer",
     "build_home_powerscore", "build_home_feed", "build_internal_boosts", "link_discovered", "apply_canonical_nav_footer",

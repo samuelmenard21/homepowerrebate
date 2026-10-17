@@ -19,7 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 STEPS = ["apply_canonical_nav_footer", "build_internal_boosts", "build_installer_rankings --links-only", "add_deadline_notes", "add_federal_links", "add_federal_alert", "add_heat_pump_links", "add_breadcrumb_jsonld", "add_breadcrumb_ld",
-         "fix_seo_meta", "add_aeo_markup", "link_orphans", "link_discovered", "fix_redirected_links", "follow_official_sources",
+         "fix_seo_meta", "add_aeo_markup", "link_orphans", "link_discovered", "fix_redirected_links", "follow_official_sources", "build_about_coverage",
          "apply_canonical_nav_footer", "apply_canonical_nav_footer"]
 
 

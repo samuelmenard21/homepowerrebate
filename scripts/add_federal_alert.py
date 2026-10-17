@@ -42,25 +42,25 @@ PROVINCES = [("AB", "Alberta"), ("BC", "British Columbia"), ("MB", "Manitoba"), 
 NAMES = {"st-albert": "St. Albert", "fort-st-john": "Fort St. John", "fort-mcmurray": "Fort McMurray", "niagara-falls": "Niagara Falls",
          "sault-ste-marie": "Sault Ste. Marie", "st-johns": "St. John's"}
 
-# Every box shows the two amounts as big numbers, so the copy below does not repeat them. Grade-6 words, and the title says
-# what the reader signs up for. Only claims from data/verified-facts/federal.json (amounts, early 2027, stacking, $1,400 savings).
-FIRST = "Be first in line. Get an email the day it opens."
-FEDERAL = (FIRST, "Applications are not open yet. Ottawa says they open in early 2027, and that you can add this rebate on top of provincial ones.")
-CITY = (FIRST, "Applications open in early 2027. Ottawa says you can add it on top of provincial rebates like the ones on this page.")
-HARP = ("Getting the heating rebate? A bigger rebate is coming.",
-        "Ottawa says homes that switch off oil, propane or electric baseboard heat save over $1,400 a year on average. "
-        "Applications open in early 2027. Get an email the day they do.")
-CLOSED = ("The old rebate closed. A new one opens in 2027.",
-          "Get an email the day applications open, so you can apply right away.")
-HOME = (FIRST, "Ottawa is putting $2 billion into heat pump rebates for Canadian homes. Applications open in early 2027. "
-        "Sign up and we'll email you the moment they open, so you can apply right away.")
-HUB = (FIRST, "Applications open in early 2027. Ottawa says you can add it on top of the {province} rebates you can claim today.")
-CITY_HUB = ("{city}: be first in line for up to $10,000",
-            "Ottawa's new heat pump rebate opens in early 2027. Get an email the day it opens, so you can apply right away.")
-OTHER = ("Planning a heat pump too? Up to $10,000 is coming.",
-         "Ottawa's new heat pump rebate opens in early 2027. Get an email the day it opens.")
-NOT_COUNTED = ("Coming in 2027, and not in your total yet",
-               "Ottawa's new heat pump rebate is not open, so we don't count it here. Get an email the day it opens.")
+# Every box carries the same headline (HEADLINE), so a reader knows at a glance that this is a heat pump rebate sign-up, and the
+# two amounts as a small ledger, so the lead line below never repeats them. Each page group gets one lead line that ties the
+# rebate to what the reader came for. Grade-6 words. Only claims from data/verified-facts/federal.json (amounts, early 2027,
+# stacking, $1,400 savings, $2 billion). Redesigned 2026-10-17: the headline used to change per page and never said "heat pump".
+# What a signup gets, shown as a list right above the email field (the promise the confirmation email and the list keep).
+GETS = ["A short hello now, so you know it worked", "One email the day applications open",
+        "One email when Ottawa says who gets $10,000"]
+HEADLINE = "Get an email the day Canada\u2019s new heat pump rebate opens"
+FEDERAL = "Applications are not open yet. Ottawa says they open in early 2027, and that you can add this rebate on top of provincial ones."
+CITY = "Ottawa says you can add it on top of provincial rebates like the ones on this page."
+HARP = ("Getting the heating rebate? A bigger one is coming. Ottawa says homes that switch off oil, propane or electric "
+        "baseboard heat save over $1,400 a year on average.")
+CLOSED = "The old rebate closed. Ottawa\u2019s new one opens in early 2027, and we\u2019ll tell you the day it does."
+HOME = ("Ottawa is putting $2 billion into heat pump rebates for Canadian homes. "
+        "We\u2019ll email you the moment applications open, so you can apply right away.")
+HUB = "Ottawa says you can add it on top of the {province} rebates you can claim today."
+CITY_HUB = "Planning a heat pump in {city}? Ottawa says you can add this on top of provincial rebates."
+OTHER = "Planning a heat pump too? This one is on top of the rebates above, and we\u2019ll email you the day it opens."
+NOT_COUNTED = "It isn\u2019t open yet, so it\u2019s not in your total. We\u2019ll email you the day it opens."
 # posts about closed programs (Greener Homes, the Greener Homes Loan in Ontario, Nova Scotia's OHPA); box goes at <!-- FED-ALERT-HERE -->
 CLOSED_PAGES = [("blog/greener-homes-grant-explained", ""), ("blog/ontario-loan-closed", "ON"), ("blog/nova-scotia-heat-pump-rebate-disappeared", "NS")]
 HARP_PAGES = ["programs/nova-scotia-heating-assistance-rebate-harp", "blog/nova-scotia-harp-heating-assistance-rebate-explained",
@@ -98,12 +98,21 @@ def share_row(open_=False):
     return f'<div class="fed-alert-share"{"" if open_ else " hidden"}><p>{lead}</p><div>{btns}</div></div>'
 
 
-def block(copy, province="", city="", follow=False, anchor="", big=False, wrap=False, more=True, share_open=False):
-    """The one alert box. province "" shows a province picker; follow=True is the rebate finder version, hidden until a
-    Canadian province is picked there (the shared JS reads data-follow). big=True adds "how it will work" (homepage, hubs,
-    federal and heat pump pages). wrap=True centres it on full-width pages (homepage, hubs).
-    more=True links the full guide (every page except the guide itself)."""
-    title, body = copy
+# Small outdoor heat pump unit (authored SVG, currentColor) so the box reads as "heat pump" before a word is read.
+UNIT = ('<svg class="fed-alert-unit" viewBox="0 0 64 56" aria-hidden="true" focusable="false">'
+        '<rect x="3" y="5" width="58" height="42" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>'
+        '<circle cx="26" cy="26" r="14" fill="none" stroke="currentColor" stroke-width="3"/>'
+        '<g class="fed-alert-fan"><path d="M26 26c0-6 2-9 6-9-1 4-3 7-6 9zM26 26c5 3 7 6 5 10-3-2-5-5-5-10zM26 26c-5 3-9 3-11 0 3-2 7-2 11 0z" fill="currentColor"/></g>'
+        '<path d="M47 16h8M47 22h8M47 28h8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>'
+        '<path d="M12 47v5M52 47v5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>')
+
+
+def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=False, more=True, share_open=False):
+    """The one alert box: a light notice (headline, lead line, the two amounts, how it will work) and a dark sign-up stub.
+    province "" shows a province picker; follow=True is the rebate finder version, hidden until a Canadian province is
+    picked there (the shared JS reads data-follow). big=True adds "how it will work" (homepage, hubs, federal and heat pump
+    pages). wrap=True centres it on full-width pages (homepage, hubs). more=True links the full guide (every page except the
+    guide itself)."""
     sel = ""
     if not province and not follow:
         opts = "".join(f'<option value="{c}">{html.escape(n)}</option>' for c, n in PROVINCES)
@@ -113,27 +122,32 @@ def block(copy, province="", city="", follow=False, anchor="", big=False, wrap=F
     attrs = f' id="{anchor}"' if anchor else ""
     if follow:
         attrs += f' data-follow="gq-region" data-follow-city="gq-city" data-provinces="{" ".join(c.lower() for c, _ in PROVINCES)}" hidden'
-    link = f'<p class="fed-alert-more"><a href="{GUIDE}">Read everything we know so far &rarr;</a></p>' if more else ""
+    link = f'<p class="fed-alert-more"><a href="{GUIDE}">Read everything we know so far</a></p>' if more else ""
     steps = ""
     if big:
         steps = ('<p class="fed-alert-steps-h">How Ottawa says it will work</p><ol class="fed-alert-steps">'
                  + "".join(f"<li><b>{html.escape(a)}</b> {html.escape(b)}</li>" for a, b in STEPS) + "</ol>")
     pre, post = ('<div class="hp-fed-wrap">', "</div>") if wrap else ("", "")
-    return (f'{S}{pre}<section class="fed-alert{" fed-alert-big" if big else ""}"{attrs} aria-label="Federal heat pump rebate email alert">'
-            '<div class="fed-alert-top"><p class="fed-alert-eyebrow">New federal heat pump rebate</p>'
-            '<p class="fed-alert-badge"><span aria-hidden="true"></span>Opens early 2027</p></div>'
-            '<div class="fed-alert-amounts"><p><b>$10,000</b><span>if your household earns below the median income</span></p>'
-            '<p><b>$2,000</b><span>for other homeowners who qualify</span></p></div>'
-            f'<p class="fed-alert-title">{html.escape(title)}</p>'
-            f'<p class="fed-alert-body">{html.escape(body)}</p>{steps}{link}'
+    how = f'<div class="fed-alert-how">{steps}{link}</div>' if steps or link else ""
+    gets = "".join(f"<li>{x}</li>" for x in GETS)
+    return (f'{S}{pre}<section class="fed-alert{" fed-alert-big" if big else ""}"{attrs} aria-label="Heat pump rebate email alert"><div class="fed-alert-in">'
+            '<div class="fed-alert-main">'
+            f'<div class="fed-alert-head">{UNIT}<p class="fed-alert-title">{html.escape(HEADLINE)}</p></div>'
+            f'<p class="fed-alert-body">{html.escape(lead)}</p>'
+            '<dl class="fed-alert-amounts"><div><dt>Up to $10,000</dt><dd>if your household earns below the median income</dd></div>'
+            '<div><dt>$2,000</dt><dd>for other homeowners who qualify</dd></div></dl></div>'
+            '<div class="fed-alert-stub">'
+            '<p class="fed-alert-badge"><span aria-hidden="true"></span>Applications open early 2027</p>'
+            '<p class="fed-alert-ask">Join the launch alert</p>'
+            f'<ul class="fed-alert-gets" aria-label="What you get">{gets}</ul>'
             '<p class="fed-alert-count" hidden></p>'
             f'<form class="fed-alert-form" data-list="federal-hp"{data}>'
             '<label for="fed-alert-email">Email</label><input id="fed-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email">'
             f'{sel}<input class="fed-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
             '<button type="submit">Email me when it opens</button></form>'
             f'<p class="fed-alert-done" role="status" hidden></p>{share_row(share_open)}'
-            '<p class="fed-alert-note"><b>What you get:</b> a quick hello now, one email the day applications open, and one when Ottawa says who gets $10,000. That&#x27;s it. No spam, unsubscribe anytime. '
-            f'Ottawa also has <a href="{OTTAWA}">its own sign-up</a>.</p></section>{post}{E}\n')
+            '<p class="fed-alert-note">Just these emails. No spam, no sales calls, unsubscribe anytime. '
+            f'Ottawa also has <a href="{OTTAWA}">its own sign-up</a>.</p></div>{how}</div></section>{post}{E}\n')
 
 
 def _after_grid(t):
@@ -216,12 +230,12 @@ def canadian_pages():
     city_dirs = {(r["code"], c[0].strip("/").split("/")[-1]): c[1] for r in ca for c in r["cities"]}
     out = [("index.html", HOME, "", "", ("after:<!-- HOME-HERO-END -->",), {"anchor": "federal-alert", "big": True, "wrap": True}),
            (SHARE_PAGE.strip("/"), HOME, "", "", ("here",), {"anchor": "federal-alert", "big": True, "share_open": True}),
-           ("ca", (HUB[0], HUB[1].replace("the {province} rebates", "provincial rebates")), "", "", ("after:<!-- HP-LINKS-END -->", "h2"), {"big": True, "wrap": True}),
+           ("ca", HUB.replace("the {province} rebates", "provincial rebates"), "", "", ("after:<!-- HP-LINKS-END -->", "h2"), {"big": True, "wrap": True}),
            ("get-quotes", NOT_COUNTED, "", "", ("finder",), {"follow": True})]
     for r in ca:
         code = r["code"]
         if (ROOT / r["path"] / "index.html").exists():
-            out.append((r["path"], (HUB[0], HUB[1].format(province=r["name"])), code.upper(), "", ("after:<!-- HUB-TOP-END -->", "fedhp", "h2"), {"big": True, "wrap": True}))
+            out.append((r["path"], HUB.format(province=r["name"]), code.upper(), "", ("after:<!-- HUB-TOP-END -->", "fedhp", "h2"), {"big": True, "wrap": True}))
         if (ROOT / "calculator" / code / "index.html").exists():
             out.append((f"calculator/{code}", NOT_COUNTED, code.upper(), "", ("calc",), {}))
         for d in sorted((ROOT / r["path"]).iterdir()):
@@ -229,7 +243,7 @@ def canadian_pages():
                 continue
             name = city_dirs.get((code, d.name))
             if name:  # city hub, then its category pages
-                out.append((str(d.relative_to(ROOT)), (CITY_HUB[0].format(city=name), CITY_HUB[1]), code.upper(), name, ("grid", "h2"), {"big": True}))
+                out.append((str(d.relative_to(ROOT)), CITY_HUB.format(city=name), code.upper(), name, ("grid", "h2"), {"big": True}))
                 for c in sorted(d.iterdir()):
                     if (c / "index.html").exists() and c.name != "heat-pump":
                         out.append((str(c.relative_to(ROOT)), OTHER, code.upper(), name, ("grid", "h2"), {}))

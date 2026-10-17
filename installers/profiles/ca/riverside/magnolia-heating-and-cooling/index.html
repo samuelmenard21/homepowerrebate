@@ -263,6 +263,7 @@
 <!-- PROFILE-BADGE-END -->
   <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked via Google Places API. Spot an error? <a href="/contact/?subject=Correction: Magnolia Heating and Cooling">Let us know</a>.</p>
 </div>
+<!-- PROFILE-QUOTE-START -->
 <script>
 (function() {
   var form = document.getElementById('ip-quote-form');
@@ -278,9 +279,13 @@
         firstname: document.getElementById('ip-name').value,
         email: document.getElementById('ip-email').value,
         phone: document.getElementById('ip-phone').value,
+        page_url: location.pathname,
         city: "Riverside",
+        province: "CA",
+        service: "heat-pump",
         source: "installer-ca-magnolia-heating-and-cooling",
-        installer: "Magnolia Heating and Cooling"
+        installer_name: "Magnolia Heating and Cooling",
+        installer_email: "info@maghvac.com"
       })
     }).catch(function(err) { console.error('quote request error', err); })
       .finally(function() {
@@ -290,6 +295,7 @@
   });
 })();
 </script>
+<!-- PROFILE-QUOTE-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->

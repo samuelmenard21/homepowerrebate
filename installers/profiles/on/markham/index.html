@@ -268,6 +268,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
 
   <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked via Google Places API. Spot an error? <a href="/contact/?subject=Correction: 多伦多冷暖气公司 - 亿家冷暖">Let us know</a>.</p>
 </div>
+<!-- PROFILE-QUOTE-START -->
 <script>
 (function() {
   var form = document.getElementById('ip-quote-form');
@@ -283,9 +284,13 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
         firstname: document.getElementById('ip-name').value,
         email: document.getElementById('ip-email').value,
         phone: document.getElementById('ip-phone').value,
+        page_url: location.pathname,
         city: "Markham",
+        province: "ON",
+        service: "heat-pump",
         source: "installer-on-",
-        installer: "\u591a\u4f26\u591a\u51b7\u6696\u6c14\u516c\u53f8 - \u4ebf\u5bb6\u51b7\u6696"
+        installer_name: "多伦多冷暖气公司 - 亿家冷暖",
+        installer_email: "info@icarehomecomfort.com"
       })
     }).catch(function(err) { console.error('quote request error', err); })
       .finally(function() {
@@ -295,6 +300,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
   });
 })();
 </script>
+<!-- PROFILE-QUOTE-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->

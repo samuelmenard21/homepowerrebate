@@ -274,6 +274,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
 <!-- PROFILE-BADGE-END -->
   <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked via Google Places API. Spot an error? <a href="/contact/?subject=Correction: VA Electric Contracting &amp; Maintenance">Let us know</a>.</p>
 </div>
+<!-- PROFILE-QUOTE-START -->
 <script>
 (function() {
   var form = document.getElementById('ip-quote-form');
@@ -289,9 +290,13 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
         firstname: document.getElementById('ip-name').value,
         email: document.getElementById('ip-email').value,
         phone: document.getElementById('ip-phone').value,
+        page_url: location.pathname,
         city: "Edmonton",
+        province: "AB",
+        service: "solar",
         source: "installer-ab-va-electric-contracting-maintenance",
-        installer: "VA Electric Contracting & Maintenance"
+        installer_name: "VA Electric Contracting & Maintenance",
+        installer_email: "admin@vaedm.com"
       })
     }).catch(function(err) { console.error('quote request error', err); })
       .finally(function() {
@@ -301,6 +306,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
   });
 })();
 </script>
+<!-- PROFILE-QUOTE-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->

@@ -314,6 +314,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
 <!-- PROFILE-BADGE-END -->
   <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked 2026-09-06. Spot an error? <a href="mailto:samuelmenard@gmail.com?subject=Correction: Manito Plumbing and Heating Ltd.">Let us know</a>.</p>
 </div>
+<!-- PROFILE-QUOTE-START -->
 <script>
 (function() {
   var form = document.getElementById('ip-quote-form');
@@ -329,9 +330,13 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
         firstname: document.getElementById('ip-name').value,
         email: document.getElementById('ip-email').value,
         phone: document.getElementById('ip-phone').value,
+        page_url: location.pathname,
         city: "Timmins",
-        source: 'installer-manito-plumbing-and-heating-ltd',
-        installer: "Manito Plumbing and Heating Ltd."
+        province: "ON",
+        service: "heat-pump",
+        source: "installer-manito-plumbing-and-heating-ltd",
+        installer_name: "Manito Plumbing and Heating Ltd.",
+        installer_email: "manitoplumbing@gmail.com"
       })
     }).catch(function(err) { console.error('quote request error', err); })
       .finally(function() {
@@ -341,6 +346,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
   });
 })();
 </script>
+<!-- PROFILE-QUOTE-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Timmins where relevant -->

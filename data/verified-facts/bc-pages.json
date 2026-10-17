@@ -162,13 +162,13 @@
    "id": "bc-pages-13-bc-hydro-ev-charger-rebate",
    "program": "BC Hydro EV charger rebate",
    "status": "active",
-   "verified_on": "2026-10-03",
+   "verified_on": "2026-10-16",
    "claim": "Home Level 2 charger",
    "amount": "50% of cost up to $350; +$200 for EV power-management device",
-   "eligibility": "Single-family, row home, duplex; new Level 2 J1772/NACS wall-mounted; electrical permit; Tesla stations no longer eligible",
+   "eligibility": "Single-family, row home, duplex (mobile and manufactured homes with a private garage or dedicated parking count as single-family); new Level 2 (208 or 240V) J1772 or NACS J3400 charger on BC Hydro's eligible list, bought not leased from a Canadian supplier, certified for Canada, permanent wall-mounted install in an occupied home; electrical permit; Tesla charging stations no longer eligible",
    "dates": "Apply within 180 days of install",
    "source_url": "https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/rebates-home-chargers.html",
-   "notes": ""
+   "notes": "Re-read 2026-10-16. Eligible costs: charger, licensed-electrician labour, permits, electrical design, power management device. Not eligible: the cost of only installing a 240V outlet. Three ways to apply: licensed electrician (invoice, permit number, photo); non-electrician with inspection certificate; existing permitted 240V outlet (charger invoice and photo only). Paid within 90 days of applying. Combined incentives are capped at total cost. FortisBC electricity customers apply through FortisBC."
   },
   {
    "id": "bc-pages-14-bc-hydro-peak-saver",
@@ -361,6 +361,66 @@
    "dates": "No end date shown",
    "source_url": "https://www.fortisbc.com/rebates/detail/ventilation-rebate-income-qualified",
    "notes": "Fans 85 cfm+ at 50 Pa, continuous duty, backdraft damper. Not bonus-eligible."
+  },
+  {
+   "id": "bc-pages-39-bc-hydro-ev-power-management-device",
+   "program": "BC Hydro EV power management device rebate",
+   "status": "active",
+   "verified_on": "2026-10-16",
+   "claim": "Extra rebate for an EV power management device installed with a Level 2 home charger; the device can avoid an electrical service upgrade (branch circuit sharing, e.g. with a dryer, or feeder monitoring of the whole home)",
+   "amount": "$200",
+   "eligibility": "BC Hydro customer in a detached home, row home, duplex or mobile home; eligible device (BC Hydro list) and eligible Level 2 charger; electrical permit; device and charger installed on or after December 1, 2023 (no retroactive installs)",
+   "dates": "No end date shown",
+   "source_url": "https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/rebates-home-chargers/rebates-ev-power-management-devices.html",
+   "notes": "No separate application: added to the home charger rebate. BC Hydro says most homes do not need a device; it is only needed when a service upgrade would otherwise be required. Electrician should review 12 months of meter data to find spare capacity."
+  },
+  {
+   "id": "bc-pages-40-bc-ev-charger-local-top-ups",
+   "program": "BC EV charger rebate top-ups",
+   "status": "active",
+   "verified_on": "2026-10-16",
+   "claim": "Top-ups added to the provincial charger rebate for single-family homes: BC Hydro community-based offers (select postal codes), Regional District of Nanaimo (separate application), BC Hydro power management devices, Indigenous Peoples, City of Kamloops, Resort Municipality of Whistler, District of Squamish",
+   "amount": "With a local government top-up: up to 75% of purchase and installation costs or the listed dollar amount, whichever is less",
+   "eligibility": "Added automatically when you apply for the provincial charger rebate, except the Regional District of Nanaimo; first come, first served",
+   "dates": "No end date shown",
+   "source_url": "https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/local-rebate-top-ups.html",
+   "notes": "Multi-unit top-ups: Kamloops, Saanich, Squamish, Indigenous Peoples, Whistler. Workplace: Indigenous Peoples, Whistler. No Burnaby, Vancouver or Surrey city top-up listed on 2026-10-16."
+  },
+  {
+   "id": "bc-pages-41-bc-ev-charger-multi-unit-workplace",
+   "program": "BC EV charger rebates for multi-unit buildings and workplaces",
+   "status": "active",
+   "verified_on": "2026-10-16",
+   "claim": "Base provincial rebates for apartment, condo and townhome complexes and for workplaces",
+   "amount": "Multi-unit: 75% up to $3,000 for an EV ready plan; 50% up to $2,000 per charger; up to $137,000 total for EV Ready building projects (varies by stage). Workplaces: 50% up to $2,000 per charger",
+   "eligibility": "Buildings built before municipal bylaws required EV ready stalls; program maximums apply",
+   "dates": "No end date shown",
+   "source_url": "https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/local-rebate-top-ups.html",
+   "notes": "Amounts read from the base-rebate table on the top-ups page."
+  },
+  {
+   "id": "bc-pages-42-fortisbc-home-ev-charger",
+   "program": "FortisBC home EV charger rebate (CleanBC Go Electric)",
+   "status": "active",
+   "verified_on": "2026-10-16",
+   "claim": "Home Level 2 charger rebate for FortisBC electricity customers and municipal utility customers of Grand Forks, Penticton, Summerland and Nelson Hydro",
+   "amount": "50% of eligible purchase and installation costs, up to $350",
+   "eligibility": "Owner, or tenant with landlord consent; single-family detached, mobile home on a permanent foundation, duplexes, triplexes and fourplexes, side-by-side row homes with their own meters and garages, with off-street dedicated parking; townhome, condo and apartment residents use the multi-unit rebates; Tesla-made stations not eligible; Level 2 J1772 or NACS J3400, new, bought not leased in Canada",
+   "dates": "Apply within 6 months of installation",
+   "source_url": "https://www.fortisbc.com/rebates/detail/ev-charging-stations-for-homes",
+   "notes": "Taxes, subscriptions and non-EV wiring are not eligible costs. Non-electrician installs need a Technical Safety BC or municipal inspection certificate."
+  },
+  {
+   "id": "bc-pages-43-bc-hydro-no-lighting-or-service-upgrade-rebate",
+   "program": "BC Hydro residential rebates list",
+   "status": "info",
+   "verified_on": "2026-10-16",
+   "claim": "BC Hydro's residential rebate list (renovations: windows and doors, insulation, heat pumps, water heating; products: appliances and air fryers; solar and battery; EV chargers; income-based free programs; Peak Saver; condo units; remote communities) has no residential lighting rebate and no stand-alone electrical service upgrade rebate",
+   "amount": "",
+   "eligibility": "",
+   "dates": "",
+   "source_url": "https://www.bchydro.com/powersmart/residential/rebates-programs.html",
+   "notes": "Service upgrades are funded only by CleanBC ESP (income-qualified, fossil fuel to heat pump; facts bc-pages-7, bc-blog-21). BC Hydro's $200 EV power management device rebate is the alternative to a service upgrade for EV charging (bc-pages-39). Commercial lighting is a business program, outside this site."
   }
  ]
 }

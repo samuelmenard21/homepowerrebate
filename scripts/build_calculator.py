@@ -220,20 +220,28 @@ def picker(specs):
 def widget_page(specs):
     code = specs[0]["code"]
     names = ", ".join(f"{e(s['name'])} (<code>{s['code']}</code>)" for s in specs)
+    opts = "".join(f'<option value="{s["code"]}"{" selected" if s["code"] == code else ""}>{e(s["name"])}</option>' for s in sorted(specs, key=lambda s: s["name"]))
     snippet = (f'<iframe src="https://homepowerrebate.com/calculator/embed/{code}/" title="Rebate calculator" width="100%" height="760" '
                f'style="max-width:820px;border:1px solid #d9d0c1;border-radius:12px;" loading="lazy"></iframe>\n'
                f'<p><a href="https://homepowerrebate.com/calculator/{code}/">Rebate calculator by HomePowerRebate</a></p>')
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/calculator/">Calculators</a></li><li aria-current="page">Installer widget</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>A Rebate Calculator for Your Website</h1><p>Let your customers check which rebates they qualify for, without leaving your site.</p></div></header>
 <section class="body"><div class="wrap rc-wrap"><h2>Copy and paste</h2>
-<pre style="background:#0a2a2e;color:#fff;padding:14px;border-radius:8px;overflow-x:auto;white-space:pre-wrap;">{e(snippet)}</pre>
-<p>Change <code>{code}</code> in both places to your region's code: {names}.</p>
+<p><label for="wg-r"><b>Your province or state</b></label><br><select id="wg-r" style="min-height:44px;font:inherit;font-size:16px;padding:8px 12px;border:1px solid #d9d0c1;border-radius:8px;margin:6px 0 12px;">{opts}</select></p>
+<pre id="wg-code" style="background:#0a2a2e;color:#fff;padding:14px;border-radius:8px;overflow-x:auto;white-space:pre-wrap;">{e(snippet)}</pre>
+<p><button type="button" id="wg-copy" style="min-height:44px;font:inherit;font-size:16px;font-weight:700;padding:10px 20px;color:#fff;background:#a4540a;border:0;border-radius:8px;cursor:pointer;">Copy code</button> <span id="wg-done" role="status"></span></p>
+<p>Or change <code>{code}</code> in both places to your region's code: {names}.</p>
 <h2>What you get</h2><ul><li>A working calculator for your province or state. It shows top-rated installers in the visitor's city, ranked by Google reviews.</li>
 <li>Rebate amounts that update on their own when a program changes. You never edit them.</li>
 <li>No script to install, no tracking, no cookies and no ads.</li></ul>
 <h2>What we ask</h2><p>Leave the "Rebate calculator by HomePowerRebate" link under the frame. It is a normal link. Listing here never changes where your company ranks: installers are ranked by Google reviews only.</p>
-<h2>Preview</h2><iframe src="/calculator/embed/{code}/" title="Rebate calculator preview" width="100%" height="760" style="max-width:820px;border:1px solid #d9d0c1;border-radius:12px;" loading="lazy"></iframe>
-</div></section>"""
+<h2>Preview</h2><iframe id="wg-prev" src="/calculator/embed/{code}/" title="Rebate calculator preview" width="100%" height="760" style="max-width:820px;border:1px solid #d9d0c1;border-radius:12px;" loading="lazy"></iframe>
+</div></section>
+<script>(function(){{var s=document.getElementById('wg-r'),c=document.getElementById('wg-code'),p=document.getElementById('wg-prev'),base=c.textContent,cur='{code}';
+function set(r){{if(!s.querySelector('option[value="'+r+'"]'))return;s.value=r;c.textContent=base.split('/{code}/').join('/'+r+'/');p.src='/calculator/embed/'+r+'/';cur=r}}
+s.addEventListener('change',function(){{set(s.value)}});var q=new URLSearchParams(location.search).get('r');if(q)set(q.toLowerCase());
+document.getElementById('wg-copy').addEventListener('click',function(){{var d=document.getElementById('wg-done');
+navigator.clipboard.writeText(c.textContent).then(function(){{d.textContent='Copied. Paste it into an HTML block on your site.'}},function(){{d.textContent='Select the code above and copy it.'}})}})}})();</script>"""
     return shell("Rebate Calculator Widget for Installers | HomePowerRebate",
                  "Add a home rebate calculator to your installer website. Amounts update automatically and it links back to HomePowerRebate.",
                  "/calculator/widget/", "bc", body, [])

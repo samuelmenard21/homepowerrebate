@@ -895,8 +895,6 @@ def quote_form(region, service, city_label, ranked):
     route, which emails that installer (Resend) with the homeowner's upgrades, logs the lead and notifies ops.
     The Worker only emails addresses in installers/allowed-installer-emails.json (written by main())."""
     svc = SERVICES[service]
-    us = region in US_REGIONS
-    postal_label, postal_ph = ("ZIP code", "e.g. 02139") if us else ("Postal code", "e.g. M4P 1E2")
     picks = "".join(
         f'<label class="qf-pick"><input type="checkbox" name="pick" value="{i}"> {esc(display_name(r["name"]))} '
         f'<span class="small">({r["rating"]:.1f}★, {r["reviews"]:,} reviews)</span></label>'
@@ -912,8 +910,7 @@ def quote_form(region, service, city_label, ranked):
 <fieldset><legend>What do you want done?</legend><div class="qf-grid">{ups}</div></fieldset>
 <div class="qf-row"><label>First name<input name="firstname" autocomplete="given-name" required></label><label>Last name<input name="lastname" autocomplete="family-name" required></label></div>
 <div class="qf-row"><label>Email<input name="email" type="email" autocomplete="email" required></label><label>Phone<input name="phone" type="tel" autocomplete="tel" required></label></div>
-<div class="qf-row"><label>{postal_label}<input name="postal" autocomplete="postal-code" placeholder="{postal_ph}" required></label>
-<label>When do you want it done?<select name="timeline"><option>In the next 3 months</option><option>3 to 6 months</option><option>Just getting prices</option></select></label></div>
+<label>When do you want it done?<select name="timeline"><option>In the next 3 months</option><option>3 to 6 months</option><option>Just getting prices</option></select></label>
 <label>Anything they should know? (optional)<textarea name="notes" rows="3" placeholder="e.g. replacing baseboard heat in a 1970s bungalow"></textarea></label>
 <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
 <p class="small">We only share your details with the companies you pick, and never sell them. <a href="/privacy">Privacy policy</a>.</p>
@@ -927,10 +924,10 @@ f.addEventListener('change',e=>{{if(e.target.name==='pick'&&f.querySelectorAll('
 f.addEventListener('submit',async e=>{{e.preventDefault();const d=new FormData(f),picks=d.getAll('pick').map(i=>I[+i]),ups=d.getAll('upgrade');
 if(!picks.length){{m.textContent='Pick at least one company.';return;}}
 if(!ups.length){{m.textContent='Tick at least one thing you want done.';return;}}
-for(const k of ['firstname','lastname','email','phone','postal'])if(!String(d.get(k)||'').trim()){{m.textContent='Please fill in every field.';f.elements[k].focus();return;}}
+for(const k of ['firstname','lastname','email','phone'])if(!String(d.get(k)||'').trim()){{m.textContent='Please fill in every field.';f.elements[k].focus();return;}}
 if(d.get('website'))return;
 const b=f.querySelector('button');b.disabled=true;m.textContent='Sending...';
-const base={{firstname:d.get('firstname'),lastname:d.get('lastname'),email:d.get('email'),phone:d.get('phone'),postal:String(d.get('postal')).trim(),
+const base={{firstname:d.get('firstname'),lastname:d.get('lastname'),email:d.get('email'),phone:d.get('phone'),
 city:{json.dumps(city_label.lower())},province:{json.dumps(region.upper())},service:{json.dumps(service)},upgrades:ups,
 notes:'Timeline: '+d.get('timeline')+'. Also asked: '+picks.map(p=>p.name).join('; ')+(d.get('notes')?'. Notes: '+d.get('notes'):''),
 page_url:location.href,referrer:document.referrer||'direct',website:''}};

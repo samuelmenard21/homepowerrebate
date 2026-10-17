@@ -191,7 +191,7 @@
 
     <form class="form-card" id="outcomeForm">
       <h3>Share what you paid</h3>
-      <p class="sub">Takes about a minute. We never store your full address — only your first 3 postal characters and city.</p>
+      <p class="sub">Takes about a minute. We never ask for your address, only your province and city.</p>
 
       <div class="field-row">
         <div class="field">
@@ -248,15 +248,6 @@
           </select>
         </div>
       </div>
-
-      <div class="field-row">
-        <div class="field">
-          <label for="postal">Postal / zip code</label>
-          <input type="text" id="postal" placeholder="V1Y 1A1" required>
-        </div>
-        <div class="field"></div>
-      </div>
-      <div class="hint">Only the first 3 characters are stored — never the full code or address. It's what lets us eventually compare you to your specific neighbourhood, not just your whole city.</div>
 
       <div class="field-row">
         <div class="field">
@@ -523,7 +514,6 @@ form.addEventListener('submit', async function(e) {
     install_month: document.getElementById('install_month').value,
     city: document.getElementById('city').value,
     province: document.getElementById('province').value,
-    postal: document.getElementById('postal').value,
     total_cost: Number(document.getElementById('total_cost').value),
     rebates_received: Number(document.getElementById('rebates_received').value || 0),
     installer_name: document.getElementById('installer_name').value,

@@ -278,7 +278,7 @@ async function handleLeadSubmit(request, env) {
   }
 
   // ---- Validation ----
-  const required = ['firstname', 'lastname', 'email', 'phone', 'postal', 'city'];
+  const required = ['firstname', 'lastname', 'email', 'phone', 'city'];
   const missing = required.filter(f => !payload[f]);
   if (missing.length) {
     return jsonResponse({ error: `Missing fields: ${missing.join(', ')}` }, 400);
@@ -297,9 +297,10 @@ async function handleLeadSubmit(request, env) {
   // Postal code format — Canadian FSA pattern for CA provinces, US ZIP for
   // US states now served by the site.
   const isUsState = US_STATE_CODES.has(cleanString(payload.province || '').toUpperCase());
-  const postalValid = isUsState
+  // We ask only for province/state and city now; a postal code from an older cached page is checked only if sent.
+  const postalValid = !payload.postal || (isUsState
     ? /^\d{5}(-\d{4})?$/.test(payload.postal)
-    : /^[A-Za-z][0-9][A-Za-z][ -]?[0-9][A-Za-z][0-9]$/.test(payload.postal);
+    : /^[A-Za-z][0-9][A-Za-z][ -]?[0-9][A-Za-z][0-9]$/.test(payload.postal));
   if (!postalValid) {
     return jsonResponse({ error: 'Invalid postal code' }, 400);
   }
@@ -342,7 +343,7 @@ async function handleLeadSubmit(request, env) {
     lastname: cleanString(payload.lastname),
     email: cleanString(payload.email),
     phone: cleanString(payload.phone),
-    postal: cleanString(payload.postal),
+    postal: cleanString(payload.postal || ''),
     // The retrofit-assessment checklist sends flat fields, not a calc_result
     // object — that mismatch previously meant every field below silently
     // fell back to 'unknown' no matter what the homeowner selected.
@@ -826,38 +827,82 @@ async function handleAlertSignup(request, env) {
   return jsonResponse({ success: true }, 200);
 }
 
-// Wording follows data/verified-facts/federal.json (federal-0 to federal-3): amounts and timing as announced, nothing
-// stated that Ottawa has not published (income line, home types, retroactivity).
+// What each province pays today, from the same verified facts as add_federal_links.py (bc-*, on-0/1, ns-*, ab-*).
+const FED_ALERT_PROVINCE_NOW = {
+  BC: 'BC Hydro pays up to $4,000 for a whole-home heat pump that replaces electric heat, and CleanBC has bigger rebates for income-qualified homes.',
+  ON: 'Home Renovation Savings pays $1,250 per ton (up to $7,500) for homes heated by electricity, oil, propane or wood, and $500 per ton (up to $2,000) for gas homes.',
+  NS: 'Efficiency Nova Scotia pays heat pump rebates by the ton right now, and HomeWarming does free upgrades for lower incomes.',
+  AB: "Alberta has no province-wide heat pump rebate we could verify, so this federal one may matter most for you."
+};
+
+// Fun but factual. Every figure follows data/verified-facts/federal.json (federal-0 to federal-3), "as announced":
+// never the income line, home types, a launch date or retroactivity until an official page states them.
 async function sendFederalAlertConfirmation(a, env) {
   const site = 'https://homepowerrebate.com';
   const hub = HEAT_PUMP_PAGE_PROVINCES.has(a.province) ? `${site}/ca/${a.province.toLowerCase()}/heat-pump/` : `${site}/programs/national-heat-pump-rebate/`;
   const unsub = `https://leads.homepowerrebate.com/unsubscribe?alert=${encodeURIComponent(a.id)}`;
   const p = 'font-size:16px;line-height:1.6;margin:0 0 14px;';
+  const h2 = 'font-family:Georgia,serif;font-size:20px;font-weight:500;color:#08363f;margin:26px 0 10px;';
+  const li = 'font-size:16px;line-height:1.55;margin:0 0 8px;';
+  const link = 'color:#08363f;font-weight:600;';
+  const step = (n, text) => `<tr><td valign="top" style="padding:0 12px 10px 0;width:30px;"><div style="width:28px;height:28px;line-height:28px;border-radius:14px;background:#08363f;color:#faf7f2;text-align:center;font-weight:700;font-size:14px;">${n}</div></td><td valign="top" style="${li}padding-top:3px;">${text}</td></tr>`;
+  const stat = (big, small) => `<td valign="top" width="50%" style="padding:14px;background:#ffffff;border:1px solid #e3dacb;border-radius:12px;"><div style="font-family:Georgia,serif;font-size:28px;color:#2d6a4f;font-weight:600;">${big}</div><div style="font-size:14px;line-height:1.45;color:#1a3d42;margin-top:4px;">${small}</div></td>`;
+  const now = FED_ALERT_PROVINCE_NOW[a.province];
+  const nowBlock = now ? `
+    <h2 style="${h2}">Meanwhile, money you can claim today</h2>
+    <p style="${p}">${now} Ottawa says the federal rebate can be combined with provincial programs, so today's money isn't something you have to give up.</p>` : '';
   const html = `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light only"></head>
 <body bgcolor="#f5efe5" style="margin:0;padding:0;background:#f5efe5;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">No more refreshing government websites. Here's what we know so far, and three smart things to do while you wait.</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#f5efe5" style="background:#f5efe5;"><tr><td align="center" style="padding:20px 12px;">
 <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:#0a2a2e;">
   <tr><td bgcolor="#08363f" style="background:#08363f;padding:26px 24px;border-radius:14px 14px 0 0;">
     <div style="font-family:Georgia,serif;font-size:18px;color:#faf7f2;">Home<span style="color:#e88a2e;font-weight:700;">Power</span>Rebate</div>
-    <h1 style="margin:14px 0 0;font-family:Georgia,serif;font-size:26px;font-weight:500;line-height:1.25;color:#faf7f2;">You're on the list.</h1>
+    <div style="margin:18px 0 0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#e88a2e;">You're on the list</div>
+    <h1 style="margin:6px 0 0;font-family:Georgia,serif;font-size:27px;font-weight:500;line-height:1.25;color:#faf7f2;">Go ahead, stop refreshing. We'll watch the door for you.</h1>
   </td></tr>
   <tr><td bgcolor="#faf7f2" style="background:#faf7f2;padding:24px;border:1px solid #d9d0c1;border-top:none;border-radius:0 0 14px 14px;">
-    <p style="${p}">We'll email you the day the federal heat pump rebate opens for applications. Ottawa says that should be early 2027.</p>
-    <p style="${p}">What it pays, as announced: up to <strong>$10,000</strong> for households below the median income and <strong>$2,000</strong> for other eligible homeowners.</p>
-    <p style="${p}">What Ottawa hasn't said yet: the income line, which homes qualify and the exact start date. We'll tell you when it does, and what you can stack with it${a.province ? ' in your province' : ''}.</p>
-    <p style="${p}">Is your heat working fine today? You may not need to rush. If it's failing now, don't wait out a cold winter. <a href="${site}/blog/should-you-wait-federal-heat-pump-rebate/" style="color:#08363f;font-weight:600;">Here's how to decide</a>.</p>
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:6px;"><tr><td bgcolor="#d4751c" style="background:#d4751c;border-radius:8px;text-align:center;">
+    <p style="${p}">The day Ottawa opens applications for the new federal heat pump rebate, you'll get an email from us. Ottawa says that should be early 2027. Until then, here's the short version of everything we know.</p>
+
+    <h2 style="${h2}">The rebate in 30 seconds</h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="8" style="margin:0 -8px;"><tr>
+      ${stat('$10,000', 'Up to this much for households below the median income')}
+      ${stat('$2,000', 'For other eligible homeowners')}
+    </tr></table>
+    <p style="${p}margin-top:10px;">It's a $2 billion program over eight years, aimed at up to 820,000 homes. Fun fact: Ottawa says homes moving off oil, propane or electric baseboard-style heat save over $1,400 a year on average. That's close to $120 a month back in your pocket.</p>
+
+    <h2 style="${h2}">How it should work (as announced)</h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      ${step(1, 'Apply online when your heating breaks or is near the end of its life. No energy audit needed.')}
+      ${step(2, 'Get approved. Ottawa is aiming for 24 hours.')}
+      ${step(3, 'Install a heat pump from the approved list. It has over 100,000 options, so you will have choices.')}
+      ${step(4, 'Upload your receipts. Ottawa says payment is approved within five days and sent by direct deposit.')}
+    </table>
+
+    <h2 style="${h2}">Still a mystery</h2>
+    <p style="${p}">Ottawa hasn't said where the income line is, which homes qualify, or the exact start date. Lots of websites are guessing. We won't. When Ottawa fills in a blank, you'll hear it from us.</p>
+
+    <h2 style="${h2}">Three smart things to do while you wait</h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      ${step('&#10003;', '<strong>Find out how old your furnace or boiler is.</strong> The date is usually on the sticker inside the panel door. Getting up there? Start planning now, not in a January cold snap.')}
+      ${step('&#10003;', '<strong>Know your heating fuel.</strong> Gas, oil, propane or electric changes which rebates you can get today.')}
+      ${step('&#10003;', `<strong>Don't wait out a broken furnace.</strong> If your heat is working, you can take your time. If it's failing, read <a href="${site}/blog/should-you-wait-federal-heat-pump-rebate/" style="${link}">should you wait?</a> first.`)}
+    </table>
+    ${nowBlock}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:14px;"><tr><td bgcolor="#d4751c" style="background:#d4751c;border-radius:8px;text-align:center;">
       <a href="${hub}" style="display:block;padding:14px 20px;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;">See the heat pump rebates open now &rarr;</a></td></tr></table>
-    <p style="font-size:13px;line-height:1.5;color:#5a6b6e;margin:20px 0 0;">You asked for this one alert on homepowerrebate.com. We won't add you to anything else. We're independent and not part of the Government of Canada. <a href="${unsub}" style="color:#5a6b6e;">Unsubscribe</a></p>
+
+    <p style="${p}margin-top:24px;">Talk soon,<br><strong>Sam</strong><br><span style="color:#5a6b6e;font-size:14px;">Founder, HomePowerRebate. Got a question? Just hit reply. A real person reads every email.</span></p>
+    <p style="font-size:13px;line-height:1.5;color:#5a6b6e;margin:20px 0 0;border-top:1px solid #e3dacb;padding-top:14px;">You asked for this alert on homepowerrebate.com, so we'll only email you about this rebate. We're independent and not part of the Government of Canada, and Ottawa has <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html" style="color:#5a6b6e;">its own sign-up</a> too. <a href="${unsub}" style="color:#5a6b6e;">Unsubscribe</a></p>
   </td></tr>
 </table></td></tr></table></body></html>`;
 
   return resendEmail(env.RESEND_API_KEY, {
     from: 'HomePowerRebate <hello@homepowerrebate.com>',
     to: a.email,
-    subject: "You're on the list for the federal heat pump rebate",
+    subject: "You're on the list! Here's what we know about the heat pump rebate",
     html
   });
 }
@@ -1657,7 +1702,7 @@ async function handleOutcomeSubmit(request, env) {
 
   if (p.website) return jsonResponse({ success: true }, 200); // honeypot
 
-  const required = ['email', 'category', 'postal', 'city', 'province', 'install_month', 'total_cost'];
+  const required = ['email', 'category', 'city', 'province', 'install_month', 'total_cost'];
   const missing = required.filter(f => p[f] === undefined || p[f] === null || p[f] === '');
   if (missing.length) return jsonResponse({ error: `Missing fields: ${missing.join(', ')}` }, 400);
 
@@ -1670,8 +1715,8 @@ async function handleOutcomeSubmit(request, env) {
     return jsonResponse({ error: `Unknown category: ${category}` }, 400);
   }
 
-  const postalFsa = extractFsa(p.postal, p.province);
-  if (!postalFsa) return jsonResponse({ error: 'Invalid postal/zip code' }, 400);
+  // Postal code is optional (we ask for province and city); keep only the area part if one is sent.
+  const postalFsa = p.postal ? (extractFsa(p.postal, p.province) || '') : '';
 
   if (!/^\d{4}-\d{2}$/.test(String(p.install_month))) {
     return jsonResponse({ error: 'install_month must be YYYY-MM' }, 400);
@@ -1876,7 +1921,7 @@ async function sendOpsOutcomeAlert(record, env) {
       <p>New verified-outcomes submission.</p>
       <ul>
         <li><strong>Category:</strong> ${escapeHtml(record.category)}</li>
-        <li><strong>Location:</strong> ${escapeHtml(capitalize(record.city))}, ${escapeHtml(record.province)} (${escapeHtml(record.postal_fsa)})</li>
+        <li><strong>Location:</strong> ${escapeHtml(capitalize(record.city))}, ${escapeHtml(record.province)}${record.postal_fsa ? ` (${escapeHtml(record.postal_fsa)})` : ''}</li>
         <li><strong>Install month:</strong> ${escapeHtml(record.install_month)}</li>
         <li><strong>Total cost:</strong> $${record.total_cost}</li>
         <li><strong>Rebates received:</strong> $${record.rebates_received}</li>
@@ -2071,8 +2116,8 @@ async function sendInstallerEmail(lead, installer, env) {
           <tr><td style="padding:6px 0;color:#1a3d42;width:140px;">Name</td><td style="padding:6px 0;font-weight:600;">${lead.firstname} ${lead.lastname}</td></tr>
           <tr><td style="padding:6px 0;color:#1a3d42;">Email</td><td style="padding:6px 0;font-weight:600;"><a href="mailto:${lead.email}">${lead.email}</a></td></tr>
           <tr><td style="padding:6px 0;color:#1a3d42;">Phone</td><td style="padding:6px 0;font-weight:600;"><a href="tel:${lead.phone}">${lead.phone}</a></td></tr>
-          <tr><td style="padding:6px 0;color:#1a3d42;">Postal code</td><td style="padding:6px 0;font-weight:600;">${lead.postal}</td></tr>
-          <tr><td style="padding:6px 0;color:#1a3d42;">City</td><td style="padding:6px 0;font-weight:600;">${capitalize(lead.city)}, BC</td></tr>
+          ${lead.postal ? `<tr><td style="padding:6px 0;color:#1a3d42;">Postal code</td><td style="padding:6px 0;font-weight:600;">${lead.postal}</td></tr>` : ''}
+          <tr><td style="padding:6px 0;color:#1a3d42;">City</td><td style="padding:6px 0;font-weight:600;">${capitalize(lead.city)}, ${escapeHtml(lead.province || 'BC')}</td></tr>
         </table>
 
         <h2 style="margin:24px 0 12px;font-size:18px;color:#08363f;">What they want</h2>
@@ -2156,7 +2201,7 @@ async function sendOpsEmail(lead, env) {
         <li><strong>Name:</strong> ${lead.firstname} ${lead.lastname}</li>
         <li><strong>Email:</strong> ${lead.email}</li>
         <li><strong>Phone:</strong> ${lead.phone}</li>
-        <li><strong>Postal:</strong> ${lead.postal}</li>
+        ${lead.postal ? `<li><strong>Postal:</strong> ${lead.postal}</li>` : ''}
         <li><strong>Utility:</strong> ${lead.utility}</li>
         <li><strong>Upgrades wanted:</strong> ${lead.upgrades || 'none specified'}</li>
         <li><strong>Current heat:</strong> ${lead.current_heat}</li>

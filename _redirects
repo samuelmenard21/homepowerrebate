@@ -1750,6 +1750,10 @@
 /blog/heat-pump-vs-ac-cost-rebates-bc /ca/bc/heat-pump/ 301
 
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+/installers/profiles/ab/red-deer/express-plumbing-heating-inc/ /installers/ab/red-deer/heat-pump/ 301
+/installers/profiles/ab/red-deer/express-plumbing-heating-inc /installers/ab/red-deer/heat-pump/ 301
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 /ca/on/durham/* /ca/on/ 301
 /ca/on/pickering/* /ca/on/ 301
 /ca/on/st-catharines/* /ca/on/ 301

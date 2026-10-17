@@ -44,7 +44,7 @@
  "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"},
  "publisher": {"@type": "Organization", "name": "HomePowerRebate"},
  "datePublished": "2026-01-15",
- "dateModified": "2026-09-26",
+ "dateModified": "2026-10-16",
  "mainEntityOfPage": "https://homepowerrebate.com/blog/greener-homes-grant-explained/"
 }
 </script>
@@ -197,7 +197,7 @@
 
 <article class="article">
   <div class="wrap">
-    <p class="meta">By <a href="/about" style="color:inherit;text-decoration:underline;">Sam Menard</a> &middot; Updated September 26, 2026 &middot; 3 min read</p>
+    <p class="meta">By <a href="/about" style="color:inherit;text-decoration:underline;">Sam Menard</a> &middot; Updated October 16, 2026 &middot; 3 min read</p>
 
     <div class="callout alert">
       <h4 aria-level="2">&#9888;&#65039; Both federal programs are now closed</h4>
@@ -220,6 +220,13 @@
       <h4 aria-level="3">The key difference for BC</h4>
       <p>CGHAP is delivered <strong>through partners in each province and territory</strong>, not through a federal application form. In BC, start with <a href="https://betterhomesbc.ca/" target="_blank" rel="noopener">Better Homes BC</a>, which lists the income-qualified programs open to you.</p>
     </div>
+
+    <h2>Coming next: the National Heat Pump Rebate</h2>
+    <p>On October 8, 2026, Ottawa announced a new federal heat pump rebate: up to <strong>$10,000</strong> for households below the median income and <strong>$2,000</strong> for other eligible homeowners. Ottawa expects it to open in early 2027. It is not open yet.</p>
+    <p>It works differently from the old grant. Ottawa says there is no energy audit before or after. You apply online when your heating system breaks or is near the end of its life, then install a heat pump from an approved list.</p>
+    <p>Ottawa has not published the income line, which homes qualify or the exact start date. <a href="/programs/national-heat-pump-rebate/">Read everything confirmed so far</a>.</p>
+    <!-- FED-ALERT-HERE --><!-- FED-ALERT-START --><section class="fed-alert" aria-label="Federal heat pump rebate email alert"><p class="fed-alert-eyebrow">Federal heat pump rebate</p><p class="fed-alert-title">The old program closed. A new one is coming.</p><p class="fed-alert-body">Ottawa plans a heat pump rebate of up to $10,000 for households below the median income and $2,000 for other eligible homeowners, starting in early 2027. Applications are not open yet.</p><form class="fed-alert-form" data-list="federal-hp"><label for="fed-alert-email">Email</label><input id="fed-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email"><label for="fed-alert-prov">Province</label><select id="fed-alert-prov" name="province"><option value="">Your province</option><option value="AB">Alberta</option><option value="BC">British Columbia</option><option value="MB">Manitoba</option><option value="NB">New Brunswick</option><option value="NL">Newfoundland and Labrador</option><option value="NS">Nova Scotia</option><option value="ON">Ontario</option><option value="PE">Prince Edward Island</option><option value="QC">Quebec</option><option value="SK">Saskatchewan</option><option value="NT">Northwest Territories</option><option value="NU">Nunavut</option><option value="YT">Yukon</option></select><input class="fed-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">Email me when it opens</button></form><p class="fed-alert-done" role="status" hidden></p><p class="fed-alert-note">We only email you about this rebate. Unsubscribe anytime. Ottawa also has <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html">its own sign-up</a>.</p></section><script>document.querySelectorAll('.fed-alert-form').forEach(function (f) { f.addEventListener('submit', async function (e) { e.preventDefault(); var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'); var t = b.textContent; b.disabled = true; b.textContent = 'Saving...'; try { var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) }); if (!r.ok) throw new Error('alert signup failed'); f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us."; } catch (err) { done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t; } done.hidden = false; }); });</script><!-- FED-ALERT-END -->
+
 
     <h2>So where's the money in 2026? (This part is good news)</h2>
     <p>Losing the federal grant sounds bad, but for most BC homeowners the provincial and utility programs are larger and still wide open:</p>

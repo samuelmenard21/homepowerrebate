@@ -27,9 +27,8 @@ def main():
         if r.returncode:
             failed.append(g)
             print("   ", (r.stderr or r.stdout).strip()[-400:])
-    if any(" --state" in g for g in runs):
-        for step in HUB_STEPS:
-            subprocess.run([sys.executable, f"scripts/{step}"], cwd=ROOT, capture_output=True, text=True)
+    for step in HUB_STEPS:  # idempotent; hub base pages (--state, Illinois --hubs) need them
+        subprocess.run([sys.executable, f"scripts/{step}"], cwd=ROOT, capture_output=True, text=True)
     bad = run_post_steps(cwd=ROOT)
     print(f"{len(runs)} runs, {len(failed)} failed; post-steps " + ("ok" if not bad else "failed: " + ", ".join(bad)))
     return 1 if failed or bad else 0

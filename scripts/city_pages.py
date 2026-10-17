@@ -176,14 +176,65 @@ class Region:
         crumb = kit.breadcrumb([(e(n), p) for n, p in trail[:-1]] + [(e(name) if is_hub else self.labels[cat], path)])
         top = (f'<span style="margin-right:14px;"><a href="/{self.path}/">&larr; All {self.name} rebates</a></span>' if self.cfg.get("hub_back_link") else "") if is_hub else f'<span style="margin-right:14px;"><a href="{hub}">&larr; Back to {e(name)} rebate hub</a></span>' + "\n" + sib
         nslug, nname = ("", "") if state else (slug, name)
+        if state:  # the region hub has no city link row under the hero
+            top = None
         kit.write_page(path, d["title"], d["desc"], lds, navfooter.render_nav(self.code, nslug), crumb, kit.hero(d, "header" if state else "section"), top, article,
                        navfooter.render_footer(self.code, nslug, nname, path))
+        return path, w
+
+
+    # ---- the region hub base page (the hub pipeline then adds the stats, table, city finder and contents) ----
+    def state_hub(self):
+        """/<region>/ from data/<code>/pages/state-hub.json (or data/<code>/state-hub.json): eyebrow, h1, sub, program_links,
+        sections (a "{cards}" placeholder becomes the city_cards), optional lists and guides_by_upgrade, faq, refs, and
+        facts or fact_prefix for the "last read" date. One layout for every region hub built from data."""
+        src = next(p for p in (ROOT / "data" / self.code / "pages" / "state-hub.json", ROOT / "data" / self.code / "state-hub.json") if p.exists())
+        d = json.loads(src.read_text())
+        path = f"/{self.path}/"
+        fids = d.get("facts") or [i for i in kit.FACTS if i.startswith(d.get("fact_prefix", self.code) + "-")]
+        iso, when = kit.checked(fids)
+        city_cards = "".join(f'<div class="rebate-card"><h4 aria-level="3">{e(self.names[c])}</h4><p style="margin-bottom:8px;">{e(u)}</p>'
+                             f'<p><a href="/{self.path}/{c}/">View {e(self.names[c])} rebates &rarr;</a></p></div>' for c, u in d.get("city_cards", []))
+        body = "".join(f"<h2>{h}</h2>{b.replace('{cards}', city_cards)}" for h, b in d["sections"])
+        for lst in d.get("lists", []):
+            items = [(u, t, b) for u, t, b in lst["items"] if (ROOT / u.strip("/") / "index.html").exists() or u.startswith("/programs/")]
+            for cat in lst.get("add_city_pages", []):
+                items += [(f"/{self.path}/{c}/{cat}/", f"{n} {self.labels.get(cat, cat).lower()} rebates", "") for c, n in self.names.items()
+                          if (ROOT / self.path / c / cat / "index.html").exists()]
+            body += (f"<h2>{lst['heading']}</h2>{lst.get('intro', '')}<ul>"
+                     + "".join(f'<li><a href="{u}">{e(t)}</a>' + (f": {b}" if b else "") + "</li>" for u, t, b in items) + "</ul>")
+        if d.get("guides_by_upgrade"):  # every city category page and statewide topic page that exists, by upgrade
+            rows = []
+            for cat, label in self.labels.items():
+                links = [f'<a href="/{self.path}/{c}/{cat}/">{e(n)}</a>' for c, n in self.names.items() if (ROOT / self.path / c / cat / "index.html").exists()]
+                if (ROOT / self.path / cat / "index.html").exists():
+                    links.append(f'<a href="/{self.path}/{cat}/">all of {e(self.name)}</a>')
+                if links:
+                    rows.append(f"<li><b>{label}:</b> " + ", ".join(links) + "</li>")
+            body += f"<h2>Rebate guides by upgrade</h2><ul>{''.join(rows)}</ul>"
+        article = f"""{body}
+<h2>Common questions</h2>
+{kit.faq(d)}
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}.</p>"""
+        w = kit.quality_gate(article, d, path, loose_refs=True, min_words=450)
+        trail = [("Home", "/"), (self.name, path)]
+        lds = kit.ld_scripts([kit.article_ld(d["title"], d["desc"], iso, path), kit.breadcrumb_ld(trail), kit.faq_ld(d)])
+        eyebrow = f'<div class="eyebrow">{e(d["eyebrow"])}</div>' if d.get("eyebrow") else ""
+        hero = f'<header class="hero"><div class="wrap">{eyebrow}<h1>{e(d["h1"])}</h1><p class="sub">{d["sub"]}</p></div></header>'
+        if d.get("program_links"):
+            hero += ('\n<!-- PROGRAM-LINKS-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Program guides:</b> '
+                     + " · ".join(f'<a href="{u}">{e(t)}</a>' for u, t in d["program_links"]) + "</p><!-- PROGRAM-LINKS-END -->")
+        kit.write_page(path, d["title"], d["desc"], lds, navfooter.render_nav(self.code, ""), kit.breadcrumb([("Home", "/"), (e(self.name), path)]),
+                       hero, None, article, navfooter.render_footer(self.code, "", "", path))
         return path, w
 
 
 def main(code, argv=None):
     argv = sys.argv[1:] if argv is None else argv
     reg = Region(code)
+    if any(a in argv for a in ("--state", "--state-hub")):  # the region hub base page
+        print("built", *reg.state_hub())
+        return
     only = {a for a in argv if not a.startswith("--")}
     cats = ["index"] if "--hubs" in argv else reg.cfg["built"]
     for slug in (sorted(reg.names) if reg.groups else reg.names):

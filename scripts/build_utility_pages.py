@@ -95,7 +95,6 @@ def index():
 <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website">
 <meta property="og:image" content="{BASE}/og-image.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
-{ca.CSS}
 </head><body>
 {navfooter.render_nav("ca", "")}
 <section class="hero"><div class="wrap"><h1>Rebate Programs by Utility and Program</h1><p>Each page lists what the program pays, who qualifies and the date we last read the official page. Amounts come from our verified facts file, so a closed program never shows as open.</p></div></section>

@@ -25,7 +25,7 @@ LABEL = {"insulation": "Insulation", "windows": "Windows & Doors", "water-heater
 BUILT = ["insulation", "windows", "water-heater", "heat-pump", "solar", "battery", "ev-charger"]
 HUB = ["index"]
 # One page for the province: /ca/bc/<k>/ from data/state-topics/bc-<k>.json (build_state_topic_pages.py).
-PROVINCE_PAGES = [("smart-thermostats", "Smart thermostat rebates"), ("appliances", "Appliance rebates"), ("hrv", "HRV and ventilation rebates")]
+PROVINCE_PAGES = [("smart-thermostats", "Smart thermostat rebates"), ("appliances", "Appliance rebates"), ("hrv", "HRV and ventilation rebates"), ("ev-charger", "EV charger rebates")]
 NAMES = {"abbotsford": "Abbotsford", "burnaby": "Burnaby", "chilliwack": "Chilliwack", "coquitlam": "Coquitlam", "fort-st-john": "Fort St. John", "kamloops": "Kamloops",
          "kelowna": "Kelowna", "langley": "Langley", "maple-ridge": "Maple Ridge", "nanaimo": "Nanaimo", "penticton": "Penticton", "prince-george": "Prince George",
          "richmond": "Richmond", "squamish": "Squamish", "surrey": "Surrey", "vancouver": "Vancouver", "vernon": "Vernon", "victoria": "Victoria"}

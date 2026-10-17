@@ -140,10 +140,10 @@ def main():
         t = f.read_text(encoding="utf-8")
         country, label = rs[0]["country"], rs[0]["region_label"]
         for k in REMOVE:
-            t = re.sub(rf"<!-- {k}-START -->.*?<!-- {k}-END -->\n?", "", t, flags=re.S)
+            t = re.sub(rf"\n?<!-- {k}-START -->.*?<!-- {k}-END -->\n?", "", t, flags=re.S)  # blocks go in as "\n" + block + "\n"
         for name, blk in (("HUB-STATS", stats_block(reg, rs, country)), ("HUB-SHOWCASE", showcase_block(reg, rs, country, label))):
             S, E = f"<!-- {name}-START -->", f"<!-- {name}-END -->"
-            t = re.sub(re.escape(S) + ".*?" + re.escape(E) + "\n?", "", t, flags=re.S)
+            t = re.sub("\n?" + re.escape(S) + ".*?" + re.escape(E) + "\n?", "", t, flags=re.S)
             if name == "HUB-STATS":
                 i = find_hero_end(t)
             else:

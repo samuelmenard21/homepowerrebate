@@ -18,7 +18,7 @@ from ca_cities import CITIES  # noqa: E402
 
 e = html.escape
 BASE = "https://homepowerrebate.com"
-AUTHOR = {"@type": "Person", "@id": f"{BASE}/#sam", "name": "Sam Menard", "url": f"{BASE}/about"}
+AUTHOR = {"@type": "Person", "@id": f"{BASE}/about#sam-menard", "name": "Sam Menard", "url": f"{BASE}/about"}
 FACTS = load_facts()
 TEMPLATE = (ROOT / "ca/on/kitchener/heat-pump/index.html").read_text(encoding="utf-8")
 # the template's CSS as the restamp leaves it: its family stylesheet link plus any inline <style> blocks, minus the

@@ -36,7 +36,7 @@ def apply(slug):
     t = re.sub(r'(<article class="article">\s*<div class="wrap">).*?(</div>\s*</article>)', lambda m: m.group(1) + "\n" + body + "\n  " + m.group(2), t, count=1, flags=re.S)
     t = re.sub(r'<script type="application/ld\+json">\{[^<]*?"@type": ?"(?:Article|FAQPage)"[\s\S]*?</script>\s*', "", t)
     ld = [{"@context": "https://schema.org", "@type": "Article", "headline": d["h1"], "description": d["desc"], "datePublished": d.get("published", upd), "dateModified": upd,
-           "author": {"@type": "Person", "@id": f"{BASE}/#sam", "name": "Sam Menard", "url": f"{BASE}/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"},
+           "author": {"@type": "Person", "@id": f"{BASE}/about#sam-menard", "name": "Sam Menard", "url": f"{BASE}/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"},
            "mainEntityOfPage": f"{BASE}/blog/{slug}/"}]
     if d.get("faq"):
         ld.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", html.unescape(a))}} for q, a in d["faq"]]})

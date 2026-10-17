@@ -29,7 +29,7 @@
 <!-- FONT-PRELOAD-END -->
 
 <link rel="stylesheet" href="/assets/tpl/article-81c1fe61.css?v=2ea39076ec" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=739c67caed" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=eb67898d82" data-hpr-site-css>
 <!-- BREADCRUMB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://homepowerrebate.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Heat Pump or Solar First? New York Edition", "item": "https://homepowerrebate.com/blog/heat-pump-or-solar-new-york/"}]}</script><!-- BREADCRUMB-LD-END -->
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -450,35 +450,86 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.textContent = originalText;
   }
 });
-// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; the handler lives here once for every page).
-// A box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
-document.addEventListener('submit', async function (e) {
-  var f = e.target;
-  if (!f.classList || !f.classList.contains('fed-alert-form')) return;
-  e.preventDefault();
-  var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
-  b.disabled = true; b.textContent = 'Saving...';
-  try {
-    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) });
-    if (!r.ok) throw new Error('alert signup failed');
-    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
-  } catch (err) {
-    done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; this code lives here once for every page).
+// - src: ?src= or ?utm_source= on arrival is kept for the visit and sent with the signup and the view count, so the weekly
+//   report (scripts/federal_alert_report.py) shows which shared or installer links bring people in.
+// - view: one anonymous ping to /alert/seen the first time a box is half on screen (no IP, cookie or person stored).
+// - count: "Join N people already on the list" once the list has 50 or more; cached 10 minutes in the tab.
+// - a box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
+// - after a signup the box shows its share row; share links carry their own src.
+(function () {
+  var boxes = document.querySelectorAll('.fed-alert');
+  if (!boxes.length) return;
+  var API = 'https://leads.homepowerrebate.com', q = new URLSearchParams(location.search), src = q.get('src') || q.get('utm_source') || '';
+  try { if (src) sessionStorage.setItem('hpr-src', src); else src = sessionStorage.getItem('hpr-src') || ''; } catch (e) {}
+  var page = location.pathname + (src ? '?src=' + encodeURIComponent(src).slice(0, 60) : '');
+  function ev(name, extra) { if (window.gtag) window.gtag('event', name, Object.assign({ page_path: location.pathname, alert_src: src || '(none)' }, extra || {})); }
+  if ('IntersectionObserver' in window && location.hostname === 'homepowerrebate.com') {  // local previews never count
+    var seen = 0, io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (!en.isIntersecting || seen) return;
+        seen = 1; io.disconnect();
+        var body = JSON.stringify({ list: 'federal-hp', page: page });
+        if (navigator.sendBeacon) navigator.sendBeacon(API + '/alert/seen', body);
+        else fetch(API + '/alert/seen', { method: 'POST', body: body, keepalive: true }).catch(function () {});
+        ev('fed_alert_view');
+      });
+    }, { threshold: 0.5 });
+    boxes.forEach(function (b) { io.observe(b); });
   }
-  done.hidden = false;
-});
-document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
-  var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), c = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
-  if (!r) return;
-  function upd() {
-    var on = ca.indexOf(r.value) >= 0;
-    box.hidden = !on;
-    f.dataset.province = on ? r.value.toUpperCase() : '';
-    f.dataset.city = on && c && c.value ? c.options[c.selectedIndex].text : '';
+  function showCount(n) {
+    if (!(n >= 50)) return;
+    document.querySelectorAll('.fed-alert-count').forEach(function (p) { p.textContent = 'Join ' + n.toLocaleString('en-CA') + ' people already on the list'; p.hidden = false; });
   }
-  r.addEventListener('change', upd); if (c) c.addEventListener('change', upd);
-  new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
-});
+  var c = null;
+  try { c = JSON.parse(sessionStorage.getItem('hpr-fed-count') || 'null'); } catch (e) {}
+  if (c && Date.now() - c.t < 600000) showCount(c.n);
+  else fetch(API + '/alert/count?list=federal-hp').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d) return;
+    try { sessionStorage.setItem('hpr-fed-count', JSON.stringify({ n: d.count, t: Date.now() })); } catch (e) {}
+    showCount(d.count);
+  }).catch(function () {});
+  document.addEventListener('submit', async function (e) {
+    var f = e.target;
+    if (!f.classList || !f.classList.contains('fed-alert-form')) return;
+    e.preventDefault();
+    var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), share = box.querySelector('.fed-alert-share'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
+    b.disabled = true; b.textContent = 'Saving...';
+    try {
+      var r = await fetch(API + '/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: page, website: f.querySelector('.fed-alert-hp').value }) });
+      if (!r.ok) throw new Error('alert signup failed');
+      f.hidden = true; done.textContent = "You're on the list! Check your inbox for a short note from us.";
+      if (share) share.hidden = false;
+      ev('fed_alert_signup');
+    } catch (err) {
+      done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+    }
+    done.hidden = false;
+  });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('.fed-alert-share a, .fed-alert-share button');
+    if (!a) return;
+    ev('fed_alert_share', { method: a.dataset.method || '' });
+    if (a.dataset.copy) {
+      e.preventDefault();
+      var done = function () { a.textContent = 'Link copied!'; };
+      if (navigator.clipboard) navigator.clipboard.writeText(a.dataset.copy).then(done, function () { prompt('Copy this link:', a.dataset.copy); });
+      else prompt('Copy this link:', a.dataset.copy);
+    }
+  });
+  document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
+    var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), cs = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
+    if (!r) return;
+    function upd() {
+      var on = ca.indexOf(r.value) >= 0;
+      box.hidden = !on;
+      f.dataset.province = on ? r.value.toUpperCase() : '';
+      f.dataset.city = on && cs && cs.value ? cs.options[cs.selectedIndex].text : '';
+    }
+    r.addEventListener('change', upd); if (cs) cs.addEventListener('change', upd);
+    new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
+  });
+})();
 (function () {
   var n = document.querySelector('.nav'), y = window.scrollY, f = 0;
   if (!n || !window.matchMedia) return;

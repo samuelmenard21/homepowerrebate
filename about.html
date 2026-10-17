@@ -48,6 +48,7 @@ document.addEventListener('click', function(e) {
 });
 </script>
 
+<!-- ABOUT-LD-START -->
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -57,43 +58,119 @@ document.addEventListener('click', function(e) {
    "@id": "https://homepowerrebate.com/#org",
    "name": "HomePowerRebate",
    "url": "https://homepowerrebate.com/",
-   "description": "Independent guide to home-energy rebates across Canada and the US, and free installer matching.",
-   "founder": { "@id": "https://homepowerrebate.com/#sam" },
+   "description": "Independent guide to home energy rebates in 149 cities across Canada and the United States. Every amount links to the official program and is re-checked monthly. Installers are ranked by Google reviews; nobody pays to be listed.",
+   "founder": {
+    "@id": "https://homepowerrebate.com/about#sam-menard"
+   },
    "foundingLocation": "Ontario, Canada",
    "areaServed": [
-    { "@type": "AdministrativeArea", "name": "Ontario, Canada" },
-    { "@type": "AdministrativeArea", "name": "British Columbia, Canada" },
-    { "@type": "AdministrativeArea", "name": "Alberta, Canada" },
-    { "@type": "AdministrativeArea", "name": "Nova Scotia, Canada" },
-    { "@type": "AdministrativeArea", "name": "Massachusetts, USA" },
-    { "@type": "AdministrativeArea", "name": "New York, USA" },
-    { "@type": "AdministrativeArea", "name": "California, USA" }
+    {
+     "@type": "AdministrativeArea",
+     "name": "Ontario, Canada"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "British Columbia, Canada"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Alberta, Canada"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Nova Scotia, Canada"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Newfoundland and Labrador, Canada"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "California, United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Massachusetts, United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "New York, United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Pennsylvania, United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Colorado, United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Vermont, United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Michigan, United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "New Jersey, United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Illinois, United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Washington, United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Minnesota, United States"
+    }
    ]
   },
   {
    "@type": "Person",
-   "@id": "https://homepowerrebate.com/#sam",
+   "@id": "https://homepowerrebate.com/about#sam-menard",
    "name": "Sam Menard",
    "jobTitle": "Founder",
-   "worksFor": { "@id": "https://homepowerrebate.com/#org" },
-   "alumniOf": { "@type": "CollegeOrUniversity", "name": "Wilfrid Laurier University" },
-   "knowsAbout": ["home-energy rebates", "heat pump rebates", "residential solar and battery rebates", "utility incentive programs"],
+   "worksFor": {
+    "@id": "https://homepowerrebate.com/#org"
+   },
+   "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Wilfrid Laurier University"
+   },
+   "knowsAbout": [
+    "home-energy rebates",
+    "heat pump rebates",
+    "residential solar and battery rebates",
+    "utility incentive programs"
+   ],
    "description": "Sam Menard is a business and analytics professional who built HomePowerRebate as an independent, plain-English guide to home-energy rebate programs across Canada and the US.",
-   "sameAs": ["https://ca.linkedin.com/in/sammenard"]
+   "sameAs": [
+    "https://ca.linkedin.com/in/sammenard"
+   ]
   },
   {
    "@type": "AboutPage",
    "url": "https://homepowerrebate.com/about",
    "name": "About HomePowerRebate",
-   "about": { "@id": "https://homepowerrebate.com/#org" },
-   "mainEntity": { "@id": "https://homepowerrebate.com/#sam" }
+   "about": {
+    "@id": "https://homepowerrebate.com/#org"
+   },
+   "mainEntity": {
+    "@id": "https://homepowerrebate.com/about#sam-menard"
+   }
   }
  ]
 }
 </script>
+<!-- ABOUT-LD-END -->
 
 <link rel="stylesheet" href="/assets/tpl/article-c5b6638d.css?v=64816832cf" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=739c67caed" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=eb67898d82" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -237,8 +314,18 @@ document.addEventListener('click', function(e) {
   <div class="wrap">
 
     <p>HomePowerRebate was built because homeowners told us the same story again and again: they wanted to claim a heat pump, solar, or battery rebate, but every comparison site they tried sold their info to a dozen installers. They got buried in calls. The rebate cheque felt out of reach because the process was hostile.</p>
-    <p>We took the opposite approach. Vetted installers in each city, picked for certification and customer reviews. You choose who to contact. No auctions, no bundles, no data sales. Independent of any utility, but transparent about every official source we cite.</p>
-    <p>Today we cover 99 cities across British Columbia, Ontario, Alberta, Nova Scotia, Massachusetts, New York, and California — with more added regularly, based on real homeowner demand. Same model the whole way.</p>
+    <p>We do it the other way. In each city we list the top-rated installers, <a href="/installers/how-we-rank/">ranked only by Google reviews</a>. Nobody can pay to rank higher. You choose who to call. We never sell your details or auction your request. We are not part of any utility, and we link to the official page for every rebate we mention.</p>
+<!-- ABOUT-COVERAGE-START -->
+    <p>Today we cover 149 cities in 16 provinces and states. We add a new place only when we can read its programs on the official pages.</p>
+    <ul>
+      <li><strong>Canada (5 provinces):</strong> <a href="/ca/on/">Ontario</a>, <a href="/ca/bc/">British Columbia</a>, <a href="/ca/ab/">Alberta</a>, <a href="/ca/ns/">Nova Scotia</a>, <a href="/ca/nl/">Newfoundland and Labrador</a></li>
+      <li><strong>the US (11 states):</strong> <a href="/us/ca/">California</a>, <a href="/us/ma/">Massachusetts</a>, <a href="/us/ny/">New York</a>, <a href="/us/pa/">Pennsylvania</a>, <a href="/us/co/">Colorado</a>, <a href="/us/vt/">Vermont</a>, <a href="/us/mi/">Michigan</a>, <a href="/us/nj/">New Jersey</a>, <a href="/us/il/">Illinois</a>, <a href="/us/wa/">Washington</a>, <a href="/us/mn/">Minnesota</a></li>
+    </ul>
+   
+<!-- ABOUT-COVERAGE-END -->
+
+    <h2>How we check the numbers</h2>
+    <p>Every rebate amount on this site comes from the program's own page, and we link to that page right next to the amount. We re-read every source once a month. When a program closes or an amount changes, we fix the page and show the date we last checked it. If a number can't be confirmed on an official page, we don't show it as a sure thing.</p>
 
     <h2>About Sam Menard</h2>
     <p>My name is Sam Menard. I'm a business and technology leader who enjoys building things from the ground up—especially when there's an opportunity to take a great idea and turn it into something people actually use.</p>
@@ -269,11 +356,14 @@ document.addEventListener('click', function(e) {
       <li><strong>You choose who to contact.</strong> We show you the top-rated installers in your city, ranked by Google reviews, and you pick who you want to connect with — no high-pressure sales.</li>
     </ul>
 
+    <h2>How we make money</h2>
+    <p>Right now, nobody pays us. Homeowners don't pay, and installers don't pay. There are no referral fees and no paid listings. If that ever changes, we will say so here and on our <a href="/installers/how-we-rank/">how we rank</a> page. Money will never change where a company ranks.</p>
+
     <h2>What we're not</h2>
     <p>We're a starting point, not a substitute for official confirmation. Rebate amounts, eligibility, and deadlines change, and your exact numbers depend on your home, your income, and an EnerGuide evaluation. Always confirm your specifics with the official program and a licensed professional before you sign anything. When a program has closed or a number has changed, we update the guide and show you the date.</p>
 
     <h2>For installers</h2>
-    <p>Do you run a reputable installation company and want to be considered for our network? I'd love to hear from you — <a href="/contact/">get in touch here</a>.</p>
+    <p>Our rankings come only from Google reviews, so there is no form to apply and no way to pay for a better spot. If your company is listed and something is wrong, like a service you don't offer or a city you don't serve, <a href="/contact/">tell us</a> and we'll fix it.</p>
     <a class="cta" href="/get-quotes/">See my rebates &rarr;</a>
 
     <link rel="stylesheet" href="/assets/tpl/article-4ce593bc.css?v=55b29450e1" data-hpr-tpl>
@@ -443,35 +533,86 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.textContent = originalText;
   }
 });
-// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; the handler lives here once for every page).
-// A box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
-document.addEventListener('submit', async function (e) {
-  var f = e.target;
-  if (!f.classList || !f.classList.contains('fed-alert-form')) return;
-  e.preventDefault();
-  var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
-  b.disabled = true; b.textContent = 'Saving...';
-  try {
-    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) });
-    if (!r.ok) throw new Error('alert signup failed');
-    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
-  } catch (err) {
-    done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; this code lives here once for every page).
+// - src: ?src= or ?utm_source= on arrival is kept for the visit and sent with the signup and the view count, so the weekly
+//   report (scripts/federal_alert_report.py) shows which shared or installer links bring people in.
+// - view: one anonymous ping to /alert/seen the first time a box is half on screen (no IP, cookie or person stored).
+// - count: "Join N people already on the list" once the list has 50 or more; cached 10 minutes in the tab.
+// - a box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
+// - after a signup the box shows its share row; share links carry their own src.
+(function () {
+  var boxes = document.querySelectorAll('.fed-alert');
+  if (!boxes.length) return;
+  var API = 'https://leads.homepowerrebate.com', q = new URLSearchParams(location.search), src = q.get('src') || q.get('utm_source') || '';
+  try { if (src) sessionStorage.setItem('hpr-src', src); else src = sessionStorage.getItem('hpr-src') || ''; } catch (e) {}
+  var page = location.pathname + (src ? '?src=' + encodeURIComponent(src).slice(0, 60) : '');
+  function ev(name, extra) { if (window.gtag) window.gtag('event', name, Object.assign({ page_path: location.pathname, alert_src: src || '(none)' }, extra || {})); }
+  if ('IntersectionObserver' in window && location.hostname === 'homepowerrebate.com') {  // local previews never count
+    var seen = 0, io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (!en.isIntersecting || seen) return;
+        seen = 1; io.disconnect();
+        var body = JSON.stringify({ list: 'federal-hp', page: page });
+        if (navigator.sendBeacon) navigator.sendBeacon(API + '/alert/seen', body);
+        else fetch(API + '/alert/seen', { method: 'POST', body: body, keepalive: true }).catch(function () {});
+        ev('fed_alert_view');
+      });
+    }, { threshold: 0.5 });
+    boxes.forEach(function (b) { io.observe(b); });
   }
-  done.hidden = false;
-});
-document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
-  var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), c = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
-  if (!r) return;
-  function upd() {
-    var on = ca.indexOf(r.value) >= 0;
-    box.hidden = !on;
-    f.dataset.province = on ? r.value.toUpperCase() : '';
-    f.dataset.city = on && c && c.value ? c.options[c.selectedIndex].text : '';
+  function showCount(n) {
+    if (!(n >= 50)) return;
+    document.querySelectorAll('.fed-alert-count').forEach(function (p) { p.textContent = 'Join ' + n.toLocaleString('en-CA') + ' people already on the list'; p.hidden = false; });
   }
-  r.addEventListener('change', upd); if (c) c.addEventListener('change', upd);
-  new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
-});
+  var c = null;
+  try { c = JSON.parse(sessionStorage.getItem('hpr-fed-count') || 'null'); } catch (e) {}
+  if (c && Date.now() - c.t < 600000) showCount(c.n);
+  else fetch(API + '/alert/count?list=federal-hp').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d) return;
+    try { sessionStorage.setItem('hpr-fed-count', JSON.stringify({ n: d.count, t: Date.now() })); } catch (e) {}
+    showCount(d.count);
+  }).catch(function () {});
+  document.addEventListener('submit', async function (e) {
+    var f = e.target;
+    if (!f.classList || !f.classList.contains('fed-alert-form')) return;
+    e.preventDefault();
+    var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), share = box.querySelector('.fed-alert-share'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
+    b.disabled = true; b.textContent = 'Saving...';
+    try {
+      var r = await fetch(API + '/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: page, website: f.querySelector('.fed-alert-hp').value }) });
+      if (!r.ok) throw new Error('alert signup failed');
+      f.hidden = true; done.textContent = "You're on the list! Check your inbox for a short note from us.";
+      if (share) share.hidden = false;
+      ev('fed_alert_signup');
+    } catch (err) {
+      done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+    }
+    done.hidden = false;
+  });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('.fed-alert-share a, .fed-alert-share button');
+    if (!a) return;
+    ev('fed_alert_share', { method: a.dataset.method || '' });
+    if (a.dataset.copy) {
+      e.preventDefault();
+      var done = function () { a.textContent = 'Link copied!'; };
+      if (navigator.clipboard) navigator.clipboard.writeText(a.dataset.copy).then(done, function () { prompt('Copy this link:', a.dataset.copy); });
+      else prompt('Copy this link:', a.dataset.copy);
+    }
+  });
+  document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
+    var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), cs = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
+    if (!r) return;
+    function upd() {
+      var on = ca.indexOf(r.value) >= 0;
+      box.hidden = !on;
+      f.dataset.province = on ? r.value.toUpperCase() : '';
+      f.dataset.city = on && cs && cs.value ? cs.options[cs.selectedIndex].text : '';
+    }
+    r.addEventListener('change', upd); if (cs) cs.addEventListener('change', upd);
+    new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
+  });
+})();
 (function () {
   var n = document.querySelector('.nav'), y = window.scrollY, f = 0;
   if (!n || !window.matchMedia) return;

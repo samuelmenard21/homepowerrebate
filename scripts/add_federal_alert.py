@@ -118,17 +118,12 @@ def stack(province=""):
     lis = ""
     for c in codes:
         d, x = data[c], data[c]["row"]
-        if x:
-            prog = html.escape(x["name"]) + (f' <span class="fs-more">{html.escape(x["more"])}</span>' if x.get("more") else "")
-            amt = f'<b class="fs-amt">{html.escape(x["amt"])}</b>'
-        else:
-            prog, amt = "No provincial heat pump rebate open today", '<b class="fs-amt fs-none">None open</b>'
-        lis += (f'<li data-prov="{c}"><a href="{d["link"]}"><span class="fs-what"><span class="fs-prov">{html.escape(d["name"])}</span>'
-                f'<span class="fs-prog">{prog}</span></span>{amt}</a></li>')
+        amt = f'<b class="fs-amt">{html.escape(x["amt"])}</b>' if x else '<b class="fs-amt fs-none">None open</b>'
+        lis += f'<li data-prov="{c}"><a href="{d["link"]}"><span class="fs-prov">{html.escape(d["name"])}</span>{amt}</a></li>'
     head = (f"Stack it with the {html.escape(data[codes[0]]['name'])} rebate open today" if province
             else "Stack it with the provincial rebate open today")
     return (f'<div class="fed-alert-stack"><p class="fed-alert-stack-h">{head}</p><ul class="fed-alert-stack-list">{lis}</ul>'
-            '<p class="fed-alert-stack-note">Ottawa says you can combine its rebate with provincial ones. Each provincial program has its own rules.</p></div>')
+            '<p class="fed-alert-stack-note">Ottawa says you can combine them. Each program has its own rules.</p></div>')
 
 
 def share_row(open_=False):

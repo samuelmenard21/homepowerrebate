@@ -254,6 +254,7 @@ async function handleFetch(request, env, ctx) {
     if (path === '/submit') return handleLeadSubmit(request, env);
     if (path === '/waitlist') return handleWaitlistSubmit(request, env);
     if (path === '/newsletter') return handleNewsletter(request, env);
+    if (path === '/alert') return handleAlertSignup(request, env);
     if (path === '/estimate-lead') return handleEstimateLead(request, env);
     if (path === '/outcomes/submit') return handleOutcomeSubmit(request, env);
     if (path === '/contact') return handleContactSubmit(request, env);
@@ -780,8 +781,141 @@ async function runDripQueue(env) {
   }
 }
 
+// ===========================================================================
+// ROUTE — /alert (program-launch alert lists, table `alerts`, schema-alerts.sql)
+// ===========================================================================
+// One alert, one purpose: "email me the day the federal heat pump rebate opens". No results drip and no newsletter
+// audience, because that is not what the person asked for (CASL). A repeat signup changes nothing and sends nothing,
+// so the form can't be used to flood someone's inbox.
+
+const ALERT_LISTS = new Set(['federal-hp']);
+const CA_ALL_PROVINCES = new Set(['AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'NT', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT']);
+// Provinces with a /ca/<code>/heat-pump/ page; the confirmation email links there, others get the federal page.
+const HEAT_PUMP_PAGE_PROVINCES = new Set(['AB', 'BC', 'MB', 'NS', 'ON', 'QC']);
+
+async function handleAlertSignup(request, env) {
+  let p;
+  try { p = await request.json(); } catch (e) { return jsonResponse({ error: 'Invalid JSON' }, 400); }
+
+  if (p.website) return jsonResponse({ success: true }, 200); // honeypot
+  const email = cleanString(p.email).toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return jsonResponse({ error: 'Invalid email' }, 400);
+  const list = cleanString(p.list || 'federal-hp');
+  if (!ALERT_LISTS.has(list)) return jsonResponse({ error: 'Unknown list' }, 400);
+  const province = cleanString(p.province).toUpperCase();
+  const record = {
+    id: crypto.randomUUID(),
+    email,
+    list,
+    province: CA_ALL_PROVINCES.has(province) ? province : '',
+    city: cleanString(p.city).slice(0, 80),
+    page: cleanString(p.page).slice(0, 200),
+    created_at: new Date().toISOString()
+  };
+  if (!env.OUTCOMES_DB) return jsonResponse({ error: 'Not configured' }, 500);
+
+  const res = await env.OUTCOMES_DB.prepare(
+    `INSERT INTO alerts (id, email, list, province, city, page, unsubscribed, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, 0, ?) ON CONFLICT(email, list) DO NOTHING`
+  ).bind(record.id, record.email, record.list, record.province, record.city, record.page, record.created_at).run();
+  if (!res.meta?.changes) return jsonResponse({ success: true }, 200);
+
+  const tasks = [logToSheet({ record_type: 'alert', timestamp: record.created_at, email, list, province: record.province, city: record.city, source: record.page, status: 'new' }, env)];
+  if (env.RESEND_API_KEY) tasks.push(sendFederalAlertConfirmation(record, env));
+  const failures = (await Promise.allSettled(tasks)).filter(r => r.status === 'rejected');
+  if (failures.length) console.error('Alert signup partial failure:', failures.map(f => f.reason?.message || f.reason));
+  return jsonResponse({ success: true }, 200);
+}
+
+// What each province pays today, from the same verified facts as add_federal_links.py (bc-*, on-0/1, ns-*, ab-*).
+const FED_ALERT_PROVINCE_NOW = {
+  BC: 'BC Hydro pays up to $4,000 for a whole-home heat pump that replaces electric heat, and CleanBC has bigger rebates for income-qualified homes.',
+  ON: 'Home Renovation Savings pays $1,250 per ton (up to $7,500) for homes heated by electricity, oil, propane or wood, and $500 per ton (up to $2,000) for gas homes.',
+  NS: 'Efficiency Nova Scotia pays heat pump rebates by the ton right now, and HomeWarming does free upgrades for lower incomes.',
+  AB: "Alberta has no province-wide heat pump rebate we could verify, so this federal one may matter most for you."
+};
+
+// Fun but factual. Every figure follows data/verified-facts/federal.json (federal-0 to federal-3), "as announced":
+// never the income line, home types, a launch date or retroactivity until an official page states them.
+async function sendFederalAlertConfirmation(a, env) {
+  const site = 'https://homepowerrebate.com';
+  const hub = HEAT_PUMP_PAGE_PROVINCES.has(a.province) ? `${site}/ca/${a.province.toLowerCase()}/heat-pump/` : `${site}/programs/national-heat-pump-rebate/`;
+  const unsub = `https://leads.homepowerrebate.com/unsubscribe?alert=${encodeURIComponent(a.id)}`;
+  const p = 'font-size:16px;line-height:1.6;margin:0 0 14px;';
+  const h2 = 'font-family:Georgia,serif;font-size:20px;font-weight:500;color:#08363f;margin:26px 0 10px;';
+  const li = 'font-size:16px;line-height:1.55;margin:0 0 8px;';
+  const link = 'color:#08363f;font-weight:600;';
+  const step = (n, text) => `<tr><td valign="top" style="padding:0 12px 10px 0;width:30px;"><div style="width:28px;height:28px;line-height:28px;border-radius:14px;background:#08363f;color:#faf7f2;text-align:center;font-weight:700;font-size:14px;">${n}</div></td><td valign="top" style="${li}padding-top:3px;">${text}</td></tr>`;
+  const stat = (big, small) => `<td valign="top" width="50%" style="padding:14px;background:#ffffff;border:1px solid #e3dacb;border-radius:12px;"><div style="font-family:Georgia,serif;font-size:28px;color:#2d6a4f;font-weight:600;">${big}</div><div style="font-size:14px;line-height:1.45;color:#1a3d42;margin-top:4px;">${small}</div></td>`;
+  const now = FED_ALERT_PROVINCE_NOW[a.province];
+  const nowBlock = now ? `
+    <h2 style="${h2}">Meanwhile, money you can claim today</h2>
+    <p style="${p}">${now} Ottawa says the federal rebate can be combined with provincial programs, so today's money isn't something you have to give up.</p>` : '';
+  const html = `<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light only"></head>
+<body bgcolor="#f5efe5" style="margin:0;padding:0;background:#f5efe5;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">No more refreshing government websites. Here's what we know so far, and three smart things to do while you wait.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#f5efe5" style="background:#f5efe5;"><tr><td align="center" style="padding:20px 12px;">
+<table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:#0a2a2e;">
+  <tr><td bgcolor="#08363f" style="background:#08363f;padding:26px 24px;border-radius:14px 14px 0 0;">
+    <div style="font-family:Georgia,serif;font-size:18px;color:#faf7f2;">Home<span style="color:#e88a2e;font-weight:700;">Power</span>Rebate</div>
+    <div style="margin:18px 0 0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#e88a2e;">You're on the list</div>
+    <h1 style="margin:6px 0 0;font-family:Georgia,serif;font-size:27px;font-weight:500;line-height:1.25;color:#faf7f2;">Go ahead, stop refreshing. We'll watch the door for you.</h1>
+  </td></tr>
+  <tr><td bgcolor="#faf7f2" style="background:#faf7f2;padding:24px;border:1px solid #d9d0c1;border-top:none;border-radius:0 0 14px 14px;">
+    <p style="${p}">The day Ottawa opens applications for the new federal heat pump rebate, you'll get an email from us. Ottawa says that should be early 2027. Until then, here's the short version of everything we know.</p>
+
+    <h2 style="${h2}">The rebate in 30 seconds</h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="8" style="margin:0 -8px;"><tr>
+      ${stat('$10,000', 'Up to this much for households below the median income')}
+      ${stat('$2,000', 'For other eligible homeowners')}
+    </tr></table>
+    <p style="${p}margin-top:10px;">It's a $2 billion program over eight years, aimed at up to 820,000 homes. Fun fact: Ottawa says homes moving off oil, propane or electric baseboard-style heat save over $1,400 a year on average. That's close to $120 a month back in your pocket.</p>
+
+    <h2 style="${h2}">How it should work (as announced)</h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      ${step(1, 'Apply online when your heating breaks or is near the end of its life. No energy audit needed.')}
+      ${step(2, 'Get approved. Ottawa is aiming for 24 hours.')}
+      ${step(3, 'Install a heat pump from the approved list. It has over 100,000 options, so you will have choices.')}
+      ${step(4, 'Upload your receipts. Ottawa says payment is approved within five days and sent by direct deposit.')}
+    </table>
+
+    <h2 style="${h2}">Still a mystery</h2>
+    <p style="${p}">Ottawa hasn't said where the income line is, which homes qualify, or the exact start date. Lots of websites are guessing. We won't. When Ottawa fills in a blank, you'll hear it from us.</p>
+
+    <h2 style="${h2}">Three smart things to do while you wait</h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      ${step('&#10003;', '<strong>Find out how old your furnace or boiler is.</strong> The date is usually on the sticker inside the panel door. Getting up there? Start planning now, not in a January cold snap.')}
+      ${step('&#10003;', '<strong>Know your heating fuel.</strong> Gas, oil, propane or electric changes which rebates you can get today.')}
+      ${step('&#10003;', `<strong>Don't wait out a broken furnace.</strong> If your heat is working, you can take your time. If it's failing, read <a href="${site}/blog/should-you-wait-federal-heat-pump-rebate/" style="${link}">should you wait?</a> first.`)}
+    </table>
+    ${nowBlock}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:14px;"><tr><td bgcolor="#d4751c" style="background:#d4751c;border-radius:8px;text-align:center;">
+      <a href="${hub}" style="display:block;padding:14px 20px;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;">See the heat pump rebates open now &rarr;</a></td></tr></table>
+
+    <p style="${p}margin-top:24px;">Talk soon,<br><strong>Sam</strong><br><span style="color:#5a6b6e;font-size:14px;">Founder, HomePowerRebate. Got a question? Just hit reply. A real person reads every email.</span></p>
+    <p style="font-size:13px;line-height:1.5;color:#5a6b6e;margin:20px 0 0;border-top:1px solid #e3dacb;padding-top:14px;">You asked for this alert on homepowerrebate.com, so we'll only email you about this rebate. We're independent and not part of the Government of Canada, and Ottawa has <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html" style="color:#5a6b6e;">its own sign-up</a> too. <a href="${unsub}" style="color:#5a6b6e;">Unsubscribe</a></p>
+  </td></tr>
+</table></td></tr></table></body></html>`;
+
+  return resendEmail(env.RESEND_API_KEY, {
+    from: 'HomePowerRebate <hello@homepowerrebate.com>',
+    to: a.email,
+    subject: "You're on the list! Here's what we know about the heat pump rebate",
+    html
+  });
+}
+
 async function handleUnsubscribe(request, env) {
-  const id = new URL(request.url).searchParams.get('id');
+  const params = new URL(request.url).searchParams;
+  const alertId = params.get('alert');
+  if (alertId) {
+    if (env.OUTCOMES_DB) await env.OUTCOMES_DB.prepare('UPDATE alerts SET unsubscribed = 1 WHERE id = ?').bind(alertId).run();
+    return htmlResponse(`<h1 style="font-size:22px;">You're unsubscribed</h1>
+       <p>We won't email you about the federal heat pump rebate. You can still check <a href="https://homepowerrebate.com/programs/national-heat-pump-rebate/">what's confirmed so far</a> any time.</p>`, 200);
+  }
+  const id = params.get('id');
   if (id && env.OUTCOMES_DB) {
     await env.OUTCOMES_DB.prepare('UPDATE subscribers SET unsubscribed = 1, next_send_at = NULL WHERE id = ?').bind(id).run();
   }

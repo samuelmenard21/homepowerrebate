@@ -569,6 +569,24 @@ body:has(#hpr-search) .nav-search { display: none; }
 @media (max-width: 700px) {
   :not(.tw) > table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 }
+/* Federal heat pump rebate alert box (scripts/add_federal_alert.py). Child rules carry the .fed-alert prefix to beat .tpl-article main p/a. */
+.fed-alert { margin: 28px 0 32px; padding: 22px 24px; background: var(--teal-deep); color: var(--paper); border-radius: var(--radius-card); }
+.fed-alert .fed-alert-eyebrow { margin: 0 0 6px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber-bright); }
+.fed-alert .fed-alert-title { margin: 0 0 8px; font-family: 'Fraunces', Georgia, serif; font-size: 23px; line-height: 1.25; font-weight: 500; color: var(--paper); }
+.fed-alert p { max-width: none; }
+.fed-alert .fed-alert-body { margin: 0 0 14px; font-size: 16px; line-height: 1.6; color: rgba(250, 247, 242, .88); }
+.fed-alert-form { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; }
+.fed-alert-form label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.fed-alert-form input[type="email"], .fed-alert-form select { flex: 1 1 220px; min-height: 48px; padding: 10px 14px; font: inherit; font-size: 16px; color: var(--ink); background: #fff; border: 1px solid var(--rule); border-radius: 10px; }
+.fed-alert-form select { flex: 0 1 190px; }
+.fed-alert-form button { flex: 0 0 auto; min-height: 48px; padding: 10px 20px; font: inherit; font-size: 16px; font-weight: 700; color: #fff; background: var(--amber-text, #a4540a); border: 0; border-radius: 10px; cursor: pointer; }
+.fed-alert-form button:hover { background: var(--amber-text-deep, #8a4607); }
+.fed-alert-form button:disabled { opacity: .7; cursor: wait; }
+.fed-alert-form .fed-alert-hp { position: absolute; left: -9999px; }
+.fed-alert .fed-alert-note { margin: 12px 0 0; font-size: 14px; line-height: 1.5; color: rgba(250, 247, 242, .75); }
+.fed-alert .fed-alert-note a:not([class]) { color: var(--paper); text-decoration: underline; }
+.fed-alert .fed-alert-done { margin: 0; padding: 12px 14px; font-size: 16px; font-weight: 600; background: rgba(250, 247, 242, .12); border-radius: 10px; }
+@media (max-width: 520px) { .fed-alert { padding: 20px 18px; } .fed-alert-form > * { flex: 1 1 100% !important; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }

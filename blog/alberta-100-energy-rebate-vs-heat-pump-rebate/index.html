@@ -58,7 +58,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/article-28f467de.css?v=9d7d233d21" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=4af1270f6b" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=739c67caed" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -214,7 +214,8 @@
     <p>The <strong><a href="https://open.alberta.ca/publications/alberta-energy-rebate-fact-sheet" target="_blank" rel="noopener">Alberta Energy Rebate</a></strong> launched July 1, 2026 — a one-time $100 payment from the provincial government, applied for online, available to Albertans broadly as a cost-of-living measure. It has nothing to do with heat pumps, insulation, or any home energy upgrade. It's closer to a rebate on your utility bill than an incentive to renovate.</p>
     <p>Separately, if you're looking for money toward an actual heat pump, insulation, or solar installation, you're looking at a completely different (and much thinner) set of programs: CEIP financing, ENMAX/ATCO utility rebates, or municipal programs specific to your city.</p>
 
-    <h2 id="why-the-confusion-matters">Why the confusion matters</h2>
+    <!-- FED-ALERT-START --><section class="fed-alert" aria-label="Federal heat pump rebate email alert"><div class="fed-alert-top"><p class="fed-alert-eyebrow">New federal heat pump rebate</p><p class="fed-alert-badge"><span aria-hidden="true"></span>Opens early 2027</p></div><div class="fed-alert-amounts"><p><b>$10,000</b><span>if your household earns below the median income</span></p><p><b>$2,000</b><span>for other homeowners who qualify</span></p></div><p class="fed-alert-title">Be first in line. Get an email the day it opens.</p><p class="fed-alert-body">Applications are not open yet. Ottawa says they open in early 2027, and that you can add this rebate on top of provincial ones.</p><p class="fed-alert-more"><a href="/programs/national-heat-pump-rebate/">Read everything we know so far &rarr;</a></p><form class="fed-alert-form" data-list="federal-hp" data-province="AB"><label for="fed-alert-email">Email</label><input id="fed-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email"><input class="fed-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">Email me when it opens</button></form><p class="fed-alert-done" role="status" hidden></p><p class="fed-alert-note"><b>What you get:</b> a quick hello now, one email the day applications open, and one when Ottawa says who gets $10,000. That&#x27;s it. No spam, unsubscribe anytime. Ottawa also has <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html">its own sign-up</a>.</p></section><!-- FED-ALERT-END -->
+<h2 id="why-the-confusion-matters">Why the confusion matters</h2>
     <p>The Alberta Energy Rebate got real media attention — including criticism of its rollout and verification process. Some homeowners searching for heat pump help have landed on Alberta Energy Rebate coverage and assumed it applies to renovation costs. It doesn't. If you're planning a $12,000 heat pump install, this $100 payment isn't part of your math.</p>
 
     <h2 id="what-actually-helps-with-a-heat-pump-in-alberta">What actually helps with a heat pump in Alberta</h2>
@@ -399,6 +400,35 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.disabled = false;
     button.textContent = originalText;
   }
+});
+// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; the handler lives here once for every page).
+// A box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('fed-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) });
+    if (!r.ok) throw new Error('alert signup failed');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+  } catch (err) {
+    done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+  }
+  done.hidden = false;
+});
+document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
+  var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), c = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
+  if (!r) return;
+  function upd() {
+    var on = ca.indexOf(r.value) >= 0;
+    box.hidden = !on;
+    f.dataset.province = on ? r.value.toUpperCase() : '';
+    f.dataset.city = on && c && c.value ? c.options[c.selectedIndex].text : '';
+  }
+  r.addEventListener('change', upd); if (c) c.addEventListener('change', upd);
+  new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
 });
 (function () {
   var n = document.querySelector('.nav'), y = window.scrollY, f = 0;

@@ -107,7 +107,7 @@
 }
 </script>
 <link rel="stylesheet" href="/assets/tpl/page-a7571861.css?v=ceab1c8cd9" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=4af1270f6b" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=739c67caed" data-hpr-site-css>
 <link rel="stylesheet" href="/assets/tpl/common-7b6053bb.css?v=041f4c934f" data-hpr-tpl id="bcblog-css">
 <link rel="stylesheet" href="/assets/tpl/common-e032dc05.css?v=bc48c864f1" data-hpr-tpl id="bcblog-post-css">
 <meta name="theme-color" content="#faf7f2">
@@ -243,6 +243,7 @@
   <p class="hpr-meta">By <a href="/about">Sam Menard</a> &middot; Updated September 26, 2026</p>
 <div class="callout hpr-short"><p><strong>Short answer:</strong> You can stack rebates that cover <strong>different upgrades</strong>: for example, BC Hydro solar (up to $5,000), battery with Peak Saver (up to $5,000), a heat pump replacing electric heat (up to $4,000) and insulation (by area, e.g. up to $900 for the attic). The federal Greener Homes Grant is closed. You can't claim two rebates for the same heat pump.</p></div>
 <h2>A worked example (BC Hydro, electric baseboards)</h2><div class="hpr-table"><table><thead><tr><th>Upgrade</th><th>Rebate</th><th>Rule</th></tr></thead><tbody><tr><td>Whole-home heat pump</td><td>Up to $4,000 (+ up to $1,000 if done by Oct 31, 2026)</td><td>Replaces electric heat; HPCN</td></tr><tr><td>Attic insulation, 1,000 sq. ft., +R40</td><td>$800</td><td>$0.02 x R x sq. ft., max $900</td></tr><tr><td>Multi-upgrade bonus</td><td>Up to $2,000</td><td>More than one upgrade</td></tr><tr><td>Solar, 5 kW</td><td>$5,000</td><td>$1,000/kW, max 50% of cost</td></tr><tr><td>Battery, 10 kWh + Peak Saver</td><td>$5,000</td><td>Enroll within 14 days</td></tr></tbody></table></div><p>Your amounts depend on your home and quotes. A gas-heated home would not get the BC Hydro heat pump rebate; it would need to qualify by income for CleanBC.</p>
+<!-- FED-ALERT-START --><section class="fed-alert" aria-label="Federal heat pump rebate email alert"><div class="fed-alert-top"><p class="fed-alert-eyebrow">New federal heat pump rebate</p><p class="fed-alert-badge"><span aria-hidden="true"></span>Opens early 2027</p></div><div class="fed-alert-amounts"><p><b>$10,000</b><span>if your household earns below the median income</span></p><p><b>$2,000</b><span>for other homeowners who qualify</span></p></div><p class="fed-alert-title">Be first in line. Get an email the day it opens.</p><p class="fed-alert-body">Applications are not open yet. Ottawa says they open in early 2027, and that you can add this rebate on top of provincial ones.</p><p class="fed-alert-more"><a href="/programs/national-heat-pump-rebate/">Read everything we know so far &rarr;</a></p><form class="fed-alert-form" data-list="federal-hp" data-province="BC"><label for="fed-alert-email">Email</label><input id="fed-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email"><input class="fed-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">Email me when it opens</button></form><p class="fed-alert-done" role="status" hidden></p><p class="fed-alert-note"><b>What you get:</b> a quick hello now, one email the day applications open, and one when Ottawa says who gets $10,000. That&#x27;s it. No spam, unsubscribe anytime. Ottawa also has <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html">its own sign-up</a>.</p></section><!-- FED-ALERT-END -->
 <h2>What's closed</h2><ul><li>Federal Greener Homes Grant (closed).</li><li>The general CleanBC fuel-switching rebate for non-income-qualified homes (ended April 11, 2025).</li></ul>
 <h2>What to do next</h2>
 <ol><li>Check who your electric utility is.</li><li>Check whether your income qualifies for CleanBC.</li><li>Get quotes from qualified contractors and apply on time.</li></ol>
@@ -399,6 +400,35 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.disabled = false;
     button.textContent = originalText;
   }
+});
+// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; the handler lives here once for every page).
+// A box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('fed-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) });
+    if (!r.ok) throw new Error('alert signup failed');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+  } catch (err) {
+    done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+  }
+  done.hidden = false;
+});
+document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
+  var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), c = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
+  if (!r) return;
+  function upd() {
+    var on = ca.indexOf(r.value) >= 0;
+    box.hidden = !on;
+    f.dataset.province = on ? r.value.toUpperCase() : '';
+    f.dataset.city = on && c && c.value ? c.options[c.selectedIndex].text : '';
+  }
+  r.addEventListener('change', upd); if (c) c.addEventListener('change', upd);
+  new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
 });
 (function () {
   var n = document.querySelector('.nav'), y = window.scrollY, f = 0;

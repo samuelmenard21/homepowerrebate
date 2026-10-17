@@ -26,7 +26,7 @@
 <!-- FONT-PRELOAD-END -->
 
 <link rel="stylesheet" href="/assets/tpl/article-a08b0375.css?v=44c5db88a4" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=4af1270f6b" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=739c67caed" data-hpr-site-css>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Heat Pump or Solar First? The Real Answer for Massachusetts", "description": "Heat pump or solar first in Massachusetts? Mass Save pays up to $8,500 for a heat pump; solar gets SMART 3.0 and a $1,000 state credit. Compare both.", "datePublished": "2026-08-13", "dateModified": "2026-09-26", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com/"}, "mainEntityOfPage": "https://homepowerrebate.com/blog/heat-pump-or-solar-massachusetts/"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Should I get a heat pump or solar first in Massachusetts?", "acceptedAnswer": {"@type": "Answer", "text": "If you heat with oil, propane or electric baseboard, usually the heat pump. It has a much bigger upfront Mass Save rebate, and it tells you how big your solar system needs to be."}}, {"@type": "Question", "name": "Is there a solar rebate in Massachusetts?", "acceptedAnswer": {"@type": "Answer", "text": "No upfront Mass Save rebate. Solar earns SMART 3.0 payments ($0.03/kWh for home systems in 2026, $0.06 low-income) and a state tax credit of 15% of cost, up to $1,000."}}, {"@type": "Question", "name": "Is the federal solar tax credit still available?", "acceptedAnswer": {"@type": "Answer", "text": "No. The federal 25D credit ended for systems placed in service after December 31, 2025."}}]}</script>
 <!-- BREADCRUMB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://homepowerrebate.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Heat Pump or Solar First? The Real Answer for Massachusetts", "item": "https://homepowerrebate.com/blog/heat-pump-or-solar-massachusetts/"}]}</script><!-- BREADCRUMB-LD-END -->
@@ -376,6 +376,35 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.disabled = false;
     button.textContent = originalText;
   }
+});
+// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; the handler lives here once for every page).
+// A box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('fed-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) });
+    if (!r.ok) throw new Error('alert signup failed');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+  } catch (err) {
+    done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+  }
+  done.hidden = false;
+});
+document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
+  var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), c = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
+  if (!r) return;
+  function upd() {
+    var on = ca.indexOf(r.value) >= 0;
+    box.hidden = !on;
+    f.dataset.province = on ? r.value.toUpperCase() : '';
+    f.dataset.city = on && c && c.value ? c.options[c.selectedIndex].text : '';
+  }
+  r.addEventListener('change', upd); if (c) c.addEventListener('change', upd);
+  new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
 });
 (function () {
   var n = document.querySelector('.nav'), y = window.scrollY, f = 0;

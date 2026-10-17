@@ -62,7 +62,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/article-180509fd.css?v=c7137bbc2b" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=4af1270f6b" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=739c67caed" data-hpr-site-css>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How long does a Mass Save rebate take?", "acceptedAnswer": {"@type": "Answer", "text": "Mass Save's official processing window is 8 to 12 weeks. In practice it has often been longer. Some homeowners waited close to six months, and at least one case ran past a year."}}, {"@type": "Question", "name": "How do I check my Mass Save rebate status?", "acceptedAnswer": {"@type": "Answer", "text": "Call Mass Save and ask for a specific status update and a reference number for your case. Then confirm with your contractor that the claim was actually submitted, and ask for a copy of the submission confirmation."}}, {"@type": "Question", "name": "Why is my Mass Save rebate delayed?", "acceptedAnswer": {"@type": "Answer", "text": "The usual causes are missing signatures or incomplete contractor paperwork, a mismatch between the assessment record and the installed equipment, a backlog of heat pump and insulation claims, an old certification, or a contractor mistake you only find out about when you call."}}, {"@type": "Question", "name": "Who do I complain to if it has been more than 12 weeks?", "acceptedAnswer": {"@type": "Answer", "text": "Call Mass Save first. If it cannot give you a timeline, file a complaint with the Massachusetts DPU Consumer Division (877-886-5066), then with the Attorney General's consumer protection division (617-727-8400)."}}, {"@type": "Question", "name": "When should I follow up on my rebate?", "acceptedAnswer": {"@type": "Answer", "text": "At the 6-week mark, not the 12-week mark. A paperwork problem is much faster to fix early than after the file has gone quiet."}}, {"@type": "Question", "name": "What should I keep in case I need to escalate?", "acceptedAnswer": {"@type": "Answer", "text": "The contractor's invoice, the assessment report, your rebate application confirmation, and a log of every call with the date, the representative's name and what they said."}}]}</script>
 <link rel="stylesheet" href="/assets/tpl/article-ce18d2cc.css?v=ce18d2cc21" data-hpr-tpl>
 <meta name="theme-color" content="#faf7f2">
@@ -436,6 +436,35 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.disabled = false;
     button.textContent = originalText;
   }
+});
+// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; the handler lives here once for every page).
+// A box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('fed-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) });
+    if (!r.ok) throw new Error('alert signup failed');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+  } catch (err) {
+    done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+  }
+  done.hidden = false;
+});
+document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
+  var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), c = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
+  if (!r) return;
+  function upd() {
+    var on = ca.indexOf(r.value) >= 0;
+    box.hidden = !on;
+    f.dataset.province = on ? r.value.toUpperCase() : '';
+    f.dataset.city = on && c && c.value ? c.options[c.selectedIndex].text : '';
+  }
+  r.addEventListener('change', upd); if (c) c.addEventListener('change', upd);
+  new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
 });
 (function () {
   var n = document.querySelector('.nav'), y = window.scrollY, f = 0;

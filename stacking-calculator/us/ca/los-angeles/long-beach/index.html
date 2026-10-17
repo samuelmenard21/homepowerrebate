@@ -32,7 +32,7 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "How Much Can You Stack in Long Beach? Heat Pump + Solar + Insulation Rebates", "description": "See how much Long Beach homeowners can stack by combining rebates: heat pump, solar, insulation and 5 more categories, added up to a real total of $4,275 in available Long Beach rebates when every open program is combined.", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about/"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "mainEntityOfPage": "https://homepowerrebate.com/stacking-calculator/us/ca/los-angeles/long-beach/", "datePublished": "2026-08-23", "dateModified": "2026-08-23"}</script>
 
 <link rel="stylesheet" href="/assets/tpl/stacking-becb5064.css?v=658b793424" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=4af1270f6b" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=739c67caed" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -422,6 +422,35 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.disabled = false;
     button.textContent = originalText;
   }
+});
+// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; the handler lives here once for every page).
+// A box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('fed-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) });
+    if (!r.ok) throw new Error('alert signup failed');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+  } catch (err) {
+    done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+  }
+  done.hidden = false;
+});
+document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
+  var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), c = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
+  if (!r) return;
+  function upd() {
+    var on = ca.indexOf(r.value) >= 0;
+    box.hidden = !on;
+    f.dataset.province = on ? r.value.toUpperCase() : '';
+    f.dataset.city = on && c && c.value ? c.options[c.selectedIndex].text : '';
+  }
+  r.addEventListener('change', upd); if (c) c.addEventListener('change', upd);
+  new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
 });
 (function () {
   var n = document.querySelector('.nav'), y = window.scrollY, f = 0;

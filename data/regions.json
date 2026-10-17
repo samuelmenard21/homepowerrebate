@@ -94,7 +94,89 @@
    "facts_files": [
     "on"
    ],
-   "home_blurb": "Home Renovation Savings pays up to $7,500 for an air-source heat pump that replaces electric, oil or propane heat."
+   "home_blurb": "Home Renovation Savings pays up to $7,500 for an air-source heat pump that replaces electric, oil or propane heat.",
+   "city_pages": {
+    "built": [
+     "windows-doors",
+     "insulation",
+     "heat-pump",
+     "water-heater",
+     "solar",
+     "battery",
+     "smart-thermostats",
+     "appliances"
+    ],
+    "names": {
+     "barrie": "Barrie",
+     "brampton": "Brampton",
+     "burlington": "Burlington",
+     "cambridge": "Cambridge",
+     "greater-sudbury": "Greater Sudbury",
+     "guelph": "Guelph",
+     "hamilton": "Hamilton",
+     "kingston": "Kingston",
+     "kitchener": "Kitchener",
+     "london": "London",
+     "markham": "Markham",
+     "mississauga": "Mississauga",
+     "niagara-falls": "Niagara Falls",
+     "oakville": "Oakville",
+     "oshawa": "Oshawa",
+     "ottawa": "Ottawa",
+     "peterborough": "Peterborough",
+     "richmond-hill": "Richmond Hill",
+     "sault-ste-marie": "Sault Ste. Marie",
+     "thunder-bay": "Thunder Bay",
+     "timmins": "Timmins",
+     "toronto": "Toronto",
+     "vaughan": "Vaughan",
+     "whitby": "Whitby",
+     "windsor": "Windsor"
+    },
+    "label_keys": [
+     "insulation",
+     "windows-doors",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "Ontario",
+    "installers": {},
+    "installers_more": [
+     "insulation"
+    ],
+    "program_links": {
+     "default": [
+      [
+       "/programs/home-renovation-savings/",
+       "Every Home Renovation Savings rebate"
+      ]
+     ],
+     "categories": {
+      "smart-thermostats": [
+       [
+        "/programs/enbridge-gas-rebates/",
+        "All Enbridge Gas rebates"
+       ]
+      ]
+     }
+    },
+    "bans": [
+     {
+      "if": "Greener Homes",
+      "unless": [
+       "ended",
+       "closed"
+      ],
+      "msg": "stale federal figure"
+     }
+    ]
+   }
   },
   {
    "code": "bc",
@@ -198,7 +280,138 @@
     "bc-pages",
     "bc-blog"
    ],
-   "home_blurb": "BC Hydro pays up to $4,000 for a heat pump that replaces electric heat. CleanBC pays more for income-qualified homes."
+   "home_blurb": "BC Hydro pays up to $4,000 for a heat pump that replaces electric heat. CleanBC pays more for income-qualified homes.",
+   "city_pages": {
+    "built": [
+     "insulation",
+     "windows",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger"
+    ],
+    "names": {
+     "abbotsford": "Abbotsford",
+     "burnaby": "Burnaby",
+     "chilliwack": "Chilliwack",
+     "coquitlam": "Coquitlam",
+     "fort-st-john": "Fort St. John",
+     "kamloops": "Kamloops",
+     "kelowna": "Kelowna",
+     "langley": "Langley",
+     "maple-ridge": "Maple Ridge",
+     "nanaimo": "Nanaimo",
+     "penticton": "Penticton",
+     "prince-george": "Prince George",
+     "richmond": "Richmond",
+     "squamish": "Squamish",
+     "surrey": "Surrey",
+     "vancouver": "Vancouver",
+     "vernon": "Vernon",
+     "victoria": "Victoria"
+    },
+    "label_keys": [
+     "insulation",
+     "windows",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "BC",
+    "region_pages": {
+     "pages": [
+      [
+       "smart-thermostats",
+       "Smart thermostat rebates"
+      ],
+      [
+       "appliances",
+       "Appliance rebates"
+      ],
+      [
+       "hrv",
+       "HRV and ventilation rebates"
+      ],
+      [
+       "ev-charger",
+       "EV charger rebates"
+      ]
+     ],
+     "link": "<a href=\"{url}\">{t} in BC</a>",
+     "guide": "<a href=\"{url}\">{t} in BC</a> (the same for every city)"
+    },
+    "installers": {
+     "index": {
+      "from": "json",
+      "min": 10
+     },
+     "water-heater": {
+      "from": "json",
+      "min": 10
+     },
+     "insulation": {
+      "from": "rows",
+      "service": "insulation",
+      "min": 5
+     },
+     "heat-pump": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "solar": {
+      "from": "rows",
+      "service": "solar",
+      "min": 5
+     },
+     "battery": {
+      "from": "rows",
+      "service": "battery",
+      "min": 5
+     }
+    },
+    "program_links": {
+     "default": [
+      [
+       "/programs/bc-hydro-rebates/",
+       "Every BC Hydro rebate"
+      ]
+     ],
+     "cities": {
+      "kelowna": [
+       [
+        "/programs/fortisbc-rebates/",
+        "Every FortisBC rebate"
+       ]
+      ],
+      "penticton": [
+       [
+        "/programs/fortisbc-rebates/",
+        "Every FortisBC rebate"
+       ]
+      ]
+     }
+    },
+    "bans": [
+     {
+      "if": "\\$11,350",
+      "msg": "stale federal figure"
+     },
+     {
+      "if": "Greener Homes",
+      "unless": [
+       "ended"
+      ],
+      "msg": "stale federal figure"
+     }
+    ]
+   }
   },
   {
    "code": "ca",
@@ -279,7 +492,73 @@
    "facts_files": [
     "ab"
    ],
-   "home_blurb": "Programs depend on your city and utility. We show only what is open."
+   "home_blurb": "Programs depend on your city and utility. We show only what is open.",
+   "city_pages": {
+    "built": [
+     "heat-pump",
+     "insulation",
+     "smart-thermostats",
+     "ev-charger"
+    ],
+    "names": {
+     "calgary": "Calgary",
+     "edmonton": "Edmonton",
+     "lethbridge": "Lethbridge",
+     "red-deer": "Red Deer",
+     "st-albert": "St. Albert",
+     "fort-mcmurray": "Fort McMurray"
+    },
+    "label_keys": [
+     "insulation",
+     "windows",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "Alberta",
+    "installers": {
+     "heat-pump": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "insulation": {
+      "from": "rows",
+      "service": "insulation",
+      "min": 5
+     }
+    },
+    "installers_more": [
+     "heat-pump",
+     "insulation"
+    ],
+    "program_links": {
+     "default": [
+      [
+       "/programs/alberta-energy-rebates/",
+       "Every Alberta rebate and financing program"
+      ]
+     ]
+    },
+    "bans": [
+     {
+      "if": "\\$11,350",
+      "msg": "stale federal figure"
+     },
+     {
+      "if": "Greener Homes",
+      "unless": [
+       "ended"
+      ],
+      "msg": "stale federal figure"
+     }
+    ]
+   }
   },
   {
    "code": "ns",
@@ -306,7 +585,73 @@
    "facts_files": [
     "ns"
    ],
-   "home_blurb": "Efficiency Nova Scotia pays per ton through a home energy assessment, up to $5,000."
+   "home_blurb": "Efficiency Nova Scotia pays per ton through a home energy assessment, up to $5,000.",
+   "city_pages": {
+    "built": [
+     "heat-pump",
+     "water-heater",
+     "insulation",
+     "windows",
+     "smart-thermostats",
+     "solar"
+    ],
+    "names": {
+     "halifax": "Halifax",
+     "cape-breton": "Cape Breton"
+    },
+    "label_keys": [
+     "insulation",
+     "windows",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "Nova Scotia",
+    "installers": {
+     "heat-pump": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "water-heater": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "index": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     }
+    },
+    "installers_more": [],
+    "program_links": {
+     "default": [
+      [
+       "/programs/efficiency-nova-scotia/",
+       "Every Efficiency Nova Scotia rebate"
+      ]
+     ]
+    },
+    "bans": [
+     {
+      "if": "\\$11,350",
+      "msg": "stale federal figure"
+     },
+     {
+      "if": "Greener Homes",
+      "unless": [
+       "ended"
+      ],
+      "msg": "stale federal figure"
+     }
+    ]
+   }
   },
   {
    "code": "nl",
@@ -349,7 +694,69 @@
    "facts_files": [
     "nl"
    ],
-   "home_blurb": "Up to $22,000 to switch from oil to a heat pump, plus takeCHARGE insulation rebates."
+   "home_blurb": "Up to $22,000 to switch from oil to a heat pump, plus takeCHARGE insulation rebates.",
+   "city_pages": {
+    "built": [],
+    "names": {
+     "st-johns": "St. John's",
+     "mount-pearl": "Mount Pearl",
+     "paradise": "Paradise",
+     "corner-brook": "Corner Brook",
+     "labrador-city": "Labrador City"
+    },
+    "label_keys": [
+     "insulation",
+     "windows",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "Newfoundland and Labrador",
+    "installers": {
+     "heat-pump": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "water-heater": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "index": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     }
+    },
+    "installers_more": [],
+    "program_links": {
+     "default": [
+      [
+       "/programs/newfoundland-oil-to-electric-rebate/",
+       "Oil to Electric rebate guide"
+      ]
+     ]
+    },
+    "bans": [
+     {
+      "if": "\\$11,350",
+      "msg": "stale federal figure"
+     },
+     {
+      "if": "Greener Homes",
+      "unless": [
+       "ended"
+      ],
+      "msg": "stale federal figure"
+     }
+    ]
+   }
   },
   {
    "code": "ma",
@@ -420,7 +827,127 @@
    "facts_files": [
     "ma"
    ],
-   "home_blurb": "Mass Save rebates, often paid to your installer. 41 towns with their own utilities are left out."
+   "home_blurb": "Mass Save rebates, often paid to your installer. 41 towns with their own utilities are left out.",
+   "city_pages": {
+    "built": [
+     "heat-pump",
+     "water-heater",
+     "insulation",
+     "windows",
+     "smart-thermostats",
+     "solar",
+     "ev-charger"
+    ],
+    "names": {
+     "boston": "Boston",
+     "brockton": "Brockton",
+     "cambridge": "Cambridge",
+     "fall-river": "Fall River",
+     "lawrence": "Lawrence",
+     "lowell": "Lowell",
+     "lynn": "Lynn",
+     "new-bedford": "New Bedford",
+     "newton": "Newton",
+     "quincy": "Quincy",
+     "somerville": "Somerville",
+     "springfield": "Springfield",
+     "worcester": "Worcester",
+     "salem": "Salem",
+     "cape-cod": "Cape Cod"
+    },
+    "label_keys": [
+     "insulation",
+     "windows-doors",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "Massachusetts",
+    "installers": {
+     "insulation": {
+      "from": "rows",
+      "service": "insulation",
+      "min": 5
+     },
+     "windows-doors": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "water-heater": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "heat-pump": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "solar": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "battery": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "ev-charger": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "smart-thermostats": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "appliances": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "hrv": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "index": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     }
+    },
+    "installers_more": [
+     "insulation"
+    ],
+    "quotes": "/get-quotes/?city={slug}&amp;province={code}",
+    "guides_need_siblings": true,
+    "program_links": {
+     "default": [
+      [
+       "/programs/mass-save/",
+       "Every Mass Save rebate"
+      ]
+     ]
+    },
+    "bans": [
+     {
+      "if": "\\$16,000",
+      "unless": [
+       "income"
+      ],
+      "msg": "enhanced amount without income condition"
+     }
+    ]
+   }
   },
   {
    "code": "ny",
@@ -570,7 +1097,95 @@
    "facts_files": [
     "pa"
    ],
-   "home_blurb": "Rebates depend on your utility: PECO, PPL, Duquesne or FirstEnergy."
+   "home_blurb": "Rebates depend on your utility: PECO, PPL, Duquesne or FirstEnergy.",
+   "city_pages": {
+    "built": [
+     "heat-pump",
+     "water-heater",
+     "insulation",
+     "windows",
+     "smart-thermostats",
+     "solar"
+    ],
+    "names": {
+     "philadelphia": "Philadelphia",
+     "pittsburgh": "Pittsburgh",
+     "allentown": "Allentown",
+     "erie": "Erie"
+    },
+    "label_keys": [
+     "insulation",
+     "windows-doors",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "Pennsylvania",
+    "installers": {
+     "heat-pump": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "water-heater": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "index": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     }
+    },
+    "installers_more": [],
+    "program_links": {
+     "cities": {
+      "philadelphia": [
+       [
+        "/programs/peco-rebates/",
+        "Every PECO rebate"
+       ]
+      ],
+      "allentown": [
+       [
+        "/programs/ppl-electric-rebates/",
+        "Every PPL Electric rebate"
+       ]
+      ],
+      "pittsburgh": [
+       [
+        "/us/pa/",
+        "Every Pennsylvania rebate"
+       ]
+      ],
+      "erie": [
+       [
+        "/us/pa/",
+        "Every Pennsylvania rebate"
+       ]
+      ]
+     }
+    },
+    "bans": [
+     {
+      "if": "\\$11,350",
+      "msg": "stale federal figure"
+     },
+     {
+      "if": "Greener Homes",
+      "unless": [
+       "ended"
+      ],
+      "msg": "stale federal figure"
+     }
+    ]
+   }
   },
   {
    "code": "co",
@@ -613,7 +1228,140 @@
    "facts_files": [
     "co"
    ],
-   "home_blurb": "Xcel Energy plus city utilities such as Fort Collins and Colorado Springs."
+   "home_blurb": "Xcel Energy plus city utilities such as Fort Collins and Colorado Springs.",
+   "city_pages": {
+    "built": [
+     "heat-pump",
+     "water-heater",
+     "insulation",
+     "windows-doors"
+    ],
+    "names": {
+     "denver": "Denver",
+     "colorado-springs": "Colorado Springs",
+     "aurora": "Aurora",
+     "fort-collins": "Fort Collins",
+     "boulder": "Boulder"
+    },
+    "label_keys": [
+     "insulation",
+     "windows-doors",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "Colorado",
+    "installers": {
+     "insulation": {
+      "from": "rows",
+      "service": "insulation",
+      "min": 5
+     },
+     "windows-doors": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "water-heater": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "heat-pump": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "solar": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "battery": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "ev-charger": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "smart-thermostats": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "appliances": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "hrv": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "index": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     }
+    },
+    "installers_more": [
+     "insulation"
+    ],
+    "quotes": "/get-quotes/?city={slug}&amp;province={code}",
+    "siblings_from": "data",
+    "card_status_from_facts": true,
+    "region_pages": {
+     "exists": "data",
+     "pages": [
+      [
+       "battery",
+       "Battery"
+      ],
+      [
+       "solar",
+       "Solar"
+      ],
+      [
+       "ev-charger",
+       "EV Charger"
+      ],
+      [
+       "appliances",
+       "Appliance"
+      ],
+      [
+       "smart-thermostats",
+       "Smart Thermostat"
+      ]
+     ],
+     "link": "<a href=\"{url}\">Colorado {t} Rebates</a>",
+     "guide": "<a href=\"{url}\">Colorado {tl} rebates (same for the whole state)</a>"
+    },
+    "program_links": {
+     "from_page": [
+      "/programs/xcel-energy-colorado-rebates/",
+      "Every Xcel Energy Colorado rebate"
+     ]
+    },
+    "bans": [
+     {
+      "if": "\\$16,000",
+      "unless": [
+       "income"
+      ],
+      "msg": "enhanced amount without income condition"
+     }
+    ]
+   }
   },
   {
    "code": "vt",
@@ -651,7 +1399,63 @@
    "facts_files": [
     "vt"
    ],
-   "home_blurb": "Efficiency Vermont and your electric company, such as Green Mountain Power."
+   "home_blurb": "Efficiency Vermont and your electric company, such as Green Mountain Power.",
+   "city_pages": {
+    "built": [
+     "heat-pump",
+     "water-heater",
+     "insulation"
+    ],
+    "names": {
+     "burlington": "Burlington",
+     "south-burlington": "South Burlington",
+     "rutland": "Rutland",
+     "montpelier": "Montpelier",
+     "barre": "Barre"
+    },
+    "label_keys": [
+     "insulation",
+     "windows-doors",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "Vermont",
+    "installers": {
+     "heat-pump": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     }
+    },
+    "installers_more": [
+     "insulation"
+    ],
+    "quotes": "/get-quotes/?city={slug}&amp;province={code}",
+    "guides_need_siblings": true,
+    "program_links": {
+     "default": [
+      [
+       "/programs/efficiency-vermont-rebates/",
+       "Every Efficiency Vermont rebate"
+      ]
+     ]
+    },
+    "bans": [
+     {
+      "if": "\\$16,000",
+      "unless": [
+       "income"
+      ],
+      "msg": "enhanced amount without income condition"
+     }
+    ]
+   }
   },
   {
    "code": "mi",
@@ -712,7 +1516,92 @@
      "lng": -84.5555
     }
    },
-   "home_blurb": "DTE and Consumers Energy rebates, plus free weatherization for income-qualified homes."
+   "home_blurb": "DTE and Consumers Energy rebates, plus free weatherization for income-qualified homes.",
+   "city_pages": {
+    "built": [
+     "heat-pump",
+     "insulation",
+     "water-heater"
+    ],
+    "names": {
+     "detroit": "Detroit",
+     "grand-rapids": "Grand Rapids",
+     "ann-arbor": "Ann Arbor",
+     "lansing": "Lansing"
+    },
+    "label_keys": [
+     "insulation",
+     "windows-doors",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "Michigan",
+    "installers": {
+     "heat-pump": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "water-heater": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "index": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     }
+    },
+    "installers_more": [],
+    "program_links": {
+     "cities": {
+      "detroit": [
+       [
+        "/programs/dte-energy-rebates/",
+        "Every DTE Energy rebate"
+       ]
+      ],
+      "ann-arbor": [
+       [
+        "/programs/ann-arbor-a2zero-rebates/",
+        "Every Ann Arbor A2ZERO rebate"
+       ]
+      ],
+      "grand-rapids": [
+       [
+        "/programs/consumers-energy-rebates/",
+        "Every Consumers Energy rebate"
+       ]
+      ],
+      "lansing": [
+       [
+        "/programs/lansing-bwl-rebates/",
+        "Every Lansing BWL rebate"
+       ]
+      ]
+     }
+    },
+    "bans": [
+     {
+      "if": "\\$11,350",
+      "msg": "stale federal figure"
+     },
+     {
+      "if": "Greener Homes",
+      "unless": [
+       "ended"
+      ],
+      "msg": "stale federal figure"
+     }
+    ]
+   }
   },
   {
    "code": "nj",
@@ -931,7 +1820,136 @@
      "lng": -122.2015
     }
    },
-   "home_blurb": "Puget Sound Energy, Seattle City Light, Avista, Tacoma Power and Clark Public Utilities programs."
+   "home_blurb": "Puget Sound Energy, Seattle City Light, Avista, Tacoma Power and Clark Public Utilities programs.",
+   "city_pages": {
+    "built": [
+     "heat-pump",
+     "water-heater",
+     "insulation",
+     "windows-doors"
+    ],
+    "names": {
+     "seattle": "Seattle",
+     "spokane": "Spokane",
+     "tacoma": "Tacoma",
+     "vancouver": "Vancouver",
+     "bellevue": "Bellevue"
+    },
+    "label_keys": [
+     "insulation",
+     "windows-doors",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "Washington",
+    "installers": {
+     "insulation": {
+      "from": "rows",
+      "service": "insulation",
+      "min": 5
+     },
+     "windows-doors": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "water-heater": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "heat-pump": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "solar": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "battery": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "ev-charger": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "smart-thermostats": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "appliances": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "hrv": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "index": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     }
+    },
+    "installers_more": [
+     "insulation"
+    ],
+    "quotes": null,
+    "siblings_from": "data",
+    "card_status_from_facts": true,
+    "region_pages": {
+     "exists": "data",
+     "pages": [
+      [
+       "battery",
+       "Battery"
+      ],
+      [
+       "solar",
+       "Solar"
+      ],
+      [
+       "ev-charger",
+       "EV Charger"
+      ],
+      [
+       "smart-thermostats",
+       "Smart Thermostat"
+      ]
+     ],
+     "link": "<a href=\"{url}\">Washington {t} Rebates</a>",
+     "guide": "<a href=\"{url}\">Washington {tl} rebates (same for the whole state)</a>"
+    },
+    "program_links": {
+     "from_page": [
+      null,
+      null
+     ]
+    },
+    "bans": [
+     {
+      "if": "\\$16,000",
+      "unless": [
+       "income"
+      ],
+      "msg": "enhanced amount without income condition"
+     }
+    ]
+   }
   },
   {
    "code": "mn",
@@ -1000,7 +2018,122 @@
      "lng": -92.1005
     }
    },
-   "home_blurb": "Xcel Energy, CenterPoint Energy and Minnesota Power programs, plus Save Energy Minnesota."
+   "home_blurb": "Xcel Energy, CenterPoint Energy and Minnesota Power programs, plus Save Energy Minnesota.",
+   "city_pages": {
+    "built": [
+     "heat-pump",
+     "water-heater",
+     "insulation"
+    ],
+    "names": {
+     "minneapolis": "Minneapolis",
+     "saint-paul": "Saint Paul",
+     "rochester": "Rochester",
+     "duluth": "Duluth"
+    },
+    "label_keys": [
+     "insulation",
+     "windows-doors",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "Minnesota",
+    "installers": {
+     "insulation": {
+      "from": "rows",
+      "service": "insulation",
+      "min": 5
+     },
+     "windows-doors": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "water-heater": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "heat-pump": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "solar": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "battery": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "ev-charger": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "smart-thermostats": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "appliances": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "hrv": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "index": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     }
+    },
+    "installers_more": [
+     "insulation"
+    ],
+    "quotes": "/get-quotes/?city={slug}&amp;province={code}",
+    "siblings_from": "data",
+    "card_status_from_facts": true,
+    "region_pages": {
+     "exists": "data",
+     "pages": [
+      [
+       "smart-thermostats",
+       "Smart Thermostat"
+      ]
+     ],
+     "link": "<a href=\"{url}\">Minnesota {t} Rebates</a>",
+     "guide": "<a href=\"{url}\">Minnesota {tl} rebates (all utilities side by side)</a>"
+    },
+    "program_links": {
+     "from_page": [
+      "/programs/xcel-energy-minnesota-rebates/",
+      "Every Xcel Energy Minnesota rebate"
+     ]
+    },
+    "bans": [
+     {
+      "if": "\\$16,000",
+      "unless": [
+       "income"
+      ],
+      "msg": "enhanced amount without income condition"
+     }
+    ]
+   }
   }
  ]
 }

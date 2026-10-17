@@ -221,7 +221,8 @@ def hero(regs, total, picker):
 <section class="hm-hero" aria-labelledby="hm-h1">
   <div class="hm-wrap hm-hero-grid">
     <div class="hm-hero-copy">
-      <a class="hm-news" href="#federal-alert"><b>New in Canada</b> Ottawa's heat pump rebate: up to $10,000, opening early 2027. <span>Get the launch email</span></a>
+      <a class="hm-news hm-for-ca" href="#federal-alert"><b>New in Canada</b> Ottawa's heat pump rebate: up to $10,000, opening early 2027. <span>Get the launch email</span></a>
+      <a class="hm-news hm-for-us" href="#regions"><b>US update</b> The 30% federal tax credits ended. State and utility rebates are still open. <span>Pick your state</span></a>
       <h1 id="hm-h1">Find every home energy rebate in your city.</h1>
       <p class="hm-lede" data-city-count="{total}">Heat pumps, solar, batteries, insulation and more, in {total} cities across Canada and the US. Every amount links to the official program, and we check them every month.</p>
       <form id="hero-find" class="hm-find" action="/get-quotes/" method="get">
@@ -301,7 +302,7 @@ def region_ledger(regs):
     cols = ""
     for country, name in (("ca", "Canada"), ("us", "United States")):
         rs = [r for r in regs if r["country"] == country]
-        cols += f'<div class="hm-col"><h3>{name} <span>{len(rs)} {"provinces" if country == "ca" else "states"}, {sum(r["count"] for r in rs)} cities</span></h3><ul class="hm-regs">{"".join(reg_row(r) for r in rs)}</ul></div>'
+        cols += f'<div class="hm-col hm-col-{country}"><h3>{name} <span>{len(rs)} {"provinces" if country == "ca" else "states"}, {sum(r["count"] for r in rs)} cities</span></h3><ul class="hm-regs">{"".join(reg_row(r) for r in rs)}</ul></div>'
     return f'''<section class="hm-sec hm-ledger" id="regions" aria-labelledby="hm-reg-h">
   <div class="hm-wrap">
     <h2 id="hm-reg-h">Pick your province or state</h2>
@@ -320,7 +321,7 @@ def powerscore():
         top = [c for c in d["leaderboard_overall"] if c["country"] == country][:5]
         lis = "".join(f'<li><a href="{c["url"]}"><span class="hm-ps-city">{esc(c["label"])}, {names[c["region"]]}</span>'
                       f'<span class="hm-ps-bar" style="--s:{round(c["overall"])}"></span><b>{round(c["overall"])}</b></a></li>' for c in top)
-        cols += f'<div><h3>{country}</h3><ol class="hm-ps">{lis}</ol></div>'
+        cols += f'<div class="hm-ps-{"ca" if country == "Canada" else "us"}"><h3>{country}</h3><ol class="hm-ps">{lis}</ol></div>'
     n = d["stats"]["total_cities"]
     return f'''<section class="hm-sec hm-psec" aria-labelledby="hm-ps-h">
   <div class="hm-wrap">
@@ -458,7 +459,8 @@ q("name").textContent=r.n;q("sub").textContent="The biggest open rebate for each
 q("rows").innerHTML=r.rows.map(row).join("");q("checked").textContent=(r.checked?"Last checked "+r.checked:"Checked monthly")+" against the official program pages.";
 var h=q("hub");h.href=r.hub;h.firstChild.textContent="All "+r.n+" programs ";sh.classList.remove("hm-in");void sh.offsetWidth;sh.classList.add("hm-in")}};
 var z="";try{{z=Intl.DateTimeFormat().resolvedOptions().timeZone||""}}catch(x){{}}
-var g=TZ[z],p=document.getElementById("hf-prov");
+var g=TZ[z],p=document.getElementById("hf-prov"),K=(document.documentElement.getAttribute("data-country")||"").toLowerCase();
+if(K==="us"||K==="ca"){{var cur=K==="us"?"USD":"CAD";if(!g||!R[g]||R[g].cur!==cur){{g="";for(var k in R){{if(R[k].cur===cur){{g=k;break}}}}}}}}
 if(g&&g!=="on")window.HPR_SHEET(g);
 if(g&&p&&!p.value&&["bc","ab","on","ns","nl"].indexOf(g)>-1){{p.value=g;window.HPR_FILL&&window.HPR_FILL()}}
 document.querySelectorAll(".hm-tab").forEach(function(b){{b.addEventListener("click",function(){{var c=b.dataset.cat;
@@ -504,6 +506,7 @@ def head(regs, total, faqs, modified, keep):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>{country_script()}</script>
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
@@ -540,6 +543,24 @@ def head(regs, total, faqs, modified, keep):
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 {keep.get("og", "")}
 </head>'''
+
+
+US_ZONES = ("America/New_York", "America/Chicago", "America/Denver", "America/Los_Angeles", "America/Phoenix", "America/Detroit",
+            "America/Anchorage", "America/Boise", "Pacific/Honolulu", "America/Indiana/", "America/Kentucky/", "America/North_Dakota/")
+CA_ZONES = ("America/Vancouver", "America/Edmonton", "America/Winnipeg", "America/Regina", "America/Toronto", "America/Halifax",
+            "America/Glace_Bay", "America/Moncton", "America/St_Johns", "America/Whitehorse", "America/Yellowknife", "America/Iqaluit")
+
+
+def country_script():
+    """Sets <html data-country="US|CA"> before first paint, so home.css can put the visitor's country first (US: the tax
+    credit note and US states first, the Canadian alert box after the regions; Canada: the reverse). Both countries' content
+    is always in the page; only the order changes. The edge function sets the attribute from the IP; this is the fallback."""
+    return ('(function(){var d=document.documentElement,q=(location.search.match(/[?&]country=(us|ca)/i)||[])[1];'
+            'if(q){d.setAttribute("data-country",q.toUpperCase());return}if(d.getAttribute("data-country"))return;'
+            'var z="";try{z=Intl.DateTimeFormat().resolvedOptions().timeZone||""}catch(e){}'
+            f'var U={json.dumps(US_ZONES, separators=(",", ":"))},C={json.dumps(CA_ZONES, separators=(",", ":"))};'
+            'function m(a){return a.some(function(x){return x.slice(-1)==="/"?z.indexOf(x)===0:z===x})}'
+            'if(m(U))d.setAttribute("data-country","US");else if(m(C))d.setAttribute("data-country","CA")})();')
 
 
 def between(s, a, b, inclusive=True):

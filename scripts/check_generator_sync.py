@@ -80,7 +80,7 @@ def main():
             for line in git("status", "--porcelain", cwd=wt).splitlines():
                 owner.setdefault(line[3:], g)
         # the same post-steps the pipeline runs after any generator (scripts/post_steps.py)
-        if any(" --state" in g for g in gens):  # a region hub base page needs the hub blocks before the post-steps
+        if True:  # hub base pages (--state, and Illinois's --hubs pseudo-city) need the hub blocks; the hub steps are idempotent
             for step in HUB_STEPS:
                 subprocess.run([sys.executable, f"scripts/{step}"], cwd=wt, capture_output=True, text=True)
         run_post_steps(cwd=wt)

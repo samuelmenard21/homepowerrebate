@@ -254,13 +254,13 @@ def link_hub(spec):
     S, E = "<!-- CALC-LINK-START -->", "<!-- CALC-LINK-END -->"
     blk = (f'{S}<p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Not sure what you qualify for?</b> '
            f'<a href="/calculator/{spec["code"]}/">Use the {e(spec["name"])} rebate calculator</a>.</p>{E}')
-    if S in s:
-        s = re.sub(re.escape(S) + ".*?" + re.escape(E), lambda m: blk, s, count=1, flags=re.S)
-    else:
-        anchor = next((a for a in ("<!-- PROGRAM-LINKS-END -->", "<!-- HUB-CHANGES-END -->") if a in s), None)
-        if not anchor:  # a hub base page before the hub pipeline has run: the post-steps add the link later
-            return
-        s = s.replace(anchor, anchor + "\n" + blk, 1)
+    # one fixed place, so a hub built from scratch and a hub updated in place match: right after the "On this page" bar,
+    # else after the program links or the "what changed" block
+    s = re.sub(r"\n?" + re.escape(S) + ".*?" + re.escape(E), "", s, flags=re.S)
+    anchor = next((a for a in ("<!-- HUB-TOC-END -->", "<!-- PROGRAM-LINKS-END -->", "<!-- HUB-CHANGES-END -->") if a in s), None)
+    if not anchor:  # a hub base page before the hub pipeline has run: the post-steps add the link later
+        return
+    s = s.replace(anchor, anchor + "\n" + blk, 1)
     f.write_text(s, encoding="utf-8")
 
 

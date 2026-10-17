@@ -103,12 +103,18 @@ def main():
 #hero-find label{{display:block;font-size:13px;font-weight:600;margin-bottom:5px;color:var(--ink-soft)}}
 #hero-find select{{width:100%;min-height:48px;padding:10px 12px;border:1.5px solid var(--rule);border-radius:9px;font-family:'Inter Tight',sans-serif;font-size:16px;background:#fff;color:var(--ink)}}
 #hero-find button{{width:100%;margin-top:14px;min-height:50px;border:0;border-radius:999px;background:var(--amber);color:#fff;font-family:'Inter Tight',sans-serif;font-weight:700;font-size:16px;cursor:pointer}}
+.hero-fed{{display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 10px;max-width:640px;margin:0 auto 18px;padding:9px 16px;border-radius:999px;background:rgba(232,138,46,.16);border:1px solid rgba(232,138,46,.55);color:inherit;font-size:15px;line-height:1.4;text-decoration:none}}
+.hero-fed b{{padding:2px 9px;border-radius:999px;background:var(--amber-bright);color:var(--ink);font-size:12px;letter-spacing:.04em;text-transform:uppercase}}
+.hero-fed span{{font-weight:700;text-decoration:underline;text-underline-offset:3px}}
+.hero-fed:hover{{background:rgba(232,138,46,.26)}}
+@media(max-width:600px){{.hero-fed{{border-radius:14px;font-size:14px}}}}
 #hero-find .hf-note{{font-size:13px;color:var(--ink-soft);margin:10px 0 0;text-align:center}}
 @media(max-width:600px){{#hero-find .hf-row{{grid-template-columns:1fr}}#hero-find{{order:2}}}}
 @media(max-width:600px){{.hero-trust-line{{flex-direction:column;align-items:center;gap:4px;flex-wrap:wrap}}.hero-trust-line span.dot{{display:none}}.hero-trust-line span{{white-space:normal}}}}
 </style>
 <section class="hero">
   <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Canada &amp; US &middot; {sum(len(r["k"]) for r in data)} cities &middot; Checked monthly</div>
+  <a class="hero-fed" href="#federal-alert"><b>New in Canada</b> Ottawa's heat pump rebate: up to $10,000, opening early 2027. <span>Get the launch email &darr;</span></a>
   <h1 class="hero-h1">Find every home energy rebate <em>for your city.</em></h1>
   <p class="hero-sub">See what you could get back and who to call. Free, no sales calls.</p>
   <form id="hero-find" action="/get-quotes/" method="get">

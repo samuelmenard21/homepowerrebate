@@ -33,7 +33,7 @@
 <!-- FONT-PRELOAD-END -->
 
 <link rel="stylesheet" href="/assets/tpl/article-28f467de.css?v=9d7d233d21" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=4af1270f6b" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=68698f8f2c" data-hpr-site-css>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -280,7 +280,7 @@
 <div class="callout"><strong>Short answer:</strong> HARP pays $400 per household. You must pay your own home heat. If you live alone, your 2025 net income must be $30,000 or less. If you live with others, your combined 2025 net household income must be $45,000 or less. Apply by March 31, 2027.</div>
 <h2 id="how-much-does-harp-pay">How much does HARP pay?</h2>
 <p>$400 for each household, according to the Province of Nova Scotia. It is a one-time payment for the 2026-27 application period. You can apply from October 1, 2026 to March 31, 2027.</p>
-<!-- FED-ALERT-START --><section class="fed-alert" aria-label="Federal heat pump rebate email alert"><p class="fed-alert-eyebrow">Federal heat pump rebate</p><p class="fed-alert-title">Getting the heating rebate? A bigger one may be coming.</p><p class="fed-alert-body">Ottawa plans a heat pump rebate of up to $10,000 for households below the median income and $2,000 for other eligible homeowners, starting in early 2027. It says homes moving off oil, propane or electric resistance heat (like baseboards) save over $1,400 a year on average. The income line is not published yet, so nobody can say who gets $10,000.</p><form class="fed-alert-form" data-list="federal-hp" data-province="NS"><label for="fed-alert-email">Email</label><input id="fed-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email"><input class="fed-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">Email me when it opens</button></form><p class="fed-alert-done" role="status" hidden></p><p class="fed-alert-note">We only email you about this rebate. Unsubscribe anytime. Ottawa also has <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html">its own sign-up</a>.</p></section><script>document.querySelectorAll('.fed-alert-form').forEach(function (f) { f.addEventListener('submit', async function (e) { e.preventDefault(); var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'); var t = b.textContent; b.disabled = true; b.textContent = 'Saving...'; try { var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) }); if (!r.ok) throw new Error('alert signup failed'); f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us."; } catch (err) { done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t; } done.hidden = false; }); });</script><!-- FED-ALERT-END -->
+<!-- FED-ALERT-START --><section class="fed-alert" aria-label="Federal heat pump rebate email alert"><div class="fed-alert-top"><p class="fed-alert-eyebrow">New federal heat pump rebate</p><p class="fed-alert-badge"><span aria-hidden="true"></span>Opens early 2027</p></div><div class="fed-alert-amounts"><p><b>$10,000</b><span>if your household earns below the median income</span></p><p><b>$2,000</b><span>for other homeowners who qualify</span></p></div><p class="fed-alert-title">Getting the heating rebate? A bigger rebate is coming.</p><p class="fed-alert-body">Ottawa says homes that switch off oil, propane or electric baseboard heat save over $1,400 a year on average. Applications open in early 2027. Get an email the day they do.</p><p class="fed-alert-more"><a href="/programs/national-heat-pump-rebate/">Read everything we know so far &rarr;</a></p><form class="fed-alert-form" data-list="federal-hp" data-province="NS"><label for="fed-alert-email">Email</label><input id="fed-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email"><input class="fed-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">Email me when it opens</button></form><p class="fed-alert-done" role="status" hidden></p><p class="fed-alert-note"><b>What you get:</b> a quick hello now, one email the day applications open, and one when Ottawa says who gets $10,000. That&#x27;s it. No spam, unsubscribe anytime. Ottawa also has <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html">its own sign-up</a>.</p></section><!-- FED-ALERT-END -->
 <h2 id="who-qualifies-for-the-nova-scotia-heating-rebate">Who qualifies for the Nova Scotia heating rebate?</h2>
 <p>You must pay for your own home heat. Then you need to meet one of these:</p>
 <ul>
@@ -487,6 +487,35 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     button.disabled = false;
     button.textContent = originalText;
   }
+});
+// Federal heat pump rebate alert box (scripts/add_federal_alert.py places it; the handler lives here once for every page).
+// A box with data-follow="<select id>" shows only while that select holds a Canadian province (the rebate finder).
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('fed-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.fed-alert'), done = box.querySelector('.fed-alert-done'), b = f.querySelector('button'), sel = f.querySelector('select'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: f.dataset.list, email: f.querySelector('input[type="email"]').value, province: (sel && sel.value) || f.dataset.province || '', city: f.dataset.city || '', page: location.pathname, website: f.querySelector('.fed-alert-hp').value }) });
+    if (!r.ok) throw new Error('alert signup failed');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+  } catch (err) {
+    done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
+  }
+  done.hidden = false;
+});
+document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
+  var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), c = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
+  if (!r) return;
+  function upd() {
+    var on = ca.indexOf(r.value) >= 0;
+    box.hidden = !on;
+    f.dataset.province = on ? r.value.toUpperCase() : '';
+    f.dataset.city = on && c && c.value ? c.options[c.selectedIndex].text : '';
+  }
+  r.addEventListener('change', upd); if (c) c.addEventListener('change', upd);
+  new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
 });
 (function () {
   var n = document.querySelector('.nav'), y = window.scrollY, f = 0;

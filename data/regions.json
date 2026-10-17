@@ -1054,7 +1054,108 @@
    "facts_files": [
     "ny"
    ],
-   "home_blurb": "NYS Clean Heat through your utility: Con Edison, National Grid, NYSEG, Central Hudson and more."
+   "home_blurb": "NYS Clean Heat through your utility: Con Edison, National Grid, NYSEG, Central Hudson and more.",
+   "city_pages": {
+    "built": [
+     "battery",
+     "ev-charger",
+     "insulation",
+     "smart-thermostats",
+     "solar",
+     "water-heater",
+     "windows-doors",
+     "appliances",
+     "hrv"
+    ],
+    "label_keys": [
+     "insulation",
+     "windows",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv",
+     "windows-doors"
+    ],
+    "calc_label": "New York",
+    "installers": {},
+    "quotes": "/get-quotes/?state={code}&amp;city={slug}",
+    "siblings_from": "page_and_data",
+    "siblings_always": [
+     "heat-pump"
+    ],
+    "groups": {
+     "con-edison": {
+      "name": "Con Edison",
+      "program_links": [
+       [
+        "/programs/con-edison-rebates/",
+        "Every Con Edison rebate"
+       ]
+      ]
+     },
+     "national-grid": {
+      "name": "National Grid",
+      "program_links": [
+       [
+        "/programs/national-grid-rebates/",
+        "Every National Grid rebate"
+       ]
+      ]
+     },
+     "pseg": {
+      "name": "PSEG Long Island",
+      "program_links": [
+       [
+        "/programs/pseg-long-island-rebates/",
+        "Every PSEG Long Island rebate"
+       ]
+      ]
+     },
+     "central-hudson": {
+      "name": "Central Hudson",
+      "program_links": [
+       [
+        "/programs/central-hudson-rebates/",
+        "Every Central Hudson rebate"
+       ]
+      ]
+     }
+    },
+    "name_overrides": {
+     "new-york-city": "New York City",
+     "oyster-bay": "Oyster Bay",
+     "mount-vernon": "Mount Vernon",
+     "new-rochelle": "New Rochelle",
+     "white-plains": "White Plains"
+    },
+    "program_links": {
+     "cities": {
+      "rochester": [
+       [
+        "/programs/nyseg-and-rge-rebates/",
+        "Every RG&amp;E rebate"
+       ]
+      ]
+     }
+    },
+    "bans": [
+     {
+      "if": "\\$11,350",
+      "msg": "stale federal figure"
+     },
+     {
+      "if": "Greener Homes",
+      "unless": [
+       "ended"
+      ],
+      "msg": "stale federal figure"
+     }
+    ]
+   }
   },
   {
    "code": "pa",
@@ -1670,7 +1771,112 @@
      "lng": -74.4229
     }
    },
-   "home_blurb": "PSE&G, JCP&L and Atlantic City Electric programs, plus the New Jersey Clean Energy Program."
+   "home_blurb": "PSE&G, JCP&L and Atlantic City Electric programs, plus the New Jersey Clean Energy Program.",
+   "city_pages": {
+    "built": [
+     "heat-pump"
+    ],
+    "names": {
+     "newark": "Newark",
+     "jersey-city": "Jersey City",
+     "toms-river": "Toms River",
+     "atlantic-city": "Atlantic City"
+    },
+    "label_keys": [
+     "insulation",
+     "windows-doors",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "New Jersey",
+    "installers": {},
+    "installer_block": false,
+    "quotes": "/get-quotes/",
+    "callout_near_you": true,
+    "guides_heading": "Every rebate guide for {name} homes",
+    "ld_home_slash": true,
+    "hub_back_link": true,
+    "region_pages": {
+     "pages": [
+      [
+       "solar",
+       "Solar"
+      ],
+      [
+       "battery",
+       "Home battery"
+      ],
+      [
+       "ev-charger",
+       "Electric car and charger"
+      ],
+      [
+       "water-heater",
+       "Heat pump water heater"
+      ],
+      [
+       "smart-thermostats",
+       "Smart thermostat"
+      ],
+      [
+       "appliances",
+       "Appliance"
+      ],
+      [
+       "insulation",
+       "Insulation and weatherization"
+      ]
+     ],
+     "link": null,
+     "guide": "<a href=\"{url}\">{t} rebates in New Jersey</a>"
+    },
+    "program_links": {
+     "cities": {
+      "newark": [
+       [
+        "/programs/pseg-rebates/",
+        "Every PSE&G rebate"
+       ]
+      ],
+      "jersey-city": [
+       [
+        "/programs/pseg-rebates/",
+        "Every PSE&G rebate"
+       ]
+      ],
+      "toms-river": [
+       [
+        "/programs/jcpl-rebates/",
+        "Every JCP&L rebate"
+       ]
+      ],
+      "atlantic-city": [
+       [
+        "/programs/atlantic-city-electric-rebates/",
+        "Every Atlantic City Electric rebate"
+       ]
+      ]
+     },
+     "extra": [
+      [
+       "/us/nj/",
+       "All New Jersey rebates"
+      ]
+     ]
+    },
+    "bans": [
+     {
+      "if": "\\$16,000|Greener Homes",
+      "msg": "stale figure"
+     }
+    ]
+   }
   },
   {
    "code": "il",
@@ -1739,7 +1945,129 @@
      "lng": -89.589
     }
    },
-   "home_blurb": "ComEd, Nicor Gas, Peoples Gas and Ameren Illinois programs, plus Illinois Shines for solar."
+   "home_blurb": "ComEd, Nicor Gas, Peoples Gas and Ameren Illinois programs, plus Illinois Shines for solar.",
+   "city_pages": {
+    "built": [
+     "heat-pump",
+     "water-heater",
+     "insulation",
+     "smart-thermostats"
+    ],
+    "names": {
+     "state": "Illinois",
+     "chicago": "Chicago",
+     "aurora": "Aurora",
+     "naperville": "Naperville",
+     "peoria": "Peoria"
+    },
+    "label_keys": [
+     "insulation",
+     "windows-doors",
+     "water-heater",
+     "heat-pump",
+     "solar",
+     "battery",
+     "ev-charger",
+     "smart-thermostats",
+     "appliances",
+     "hrv"
+    ],
+    "calc_label": "Illinois",
+    "installers": {
+     "heat-pump": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "water-heater": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     },
+     "index": {
+      "from": "rows",
+      "service": "heat-pump",
+      "min": 5
+     }
+    },
+    "installers_more": [],
+    "state_page": {
+     "slug": "state",
+     "guides_heading": "City guides and statewide guides",
+     "topics": [
+      [
+       "solar",
+       "Solar rebates"
+      ],
+      [
+       "appliances",
+       "Appliance rebates"
+      ],
+      [
+       "smart-thermostats",
+       "Smart thermostat rebates"
+      ]
+     ],
+     "topic_link": "<a href=\"{url}\">Illinois {tl}</a>"
+    },
+    "region_pages": {
+     "pages": [
+      [
+       "smart-thermostats",
+       "Illinois smart thermostat rebates (all utilities side by side)"
+      ]
+     ],
+     "link": null,
+     "guide": "<a href=\"{url}\">{t}</a>"
+    },
+    "program_links": {
+     "cities": {
+      "state": [
+       [
+        "/programs/",
+        "Every Illinois utility rebate"
+       ]
+      ],
+      "chicago": [
+       [
+        "/programs/comed-rebates/",
+        "Every ComEd rebate"
+       ]
+      ],
+      "aurora": [
+       [
+        "/programs/comed-rebates/",
+        "Every ComEd rebate"
+       ]
+      ],
+      "naperville": [
+       [
+        "/programs/naperville-electric-rebates/",
+        "Every Naperville Electric rebate"
+       ]
+      ],
+      "peoria": [
+       [
+        "/programs/ameren-illinois-rebates/",
+        "Every Ameren Illinois rebate"
+       ]
+      ]
+     }
+    },
+    "bans": [
+     {
+      "if": "\\$11,350",
+      "msg": "stale federal figure"
+     },
+     {
+      "if": "Greener Homes",
+      "unless": [
+       "ended"
+      ],
+      "msg": "stale federal figure"
+     }
+    ]
+   }
   },
   {
    "code": "wa",

@@ -15,18 +15,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import apply_canonical_nav_footer as navfooter  # noqa: E402
+import city_pages  # noqa: E402  (city pages and hubs: the shared engine)
 import build_ca_pages as ca  # noqa: E402  (shared CSS, card(), words(), AUTHOR, FACTS)
 
 e = html.escape
 BASE = ca.BASE
 FACTS = ca.FACTS
-LABEL = {"insulation": "Insulation", "windows-doors": "Windows & Doors", "water-heater": "Water Heater", "heat-pump": "Heat Pump", "solar": "Solar", "battery": "Battery Storage",
-         "ev-charger": "EV Charger", "smart-thermostats": "Smart Thermostat", "appliances": "Appliance", "hrv": "HRV & Ventilation"}
-BUILT = ["heat-pump"]
-HUB = ["index"]
-NAMES = {"newark": "Newark", "jersey-city": "Jersey City", "toms-river": "Toms River", "atlantic-city": "Atlantic City"}
-UTILITY = {"newark": ("/programs/pseg-rebates/", "PSE&G"), "jersey-city": ("/programs/pseg-rebates/", "PSE&G"),
-           "toms-river": ("/programs/jcpl-rebates/", "JCP&L"), "atlantic-city": ("/programs/atlantic-city-electric-rebates/", "Atlantic City Electric")}
+NAMES = city_pages.Region("nj").names  # city names live in data/regions.json (city_pages)
 TOPICS = [("solar", "Solar"), ("battery", "Home battery"), ("ev-charger", "Electric car and charger"), ("water-heater", "Heat pump water heater"),
           ("smart-thermostats", "Smart thermostat"), ("appliances", "Appliance"), ("insulation", "Insulation and weatherization")]
 LABEL_TOPIC = dict(TOPICS)
@@ -85,65 +80,6 @@ def jsonld(d, title, desc, checked, path, crumbs):
     return "".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in ld)
 
 
-def build(slug, cat):
-    name = NAMES[slug]
-    pj = ROOT / "data/nj/pages" / slug / f"{cat}.json"
-    if not pj.exists():
-        return None
-    d = json.loads(pj.read_text())
-    hub = f"/us/nj/{slug}/"
-    is_hub = cat == "index"
-    path = hub if is_hub else f"{hub}{cat}/"
-    fids = [i for cd in d["cards"] for i in cd.get("facts", [])] + d.get("facts", [])
-    for i in fids:
-        assert i in FACTS, f"unknown fact {i}"
-    checked = max(FACTS[i]["verified_on"] for i in fids)
-    when = date.fromisoformat(checked).strftime("%B %-d, %Y")
-    sibs = [k for k in LABEL if k != cat and (ROOT / f"us/nj/{slug}/{k}/index.html").exists()]
-    sib = "".join(f'<span style="margin-right:14px;"><a href="{hub}{k}/">{LABEL[k]} Rebates in {e(name)}</a></span>\n' for k in sibs)
-    guides = ""
-    if is_hub:
-        li = "".join(f'<li><a href="{hub}{k}/">{LABEL[k]} rebates in {e(name)}</a></li>' for k in sibs)
-        li += "".join(f'<li><a href="/us/nj/{k}/">{t} rebates in New Jersey</a></li>' for k, t in TOPICS if (ROOT / f"us/nj/{k}/index.html").exists())
-        guides = f"<h2>Every rebate guide for {e(name)} homes</h2><ul>{li}</ul>"
-    cards = "".join(ca.card(x) for x in d["cards"])
-    steps = "".join(f"<li>{s}</li>\n" for s in d.get("claim_steps", []))
-    claim = f"<h2>{d['claim_heading']}</h2>\n<ol>\n{steps}</ol>" if steps else ""
-    faq = "".join(f'<div class="faq-item"><h3>{e(q)}</h3><p>{a}</p></div>\n' for q, a in d["faq"])
-    sources = " ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>' + ("," if i < len(d["refs"]) - 1 else "") for i, (t, u) in enumerate(d["refs"]))
-    article = f"""<h2>{d['cards_heading']}</h2>
-{d['cards_intro']}
-<div class="rebate-grid">
-{cards}
-</div>
-{d.get('after_cards', '')}
-{''.join(f"<h2>{h}</h2>{b}" for h, b in d['sections'])}
-{guides}
-{claim}
-<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/nj/" style="color:var(--teal,#0d4f5c); font-weight:600;">New Jersey rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
-<h2>Common questions</h2>
-{faq}
-<h2>What to do next</h2>
-{d['next']}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {sources}. <a href="{hub}">All {e(name)} rebates &rarr;</a> <a href="{UTILITY[slug][0]}">Every {UTILITY[slug][1]} rebate &rarr;</a> <a href="/us/nj/">All New Jersey rebates &rarr;</a></p>"""
-    w = gate(path, article, d)
-    title, desc = d["title"], d["desc"]
-    crumbs = [("Home", "/"), ("New Jersey", "/us/nj/"), (name, hub)] + ([] if is_hub else [(LABEL[cat], path)])
-    lds = jsonld(d, title, desc, checked, path, crumbs)
-    page = head(title, desc, path, lds) + f"""{navfooter.render_nav("nj", slug)}
-<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/us/nj/">New Jersey</a></li>{"" if is_hub else f'<li><a href="{hub}">{e(name)}</a></li>'}<li aria-current="page">{e(name) if is_hub else LABEL[cat]}</li></ol></nav>
-<section class="hero"><div class="wrap"><div class="amount-badge">{e(d['badge'])}</div><h1>{e(d['h1'])}</h1><p>{d['lead']}</p></div></section>
-<section class="wrap" style="padding:24px 28px 0;"><div style="font-size:14px; line-height:2.2;">
-{'<span style="margin-right:14px;"><a href="/us/nj/">&larr; All New Jersey rebates</a></span>' if is_hub else f'<span style="margin-right:14px;"><a href="{hub}">&larr; Back to {e(name)} rebate hub</a></span>' + chr(10) + sib}</div></section>
-<article class="article"><div class="wrap">
-{article}
-</div></article>
-{navfooter.render_footer("nj", slug, name, path)}
-</body></html>
-"""
-    finish(path, page)
-    return path, w
-
 
 def build_state():
     d = json.loads((ROOT / "data/nj/state-hub.json").read_text())
@@ -191,14 +127,7 @@ def build_state():
 
 
 if __name__ == "__main__":
-    only = {a for a in sys.argv[1:] if not a.startswith("--")}
-    if "--state" in sys.argv:
+    if "--state" in sys.argv:  # the state hub, then the city pages as before
         r = build_state()
         print("built", r[0], r[1], "words")
-    for slug in NAMES:
-        if only and slug not in only:
-            continue
-        for cat in (HUB if "--hubs" in sys.argv else BUILT):
-            r = build(slug, cat)
-            if r:
-                print("built", r[0], r[1], "words")
+    city_pages.main("nj")

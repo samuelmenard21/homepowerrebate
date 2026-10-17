@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import apply_canonical_nav_footer as nf  # noqa: E402
 # needs arguments or is not a page builder
-SKIP = {"build_monthly_rebate_report"}
+SKIP = {"build_monthly_rebate_report", "page_kit", "city_pages", "capture_build"}
 from post_steps import run as run_post_steps  # noqa: E402  (one list, shared with scripts/post_steps.py)
 from build_hubs import HUB as HUB_STEPS  # noqa: E402
 # (the restamp converts a fresh generator <style> block to its template file on its second pass, after adding font fallbacks)
@@ -42,10 +42,11 @@ def generators():
     runs = sorted((gens | set(EXTRA)) - SKIP)
     for p in sorted((ROOT / "scripts").glob("*.py")):
         t = p.read_text(encoding="utf-8")
-        if p.stem in SKIP or p.stem in gens or not (p.stem == "build_ca_pages" or re.search(r"^import build_ca_pages\b", t, re.M)) or "<!DOCTYPE" not in t:
+        wrapper = bool(re.search(r"^\s*city_pages\.main\(", t, re.M))  # a region wrapper on the shared engine (always has --hubs)
+        if p.stem in SKIP or p.stem in gens or not (wrapper or ((p.stem == "build_ca_pages" or re.search(r"^import build_ca_pages\b", t, re.M)) and "<!DOCTYPE" in t)):
             continue
         runs.append(p.stem)
-        runs += [f"{p.stem} {flag}" for flag in ("--hubs", "--state", "--state-hub") if f'"{flag}"' in t]
+        runs += [f"{p.stem} {flag}" for flag in ("--hubs", "--state", "--state-hub") if f'"{flag}"' in t or (wrapper and flag == "--hubs")]
     return runs
 
 

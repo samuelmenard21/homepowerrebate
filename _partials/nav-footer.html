@@ -569,6 +569,9 @@ body:has(#hpr-search) .nav-search { display: none; }
 @media (max-width: 700px) {
   :not(.tw) > table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 }
+/* Heat pump links box on the homepage (scripts/add_heat_pump_links.py); other pages carry the same rules inline */
+.hp-links { max-width: 880px; margin: 18px auto; padding: 14px 20px; background: #f5efe5; border-left: 4px solid #d4751c; border-radius: 8px; font-size: 15px; line-height: 1.6; }
+@media (max-width: 912px) { .hp-links { margin: 18px 16px; } }
 /* Federal heat pump rebate alert box (scripts/add_federal_alert.py). Child rules carry the .fed-alert prefix to beat .tpl-article main p/a. */
 .fed-alert { margin: 28px 0 32px; padding: 22px 24px; background: var(--teal-deep); color: var(--paper); border-radius: var(--radius-card); }
 .fed-alert .fed-alert-eyebrow { margin: 0 0 6px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber-bright); }

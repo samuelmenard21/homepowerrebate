@@ -147,4 +147,7 @@ def link_pages():
 
 
 if __name__ == "__main__":
-    main()
+    if "--links-only" in sys.argv:  # a post-step: re-add the NS-HPWH-LINK box to the pages that link here
+        link_pages()
+    else:
+        main()

@@ -257,7 +257,9 @@ def link_hub(spec):
     if S in s:
         s = re.sub(re.escape(S) + ".*?" + re.escape(E), lambda m: blk, s, count=1, flags=re.S)
     else:
-        anchor = next(a for a in ("<!-- PROGRAM-LINKS-END -->", "<!-- HUB-CHANGES-END -->") if a in s)
+        anchor = next((a for a in ("<!-- PROGRAM-LINKS-END -->", "<!-- HUB-CHANGES-END -->") if a in s), None)
+        if not anchor:  # a hub base page before the hub pipeline has run: the post-steps add the link later
+            return
         s = s.replace(anchor, anchor + "\n" + blk, 1)
     f.write_text(s, encoding="utf-8")
 
@@ -289,4 +291,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if "--links-only" in sys.argv:  # a post-step: re-add the CALC-LINK line to every region hub
+        for f in sorted((ROOT / "data" / "calc").glob("*.json")):
+            link_hub(json.loads(f.read_text()))
+    else:
+        main()

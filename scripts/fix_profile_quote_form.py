@@ -75,6 +75,8 @@ def profile_index():
     import build_installer_rankings as br
     out = {}
     for r in br.load_rows():
+        if r["service"] not in SERVICE_ORDER:   # energy advisors and auditors have their own profiles (build_advisor_directory.py)
+            continue
         url = br.profile_url(r["region"], r["city"], r["name"])
         if not url:
             continue

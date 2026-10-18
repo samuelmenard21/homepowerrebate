@@ -12,12 +12,22 @@ from datetime import date
 from pathlib import Path
 
 import apply_canonical_nav_footer as navfooter
-from build_calculator import load_facts
 from status_pills import STATUS as _STATUS  # one status vocabulary site-wide
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://homepowerrebate.com"
 AUTHOR = {"@type": "Person", "@id": f"{BASE}/about#sam-menard", "name": "Sam Menard", "url": f"{BASE}/about"}
+
+
+def load_facts():
+    """Every verified fact by id, from data/verified-facts/*.json (the one source for amounts, status and dates)."""
+    facts = {}
+    for f in sorted((ROOT / "data" / "verified-facts").glob("*.json")):
+        for x in json.loads(f.read_text())["facts"]:
+            facts[x["id"]] = x
+    return facts
+
+
 FACTS = load_facts()
 # The article family's CSS as the restamp leaves it, read from a built article page: its family stylesheet link plus any
 # inline <style> blocks, minus the font faces (the restamp adds those as the FONT-PRELOAD block) and dead blocks.
@@ -177,3 +187,30 @@ def write_page(path, title, desc, lds, nav, crumb, hero_html, top, article, foot
     out = ROOT / path.strip("/") / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(navfooter.ensure_shared_assets(page), encoding="utf-8")
+
+
+# ---- "Page updated" dates that change only when the content does ----
+_DATES_FILE = ROOT / "data" / "page-dates.json"
+_DATES = None
+
+
+def stable_date(key, content, fallback=None):
+    """ISO date a generated page's content last changed. key: the page path; content: the generated HTML with the date left
+    out. Unchanged content keeps its stored date; changed content gets today's date; a page seen for the first time keeps
+    `fallback` (the date it shows now) when given. Call save_dates() once after a build."""
+    global _DATES
+    if _DATES is None:
+        _DATES = json.loads(_DATES_FILE.read_text()) if _DATES_FILE.exists() else {}
+    import hashlib
+    h = hashlib.sha1(content.encode()).hexdigest()[:16]
+    old = _DATES.get(key)
+    if old and old["hash"] == h:
+        return old["date"]
+    d = fallback if (old is None and fallback) else date.today().isoformat()
+    _DATES[key] = {"hash": h, "date": d}
+    return d
+
+
+def save_dates():
+    if _DATES is not None:
+        _DATES_FILE.write_text(json.dumps(dict(sorted(_DATES.items())), indent=0) + "\n", encoding="utf-8")

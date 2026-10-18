@@ -181,3 +181,7 @@ Growth and tracking (2026-10-17):
 - `build_ca_pages.py` is a thin wrapper: California runs on `city_pages.py` with `city_source: ca_cities` (cities, metro folders and utilities stay in `scripts/ca_cities.py`), `installers_ca`, program links `by_city_utility`, `no_guides`, `nav_city: false`, `hubs_with_cities`. Output was byte-identical (68 pages).
 - BASE, AUTHOR, FACTS, CSS, PILL, card() and words() now live in `page_kit.py`; `build_ca_pages.py` re-exports them for older importers. New code imports `page_kit`.
 - `/programs` and `/smart-thermostats` were old flat BC pages shadowing the folder pages of the same name; the flat files are gone, so Cloudflare serves the folder versions.
+
+## Installer rankings in the rebuild check; stable "Page updated" dates (added 2026-10-18)
+- `build_installer_rankings.py` is in the sync check and `rebuild_all.py`. Its "Page updated" date comes from `page_kit.stable_date()`: `data/page-dates.json` stores a fingerprint of each generated page and the date its content last changed, so a rebuild on another day changes nothing (it used to stamp today's date on all 424 pages). Use `stable_date()` + `save_dates()` in any generator that prints an updated date. `git add -f data/page-dates.json`.
+- `load_facts()` lives in `page_kit.py` (it was in `build_calculator.py`, which made `page_kit` and the calculator import each other).

@@ -59,9 +59,22 @@ SERVICES = {
     "solar": {"name": "Solar", "lower": "solar", "rebate_cat": "solar"},
     "insulation": {"name": "Insulation", "lower": "insulation", "rebate_cat": "insulation"},
     "battery": {"name": "Home Battery", "lower": "home battery", "rebate_cat": "battery"},
+    # Registered energy advisors (EnerGuide evaluations), added 2026-10-17. Not installers: the pages say "advisors",
+    # carry no quote form (the lead router only knows installer trades) and are built for Canadian regions only.
+    "energy-advisor": {"name": "Energy Advisor", "lower": "energy advisor", "rebate_cat": "insulation", "pro": ""},
+    # The US version: home energy auditors (BPI, RESNET HERS raters, Home Energy Score assessors). US regions only.
+    "energy-auditor": {"name": "Home Energy Auditor", "lower": "home energy auditor", "rebate_cat": "insulation", "pro": ""},
 }
+for _sv in SERVICES.values():
+    _pro = _sv.get("pro", " installer")
+    _sv["pro_l"] = _sv["lower"] + _pro               # "heat pump installer" / "energy advisor"
+    _sv["pros_l"] = _sv["pro_l"] + "s"               # "heat pump installers" / "energy advisors"
+    _sv["pros_t"] = _sv["name"] + _pro.title() + "s"  # "Heat Pump Installers" / "Energy Advisors"
+ADVISOR = "energy-advisor"
+ADVISORS = ("energy-advisor", "energy-auditor")
 # Short plural used in "Also installs ..." labels and cross-links.
 ALSO = {"heat-pump": "heat pumps", "solar": "solar", "insulation": "insulation", "battery": "batteries"}
+INSTALL_SERVICES = [sv for sv in SERVICES if sv not in ADVISORS]
 
 
 def slugify(s):
@@ -72,7 +85,7 @@ def slugify(s):
 def load_rows():
     rows = []
     for f in sorted((ROOT / "installers").glob("*-installers-real.csv")):
-        m = re.match(r"(?:([a-z]{2})-)?(heat-pump|solar|insulation|battery)-installers-real\.csv$", f.name)
+        m = re.match(r"(?:([a-z]{2})-)?(heat-pump|solar|insulation|battery|energy-advisor|energy-auditor)-installers-real\.csv$", f.name)
         if not m:
             continue
         region, service = (m.group(1) or "bc"), m.group(2)
@@ -110,7 +123,17 @@ def find_hub(hubs, region, city):
     return hubs.get((region, city.lower())) or hubs.get((region, slugify(city)))
 
 
+ADVISOR_PROFILES = {}   # "ca|<name lower>" -> /energy-advisors/<slug>/ (build_advisor_directory.py)
+_apf = ROOT / "data" / "energy-advisor-profiles.json"
+if _apf.exists():
+    ADVISOR_PROFILES = json.loads(_apf.read_text(encoding="utf-8"))
+
+
 def profile_url(region, city, name):
+    if REGIONS[region][0] == "us" and f"us|{name.strip().lower()}" in ADVISOR_PROFILES and _ADVISOR_CTX.get("on"):
+        return ADVISOR_PROFILES[f"us|{name.strip().lower()}"]
+    if REGIONS[region][0] == "ca" and f"ca|{name.strip().lower()}" in ADVISOR_PROFILES and _ADVISOR_CTX.get("on"):
+        return ADVISOR_PROFILES[f"ca|{name.strip().lower()}"]
     city_slug = slugify(city)
     # The profile generators drop "&" and "'" while slugify() turns "&" into "and"; try both spellings.
     gen_slug = re.sub(r"[^a-z0-9]+", "-", re.sub(r"[&'’]", "", name.lower().strip())).strip("-")
@@ -302,6 +325,8 @@ def climate_section(region, service, city_label):
                 f"<p>In {esc(city_label)}, the average January low is <b>{temp(low, us)}</b>, colder than {colder}% of the 123 cities we track. {advice}</p>"
                 f"<p>Most rebate programs pay only after an energy assessment, and some need one before the work too. Book it first.</p>"
                 f'<p class="small">Source: Open-Meteo historical weather data, {d.get("sample_years","2015-2024")}.</p>')
+    if service in ADVISORS:
+        return advisor_section(region, city_label)
     if service == "battery":
         return ("<h2>Which battery should you ask about?</h2>"
                 "<p>Most home installers work with a few brands. Compare usable storage (kWh), how much power it can deliver at once (kW), "
@@ -322,8 +347,94 @@ def climate_section(region, service, city_label):
             f'<p class="small">Source: Open-Meteo historical solar radiation, {d.get("sample_years","2020-2024")}. Production estimate assumes 80% system efficiency.</p>')
 
 
+# Region notes for the energy advisor pages. Every figure comes from a verified fact (id in the comment).
+ADVISOR_REGION = {
+    # on-20 (Home Renovation Savings assessment stream rules, verified 2026-10-03)
+    "on": ("<p>In Ontario, the Home Renovation Savings assessment stream needs a registered energy advisor at an authorized service "
+           "organization. The advisor does a pre-audit <b>before any work starts</b>, then a post-audit after you finish at least two "
+           "qualified upgrades. The program pays a <b>$600 audit rebate</b>, plus $500 more for three or more upgrades. In 2026, post-audits "
+           "must be booked in the program's system by November 30 and done by December 31. Total rebates are capped at $5,000 for "
+           "Enbridge gas-heated homes and $10,000 for homes heated by electricity, oil, propane or wood.</p>",
+           "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Assessment-Additional-Program-Eligibility-Requirements.pdf",
+           "Home Renovation Savings assessment stream requirements"),
+    # ns-0 (Efficiency Nova Scotia Home Energy Assessment, verified 2026-10-09)
+    "ns": ("<p>In Nova Scotia, Efficiency Nova Scotia's Home Energy Assessment unlocks up to <b>$5,000</b> in rebates on the upgrades the "
+           "assessment recommends, for any homeowner, any income and any heating type. The first assessment costs <b>$199</b> "
+           "(waived for moderate-income households). Book it before you start any renovation, and finish the upgrades and the final "
+           "assessment within 12 months.</p>",
+           "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf",
+           "Efficiency Nova Scotia Home Energy Assessment rebate guide"),
+    # nl-10 (takeCHARGE Greener Homes, verified 2026-10-16)
+    "nl": ("<p>In Newfoundland and Labrador, the income-eligible takeCHARGE Greener Homes program includes a home energy assessment. "
+           "You apply first, then an assessment is done, then contractor quotes are approved, the work is done and a final inspection "
+           "follows. takeCHARGE pays the contractors and auditors directly.</p>",
+           "https://takechargenl.ca/greenerhomes/", "takeCHARGE Greener Homes"),
+    # ma-27 (Mass Save Home Energy Assessment, verified 2026-09-26) and ma-5 (verified 2026-10-03)
+    "ma": ("<p>In Massachusetts, Mass Save offers a <b>no-cost</b> home energy assessment, in person or virtual, for homeowners, renters "
+           "and landlords. It unlocks Mass Save's insulation and air sealing incentives, and income-qualified homes can get insulation, "
+           "air sealing and heat pumps at up to no cost. Call 866-527-7283 or book on the Mass Save site. An independent auditor can "
+           "still help you plan bigger projects.</p>",
+           "https://web.archive.org/web/20260703083615/https://www.masssave.com/residential/rebates-offers-services/home-energy-assessments",
+           "Mass Save Home Energy Assessments"),
+    # nj-10 (PSE&G Whole Home Energy Assessment, verified 2026-10-06)
+    "nj": ("<p>In New Jersey, PSE&amp;G customers can get a <b>free</b> assessment of about one hour with a personal report and no-cost "
+           "products where supply allows, such as a smart thermostat, LED bulbs and weather stripping.</p>",
+           "https://myhomeenergy.pseg.com/en/Home-Energy-Assessments/WHAssessment", "PSE&G Home Energy Assessments"),
+    # il-7 (ComEd Home Energy Savings, verified 2026-10-06)
+    "il": ("<p>In Illinois, ComEd gives households at or below 80% of area median income a <b>free</b> in-home energy assessment with "
+           "free products, and possibly free insulation and air sealing after it.</p>",
+           "https://www.comed.com/ways-to-save/for-your-home/home-energy-savings/single-family", "ComEd Home Energy Savings"),
+    # mi-5 (DTE home energy assessment, verified 2026-10-06)
+    "mi": ("<p>In Michigan, DTE pays a <b>$50</b> rebate for a blower door pre-test, and $75 to $150 for air sealing that cuts air "
+           "leakage by 10% to 40%. Electric customers who heat with an air source heat pump or baseboards can get 50% of the cost of "
+           "a comprehensive audit, air sealing and insulation, up to $5,000.</p>",
+           "https://www.dteenergy.com/us/en/residential/save-money-energy/get-started-with/home-energy-assessment.html", "DTE home energy assessment"),
+    # bc-blog-16 (BC Hydro / FortisBC ECAP, verified 2026-09-26)
+    "bc": ("<p>In BC, income-qualified BC Hydro and FortisBC customers can get a free home energy evaluation and free upgrades through "
+           "the Energy Conservation Assistance Program. Everyone else pays the advisor directly, so ask for the price up front.</p>",
+           "https://www.fortisbc.com/rebates/detail/free-home-energy-evaluation-and-upgrades", "FortisBC: free home energy evaluation and upgrades"),
+}
+
+
+def advisor_section(region, city_label):
+    note = ADVISOR_REGION.get(region)
+    if REGIONS[region][0] == "us":
+        body = ("<p>A home energy auditor visits your home and finds where it wastes energy. Most test how much air leaks out with "
+                "a blower door, check insulation in the attic, walls and basement, and look at your heating, cooling and hot water. "
+                "You get a report that lists upgrades in order of value.</p>"
+                "<p>If your program needs an audit, book it <b>first</b>. Some utility insulation and air sealing programs pay only "
+                "after an assessment, and some need it before any work starts. Ask your utility whether an outside auditor's report counts, or whether you "
+                "must book through the program.</p>")
+        if note:
+            body += note[0] + f'<p class="small">Source: <a href="{note[1]}" rel="noopener" target="_blank">{esc(note[2])}</a>.</p>'
+        return f"<h2>What a home energy audit covers in {esc(city_label)}</h2>{body}"
+    body = ("<p>A registered energy advisor visits your home and runs an EnerGuide evaluation. They check your insulation and windows, "
+            "test how much air leaks out with a blower door, and look at your heating and hot water. You get a report with a rating "
+            "and a list of upgrades in order of value.</p>"
+            "<p>If your rebate program needs an evaluation, book the advisor <b>first</b>. Some programs pay only if an advisor sees "
+            "the home before any work starts, and again after it is done; hire a contractor first and you can lose the rebate.</p>")
+    if note:
+        body += note[0] + f'<p class="small">Source: <a href="{note[1]}" rel="noopener" target="_blank">{esc(note[2])}</a>.</p>'
+    return f"<h2>What an energy advisor does in {esc(city_label)}</h2>{body}"
+
+
 def hire_tips(region, service):
     tips = []
+    if service == "energy-auditor":
+        return [
+            "Ask whether they are BPI certified or a RESNET HERS rater, and whether they run a blower door test.",
+            "Ask whether your utility's insulation or heat pump program accepts their report, or whether you must book through the program.",
+            "Ask what the audit costs, what the report includes, and whether a test-out visit after the work costs extra.",
+            "Ask whether they also sell or install upgrades. An auditor who does not sell gives the most neutral advice.",
+        ]
+    if service in ADVISORS:
+        tips += [
+            "Ask whether they are a registered energy advisor with Natural Resources Canada and which service organization they work with.",
+            "Ask whether their evaluation counts for the rebate program you plan to use, and how soon they can book the first visit.",
+            "Ask what the visit costs, what the report includes, and whether the follow-up visit after your upgrades costs extra.",
+            "Ask how long the report takes and whether they will explain which upgrades pay back best in your home.",
+        ]
+        return tips
     if service == "heat-pump":
         tips += [
             "Ask for a room-by-room heat loss calculation. A quote that guesses the size from square footage alone is a red flag.",
@@ -396,12 +507,13 @@ def cost_box(region, service, city_label, hub):
     us = REGIONS[region][0] == "us"
     if service == "heat-pump":
         price = US_HP_COST if us else CA_HP_COST
-    elif service in ("insulation", "battery"):
+    elif service in ("insulation", "battery") + ADVISORS:
         price = None
     else:
         price = US_SOLAR_COST if us else None
     city = PS_CITIES.get(hub["url"]) if hub else None
-    cats = {"heat-pump": ["heat-pump"], "solar": ["solar", "battery"], "insulation": ["insulation"], "battery": ["battery"]}[service]
+    cats = {"heat-pump": ["heat-pump"], "solar": ["solar", "battery"], "insulation": ["insulation"], "battery": ["battery"],
+            ADVISOR: ["insulation", "heat-pump"], "energy-auditor": ["insulation", "heat-pump"]}[service]
     reb = []
     for c in cats:
         d = (city or {}).get("categories", {}).get(c)
@@ -415,6 +527,16 @@ def cost_box(region, service, city_label, hub):
         rows.append('<div class="cb-row"><span>Typical installed price</span><b>Varies by area</b></div>'
                     '<p class="cb-note">Price depends on which areas you insulate (attic, walls, basement) and how much air sealing is needed. '
                     'Ask each company for a price per area and the R-value you end up with, so quotes are easy to compare.</p>')
+    elif service == ADVISOR:   # fact general-22 (NRCan, read 2026-10-17)
+        rows.append('<div class="cb-row"><span>Typical price, both visits</span><b>$600 to $1,000</b></div>'
+                    '<p class="cb-note">NRCan says the before and after evaluations together average $600 to $1,000, depending on the '
+                    'advisor and the province, and you usually pay after the work is done. Some programs pay for the evaluation or give a '
+                    'rebate on it. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes" '
+                    'rel="noopener" target="_blank">Source: Natural Resources Canada</a>.</p>')
+    elif service in ADVISORS:
+        rows.append('<div class="cb-row"><span>Typical price</span><b>Varies by auditor</b></div>'
+                    '<p class="cb-note">Some utility programs pay for the assessment. Ask each auditor for the price of the audit and any '
+                    'test-out visit after the work, so you can compare.</p>')
     elif service == "battery":
         rows.append('<div class="cb-row"><span>Typical installed price</span><b>Varies by battery</b></div>'
                     '<p class="cb-note">Price depends on the brand, how much storage you want, and whether you need a panel upgrade. '
@@ -428,14 +550,17 @@ def cost_box(region, service, city_label, hub):
         for c, v in reb:
             rows.append(f'<div class="cb-row cb-reb"><span>{names[c].capitalize()} rebates open in {esc(city_label)}</span><b>up to ${v:,.0f}</b></div>')
         total = sum(v for _, v in reb)
-        rows.append(f'<p class="cb-note">That could cut your cost by up to <b>${total:,.0f}</b> if you qualify. Most rebates have rules '
+        first = ("Check whether each one needs an energy advisor's evaluation before work starts. " if service == ADVISOR else
+                 "Check whether each one needs an energy assessment or pre-approval before work starts. " if service in ADVISORS else "")
+        rows.append(f'<p class="cb-note">{first}That could cut your cost by up to <b>${total:,.0f}</b> if you qualify. Most rebates have rules '
                     f'(income, your current heating, a registered contractor, approval before work starts).</p>')
     else:
         rows.append(f'<div class="cb-row"><span>Rebates open in {esc(city_label)}</span><b>None confirmed right now</b></div>'
                     f'<p class="cb-note">Financing or future programs may still help. Check the rebate page before you sign.</p>')
     src = f'<p class="small">Price source: <a href="{price[3]}" rel="nofollow noopener" target="_blank">{price[2]}</a>. ' if price else '<p class="small">'
     src += 'Rebates: our verified program data, checked monthly. Always confirm the exact amount for your home.</p>'
-    return f'<h2>What a {SERVICES[service]["lower"]} costs in {esc(city_label)}</h2><div class="cb">{"".join(rows)}</div>{src}'
+    what = {ADVISOR: "an energy advisor", "energy-auditor": "a home energy audit"}.get(service, "a " + SERVICES[service]["lower"])
+    return f'<h2>What {what} costs in {esc(city_label)}</h2><div class="cb">{"".join(rows)}</div>{src}'
 
 
 def _plain(s):
@@ -446,12 +571,14 @@ def faq_items(region, service, city_label, hub, ranked, n, total_reviews, avg, m
     """Visible FAQ (and FAQPage markup) for a ranking page. Every answer is built from this page's own data."""
     svc = SERVICES[service]
     low = svc["lower"]
-    plural = {"heat-pump": "heat pumps", "solar": "solar panels", "battery": "home batteries", "insulation": "insulation"}[service]
+    plural = {"heat-pump": "heat pumps", "solar": "solar panels", "battery": "home batteries", "insulation": "insulation",
+              ADVISOR: "home energy upgrades", "energy-auditor": "home energy upgrades"}[service]
     art = "an" if low[0] in "aeiou" else "a"
-    items = [(f"Who is the best {low} installer in {city_label}?",
-              f"Based on Google reviews, the top-rated {low} installers in {city_label} are {top_line}. "
+    pro, pros = svc["pro_l"], svc["pros_l"]
+    items = [(f"Who is the best {pro} in {city_label}?",
+              f"Based on Google reviews, the top-rated {pros} in {city_label} are {top_line}. "
               f"We rank by a review-weighted score, so companies with many strong reviews rank above those with only a few.")]
-    items.append((f"How are the {low} installers in {city_label} ranked?",
+    items.append((f"How are the {pros} in {city_label} ranked?",
                   f"We list {n} {low} {'company' if n == 1 else 'companies'} in {city_label}, ranked by Google rating weighted by review count. "
                   f"Together they have {total_reviews:,} Google reviews and average {avg:.1f} stars, collected {upd_h}. "
                   f"{display_name(most_reviewed['name'])} has the most reviews ({most_reviewed['reviews']:,}). No company pays to be listed or ranked."))
@@ -464,25 +591,35 @@ def faq_items(region, service, city_label, hub, ranked, n, total_reviews, avg, m
     elif service == "insulation":
         cost_a = ("Insulation prices depend on which areas you insulate (attic, walls, basement) and how much air sealing is needed. "
                   "Ask each company for a price per area and the R-value you end up with, so quotes are easy to compare.")
+    elif service == ADVISOR:
+        cost_a = ("Natural Resources Canada says the before and after EnerGuide evaluations together average $600 to $1,000, depending "
+                  "on the advisor and the province, usually paid after the work. Some programs pay for the evaluation or give a rebate on it.")
+    elif service in ADVISORS:
+        cost_a = ("Prices vary by auditor and by the size of your home. Some utility programs pay for the assessment. "
+                  "Ask each auditor for the price of the audit and any test-out visit after the work.")
     elif service == "battery":
         cost_a = ("Battery prices depend on the brand, how much storage you want, and whether you need a panel upgrade. "
                   "Ask for the price per usable kWh so quotes are easy to compare.")
     else:
         cost_a = ("Canada has no public solar price survey, so we do not quote a typical price. Get two or three quotes for the same size "
                   "system and compare the price per watt.")
-    cost_q = {"heat-pump": "a heat pump installation", "solar": "solar installation", "battery": "a home battery installation", "insulation": "insulation"}[service]
+    cost_q = {"heat-pump": "a heat pump installation", "solar": "solar installation", "battery": "a home battery installation", "insulation": "insulation",
+              ADVISOR: "an energy advisor's evaluation", "energy-auditor": "a home energy audit"}[service]
     items.append((f"How much does {cost_q} cost in {city_label}?", cost_a))
     city = PS_CITIES.get(hub["url"]) if hub else None
-    cats = {"heat-pump": ["heat-pump"], "solar": ["solar", "battery"], "insulation": ["insulation"], "battery": ["battery"]}[service]
+    cats = {"heat-pump": ["heat-pump"], "solar": ["solar", "battery"], "insulation": ["insulation"], "battery": ["battery"],
+            ADVISOR: ["insulation", "heat-pump"], "energy-auditor": ["insulation", "heat-pump"]}[service]
     names = {"heat-pump": "heat pump", "solar": "solar", "battery": "battery", "insulation": "insulation"}
     reb = [(c, d["dollar_value"]) for c in cats
            for d in [((city or {}).get("categories", {}) or {}).get(c)] if d and d.get("status") == "open" and d.get("dollar_value")]
     if reb:
         parts = ", ".join(f"{names[c]} rebates up to ${v:,.0f}" for c, v in reb)
-        reb_a = (f"Yes. Our verified program data shows {parts} open in {city_label}. Most rebates have rules, such as income, your current "
+        reb_a = (f"Yes. Our verified program data shows {parts} open in {city_label}." + (
+                 " Check whether each one needs an energy advisor's evaluation before any work starts." if service == ADVISOR else
+                 " Check whether each one needs an energy assessment before work starts." if service in ADVISORS else "") + f" Most rebates have rules, such as income, your current "
                  f"heating, a registered contractor, or approval before work starts, so check the rebate page before you sign.")
     else:
-        reb_a = (f"We have no confirmed open {low} rebate for {city_label} right now. Financing or future programs may still help, "
+        reb_a = (f"We have no confirmed open {plural if service in ADVISORS else low} rebate for {city_label} right now. Financing or future programs may still help, "
                  f"so check the rebate page before you sign.")
     items.append((f"Are there rebates for {plural} in {city_label}?", reb_a))
     if reg_count:
@@ -500,8 +637,10 @@ def faq_items(region, service, city_label, hub, ranked, n, total_reviews, avg, m
             items.append((f"Is insulation worth it in {city_label}?", _plain(" ".join(ps[:2]))))
         elif service == "solar":
             items.append((f"How much power do solar panels make in {city_label}?", _plain(ps[0])))
+        elif service in ADVISORS:
+            items.append((f"Do I need {'an energy advisor' if service == ADVISOR else 'an energy audit'} before I upgrade in {city_label}?", _plain(" ".join(ps[1:3]))))
     tips = hire_tips(region, service)
-    items.append((f"What should I ask {art} {low} installer before I hire?", " ".join(_plain(x) for x in tips[:3])))
+    items.append((f"What should I ask {art} {pro} before I hire?", " ".join(_plain(x) for x in tips[:3])))
     return items
 
 
@@ -522,7 +661,11 @@ def best_for(ranked, other_names):
     return {k: v[:2] for k, v in labels.items()}
 
 
+_ADVISOR_CTX = {}
+
+
 def build_page(region, service, city_label, hub, installers, other_service_url, other_names=None):
+    _ADVISOR_CTX["on"] = service in ADVISORS
     c_dir, r_dir, short, long_name = REGIONS[region]
     svc = SERVICES[service]
     city_slug = hub["slug"] if hub else slugify(city_label)
@@ -538,8 +681,8 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
     upd_h = date.fromisoformat(updated).strftime("%B %Y") if re.match(r"\d{4}-\d\d-\d\d$", updated) else updated
     upd_short = date.fromisoformat(updated).strftime("%b %Y") if re.match(r"\d{4}-\d\d-\d\d$", updated) else updated
 
-    title = f"Best {svc['name']} Installers in {city_label}, {short} (2026)"
-    desc = (f"The top-rated {svc['lower']} installers in {city_label}, {short}, ranked by "
+    title = f"Best {svc['pros_t']} in {city_label}, {short} (2026)"
+    desc = (f"The top-rated {svc['pros_l']} in {city_label}, {short}, ranked by "
             f"{total_reviews:,} Google reviews. Compare {n} local companies, plus what to ask before you hire.")
     top_line = ", ".join(f"{display_name(r['name'])} ({r['rating']:.1f}★, {r['reviews']:,} reviews)" for r in top3)
 
@@ -596,7 +739,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
     rebate_line = (f'<p>Before you call anyone, check <a href="{rebate_url}">what {svc["lower"]} rebates you can get in {esc(city_label)}</a>. '
                    f'Many programs require approval or a registered contractor <em>before</em> work starts.</p>') if rebate_url else ""
     other_line = (f'<p>Planning more upgrades? See the top-rated ' + ", ".join(
-        f'<a href="{u}">{SERVICES[sv]["lower"]} installers</a>' for sv, u in (other_service_url or {}).items())
+        f'<a href="{u}">{SERVICES[sv]["pros_l"]}</a>' for sv, u in (other_service_url or {}).items())
         + f' in {esc(city_label)}.</p>') if other_service_url else ""
 
     vet_line = ('<p>Full checklist: <a href="/guides/installer-vetting-checklist/">how to vet an HPCN installer in BC</a>.</p>'
@@ -606,7 +749,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
     crumbs = [("Home", "/"), ("Installers", "/installers/")]
     if city_hub_url:
         crumbs.append((city_label, city_hub_url))
-    crumbs.append((f"{svc['name']} installers", None))
+    crumbs.append((svc["pros_t"][:1] + svc["pros_t"][1:].lower() if service in ADVISORS else f"{svc['name']} installers", None))
     crumb_html = "".join(
         f'<li><a href="{u}">{esc(t)}</a></li>' if u else f'<li aria-current="page">{esc(t)}</li>' for t, u in crumbs)
 
@@ -622,40 +765,41 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
     ]
     ld.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faqs]})
-    faq_html = (f'<h2 id="faq">Questions about {svc["lower"]} installers in {esc(city_label)}</h2><div class="faq">'
+    faq_html = (f'<h2 id="faq">Questions about {svc["pros_l"]} in {esc(city_label)}</h2><div class="faq">'
                 + "".join(f'<div class="faq-item"><h3>{esc(q)}</h3><p>{esc(a)}</p></div>' for q, a in faqs) + "</div>")
     ld_html = "\n".join(f'<script type="application/ld+json">\n{json.dumps(o, ensure_ascii=False, indent=1)}\n</script>' for o in ld)
 
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol>{crumb_html}</ol></nav>
 <header class="hero"><div class="wrap">
 <div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{ICONS.get(service, ICONS["solar"])}</svg></div>
-<h1>Top-Rated {svc['name']} Installers in {esc(city_label)}, {short}</h1></div>
-<p>{n} local companies ranked by {total_reviews:,} Google reviews. Free to compare, no sign-up.</p>
+<h1>Top-Rated {svc['pros_t']} in {esc(city_label)}, {short}</h1></div>
+<p>{n} local {"advisors" if service == ADVISOR else "auditors" if service in ADVISORS else "companies"} ranked by {total_reviews:,} Google reviews. Free to compare, no sign-up.</p>
 <p class="meta">Ratings and review counts from Google Maps, collected {upd_h} · Page updated @@PAGE-UPDATED@@</p>
 </div></header>
 <section class="body"><div class="wrap">
 <div class="stats"><div class="stat"><b>{n}</b><span>Companies</span></div><div class="stat"><b>{total_reviews:,}</b><span>Google reviews</span></div><div class="stat"><b>{avg:.1f}★</b><span>Average rating</span></div><div class="stat"><b>{upd_short}</b><span>Data collected</span></div></div>
 <div class="trust"><span>Ranked by Google reviews</span><span>Never paid for</span><span>Free to compare</span></div>
-<div class="callout"><p><strong>Short answer:</strong> The top-rated {svc['lower']} installers in {esc(city_label)} are {esc(top_line)}.</p></div>
+<div class="callout"><p><strong>Short answer:</strong> The top-rated {svc['pros_l']} in {esc(city_label)} are {esc(top_line)}.</p></div>
 
-<h2 class="sec-h">{svc['name']} installers in {esc(city_label)}, ranked <span class="chip" aria-hidden="true">{n} listed</span></h2>
+<h2 class="sec-h">{svc['pros_t'][:1] + svc['pros_t'][1:].lower() if service in ADVISORS else svc['name'] + ' installers'} in {esc(city_label)}, ranked <span class="chip" aria-hidden="true">{n} listed</span></h2>
 <div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button></div>
 <ol class="rank-list">
 {chr(10).join(items)}
 </ol>
 {reg_note}
+{advisor_note(region, service, city_label)}
 <p class="small">Together these {n} companies average {avg:.1f}★ across {total_reviews:,} reviews. {esc(most_reviewed['name'])} has the most reviews ({most_reviewed['reviews']:,}).</p>
 
 <p class="small">Ranked by Google rating weighted by review count, collected {upd_h}. Rankings are never paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
-<p class="small"><b>Listed here?</b> <a href="/installers/badge/?r={region}&amp;c={city_slug}&amp;s={service}">Get your top-rated badge</a> for your website.</p>
+{pro_box(region, service, city_slug, city_label)}
 
 {cost_box(region, service, city_label, hub)}
 
-{quote_form(region, service, city_label, ranked)}
+{"" if service in ADVISORS else quote_form(region, service, city_label, ranked)}
 
 {climate_section(region, service, city_label)}
 
-<h2>Before you hire a {svc['lower']} installer</h2>
+<h2>Before you hire {"an" if svc['pro_l'][0] in "aeiou" else "a"} {svc['pro_l']}</h2>
 <ol>
 {chr(10).join('<li>' + esc(t) + '</li>' for t in hire_tips(region, service))}
 </ol>
@@ -665,7 +809,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 {other_line}
 
 <div class="cta"><h3>See every rebate in {esc(city_label)}</h3>
-<p>Compare top-rated local installers, ranked by Google reviews, and see the rebates you can stack. Free for homeowners.</p>
+<p>Compare top-rated local {svc["pros_l"] + " and installers" if service in ADVISORS else "installers"}, ranked by Google reviews, and see the rebates you can stack. Free for homeowners.</p>
 <a href="{rebate_url or '/#city-picker'}">See {esc(city_label)} rebates →</a></div>
 </div></section>"""
 
@@ -705,6 +849,38 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
                         "count": n, "reviews": total_reviews, "rebate_registered": reg_count, "top": [display_name(r["name"]) for r in top3]}
 
 
+def advisor_note(region, service, city_label):
+    if service == ADVISOR:
+        return (f'<p class="small">Every company here is licensed by Natural Resources Canada to serve {esc(city_label)} postal codes '
+                f'(or told us it works here as registered energy advisors). The address is its Google listing, which may be in another city. '
+                f'<a href="/energy-advisors/">See every registered energy advisor</a>, rated or not.</p>')
+    if service in ADVISORS:
+        return (f'<p class="small">Every company here is on RESNET\'s 2026 list of HERS rating companies and has an office within 80 km of '
+                f'{esc(city_label)}. <a href="/energy-auditors/">See every home energy auditor we list</a>, rated or not.</p>')
+    return ""
+
+
+def pro_box(region, service, city_slug, city_label):
+    """What a listed company can take from this page: the badge, the calculator embed and the printable city rebate sheet.
+    Advisors and auditors get it as a box (the embed and sheet are the reason to reach out to them); installers get one line."""
+    badge = f'/installers/badge/?r={region}&amp;c={city_slug}&amp;s={service}'
+    sheet = f"/rebate-sheet/{region}/{city_slug}/"
+    has_sheet = (ROOT / sheet.strip("/") / "index.html").exists()
+    widget = f"/calculator/widget/?r={region}"
+    if service not in ADVISORS:
+        extra = f' or print the <a href="{sheet}">{esc(city_label)} rebate sheet</a> for your customers' if has_sheet else ""
+        return f'<p class="small"><b>Listed here?</b> <a href="{badge}">Get your top-rated badge</a> for your website{extra}.</p>'
+    who = SERVICES[service]["pros_l"]
+    items = [f'<li><b>A rebate calculator for your website.</b> Clients answer a few questions and see the rebates they can stack. '
+             f'<a href="{widget}">Get the embed code</a>.</li>']
+    if has_sheet:
+        items.append(f'<li><b>A one-page {esc(city_label)} rebate sheet</b> to print or email to clients, with every open program, '
+                     f'the main rule and the official source. <a href="{sheet}">Open the rebate sheet</a>.</li>')
+    items.append(f'<li><b>Your top-rated badge</b>, if you are listed here. <a href="{badge}">Get your badge</a>.</li>')
+    return (f'<div class="callout"><p><strong>Are you one of the {who} in {esc(city_label)}?</strong> '
+            f'These are yours to use with clients:</p><ul>{"".join(items)}</ul></div>')
+
+
 def body_text(html_out, city_label):
     a = html_out.find('<section class="body">')
     t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html_out[a:html_out.find("</section>", a)]))
@@ -722,7 +898,9 @@ def near_duplicates(pages, limit=0.90):
         groups.setdefault((p["region"], p["service"]), []).append(p)
     for sibs in groups.values():
         for a, b in itertools.combinations(sibs, 2):
-            if difflib.SequenceMatcher(None, a["text"], b["text"], autojunk=False).ratio() >= limit:
+            # advisor and auditor pages are long lists: compare words, not characters (same idea, far faster)
+            x, y = (a["text"].split(), b["text"].split()) if a["service"] in ADVISORS else (a["text"], b["text"])
+            if difflib.SequenceMatcher(None, x, y, autojunk=False).ratio() >= limit:
                 flagged.add((a if a["count"] < b["count"] else b)["url"])
     return flagged
 
@@ -818,11 +996,11 @@ def rankings_block(city, entries):
         items.append(
             f'<a href="{e["url"]}" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;'
             f'padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;">'
-            f'<strong style="font-size:17px;">Top-rated {SERVICES[sv]["name"].lower()} installers in {esc(city)} &rarr;</strong>'
+            f'<strong style="font-size:17px;">Top-rated {SERVICES[sv]["pros_l"]} in {esc(city)} &rarr;</strong>'
             f'<span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">{e["count"]} local companies ranked by '
             f'{e["reviews"]:,} Google reviews. Top picks: {top}.</span></a>')
     return (f'{LINK_START}\n<section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers">'
-            f'<h2 style="font-family:\'Fraunces\',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated installers in {esc(city)}</h2>'
+            f'<h2 style="font-family:\'Fraunces\',Georgia,serif;font-size:26px;margin-bottom:8px;">Compare top-rated {"installers and energy advisors" if ADVISOR in entries else "installers and energy auditors" if "energy-auditor" in entries else "installers"} in {esc(city)}</h2>'
             f'<p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, '
             f'weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p>'
             f'<div style="display:flex;gap:14px;flex-wrap:wrap;">{"".join(items)}</div></section>\n{LINK_END}')
@@ -874,6 +1052,7 @@ ICONS = {
     "solar": '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
     "battery": '<rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2M6 10v4M10 10v4"/>',
     "insulation": '<path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',
+    "energy-advisor": '<path d="M9 11l2 2 4-4"/><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>',
 }
 
 RANK_JS = """<script>
@@ -945,12 +1124,12 @@ else{{b.disabled=false;m.textContent='Something went wrong. Please try again or 
 def badge_svg(city, service):
     """City-specific 'Top-rated' badge (design A: seal with house medallion + five stars).
     Pure SVG with system font stacks, because web fonts don't load inside an <img>."""
-    label = f"TOP-RATED {SERVICES[service]['name'].upper()} INSTALLER"
+    label = f"TOP-RATED {SERVICES[service]['pro_l'].upper()}"
     c = esc(city)
     size = 40 if len(city) <= 11 else 34 if len(city) <= 14 else 28 if len(city) <= 18 else 23
     star = "M12 2l3 6.3 6.9 1-5 4.8 1.2 6.9L12 17.8 5.9 21l1.2-6.9-5-4.8 6.9-1z"
     stars = "".join(f'<path transform="translate({172 + i * 20} 118) scale(0.72)" d="{star}" fill="#e88a2e"/>' for i in range(5))
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="480" height="192" viewBox="0 0 480 192" role="img" aria-label="Top-rated {SERVICES[service]['name'].lower()} installer in {c}, ranked by Google reviews - homepowerrebate.com">
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="480" height="192" viewBox="0 0 480 192" role="img" aria-label="Top-rated {SERVICES[service]['pro_l']} in {c}, ranked by Google reviews - homepowerrebate.com">
 <rect width="480" height="192" rx="20" fill="#08363f"/>
 <circle cx="92" cy="96" r="60" fill="#d4751c"/>
 <circle cx="92" cy="96" r="51" fill="none" stroke="#faf7f2" stroke-width="1.5" stroke-dasharray="2 4"/>
@@ -1066,7 +1245,7 @@ body{font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,sans-serif;color
 
 def badge_page(index):
     path = "/installers/badge/"
-    order = {sv: i for i, sv in enumerate(("heat-pump", "solar", "battery", "insulation"))}
+    order = {sv: i for i, sv in enumerate(("heat-pump", "solar", "battery", "insulation", "energy-advisor"))}
     tree = {}
     for m in index:
         if not m.get("indexed"):
@@ -1074,7 +1253,7 @@ def badge_page(index):
         slug = m["url"].strip("/").split("/")[2]
         reg = tree.setdefault(m["region"], {})
         city = reg.setdefault(slug, {"n": m["city"], "s": []})
-        city["s"].append({"k": m["service"], "n": SERVICES[m["service"]]["name"], "l": SERVICES[m["service"]]["lower"],
+        city["s"].append({"k": m["service"], "n": SERVICES[m["service"]]["name"], "l": SERVICES[m["service"]]["lower"], "p": SERVICES[m["service"]]["pro_l"],
                           "u": m["url"], "t": m["top"]})
     regions_out = []
     for code in sorted(tree, key=lambda c: (REGIONS[c][0] != "ca", REGIONS[c][3])):
@@ -1156,7 +1335,7 @@ function step(id,on){{$(id).classList.toggle('off',!on)}}
 function sync(){{var q=new URLSearchParams();if(reg)q.set('r',reg.k);if(city)q.set('c',city.k);if(svc)q.set('s',svc.k);
 try{{history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:''))}}catch(e){{}}}}
 function render(){{
-  if(svc){{var url=BASE+svc.u,t='Top-rated '+svc.l+' installer in '+city.n;
+  if(svc){{var url=BASE+svc.u,t='Top-rated '+svc.p+' in '+city.n;
     var c='<a href="'+url+'" title="'+t+'"><img src="'+url+'badge.svg" width="320" height="128" alt="'+t+' on HomePowerRebate"></a>';
     code.value=c;code.disabled=false;copy.disabled=false;img.src=svc.u+'badge.svg';img.alt=t;stage.classList.add('ready');
     who.innerHTML='<b>On this ranking:</b> '+esc(svc.t.join(', '))+(svc.t.length>=3?' and others':'')+'. <a href="'+svc.u+'" target="_blank" rel="noopener">See the ranking page</a>';who.hidden=false;
@@ -1275,6 +1454,8 @@ def main():
         label = hub["label"] if hub else city
         also_by = {}
         for sv in others:
+            if sv in ADVISORS or service in ADVISORS:
+                continue
             for r in groups.get((region, sv, city), []):
                 also_by.setdefault(slugify(r["name"]), []).append(ALSO[sv])
         other_names = {k: "Also installs " + " and ".join(v[:2]) for k, v in also_by.items()}

@@ -178,7 +178,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/page-970fc6e7.css?v=8c0ad3fe04" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=3d1fd7d047" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=a7170a32da" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -612,7 +612,6 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
         <li><a href="/installers/profiles/kelowna/onyx-electric-ltd/">Onyx Electric Ltd.</a></li>
         <li><a href="/installers/profiles/kelowna/skyfire-energy-inc/">SkyFire Energy Inc</a></li>
         <li><a href="/installers/profiles/kelowna/solar-centre/">Solar Centre</a></li>
-        <li><a href="/installers/profiles/kelowna/thrive-energy-inc/">Thrive Energy Inc</a></li>
         <li><a href="/installers/profiles/kelowna/triumph-heating-air-conditioning/">Triumph Heating &amp; Air Conditioning</a></li>
         <li><a href="/installers/profiles/kelowna/zoltera-mechanical-ltd/">Zoltera Mechanical Ltd.</a></li>
         </ul>
@@ -2564,6 +2563,8 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       else prompt('Copy this link:', a.dataset.copy);
     }
   });
+  function stackOn(box, code) { box.querySelectorAll('.fed-alert-stack-list li').forEach(function (li) { li.classList.toggle('is-on', !!code && li.dataset.prov === code); }); }
+  document.addEventListener('change', function (e) { var s = e.target; if (s.tagName === 'SELECT' && s.closest('.fed-alert-form')) stackOn(s.closest('.fed-alert'), s.value); });
   document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
     var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), cs = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
     if (!r) return;
@@ -2572,6 +2573,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       box.hidden = !on;
       f.dataset.province = on ? r.value.toUpperCase() : '';
       f.dataset.city = on && cs && cs.value ? cs.options[cs.selectedIndex].text : '';
+      stackOn(box, f.dataset.province);
     }
     r.addEventListener('change', upd); if (cs) cs.addEventListener('change', upd);
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();

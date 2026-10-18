@@ -350,6 +350,11 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     )
 
     quote_source = f'installer-{region_key}-{slug}'
+    # One quote-form script for every profile (fix_profile_quote_form.py): province, service and the installer's address for the lead router.
+    from fix_profile_quote_form import quote_script, EMAIL_RE
+    _em = EMAIL_RE.search(next((inst.get("email") or "" for inst, _, _, _ in listings if inst.get("email")), ""))
+    quote_html = quote_script(city_name, region_key.upper(), quote_source, name,
+                              _em.group(0).lower() if _em else "", primary_category)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -482,33 +487,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
 
   <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked via Google Places API. Spot an error? <a href="/contact/?subject=Correction: {escaped_name}">Let us know</a>.</p>
 </div>
-<script>
-(function() {{
-  var form = document.getElementById('ip-quote-form');
-  form.addEventListener('submit', function(e) {{
-    e.preventDefault();
-    if (document.getElementById('ip-hp').value) return;
-    var btn = document.getElementById('ip-quote-btn');
-    btn.disabled = true; btn.textContent = 'Sending…';
-    fetch('https://leads.homepowerrebate.com/estimate-lead', {{
-      method: 'POST',
-      headers: {{ 'Content-Type': 'application/json' }},
-      body: JSON.stringify({{
-        firstname: document.getElementById('ip-name').value,
-        email: document.getElementById('ip-email').value,
-        phone: document.getElementById('ip-phone').value,
-        city: {json.dumps(city_name)},
-        source: {json.dumps(quote_source)},
-        installer: {json.dumps(name)}
-      }})
-    }}).catch(function(err) {{ console.error('quote request error', err); }})
-      .finally(function() {{
-        form.style.display = 'none';
-        document.getElementById('ip-quote-done').style.display = 'block';
-      }});
-  }});
-}})();
-</script>
+{quote_html}
 </body>
 </html>
 """

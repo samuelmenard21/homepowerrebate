@@ -61,7 +61,7 @@
   ]
 }</script>
 <link rel="stylesheet" href="/assets/tpl/profile-88a4d3e4.css?v=87a6b530f7" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=3d1fd7d047" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=a7170a32da" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -270,6 +270,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
 <!-- PROFILE-BADGE-END -->
   <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked via Google Places API. Spot an error? <a href="/contact/?subject=Correction: Koala Insulation of the Westside">Let us know</a>.</p>
 </div>
+<!-- PROFILE-QUOTE-START -->
 <script>
 (function() {
   var form = document.getElementById('ip-quote-form');
@@ -285,9 +286,13 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
         firstname: document.getElementById('ip-name').value,
         email: document.getElementById('ip-email').value,
         phone: document.getElementById('ip-phone').value,
+        page_url: location.pathname,
         city: "Santa Monica",
+        province: "CA",
+        service: "insulation",
         source: "installer-ca-koala-insulation-of-the-westside",
-        installer: "Koala Insulation of the Westside"
+        installer_name: "Koala Insulation of the Westside",
+        installer_email: ""
       })
     }).catch(function(err) { console.error('quote request error', err); })
       .finally(function() {
@@ -297,6 +302,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
   });
 })();
 </script>
+<!-- PROFILE-QUOTE-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
@@ -510,6 +516,8 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       else prompt('Copy this link:', a.dataset.copy);
     }
   });
+  function stackOn(box, code) { box.querySelectorAll('.fed-alert-stack-list li').forEach(function (li) { li.classList.toggle('is-on', !!code && li.dataset.prov === code); }); }
+  document.addEventListener('change', function (e) { var s = e.target; if (s.tagName === 'SELECT' && s.closest('.fed-alert-form')) stackOn(s.closest('.fed-alert'), s.value); });
   document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
     var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), cs = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
     if (!r) return;
@@ -518,6 +526,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       box.hidden = !on;
       f.dataset.province = on ? r.value.toUpperCase() : '';
       f.dataset.city = on && cs && cs.value ? cs.options[cs.selectedIndex].text : '';
+      stackOn(box, f.dataset.province);
     }
     r.addEventListener('change', upd); if (cs) cs.addEventListener('change', upd);
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();

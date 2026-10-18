@@ -29,7 +29,7 @@
 <!-- FONT-PRELOAD-END -->
 
 <link rel="stylesheet" href="/assets/tpl/article-f44ad841.css?v=b94e9fca93" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=3d1fd7d047" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=a7170a32da" data-hpr-site-css>
 <link rel="stylesheet" href="/assets/tpl/article-a87865f4.css?v=a87865f4a9" data-hpr-tpl>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Top 5 California Cities for Heat Pump Rebates (2026)", "description": "A corrected 2026 ranking of California heat pump rebates by utility: Los Angeles, Glendale, Sacramento, Burbank and Riverside, with a 3-ton example for each and sources.", "datePublished": "2026-10-02", "dateModified": "2026-10-02", "author": {"@type": "Person", "@id": "https://homepowerrebate.com/about#sam-menard", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"}, "mainEntityOfPage": "https://homepowerrebate.com/blog/top-5-california-cities-heat-pump-rebate/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Which California city has the best heat pump rebate?", "acceptedAnswer": {"@type": "Answer", "text": "For a typical 3-ton system, Los Angeles (LADWP) at $3,000 to $7,500, Glendale at $3,000 and Sacramento (SMUD) at $3,000."}}, {"@type": "Question", "name": "Does the rebate depend on the unit's efficiency?", "acceptedAnswer": {"@type": "Answer", "text": "At LADWP, yes: the per-ton amount rises with the SEER2 and HSPF2 tier. At most others it is a flat per-ton or flat amount."}}, {"@type": "Question", "name": "Is there a statewide California heat pump rebate?", "acceptedAnswer": {"@type": "Answer", "text": "Not open for single-family homes. TECH Clean California and HEEHRA are fully reserved."}}]}</script>
 <!-- BREADCRUMB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://homepowerrebate.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Top 5 California Cities for Heat Pump Rebates", "item": "https://homepowerrebate.com/blog/top-5-california-cities-heat-pump-rebate/"}]}</script><!-- BREADCRUMB-LD-END -->
@@ -407,6 +407,8 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       else prompt('Copy this link:', a.dataset.copy);
     }
   });
+  function stackOn(box, code) { box.querySelectorAll('.fed-alert-stack-list li').forEach(function (li) { li.classList.toggle('is-on', !!code && li.dataset.prov === code); }); }
+  document.addEventListener('change', function (e) { var s = e.target; if (s.tagName === 'SELECT' && s.closest('.fed-alert-form')) stackOn(s.closest('.fed-alert'), s.value); });
   document.querySelectorAll('.fed-alert[data-follow]').forEach(function (box) {
     var ca = (box.dataset.provinces || '').split(' '), r = document.getElementById(box.dataset.follow), cs = document.getElementById(box.dataset.followCity), f = box.querySelector('form');
     if (!r) return;
@@ -415,6 +417,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       box.hidden = !on;
       f.dataset.province = on ? r.value.toUpperCase() : '';
       f.dataset.city = on && cs && cs.value ? cs.options[cs.selectedIndex].text : '';
+      stackOn(box, f.dataset.province);
     }
     r.addEventListener('change', upd); if (cs) cs.addEventListener('change', upd);
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();

@@ -21,7 +21,7 @@ import html
 import json
 import re
 import sys
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 
 import sys as _sys
@@ -29,7 +29,8 @@ _sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
 import regions
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-import apply_canonical_nav_footer as navfooter  # noqa: E402
+import apply_canonical_nav_footer as navfooter
+import page_kit as kit  # noqa: E402  (shared helpers: stable page dates)
 
 BASE = "https://homepowerrebate.com"
 MIN_INSTALLERS = 3
@@ -630,7 +631,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 <div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{ICONS.get(service, ICONS["solar"])}</svg></div>
 <h1>Top-Rated {svc['name']} Installers in {esc(city_label)}, {short}</h1></div>
 <p>{n} local companies ranked by {total_reviews:,} Google reviews. Free to compare, no sign-up.</p>
-<p class="meta">Ratings and review counts from Google Maps, collected {upd_h} · Page updated {date.fromisoformat(MODIFIED).strftime('%B %-d, %Y')}</p>
+<p class="meta">Ratings and review counts from Google Maps, collected {upd_h} · Page updated @@PAGE-UPDATED@@</p>
 </div></header>
 <section class="body"><div class="wrap">
 <div class="stats"><div class="stat"><b>{n}</b><span>Companies</span></div><div class="stat"><b>{total_reviews:,}</b><span>Google reviews</span></div><div class="stat"><b>{avg:.1f}★</b><span>Average rating</span></div><div class="stat"><b>{upd_short}</b><span>Data collected</span></div></div>
@@ -1293,7 +1294,11 @@ def main():
         if not args.dry_run:
             out = ROOT / b["url"].strip("/") / "index.html"
             out.parent.mkdir(parents=True, exist_ok=True)
-            out.write_text(html_out, encoding="utf-8")
+            # "Page updated" changes only when the page's content does (page_kit.stable_date)
+            prev = re.search(r"Page updated ([A-Z][a-z]+ \d{1,2}, \d{4})", out.read_text(encoding="utf-8")) if out.exists() else None
+            fallback = datetime.strptime(prev.group(1), "%B %d, %Y").date().isoformat() if prev else None
+            upd = kit.stable_date(b["url"], html_out, fallback)
+            out.write_text(html_out.replace("@@PAGE-UPDATED@@", date.fromisoformat(upd).strftime("%B %-d, %Y")), encoding="utf-8")
             written += 1
 
     if not args.dry_run:
@@ -1326,6 +1331,7 @@ def main():
         print(f"{outreach_list(index, rows)} installers with public emails in data/outreach-rankings.csv (not published).")
         print(f"{link_city_pages(index, hubs)} city pages linked to their rankings.")
         (ROOT / "installers" / "rankings.json").write_text(json.dumps(index, indent=1, ensure_ascii=False) + "\n")
+        kit.save_dates()
     print(f"{len(rows)} installers, {len(groups)} city/service groups, {len(eligible)} pages "
           f"({'dry run' if args.dry_run else f'{written} written'}).")
     print(f"{len(held)} held back as noindex (>=90% similar to a sibling): {', '.join(sorted(held))}")

@@ -61,12 +61,7 @@ CSS = """
 """
 
 
-def load_facts():
-    facts = {}
-    for f in sorted((ROOT / "data" / "verified-facts").glob("*.json")):
-        for x in json.loads(f.read_text())["facts"]:
-            facts[x["id"]] = x
-    return facts
+from page_kit import load_facts  # noqa: E402,F401  (one facts loader, re-exported for older importers)
 
 
 SERVICES = ("heat-pump", "solar", "battery", "insulation")

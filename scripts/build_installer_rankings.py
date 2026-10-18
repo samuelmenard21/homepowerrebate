@@ -114,7 +114,7 @@ def profile_url(region, city, name):
     city_slug = slugify(city)
     # The profile generators drop "&" and "'" while slugify() turns "&" into "and"; try both spellings.
     gen_slug = re.sub(r"[^a-z0-9]+", "-", re.sub(r"[&'’]", "", name.lower().strip())).strip("-")
-    for name_slug in dict.fromkeys((slugify(name), gen_slug)):
+    for name_slug in dict.fromkeys(x for x in (slugify(name), gen_slug) if x):  # a non-Latin name slugs to "", which would match the city index (markham//)
         for rel in (f"installers/profiles/{city_slug}/{name_slug}",
                     f"installers/profiles/{region}/{city_slug}/{name_slug}"):
             if (ROOT / rel / "index.html").exists():

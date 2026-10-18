@@ -23,15 +23,55 @@ TITLE_RE = re.compile(r"<title>(.*?)</title>", re.S)
 SUFFIX = " | HomePowerRebate"
 
 
+def fit_title(t, limit=60):
+    """Longest prefix of t that fits: cut at a colon, then at the last comma/dash/"and" clause, then at a word."""
+    import html as _h
+    plain = _h.unescape(t)
+    if len(plain) <= limit:
+        return t
+    for sep in (":", " | ", " - "):
+        if sep in plain:
+            head, tail = plain.split(sep, 1)
+            out = head
+            for clause in re.split(r",\s*|\s+and\s+", tail.strip()):
+                nxt = f"{head}: {clause}" if out == head else f"{out}, {clause}"
+                if len(nxt) <= limit:
+                    out = nxt
+                else:
+                    break
+            if len(out) <= limit and len(out) > len(head) - 1:
+                return _h.escape(out, quote=False)
+            break
+    cut = plain[:limit].rsplit(" ", 1)[0].rstrip(" ,:;-&")
+    return _h.escape(cut, quote=False)
+
+
+DESC_RE = re.compile(r'(<meta name="description" content=")([^"]*)(")')
+
+
+def fit_desc(d, limit=160):
+    import html as _h
+    plain = _h.unescape(d)
+    if len(plain) <= limit:
+        return d
+    cut = plain[:limit]
+    m = max(cut.rfind(". "), cut.rfind("; "))
+    if m >= 90:
+        cut = cut[: m + 1]
+    else:
+        cut = cut[: limit - 1].rsplit(" ", 1)[0].rstrip(" ,:;-&") + "."
+    return _h.escape(cut, quote=True)
+
+
 def shorten(t):
     if len(t) <= 60 or not t.endswith(SUFFIX):
-        return t
+        return fit_title(t)
     base = t[: -len(SUFFIX)]
     if len(base) <= 62 or ":" not in base:
-        return base
+        return fit_title(base)
     head, tail = base.split(":", 1)
     clause = tail.strip().split(",")[0].strip()
-    return f"{head}: {clause}" if len(head) + 2 + len(clause) <= 62 else head
+    return fit_title(f"{head}: {clause}" if len(head) + 2 + len(clause) <= 62 else head)
 
 
 files = [f for f in subprocess.run(["git", "ls-files", "*.html"], cwd=ROOT, capture_output=True, text=True).stdout.split() if not f.startswith(SKIP) and (ROOT / f).exists()]
@@ -63,6 +103,23 @@ for f, s in pages.items():
             s = s[: m.start()] + f"<title>{new}</title>" + s[m.end():]
             changed["title"] += 1
         titles[TITLE_RE.search(s).group(1).strip()].append(f)
+    if 'name="twitter:card"' in s and indexable:
+        tt, dd = TITLE_RE.search(s), DESC_RE.search(s)
+        add = ""
+        if tt and 'name="twitter:title"' not in s:
+            add += f'<meta name="twitter:title" content="{tt.group(1).strip().replace(chr(34), "&quot;")}">\n'
+        if dd and 'name="twitter:description"' not in s:
+            add += f'<meta name="twitter:description" content="{dd.group(2)}">\n'
+        if add:
+            s = s.replace('<meta name="twitter:card"', add + '<meta name="twitter:card"', 1)
+            changed["xcard"] += 1
+    if indexable:
+        md = DESC_RE.search(s)
+        if md and len(md.group(2)) > 160:
+            nd = fit_desc(md.group(2))
+            if nd != md.group(2):
+                s = s[: md.start(2)] + nd + s[md.end(2):]
+                changed["desc"] += 1
     pages[f] = s
 for t, fs in titles.items():
     if len(fs) < 2:

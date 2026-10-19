@@ -111,7 +111,9 @@ for f, s in pages.items():
         if dd and 'name="twitter:description"' not in s:
             add += f'<meta name="twitter:description" content="{dd.group(2)}">\n'
         if add:
-            s = s.replace('<meta name="twitter:card"', add + '<meta name="twitter:card"', 1)
+            # outside the OG-CARD block: the restamp rewrites that block and would drop them
+            at = "<!-- OG-CARD-START -->" if "<!-- OG-CARD-START -->" in s else '<meta name="twitter:card"'
+            s = s.replace(at, add + at, 1)
             changed["xcard"] += 1
     if indexable:
         md = DESC_RE.search(s)

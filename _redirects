@@ -1681,91 +1681,9 @@
 /installers/profiles/bc/squamish/western-technical-systems-inc/ /installers/bc/squamish/heat-pump/ 301
 /installers/profiles/bc/squamish/western-technical-systems-inc /installers/bc/squamish/heat-pump/ 301
 
-# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
-/installers/profiles/ab/red-deer/express-plumbing-heating-inc/ /installers/ab/red-deer/heat-pump/ 301
-/installers/profiles/ab/red-deer/express-plumbing-heating-inc /installers/ab/red-deer/heat-pump/ 301
+/installers/profiles/squamish/s2s-electric-ltd/ /installers/bc/squamish/battery/ 301
+/installers/profiles/squamish/s2s-electric-ltd /installers/bc/squamish/battery/ 301
 
-# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
-
-# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
-
-# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
-
-# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
-
-# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
-
-# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
-# Cloudflare Pages redirects
-# Format: /source  /destination  status
-# Old paid-partner pitch (retired model) -> installer badge page.
-# Vetting page described the retired model (case studies, SLAs, removals); rankings come from Google reviews (2026-10-14).
-
-# Old flat city URLs -> canonical folder URLs.
-# Kept so any pre-launch links or crawler-cached paths land on the right page.
-
-
-# Old root-level blog files -> new nested blog locations
-# These were moved from /blog-*.html to /blog/*/index.html structure
-
-# 23 blog posts that used to live at /blog/<slug>.html, converted to the
-# standard /blog/<slug>/index.html folder structure (2026-09-06) for
-# sitemap trailing-slash consistency with every other post. Safety net for
-# any external backlink, bookmark, or stale Google-cached URL.
-
-# Keyword cannibalization consolidation — merge the weaker duplicate
-# targeting "insulation rebates" into the stronger, more complete page.
-# Both slash variants covered — the trailing-slash page had its own
-# self-referencing canonical and was still live as an indexable duplicate.
-
-# city-pages/ directory removed — legacy duplicate content
-
-# root calculator.html superseded by /calculator/
-
-# about-us.html was an orphaned duplicate of /about, merged and removed
-
-# folsom moved under the sacramento metro cluster; catch stray/old links
-# Placeholder hubs removed 2026-09-29 (no rebate pages behind them; Winnipeg was misfiled under Ontario)
-# Stacking calculator: cities with no open dollar amount in any category (2026-10-11) go to the city hub
-
-
-# Old PowerScore comparison pages (pairs no longer built; scores used the old per-region scale)
-
-# The assessment form was merged into the single get-my-plan form (2026-09-30).
-
-# Roseville has its own electric utility; the old SMUD-based category pages were removed (2026-10-01).
-
-
-
-
-
-
-# Nova Scotia: categories with no program or no local difference go to the city hub (build_ns_pages.py, 2026-10-03)
-
-# Pennsylvania: categories with no verified program for the city's utility go to the city hub (build_pa_pages.py, 2026-10-03)
-
-# Massachusetts: battery, solar, EV charger, smart thermostat, water heater and windows pages had the same statewide offer in every city and nothing local to add; they go to the city hub (build_ma_pages.py, 2026-10-03)
-
-# BC battery pages merged into the solar and battery page; EV charger pages kept only where a local top-up exists (2026-10-03)
-# BC appliances, HRV and smart thermostats: one province page each (2026-10-11); the city pages had nothing city-specific beyond utility and BC Hydro community postal codes
-
-# New York: categories with no program or no local difference go to the city hub (build_ny_pages.py, 2026-10-03)
-
-# CO/VT/CA hrv and leftover pages: no verified HRV/ERV offers (2026-10-03)
-
-# Alberta: categories with no verified local program go to the city hub (build_ab_pages.py, 2026-10-03)
-# Michigan (2026-10-06)
-# New regions (2026-10-09)
-
-# Search Console 404s with a useful destination (2026-10-16)
-
-# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
-
-# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
-
-# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
-
-# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 /installers/profiles/co/aurora/dad-s-heating-and-ac/ /installers/profiles/co/aurora/dad-s-heating-ac/ 301
 /installers/profiles/co/aurora/dad-s-heating-and-ac /installers/profiles/co/aurora/dad-s-heating-ac/ 301
 /installers/profiles/co/boulder/bernie-s-plumbing-and-heating-company/ /installers/profiles/co/boulder/bernies-plumbing-heating-company/ 301
@@ -1826,8 +1744,6 @@
 /installers/profiles/ny/oyster-bay/gold-star-plumbing-heating-cooling /installers/ny/oyster-bay/heat-pump/ 301
 /installers/profiles/ny/rochester/rochester-heating-cooling/ /installers/ny/rochester/heat-pump/ 301
 /installers/profiles/ny/rochester/rochester-heating-cooling /installers/ny/rochester/heat-pump/ 301
-
-# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 /installers/profiles/ca/riverside/go-green-solar-clean/ /installers/ca/riverside/solar/ 301
 /installers/profiles/ca/riverside/go-green-solar-clean /installers/ca/riverside/solar/ 301
 /installers/profiles/ca/riverside/all-city-plumbing-air-electrical/ /installers/ca/riverside/heat-pump/ 301
@@ -1842,6 +1758,23 @@
 /installers/profiles/ca/san-diego/solar-shine-san-diego /installers/ca/san-diego/solar/ 301
 /installers/profiles/ny/babylon/call-me-electric/ /installers/ny/babylon/solar/ 301
 /installers/profiles/ny/babylon/call-me-electric /installers/ny/babylon/solar/ 301
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+/installers/profiles/ab/red-deer/express-plumbing-heating-inc/ /installers/ab/red-deer/heat-pump/ 301
+/installers/profiles/ab/red-deer/express-plumbing-heating-inc /installers/ab/red-deer/heat-pump/ 301
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 
@@ -1884,9 +1817,3 @@
 /ca/on/:city/ev-charger /ca/on/ev-charger/ 301
 /ca/on/:city/hrv/ /ca/on/hrv/ 301
 /ca/on/:city/hrv /ca/on/hrv/ 301
-/us/ma/:city/water-heater /us/ma/:city/ 301
-/us/ma/:city/windows-doors/ /us/ma/:city/ 301
-/us/ma/:city/smart-thermostats /us/ma/:city/ 301
-/us/ma/:city/solar/ /us/ma/:city/ 301
-/us/ma/:city/solar /us/ma/:city/ 301
-/us/ma/:city/water-heater/ /us/ma/:city/ 301

@@ -91,16 +91,16 @@ def extract(text):
         vr = re.search(r'ip-rating-num">\s*([\d.]+)', text)
         d["rating"] = vr.group(1) if vr else None
     if not d["reviews"]:
-        vc = re.search(r'ip-rating-count">\s*([\d,]+)\s*reviews?', text)
+        vc = re.search(r'ip-rating-count">\s*([\d,]+)\s*(?:Google )?reviews?', text)
         d["reviews"] = vc.group(1).replace(",", "") if vc else None
 
     area_m = re.search(r'"areaServed":\s*\{[^}]*"name":\s*"([^"]+)"', text)
     d["city"] = html.unescape(area_m.group(1)) if area_m else None
 
-    category_m = re.search(r'<h2>([\w\s&]+?) Rebates This Installer Puts You In Reach Of</h2>', text)
+    category_m = re.search(r'<h2>([\w\s&;]+?) Rebates This Installer Puts You In Reach Of</h2>', text)
     d["category"] = category_m.group(1).strip() if category_m else None
 
-    rank_m = re.search(r'Ranked <strong>#(\d+) of (\d+)</strong> ([\w\s]+?) installers in ([\w\s.]+?) by Google rating', text)
+    rank_m = re.search(r'Ranked <strong>#(\d+) of (\d+)</strong> ([\w\s&;]+?) installers in ([\w\s.\'’-]+?) by Google rating', text)
     d["rank"] = rank_m.groups() if rank_m else None
 
     prog_m = re.search(
@@ -223,6 +223,7 @@ def apply(profile_path, dry_run, stats, samples):
     if rating and reviews and 'class="ip-faq"' not in text:
         if rank:
             r, out_of, trade, rank_city = rank
+            trade = html.unescape(trade)
             q2 = f"Is {name} a good choice in {city_disp}?"
             a2 = (f"{name} ranks #{r} of {out_of} {trade} installers in {rank_city} by Google "
                   f"rating, with a {rating}★ average from {reviews} Google reviews.")
@@ -230,10 +231,10 @@ def apply(profile_path, dry_run, stats, samples):
             q2 = f"Is {name} a good choice in {city_disp}?"
             a2 = f"{name} is rated {rating}★ from {reviews} Google reviews in {city_disp}."
 
-        if program_name and program_detail:
+        if program_name and program_detail and not program_detail.lstrip().startswith("$0"):
             q1 = f"How much can {name}'s work save me in {city_disp}?"
-            a1 = (f"Homeowners who use {name} in {city_disp} can qualify for {program_name} "
-                  f"— {program_detail.rstrip('.')}.")
+            a1 = (f"Homeowners who use {name} in {city_disp} can qualify for {program_name}: "
+                  f"{program_detail.rstrip('.')}.")
         else:
             q1 = f"What rebates does {name}'s work qualify for in {city_disp}?"
             a1 = (f"{name} serves {city_disp}; see the current local rebate programs their work "

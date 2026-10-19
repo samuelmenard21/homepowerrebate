@@ -202,11 +202,13 @@ def stable_date(key, content, fallback=None):
     if _DATES is None:
         _DATES = json.loads(_DATES_FILE.read_text()) if _DATES_FILE.exists() else {}
     import hashlib
-    h = hashlib.sha1(content.encode()).hexdigest()[:16]
+    # cache-busting versions (site.css?v=..., og images) change with unrelated edits: leave them out of the fingerprint
+    h = "v2:" + hashlib.sha1(re.sub(r"\?v=[0-9a-f]+", "", content).encode()).hexdigest()[:16]
     old = _DATES.get(key)
     if old and old["hash"] == h:
         return old["date"]
-    d = fallback if (old is None and fallback) else date.today().isoformat()
+    first = old is None or not old["hash"].startswith("v2:")  # never seen, or saved before this fingerprint
+    d = fallback if (first and fallback) else date.today().isoformat()
     _DATES[key] = {"hash": h, "date": d}
     return d
 

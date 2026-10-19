@@ -62,7 +62,7 @@ def main():
                 by_slug.setdefault(gp.slugify(inst["name"]), []).append((inst, svc, idx + 1, len(insts)))
         for slug, listings in by_slug.items():
             name = listings[0][0]["name"]
-            out_dir = os.path.join(cfg["profiles_dir"], city_slug, slug)
+            out_dir = os.path.join(cfg["profiles_dir"], city_slug, gp.profile_slug(region, city_slug, name))
             out_path = os.path.join(out_dir, "index.html")
             if REFRESH and os.path.exists(out_path) and gp.slugify(name) not in JSON_SLUGS.get((region, city_slug), set()):
                 pass  # built from the CSV row only (no curated JSON data), so it is safe to rebuild

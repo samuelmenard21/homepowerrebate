@@ -8,14 +8,16 @@ Re-run weekly (or after any facts change), then the post-steps in CLAUDE.md and 
 import glob
 import html
 import json
+import re
 import sys
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 from build_furnace_pages import shell, page_css, AUTHOR  # noqa: E402
 from build_installer_rankings import BASE  # noqa: E402
+import page_kit as kit  # noqa: E402  (stable page dates)
 
 PATH = "/rebate-deadlines/"
 e = html.escape
@@ -81,7 +83,7 @@ def build(today=None):
     first = groups[0]
     short = (f"{len(rows)} home energy rebate deadlines are coming up in Canada and the US. The next one is {fmt(first[0])}: "
              + "; ".join(f'{r["program"]}' for r in first[1][:3]) + ". Many year-end offers need the work done, not just signed, by December 31.")
-    updated = fmt(today)
+    updated = "@@UPDATED@@"  # filled in below with the date the list last changed (page_kit.stable_date)
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Rebate deadlines</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>Home Rebate Deadlines Coming Up</h1>
 <p>Heat pump, insulation, appliance and EV charger rebates that end soon, soonest first. Updated {updated}.</p></div></header>
@@ -106,14 +108,19 @@ document.querySelectorAll('.dl-group').forEach(g=>g.hidden=![...g.querySelectorA
 .dl-item{background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:16px 18px;margin:12px 0;}.dl-item h3{margin:4px 0 6px;font-size:18px;}.dl-item p{margin:6px 0;}
 .dl-meta{font-size:13px;font-weight:700;color:#1a3d42;text-transform:uppercase;letter-spacing:.04em;}.dl-links{font-size:14px;}"""
     ld = [{"@context": "https://schema.org", "@type": "Article", "headline": "Home Rebate Deadlines Coming Up",
-           "description": short, "datePublished": "2026-10-13", "dateModified": today, "author": AUTHOR,
+           "description": short, "datePublished": "2026-10-13", "dateModified": "@@UPDATED-ISO@@", "author": AUTHOR,
            "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": BASE}, "mainEntityOfPage": BASE + PATH}]
     page = shell("Home Rebate Deadlines 2026: Heat Pump, Insulation, EV Charger",
                  f"{len(rows)} home energy rebate deadlines in Canada and the US, soonest first: BC Hydro, Mass Save, Home Renovation Savings and more. Each links to the official source.",
                  PATH, "on", body, ld, css=page_css("2026-09-29"))
     page = page.replace("</style>", css + "</style>", 1)
     (ROOT / "rebate-deadlines").mkdir(exist_ok=True)
-    (ROOT / "rebate-deadlines" / "index.html").write_text(page, encoding="utf-8")
+    out = ROOT / "rebate-deadlines" / "index.html"
+    prev = re.search(r"Updated ([A-Z][a-z]+ \d{1,2}, \d{4})", out.read_text(encoding="utf-8")) if out.exists() else None
+    fallback = datetime.strptime(prev.group(1), "%B %d, %Y").date().isoformat() if prev else None
+    upd = kit.stable_date("/rebate-deadlines/", page, fallback)
+    kit.save_dates()
+    out.write_text(page.replace("@@UPDATED-ISO@@", upd).replace("@@UPDATED@@", fmt(upd)), encoding="utf-8")
     print(f"Wrote {PATH}: {len(rows)} deadlines from {fmt(rows[0]['date'])} to {fmt(rows[-1]['date'])}.")
 
 

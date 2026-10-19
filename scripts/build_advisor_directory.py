@@ -26,7 +26,7 @@ import json
 import re
 import sys
 from collections import defaultdict
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -45,6 +45,14 @@ PRIOR_REVIEWS, PRIOR_RATING = 25, 4.5
 NRCAN_URL = DIR["sources"]["nrcan"]
 RESNET_URL = DIR["sources"]["resnet"]
 TODAY = date.today()
+
+
+def _shown_date(out):
+    """The 'checked'/'read' date a page shows now (kept the first time page_kit.stable_date sees it)."""
+    if not out.exists():
+        return None
+    m = re.search(r"(?:checked|read) ([A-Z][a-z]+ \d{1,2}, \d{4})", out.read_text(encoding="utf-8"))
+    return datetime.strptime(m.group(1), "%B %d, %Y").date().isoformat() if m else None
 PROV_NAMES = {"AB": "Alberta", "BC": "British Columbia", "MB": "Manitoba", "NB": "New Brunswick", "NL": "Newfoundland and Labrador",
               "NS": "Nova Scotia", "NT": "Northwest Territories", "NU": "Nunavut", "ON": "Ontario", "PEI": "Prince Edward Island",
               "QC": "Quebec", "SK": "Saskatchewan", "YT": "Yukon"}
@@ -57,7 +65,7 @@ KIND = {
            "Title": "Home Energy Auditors", "who": "RESNET HERS rating company", "src": RESNET_URL,
            "src_name": "RESNET Rating Companies 2026"},
 }
-PROFILE_CSS = "profile-bd3e7b6e"
+PROFILE_CSS = "profile-88a4d3e4"  # the installer profiles' stylesheet: one profile template site-wide
 
 
 def slugify(s):
@@ -220,7 +228,7 @@ def profile(c, kind, ranks, rows_by_city, path):
 <p>Tell us what to add to this page: the services you offer, the areas and languages you work in, the rebate programs you know best, or a correction. It takes one email to <a href="mailto:hello@homepowerrebate.com?subject={e('Profile: ' + name)}">hello@homepowerrebate.com</a>.</p>
 <p>These are yours to use with clients:</p>{pro_tools(c['country'], first_reg, first_city)}</section>
 <a href="{kind['root']}" class="ip-city-link">See every {kind['pro']} we list &rarr;</a>
-<p class="ip-footer-note">Listing from {src}{", ratings and review counts from Google Maps" if g else ""}, checked {TODAY.strftime('%B %-d, %Y')}. Spot an error? <a href="/contact/?subject={e('Correction: ' + name)}">Let us know</a>.</p>
+<p class="ip-footer-note">Listing from {src}{", ratings and review counts from Google Maps" if g else ""}, checked @@CHECKED@@. Spot an error? <a href="/contact/?subject={e('Correction: ' + name)}">Let us know</a>.</p>
 </div></main>"""
     title = f"{name}: {kind['Title'][:-1]} | HomePowerRebate" if len(name) < 40 else f"{name} | HomePowerRebate"
     desc = (f"{name}, a {w} in {regions_txt}." + (f" {g['rating']:.1f} stars from {g['reviews']:,} Google reviews." if g and g.get('rating') else "")
@@ -301,15 +309,17 @@ def directory(country, companies, ranks, rows_by_city, slugs):
     tools = (f'<div class="callout"><p><strong>Are you a {kind["pro"]}?</strong> These are yours to use with clients:</p>{pro_tools(country)}</div>')
     article = (intro + tools + "".join(sections)
                + f'<p class="small">Sources: <a href="{kind["src"]}" rel="noopener" target="_blank">{e(kind["src_name"])}</a>, read '
-                 f'{TODAY.strftime("%B %-d, %Y")}. Ratings and review counts from Google Maps. A company with no rating is still listed. '
+                 f'@@CHECKED@@. Ratings and review counts from Google Maps. A company with no rating is still listed. '
                  f'Is your company missing or wrong? Email hello@homepowerrebate.com.</p>')
     crumbs = [("Home", "/"), (kind["Title"], path)]
     lds = page_kit.ld_scripts([page_kit.breadcrumb_ld(crumbs)])
     reg0 = "bc" if country == "ca" else "ma"
     hero = (f'<section class="hero"><div class="wrap"><div class="amount-badge">{n} companies</div><h1>{e(h1)}</h1>'
             f'<p>{"Every NRCan-licensed company" if country == "ca" else "Every company on RESNET\'s 2026 list in the states we cover"}, '
-            f'with phone numbers and Google ratings. Updated {TODAY.strftime("%B %Y")}.</p></div></section>')
-    page_kit.write_page(path, h1, desc, lds, navfooter.render_nav(reg0, ""), page_kit.breadcrumb(crumbs), hero, None, article,
+            f'with phone numbers and Google ratings. Updated @@CHECKED-MONTH@@.</p></div></section>')
+    d = date.fromisoformat(page_kit.stable_date(path, hero + article, _shown_date(ROOT / path.strip("/") / "index.html")))
+    fill = lambda t: t.replace("@@CHECKED@@", d.strftime("%B %-d, %Y")).replace("@@CHECKED-MONTH@@", d.strftime("%B %Y"))
+    page_kit.write_page(path, h1, desc, lds, navfooter.render_nav(reg0, ""), page_kit.breadcrumb(crumbs), fill(hero), None, fill(article),
                         navfooter.render_footer(reg0, "", "", path))
 
 
@@ -329,11 +339,14 @@ def main():
         path = slugs[(c["country"], c["name"].lower())]
         out = ROOT / path.strip("/") / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(profile(c, KIND[c["country"]], ranks, rows_by_city, path), encoding="utf-8")
+        page = profile(c, KIND[c["country"]], ranks, rows_by_city, path)
+        d = date.fromisoformat(page_kit.stable_date(path, page, _shown_date(out)))  # "checked" moves only when the listing changes
+        out.write_text(page.replace("@@CHECKED@@", d.strftime("%B %-d, %Y")), encoding="utf-8")
         n += 1
     for country in ("ca", "us"):
         directory(country, [c for c in comps if c["country"] == country], ranks, rows_by_city, slugs)
     MAP_OUT.write_text(json.dumps({f"{k[0]}|{k[1]}": v for k, v in sorted(slugs.items())}, indent=1, ensure_ascii=False) + "\n")
+    page_kit.save_dates()
     print(f"{n} profiles, 2 directory pages, {MAP_OUT.name} written.")
 
 

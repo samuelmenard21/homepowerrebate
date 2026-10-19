@@ -31,6 +31,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import apply_canonical_nav_footer as navfooter
 import page_kit as kit  # noqa: E402  (shared helpers: stable page dates)
+from installer_blocklist import is_blocked  # noqa: E402
 
 BASE = "https://homepowerrebate.com"
 MIN_INSTALLERS = 3
@@ -94,6 +95,8 @@ def load_rows():
                 rating, reviews = float(r["Google Rating"]), int(float(r["Review Count"]))
             except (ValueError, KeyError):
                 continue
+            if is_blocked(r["Business Name"], r["City"], r.get("Email"), r.get("Website"), r.get("Google Maps URL")):
+                continue  # asked to be taken off the site (data/installer-blocklist.json)
             rows.append({
                 "region": region, "service": service, "city": r["City"].strip(),
                 "name": r["Business Name"].strip(), "phone": r.get("Phone", "").strip(),

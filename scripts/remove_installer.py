@@ -1,21 +1,14 @@
 #!/usr/bin/env python3
-"""Take an installer off the site for good, in one command.
+"""Take installers off the site for good, in one command.
 
-  python3 scripts/remove_installer.py --email owner@example.ca --reason "asked to be removed"
-  python3 scripts/remove_installer.py --name "Acme Heating" --city "Kelowna" --reason "..."
-  python3 scripts/remove_installer.py --email a@x.ca --reason "..." --no-build   # queue several, then:
-  python3 scripts/remove_installer.py --build                                       # rebuild once
+  python3 scripts/remove_installer.py owner@a.ca other@b.com --reason "asked to be removed" --ship
 
-What it does:
-  1. Adds the company to data/installer-blocklist.json (rankings and the Google
-     Places scraper skip it from now on) and logs it in data/installer-cleanup-log.csv.
-  2. Drops its rows from installers/*-installers-real.csv and installers/json/**.json.
-  3. Deletes its profile pages, 301s each to the ranking page it was on (or the
-     city hub), and removes it from other profiles' "Other installers" lists and
-     the installer directory.
-  4. Unless --no-build: rebuilds rankings, the affected regions' city pages and
-     hubs, the rebate finder, compacts redirects, runs the post-steps and checks
-     that nothing blocked is still listed.
+For each email it blocks the company (data/installer-blocklist.json, which the
+rankings builder and the Google Places scraper skip), drops its rows, deletes
+its profiles with 301s, strips it from other profiles, rebuilds once, keeps
+only the files about these installers, and checks nothing blocked is listed.
+--ship then commits on a new branch, opens and merges the PR, and waits until
+the live site shows the removal. Run it from a fresh worktree of origin/main.
 """
 import argparse
 import csv
@@ -25,6 +18,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 from datetime import date
 from pathlib import Path
 
@@ -32,7 +26,10 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import installer_blocklist as bl  # noqa: E402
 
-PENDING = ROOT / "data" / "installer-removals-pending.json"  # regions waiting for --build
+# outreach never emails these; outreach/ is gitignored, so use the main checkout's copy when run from a worktree
+SUPPRESS = Path(subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--path-format=absolute", "--git-common-dir"],
+                               capture_output=True, text=True).stdout.strip() or ROOT / ".git").parent / "outreach" / "suppress.txt"
+BASE = "https://homepowerrebate.com"
 
 
 def slugs(name):
@@ -159,7 +156,7 @@ def ranking_url(rows):
 def build(regions):
     def run(*cmd):
         print("$", " ".join(cmd))
-        subprocess.run([sys.executable, *cmd], cwd=ROOT, check=True)
+        subprocess.run([sys.executable, *cmd], cwd=ROOT, check=True, stdout=subprocess.DEVNULL)
     run("scripts/build_installer_rankings.py")
     for code in sorted(regions):
         b = ROOT / "scripts" / f"build_{code}_pages.py"
@@ -169,62 +166,99 @@ def build(regions):
     run("scripts/build_get_quotes.py")
     run("scripts/compact_redirects.py")
     run("scripts/post_steps.py")
-    if subprocess.run([sys.executable, "scripts/installer_blocklist.py"], cwd=ROOT).returncode:
-        sys.exit("A blocked installer is still listed; see above.")
-    PENDING.unlink(missing_ok=True)
+
+
+def git(*args, **kw):
+    return subprocess.run(["git", "-C", str(ROOT), *args], capture_output=True, text=True, **kw).stdout
+
+
+DATA = {"_redirects", "data/installer-blocklist.json", "data/installer-cleanup-log.csv", "data/installer-place-ids.json",
+        "data/outreach-rankings.csv", "data/page-dates.json", "installers/rankings.json", "installers/allowed-installer-emails.json",
+        "installers/badge/index.html", "og/manifest.json"}
+
+
+def keep_only_related(needles):
+    """Revert any rebuilt file that never mentioned these installers (drift from other work)."""
+    related = set(DATA)
+    for n in needles:
+        related |= {l.split(":", 1)[1] if l.startswith("HEAD:") else l for l in git("grep", "-l", "-i", "-F", n, "HEAD", "--", ".").split()}
+    stray = [f for f in git("diff", "--name-only").split() if f not in related and not f.startswith("scripts/")]
+    if stray:
+        git("checkout", "HEAD", "--", *stray)
+    return stray
+
+
+def ship(names, gone):
+    branch = git("rev-parse", "--abbrev-ref", "HEAD").strip()
+    if branch in ("main", "HEAD"):
+        sys.exit("--ship needs a branch (run from a fresh worktree on a new branch).")
+    title = "Remove and block " + ", ".join(names)
+    git("add", "-A"); git("add", "-f", "data/installer-blocklist.json")
+    git("commit", "-q", "-m", f"{title}\n\nscripts/remove_installer.py\n\nCo-Authored-By: Claude <noreply@anthropic.com>")
+    git("push", "-q", "-u", "origin", branch)
+    body = f"{title}: blocked, rows dropped, profiles 301'd ({', '.join(gone)}), rankings rebuilt.\n\n\U0001F916 Generated with [Claude Code](https://claude.com/claude-code)"
+    pr = subprocess.run(["gh", "pr", "create", "--title", title, "--body", body], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    subprocess.run(["gh", "pr", "merge", "--merge"], cwd=ROOT, check=True)
+    print("merged", pr)
+    for _ in range(10):
+        codes = [subprocess.run(["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", BASE + u], capture_output=True, text=True).stdout for u in gone]
+        if codes and all(c == "301" for c in codes):
+            print("live: profiles now 301")
+            return pr, True
+        time.sleep(120)
+    print("not live after 20 minutes")
+    return pr, False
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--email")
-    ap.add_argument("--name")
-    ap.add_argument("--city")
-    ap.add_argument("--reason")
-    ap.add_argument("--no-build", action="store_true", help="queue the removal; run --build after the last one")
-    ap.add_argument("--build", action="store_true", help="rebuild for every queued removal")
+    ap.add_argument("emails", nargs="+")
+    ap.add_argument("--reason", required=True)
+    ap.add_argument("--ship", action="store_true", help="commit, open and merge the PR, wait for the live site")
     a = ap.parse_args()
-    pending = set(json.loads(PENDING.read_text())) if PENDING.exists() else set()
 
-    if a.build and not (a.email or a.name):
-        build(pending or {"bc"})
-        return
-    if not (a.email or a.name) or not a.reason:
-        ap.error("give --email or --name (with --city), and --reason")
-
-    email = (a.email or "").strip().lower()
-    rows = find_rows(email, a.name, a.city)
-    if not rows:
-        sys.exit("No installer row matches; nothing removed.")
-    name = rows[0][1]["Business Name"].strip()
-    cities = sorted({r["City"].strip() for _, r in rows})
-    redirect_to = ranking_url(rows)
-
+    names, gone, regions, needles = [], [], set(), []
     entries = json.loads(bl.FILE.read_text()) if bl.FILE.exists() else []
-    for c in cities:
-        r = next(r for _, r in rows if r["City"].strip() == c)
-        entries.append({"name": name, "city": c, "email": email or r.get("Email", "").strip().lower(),
-                        "website": r.get("Website", "").strip(), "cid": bl._cid(r.get("Google Maps URL")),
-                        "reason": a.reason, "date": date.today().isoformat()})
-    bl.FILE.write_text(json.dumps(entries, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    bl._KEYS = None
-
-    with open(ROOT / "data" / "installer-cleanup-log.csv", "a", encoding="utf-8", newline="") as f:
-        w = csv.writer(f, lineterminator="\n")
-        for fp in sorted({fp.name for fp, _ in rows}):
-            for c in cities:
-                w.writerow([fp, name, c, "removed and blocked", f"{a.reason} ({date.today().isoformat()})"])
-
-    n_csv, n_json = strip_csvs(), strip_json()
-    gone = remove_profiles(name, cities, redirect_to)
-    print(f"{name}: blocked; {n_csv} CSV rows, {n_json} JSON entries, {len(gone)} profiles removed ({', '.join(gone) or 'none'}) -> {redirect_to}")
-
-    regions = {(re.match(r"([a-z]{2})-", fp.name) or [None, "bc"])[1] for fp, _ in rows}
-    pending |= regions
-    if a.no_build:
-        PENDING.write_text(json.dumps(sorted(pending)) + "\n")
-        print("Queued. Run: python3 scripts/remove_installer.py --build")
-    else:
-        build(pending)
+    for email in (e.strip().lower() for e in a.emails):
+        rows = find_rows(email, None, None)
+        if not rows:
+            print(f"{email}: no installer row matches; skipped")
+            continue
+        name = rows[0][1]["Business Name"].strip()
+        cities = sorted({r["City"].strip() for _, r in rows})
+        redirect_to = ranking_url(rows)
+        for c in cities:
+            r = next(r for _, r in rows if r["City"].strip() == c)
+            entries.append({"name": name, "city": c, "email": email, "website": r.get("Website", "").strip(),
+                            "cid": bl._cid(r.get("Google Maps URL")), "reason": a.reason, "date": date.today().isoformat()})
+        bl.FILE.write_text(json.dumps(entries, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        bl._KEYS = None
+        with open(ROOT / "data" / "installer-cleanup-log.csv", "a", encoding="utf-8", newline="") as f:
+            w = csv.writer(f, lineterminator="\n")
+            for fp in sorted({fp.name for fp, _ in rows}):
+                for c in cities:
+                    w.writerow([fp, name, c, "removed and blocked", f"{a.reason} ({date.today().isoformat()})"])
+        if SUPPRESS.parent.exists():
+            have = SUPPRESS.read_text().lower().split() if SUPPRESS.exists() else []
+            if email not in have:
+                with SUPPRESS.open("a") as f:
+                    f.write(email + "\n")
+        n_csv, n_json = strip_csvs(), strip_json()
+        g = remove_profiles(name, cities, redirect_to)
+        print(f"{name}: {n_csv} CSV rows, {n_json} JSON entries, {len(g)} profiles removed -> {redirect_to}")
+        names.append(name); gone += g; needles += [name, email] + g + [u.rstrip("/").rsplit("/", 1)[-1] for u in g]
+        regions |= {(re.match(r"([a-z]{2})-", fp.name) or [None, "bc"])[1] for fp, _ in rows}
+    if not names:
+        sys.exit("Nothing removed.")
+    build(regions)
+    stray = keep_only_related(needles)
+    if stray:
+        print(f"reverted {len(stray)} unrelated rebuilt files")
+    if subprocess.run([sys.executable, "scripts/installer_blocklist.py"], cwd=ROOT).returncode:
+        sys.exit("A blocked installer is still listed; see above.")
+    print(git("diff", "--stat", "HEAD").strip().splitlines()[-1])
+    if a.ship:
+        ship(names, gone)
 
 
 if __name__ == "__main__":

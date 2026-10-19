@@ -1,6 +1,7 @@
 import sys as _sys
 _sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
 import regions
+from installer_blocklist import is_blocked
 #!/usr/bin/env python3
 """
 Scrape REAL heat pump (HVAC) and solar installers from Google Places API (NEW v1).
@@ -46,6 +47,7 @@ SHEET_ID = "11YrVuRF2xutjeaPlL9zwd2LwzmBAxfFujFGMdadph-4"
 # Filter criteria
 MIN_RATING = 4.0
 MIN_REVIEWS = 10
+MIN_ADVISOR_REVIEWS = 5   # advisory firms are small; most have far fewer reviews than installers
 MAX_PER_CITY = 5   # override with --max=12
 PRIOR_REVIEWS, PRIOR_RATING = 25, 4.5   # same review-weighted score as the public rankings
 
@@ -96,6 +98,20 @@ WINDOWS_GOOD_WORDS = (
 
 BATTERY_GOOD_TYPES = {"solar_energy_contractor", "electrician"}
 BATTERY_GOOD_WORDS = ("solar", "battery", "batteries", "powerwall", "energy storage", "electric", "energy")
+
+# Registered energy advisors (EnerGuide evaluations, home energy assessments), added 2026-10-17.
+# Matched on the name only: Google types advisors as anything from "consultant" to "general_contractor",
+# so a name must say what they do, and a name that also says it installs things is left to the trade lists.
+ENERGY_ADVISOR_GOOD_TYPES = set()
+ENERGY_ADVISOR_GOOD_WORDS = (
+    "energy advis", "energy audit", "energuide", "energy assess", "energy evaluat", "energy rating",
+    "home energy", "energy consult", "home performance", "building science", "energy efficien", "energy solutions",
+)
+ENERGY_ADVISOR_TRADE_TYPES = {"hvac_contractor", "heating_contractor", "air_conditioning_contractor", "plumber", "electrician",
+                              "solar_energy_contractor", "roofing_contractor", "insulation_contractor", "gas_station", "electric_utility",
+                              "real_estate_agency", "spa", "wellness_center", "massage", "store", "home_goods_store", "hardware_store"}
+ENERGY_ADVISOR_TRADE_RE = re.compile(r"solar|hvac|heating|cooling|plumb|furnace|insulat|window|roof|electric(?!ity)|mechanical|air condition|renovat|construction|"
+                                     r"healing|wellness|counsel|chakra|yoga|massage|realty|real estate|propane|fuel|oil\b|gas\b", re.I)
 
 EV_CHARGER_GOOD_TYPES = {"electrician", "general_contractor"}
 EV_CHARGER_GOOD_WORDS = (
@@ -266,7 +282,16 @@ VERMONT_CITIES = {
     "Montpelier": {"lat": 44.2601, "lng": -72.5754},
 }
 
+NL_CITIES = {  # added 2026-10-17 for the energy advisor lists
+    "St. John's": {"lat": 47.5615, "lng": -52.7126},
+    "Mount Pearl": {"lat": 47.5189, "lng": -52.8058},
+    "Paradise": {"lat": 47.5269, "lng": -52.8735},
+    "Corner Brook": {"lat": 48.9490, "lng": -57.9503},
+    "Labrador City": {"lat": 52.9463, "lng": -66.9114},
+}
+
 PROVINCES = {
+    "nl": {"cities": NL_CITIES, "abbrev": "NL", "csv_prefix": "nl-"},
     "bc": {"cities": BC_CITIES, "abbrev": "BC", "csv_prefix": ""},
     "pa": {"cities": PENNSYLVANIA_CITIES, "abbrev": "PA", "csv_prefix": "pa-"},
     "co": {"cities": COLORADO_CITIES, "abbrev": "CO", "csv_prefix": "co-"},
@@ -411,6 +436,12 @@ def is_relevant_installer(name, primary_type, installer_type):
     restoration, etc.) and requires a positive HVAC/solar signal.
     """
     name_l = name.lower()
+    if installer_type in ("energy-advisor", "energy-auditor"):
+        # Advisor names rarely say what they do, so anything the advisor searches return passes unless its name or Google type
+        # is a trade. scripts/verify_energy_advisors.py then keeps only companies whose website offers EnerGuide evaluations.
+        if ENERGY_ADVISOR_TRADE_RE.search(name):
+            return False
+        return any(w in name_l for w in ENERGY_ADVISOR_GOOD_WORDS) or primary_type not in ENERGY_ADVISOR_TRADE_TYPES
     if is_non_installer_name(name):
         return False
 
@@ -480,6 +511,10 @@ def scrape_installers(api_key, installer_type, province="bc", debug=False):
         queries = ["window installation company", "window and door company", "replacement windows"]
     elif installer_type == "battery":
         queries = ["home battery installer", "solar and battery storage installer", "Tesla Powerwall installer"]
+    elif installer_type == "energy-advisor":
+        queries = ["registered energy advisor", "EnerGuide home energy evaluation", "home energy assessment", "energy advisor"]
+    elif installer_type == "energy-auditor":  # US version (2026-10-17)
+        queries = ["home energy audit", "BPI certified energy auditor", "HERS rater", "home energy assessment"]
     elif installer_type == "ev-charger":
         queries = ["electrician", "ev charger installation", "electrical contractor"]
     else:
@@ -515,7 +550,7 @@ def scrape_installers(api_key, installer_type, province="bc", debug=False):
 
                 rating = p.get("rating", 0) or 0
                 reviews = p.get("userRatingCount", 0) or 0
-                if rating < MIN_RATING or reviews < MIN_REVIEWS:
+                if rating < MIN_RATING or reviews < (MIN_ADVISOR_REVIEWS if installer_type in ("energy-advisor", "energy-auditor") else MIN_REVIEWS):
                     continue
 
                 name = display_name_text(p)
@@ -601,7 +636,7 @@ def scrape_installers(api_key, installer_type, province="bc", debug=False):
 
         # Resolve photos for just the survivors (keeps API calls low).
         for inst in ranked:
-            if inst["photo_name"]:
+            if inst["photo_name"] and installer_type not in ("energy-advisor", "energy-auditor"):  # Places photos may not be stored; skip the lookups
                 time.sleep(RATE_LIMIT_DELAY)
                 inst["image_url"] = resolve_photo_url(api_key, inst["photo_name"], debug=debug)
 
@@ -633,6 +668,8 @@ def save_to_csv(installers, installer_type, province="bc"):
                 known[(r.get("Business Name", "").strip().lower())] = r["Email"].strip()
     for i in installers:
         i["email"] = i.get("email") or known.get(i["name"].strip().lower(), "")
+    # Companies that asked to be taken off the site never come back (data/installer-blocklist.json).
+    installers = [i for i in installers if not is_blocked(i["name"], i["city"], i["email"], i["website"], i["gmaps_url"])]
 
     if REVIEW_SUMMARIES:
         rsp = Path("data/places-review-summaries.json")
@@ -668,7 +705,7 @@ def tab_name_for(installer_type, province="bc"):
     BC keeps its original unsuffixed tab names (no change to existing data);
     Ontario gets its own tabs so a run here can never clear BC's real data."""
     base = {"solar": "Solar", "insulation": "Insulation", "battery": "Batteries", "ev-charger": "EV Chargers",
-            "windows-doors": "Windows"}.get(installer_type, "Heat Pumps")
+            "windows-doors": "Windows", "energy-advisor": "Energy Advisors", "energy-auditor": "Energy Auditors"}.get(installer_type, "Heat Pumps")
     return base if province == "bc" else f"{base} - {PROVINCES[province]['abbrev']}"
 
 
@@ -796,7 +833,7 @@ def write_to_google_sheet(installers, installer_type, province="bc"):
         return False
 
 
-TYPES = ("heat-pump", "solar", "insulation", "battery", "ev-charger", "windows-doors")
+TYPES = ("heat-pump", "solar", "insulation", "battery", "ev-charger", "windows-doors", "energy-advisor", "energy-auditor")
 
 if __name__ == "__main__":
     # python3 scripts/scrape_google_places_installers.py heat-pump,solar,insulation,battery --province=all --max=12 [--no-sheet] [--debug]
@@ -828,6 +865,7 @@ if __name__ == "__main__":
     for prov in provinces:
         for installer_type in types:
             installers = scrape_installers(api_key, installer_type, province=prov, debug=debug)
+            installers = [i for i in installers if not is_blocked(i["name"], i["city"], "", i["website"], i["gmaps_url"])]
             if not installers:
                 print(f"\n⚠️  {prov} {installer_type}: no qualified installers found.")
                 continue

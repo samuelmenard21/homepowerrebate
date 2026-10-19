@@ -49,6 +49,8 @@ def main():
         cfg = gp.REGIONS[region]
         by_cat = {}
         for svc, rs in svcs.items():
+            if svc not in SPECIALTY:  # energy advisors and auditors have their own pages (build_advisor_directory.py)
+                continue
             by_cat[svc] = [{
                 "name": r["name"], "location": r["address"], "phone": r["phone"], "email": r["email"],
                 "website": r["website"], "rating": r["rating"], "reviews": r["reviews"], "gmaps_url": r["gmaps"],

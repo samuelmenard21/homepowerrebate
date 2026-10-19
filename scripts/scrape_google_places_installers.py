@@ -1,6 +1,7 @@
 import sys as _sys
 _sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
 import regions
+from installer_blocklist import is_blocked
 #!/usr/bin/env python3
 """
 Scrape REAL heat pump (HVAC) and solar installers from Google Places API (NEW v1).
@@ -667,6 +668,8 @@ def save_to_csv(installers, installer_type, province="bc"):
                 known[(r.get("Business Name", "").strip().lower())] = r["Email"].strip()
     for i in installers:
         i["email"] = i.get("email") or known.get(i["name"].strip().lower(), "")
+    # Companies that asked to be taken off the site never come back (data/installer-blocklist.json).
+    installers = [i for i in installers if not is_blocked(i["name"], i["city"], i["email"], i["website"], i["gmaps_url"])]
 
     if REVIEW_SUMMARIES:
         rsp = Path("data/places-review-summaries.json")
@@ -862,6 +865,7 @@ if __name__ == "__main__":
     for prov in provinces:
         for installer_type in types:
             installers = scrape_installers(api_key, installer_type, province=prov, debug=debug)
+            installers = [i for i in installers if not is_blocked(i["name"], i["city"], "", i["website"], i["gmaps_url"])]
             if not installers:
                 print(f"\n⚠️  {prov} {installer_type}: no qualified installers found.")
                 continue

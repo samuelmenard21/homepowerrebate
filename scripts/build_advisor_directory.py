@@ -26,7 +26,7 @@ import json
 import re
 import sys
 from collections import defaultdict
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -40,6 +40,9 @@ BASE = "https://homepowerrebate.com"
 DIR = json.loads((ROOT / "data" / "energy-advisor-directory.json").read_text())
 SITES = json.loads((ROOT / "data" / "energy-advisor-sites.json").read_text()) if (ROOT / "data" / "energy-advisor-sites.json").exists() else {}
 MAP_OUT = ROOT / "data" / "energy-advisor-profiles.json"
+GUIDE = "/energy-advisors/when-to-call-an-energy-advisor/"
+# Details a company gave us by email (services, base, area), keyed by company name. Shown on its profile, labelled as told to us.
+OWNER = json.loads((ROOT / "data" / "energy-advisor-owner-details.json").read_text())["companies"] if (ROOT / "data" / "energy-advisor-owner-details.json").exists() else {}
 MIN_RANKED = 3
 PRIOR_REVIEWS, PRIOR_RATING = 25, 4.5
 NRCAN_URL = DIR["sources"]["nrcan"]
@@ -187,6 +190,17 @@ def profile(c, kind, ranks, rows_by_city, path):
         svc_html = (f'<section class="ip-faq"><h3>Services mentioned on their website</h3><p>'
                     + " · ".join(e(x) for x in svc)
                     + f'</p><p class="ip-footer-note">We read their website in {when} and noted what it mentions. Ask them to confirm before you book.</p></section>')
+    od = OWNER.get(name)
+    if od:
+        items = "".join(f"<li>{e(x)}</li>" for x in od["services"])
+        svc_html += (f'<section class="ip-faq"><h3>Services, as told to us by {e(name)}</h3><ul>{items}</ul>'
+                     f'<p>{e(od["base"])} {e(od["area"])}</p>'
+                     f'<p class="ip-footer-note">Details supplied by the company on {date.fromisoformat(od["told_on"]).strftime("%B %-d, %Y")}. We have not checked them. '
+                     f'To book, use the Visit website button above.</p></section>')
+    if c["country"] == "ca":
+        svc_html += (f'<section class="ip-faq"><h3>Call an advisor before the work starts</h3>'
+                     f'<p>Some rebates need an evaluation or a heat load calculation before any work begins. '
+                     f'<a href="{GUIDE}">Read when to call an energy advisor</a>.</p></section>')
     listed = c["sources"][0].startswith(("NRCan", "RESNET"))
     src = (f'<a href="{kind["src"]}" target="_blank" rel="noopener">{e(kind["src_name"])}</a>' if listed
            else "the company, by email")
@@ -220,7 +234,7 @@ def profile(c, kind, ranks, rows_by_city, path):
 <p>Tell us what to add to this page: the services you offer, the areas and languages you work in, the rebate programs you know best, or a correction. It takes one email to <a href="mailto:hello@homepowerrebate.com?subject={e('Profile: ' + name)}">hello@homepowerrebate.com</a>.</p>
 <p>These are yours to use with clients:</p>{pro_tools(c['country'], first_reg, first_city)}</section>
 <a href="{kind['root']}" class="ip-city-link">See every {kind['pro']} we list &rarr;</a>
-<p class="ip-footer-note">Listing from {src}{", ratings and review counts from Google Maps" if g else ""}, checked {TODAY.strftime('%B %-d, %Y')}. Spot an error? <a href="/contact/?subject={e('Correction: ' + name)}">Let us know</a>.</p>
+<p class="ip-footer-note">Listing from {src}{", ratings and review counts from Google Maps" if g else ""}, checked @@CHECKED@@. Spot an error? <a href="/contact/?subject={e('Correction: ' + name)}">Let us know</a>.</p>
 </div></main>"""
     title = f"{name}: {kind['Title'][:-1]} | HomePowerRebate" if len(name) < 40 else f"{name} | HomePowerRebate"
     desc = (f"{name}, a {w} in {regions_txt}." + (f" {g['rating']:.1f} stars from {g['reviews']:,} Google reviews." if g and g.get('rating') else "")
@@ -287,7 +301,8 @@ def directory(country, companies, ranks, rows_by_city, slugs):
                  f"Natural Resources Canada. This page lists all {nr} of them, by province{extra_txt}, with the {rated} we could match to a "
                  f"rated Google Maps listing ranked first.</p>"
                  f"<p>NRCan says the two evaluations together average <b>$600 to $1,000</b>, depending on the provider and province, and "
-                 f"are usually paid after the work. Service organizations never sell door to door or by unsolicited calls or emails.</p>")
+                 f"are usually paid after the work. Service organizations never sell door to door or by unsolicited calls or emails.</p>"
+                 f'<p>Not sure when to call one? Read <a href="{GUIDE}">when to call an energy advisor</a>: what an evaluation and a heat load calculation are, and which rebates ask for them first.</p>')
         h1, desc = ("Registered Energy Advisors in Canada",
                     f"All {n} NRCan-licensed EnerGuide service organizations by province, with phone numbers, Google ratings and the cities each one serves.")
     else:
@@ -329,10 +344,16 @@ def main():
         path = slugs[(c["country"], c["name"].lower())]
         out = ROOT / path.strip("/") / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(profile(c, KIND[c["country"]], ranks, rows_by_city, path), encoding="utf-8")
+        html_out = profile(c, KIND[c["country"]], ranks, rows_by_city, path)
+        # "checked" moves only when the page's content does, so a rebuild on another day changes nothing
+        m = re.search(r"checked ([A-Z][a-z]+ \d+, \d{4})", out.read_text(encoding="utf-8")) if out.exists() else None
+        shown = datetime.strptime(m.group(1), "%B %d, %Y").date().isoformat() if m else TODAY.isoformat()
+        iso = page_kit.stable_date(path, html_out, fallback=shown)
+        out.write_text(html_out.replace("@@CHECKED@@", date.fromisoformat(iso).strftime("%B %-d, %Y")), encoding="utf-8")
         n += 1
     for country in ("ca", "us"):
         directory(country, [c for c in comps if c["country"] == country], ranks, rows_by_city, slugs)
+    page_kit.save_dates()
     MAP_OUT.write_text(json.dumps({f"{k[0]}|{k[1]}": v for k, v in sorted(slugs.items())}, indent=1, ensure_ascii=False) + "\n")
     print(f"{n} profiles, 2 directory pages, {MAP_OUT.name} written.")
 

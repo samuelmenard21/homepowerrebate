@@ -698,39 +698,26 @@
 # Massachusetts: battery, solar, EV charger, smart thermostat, water heater and windows pages had the same statewide offer in every city and nothing local to add; they go to the city hub (build_ma_pages.py, 2026-10-03)
 /us/ma/boston/ev-charger/ /us/ma/ev-charger/ 301
 /us/ma/boston/ev-charger /us/ma/ev-charger/ 301
-/us/ma/boston/windows-doors /us/ma/boston/ 301
 /us/ma/brockton/ev-charger/ /us/ma/ev-charger/ 301
 /us/ma/brockton/ev-charger /us/ma/ev-charger/ 301
-/us/ma/brockton/windows-doors /us/ma/brockton/ 301
 /us/ma/cambridge/ev-charger/ /us/ma/ev-charger/ 301
 /us/ma/cambridge/ev-charger /us/ma/ev-charger/ 301
-/us/ma/cambridge/windows-doors /us/ma/cambridge/ 301
 /us/ma/fall-river/ev-charger/ /us/ma/ev-charger/ 301
 /us/ma/fall-river/ev-charger /us/ma/ev-charger/ 301
-/us/ma/fall-river/windows-doors /us/ma/fall-river/ 301
 /us/ma/lawrence/ev-charger/ /us/ma/ev-charger/ 301
 /us/ma/lawrence/ev-charger /us/ma/ev-charger/ 301
-/us/ma/lawrence/windows-doors /us/ma/lawrence/ 301
 /us/ma/lowell/ev-charger/ /us/ma/ev-charger/ 301
 /us/ma/lowell/ev-charger /us/ma/ev-charger/ 301
-/us/ma/lowell/windows-doors /us/ma/lowell/ 301
 /us/ma/lynn/ev-charger/ /us/ma/ev-charger/ 301
 /us/ma/lynn/ev-charger /us/ma/ev-charger/ 301
-/us/ma/lynn/windows-doors /us/ma/lynn/ 301
 /us/ma/new-bedford/ev-charger/ /us/ma/ev-charger/ 301
 /us/ma/new-bedford/ev-charger /us/ma/ev-charger/ 301
-/us/ma/new-bedford/windows-doors /us/ma/new-bedford/ 301
-/us/ma/newton/windows-doors /us/ma/newton/ 301
 /us/ma/quincy/ev-charger/ /us/ma/ev-charger/ 301
 /us/ma/quincy/ev-charger /us/ma/ev-charger/ 301
-/us/ma/quincy/windows-doors /us/ma/quincy/ 301
 /us/ma/somerville/ev-charger/ /us/ma/ev-charger/ 301
 /us/ma/somerville/ev-charger /us/ma/ev-charger/ 301
-/us/ma/somerville/windows-doors /us/ma/somerville/ 301
 /us/ma/springfield/ev-charger/ /us/ma/ev-charger/ 301
 /us/ma/springfield/ev-charger /us/ma/ev-charger/ 301
-/us/ma/springfield/windows-doors /us/ma/springfield/ 301
-/us/ma/worcester/windows-doors /us/ma/worcester/ 301
 
 # BC battery pages merged into the solar and battery page; EV charger pages kept only where a local top-up exists (2026-10-03)
 /ca/bc/abbotsford/ev-charger/ /ca/bc/ev-charger/ 301
@@ -1266,31 +1253,18 @@
 /us/ny/pseg/smithtown/heat-pump /us/ny/pseg/smithtown/ 301
 /us/ny/pseg/southampton/heat-pump/ /us/ny/pseg/southampton/ 301
 /us/ny/pseg/southampton/heat-pump /us/ny/pseg/southampton/ 301
-/us/ma/boston/hrv/ /us/ma/hrv/ 301
 /us/ma/boston/hrv /us/ma/hrv/ 301
-/us/ma/brockton/hrv/ /us/ma/hrv/ 301
 /us/ma/brockton/hrv /us/ma/hrv/ 301
-/us/ma/cambridge/hrv/ /us/ma/hrv/ 301
 /us/ma/cambridge/hrv /us/ma/hrv/ 301
-/us/ma/fall-river/hrv/ /us/ma/hrv/ 301
 /us/ma/fall-river/hrv /us/ma/hrv/ 301
-/us/ma/lawrence/hrv/ /us/ma/hrv/ 301
 /us/ma/lawrence/hrv /us/ma/hrv/ 301
-/us/ma/lowell/hrv/ /us/ma/hrv/ 301
 /us/ma/lowell/hrv /us/ma/hrv/ 301
-/us/ma/lynn/hrv/ /us/ma/hrv/ 301
 /us/ma/lynn/hrv /us/ma/hrv/ 301
-/us/ma/new-bedford/hrv/ /us/ma/hrv/ 301
 /us/ma/new-bedford/hrv /us/ma/hrv/ 301
-/us/ma/newton/hrv/ /us/ma/hrv/ 301
 /us/ma/newton/hrv /us/ma/hrv/ 301
-/us/ma/quincy/hrv/ /us/ma/hrv/ 301
 /us/ma/quincy/hrv /us/ma/hrv/ 301
-/us/ma/somerville/hrv/ /us/ma/hrv/ 301
 /us/ma/somerville/hrv /us/ma/hrv/ 301
-/us/ma/springfield/hrv/ /us/ma/hrv/ 301
 /us/ma/springfield/hrv /us/ma/hrv/ 301
-/us/ma/worcester/hrv/ /us/ma/hrv/ 301
 /us/ma/worcester/hrv /us/ma/hrv/ 301
 /us/ma/boston/appliances/ /us/ma/appliances/ 301
 /us/ma/boston/appliances /us/ma/appliances/ 301
@@ -1761,6 +1735,36 @@
 /installers/profiles/ca/los-angeles/cse-solar-usa-llc/ /installers/ca/los-angeles/battery/ 301
 /installers/profiles/ca/los-angeles/cse-solar-usa-llc /installers/ca/los-angeles/battery/ 301
 
+/installers/profiles/ab/edmonton/solar-super-store-inc/ /installers/ab/edmonton/battery/ 301
+/installers/profiles/ab/edmonton/solar-super-store-inc /installers/ab/edmonton/battery/ 301
+
+/installers/profiles/bc/kelowna/cdn-solar-canadian-solar-wholesale/ /installers/bc/kelowna/battery/ 301
+/installers/profiles/bc/kelowna/cdn-solar-canadian-solar-wholesale /installers/bc/kelowna/battery/ 301
+
+/installers/profiles/ca/sacramento/idi-insulation-distributors-inc/ /installers/ca/sacramento/insulation/ 301
+/installers/profiles/ca/sacramento/idi-insulation-distributors-inc /installers/ca/sacramento/insulation/ 301
+
+/installers/profiles/co/denver/idi-insulation-distributors-inc/ /installers/co/denver/insulation/ 301
+/installers/profiles/co/denver/idi-insulation-distributors-inc /installers/co/denver/insulation/ 301
+
+/installers/profiles/mi/grand-rapids/idi-insulation-distributors-inc-service-center/ /installers/mi/grand-rapids/insulation/ 301
+/installers/profiles/mi/grand-rapids/idi-insulation-distributors-inc-service-center /installers/mi/grand-rapids/insulation/ 301
+
+/installers/profiles/ny/syracuse/idi-insulation-distributors-inc/ /installers/ny/syracuse/insulation/ 301
+/installers/profiles/ny/syracuse/idi-insulation-distributors-inc /installers/ny/syracuse/insulation/ 301
+
+/installers/profiles/wa/spokane/idi-insulation-distributors-inc/ /installers/wa/spokane/insulation/ 301
+/installers/profiles/wa/spokane/idi-insulation-distributors-inc /installers/wa/spokane/insulation/ 301
+
+/installers/profiles/bc/langley/polysource-industries-inc-spray-foam-slab-jacking-protective-coatings-spray-foam-rigs-equipment/ /installers/bc/langley/insulation/ 301
+/installers/profiles/bc/langley/polysource-industries-inc-spray-foam-slab-jacking-protective-coatings-spray-foam-rigs-equipment /installers/bc/langley/insulation/ 301
+
+/installers/profiles/on/hamilton/td-solar-shop/ /installers/on/hamilton/battery/ 301
+/installers/profiles/on/hamilton/td-solar-shop /installers/on/hamilton/battery/ 301
+
+/installers/profiles/on/guelph/eden-energy-equipment/ /installers/on/guelph/battery/ 301
+/installers/profiles/on/guelph/eden-energy-equipment /installers/on/guelph/battery/ 301
+
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 /installers/profiles/ab/red-deer/express-plumbing-heating-inc/ /installers/ab/red-deer/heat-pump/ 301
 /installers/profiles/ab/red-deer/express-plumbing-heating-inc /installers/ab/red-deer/heat-pump/ 301
@@ -1786,6 +1790,10 @@
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+/us/ma/:city/windows-doors /us/ma/:city/ 301
+/us/ma/:city/hrv/ /us/ma/hrv/ 301
 /us/ma/:city/smart-thermostats /us/ma/:city/ 301
 /us/ma/:city/solar/ /us/ma/:city/ 301
 /us/ma/:city/solar /us/ma/:city/ 301

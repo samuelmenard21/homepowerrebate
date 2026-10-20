@@ -60,7 +60,7 @@ KIND = {
            "Title": "Home Energy Auditors", "who": "RESNET HERS rating company", "src": RESNET_URL,
            "src_name": "RESNET Rating Companies 2026"},
 }
-PROFILE_CSS = "profile-bd3e7b6e"
+PROFILE_CSS = "profile-88a4d3e4"  # the installer profiles' stylesheet: one profile template site-wide
 
 
 def slugify(s):
@@ -319,15 +319,21 @@ def directory(country, companies, ranks, rows_by_city, slugs):
     tools = (f'<div class="callout"><p><strong>Are you a {kind["pro"]}?</strong> These are yours to use with clients:</p>{pro_tools(country)}</div>')
     article = (intro + tools + "".join(sections)
                + f'<p class="small">Sources: <a href="{kind["src"]}" rel="noopener" target="_blank">{e(kind["src_name"])}</a>, read '
-                 f'{TODAY.strftime("%B %-d, %Y")}. Ratings and review counts from Google Maps. A company with no rating is still listed. '
+                 f'@@CHECKED@@. Ratings and review counts from Google Maps. A company with no rating is still listed. '
                  f'Is your company missing or wrong? Email hello@homepowerrebate.com.</p>')
     crumbs = [("Home", "/"), (kind["Title"], path)]
     lds = page_kit.ld_scripts([page_kit.breadcrumb_ld(crumbs)])
     reg0 = "bc" if country == "ca" else "ma"
     hero = (f'<section class="hero"><div class="wrap"><div class="amount-badge">{n} companies</div><h1>{e(h1)}</h1>'
             f'<p>{"Every NRCan-licensed company" if country == "ca" else "Every company on RESNET\'s 2026 list in the states we cover"}, '
-            f'with phone numbers and Google ratings. Updated {TODAY.strftime("%B %Y")}.</p></div></section>')
-    page_kit.write_page(path, h1, desc, lds, navfooter.render_nav(reg0, ""), page_kit.breadcrumb(crumbs), hero, None, article,
+            f'with phone numbers and Google ratings. Updated @@CHECKED-MONTH@@.</p></div></section>')
+    # the "read"/"Updated" date moves only when the directory's content does
+    out = ROOT / path.strip("/") / "index.html"
+    m = re.search(r"read ([A-Z][a-z]+ \d{1,2}, \d{4})", out.read_text(encoding="utf-8")) if out.exists() else None
+    shown = datetime.strptime(m.group(1), "%B %d, %Y").date().isoformat() if m else TODAY.isoformat()
+    d = date.fromisoformat(page_kit.stable_date(path, hero + article, fallback=shown))
+    fill = lambda t: t.replace("@@CHECKED@@", d.strftime("%B %-d, %Y")).replace("@@CHECKED-MONTH@@", d.strftime("%B %Y"))
+    page_kit.write_page(path, h1, desc, lds, navfooter.render_nav(reg0, ""), page_kit.breadcrumb(crumbs), fill(hero), None, fill(article),
                         navfooter.render_footer(reg0, "", "", path))
 
 

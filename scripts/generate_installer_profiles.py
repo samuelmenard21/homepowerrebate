@@ -140,6 +140,13 @@ for _r in regions.REGIONS:
             "program_name": (_r["programs"][0][1] if _r.get("programs") else f"{_r['name']} utility rebates"),
         }
 
+# Licence and registration check links per region come from data/regions.json (profile_verify_links).
+for _r in regions.REGIONS:
+    if _r.get("profile_verify_links") and _r["code"] in REGIONS:
+        REGIONS[_r["code"]]["verify_links"] = [tuple(x) for x in _r["profile_verify_links"]]
+_blk = os.path.join(ROOT, "data", "blocked-installer-emails.json")
+BLOCKED_EMAILS = {x.lower() for x in json.load(open(_blk))} if os.path.exists(_blk) else set()
+
 # BC's hand-built profiles have no region folder: installers/profiles/<city>/<slug>/
 REGIONS["bc"]["profiles_dir"] = os.path.join(ROOT, "installers/profiles")
 REGIONS["bc"]["url_base"] = "installers/profiles"
@@ -276,10 +283,14 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     phone = installer.get("phone") or ""
     website = installer.get("website") or ""
     gmaps = installer.get("gmaps_url") or ""
+    email = (installer.get("email") or "").strip()
+    if email.lower() in BLOCKED_EMAILS or "@" not in email:
+        email = ""
     photo_html = f'<img src="{photo}" alt="{html.escape(installer["name"])}" class="ip-photo" loading="lazy" width="760" height="380" onerror="this.remove()">' if photo else ""
     actions_html = "".join([
         f'<a href="{website}" target="_blank" rel="noopener" class="ip-btn ip-btn-primary">Visit Website</a>' if website else "",
         f'<a href="tel:{re.sub(r"[^0-9+]", "", phone)}" class="ip-btn ip-btn-outline">Call {phone}</a>' if phone else "",
+        f'<a href="mailto:{html.escape(email)}" class="ip-btn ip-btn-outline">Email {html.escape(name)}</a>' if email else "",
         f'<a href="{gmaps}" target="_blank" rel="noopener" class="ip-maps-link">View on Google Maps</a>' if gmaps else "",
     ])
     escaped_name = html.escape(name)
@@ -344,7 +355,7 @@ def render_profile(region_key, city_slug, listings, all_in_city_by_cat):
     all_in_city = all_in_city_by_cat[primary_category]
     nearby = [i for i in all_in_city if i["name"] != name][:9]
     nearby_html = "".join(
-        f'<a href="/{profile_base(region_key)}/{city_slug}/{slugify(n["name"])}/" class="ip-nearby-item">'
+        f'<a href="/{profile_base(region_key)}/{city_slug}/{profile_slug(region_key, city_slug, n["name"])}/" class="ip-nearby-item">'
         f'<span>{html.escape(n["name"])}</span><span class="ip-nearby-rating">{n["rating"]:.1f}★</span></a>'
         for n in nearby
     )
@@ -500,6 +511,23 @@ def profile_exists(region_key, city_slug, name):
     return any(os.path.exists(os.path.join(base, s, "index.html")) for s in spellings)
 
 
+def profile_slug(region_key, city_slug, name):
+    """The folder an installer's profile lives in: an existing page under either spelling ('and' first, the spelling the
+    ranking pages link), else the standard slug. One profile per installer, and links that already exist keep working."""
+    base = os.path.join(ROOT, profile_base(region_key), city_slug)
+    low = name.lower()
+    spellings = []
+    for amp in ("and", ""):            # "&" written as "and" (rankings) or dropped (old generator)
+        for apos in ("", "-"):         # apostrophe dropped, or turned into a hyphen (older pages: "dad-s")
+            v = re.sub(r"[^a-z0-9]+", "-", re.sub(r"['\u2019]", apos, low.replace("&", f" {amp} " if amp else ""))).strip("-")
+            if v not in spellings:
+                spellings.append(v)
+    for s in spellings + [slugify(name)]:
+        if os.path.exists(os.path.join(base, s, "index.html")):
+            return s
+    return slugify(name)
+
+
 def build_region(region_key, only_missing=False):
     cfg = REGIONS[region_key]
     total_pages = 0
@@ -538,7 +566,7 @@ def build_region(region_key, only_missing=False):
         for slug, listings in by_slug.items():
             if only_missing and profile_exists(region_key, city_slug, listings[0][0]["name"]):
                 continue
-            out_dir = os.path.join(cfg["profiles_dir"], city_slug, slug)
+            out_dir = os.path.join(cfg["profiles_dir"], city_slug, profile_slug(region_key, city_slug, listings[0][0]["name"]))
             os.makedirs(out_dir, exist_ok=True)
             out_path = os.path.join(out_dir, "index.html")
             html_out = render_profile(region_key, city_slug, listings, all_in_city_by_cat)

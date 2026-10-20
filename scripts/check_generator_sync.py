@@ -26,7 +26,7 @@ from build_hubs import HUB as HUB_STEPS  # noqa: E402
 # (the restamp converts a fresh generator <style> block to its template file on its second pass, after adding font fallbacks)
 TPL_RE = re.compile(r'/assets/tpl/([\w-]+)\.css')
 EXTRA = ["build_ca_sacramento", "build_ca_sf", "build_ca_sj", "build_ca_la", "build_installer_rankings", "build_rebate_sheets",
-         "build_advisor_directory"]
+         "build_advisor_directory", "build_installer_profiles"]
 
 
 def git(*a, cwd=ROOT, check=True):

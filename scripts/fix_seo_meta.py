@@ -103,6 +103,17 @@ for f, s in pages.items():
             s = s[: m.start()] + f"<title>{new}</title>" + s[m.end():]
             changed["title"] += 1
         titles[TITLE_RE.search(s).group(1).strip()].append(f)
+    if indexable:  # trim before the X card copies the description
+        md = DESC_RE.search(s)
+        if md and len(md.group(2)) > 160:
+            nd = fit_desc(md.group(2))
+            if nd != md.group(2):
+                s = s[: md.start(2)] + nd + s[md.end(2):]
+                changed["desc"] += 1
+        tw = re.search(r'(<meta name="twitter:description" content=")([^"]*)(")', s)
+        if tw and len(tw.group(2)) > 160:  # some builders write the X card themselves, from the long description
+            s = s[: tw.start(2)] + fit_desc(tw.group(2)) + s[tw.end(2):]
+            changed["desc"] += 1
     if 'name="twitter:card"' in s and indexable:
         tt, dd = TITLE_RE.search(s), DESC_RE.search(s)
         add = ""
@@ -115,13 +126,6 @@ for f, s in pages.items():
             at = "<!-- OG-CARD-START -->" if "<!-- OG-CARD-START -->" in s else '<meta name="twitter:card"'
             s = s.replace(at, add + at, 1)
             changed["xcard"] += 1
-    if indexable:
-        md = DESC_RE.search(s)
-        if md and len(md.group(2)) > 160:
-            nd = fit_desc(md.group(2))
-            if nd != md.group(2):
-                s = s[: md.start(2)] + nd + s[md.end(2):]
-                changed["desc"] += 1
     pages[f] = s
 for t, fs in titles.items():
     if len(fs) < 2:

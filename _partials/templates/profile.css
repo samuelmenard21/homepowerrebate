@@ -29,3 +29,6 @@
 .tpl-profile .ip-video { margin-top: 44px; }
 .tpl-profile .ip-video-embed { position: relative; padding-top: 56.25%; border-radius: 14px; overflow: hidden; background: #000; }
 .tpl-profile .ip-video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+/* Links inside the dark "Is this your company?" box were teal on teal and invisible */
+.tpl-profile .ip-quote a { color: var(--amber-bright, #e88a2e); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+.tpl-profile .ip-quote li { color: #c9d8d5; font-size: 14.5px; margin-bottom: 8px; }

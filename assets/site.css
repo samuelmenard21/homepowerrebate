@@ -859,19 +859,9 @@ body.tpl-hub { --gut: clamp(20px, 3.2vw, 56px); --hub-w: min(var(--container), 1
 /* Google attribution logo: 16 to 19px tall, clear space 10px left, right and top, 5px bottom (Places policies) */
 .tpl-profile .ipf-g { height: 18px; width: auto; margin: 10px 10px 5px; }
 .tpl-profile .ipf-gt { font-family: Roboto, Arial, sans-serif; font-weight: 400; font-size: 13px; color: #5e5e5e; margin-left: 4px; }
-/* Profile FAQ (every profile, built by enrich_installer_profiles.py) and the "Also installs" line */
-.tpl-profile .ip-also-installs { font-size: 13px; color: #5a5348; margin: 0 0 10px; font-style: italic; }
-.tpl-profile .ip-faq { margin-top: 44px; }
-.tpl-profile .ip-faq h3 { font-size: 17px; margin: 0 0 14px; }
-.tpl-profile .ip-faq-item { padding: 14px 0; border-top: 1px solid var(--rule); }
-.tpl-profile .ip-faq-item:first-of-type { border-top: none; }
-.tpl-profile .ip-faq-q { font-weight: 700; font-size: 14.5px; margin: 0 0 6px; color: var(--teal-deep); }
-.tpl-profile .ip-faq-a { font-size: 14px; color: #5a5348; margin: 0; }
-/* Advisor and auditor profiles: a check that does not apply, and an optional video */
-.tpl-profile .ip-vet-no .ip-vet-icon { background: var(--rule); color: #5a5348; }
-.tpl-profile .ip-video { margin-top: 44px; }
-.tpl-profile .ip-video-embed { position: relative; padding-top: 56.25%; border-radius: 14px; overflow: hidden; background: #000; }
-.tpl-profile .ip-video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+/* Links inside the dark "Is this your company?" box were teal on teal and invisible */
+.tpl-profile .ip-quote a { color: var(--amber-bright, #e88a2e); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+.tpl-profile .ip-quote li { color: #c9d8d5; font-size: 14.5px; margin-bottom: 8px; }
 
 /* ===== template design: powerscore (powerscore.css) ===== */
 /* PowerScore design (body.tpl-powerscore): /powerscore/ and the city comparison pages.

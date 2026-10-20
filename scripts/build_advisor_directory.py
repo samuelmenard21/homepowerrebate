@@ -198,9 +198,12 @@ def profile(c, kind, ranks, rows_by_city, path):
                      f'<p class="ip-footer-note">Details supplied by the company on {date.fromisoformat(od["told_on"]).strftime("%B %-d, %Y")}. We have not checked them. '
                      f'To book, use the Visit website button above.</p></section>')
     if c["country"] == "ca":
-        svc_html += (f'<section class="ip-faq"><h3>Call an advisor before the work starts</h3>'
-                     f'<p>Some rebates need an evaluation or a heat load calculation before any work begins. '
-                     f'<a href="{GUIDE}">Read when to call an energy advisor</a>.</p></section>')
+        svc_html += (f'<section class="ip-faq"><h3>Why call an energy advisor first</h3><ul>'
+                     f'<li><b>Before any work.</b> Some programs want an evaluation or a heat load calculation first. Ontario\'s assessment stream needs the pre-audit before any work, and a rebate can be lost if the work starts earlier.</li>'
+                     f'<li><b>The EnerGuide evaluation.</b> An advisor visits, measures the home and gives you a rating and a report, so you can pick upgrades in the right order.</li>'
+                     f'<li><b>The heat load calculation.</b> BC Hydro\'s full heat pump rebate needs the unit to meet 100% of your heating at -5 C, shown by a CSA F280 calculation.</li>'
+                     f'<li><b>The site visit.</b> The advisor checks insulation, windows and equipment, and a blower door test measures how airtight the home is.</li></ul>'
+                     f'<p><a href="{GUIDE}">Read the full guide: when to call an energy advisor</a>.</p></section>')
     listed = c["sources"][0].startswith(("NRCan", "RESNET"))
     src = (f'<a href="{kind["src"]}" target="_blank" rel="noopener">{e(kind["src_name"])}</a>' if listed
            else "the company, by email")

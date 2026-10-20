@@ -59,6 +59,12 @@ def page_data(rel, s):
         eyebrow = meta
         key = f"{rating} from {count}" if rating and count else ""
         trust = TRUST["profile"]
+    elif fam == "advisor":
+        eyebrow = first(r'class="ad-kind">(.*?)</p>', s)
+        rating = first(r'<div class="ad-fact"><b>([^<]*★)</b>', s)
+        count = first(r'<div class="ad-fact"><b>[^<]*★</b><span>(.*?)</span>', s)
+        key = f"{rating} from {count}" if rating and count else ""
+        trust = TRUST["profile"]
     elif fam == "ranking":
         stats = dict((text(b2), text(b1)) for b1, b2 in re.findall(r'<div class="stat"><b>(.*?)</b><span>(.*?)</span></div>', s))
         n, rv = stats.get("Companies"), stats.get("Google reviews")

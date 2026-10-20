@@ -25,18 +25,18 @@ PILLAR = ("National Heat Pump Rebate: everything confirmed so far", "/programs/n
 STYLE = "<style>.faq-item{border-bottom:1px solid #d9d0c1;padding:14px 0}.faq-item h3{margin:0 0 6px;font-size:18px}.faq-item p{margin:0}.byline{font-size:14px;color:#5a5348;margin:0 0 16px}</style>"
 
 
-def build(slug):
-    d = json.loads((ROOT / "data/federal" / f"{slug}.json").read_text())
+def build(slug, src="federal", pillar=True):
+    d = json.loads((ROOT / "data" / src / f"{slug}.json").read_text())
     path = f"/blog/{slug}/"
     nice = date.fromisoformat(d["updated"]).strftime("%B %-d, %Y")
     refs = ", ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>' for t, u in d["refs"])
-    rel = "".join(f'<li><a href="{u}">{t}</a></li>' for t, u in [PILLAR] + d["related"])
+    rel = "".join(f'<li><a href="{u}">{t}</a></li>' for t, u in ([PILLAR] if pillar else []) + d["related"])
     article = f"""<p class="byline">By <a href="/about">Sam Menard</a> · Updated {nice}</p>
 {kit.sections(d)}
 <div class="callout"><strong>Want a number for your home?</strong> Run our <a href="{d.get('calc', '/calculator/on/')}" style="color:var(--teal,#0d4f5c); font-weight:600;">rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers near you</a>.</div>
 <h2>Common questions</h2>
 {kit.faq(d)}
-<h2>More on the federal heat pump rebate</h2>
+<h2>{d.get("related_heading", "More on the federal heat pump rebate")}</h2>
 <ul>{rel}</ul>
 <p style="font-size:14px;">Sources, read {nice}: {refs}.</p>"""
     w = kit.quality_gate(article, d, path, loose_refs=True)

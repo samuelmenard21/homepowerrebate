@@ -158,6 +158,7 @@ def build(regions):
         print("$", " ".join(cmd))
         subprocess.run([sys.executable, *cmd], cwd=ROOT, check=True, stdout=subprocess.DEVNULL)
     run("scripts/build_installer_rankings.py")
+    run("scripts/build_installer_profiles.py")  # remaining profiles from the one template (sibling lists, directory)
     for code in sorted(regions):
         b = ROOT / "scripts" / f"build_{code}_pages.py"
         if b.exists():

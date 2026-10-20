@@ -859,6 +859,9 @@ body.tpl-hub { --gut: clamp(20px, 3.2vw, 56px); --hub-w: min(var(--container), 1
 /* Google attribution logo: 16 to 19px tall, clear space 10px left, right and top, 5px bottom (Places policies) */
 .tpl-profile .ipf-g { height: 18px; width: auto; margin: 10px 10px 5px; }
 .tpl-profile .ipf-gt { font-family: Roboto, Arial, sans-serif; font-weight: 400; font-size: 13px; color: #5e5e5e; margin-left: 4px; }
+/* Links inside the dark "Is this your company?" box were teal on teal and invisible */
+.tpl-profile .ip-quote a { color: var(--amber-bright, #e88a2e); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+.tpl-profile .ip-quote li { color: #c9d8d5; font-size: 14.5px; margin-bottom: 8px; }
 
 /* ===== template design: powerscore (powerscore.css) ===== */
 /* PowerScore design (body.tpl-powerscore): /powerscore/ and the city comparison pages.

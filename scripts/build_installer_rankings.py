@@ -798,6 +798,8 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 
 {cost_box(region, service, city_label, hub)}
 
+{advisor_pair_box(region, service, city_label, other_service_url)}
+
 {"" if service in ADVISORS else quote_form(region, service, city_label, ranked)}
 
 {climate_section(region, service, city_label)}
@@ -861,6 +863,25 @@ def advisor_note(region, service, city_label):
         return (f'<p class="small">Every company here is on RESNET\'s 2026 list of HERS rating companies and has an office within 80 km of '
                 f'{esc(city_label)}. <a href="/energy-auditors/">See every home energy auditor we list</a>, rated or not.</p>')
     return ""
+
+
+def advisor_pair_box(region, service, city_label, other_service_url):
+    """On installer ranking pages: send the reader to a registered energy advisor (Canada) or home energy auditor (US) first.
+    The advisor measures the home and writes the report; the installer does the work. Links the city's advisor ranking when
+    there is one, else the national directory. Canadian pages also link the guide. Facts: on-20, bc-pages-0, general-22, general-24."""
+    if service in ADVISORS:
+        return ""
+    ca = REGIONS[region][0] == "ca"
+    key, directory, who, whos = ("energy-advisor", "/energy-advisors/", "registered energy advisor", "registered energy advisors") if ca else \
+        ("energy-auditor", "/energy-auditors/", "home energy auditor", "home energy auditors")
+    url = (other_service_url or {}).get(key)
+    link = (f'<a href="{url}">See the top-rated {whos} in {esc(city_label)}</a>' if url
+            else f'<a href="{directory}">See the {whos} we list</a>')
+    why = ("Some rebates need an evaluation or heat load calculation before any work starts. ") if ca else (
+           "Some utility programs want an audit before any work starts. ")
+    guide = ' <a href="/energy-advisors/when-to-call-an-energy-advisor/">Read when to call an energy advisor</a>.' if ca else ""
+    return (f'<div class="callout"><p><strong>Talk to {"an" if who[0] in "aeiou" else "a"} {who} first.</strong> {why}'
+            f'{link}.{guide}</p></div>')
 
 
 def pro_box(region, service, city_slug, city_label):

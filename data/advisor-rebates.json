@@ -1,0 +1,79 @@
+{
+ "_about": "Rebates shown on energy advisor and auditor profiles (build_advisor_directory.py). Each entry names a verified fact; amount, status, date and source come from the facts file, and only active programs are shown. 'role' is where an assessment fits, in plain words, and must match the fact. Regions with no entry show no rebate section. git add -f.",
+ "ca": {
+  "ON": [
+   {
+    "fact": "on-20-hrs-assessment-deadlines-and-caps",
+    "title": "Ontario Home Renovation Savings: assessment stream",
+    "href": "/ca/on/",
+    "role": "The pre-audit comes before any work, and a post-audit finishes it by December 31, 2026. You need at least two qualified upgrades. A registered energy advisor at an authorized service organization does both audits."
+   }
+  ],
+  "BC": [
+   {
+    "fact": "bc-pages-0-bc-hydro-heat-pump-rebate-home-renovation-rebate",
+    "title": "BC Hydro heat pump rebate",
+    "href": "/programs/bc-hydro-rebates/",
+    "role": "For the full amount the heat pump must meet 100% of your heating at -5 °C, shown by a heat load calculation. It is for homes replacing electric heat, such as baseboards or an electric furnace, and needs an installer from the Home Performance Contractor Network."
+   }
+  ],
+  "NS": [
+   {
+    "fact": "ns-0-efficiency-nova-scotia-home-energy-assessment-hea-",
+    "title": "Efficiency Nova Scotia Home Energy Assessment rebates",
+    "href": "/ca/ns/",
+    "role": "You book an initial assessment ($199, waived for moderate-income households), do the upgrades it recommends within 12 months, then get a final assessment. The rebate cheque follows the final assessment."
+   }
+  ],
+  "NL": [
+   {
+    "fact": "nl-7-takecharge-air-sealing",
+    "title": "takeCHARGE air sealing rebate",
+    "href": "/ca/nl/",
+    "role": "For an existing home you need a blower door test before and after the work: $200 for 10% fewer leaks, $475 for 20% and $750 for 30% or more. The home needs electric heat and an air exchanger such as an HRV."
+   }
+  ]
+ },
+ "us": {
+  "MA": [
+   {
+    "fact": "ma-5-mass-save-home-energy-assessment",
+    "title": "Mass Save Home Energy Assessment",
+    "href": "/us/ma/",
+    "role": "The utility's own assessment is free and unlocks weatherization incentives. Check it before you pay for a private audit."
+   }
+  ],
+  "NJ": [
+   {
+    "fact": "nj-10-pseg-whole-home-energy-assessment",
+    "title": "PSE&G Whole Home Energy Assessment",
+    "href": "/us/nj/",
+    "role": "PSE&G customers can book an assessment through the utility. Check it before you pay for a private audit."
+   }
+  ],
+  "MI": [
+   {
+    "fact": "mi-11-consumers-home-energy-analysis",
+    "title": "Consumers Energy home energy analysis",
+    "href": "/us/mi/",
+    "role": "Consumers Energy customers can book an analysis through the utility. Check it before you pay for a private audit."
+   }
+  ],
+  "MN": [
+   {
+    "fact": "mn-10-xcel-energy-home-energy-squad",
+    "title": "Xcel Energy Home Energy Squad",
+    "href": "/us/mn/",
+    "role": "The $100 Energy Planner visit includes a blower door test, and visits are free for income-qualified customers. Check Xcel's program before you pay for a private audit."
+   }
+  ],
+  "IL": [
+   {
+    "fact": "il-7-comed-home-energy-savings",
+    "title": "ComEd Home Energy Savings",
+    "href": "/us/il/",
+    "role": "Free for households at or below 80% of area median income. If that is you, check ComEd's program before you pay for a private audit."
+   }
+  ]
+ }
+}

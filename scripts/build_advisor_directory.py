@@ -32,6 +32,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import apply_canonical_nav_footer as navfooter  # noqa: E402
+import advisor_profile_page  # noqa: E402
 import page_kit  # noqa: E402
 import regions  # noqa: E402
 
@@ -41,7 +42,7 @@ DIR = json.loads((ROOT / "data" / "energy-advisor-directory.json").read_text())
 SITES = json.loads((ROOT / "data" / "energy-advisor-sites.json").read_text()) if (ROOT / "data" / "energy-advisor-sites.json").exists() else {}
 MAP_OUT = ROOT / "data" / "energy-advisor-profiles.json"
 GUIDE = "/energy-advisors/when-to-call-an-energy-advisor/"
-# Details a company gave us by email (services, base, area), keyed by company name. Shown on its profile, labelled as told to us.
+# Details a company gave us by email (services, base, area), keyed by company name. Shown on its profile as plain services.
 OWNER = json.loads((ROOT / "data" / "energy-advisor-owner-details.json").read_text())["companies"] if (ROOT / "data" / "energy-advisor-owner-details.json").exists() else {}
 MIN_RANKED = 3
 PRIOR_REVIEWS, PRIOR_RATING = 25, 4.5
@@ -143,117 +144,30 @@ def who(c, kind):
 
 
 def profile(c, kind, ranks, rows_by_city, path):
-    name = c["name"]
+    """One page per company, rendered by advisor_profile_page.render (the advisor template, body class tpl-advisor)."""
+    name, g = c["name"], c["google"]
     w = who(c, kind)
-    g = c["google"]
     regions_txt = ", ".join(PROV_NAMES.get(x, STATE_NAMES.get(x, x)) for x in c["regions"])
-    acts = []
-    if c["website"]:
-        acts.append(f'<a href="{e(c["website"])}" target="_blank" rel="noopener" class="ip-btn ip-btn-primary">Visit website</a>')
-    for reg, ph in list(c["phones"].items())[:2]:
-        if ph:
-            acts.append(f'<a href="tel:{tel(ph)}" class="ip-btn ip-btn-outline">Call {e(ph)}{" (" + e(reg) + ")" if len(c["phones"]) > 1 else ""}</a>')
-    if c["email"]:
-        acts.append(f'<a href="mailto:{e(c["email"])}" class="ip-btn ip-btn-outline">Email</a>')
-    if g and g.get("maps"):
-        acts.append(f'<a href="{e(g["maps"])}" target="_blank" rel="noopener" class="ip-maps-link">View on Google Maps</a>')
-    rating = (f'<div class="ip-rating"><div class="ip-rating-num">{g["rating"]:.1f}★</div><div class="ip-rating-count">{g["reviews"]:,} Google reviews</div></div>'
-              if g and g.get("rating") else "")
-    rk = ranks.get((c["country"], name.lower()), [])
-    rank_html = ""
-    if rk:
-        rows = "".join(f'<a href="{u}" class="ip-program"><div class="ip-program-name">#{i} of {n} in {e(city)}</div>'
-                       f'<div class="ip-program-detail">Top-rated {kind["pros"]} in {e(city)}, ranked by Google reviews</div>'
-                       f'<span class="ip-program-arrow">&rarr;</span></a>' for reg, city, i, n, u in sorted(rk, key=lambda x: (x[2], x[1])))
-        rank_html = f'<section class="ip-kind"><div class="ip-kind-head"><h2>Where {e(name)} ranks</h2></div><div class="ip-programs">{rows}</div></section>'
-    cities = sorted({(r, ci) for r, ci in c["cities"]}, key=lambda x: x[1])
-    city_links = []
-    for reg, city in cities:
-        hub = HUBS.get((reg, city.lower()))
-        city_links.append(f'<a href="{hub[0]}" class="ip-nearby-item"><span>{e(city)}</span><span class="ip-nearby-rating">rebates</span></a>'
-                          if hub else f'<span class="ip-nearby-item"><span>{e(city)}</span></span>')
-    if c["country"] == "ca" and not c["sources"][0].startswith("NRCan"):
-        serve = (f'<p>{e(name)} told us it works as registered energy advisors in {e(regions_txt)}. '
-                 + (f'Cities we cover where it works:</p><div class="ip-nearby-list">{"".join(city_links)}</div>' if city_links else '</p>'))
-    elif c["country"] == "ca":
-        serve = (f'<p>NRCan lists {e(name)} as licensed to serve postal codes in {e(regions_txt)}. '
-                 + (f'That includes these cities we cover:</p><div class="ip-nearby-list">{"".join(city_links)}</div>' if city_links
-                    else 'None of them are cities we have pages for yet.</p>'))
-    else:
-        serve = (f'<p>RESNET lists {e(name)} as a HERS rating company in {e(regions_txt)}. '
-                 + (f'Its office is within 80 km of these cities we cover:</p><div class="ip-nearby-list">{"".join(city_links)}</div>' if city_links
-                    else 'We could not place its office near a city we cover.</p>'))
-    svc, checked = services(c)
-    svc_html = ""
-    if svc:
-        when = date.fromisoformat(checked).strftime("%B %Y") if checked else ""
-        svc_html = (f'<section class="ip-faq"><h3>Services mentioned on their website</h3><p>'
-                    + " · ".join(e(x) for x in svc)
-                    + f'</p><p class="ip-footer-note">We read their website in {when} and noted what it mentions. Ask them to confirm before you book.</p></section>')
-    od = OWNER.get(name)
-    if od:
-        items = "".join(f"<li>{e(x)}</li>" for x in od["services"])
-        svc_html += (f'<section class="ip-faq"><h3>Services, as told to us by {e(name)}</h3><ul>{items}</ul>'
-                     f'<p>{e(od["base"])} {e(od["area"])}</p>'
-                     f'<p class="ip-footer-note">Details supplied by the company on {date.fromisoformat(od["told_on"]).strftime("%B %-d, %Y")}. We have not checked them. '
-                     f'To book, use the Visit website button above.</p></section>')
-    if c["country"] == "ca":
-        svc_html += (f'<section class="ip-faq"><h3>Why call an energy advisor first</h3><ul>'
-                     f'<li><b>Before any work.</b> Some programs want an evaluation or a heat load calculation first. Ontario\'s assessment stream needs the pre-audit before any work, and a rebate can be lost if the work starts earlier.</li>'
-                     f'<li><b>The EnerGuide evaluation.</b> An advisor visits, measures the home and gives you a rating and a report, so you can pick upgrades in the right order.</li>'
-                     f'<li><b>The heat load calculation.</b> BC Hydro\'s full heat pump rebate needs the unit to meet 100% of your heating at -5 C, shown by a CSA F280 calculation.</li>'
-                     f'<li><b>The site visit.</b> The advisor checks insulation, windows and equipment, and a blower door test measures how airtight the home is.</li></ul>'
-                     f'<p><a href="{GUIDE}">Read the full guide: when to call an energy advisor</a>.</p></section>')
-    listed = c["sources"][0].startswith(("NRCan", "RESNET"))
-    src = (f'<a href="{kind["src"]}" target="_blank" rel="noopener">{e(kind["src_name"])}</a>' if listed
-           else "the company, by email")
-    checks = [f'<div class="ip-vet-row ip-vet-yes"><span class="ip-vet-icon">✓</span><div><strong>{e(c["sources"][0])}</strong><br>'
-              f'<span class="ip-vet-detail">Source: {src}</span></div></div>']
-    if g and g.get("rating"):
-        checks.append(f'<div class="ip-vet-row ip-vet-yes"><span class="ip-vet-icon">✓</span><div><strong>Listed on Google Maps</strong><br>'
-                      f'<span class="ip-vet-detail">{g["rating"]:.1f}★ from {g["reviews"]:,} reviews. Ratings and review counts from Google Maps.</span></div></div>')
-    else:
-        checks.append('<div class="ip-vet-row ip-vet-no"><span class="ip-vet-icon">–</span><div><strong>No Google rating found</strong><br>'
-                      '<span class="ip-vet-detail">We could not match this company to a rated Google Maps listing, so it is not in our city rankings.</span></div></div>')
-    adv = "registered energy advisor" if c["country"] == "ca" else "home energy auditor"
-    intro = (f'{e(name)} is a {e(w)} serving {e(regions_txt)}.'
-             + (f' It has a {g["rating"]:.1f}★ Google rating from {g["reviews"]:,} reviews.' if g and g.get("rating") else ""))
-    if c["country"] == "ca" and "confirmed" in c["sources"][0].lower():
-        intro = f'{e(name)} is a team of registered energy advisors in {e(regions_txt)}.' + (
-            f' It has a {g["rating"]:.1f}★ Google rating from {g["reviews"]:,} reviews.' if g and g.get("rating") else "")
-    first_reg = next((r for r, _ in cities), None)
-    first_city = next((ci for _, ci in cities), None)
-    body = f"""<main id="main" tabindex="-1" class="layout-wide"><div class="ip-wrap">
-<p class="ip-breadcrumb"><a href="/">HomePowerRebate</a> / <a href="{kind['root']}">{kind['Title']}</a> / {e(name)}</p>
-<div class="ip-hero"><div><h1>{e(name)}</h1><p class="ip-hero-meta">{e(w[:1].upper() + w[1:])} &middot; {e(regions_txt)}</p></div>{rating}</div>
-<p class="ip-intro">{intro}</p>
-<div class="ip-actions">{"".join(acts)}</div>
-{rank_html}
-<section class="ip-nearby"><h3>Where they work</h3>{serve}</section>
-{svc_html}
-<aside class="ip-vetting"><h3>What we checked</h3>{"".join(checks)}
-<p class="ip-vet-note">Ask any {adv} for the price of every visit up front, and whether their report counts for the rebate program you plan to use.</p></aside>
-<section class="ip-quote"><h2>Is this your company?</h2>
-<p>Tell us what to add to this page: the services you offer, the areas and languages you work in, the rebate programs you know best, or a correction. It takes one email to <a href="mailto:hello@homepowerrebate.com?subject={e('Profile: ' + name)}">hello@homepowerrebate.com</a>.</p>
-<p>These are yours to use with clients:</p>{pro_tools(c['country'], first_reg, first_city)}</section>
-<a href="{kind['root']}" class="ip-city-link">See every {kind['pro']} we list &rarr;</a>
-<p class="ip-footer-note">Listing from {src}{", ratings and review counts from Google Maps" if g else ""}, checked @@CHECKED@@. Spot an error? <a href="/contact/?subject={e('Correction: ' + name)}">Let us know</a>.</p>
-</div></main>"""
+    ctx = {"PROV_NAMES": PROV_NAMES, "STATE_NAMES": STATE_NAMES, "HUBS": HUBS, "SITES": SITES, "OWNER": OWNER,
+           "who": who, "services": services, "pro_tools": pro_tools}
+    body = advisor_profile_page.render(c, kind, ranks, path, ctx)
     title = f"{name}: {kind['Title'][:-1]} | HomePowerRebate" if len(name) < 40 else f"{name} | HomePowerRebate"
     desc = (f"{name}, a {w} in {regions_txt}." + (f" {g['rating']:.1f} stars from {g['reviews']:,} Google reviews." if g and g.get('rating') else "")
             + " Phone, website, cities served and services.")
     crumbs = [("Home", "/"), (kind["Title"], kind["root"]), (name, path)]
     ld = page_kit.ld_scripts([page_kit.breadcrumb_ld(crumbs)])
-    reg0 = (first_reg or ("bc" if c["country"] == "ca" else "ma"))
+    cities = sorted({(r, ci) for r, ci in c["cities"]}, key=lambda x: x[1])
+    reg0 = next((r for r, _ in cities), None) or ("bc" if c["country"] == "ca" else "ma")
     page = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{e(title)}</title>
 {page_kit.GA}
 <meta name="description" content="{e(desc)}"><meta name="robots" content="noindex, follow"><link rel="canonical" href="{BASE}{path}">
 {page_kit.FONTS}
-{navfooter.tpl_link(PROFILE_CSS)}{ld}</head>
-<body class="tpl-profile">
+{ld}</head>
+<body class="tpl-advisor">
 {navfooter.render_nav(reg0, "")}
+{page_kit.breadcrumb([(n, p) for n, p in crumbs[:-1]] + [(e(name), path)])}
 {body}
 {navfooter.render_footer(reg0, "", "", path)}
 </body></html>
@@ -305,7 +219,12 @@ def directory(country, companies, ranks, rows_by_city, slugs):
                  f"rated Google Maps listing ranked first.</p>"
                  f"<p>NRCan says the two evaluations together average <b>$600 to $1,000</b>, depending on the provider and province, and "
                  f"are usually paid after the work. Service organizations never sell door to door or by unsolicited calls or emails.</p>"
-                 f'<p>Not sure when to call one? Read <a href="{GUIDE}">when to call an energy advisor</a>: what an evaluation and a heat load calculation are, and which rebates ask for them first.</p>')
+                 f'<p>Not sure when to call one? Read <a href="{GUIDE}">when to call an energy advisor</a>: what an evaluation and a heat load calculation are, and which rebates ask for them first.</p>'
+                 f'<p>Guides by province: <a href="/blog/bc-heat-pump-rebate-energy-advisor-heat-load-calculation/">British Columbia</a>, '
+                 f'<a href="/blog/ontario-home-renovation-savings-energy-audit-first/">Ontario</a>, '
+                 f'<a href="/blog/nova-scotia-home-energy-assessment-rebates-explained/">Nova Scotia</a>, '
+                 f'<a href="/blog/newfoundland-air-sealing-blower-door-test-takecharge/">Newfoundland and Labrador</a>, and '
+                 f'<a href="/blog/how-to-find-a-registered-energy-advisor-canada/">how to find an advisor anywhere in Canada</a>.</p>')
         h1, desc = ("Registered Energy Advisors in Canada",
                     f"All {n} NRCan-licensed EnerGuide service organizations by province, with phone numbers, Google ratings and the cities each one serves.")
     else:
@@ -313,7 +232,8 @@ def directory(country, companies, ranks, rows_by_city, slugs):
                  f"heat pump programs ask for one. This page lists all {n} HERS rating companies on RESNET's 2026 list in the states we "
                  f"cover, by state, with the {rated} we could match to a rated Google Maps listing ranked first.</p>"
                  f"<p>RESNET's list covers companies that completed HERS Ratings in 2025. Most also do energy code testing and new home "
-                 f"certifications; ask whether they audit existing homes and whether your utility accepts their report.</p>")
+                 f"certifications; ask whether they audit existing homes and whether your utility accepts their report.</p>"
+                 f'<p>Before you pay for an audit, read <a href="/blog/free-utility-home-energy-assessment-before-private-auditor/">which utilities offer their own assessment</a>.</p>')
         h1, desc = ("Home Energy Auditors in the US",
                     f"All {n} RESNET HERS rating companies in the states we cover, with Google ratings, contacts and the cities each one serves.")
     tools = (f'<div class="callout"><p><strong>Are you a {kind["pro"]}?</strong> These are yours to use with clients:</p>{pro_tools(country)}</div>')

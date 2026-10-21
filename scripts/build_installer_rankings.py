@@ -854,14 +854,28 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
                         "count": n, "reviews": total_reviews, "rebate_registered": reg_count, "top": [display_name(r["name"]) for r in top3]}
 
 
+ADVISOR_GUIDES = {"bc": ("/blog/bc-heat-pump-rebate-energy-advisor-heat-load-calculation/", "Why the heat load calculation comes first in BC"),
+                  "on": ("/blog/ontario-home-renovation-savings-energy-audit-first/", "Book the energy audit first in Ontario"),
+                  "ns": ("/blog/nova-scotia-home-energy-assessment-rebates-explained/", "What the Nova Scotia home energy assessment unlocks"),
+                  "nl": ("/blog/newfoundland-air-sealing-blower-door-test-takecharge/", "The Newfoundland blower door test explained")}
+
+
+def advisor_guides(region):
+    """Links to the advisor guide for this province (when we have one) and the country-wide finding guide."""
+    own = ADVISOR_GUIDES.get(region)
+    return ((f'Read: <a href="{own[0]}">{own[1]}</a>. ' if own else "")
+            + '<a href="/blog/how-to-find-a-registered-energy-advisor-canada/">How to find a registered energy advisor in Canada</a>.')
+
+
 def advisor_note(region, service, city_label):
     if service == ADVISOR:
         return (f'<p class="small">Every company here is licensed by Natural Resources Canada to serve {esc(city_label)} postal codes '
                 f'(or told us it works here as registered energy advisors). The address is its Google listing, which may be in another city. '
-                f'<a href="/energy-advisors/">See every registered energy advisor</a>, rated or not.</p>')
+                f'<a href="/energy-advisors/">See every registered energy advisor</a>, rated or not. {advisor_guides(region)}</p>')
     if service in ADVISORS:
         return (f'<p class="small">Every company here is on RESNET\'s 2026 list of HERS rating companies and has an office within 80 km of '
-                f'{esc(city_label)}. <a href="/energy-auditors/">See every home energy auditor we list</a>, rated or not.</p>')
+                f'{esc(city_label)}. <a href="/energy-auditors/">See every home energy auditor we list</a>, rated or not. '
+                f'<a href="/blog/free-utility-home-energy-assessment-before-private-auditor/">Check your utility\'s own assessment before you pay for an audit</a>.</p>')
     return ""
 
 

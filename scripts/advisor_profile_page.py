@@ -32,6 +32,51 @@ NRCAN_COST_FACT = FACTS["general-22-nrcan-energuide-evaluation-cost"]
 GUIDES = {"ON": "/blog/ontario-home-renovation-savings-energy-audit-first/", "BC": "/blog/bc-heat-pump-rebate-energy-advisor-heat-load-calculation/",
           "NS": "/blog/nova-scotia-home-energy-assessment-rebates-explained/", "NL": "/blog/newfoundland-air-sealing-blower-door-test-takecharge/"}
 US_GUIDE = "/blog/free-utility-home-energy-assessment-before-private-auditor/"
+FIND_GUIDE = "/blog/how-to-find-a-registered-energy-advisor-canada/"
+WHEN_GUIDE = "/energy-advisors/when-to-call-an-energy-advisor/"
+NRCAN_LIST = NRCAN_COST_FACT["source_url"]
+_BC_LIST = "https://betterhomesbc.ca/get-support/energy-advisors/"
+# Copy that depends on the province, so a BC page never talks about Ontario's rules. A province with no verified rule that
+# needs an advisor gets the generic text (REGION_COPY_DEFAULT). Every claim here matches a fact named in data/advisor-rebates.json
+# or the NRCan facts (general-22, general-24) or bc-pages-44.
+REGION_COPY = {
+    "ON": {"lede": "Ontario's assessment stream needs the pre-audit before any work, and a rebate can be lost if the work starts earlier.",
+           "need": "Not for every project. Ontario's Home Renovation Savings assessment stream needs one: a registered energy advisor at an authorized service organization does the pre-audit and the post-audit. The attic-only stream does not need an assessment.",
+           "after": "For the assessment stream, no. The pre-audit has to come before any work starts, and the post-audit must be done by December 31, 2026.",
+           "find": f'Homeowners book through an NRCan licensed service organization, which sends a registered advisor. Ontario\'s assessment stream needs an advisor at an authorized service organization. <a href="{NRCAN_LIST}" target="_blank" rel="noopener">NRCan lists them</a>.',
+           "cost": "The program also pays a $600 audit rebate in its assessment stream, so ask the advisor how that shows up for you."},
+    "BC": {"lede": "BC Hydro's full heat pump rebate needs a heat load calculation, and some add-on rebates need an EnerGuide evaluation.",
+           "need": "Not for every project. BC Hydro's full heat pump rebate needs a heat load calculation showing the unit meets 100% of your heating at -5 °C, and some add-on rebates need an EnerGuide evaluation by a program-qualified advisor.",
+           "after": "For the full BC Hydro heat pump rebate, the heat load calculation decides the size of heat pump that qualifies, so get it before you buy. Check the page for any add-on rebate you want, since some need an evaluation first.",
+           "find": f'<a href="{_BC_LIST}" target="_blank" rel="noopener">Better Homes BC</a> lists advisors registered with NRCan who also finished BC rebate training. It tells homeowners to interview and choose their own. Energy coaches answer questions at 1-844-881-9790.',
+           "cost": ""},
+    "NS": {"lede": "In Nova Scotia the assessment is the way into the rebate: Efficiency Nova Scotia pays up to $5,000 for upgrades its assessment recommends.",
+           "need": "In Nova Scotia the assessment is the way into the rebate. Efficiency Nova Scotia pays up to $5,000 for upgrades that its home energy assessment recommends.",
+           "after": "No. Your home must have no renovations started before the initial assessment, and the upgrades happen between the initial and final assessment, within 12 months.",
+           "find": "Book through Efficiency Nova Scotia. NRCan lists no licensed service organization for the province.",
+           "cost": "Efficiency Nova Scotia's initial assessment is $199, and the fee is waived for moderate-income households."},
+    "NL": {"lede": "takeCHARGE's air sealing rebate needs a blower door test before the work and another after it.",
+           "need": "takeCHARGE's air sealing rebate for an existing home needs a blower door test before and after the work, so you have a starting number to compare.",
+           "after": "For the air sealing rebate on an existing home, no. The first blower door test is your starting number, so it has to come before the work.",
+           "find": f'Homeowners book through an NRCan licensed service organization, which sends a registered advisor. Income-eligible homeowners can apply to takeCHARGE first, which arranges the energy assessment. <a href="{NRCAN_LIST}" target="_blank" rel="noopener">NRCan lists the organizations</a>.',
+           "cost": ""},
+}
+
+
+def region_copy(regions_abbr, prov, key):
+    """The province-specific text for key, for one province or a short list; the generic text for provinces with no verified rule."""
+    default = {
+        "lede": "Some rebates want an advisor involved before any work starts, so check your program's page before you hire anyone.",
+        "need": "Not for every project. Some rebates require one, and a visit helps you pick upgrades in the right order. We have not yet verified a provincial rebate here that needs one, so check your program page first.",
+        "after": "For many programs, no. Some want the first evaluation before any work starts. Check your program's page before you hire anyone.",
+        "find": f'Homeowners book through an NRCan licensed service organization, which sends a registered advisor. <a href="{NRCAN_LIST}" target="_blank" rel="noopener">NRCan lists them</a>, and <a href="/energy-advisors/">our directory</a> shows every organization by province.',
+        "cost": ""}
+    known = [(a, REGION_COPY[a][key]) for a in regions_abbr if a in REGION_COPY and REGION_COPY[a][key]]
+    if not known:
+        return default[key] if key != "cost" else ""
+    if len(known) == 1 and len(regions_abbr) == 1:
+        return known[0][1]
+    return " ".join(f"<b>{e(prov.get(a, a))}:</b> {t}" for a, t in known[:3])
 
 SYMBOLS = """<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
 <symbol id="ad-report" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13l3-2.5 3 2.5M10 12.8V17h4v-4.2"/></symbol>
@@ -99,6 +144,37 @@ def rebate_rows(country, region_codes):
     return out
 
 
+GUIDE_META = {}
+for _f in sorted((ROOT / "data" / "advisors").glob("*.json")):
+    _d = json.loads(_f.read_text())
+    GUIDE_META["/blog/" + _f.stem + "/"] = (_d["h1"], _d["desc"])
+
+
+# the country guides name several provinces and utilities in their descriptions; on a profile the blurb stays neutral
+NEUTRAL_BLURB = {FIND_GUIDE: "Where to look in your province, what a visit costs and five questions to ask before you book.",
+                 US_GUIDE: "Which utilities offer their own assessment, with what each includes, from their own pages."}
+
+
+def read_next(c, ca):
+    """Guides worth reading from this profile: the province's own, the finding guide, when-to-call (US: the utility guide)."""
+    links = []
+    if ca:
+        for a in c["regions"]:
+            if a in GUIDES and GUIDES[a] not in links:
+                links.append(GUIDES[a])
+        links.append(FIND_GUIDE)
+    else:
+        links.append(US_GUIDE)
+    out = []
+    for u in links[:4]:
+        t, d = GUIDE_META[u]
+        d = NEUTRAL_BLURB.get(u, d)
+        out.append(f'<a href="{u}" class="ad-rank" style="display:block"><b>{e(t)}</b><span style="display:block;margin-top:4px">{e(d)}</span></a>')
+    out.append(f'<a href="{WHEN_GUIDE}" class="ad-rank" style="display:block"><b>When to call an energy advisor, and why it comes first</b><span style="display:block;margin-top:4px">What an evaluation and a heat load calculation are, and which rebates ask for them first.</span></a>' if ca else
+               '<a href="/energy-auditors/" class="ad-rank" style="display:block"><b>Every home energy auditor we list</b><span style="display:block;margin-top:4px">By state, with Google ratings where we could match one.</span></a>')
+    return "".join(out)
+
+
 def render(c, kind, ranks, path, ctx):
     """Return the profile page HTML (with @@CHECKED@@ placeholders). ctx supplies the builder's helpers and data."""
     name, g, country = c["name"], c["google"], c["country"]
@@ -148,7 +224,8 @@ def render(c, kind, ranks, path, ctx):
            if ca else
            "A home energy auditor tests how much energy your house uses and where it leaks, so you fix the biggest problems first.")
     n_reg = len(c["regions"])
-    area_b = ", ".join(c["regions"]) if n_reg <= 3 else f"{n_reg} {'provinces' if ca else 'states'}"
+    city_names = [ci for _, ci in cities]
+    area_b = ", ".join(city_names) if 0 < len(city_names) <= 2 else (f"{len(city_names)} cities" if city_names else "Ask them")
     f1 = (f'<b>{g["rating"]:.1f} ★</b><span>{g["reviews"]:,} Google reviews</span>' if g and g.get("rating")
           else '<b>Not rated</b><span>No Google rating found</span>')
     if listed:
@@ -156,7 +233,7 @@ def render(c, kind, ranks, path, ctx):
     else:
         f2 = '<b>Registered</b><span>Energy advisors</span>'
     strip = "".join(f'<div class="ad-fact">{x}</div>' for x in
-                    (f1, f2, f'<b>{e(area_b)}</b><span>{"Provinces" if ca else "States"} served</span>', '<b>@@CHECKED@@</b><span>Page last checked</span>'))
+                    (f1, f2, f'<b>{e(area_b)}</b><span>{"Cities we cover" if city_names else "Cities served"}</span>', '<b>@@CHECKED@@</b><span>Page last checked</span>'))
     hero = (f'<header class="ad-hero"><div class="ad-wrap"><div class="ad-hero-grid"><div>'
             f'<p class="ad-kind">{e(w[:1].upper() + w[1:])} · {e(regions_txt)}</p><h1>{e(name)}</h1><p class="ad-sub">{sub}</p>'
             f'<div class="ad-cta-row">{"".join(cta)}</div></div>'
@@ -166,7 +243,7 @@ def render(c, kind, ranks, path, ctx):
     s = []
     if ca:
         s.append(f"""<section id="first"><h2>Call the energy advisor first</h2>
-<p class="ad-lede">Some rebates want an advisor involved before any work starts. For example, Ontario's assessment stream needs the pre-audit first, and a rebate can be lost if the work starts earlier.</p>
+<p class="ad-lede">Some rebates want an advisor involved before any work starts. {region_copy(c["regions"], PROV, "lede")}</p>
 <div class="ad-window"><div class="ad-zones"><div class="ad-zone before"><h3>Before work starts <span class="ad-pill open">Where the advisor goes</span></h3><ol>
 <li class="go"><i>1</i><div><b>Energy advisor visits</b><span>Tests the house. Writes the EnerGuide evaluation and, for a heat pump, the heat load calculation.</span></div></li>
 <li><i>2</i><div><b>You choose upgrades</b><span>In the right order: sealing and insulation can come before the heat pump.</span></div></li></ol></div>
@@ -262,16 +339,21 @@ def render(c, kind, ranks, path, ctx):
             f'depending on the provider and province, and are usually paid after the service. Ask this company for its own price. '
             f'<a href="{e(NRCAN_COST_FACT["source_url"])}" target="_blank" rel="noopener">NRCan, read {nice_date(NRCAN_COST_FACT["verified_on"])}</a>.')
     if ca:
-        faq = [("Do I need an energy advisor?", "Not for every project. Some rebates require one, and a visit helps you pick upgrades in the right order. Check your program page first."),
+        rc = lambda k: region_copy(c["regions"], PROV, k)  # noqa: E731
+        cost_extra = rc("cost") if any(a in REGION_COPY and REGION_COPY[a]["cost"] for a in c["regions"]) else ""
+        faq = [("Do I need an energy advisor?", rc("need")),
                ("How is an advisor different from an installer?", "An advisor tests and measures your home and does not sell equipment. An installer fits it. The advisor's numbers help the installer size it properly."),
-               ("What does it cost?", cost),
-               ("Can I book one after the install?", "For many programs, no. Ontario's assessment stream, for one, needs the pre-audit before any work starts."),
-               ("How do I find a registered advisor?", f'Homeowners book through an NRCan licensed service organization, which sends a registered advisor. <a href="{e(NRCAN_COST_FACT["source_url"])}" target="_blank" rel="noopener">NRCan lists them</a>, and <a href="/energy-advisors/">our directory</a> shows every organization by province.')]
+               ("What does it cost?", cost + (" " + cost_extra if cost_extra else "")),
+               ("Can I book one after the install?", rc("after")),
+               ("How do I find a registered advisor?", rc("find"))]
     else:
         faq = [("Do I need a home energy auditor?", "Not for every project. Start with your utility, since some offer their own assessment at low or no cost, then decide whether you need an independent rater."),
                ("What is a HERS rating company?", f'RESNET lists the companies that can give a HERS rating. <a href="{e(kind["src"])}" target="_blank" rel="noopener">See the RESNET list</a>.'),
                ("What does it cost?", "Prices vary by company and home. Ask for the price of every visit up front, and whether the report counts for the rebate program you plan to use.")]
     s.append(f'<section id="faq"><h2>Questions people ask</h2>{"".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in faq)}</section>')
+
+    # read next: the province's guide, the country guide and the when-to-call page (US: the utility guide)
+    s.append(f'<section id="read"><h2>Read next</h2><div class="ad-rows" style="margin-top:18px">{read_next(c, ca)}</div></section>')
 
     # claim box
     claim = (f'<div class="ad-claim"><p><b>Is this your company?</b> Tell us what to add or correct: services, areas, languages, or the rebate programs you know best. Email '

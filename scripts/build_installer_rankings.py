@@ -927,19 +927,42 @@ def body_text(html_out, city_label):
 
 def near_duplicates(pages, limit=0.90):
     """Paths whose body is >= limit similar to a sibling (same region+service).
-    The page with fewer installers in each offending pair is the one held back."""
+    The page with fewer installers in each offending pair is the one held back.
+    Each pair's verdict is cached by the hashes of both texts (data/near-duplicate-cache.json), so a rebuild only
+    compares pages whose text changed."""
     import difflib
+    import hashlib
     import itertools
+    cache_file = ROOT / "data" / "near-duplicate-cache.json"
+    try:
+        cache = json.loads(cache_file.read_text())
+    except (OSError, ValueError):
+        cache = {}
+    used = {}
     flagged = set()
     groups = {}
     for p in pages:
+        p["_h"] = hashlib.sha1(p["text"].encode("utf-8")).hexdigest()[:16]
         groups.setdefault((p["region"], p["service"]), []).append(p)
     for sibs in groups.values():
         for a, b in itertools.combinations(sibs, 2):
-            # advisor and auditor pages are long lists: compare words, not characters (same idea, far faster)
-            x, y = (a["text"].split(), b["text"].split()) if a["service"] in ADVISORS else (a["text"], b["text"])
-            if difflib.SequenceMatcher(None, x, y, autojunk=False).ratio() >= limit:
+            words = a["service"] in ADVISORS
+            key = f"{limit}|{int(words)}|" + "|".join(sorted((a["_h"], b["_h"])))
+            if key in cache:
+                hit = cache[key]
+            else:
+                # advisor and auditor pages are long lists: compare words, not characters (same idea, far faster)
+                x, y = (a["text"].split(), b["text"].split()) if words else (a["text"], b["text"])
+                sm = difflib.SequenceMatcher(None, autojunk=False)
+                sm.set_seq2(y)
+                sm.set_seq1(x)
+                # cheap upper bounds first: a pair that cannot reach the limit skips the slow exact ratio
+                hit = not (sm.real_quick_ratio() < limit or sm.quick_ratio() < limit) and sm.ratio() >= limit
+            used[key] = hit
+            if hit:
                 flagged.add((a if a["count"] < b["count"] else b)["url"])
+    if used != cache:
+        cache_file.write_text(json.dumps(used, indent=0, sort_keys=True) + "\n")
     return flagged
 
 

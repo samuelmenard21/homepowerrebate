@@ -1756,8 +1756,8 @@
 /installers/profiles/wa/spokane/idi-insulation-distributors-inc/ /installers/wa/spokane/insulation/ 301
 /installers/profiles/wa/spokane/idi-insulation-distributors-inc /installers/wa/spokane/insulation/ 301
 
-/installers/profiles/bc/langley/polysource-industries-inc-spray-foam-slab-jacking-protective-coatings-spray-foam-rigs-equipment/ /installers/bc/langley/insulation/ 301
-/installers/profiles/bc/langley/polysource-industries-inc-spray-foam-slab-jacking-protective-coatings-spray-foam-rigs-equipment /installers/bc/langley/insulation/ 301
+/installers/profiles/bc/langley/polysource-industries-inc-spray-foam-slab-jacking-protective-coatings-spray-foam-rigs-equipment/ /ca/bc/langley/insulation/ 301
+/installers/profiles/bc/langley/polysource-industries-inc-spray-foam-slab-jacking-protective-coatings-spray-foam-rigs-equipment /ca/bc/langley/insulation/ 301
 
 /installers/profiles/on/hamilton/td-solar-shop/ /installers/on/hamilton/battery/ 301
 /installers/profiles/on/hamilton/td-solar-shop /installers/on/hamilton/battery/ 301
@@ -1765,9 +1765,14 @@
 /installers/profiles/on/guelph/eden-energy-equipment/ /installers/on/guelph/battery/ 301
 /installers/profiles/on/guelph/eden-energy-equipment /installers/on/guelph/battery/ 301
 
+/installers/bc/langley/insulation/ /ca/bc/langley/insulation/ 301
+/installers/bc/langley/insulation /ca/bc/langley/insulation/ 301
+
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 /installers/profiles/ab/red-deer/express-plumbing-heating-inc/ /installers/ab/red-deer/heat-pump/ 301
 /installers/profiles/ab/red-deer/express-plumbing-heating-inc /installers/ab/red-deer/heat-pump/ 301
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 

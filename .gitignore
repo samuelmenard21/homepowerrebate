@@ -15,4 +15,6 @@ installers/installer-emails.csv
 installers/installer-profile-urls.csv
 dist/
 scripts/__pycache__/
-outreach/
+outreach/*
+!outreach/send_advisors.py
+!outreach/check_advisors.py

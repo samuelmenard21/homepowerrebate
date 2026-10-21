@@ -19,25 +19,17 @@ DAILY_CAP = 15
 def body(r, address):
     ca = r["country"] == "ca"
     name = html.escape(short_name(r["name"]))
-    reg = r["regions"].split(",")[0]
-    region = html.escape(REGION_NAMES.get(reg, reg))
     role = "energy advisors" if ca else "home energy auditors"
     listed = "NRCan's list of licensed EnerGuide service organizations" if ca else "RESNET's list of HERS rating companies"
-    calc = f"https://homepowerrebate.com/calculator/widget/?r={reg.lower()}"
-    preview = f"{name} is listed in our directory of {role}, plus a rebate calculator for your website."
+    preview = f"{name} is listed in our directory of {role}. I'd love to hear how business is going."
     pre = (f'<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;mso-hide:all;">{preview}'
            + "&nbsp;&zwnj;" * 40 + "</div>")
     return f"""{pre}<p>Hi {name} team,</p>
 <p>I'm Sam, founder of <a href="https://homepowerrebate.com/">HomePowerRebate</a>. We help homeowners find energy rebates they qualify for and explain why getting a professional home energy assessment is the critical first step.</p>
 <p>While building out our directory of top {role}, we listed {name} from {listed}.</p>
 <p>Here is your dedicated page: <a href="{r['profile_url']}" {LINK}>{name} on HomePowerRebate</a>.</p>
-<p>It shows homeowners what you do and how to reach you directly. Our goal is to connect local homeowners looking for qualified {role} straight to your team.</p>
-<p>Two quick ways we can help:</p>
-<ol>
-<li><strong>Update your profile:</strong> Take a look at your page. If anything is wrong, or if you want us to add specific services or cities you cover, just reply and I'll update it right away.</li>
-<li><strong>{region} Rebate Calculator:</strong> We created an embeddable <a href="{calc}" {LINK}>rebate calculator for {region}</a> you can add to your own website. Visitors can see which rebates they qualify for, and the amounts update automatically whenever programs change.</li>
-</ol>
-<p>If you have any feedback or ideas on how we can better feature your services to local clients, just reply and let me know!</p>
+<p>I'm trying to learn what {role} are dealing with right now. If you're open to it, tell me what's going on in your business: what's working, what's slowing you down, anything at all.</p>
+<p>There's no pitch in this email. I read every reply myself, and I'll write back.</p>
 <p>Best regards,<br>Sam Menard<br>Founder, HomePowerRebate<br><a href="https://homepowerrebate.com/">homepowerrebate.com</a></p>
 <p style="font-size:12px;color:#777">HomePowerRebate, {html.escape(address)}<br>You're receiving this because your business is on a public register of {role}. Reply "remove" and we won't email you again.</p>"""
 

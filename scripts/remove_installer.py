@@ -179,11 +179,15 @@ DATA = {"_redirects", "data/installer-blocklist.json", "data/installer-cleanup-l
 
 
 def keep_only_related(needles):
-    """Revert any rebuilt file that never mentioned these installers (drift from other work)."""
-    related = set(DATA)
-    for n in needles:
-        related |= {l.split(":", 1)[1] if l.startswith("HEAD:") else l for l in git("grep", "-l", "-i", "-F", n, "HEAD", "--", ".").split()}
-    stray = [f for f in git("diff", "--name-only").split() if f not in related and not f.startswith("scripts/")]
+    """Revert any rebuilt file whose change never touches these installers (drift from other work)."""
+    keys = [n.lower() for n in needles if n]
+    stray = []
+    for f in git("diff", "--name-only").split():
+        if f in DATA or f.startswith(("scripts/", "installers/json/")):
+            continue
+        diff = git("diff", "-U0", "HEAD", "--", f).lower()
+        if not any(k in diff for k in keys):
+            stray.append(f)
     if stray:
         git("checkout", "HEAD", "--", *stray)
     return stray

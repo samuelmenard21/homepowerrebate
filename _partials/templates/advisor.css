@@ -167,3 +167,7 @@ a.ad-chip:hover { border-color: #0d4f5c; }
   .tpl-advisor .ad-bar { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; background: rgba(250, 247, 242, .96); backdrop-filter: blur(8px); padding: 10px 16px; border-top: 1px solid #d9d0c1; z-index: 40; }
   .tpl-advisor .ad-bar.one { grid-template-columns: 1fr; }
 }
+
+/* the page carries its own call and website bar: the site's floating rebate button would sit on top of it */
+.tpl-advisor .sticky-cta, .tpl-advisor #sticky-cta { display: none !important; }
+.tpl-advisor .ad-rank { flex-wrap: wrap; }

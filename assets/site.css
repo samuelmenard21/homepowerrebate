@@ -1047,6 +1047,10 @@ a.ad-chip:hover { border-color: #0d4f5c; }
   .tpl-advisor .ad-bar.one { grid-template-columns: 1fr; }
 }
 
+/* the page carries its own call and website bar: the site's floating rebate button would sit on top of it */
+.tpl-advisor .sticky-cta, .tpl-advisor #sticky-cta { display: none !important; }
+.tpl-advisor .ad-rank { flex-wrap: wrap; }
+
 /* ===== template design: powerscore (powerscore.css) ===== */
 /* PowerScore design (body.tpl-powerscore): /powerscore/ and the city comparison pages.
    Bold left-aligned hero with stat cards, a prominent city picker, readable podium rings and region cards. */

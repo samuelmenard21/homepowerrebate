@@ -1,0 +1,419 @@
+{
+ "code": "nb",
+ "name": "New Brunswick",
+ "country": "ca",
+ "currency": "CAD",
+ "hub": "/ca/nb/",
+ "installers": "/installers/",
+ "title": "New Brunswick Rebate Calculator 2026: NB Power Total Home Rebates",
+ "h1": "New Brunswick Rebate Calculator 2026: What You Could Get Back",
+ "desc": "Free New Brunswick rebate calculator. NB Power Total Home heat pump, water heater, insulation, window and HRV rebates, plus the income-based program. Every number sourced.",
+ "intro": "Answer a few questions and see which New Brunswick rebates fit your home, with a source for every number.",
+ "short": "NB Power's Total Home Energy Savings Program pays $1,500 for a central ducted heat pump, $400 for a mini split, $550 for a heat pump water heater and more, after a home energy evaluation. The oil to heat pump advance funding and the solar rebate have closed to new people.",
+ "faq": [
+  [
+   "How much is the NB Power heat pump rebate?",
+   "$1,500 for a central ducted air source heat pump, $1,000 for a furnace heat pump add-on, $2,000 for geothermal, $400 for a mini split, and $350 per indoor head for a multizone system. You start with a home energy evaluation."
+  ],
+  [
+   "Is the oil to heat pump funding still open?",
+   "No. Registration for the advance payment closed on June 30, 2026. People who registered must finish their upgrade by March 31, 2027. The Total Home rebates still apply to everyone else."
+  ],
+  [
+   "Is there help for lower incomes?",
+   "Yes. The Enhanced Energy Savings Program is for homeowners with a combined household income under $70,000. NB Power screens the applications, and places are first come, first served while funding lasts."
+  ],
+  [
+   "Can I get the NB solar rebate?",
+   "Only if you enrolled in Total Home by May 27, 2026. The $200 per kW rebate is closed to anyone who did not."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "hp_type",
+   "label": "Which heating upgrade would you do?",
+   "type": "select",
+   "options": [
+    {
+     "value": "central",
+     "label": "Central ducted air source heat pump"
+    },
+    {
+     "value": "furnace",
+     "label": "Heat pump add-on to a furnace"
+    },
+    {
+     "value": "geothermal",
+     "label": "Geothermal heat pump"
+    },
+    {
+     "value": "mini",
+     "label": "One mini split"
+    },
+    {
+     "value": "multi",
+     "label": "Multizone heat pump (several indoor heads)"
+    }
+   ],
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
+   "id": "heads",
+   "label": "How many indoor heads? (multizone only)",
+   "type": "select",
+   "options": [
+    {
+     "value": "1",
+     "label": "1"
+    },
+    {
+     "value": "2",
+     "label": "2"
+    },
+    {
+     "value": "3",
+     "label": "3"
+    },
+    {
+     "value": "4",
+     "label": "4"
+    },
+    {
+     "value": "5",
+     "label": "5"
+    },
+    {
+     "value": "6",
+     "label": "6 or more"
+    }
+   ],
+   "for": [
+    "heat-pump"
+   ],
+   "optional": true,
+   "help": "Skip this to see the per-head rate."
+  },
+  {
+   "id": "wh_type",
+   "label": "Which water heating upgrade?",
+   "type": "select",
+   "options": [
+    {
+     "value": "hpwh",
+     "label": "Heat pump water heater"
+    },
+    {
+     "value": "drain",
+     "label": "Drain water heat recovery"
+    }
+   ],
+   "for": [
+    "water-heater"
+   ]
+  },
+  {
+   "id": "openings",
+   "label": "How many windows, doors or skylights would you replace?",
+   "type": "select",
+   "options": [
+    {
+     "value": "1",
+     "label": "1"
+    },
+    {
+     "value": "2",
+     "label": "2"
+    },
+    {
+     "value": "3",
+     "label": "3"
+    },
+    {
+     "value": "4",
+     "label": "4"
+    },
+    {
+     "value": "5",
+     "label": "5"
+    },
+    {
+     "value": "6",
+     "label": "6"
+    },
+    {
+     "value": "7",
+     "label": "7"
+    },
+    {
+     "value": "8",
+     "label": "8"
+    },
+    {
+     "value": "9",
+     "label": "9"
+    },
+    {
+     "value": "10",
+     "label": "10"
+    },
+    {
+     "value": "11",
+     "label": "11"
+    },
+    {
+     "value": "12",
+     "label": "12 or more"
+    }
+   ],
+   "for": [
+    "windows"
+   ],
+   "optional": true,
+   "help": "ENERGY STAR units only. Skip this to see the per-unit rate."
+  },
+  {
+   "id": "income_band",
+   "label": "Is your combined household income under $70,000? (optional)",
+   "type": "select",
+   "options": [
+    {
+     "value": "under70",
+     "label": "Yes, under $70,000"
+    },
+    {
+     "value": "70plus",
+     "label": "No, $70,000 or more"
+    }
+   ],
+   "optional": true,
+   "help": "Only used to check the income-based program. It stays on your device."
+  }
+ ],
+ "derived": {},
+ "pools": [],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump"
+  },
+  {
+   "id": "water-heater",
+   "label": "Water heating"
+  },
+  {
+   "id": "insulation",
+   "label": "Insulation and air sealing"
+  },
+  {
+   "id": "windows",
+   "label": "Windows, doors and skylights"
+  },
+  {
+   "id": "hrv",
+   "label": "HRV (fresh air system)"
+  },
+  {
+   "id": "support",
+   "label": "Income-based help"
+  }
+ ],
+ "programs": [
+  {
+   "id": "nb-hp-central",
+   "fact": "nb-1-space-heating",
+   "name": "Total Home: central ducted air source heat pump",
+   "upgrade": "heat-pump",
+   "group": "hp",
+   "amount": {
+    "max": 1500
+   },
+   "rules": "Must be on NB Power's qualifying air source heat pump list. Home Energy Evaluation before and after.",
+   "when": {
+    "hp_type": [
+     "central"
+    ]
+   }
+  },
+  {
+   "id": "nb-hp-furnace",
+   "fact": "nb-1-space-heating",
+   "name": "Total Home: furnace heat pump add-on",
+   "upgrade": "heat-pump",
+   "group": "hp",
+   "amount": {
+    "max": 1000
+   },
+   "rules": "ENERGY STAR or on NB Power's qualifying air source heat pump list.",
+   "when": {
+    "hp_type": [
+     "furnace"
+    ]
+   }
+  },
+  {
+   "id": "nb-hp-geo",
+   "fact": "nb-1-space-heating",
+   "name": "Total Home: geothermal heat pump",
+   "upgrade": "heat-pump",
+   "group": "hp",
+   "amount": {
+    "max": 2000
+   },
+   "rules": "On the Canada Greener Homes Grant ground source list or ENERGY STAR.",
+   "when": {
+    "hp_type": [
+     "geothermal"
+    ]
+   }
+  },
+  {
+   "id": "nb-hp-mini",
+   "fact": "nb-1-space-heating",
+   "name": "Total Home: mini split heat pump",
+   "upgrade": "heat-pump",
+   "group": "hp",
+   "amount": {
+    "max": 400
+   },
+   "rules": "Must be on NB Power's qualifying air source heat pump list.",
+   "when": {
+    "hp_type": [
+     "mini"
+    ]
+   }
+  },
+  {
+   "id": "nb-hp-multi",
+   "fact": "nb-1-space-heating",
+   "name": "Total Home: multizone heat pump",
+   "upgrade": "heat-pump",
+   "group": "hp",
+   "amount": {
+    "per": {
+     "unit": "indoor head",
+     "rate": 350,
+     "question": "heads"
+    }
+   },
+   "rules": "$350 per indoor head. Must be on NB Power's qualifying air source heat pump list.",
+   "when": {
+    "hp_type": [
+     "multi"
+    ]
+   }
+  },
+  {
+   "id": "nb-hpwh",
+   "fact": "nb-2-water-heating",
+   "name": "Total Home: heat pump water heater",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 550
+   },
+   "rules": "ENERGY STAR heat pump water heater.",
+   "when": {
+    "wh_type": [
+     "hpwh"
+    ]
+   }
+  },
+  {
+   "id": "nb-dwhr",
+   "fact": "nb-2-water-heating",
+   "name": "Total Home: drain water heat recovery",
+   "upgrade": "water-heater",
+   "amount": {
+    "max": 400
+   },
+   "rules": "Heat recovery efficiency of 42% or more.",
+   "when": {
+    "wh_type": [
+     "drain"
+    ]
+   }
+  },
+  {
+   "id": "nb-win",
+   "fact": "nb-4-additional-rebates",
+   "name": "Total Home: windows, doors and skylights",
+   "upgrade": "windows",
+   "amount": {
+    "per": {
+     "unit": "unit",
+     "rate": 50,
+     "question": "openings"
+    }
+   },
+   "rules": "$50 each. ENERGY STAR. Keep the stickers that come on the windows."
+  },
+  {
+   "id": "nb-hrv",
+   "fact": "nb-4-additional-rebates",
+   "name": "Total Home: heat recovery ventilator",
+   "upgrade": "hrv",
+   "amount": {
+    "max": 200
+   },
+   "rules": "ENERGY STAR heat recovery ventilator."
+  },
+  {
+   "id": "nb-ins",
+   "fact": "nb-3-insulation",
+   "name": "Total Home: insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "label": "$0.40 to $3.00 per square foot",
+    "max": 0
+   },
+   "rules": "Paid per square foot by the R-value you add. Insulate at least 20% of a building component, such as the ceiling. Shown but not added to your total because it depends on your home."
+  },
+  {
+   "id": "nb-airseal",
+   "fact": "nb-4-additional-rebates",
+   "name": "Total Home: air sealing",
+   "upgrade": "insulation",
+   "amount": {
+    "label": "$250 to $550",
+    "max": 0
+   },
+   "rules": "Paid by how much your air leakage drops, from 10% to 25%. Not available if the home started at 3 air changes per hour or less. Shown but not added to your total."
+  },
+  {
+   "id": "nb-enhanced",
+   "fact": "nb-7-enhanced-energy-savings",
+   "name": "Enhanced Energy Savings Program",
+   "upgrade": "support",
+   "amount": {
+    "label": "Upgrades recommended after screening",
+    "max": 0
+   },
+   "rules": "Combined household income under $70,000. Own and live in the home. First come, first served while funding lasts.",
+   "when": {
+    "income_band": [
+     "under70"
+    ]
+   }
+  },
+  {
+   "id": "fed-hp",
+   "fact": "federal-0-national-heat-pump-rebate",
+   "name": "National Heat Pump Rebate (federal, not open yet)",
+   "upgrade": "heat-pump",
+   "amount": {
+    "label": "Up to $10,000 or $2,000",
+    "max": 0
+   },
+   "rules": "Announced October 8, 2026 and expected to launch in early 2027. The income line, eligible homes and how it combines with provincial programs are not published, so this is shown but not added to your total."
+  }
+ ],
+ "closed_facts": [
+  "nb-6-oil-to-heat-pump-advance",
+  "nb-5-solar"
+ ],
+ "notes": [
+  "The oil to heat pump advance funding and the solar rebate are closed to new people and are listed below as closed.",
+  "Amounts are the most a program pays. Your rebate depends on your quote and final invoice."
+ ]
+}

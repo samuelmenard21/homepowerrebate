@@ -3,7 +3,7 @@
 <title>Ontario Rebate Calculator 2026: Home Renovation Savings</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W33G4TGRHD');</script>
-<meta name="description" content="Free Ontario rebate calculator. See Home Renovation Savings rebates for heat pumps, insulation, solar, batteries and thermostats."><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large"><link rel="canonical" href="https://homepowerrebate.com/calculator/on/">
+<meta name="description" content="Free Ontario rebate calculator. See Home Renovation Savings rebates for heat pumps, insulation, solar, batteries and thermostats, with the official source for."><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large"><link rel="canonical" href="https://homepowerrebate.com/calculator/on/">
 <!-- AEO-SPEAKABLE-START -->
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Ontario Rebate Calculator 2026: Home Renovation Savings", "url": "https://homepowerrebate.com/calculator/on/", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".hero h1", ".hero h1 + p"]}}</script>
 <!-- AEO-SPEAKABLE-END -->
@@ -21,7 +21,7 @@
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="twitter:title" content="Ontario Rebate Calculator 2026: Home Renovation Savings">
-<meta name="twitter:description" content="Free Ontario rebate calculator. See Home Renovation Savings rebates for heat pumps, insulation, solar, batteries and thermostats.">
+<meta name="twitter:description" content="Free Ontario rebate calculator. See Home Renovation Savings rebates for heat pumps, insulation, solar, batteries and thermostats, with the official source for.">
 <!-- OG-CARD-START -->
 <meta property="og:image" content="https://homepowerrebate.com/og/calculator/on.jpg?v=71d8f8ae4fb6">
 <meta property="og:image:width" content="1200">
@@ -84,6 +84,8 @@
         <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" class="nav-region-tab" aria-pressed="false">Illinois</button>
         <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" class="nav-region-tab" aria-pressed="false">Washington</button>
         <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" class="nav-region-tab" aria-pressed="false">Minnesota</button>
+        <button type="button" onclick="showProvinceCities('pe')" id="province-tab-pe" class="nav-region-tab" aria-pressed="false">PEI</button>
+        <button type="button" onclick="showProvinceCities('nb')" id="province-tab-nb" class="nav-region-tab" aria-pressed="false">New Brunswick</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -134,6 +136,12 @@
     </div>
     <div id="province-cities-mn" class="nav-region-cities" hidden>
       <a href="/us/mn/minneapolis/">Minneapolis</a><a href="/us/mn/saint-paul/">Saint Paul</a><a href="/us/mn/rochester/">Rochester</a><a href="/us/mn/duluth/">Duluth</a>
+    </div>
+    <div id="province-cities-pe" class="nav-region-cities" hidden>
+      <a href="/ca/pe/charlottetown/">Charlottetown</a><a href="/ca/pe/summerside/">Summerside</a>
+    </div>
+    <div id="province-cities-nb" class="nav-region-cities" hidden>
+      <a href="/ca/nb/moncton/">Moncton</a><a href="/ca/nb/fredericton/">Fredericton</a>
     </div>
     </div>
   </div>
@@ -552,6 +560,8 @@
           <li><a href="/ca/ab/">Alberta</a></li>
           <li><a href="/ca/ns/">Nova Scotia</a></li>
           <li><a href="/ca/nl/">Newfoundland and Labrador</a></li>
+          <li><a href="/ca/pe/">Prince Edward Island</a></li>
+          <li><a href="/ca/nb/">New Brunswick</a></li>
         </ul>
       </div>
       <div>
@@ -620,7 +630,7 @@ function toggleCityDropdown() {
   modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn', 'pe', 'nb'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

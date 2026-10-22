@@ -39,6 +39,7 @@
 <!-- OG-CARD-END -->
 </head>
 <body class="tpl-page">
+<a class="skip-link" href="#main">Skip to main content</a>
 <!-- CANONICAL-NAV-START -->
 <nav class="nav" aria-label="Main">
   <div class="nav-inner" style="display:flex; justify-content:space-between; align-items:center;">
@@ -179,6 +180,7 @@
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
+<main id="main" tabindex="-1">
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/guides/">Guides</a></li><li aria-current="page">HPCN Installer Vetting Checklist</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -289,13 +291,10 @@
     <h3 style="margin-top: 0;">How to Score Your Installers</h3>
     <div class="score-item">
       <strong>7 out of 7 items:</strong> Best choice. Hire this installer.</div>
-    </div>
     <div class="score-item">
       <strong>5–6 out of 7 items:</strong> Good choice. Ask follow-up questions on what they missed.</div>
-    </div>
     <div class="score-item">
       <strong>4 or fewer:</strong> Red flag. Get quotes from other installers.</div>
-    </div>
   </div>
 
   <!-- NOTES SECTION -->
@@ -568,6 +567,7 @@ var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).fi
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
+</main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
 <section class="hpr-newsletter" style="background: linear-gradient(135deg, rgba(13, 79, 92, 0.95), rgba(8, 54, 63, 0.98)); padding: 56px 24px; margin: 0;">

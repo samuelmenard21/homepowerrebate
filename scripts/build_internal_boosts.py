@@ -335,6 +335,10 @@ STATE_TOPICS = [
     ("us/wa", "/us/wa/heating-assistance/", "Washington heating bill help: LIHEAP dates and income limits"),
     ("us/ca", "/us/ca/heating-assistance/", "California heating bill help: LIHEAP dates and income limits"),
     ("us/vt", "/us/vt/heating-assistance/", "Vermont heating bill help: LIHEAP dates and income limits"),
+    ("ca/bc", "/ca/bc/heating-assistance/", "British Columbia heating and bill help: programs and dates"),
+    ("ca/on", "/ca/on/heating-assistance/", "Ontario heating and bill help: programs and dates"),
+    ("ca/yt", "/ca/yt/heating-assistance/", "Yukon heating and bill help: programs and dates"),
+    ("ca/nl", "/ca/nl/heating-assistance/", "Newfoundland and Labrador heating and bill help: programs and dates"),
 ]
 for region, url, label in STATE_TOPICS:
     marker = "STATE-" + url.strip("/").replace("/", "-").upper() + "-LINK"

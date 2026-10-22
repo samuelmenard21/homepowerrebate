@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 615,
+ "count": 622,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -1154,6 +1154,19 @@
     "/ca/bc/nanaimo/windows/"
    ],
    "last_read": "2026-09-26"
+  },
+  {
+   "url": "https://app.bchydro.com/accounts-billing/bill-payment/ways-to-pay/customer-crisis-fund.html",
+   "host": "app.bchydro.com",
+   "region": "bc-pages",
+   "check": "BC Hydro Customer Crisis Fund; BC Hydro: Customer Crisis Fund",
+   "facts": [
+    "bc-pages-44-customer-crisis-fund"
+   ],
+   "used_by_pages": [
+    "state-topics/bc-heating-assistance"
+   ],
+   "last_read": "2026-10-21"
   },
   {
    "url": "https://betterhomesbc.ca/get-support/energy-advisors/",
@@ -5508,7 +5521,7 @@
    "url": "https://www.gov.nl.ca/releases/2026/fin/0716n04/",
    "host": "www.gov.nl.ca",
    "region": "nl",
-   "check": "Home Heating Supplement; Home Heating Supplement Program (furnace and stove oil), Government of Newfoundland and Labrador; Home Heating Supplement Program, Government of NL",
+   "check": "Government of NL: Home Heating Supplement news release; Home Heating Supplement; Home Heating Supplement Program (furnace and stove oil), Government of Newfoundland and Labrador; Home Heating Suppleme",
    "facts": [
     "nl-4-home-heating-supplement"
    ],
@@ -5518,7 +5531,8 @@
     "/nl/mount-pearl/",
     "/nl/paradise/",
     "/nl/st-johns/",
-    "/programs/newfoundland-oil-to-electric-rebate/"
+    "/programs/newfoundland-oil-to-electric-rebate/",
+    "state-topics/nl-heating-assistance"
    ],
    "last_read": "2026-10-16"
   },
@@ -6164,6 +6178,19 @@
    "last_read": "2026-10-11"
   },
   {
+   "url": "https://ontarioelectricitysupport.ca/",
+   "host": "ontarioelectricitysupport.ca",
+   "region": "on",
+   "check": "Ontario Electricity Support Program; Ontario Electricity Support Program (OESP)",
+   "facts": [
+    "on-34-oesp"
+   ],
+   "used_by_pages": [
+    "state-topics/on-heating-assistance"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
    "url": "https://ottawa.ca/en/city-hall/budget-finance-and-corporate-planning/funding/environmental-funding/better-homes-ottawa/better-homes-ottawa-loan-program",
    "host": "ottawa.ca",
    "region": "on",
@@ -6240,7 +6267,8 @@
     "/ca/on/whitby/smart-thermostats/",
     "/ca/on/windsor/appliances/",
     "/ca/on/windsor/smart-thermostats/",
-    "/programs/save-on-energy-rebates/"
+    "/programs/save-on-energy-rebates/",
+    "state-topics/on-heating-assistance"
    ],
    "last_read": "2026-10-04"
   },
@@ -7692,6 +7720,20 @@
    "last_read": "2026-10-21"
   },
   {
+   "url": "https://211.ca/",
+   "host": "211.ca",
+   "region": "state-topics",
+   "check": "211 Canada: find local help",
+   "facts": [],
+   "used_by_pages": [
+    "state-topics/bc-heating-assistance",
+    "state-topics/nl-heating-assistance",
+    "state-topics/on-heating-assistance",
+    "state-topics/yt-heating-assistance"
+   ],
+   "last_read": ""
+  },
+  {
    "url": "https://acf.gov/ocs/programs/liheap",
    "host": "acf.gov",
    "region": "state-topics",
@@ -7707,6 +7749,17 @@
     "state-topics/pa-heating-assistance",
     "state-topics/vt-heating-assistance",
     "state-topics/wa-heating-assistance"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://app.bchydro.com/accounts-billing/bill-payment/ways-to-pay/bill-help.html",
+   "host": "app.bchydro.com",
+   "region": "state-topics",
+   "check": "BC Hydro: bill help",
+   "facts": [],
+   "used_by_pages": [
+    "state-topics/bc-heating-assistance"
    ],
    "last_read": ""
   },
@@ -7831,6 +7884,17 @@
    "last_read": ""
   },
   {
+   "url": "https://www.gov.nl.ca/fin/home-heating-supplement-program/",
+   "host": "www.gov.nl.ca",
+   "region": "state-topics",
+   "check": "Government of NL: Home Heating Supplement Program",
+   "facts": [],
+   "used_by_pages": [
+    "state-topics/nl-heating-assistance"
+   ],
+   "last_read": ""
+  },
+  {
    "url": "https://www.hydroquebec.com/data/logisvert/logisvert-guide-participation-residentiel-en.pdf",
    "host": "www.hydroquebec.com",
    "region": "state-topics",
@@ -7849,6 +7913,17 @@
    "facts": [],
    "used_by_pages": [
     "state-topics/wa-battery"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://yukon.ca/en/housing-and-property/funding-and-loans/calculate-funding-seniors-home-heating-pioneer-utility-grant",
+   "host": "yukon.ca",
+   "region": "state-topics",
+   "check": "Yukon: Pioneer Utility Grant calculator",
+   "facts": [],
+   "used_by_pages": [
+    "state-topics/yt-heating-assistance"
    ],
    "last_read": ""
   },
@@ -10223,6 +10298,19 @@
    ],
    "used_by_pages": [
     "/yt/whitehorse/"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
+   "url": "https://yukon.ca/en/pioneer-utility-grant",
+   "host": "yukon.ca",
+   "region": "yt",
+   "check": "Government of Yukon: Pioneer Utility Grant; Yukon Pioneer Utility Grant",
+   "facts": [
+    "yt-9-pioneer-utility-grant"
+   ],
+   "used_by_pages": [
+    "state-topics/yt-heating-assistance"
    ],
    "last_read": "2026-10-21"
   },

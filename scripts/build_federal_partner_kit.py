@@ -116,7 +116,7 @@ SHEET_CSS = """<style>
 @media(min-width:640px){.ps-tools{grid-template-columns:1fr 1fr}.ps-tools .wide{grid-column:1/-1}}
 .ps-sheet{background:#fff;border:1px solid var(--card-rule);border-radius:14px;padding:26px 24px}
 .ps-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;border-bottom:3px solid var(--amber);padding-bottom:12px;margin-bottom:14px}
-.ps-head h1{font-family:'Fraunces',Georgia,serif;font-size:27px;line-height:1.15;margin:0}
+.ps .ps-head h2{font-family:'Fraunces',Georgia,serif;font-size:27px;line-height:1.15;margin:0;color:var(--ink);text-transform:none;letter-spacing:0}
 .ps-head p{margin:4px 0 0;font-size:14px;color:var(--ink-soft)}
 .ps-by{text-align:right;font-size:13.5px;line-height:1.4;min-width:150px}.ps-by b{display:block;font-size:16px}
 .ps h2{font-size:15px;margin:16px 0 6px;color:var(--teal-deep);text-transform:uppercase;letter-spacing:.04em}
@@ -133,7 +133,7 @@ SHEET_CSS = """<style>
   body{background:#fff!important}
   .nav,.site-footer,footer,.ps-tools,.hpr-breadcrumb,.skip-link,#sticky-cta,.sticky-cta,.fed-alert,.fed-bar,[class*="newsletter"]{display:none!important}
   .ps{padding:0;max-width:none}.ps-sheet{border:0;padding:0}
-  .ps ul{font-size:12px}.ps table{font-size:11.5px}.ps td{padding:4px 5px}.ps h2{font-size:12.5px;margin:10px 0 3px}.ps-head h1{font-size:22px}.ps-amt b{font-size:22px}
+  .ps ul{font-size:12px}.ps table{font-size:11.5px}.ps td{padding:4px 5px}.ps h2{font-size:12.5px;margin:10px 0 3px}.ps .ps-head h2{font-size:22px}.ps-amt b{font-size:22px}
   a{color:inherit;text-decoration:none}@page{margin:12mm}
 }
 </style>"""
@@ -155,7 +155,7 @@ def sheet_article(pdata):
 <div class="wide"><button type="button" onclick="window.print()">Print or save as PDF</button></div>
 </form>
 <article class="ps-sheet">
-<div class="ps-head"><div><h1>The federal heat pump rebate: what we know</h1><p>Information checked {CHECKED}. Applications are not open yet.</p></div>
+<div class="ps-head"><div><h2>The federal heat pump rebate: what we know</h2><p>Information checked {CHECKED}. Applications are not open yet.</p></div>
 <div class="ps-by" id="ps-by" hidden><span class="ps-small">Prepared for you by</span><b id="o-name"></b><span id="o-phone"></span><br><span id="o-email"></span><br><span id="o-site"></span></div></div>
 <div class="ps-amts"><div class="ps-amt"><b>Up to $10,000</b>Households below the median income</div><div class="ps-amt"><b>$2,000</b>Other eligible homeowners</div></div>
 <h2>What Ottawa has said</h2><ul>{said}</ul>

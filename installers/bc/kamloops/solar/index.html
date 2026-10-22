@@ -169,7 +169,7 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=ef04f84995" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
 <meta name="twitter:title" content="Best Solar Installers in Kamloops, BC (2026)">
 <meta name="twitter:description" content="The top-rated solar installers in Kamloops, BC, ranked by 598 Google reviews. Compare 7 local companies, plus what to ask before you hire.">
 <meta name="theme-color" content="#faf7f2">
@@ -342,7 +342,7 @@
 <div class="callout"><p><strong>Short answer:</strong> The top-rated solar installers in Kamloops are Riverside Energy Systems (4.9★, 150 reviews), Rooham Electric (5.0★, 50 reviews), Greenfoot Energy Solutions (4.8★, 169 reviews).</p></div>
 
 <h2 class="sec-h">Solar installers in Kamloops, ranked <span class="chip" aria-hidden="true">7 listed</span></h2>
-<div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button></div>
+<div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button><button type="button" data-f="reg" aria-pressed="false">✓ Registered only</button></div>
 <ol class="rank-list">
 <li class="rank top g1 has-prof" data-rank="1" data-reviews="150" data-rating="4.9"><div class="n"><a href="/installers/profiles/kamloops/riverside-energy-systems/" aria-label="Riverside Energy Systems profile">1</a></div><div class="nm"><a href="/installers/profiles/kamloops/riverside-energy-systems/">Riverside Energy Systems</a><span class="badge">Top pick</span><span class="bf">Also installs batteries</span><span class="reg" title="BC Hydro solar and battery rebates require an HPCN member contractor.">✓ HPCN member</span></div><div class="st"><span class="rt"><span class="stars" style="--p:98%" aria-hidden="true">★★★★★</span> <b>4.9</b></span> <span class="rv">(150 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:89%"></i></div><div class="adr">1425 Cariboo Pl #24, Kamloops, BC V2C 5Z3</div></div><div class="act"><a class="btn-call" href="tel:2505780620">Call (250) 578-0620</a><a class="btn-prof" href="/installers/profiles/kamloops/riverside-energy-systems/">View profile</a><a class="lnk" href="https://maps.google.com/?cid=15850198173405453521&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk em" href="mailto:info@riversideenergy.ca" aria-label="Email Riverside Energy Systems">Email</a></div></li>
 <li class="rank has-prof" data-rank="2" data-reviews="50" data-rating="5.0"><div class="n"><a href="/installers/profiles/bc/kamloops/rooham-electric/" aria-label="Rooham Electric profile">2</a></div><div class="nm"><a href="/installers/profiles/bc/kamloops/rooham-electric/">Rooham Electric</a><span class="bf">Highest rating (50+ reviews)</span><span class="bf">Also installs batteries</span></div><div class="st"><span class="rt"><span class="stars" style="--p:100%" aria-hidden="true">★★★★★</span> <b>5.0</b></span> <span class="rv">(50 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:30%"></i></div><div class="adr">2817 Bowers Pl, Kamloops, BC V1S 1A7</div></div><div class="act"><a class="btn-call" href="tel:7784716255">Call (778) 471-6255</a><a class="btn-prof" href="/installers/profiles/bc/kamloops/rooham-electric/">View profile</a><a class="lnk" href="https://maps.google.com/?cid=2522846513923399455&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk em" href="mailto:brandon@roohamelectric.ca" aria-label="Email Rooham Electric">Email</a></div></li>
@@ -420,7 +420,8 @@ else{b.disabled=false;m.textContent='Something went wrong. Please try again or e
 </div></section>
 <script>
 (function(){var ol=document.querySelector('.rank-list');if(!ol)return;
-var btns=[].slice.call(document.querySelectorAll('.sortbar button'));
+var btns=[].slice.call(document.querySelectorAll('.sortbar button[data-s]'));
+var fb=document.querySelector('.sortbar button[data-f]');if(fb){fb.addEventListener('click',function(){var on=fb.getAttribute('aria-pressed')!=='true';fb.setAttribute('aria-pressed',on);fb.classList.toggle('on',on);[].slice.call(ol.children).forEach(function(x){x.hidden=on&&!x.querySelector('.reg');});});}
 function sortBy(k){var li=[].slice.call(ol.children);li.sort(function(a,b){
  if(k==='reviews')return b.dataset.reviews-a.dataset.reviews;
  if(k==='rating')return (b.dataset.rating-a.dataset.rating)||(b.dataset.reviews-a.dataset.reviews);

@@ -197,7 +197,7 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=ef04f84995" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
 <meta name="twitter:title" content="Best Heat Pump Installers in Los Angeles, CA (2026)">
 <meta name="twitter:description" content="The top-rated heat pump installers in Los Angeles, CA, ranked by 11,202 Google reviews. Compare 13 local companies, plus what to ask before you hire.">
 <meta name="theme-color" content="#faf7f2">
@@ -454,7 +454,8 @@ else{b.disabled=false;m.textContent='Something went wrong. Please try again or e
 </div></section>
 <script>
 (function(){var ol=document.querySelector('.rank-list');if(!ol)return;
-var btns=[].slice.call(document.querySelectorAll('.sortbar button'));
+var btns=[].slice.call(document.querySelectorAll('.sortbar button[data-s]'));
+var fb=document.querySelector('.sortbar button[data-f]');if(fb){fb.addEventListener('click',function(){var on=fb.getAttribute('aria-pressed')!=='true';fb.setAttribute('aria-pressed',on);fb.classList.toggle('on',on);[].slice.call(ol.children).forEach(function(x){x.hidden=on&&!x.querySelector('.reg');});});}
 function sortBy(k){var li=[].slice.call(ol.children);li.sort(function(a,b){
  if(k==='reviews')return b.dataset.reviews-a.dataset.reviews;
  if(k==='rating')return (b.dataset.rating-a.dataset.rating)||(b.dataset.reviews-a.dataset.reviews);

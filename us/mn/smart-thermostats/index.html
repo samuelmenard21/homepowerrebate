@@ -211,7 +211,7 @@
 <div class="faq-item"><h3>Do I need a contractor?</h3><p>No. Several of these allow you to buy and install it yourself. Minnesota Power also lets a contractor install it and file for you.</p></div>
 <div class="faq-item"><h3>Does it work with electric baseboard heat?</h3><p>Yes, with a line-voltage model. Minnesota Power lists a separate line-voltage page.</p></div>
 
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.centerpointenergy.com/en-us/savings-solutions/energy-efficiency/smart-thermostat" target="_blank" rel="noopener">CenterPoint Energy thermostat rebate</a>, <a href="https://www.mnpower.com/ProgramsRebates/ProgrammableThermostatRebate" target="_blank" rel="noopener">Minnesota Power low-voltage smart thermostat rebate</a>, <a href="https://www.rpu.org/media/egql5pz2/2026-electric-hvac-water-heating-equipment-rebate-application.pdf" target="_blank" rel="noopener">Rochester Public Utilities 2026 equipment rebate form</a>, <a href="https://mn.my.xcelenergy.com/s/residential/heating-cooling/smart-thermostats" target="_blank" rel="noopener">Xcel Energy Minnesota smart thermostats</a>.</p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.centerpointenergy.com/en-us/savings-solutions/energy-efficiency/smart-thermostat" target="_blank" rel="noopener">CenterPoint Energy thermostat rebate</a>, <a href="https://www.mnpower.com/ProgramsRebates/ProgrammableThermostatRebate" target="_blank" rel="noopener">Minnesota Power low-voltage smart thermostat rebate</a>, <a href="https://www.rpu.org/media/egql5pz2/2026-electric-hvac-water-heating-equipment-rebate-application.pdf" target="_blank" rel="noopener">Rochester Public Utilities 2026 equipment rebate form</a>, <a href="https://mn.my.xcelenergy.com/s/residential/heating-cooling/smart-thermostats?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Xcel Energy Minnesota smart thermostats</a>.</p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-minnesota-utilities-pay-for-a-smart-thermos">What Minnesota utilities pay for a smart thermostat</a></li><li><a href="#which-thermostat-works-with-which-system">Which thermostat works with which system</a></li><li><a href="#easy-to-get-wrong-stacking-and-timing">Easy to get wrong: stacking and timing</a></li><li><a href="#extra-programs-that-pay-you-to-share-control">Extra programs that pay you to share control</a></li><li><a href="#does-a-smart-thermostat-save-money-on-a-heat-pum">Does a smart thermostat save money on a heat pump?</a></li><li><a href="#how-to-claim-a-minnesota-smart-thermostat-rebate">How to claim a Minnesota smart thermostat rebate</a></li><li><a href="#more-for-minnesota-homes">More for Minnesota homes</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=mn">See my rebates</a></div></aside>
@@ -453,6 +453,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

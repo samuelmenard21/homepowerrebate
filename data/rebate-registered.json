@@ -1,5 +1,5 @@
 {
- "checked": "2026-09-28",
+ "checked": "2026-10-22",
  "programs": {
   "bc_hpcn_heat_pump": {
    "name": "Home Performance Contractor Network (HVAC)",
@@ -27,396 +27,45 @@
    "why": "NYS Clean Heat heat pump rebates are paid through participating contractors.",
    "source_url": "https://cleanheat.ny.gov/find-a-contractor/",
    "checked": "2026-09-28"
+  },
+  "bc_reg_hp_both": {
+   "name": "Better Homes BC program registered contractor (ESP and HRR)",
+   "short": "Registered contractor (ESP and HRR)",
+   "region": "bc",
+   "service": "heat-pump",
+   "why": "Better Homes BC lists this company as a program registered contractor (a Home Performance Contractor Network member). A registered contractor is required for all CleanBC Energy Savings Program upgrades and for BC Hydro Home Renovation Rebate heat pump and insulation upgrades. Registered for: ESP and HRR.",
+   "source_url": "https://betterhomesbc.ca/get-support/contractors/",
+   "checked": "2026-10-22"
+  },
+  "bc_reg_hp_hrr": {
+   "name": "Better Homes BC program registered contractor (HRR only)",
+   "short": "Registered contractor (HRR only)",
+   "region": "bc",
+   "service": "heat-pump",
+   "why": "Better Homes BC lists this company as a program registered contractor (a Home Performance Contractor Network member). A registered contractor is required for all CleanBC Energy Savings Program upgrades and for BC Hydro Home Renovation Rebate heat pump and insulation upgrades. Registered for: HRR only.",
+   "source_url": "https://betterhomesbc.ca/get-support/contractors/",
+   "checked": "2026-10-22"
+  },
+  "bc_reg_ins_both": {
+   "name": "Better Homes BC program registered contractor (ESP and HRR)",
+   "short": "Registered contractor (ESP and HRR)",
+   "region": "bc",
+   "service": "insulation",
+   "why": "Better Homes BC lists this company as a program registered contractor (a Home Performance Contractor Network member). A registered contractor is required for all CleanBC Energy Savings Program upgrades and for BC Hydro Home Renovation Rebate heat pump and insulation upgrades. Registered for: ESP and HRR.",
+   "source_url": "https://betterhomesbc.ca/get-support/contractors/",
+   "checked": "2026-10-22"
+  },
+  "bc_reg_ins_hrr": {
+   "name": "Better Homes BC program registered contractor (HRR only)",
+   "short": "Registered contractor (HRR only)",
+   "region": "bc",
+   "service": "insulation",
+   "why": "Better Homes BC lists this company as a program registered contractor (a Home Performance Contractor Network member). A registered contractor is required for all CleanBC Energy Savings Program upgrades and for BC Hydro Home Renovation Rebate heat pump and insulation upgrades. Registered for: HRR only.",
+   "source_url": "https://betterhomesbc.ca/get-support/contractors/",
+   "checked": "2026-10-22"
   }
  },
  "matches": [
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "AirVantage Heating & Cooling",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "AirVantage Heating and Cooling Ltd.",
-   "evidence": "name + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Techno Gas Heating & Cooling Services Ltd.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Techno-Gas Heating Services Ltd.",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "A2B Plumbing and Heating",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "A2B Plumbing and Heating Ltd (A2B Plumbing Heating & Cooling)",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "ATMOSERRA Heating & Cooling",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "ATMOSERRA HVAC LTD. (ATMOSERRA Heating & Cooling)",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "RGS Refrigeration & Heating LTD",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "RGS Refrigeration & Heating Ltd",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Trium Mechanical Heating & Cooling",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Trium Mechanical Inc.",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "TAK Heating & Cooling Ltd.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Tak Heating & Cooling Ltd.",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Perfect Choice Heating & Cooling",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Perfect Choice Heating & Cooling Ltd",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Tidal Mechanical",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Tidal Mechanical",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "KDB HVAC",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Redemption Mechanical (KDB HVAC)",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Full Spectrum Heating and Air Conditioning Ltd.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Full Spectrum Heating and Air Conditioning Ltd.",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Cal Geothermal Refrigeration and Heating Ltd",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "CAL Geothermal Refrigeration and Heating Ltd.",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "KTA Mechanical Inc.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "KTA Mechanical Inc.",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Triumph Heating & Air Conditioning",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Triumph Heating and Air Conditioning Ltd.",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Airtika Heating and Cooling Ltd.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Airtika Heating and Cooling Ltd",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Zoltera Mechanical Ltd.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Zoltera Mechanical Ltd.",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Key West Mechanical",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Key West Mechanical",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Cloudy Town Heating & Cooling",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Cloudy Town HVAC Ltd.",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Heritage Mountain Heating and Cooling Inc.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Heritage Mountain Heating and Cooling (2015) Incorporated",
-   "evidence": "name + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Ryan Heating & Air Conditioning",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Ryan Heating & Air Conditioning Ltd.",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Eaton's Furnace Heating & Air Conditioning HVAC",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Eaton's Heating ltd (Eaton's Furnace Heating & Air Conditioning HVAC)",
-   "evidence": "name + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Multitech Mechanical",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Multitech  Mechanical",
-   "evidence": "name + phone match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Coastal Energy Ltd",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Coastal Energy Ltd.",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Sparrow Mechanical Services Ltd.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Sparrow Mechanical Services Ltd",
-   "evidence": "name + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "DRG Plumbing & Heating Ltd.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "DRG Plumbing & Heating Ltd.",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Sasquatch Heat Pumps",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Sasquatch Heat Pumps",
-   "evidence": "name + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "RPR Heating and Air Conditioning Ltd.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "RPR Heating & Air Conditioning Ltd",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "TruFinity Plumbing Heating & Cooling",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Trufinity Ltd. (TruFinity Plumbing Heating & Cooling)",
-   "evidence": "name + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Fehling's Sheet Metal Heating & Air Conditioning Ltd",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Fehling's Sheet Metal Ltd",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Errington Mechanical - Plumbing & HVAC Richmond",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Errington Mechanical Ltd.",
-   "evidence": "name + phone + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Jolly Heating & Cooling",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "447870 B.C. Ltd (Jolly Heating & Cooling)",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Garibaldi Heating and Cooling Ltd.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Garibaldi Heating and Cooling Ltd.",
-   "evidence": "name + phone + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Sir Pipes-a-Lot Plumbing & Heating",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Sir Pipes-a-Lot Plumbing & Heating",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Fraser Valley Heating Ltd",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Fraser Valley Heating Ltd",
-   "evidence": "name + phone match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Bakerview Heating and Cooling",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Bakerview Heating & Cooling Ltd.",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Advanced furnace services and air conditioning",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Advanced 1 Furnace Ltd",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Skyra Heating & Cooling",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Skyra Heating & Cooling Ltd.",
-   "evidence": "name + phone match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Vernon Air Conditioning, Plumbing & Electrical Services",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Vernon BC Air Conditioning Inc. (Vernon Air Conditioning, Plumbing and Electrical Services)",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Xced Plumbing, Heating & A/C Ltd.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Xced Plumbing, Heating & A/C Ltd.",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Groundswell Mechanical Ltd.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Groundswell Mechanical Ltd.",
-   "evidence": "name + phone + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Barracuda Mechanical",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Barracuda Mechanical Inc.",
-   "evidence": "name + website domain + email domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Bears Heating & Cooling Ltd.",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Bears Heating and Cooling Ltd.",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
-  {
-   "region": "bc",
-   "service": "heat-pump",
-   "business": "Coastal Heat Pumps",
-   "program": "bc_hpcn_heat_pump",
-   "official_name": "Coastal Heat Pumps Co Inc.",
-   "evidence": "name + phone + website domain match on official list",
-   "confidence": "high"
-  },
   {
    "region": "bc",
    "service": "solar",
@@ -839,6 +488,1383 @@
    "official_name": "Homets Services LLC DBA Homets Air and Heat",
    "evidence": "website match but name differs",
    "confidence": "medium"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "AirVantage Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "AirVantage Heating and Cooling Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Hudson Service Group",
+   "program": "bc_reg_hp_both",
+   "official_name": "Hudson Service Group Ltd",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Wagner Heating & Air Ltd",
+   "program": "bc_reg_hp_both",
+   "official_name": "Wagner Heating & Air Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Knowledge Hvac & Refrigeration Ltd",
+   "program": "bc_reg_hp_both",
+   "official_name": "Knowledge Hvac & Refrigeration Ltd",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Ringaway Plumbing Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "Ringaway Plumbing, Heating & Cooling Ltd.",
+   "evidence": "phone number and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Neufeld Heating Service",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Neufeld Heating Service Ltd",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Techno Gas Heating & Cooling Services Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Techno-Gas Heating Services Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Milani Plumbing, Heating & Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Milani Plumbing, Heating & Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "ATMOSERRA Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "ATMOSERRA Heating & Cooling",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Central HVAC",
+   "program": "bc_reg_hp_both",
+   "official_name": "Central Commercial &amp; Residential Services",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Heat Co. ( Heating & Cooling )",
+   "program": "bc_reg_hp_both",
+   "official_name": "HeatCo Furnace Services Ltd.",
+   "evidence": "email match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Canadian Pacific Heating and Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "Canadian Pacific Heating and Plumbing",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "BCRC Heating and Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "BCRC Heating and Cooling",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Trium Mechanical Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "Trium Mechanical Inc.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "High Standard Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "High Standard Heating and Cooling Corporation",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Horne Plumbing & Heating",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Horne Plumbing and Heating Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "RGS Refrigeration & Heating LTD",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "RGS Refrigeration & Heating Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Ian's Plumbing Heating And Gas Services ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Ian's Plumbing Heating And Gas Services ltd",
+   "evidence": "email match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "TAK Heating & Cooling Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Tak Heating & Cooling Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Perfect Choice Heating & Cooling",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Perfect Choice Heating &amp; Cooling Ltd",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Best Way Heating",
+   "program": "bc_reg_hp_both",
+   "official_name": "Best Way Heating",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Eaton's Furnace Heating & Air Conditioning HVAC",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Eaton's Heating Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Pro West Heating & Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Pro West Heating & Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "KDB HVAC",
+   "program": "bc_reg_hp_both",
+   "official_name": "KDB HVAC",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Full Spectrum Heating and Air Conditioning Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Full Spectrum Heating and Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Interior Plumbing & Heating Ltd",
+   "program": "bc_reg_hp_both",
+   "official_name": "Interior Plumbing and Heating Limited",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Hartley and Co. Heating and Air Conditioning - Kamloops",
+   "program": "bc_reg_hp_both",
+   "official_name": "Hartley and Co. Heating and Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Rapid Cool Mechanical",
+   "program": "bc_reg_hp_both",
+   "official_name": "Rapid Cool Mechanical",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Hadwin's HVAC & Gas Inc.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Hadwin's HVAC and Gas Inc.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Kamloops Heating & Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Kamloops Heating & Air Conditioning",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Greenfoot Energy Solutions",
+   "program": "bc_reg_hp_both",
+   "official_name": "Greenfoot Energy Solutions Victoria",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "KamCity Mechanical Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "KamCity Mechanical LTD.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Cal Geothermal Refrigeration and Heating Ltd",
+   "program": "bc_reg_hp_both",
+   "official_name": "Cal Geothermal Refrigeration and Heating Ltd",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Airtika Heating and Cooling Ltd.",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Airtika Heating and Cooling Ltd",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Key West Mechanical",
+   "program": "bc_reg_hp_both",
+   "official_name": "Key West Mechanical",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Bree-link plumbing and Heating",
+   "program": "bc_reg_hp_both",
+   "official_name": "Bree-link Plumbing and Heating Ltd",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "TruFinity Plumbing Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "TruFinity Plumbing Heating &amp; Cooling",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Vision Plumbing Heating Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "Vision Plumbing, Heating, Cooling & Gas",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "TruFinity Plumbing Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "TruFinity Plumbing Heating &amp; Cooling",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Air Tech Plumbing, Heating, Cooling & Electrical",
+   "program": "bc_reg_hp_both",
+   "official_name": "Air Tech Plumbing, Heating, Cooling &amp; Green Energy",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Adlem Mechanical",
+   "program": "bc_reg_hp_both",
+   "official_name": "Adlem Mechanical",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Cloudy Town Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "Cloudy Town HVAC Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "South Fraser Heating & Cooling Ltd",
+   "program": "bc_reg_hp_both",
+   "official_name": "South Fraser Heating and Cooling",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Yorkson Plumbing, Heating & Cooling LTD",
+   "program": "bc_reg_hp_both",
+   "official_name": "Yorkson Plumbing, Heating and Cooling LTD",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Combined Comfort Systems",
+   "program": "bc_reg_hp_both",
+   "official_name": "Combined Comfort Systems",
+   "evidence": "email match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Gandy Installations",
+   "program": "bc_reg_hp_both",
+   "official_name": "Gandy Installations",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Heritage Mountain Heating and Cooling Inc.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Heritage Mountain Heating and Cooling (2015) Incorporated",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Ryan Heating & Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Ryan Heating & Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Eaton's Furnace Heating & Air Conditioning HVAC",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Eaton's Heating Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Coleman Heating & Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Coleman Heating and Air Conditioning Inc.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Tek Climate Heating and Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Tek Climate Heating & Air Conditioning LTD.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Multitech Mechanical",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Multitech Mechanical",
+   "evidence": "email match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Mountain Ridge Heating and Gas",
+   "program": "bc_reg_hp_both",
+   "official_name": "Mountain Ridge Heating and Gas Inc.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "FlameCo Heating Services",
+   "program": "bc_reg_hp_both",
+   "official_name": "Flame Co Heating Services Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Big Valley Heating & Sheet Metal Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Big Valley Heating & Sheet Metal Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Coastal Energy Ltd",
+   "program": "bc_reg_hp_both",
+   "official_name": "Coastal Energy Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Sparrow Mechanical Services Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Sparrow Mechanical Services Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Norm's Plumbing, Heating & Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Norm's Plumbing and Heating",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "ServiceXCEL Heating, Cooling & Plumbing",
+   "program": "bc_reg_hp_both",
+   "official_name": "ServiceXCEL",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "DRG Plumbing & Heating Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "DRG Plumbing &amp; Heating Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Twin Peaks Plumbing, Heating & Air",
+   "program": "bc_reg_hp_both",
+   "official_name": "Twin Peaks Plumbing Ltd",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Bryans Mechanical Ltd",
+   "program": "bc_reg_hp_both",
+   "official_name": "Bryans Mechanical Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Waywest Mechanical Ltd - 24 Hour service Nanaimo",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Waywest Mechanical Service Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Sasquatch Heat Pumps",
+   "program": "bc_reg_hp_both",
+   "official_name": "Sasquatch Heat Pumps",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Pro Temp Control",
+   "program": "bc_reg_hp_both",
+   "official_name": "Pro Temp Control",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "The Comfort Group Heating Co",
+   "program": "bc_reg_hp_both",
+   "official_name": "The Comfort Group Heating Corporation",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "RPR Heating and Air Conditioning Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "RPR Heating &amp; Air Conditioning Ltd",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "TruFinity Plumbing Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "TruFinity Plumbing Heating &amp; Cooling",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Fehling's Sheet Metal Heating & Air Conditioning Ltd",
+   "program": "bc_reg_hp_both",
+   "official_name": "Fehling's Sheet Metal Ltd",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Crux Mechanical LTD",
+   "program": "bc_reg_hp_both",
+   "official_name": "Crux Mechanical (2023) Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Better Living Heating and Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "Better Living Heating and Cooling",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Coppertec Refrigeration Heating & Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Coppertec Refrigeration, Heating & Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "HVAC Strong Mechanical Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "HVAC Strong Mechanical Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Accelerate Plumbing and Heating Ltd. - Prince George",
+   "program": "bc_reg_hp_both",
+   "official_name": "Micah's Plumbing &amp; Heating Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Carrier Plumbing & Heating (TSBC License# LGA0202928)",
+   "program": "bc_reg_hp_both",
+   "official_name": "Carrier Plumbing and Heating",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Errington Mechanical - Plumbing & HVAC Richmond",
+   "program": "bc_reg_hp_both",
+   "official_name": "Errington Mechanical Ltd.",
+   "evidence": "email match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Jolly Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "Jolly Heating &amp; Cooling",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Ashton Plumbing, Heating & Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Ashton Plumbing, Heating & Air Conditioning",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Milani Plumbing, Heating & Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Milani Plumbing, Heating & Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Refrigeration Systems Ltd",
+   "program": "bc_reg_hp_both",
+   "official_name": "Refrigeration Systems Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Season Energy",
+   "program": "bc_reg_hp_both",
+   "official_name": "Season Energy",
+   "evidence": "phone number and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Sierra Mechanical Limited",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Sierra Mechanical Limited",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Newell Heating and Sheet Metal Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Newell Heating and Sheet Metal Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Garibaldi Heating and Cooling Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Garibaldi Heating and Cooling Ltd.",
+   "evidence": "email match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Sir Pipes-a-Lot Plumbing & Heating",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Sir Pipes-a-Lot Plumbing &amp; Heating",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Pipeline Plumbing & Heating",
+   "program": "bc_reg_hp_both",
+   "official_name": "Pipeline Plumbing &amp; Heating Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Howe Sound Sheet Metal Ltd",
+   "program": "bc_reg_hp_both",
+   "official_name": "Howe Sound Sheet Metal Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "John Sadler Plumbing & Heating",
+   "program": "bc_reg_hp_both",
+   "official_name": "John Sadler Plumbing & Heating Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Fraser Valley Heating Ltd",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Fraser Valley Heating Ltd",
+   "evidence": "exact company name and city match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Sunrise Heating & Cooling Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Sunrise Heating and Cooling Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "JJ&A Mechanical Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "JJ&A Mechanical Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Blue Sea Plumbing & Heating Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Blue Sea Plumbing &amp; Heating Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Grove Mechanical - Heating & Cooling Experts",
+   "program": "bc_reg_hp_both",
+   "official_name": "Grove Mechanical Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Advanced furnace services and air conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Advanced 1 Furnace Ltd",
+   "evidence": "phone number and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Total Line Heating and Air Conditioning Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Total Line Heating and Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Skyra Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "Skyra Heating &amp; Cooling Ltd.",
+   "evidence": "phone number and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Milani Plumbing, Heating & Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Milani Plumbing, Heating & Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Eco Pro Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "Eco Pro Heating &amp; Cooling Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Vanheat Services",
+   "program": "bc_reg_hp_both",
+   "official_name": "Vanheat Services",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Aquatech Vancouver Heating & Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Aquatech Vancouver Heating & Air Conditioning",
+   "evidence": "exact company name and city match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Western Pacific HVAC",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Western Pacific Heating Cooling And Air Flow",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Greentech Air Conditioning and Heating (HVAC)",
+   "program": "bc_reg_hp_both",
+   "official_name": "Greentech Air Conditioning and Heating",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Eaton’s Furnace Heating & Air Conditioning HVAC",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Eaton's Heating Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Vernon Air Conditioning, Plumbing & Electrical Services",
+   "program": "bc_reg_hp_both",
+   "official_name": "Vernon Air Conditioning, Plumbing and Electrical Services",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Air Tech Plumbing, Heating, Cooling & Electrical",
+   "program": "bc_reg_hp_both",
+   "official_name": "Air Tech Plumbing, Heating, Cooling &amp; Green Energy",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Xced Plumbing, Heating & A/C Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Xced Plumbing, Heating and A/C Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "TruFinity Plumbing Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "TruFinity Plumbing Heating &amp; Cooling",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Applewood Heating & Air Conditioning Ltd",
+   "program": "bc_reg_hp_both",
+   "official_name": "Applewood Heating and Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Haze Heating & Air Conditioning",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Haze Heating & Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Groundswell Mechanical Ltd.",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Groundswell Mechanical Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Fox Plumbing Heating Cooling Electrical",
+   "program": "bc_reg_hp_both",
+   "official_name": "FOX Plumbing Heating Cooling Electrical Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Hao Goodair",
+   "program": "bc_reg_hp_both",
+   "official_name": "HAO Goodair",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Coastal Heat Pumps",
+   "program": "bc_reg_hp_both",
+   "official_name": "Coastal Heat Pumps",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Sasquatch Heat Pumps",
+   "program": "bc_reg_hp_both",
+   "official_name": "Sasquatch Heat Pumps",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Barracuda Mechanical",
+   "program": "bc_reg_hp_both",
+   "official_name": "Barracuda Mechanical Inc.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Method Air",
+   "program": "bc_reg_hp_both",
+   "official_name": "Method Air",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Uptown Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Uptown Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "The Comfort Group",
+   "program": "bc_reg_hp_both",
+   "official_name": "The Comfort Group Heating Corporation",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Aire Serv of Greater Victoria",
+   "program": "bc_reg_hp_both",
+   "official_name": "Aire Serv of Greater Victoria",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Foster Heating & Cooling",
+   "program": "bc_reg_hp_both",
+   "official_name": "Foster Heating and Cooling",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Trifecta Temperature Control",
+   "program": "bc_reg_hp_both",
+   "official_name": "Trifecta Temperature Control LTD",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "RedBlue Heating & Refrigeration",
+   "program": "bc_reg_hp_both",
+   "official_name": "RedBlue Heat Pumps & Refrigeration",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "A2B Plumbing and Heating",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "A2B Plumbing Heating &amp; Cooling",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Tidal Mechanical",
+   "program": "bc_reg_hp_both",
+   "official_name": "Tidal Mechanical",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "KTA Mechanical Inc.",
+   "program": "bc_reg_hp_both",
+   "official_name": "KTA Mechanical Inc.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Triumph Heating & Air Conditioning",
+   "program": "bc_reg_hp_both",
+   "official_name": "Triumph Heating and Air Conditioning Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Zoltera Mechanical Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Zoltera Mechanical Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Bakerview Heating and Cooling",
+   "program": "bc_reg_hp_hrr",
+   "official_name": "Bakerview Heating & Cooling Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "heat-pump",
+   "business": "Bears Heating & Cooling Ltd.",
+   "program": "bc_reg_hp_both",
+   "official_name": "Bears Heating and Cooling (HVAC)",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "MSA Insulating Inc",
+   "program": "bc_reg_ins_both",
+   "official_name": "MSA Insulating Inc.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Element Spray Foam Inc",
+   "program": "bc_reg_ins_both",
+   "official_name": "Element Spray Foam Inc",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Knights Insulation LTD",
+   "program": "bc_reg_ins_both",
+   "official_name": "Knights Insulation Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Greer Spray Foam Ltd.",
+   "program": "bc_reg_ins_hrr",
+   "official_name": "Greer Spray Foam Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Greenfoot Energy Solutions",
+   "program": "bc_reg_ins_both",
+   "official_name": "Greenfoot Energy Solutions Victoria",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "STUFF IT Insulation",
+   "program": "bc_reg_ins_both",
+   "official_name": "Stuff It Insulation",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Peoples Insulation",
+   "program": "bc_reg_ins_both",
+   "official_name": "Peoples Insulation",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Assured Insulation",
+   "program": "bc_reg_ins_both",
+   "official_name": "BugMaster and Assured Insulation",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Okanagan Insulation Services",
+   "program": "bc_reg_ins_both",
+   "official_name": "Okanagan Insulation Services",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Western Insulation Ltd",
+   "program": "bc_reg_ins_both",
+   "official_name": "Western Insulation LTD",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Top Trade Insulation and Attic",
+   "program": "bc_reg_ins_both",
+   "official_name": "Top Trade Insulation and Attic",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Harbourside Spray Foam",
+   "program": "bc_reg_ins_both",
+   "official_name": "Harbourside Spray Foam",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Nick's Insulation",
+   "program": "bc_reg_ins_both",
+   "official_name": "Nick's Insulation",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Season Energy",
+   "program": "bc_reg_ins_both",
+   "official_name": "Season Energy",
+   "evidence": "phone number and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Costar Home Energy Ltd.",
+   "program": "bc_reg_ins_both",
+   "official_name": "Costar Home Energy Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Fransor Insulation Ltd.",
+   "program": "bc_reg_ins_hrr",
+   "official_name": "Fransor Insulation Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Metro standard Insulation Ltd",
+   "program": "bc_reg_ins_hrr",
+   "official_name": "Metro Standard Insulation Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Wolf Spray Foam Inc.",
+   "program": "bc_reg_ins_hrr",
+   "official_name": "Wolf Spray Foam Inc.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Instant Insulation Ltd.",
+   "program": "bc_reg_ins_hrr",
+   "official_name": "Instant Insulation Ltd.",
+   "evidence": "phone number and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Thermotech Insulation",
+   "program": "bc_reg_ins_hrr",
+   "official_name": "Thermotech Insulation",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Advance Insulation Canada",
+   "program": "bc_reg_ins_both",
+   "official_name": "Advance Insulation Canada",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Ecolofty Green Insulation",
+   "program": "bc_reg_ins_both",
+   "official_name": "Ecolofty Green Insulation",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Alpine Insulation",
+   "program": "bc_reg_ins_both",
+   "official_name": "Alpine Insulation LTD",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
+  },
+  {
+   "region": "bc",
+   "service": "insulation",
+   "business": "Knights Insulation LTD",
+   "program": "bc_reg_ins_both",
+   "official_name": "Knights Insulation Ltd.",
+   "evidence": "website domain and name match on the official list",
+   "confidence": "high"
   }
  ]
 }

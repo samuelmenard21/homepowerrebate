@@ -344,7 +344,7 @@
 <li>Apply online (you need an email address) or print the paper form and mail it. Paper forms must be postmarked by March 31, 2027.</li>
 <li>Save your confirmation number.</li>
 </ol>
-<p>It costs nothing to apply. The <a href="https://www.novascotia.ca/apply-heating-assistance-rebate-heating-assistance-rebate-program" target="_blank" rel="noopener">province's apply page</a> has the form and the full list of papers.</p>
+<p>It costs nothing to apply. The <a href="https://www.novascotia.ca/apply-heating-assistance-rebate-heating-assistance-rebate-program?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">province's apply page</a> has the form and the full list of papers.</p>
 <h2 id="how-to-check-your-harp-status">How to check your HARP status</h2>
 <p>If you applied online, use the province's status page with your confirmation number and postal code. We walk through it, with payment timing, in our guide to <a href="/blog/nova-scotia-heating-rebate-2026-27-payment-dates-status/">payment dates and how to check your status</a>.</p>
 <h2 id="what-harp-does-not-do">What HARP does not do</h2>
@@ -369,7 +369,7 @@
 <li><a href="/programs/nova-scotia-heating-assistance-rebate-harp/">Heating Assistance Rebate Program details</a></li>
 <li><a href="/ca/ns/halifax/">Halifax home energy rebates</a></li>
 </ul>
-<p style="font-size:13px; color:var(--ink-soft); margin-top:32px;">Sources, read October 5, 2026: <a href="https://www.novascotia.ca/programs-and-services/heating-assistance-rebate-program-harp" target="_blank" rel="noopener">Province of Nova Scotia: Heating Assistance Rebate Program</a>, <a href="https://www.novascotia.ca/apply-heating-assistance-rebate-heating-assistance-rebate-program" target="_blank" rel="noopener">Province of Nova Scotia: apply</a>, <a href="https://www.novascotia.ca/check-status-your-heating-assistance-rebate-application-heating-assistance-rebate-program" target="_blank" rel="noopener">Province of Nova Scotia: check your status</a>.</p>
+<p style="font-size:13px; color:var(--ink-soft); margin-top:32px;">Sources, read October 5, 2026: <a href="https://www.novascotia.ca/programs-and-services/heating-assistance-rebate-program-harp?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Province of Nova Scotia: Heating Assistance Rebate Program</a>, <a href="https://www.novascotia.ca/apply-heating-assistance-rebate-heating-assistance-rebate-program?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Province of Nova Scotia: apply</a>, <a href="https://www.novascotia.ca/check-status-your-heating-assistance-rebate-application-heating-assistance-rebate-program?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Province of Nova Scotia: check your status</a>.</p>
 
   </div>
 </article>
@@ -615,6 +615,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

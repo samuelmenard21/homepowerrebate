@@ -340,7 +340,7 @@
 <div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 4.6A2 2 0 1 1 11 8H2M12.6 19.4A2 2 0 1 0 14 16H2M17.7 7.7A2.5 2.5 0 1 1 19.5 12H2"/></svg></div>
 <h1>Top-Rated Heat Pump Installers in Huntington, NY</h1></div>
 <p>8 local companies ranked by 1,592 Google reviews. Free to compare, no sign-up.</p>
-<p class="meta">Ratings and review counts from Google Maps, collected September 2026 · Page updated October 20, 2026</p>
+<p class="meta">Ratings and review counts from Google Maps, collected September 2026 · Page updated October 22, 2026</p>
 </div></header>
 <section class="body"><div class="wrap">
 <div class="stats"><div class="stat"><b>8</b><span>Companies</span></div><div class="stat"><b>1,592</b><span>Google reviews</span></div><div class="stat"><b>4.7★</b><span>Average rating</span></div><div class="stat"><b>Sep 2026</b><span>Data collected</span></div></div>
@@ -359,7 +359,7 @@
 <li class="rank has-prof" data-rank="7" data-reviews="398" data-rating="4.5"><div class="n"><a href="/installers/profiles/ny/huntington/master-plumbing-heating-cooling/" aria-label="Master Plumbing Heating Cooling profile">7</a></div><div class="nm"><a href="/installers/profiles/ny/huntington/master-plumbing-heating-cooling/">Master Plumbing Heating Cooling</a></div><div class="st"><span class="rt"><span class="stars" style="--p:90%" aria-hidden="true">★★★★★</span> <b>4.5</b></span> <span class="rv">(398 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:48%"></i></div><div class="adr">151 E 2nd St, Huntington Station, NY 11746</div></div><div class="act"><a class="btn-call" href="tel:6313919292">Call (631) 391-9292</a><a class="btn-prof" href="/installers/profiles/ny/huntington/master-plumbing-heating-cooling/">View profile</a><a class="lnk" href="https://maps.google.com/?cid=11113022143057113975&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a></div></li>
 <li class="rank has-prof" data-rank="8" data-reviews="20" data-rating="4.4"><div class="n"><a href="/installers/profiles/ny/huntington/christensens-plumbing-heating-ac/" aria-label="Christensen&#x27;s Plumbing Heating &amp; AC profile">8</a></div><div class="nm"><a href="/installers/profiles/ny/huntington/christensens-plumbing-heating-ac/">Christensen&#x27;s Plumbing Heating &amp; AC</a></div><div class="st"><span class="rt"><span class="stars" style="--p:88%" aria-hidden="true">★★★★★</span> <b>4.4</b></span> <span class="rv">(20 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:4%"></i></div><div class="adr">330 Nassau Rd, Huntington Station, NY 11746</div></div><div class="act"><a class="btn-call" href="tel:6314233939">Call (631) 423-3939</a><a class="btn-prof" href="/installers/profiles/ny/huntington/christensens-plumbing-heating-ac/">View profile</a><a class="lnk" href="https://maps.google.com/?cid=16533923181436107775&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk em" href="mailto:christensensplumbinghuntington@gmail.com" aria-label="Email Christensen&#x27;s Plumbing Heating &amp; AC">Email</a></div></li>
 </ol>
-<p class="small"><span class="reg">✓</span> = on the official contractor list for NYS Clean Heat participating contractors (checked September 28, 2026, <a href="https://cleanheat.ny.gov/find-a-contractor/" rel="noopener" target="_blank">source</a>). Most rebates require a registered contractor; confirm before you sign.</p>
+<p class="small"><span class="reg">✓</span> = on the official contractor list for NYS Clean Heat participating contractors (checked September 28, 2026, <a href="https://cleanheat.ny.gov/find-a-contractor/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" target="_blank" data-official="1">source</a>). Most rebates require a registered contractor; confirm before you sign.</p>
 
 <p class="small">Together these 8 companies average 4.7★ across 1,592 reviews. FIX-A-LEAK Plumbing &amp; Heating Inc. has the most reviews (832).</p>
 
@@ -676,6 +676,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

@@ -210,7 +210,7 @@
 
 <h2 id="what-to-do-next">What to do next</h2>
 <p>Not sure where your home fits? Run the <a href="/calculator/yt/">Yukon rebate calculator</a>, or read the <a href="/ca/yt/">province guide</a>.</p>
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 21, 2026: <a href="https://yukon.ca/en/housing-and-property/home-energy-rebates/apply-rebate-your-home-heating-system" target="_blank" rel="noopener">Yukon: rebate on your home heating system</a>, <a href="https://yukon.ca/en/home-insulation-air-sealing-rebate" target="_blank" rel="noopener">Yukon: insulation and air sealing rebates</a>, <a href="https://yukon.ca/en/housing-and-property/home-energy-rebates/apply-rebate-reduce-home-electricity-use" target="_blank" rel="noopener">Yukon: Dependable Grid rebates</a>, <a href="https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/index.cfm?Lang=E" target="_blank" rel="noopener">Statistics Canada 2021 Census Profile</a>. <a href="/ca/yt/whitehorse/">All Whitehorse rebates &rarr;</a></p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 21, 2026: <a href="https://yukon.ca/en/housing-and-property/home-energy-rebates/apply-rebate-your-home-heating-system" target="_blank" rel="noopener">Yukon: rebate on your home heating system</a>, <a href="https://yukon.ca/en/home-insulation-air-sealing-rebate" target="_blank" rel="noopener">Yukon: insulation and air sealing rebates</a>, <a href="https://yukon.ca/en/housing-and-property/home-energy-rebates/apply-rebate-reduce-home-electricity-use" target="_blank" rel="noopener">Yukon: Dependable Grid rebates</a>, <a href="https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/index.cfm?Lang=E&amp;utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Statistics Canada 2021 Census Profile</a>. <a href="/ca/yt/whitehorse/">All Whitehorse rebates &rarr;</a></p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-is-open-for-whitehorse-homes-in-2026">What is open for Whitehorse homes in 2026</a></li><li><a href="#what-whitehorse-homes-look-like">What Whitehorse homes look like</a></li><li><a href="#where-to-go-in-whitehorse">Where to go in Whitehorse</a></li><li><a href="#the-income-based-heat-pump-program">The income-based heat pump program</a></li><li><a href="#if-you-are-over-the-income-line">If you are over the income line</a></li><li><a href="#the-federal-rebate">The federal rebate</a></li><li><a href="#every-rebate-guide-for-whitehorse">Every rebate guide for Whitehorse</a></li><li><a href="#where-to-start-in-whitehorse">Where to start in Whitehorse</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=whitehorse&province=yt">See my rebates</a></div></aside>
@@ -453,6 +453,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

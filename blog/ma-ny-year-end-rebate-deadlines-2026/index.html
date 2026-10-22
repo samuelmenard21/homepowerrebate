@@ -260,7 +260,7 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 <div class="faq-item"><h3>Is the Con Edison heat pump water heater offer ending?</h3><p>Yes. The $1,500 limited-time offer applies to applications submitted from September 1 to November 30, 2026. The regular rebate is $1,300.</p></div>
 <div class="faq-item"><h3>Do the federal heat pump tax credits end this year?</h3><p>They already ended. The 25C and 25D credits do not apply to property placed in service after December 31, 2025.</p></div>
 <div class="faq-item"><h3>Will EV charger rebates return in 2027?</h3><p>Both utilities say they expect changes in 2027. Eversource is waiting for state approval of a 2027 program. Neither has confirmed amounts.</p></div>
-<p class="is-433de30b">Sources, read October 10, 2026: <a href="https://www.eversource.com/residential/save-money-energy/clean-energy-options/electric-vehicles/charging-stations/ema" target="_blank" rel="noopener">Eversource: EV home charging rebates in Massachusetts</a>, <a href="https://www.nationalgridus.com/electric-vehicle-hub/Programs/Massachusetts/EV-Charging-Upgrade-Program" target="_blank" rel="noopener">National Grid: EV Charging Upgrade Program (Massachusetts)</a>, <a href="https://visionelements.customerapplication.com/Framework/Ny_statewide/NYS-Clean-Heat-Program-Manual.Pdf" target="_blank" rel="noopener">NYS Clean Heat Program Manual, version 3 (PDF)</a>, <a href="https://web.archive.org/web/20260716094049/https://www.masssave.com/residential/rebates-offers-services/heating-and-cooling/heat-pumps/air-source-heat-pumps" target="_blank" rel="noopener">Mass Save air-source heat pumps (archived July 16, 2026)</a>.</p>
+<p class="is-433de30b">Sources, read October 10, 2026: <a href="https://www.eversource.com/residential/save-money-energy/clean-energy-options/electric-vehicles/charging-stations/ema?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Eversource: EV home charging rebates in Massachusetts</a>, <a href="https://www.nationalgridus.com/electric-vehicle-hub/Programs/Massachusetts/EV-Charging-Upgrade-Program?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">National Grid: EV Charging Upgrade Program (Massachusetts)</a>, <a href="https://visionelements.customerapplication.com/Framework/Ny_statewide/NYS-Clean-Heat-Program-Manual.Pdf" target="_blank" rel="noopener">NYS Clean Heat Program Manual, version 3 (PDF)</a>, <a href="https://web.archive.org/web/20260716094049/https://www.masssave.com/residential/rebates-offers-services/heating-and-cooling/heat-pumps/air-source-heat-pumps" target="_blank" rel="noopener">Mass Save air-source heat pumps (archived July 16, 2026)</a>.</p>
 
   </div>
 </article>
@@ -506,6 +506,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

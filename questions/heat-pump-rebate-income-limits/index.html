@@ -234,7 +234,7 @@
     <h2 id="other-provinces-and-states">Other provinces and states</h2>
     <p>Programs and income limits change often, so we don't list numbers we can't keep current here. <a href="/#city-picker">See your city's page</a> for what's open now.</p>
 
-    <p style="font-size:14px;color:var(--ink-soft);"><strong>Sources, checked September 26, 2026:</strong> <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html" rel="noopener">BC Hydro heat pump rebates</a> &middot; <a href="https://betterhomesbc.ca/learn-about-programs/energy-savings-program/" rel="noopener">Better Homes BC Energy Savings Program</a> &middot; <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative" rel="noopener">NRCan Greener Homes</a> &middot; <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" rel="noopener">IRS 25C</a></p>
+    <p style="font-size:14px;color:var(--ink-soft);"><strong>Sources, checked September 26, 2026:</strong> <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" data-official="1">BC Hydro heat pump rebates</a> &middot; <a href="https://betterhomesbc.ca/learn-about-programs/energy-savings-program/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" data-official="1">Better Homes BC Energy Savings Program</a> &middot; <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" data-official="1">NRCan Greener Homes</a> &middot; <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" data-official="1">IRS 25C</a></p>
 
     <h2 id="key-takeaway">Key Takeaway</h2>
     <p><strong>Apply anyway.</strong> Most people qualify for the base rebate regardless of income. Even if you don't meet an income-qualified top-up threshold, you'll still get the main rebate. The worst outcome is "no," and you'll know to apply elsewhere.</p>
@@ -485,6 +485,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

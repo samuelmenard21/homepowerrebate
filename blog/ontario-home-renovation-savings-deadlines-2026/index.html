@@ -263,7 +263,7 @@ body .is-fcb3fb3d.is-fcb3fb3d.is-fcb3fb3d { display:grid; gap:8px; }
 <div class="faq-item"><h3>What happens if I miss the November 30 date?</h3><p>The program rules say the administrators can disqualify a participant and close the file if the post-audit is not scheduled by November 30 or finished by the end date. Ask the program about your situation before you pay for work.</p></div>
 <div class="faq-item"><h3>Will the program continue in 2027?</h3><p>None of the documents we read says. We will update this page if the program publishes new rules.</p></div>
 <div class="faq-item"><h3>Can I use the Ontario rebate and the new federal heat pump rebate together?</h3><p>Not known. The federal National Heat Pump Rebate was announced on October 8, 2026 with rules still to come, and it is expected to launch in early 2027.</p></div>
-<p class="is-433de30b">Sources, read October 10, 2026: <a href="https://www.homerenovationsavings.ca/with-assessment" target="_blank" rel="noopener">Home Renovation Savings: energy assessment required upgrades</a>, <a href="https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Assessment-Additional-Program-Eligibility-Requirements.pdf" target="_blank" rel="noopener">Assessment stream eligibility requirements (PDF)</a>, <a href="https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/attic-additional-program-eligibility-requirements.pdf" target="_blank" rel="noopener">Attic insulation eligibility requirements (PDF)</a>, <a href="https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Heat-Pump-Program-Stream-Requirements.pdf" target="_blank" rel="noopener">Heat pump stream requirements (PDF)</a>, <a href="https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Solar-and-Storage-Program-Stream-Requirements.pdf" target="_blank" rel="noopener">Solar and storage stream requirements (PDF)</a>.</p>
+<p class="is-433de30b">Sources, read October 10, 2026: <a href="https://www.homerenovationsavings.ca/with-assessment?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Home Renovation Savings: energy assessment required upgrades</a>, <a href="https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Assessment-Additional-Program-Eligibility-Requirements.pdf" target="_blank" rel="noopener">Assessment stream eligibility requirements (PDF)</a>, <a href="https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/attic-additional-program-eligibility-requirements.pdf" target="_blank" rel="noopener">Attic insulation eligibility requirements (PDF)</a>, <a href="https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Heat-Pump-Program-Stream-Requirements.pdf" target="_blank" rel="noopener">Heat pump stream requirements (PDF)</a>, <a href="https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Solar-and-Storage-Program-Stream-Requirements.pdf" target="_blank" rel="noopener">Solar and storage stream requirements (PDF)</a>.</p>
 
   </div>
 </article>
@@ -509,6 +509,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

@@ -368,7 +368,7 @@
 <div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 4.6A2 2 0 1 1 11 8H2M12.6 19.4A2 2 0 1 0 14 16H2M17.7 7.7A2.5 2.5 0 1 1 19.5 12H2"/></svg></div>
 <h1>Top-Rated Heat Pump Installers in Kitchener, ON</h1></div>
 <p>14 local companies ranked by 6,307 Google reviews. Free to compare, no sign-up.</p>
-<p class="meta">Ratings and review counts from Google Maps, collected September 2026 · Page updated October 20, 2026</p>
+<p class="meta">Ratings and review counts from Google Maps, collected September 2026 · Page updated October 22, 2026</p>
 </div></header>
 <section class="body"><div class="wrap">
 <div class="stats"><div class="stat"><b>14</b><span>Companies</span></div><div class="stat"><b>6,307</b><span>Google reviews</span></div><div class="stat"><b>4.9★</b><span>Average rating</span></div><div class="stat"><b>Sep 2026</b><span>Data collected</span></div></div>
@@ -473,10 +473,6 @@ if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es
 setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600);
 })();
 </script>
-<!-- Newsletter — every page, parameterize city dropdown default to Kitchener where relevant -->
-
-
-<!-- LOCAL-REBATE-BOX-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><h2>What a heat pump rebate looks like in Kitchener</h2><p>Ontario's Home Renovation Savings program pays $500 per ton of heat pump capacity if you heat with gas and $1,250 per ton if you heat with electricity, up to $7,500 for a cold-climate air-source system. Your current heating fuel decides the rate, so tell each installer what you heat with before you compare quotes. Read the full <a href="/ca/on/kitchener/heat-pump/">Kitchener heat pump rebate guide</a> or see every <a href="/ca/on/kitchener/">Kitchener home energy rebate</a>.</p></section><!-- LOCAL-REBATE-BOX-END -->
 </main>
 <!-- CANONICAL-FOOTER-START -->
 <!-- Newsletter — every page, parameterize city dropdown default to Kitchener where relevant -->
@@ -714,6 +710,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

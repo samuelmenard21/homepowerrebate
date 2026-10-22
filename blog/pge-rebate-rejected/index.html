@@ -237,7 +237,7 @@
 <h2 id="the-usual-reasons-for-rejection">The Usual Reasons for Rejection</h2>
 
 <h3>1. Non-approved contractor</h3>
-<p>PG&E and BayREN programs both require your installer to be enrolled in the rebate network. If your contractor isn't on the list, the rebate gets denied &mdash; even if the install itself is perfect. Fix: ask your contractor directly if they're enrolled, or check <a href="https://www.bayren.org/find-incentives" target="_blank" rel="noopener">BayREN's incentive finder</a> for a participating contractor list.</p>
+<p>PG&E and BayREN programs both require your installer to be enrolled in the rebate network. If your contractor isn't on the list, the rebate gets denied &mdash; even if the install itself is perfect. Fix: ask your contractor directly if they're enrolled, or check <a href="https://www.bayren.org/find-incentives?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BayREN's incentive finder</a> for a participating contractor list.</p>
 
 <h3>2. You applied after installation instead of before</h3>
 <p>Most rebate programs require pre-approval before the work starts. If you installed first and applied afterward, the application can be denied on that basis alone. Fix: for any future project, get written pre-approval before signing a contractor agreement.</p>
@@ -261,7 +261,7 @@
 
 <div class="callout">If you haven't installed anything yet, read our <a href="/blog/pge-pre-approval-guide/">pre-approval guide</a> first &mdash; it walks through how to avoid this whole situation.</div>
 
-<p>More detail on your local numbers: <a href="/us/ca/bay-area/">Bay Area hub</a>. Official incentive listing: <a href="https://www.bayren.org/find-incentives" target="_blank" rel="noopener">bayren.org</a>.</p>
+<p>More detail on your local numbers: <a href="/us/ca/bay-area/">Bay Area hub</a>. Official incentive listing: <a href="https://www.bayren.org/find-incentives?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">bayren.org</a>.</p>
 
   </div>
 </article>
@@ -507,6 +507,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

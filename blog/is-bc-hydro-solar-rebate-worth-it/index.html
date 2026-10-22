@@ -241,7 +241,7 @@
     <p>"Solar payback is 15 years, isn't that a scam?" I hear this all the time. Usually it's from someone who got a quote that looked expensive, or read something scary on Reddit. It's a fair question. Let me actually run the math instead of just saying "trust me."</p>
 
     <h2 id="the-real-math-city-by-city">The real math, city by city</h2>
-    <p>Payback time depends on three things: how much sun your city gets, what you pay per kWh, and how big your rebate is. In BC, the <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html" target="_blank" rel="noopener">BC Hydro rebate</a> is $1,000 per kW up to $5,000 (and no more than 50% of cost). Since July 1, 2026, power you export earns 10 cents per kWh, so the value is mostly in the power you use yourself. Payback depends on your roof, your use and your quote; ask each installer to show the math with your own bills.</p>
+    <p>Payback time depends on three things: how much sun your city gets, what you pay per kWh, and how big your rebate is. In BC, the <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro rebate</a> is $1,000 per kW up to $5,000 (and no more than 50% of cost). Since July 1, 2026, power you export earns 10 cents per kWh, so the value is mostly in the power you use yourself. Payback depends on your roof, your use and your quote; ask each installer to show the math with your own bills.</p>
     <ul>
       <li><strong>Sunnier Interior cities</strong> (like Kamloops) usually produce more per panel than cloudier coastal ones.</li>
       <li><strong>Kelowna</strong> is on FortisBC, so BC Hydro's solar rebate doesn't apply there.</li>
@@ -519,6 +519,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

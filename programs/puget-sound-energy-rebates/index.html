@@ -214,7 +214,7 @@
 <div class="faq-item"><h3>Is the federal tax credit still there?</h3><p>No. The IRS says the residential clean energy credit does not apply to property placed in service after December 31, 2025.</p></div>
 <div class="faq-item"><h3>Are condos and apartments covered?</h3><p>PSE says these rebates apply to existing single-family properties only. Buildings with five or more attached units use PSE's multifamily page.</p></div>
 
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.pse.com/en/rebates" target="_blank" rel="noopener">PSE rebates and offers</a>, <a href="https://www.pse.com/en/rebates/heating" target="_blank" rel="noopener">PSE heating rebates</a>, <a href="https://www.pse.com/en/rebates/efficiency-boost" target="_blank" rel="noopener">PSE Efficiency Boost</a>, <a href="https://www.pse.com/en/rebates/water-heating/heat-pump-water-heater-rebate" target="_blank" rel="noopener">PSE heat pump water heater rebate</a>, <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS Residential Clean Energy Credit</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.pse.com/en/rebates" target="_blank" rel="noopener">PSE rebates and offers</a>, <a href="https://www.pse.com/en/rebates/heating" target="_blank" rel="noopener">PSE heating rebates</a>, <a href="https://www.pse.com/en/rebates/efficiency-boost" target="_blank" rel="noopener">PSE Efficiency Boost</a>, <a href="https://www.pse.com/en/rebates/water-heating/heat-pump-water-heater-rebate" target="_blank" rel="noopener">PSE heat pump water heater rebate</a>, <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">IRS Residential Clean Energy Credit</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-puget-sound-energy-pays-in-2026">What Puget Sound Energy pays in 2026</a></li><li><a href="#how-the-efficiency-boost-works">How the Efficiency Boost works</a></li><li><a href="#what-your-heating-fuel-decides">What your heating fuel decides</a></li><li><a href="#rules-that-trip-people-up">Rules that trip people up</a></li><li><a href="#things-we-could-not-confirm">Things we could not confirm</a></li><li><a href="#how-to-claim-a-pse-rebate">How to claim a PSE rebate</a></li><li><a href="#our-pages-for-puget-sound-energy-customers">Our pages for Puget Sound Energy customers</a></li><li><a href="#guides">Guides</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">See my rebates</a></div></aside>
@@ -456,6 +456,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

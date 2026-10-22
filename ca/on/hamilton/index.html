@@ -365,7 +365,7 @@
     <div class="highlight-box">
       <h4>Honest math for Hamilton</h4>
       <p>A typical household stacking a heat pump with solar or battery nets <strong>$4,000&ndash;$17,000</strong> in direct rebates &mdash; identical to Toronto and Ottawa, since this is a provincial program.</p>
-      <p style="margin-top:10px;">We could not confirm a hard expiry date for these programs on the official site as of this writing &mdash; check <a href="https://www.homerenovationsavings.ca" target="_blank" rel="noopener">homerenovationsavings.ca</a> directly before relying on any deadline you see elsewhere (several third-party HVAC sites repeat a Nov 30, 2026 date that we could not verify on the official program page).</p>
+      <p style="margin-top:10px;">We could not confirm a hard expiry date for these programs on the official site as of this writing &mdash; check <a href="https://www.homerenovationsavings.ca?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">homerenovationsavings.ca</a> directly before relying on any deadline you see elsewhere (several third-party HVAC sites repeat a Nov 30, 2026 date that we could not verify on the official program page).</p>
     </div>
   </div>
 </section>
@@ -475,7 +475,7 @@
 
     <div class="highlight-box">
       <h4 aria-level="3">If you rent</h4>
-      <p>The structural rebates above &mdash; heat pump, insulation, windows, solar, battery &mdash; attach to the property, so they go to whoever owns it, not to you. If you want one of these upgrades, the ask has to go to your landlord; point them to this page and the official <a href="https://www.homerenovationsavings.ca" target="_blank" rel="noopener">homerenovationsavings.ca</a> program details. Some smaller rebates, like the smart thermostat rebate, may not require proof of ownership at purchase &mdash; but confirm eligibility for your specific situation with the program directly before assuming.</p>
+      <p>The structural rebates above &mdash; heat pump, insulation, windows, solar, battery &mdash; attach to the property, so they go to whoever owns it, not to you. If you want one of these upgrades, the ask has to go to your landlord; point them to this page and the official <a href="https://www.homerenovationsavings.ca?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">homerenovationsavings.ca</a> program details. Some smaller rebates, like the smart thermostat rebate, may not require proof of ownership at purchase &mdash; but confirm eligibility for your specific situation with the program directly before assuming.</p>
     </div>
 
     <div class="highlight-box">
@@ -485,7 +485,7 @@
 
     <div class="highlight-box">
       <h4>If it's a whole-building retrofit</h4>
-      <p>A heat pump, insulation, or solar project for the whole building is a group decision that goes through your condo board or property manager, not individual owners, and the per-unit rebate math is likely different from the single-family figures on this page. This page doesn't have confirmed multi-unit numbers for Hamilton &mdash; your board should contact the HRSP program directly at <a href="https://www.homerenovationsavings.ca" target="_blank" rel="noopener">homerenovationsavings.ca</a> to confirm what applies to a multi-unit building.</p>
+      <p>A heat pump, insulation, or solar project for the whole building is a group decision that goes through your condo board or property manager, not individual owners, and the per-unit rebate math is likely different from the single-family figures on this page. This page doesn't have confirmed multi-unit numbers for Hamilton &mdash; your board should contact the HRSP program directly at <a href="https://www.homerenovationsavings.ca?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">homerenovationsavings.ca</a> to confirm what applies to a multi-unit building.</p>
     </div>
   </div>
 </section>
@@ -1179,6 +1179,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

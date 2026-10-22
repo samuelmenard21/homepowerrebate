@@ -193,7 +193,7 @@
 
 <h2 id="more-on-the-federal-heat-pump-rebate">More on the federal heat pump rebate</h2>
 <ul><li><a href="/ca/ns/">Nova Scotia rebates by city</a></li></ul>
-<p style="font-size:14px;">Sources, read October 20, 2026: <a href="https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf" target="_blank" rel="noopener">Efficiency Nova Scotia: Home Energy Assessment rebate guide, August 2026 (PDF)</a>, <a href="https://www.efficiencyns.ca/programs-rebates/homewarming" target="_blank" rel="noopener">Efficiency Nova Scotia: HomeWarming</a>, <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes" target="_blank" rel="noopener">NRCan: find service organizations for existing homes</a>.</p>
+<p style="font-size:14px;">Sources, read October 20, 2026: <a href="https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf" target="_blank" rel="noopener">Efficiency Nova Scotia: Home Energy Assessment rebate guide, August 2026 (PDF)</a>, <a href="https://www.efficiencyns.ca/programs-rebates/homewarming?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Efficiency Nova Scotia: HomeWarming</a>, <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">NRCan: find service organizations for existing homes</a>.</p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#how-the-program-works">How the program works</a></li><li><a href="#who-can-join">Who can join</a></li><li><a href="#what-each-upgrade-pays">What each upgrade pays</a></li><li><a href="#lower-income-look-at-homewarming">Lower income? Look at HomeWarming</a></li><li><a href="#mistakes-to-avoid">Mistakes to avoid</a></li><li><a href="#a-good-order-for-most-homes">A good order for most homes</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#more-on-the-federal-heat-pump-rebate">More on the federal heat pump rebate</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">See my rebates</a></div></aside>
@@ -435,6 +435,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

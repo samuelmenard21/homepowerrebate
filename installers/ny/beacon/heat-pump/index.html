@@ -310,7 +310,7 @@
 <div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 4.6A2 2 0 1 1 11 8H2M12.6 19.4A2 2 0 1 0 14 16H2M17.7 7.7A2.5 2.5 0 1 1 19.5 12H2"/></svg></div>
 <h1>Top-Rated Heat Pump Installers in Beacon, NY</h1></div>
 <p>3 local companies ranked by 177 Google reviews. Free to compare, no sign-up.</p>
-<p class="meta">Ratings and review counts from Google Maps, collected September 2026 · Page updated October 20, 2026</p>
+<p class="meta">Ratings and review counts from Google Maps, collected September 2026 · Page updated October 22, 2026</p>
 </div></header>
 <section class="body"><div class="wrap">
 <div class="stats"><div class="stat"><b>3</b><span>Companies</span></div><div class="stat"><b>177</b><span>Google reviews</span></div><div class="stat"><b>4.7★</b><span>Average rating</span></div><div class="stat"><b>Sep 2026</b><span>Data collected</span></div></div>
@@ -324,7 +324,7 @@
 <li class="rank has-prof" data-rank="2" data-reviews="97" data-rating="4.7"><div class="n"><a href="/installers/profiles/ny/beacon/mjs-plumbing-heating-inc/" aria-label="MJS Plumbing &amp; Heating Inc. profile">2</a></div><div class="nm"><a href="/installers/profiles/ny/beacon/mjs-plumbing-heating-inc/">MJS Plumbing &amp; Heating Inc.</a><span class="bf">Most reviews</span><span class="reg" title="NYS Clean Heat heat pump rebates are paid through participating contractors.">✓ Clean Heat contractor</span></div><div class="st"><span class="rt"><span class="stars" style="--p:94%" aria-hidden="true">★★★★★</span> <b>4.7</b></span> <span class="rv">(97 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:100%"></i></div><div class="adr">621 NY-52, Beacon, NY 12508</div></div><div class="act"><a class="btn-call" href="tel:9146027106">Call (914) 602-7106</a><a class="btn-prof" href="/installers/profiles/ny/beacon/mjs-plumbing-heating-inc/">View profile</a><a class="lnk" href="https://maps.google.com/?cid=5725251663977143021&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk em" href="mailto:info@mjsplumbinginc.com" aria-label="Email MJS Plumbing &amp; Heating Inc.">Email</a></div></li>
 <li class="rank has-prof" data-rank="3" data-reviews="43" data-rating="4.7"><div class="n"><a href="/installers/profiles/ny/beacon/water-heater-express-llc/" aria-label="Water Heater Express LLC profile">3</a></div><div class="nm"><a href="/installers/profiles/ny/beacon/water-heater-express-llc/">Water Heater Express LLC</a></div><div class="st"><span class="rt"><span class="stars" style="--p:94%" aria-hidden="true">★★★★★</span> <b>4.7</b></span> <span class="rv">(43 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:44%"></i></div><div class="adr">621 NY-52, Beacon, NY 12508</div></div><div class="act"><a class="btn-call" href="tel:8453355051">Call (845) 335-5051</a><a class="btn-prof" href="/installers/profiles/ny/beacon/water-heater-express-llc/">View profile</a><a class="lnk" href="https://maps.google.com/?cid=9258376768548017135&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk em" href="mailto:sales@needhotwater.com" aria-label="Email Water Heater Express LLC">Email</a></div></li>
 </ol>
-<p class="small"><span class="reg">✓</span> = on the official contractor list for NYS Clean Heat participating contractors (checked September 28, 2026, <a href="https://cleanheat.ny.gov/find-a-contractor/" rel="noopener" target="_blank">source</a>). Most rebates require a registered contractor; confirm before you sign.</p>
+<p class="small"><span class="reg">✓</span> = on the official contractor list for NYS Clean Heat participating contractors (checked September 28, 2026, <a href="https://cleanheat.ny.gov/find-a-contractor/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" target="_blank" data-official="1">source</a>). Most rebates require a registered contractor; confirm before you sign.</p>
 
 <p class="small">Together these 3 companies average 4.7★ across 177 reviews. MJS Plumbing &amp; Heating Inc. has the most reviews (97).</p>
 
@@ -641,6 +641,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

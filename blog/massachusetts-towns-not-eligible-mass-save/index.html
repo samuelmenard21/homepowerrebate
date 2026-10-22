@@ -274,7 +274,7 @@
   <div class="wrap">
 
     <h2 id="why-this-happens">Why this happens</h2>
-    <p>Mass Save is funded through a charge on customer bills from Massachusetts's investor-owned utilities — Eversource, National Grid, Unitil, and a few smaller gas companies. Forty-one Massachusetts communities are served instead by a <strong><a href="https://www.mass.gov/info-details/massachusetts-municipally-owned-electric-companies" target="_blank" rel="noopener">municipal light plant (MLP)</a></strong> — a town-owned electric utility, separate from that funding structure entirely. If your town runs its own electric department, you're not paying into Mass Save, and you can't draw rebates from it.</p>
+    <p>Mass Save is funded through a charge on customer bills from Massachusetts's investor-owned utilities — Eversource, National Grid, Unitil, and a few smaller gas companies. Forty-one Massachusetts communities are served instead by a <strong><a href="https://www.mass.gov/info-details/massachusetts-municipally-owned-electric-companies?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">municipal light plant (MLP)</a></strong> — a town-owned electric utility, separate from that funding structure entirely. If your town runs its own electric department, you're not paying into Mass Save, and you can't draw rebates from it.</p>
     <p>This isn't a penalty or an oversight. It's just a structural gap that almost nobody explains clearly, which leaves MLP-town homeowners confused about why their heat pump quote doesn't come with the rebate their friend in the next town over got.</p>
 
     <h2 id="some-of-the-mlp-towns">Some of the MLP towns</h2>
@@ -569,6 +569,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

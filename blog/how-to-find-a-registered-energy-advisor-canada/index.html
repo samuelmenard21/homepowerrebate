@@ -194,7 +194,7 @@
 
 <h2 id="more-on-the-federal-heat-pump-rebate">More on the federal heat pump rebate</h2>
 <ul><li><a href="/energy-advisors/">Browse every licensed energy advisor</a></li></ul>
-<p style="font-size:14px;">Sources, read October 20, 2026: <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes" target="_blank" rel="noopener">NRCan: find service organizations for existing homes</a>, <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/prepare-energuide-home-evaluation" target="_blank" rel="noopener">NRCan: prepare for your EnerGuide home evaluation</a>, <a href="https://betterhomesbc.ca/get-support/energy-advisors/" target="_blank" rel="noopener">Better Homes BC: find an energy advisor</a>, <a href="https://www.efficiencyns.ca/programs-rebates/" target="_blank" rel="noopener">Efficiency Nova Scotia: Home Energy Assessment</a>.</p>
+<p style="font-size:14px;">Sources, read October 20, 2026: <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">NRCan: find service organizations for existing homes</a>, <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/prepare-energuide-home-evaluation?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">NRCan: prepare for your EnerGuide home evaluation</a>, <a href="https://betterhomesbc.ca/get-support/energy-advisors/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Better Homes BC: find an energy advisor</a>, <a href="https://www.efficiencyns.ca/programs-rebates/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Efficiency Nova Scotia: Home Energy Assessment</a>.</p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#how-advisors-are-organized">How advisors are organized</a></li><li><a href="#british-columbia">British Columbia</a></li><li><a href="#ontario">Ontario</a></li><li><a href="#nova-scotia">Nova Scotia</a></li><li><a href="#newfoundland-and-labrador">Newfoundland and Labrador</a></li><li><a href="#alberta-saskatchewan-manitoba-quebec-and-the-res">Alberta, Saskatchewan, Manitoba, Quebec and the rest</a></li><li><a href="#what-a-visit-costs">What a visit costs</a></li><li><a href="#what-happens-after-you-book">What happens after you book</a></li><li><a href="#five-questions-to-ask-before-you-book">Five questions to ask before you book</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#more-on-the-federal-heat-pump-rebate">More on the federal heat pump rebate</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">See my rebates</a></div></aside>
@@ -436,6 +436,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

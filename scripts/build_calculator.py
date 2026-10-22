@@ -51,6 +51,11 @@ CSS = """
 .rc-closed{padding-left:18px}.rc-notes{font-size:13.5px;color:#4a5f5b;padding-left:18px}
 .rc-save{background:#f5efe5;border-radius:12px;padding:6px 18px 16px;margin:20px 0}
 .rc-save input{min-height:44px;padding:8px 10px;border:1px solid #b9ae9c;border-radius:8px;font:inherit;width:min(320px,100%)}
+.rc-fed{background:#f6f0e6;border:1px solid #d9cfbd;border-left:5px solid #d4751c;border-radius:12px;padding:4px 18px 16px;margin:16px 0}
+.rc-fed input[type=email]{min-height:44px;padding:8px 10px;border:1px solid #b9ae9c;border-radius:8px;font:inherit;width:min(320px,100%)}
+.rc-fed button{min-height:44px;margin-left:8px;padding:0 18px;border:0;border-radius:8px;background:#a4540a;color:#fff;font-weight:700;cursor:pointer}
+.rc-fed .rc-hp{position:absolute;left:-9999px}
+@media(max-width:480px){.rc-fed button{margin:8px 0 0;width:100%}}
 .rc-save button{min-height:44px;margin-left:8px;padding:0 18px;border:0;border-radius:8px;background:#d4751c;color:#fff;font-weight:700;cursor:pointer}
 .rc-links{font-size:15px}
 .rc-inst{background:#fff;border:1px solid #d9d0c1;border-radius:12px;padding:4px 18px 12px;margin:20px 0}.rc-inst-list{margin:6px 0 0;padding-left:20px;line-height:1.9}

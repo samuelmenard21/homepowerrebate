@@ -512,6 +512,22 @@ body:has(#hpr-search) .nav-search { display: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+/* Slim federal alert bar (2026-10-22): a one-line strip at the foot of Canadian pages, built by the script below. It stays out of the way: shown after a little scrolling, hidden while a full alert box is on screen, gone for 14 days once closed and for good after a signup. */
+.fed-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 16px; padding: 10px 52px 10px 16px; color: var(--paper); background: linear-gradient(165deg, #0f5361 0%, #08363f 70%); box-shadow: 0 -6px 24px rgba(8, 54, 63, .28); transform: translateY(110%); transition: transform .25s ease; }
+.fed-bar.on { transform: none; }
+.fed-bar[hidden] { display: none; }
+.fed-bar p { margin: 0; max-width: none; font-size: 15px; line-height: 1.35; color: var(--paper); }
+.fed-bar p b { color: var(--amber-bright); }
+.fed-bar form { display: flex; flex: 0 1 auto; gap: 8px; margin: 0; }
+.fed-bar input[type="email"] { width: 230px; min-width: 0; min-height: 44px; padding: 0 12px; font: inherit; font-size: 16px; color: var(--ink); background: #fff; border: 0; border-radius: 8px; }
+.fed-bar button[type="submit"] { min-height: 44px; padding: 0 16px; font: inherit; font-size: 15px; font-weight: 700; color: #fff; background: #a4540a; border: 0; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+.fed-bar button[type="submit"]:hover { background: #8a4607; }
+.fed-bar .fed-bar-x { position: absolute; top: 50%; right: 6px; width: 44px; height: 44px; margin-top: -22px; font-size: 26px; line-height: 1; color: var(--paper); background: none; border: 0; cursor: pointer; }
+.fed-bar .fed-bar-hp { position: absolute; left: -9999px; }
+.fed-bar-msg { font-weight: 700; }
+.fed-bar .fb-s { display: none; }
+@media (max-width: 560px) { .fed-bar { padding: 10px 12px 12px; justify-content: flex-start; } .fed-bar p { padding-right: 36px; } .fed-bar .fed-bar-x { top: 2px; right: 0; margin-top: 0; width: 40px; height: 40px; } .fed-bar .fb-l { display: none; } .fed-bar .fb-s { display: inline; } .fed-bar form { flex: 1 1 100%; } .fed-bar input[type="email"] { flex: 1 1 auto; width: auto; } body.has-fed-bar .sticky-cta { display: none !important; } }
+@media print { .fed-bar { display: none !important; } }
 /* ===== template design: article (article.css) ===== */
 /* Article template design (category, city hub and program pages: body.tpl-article).
    One reading column with one left edge, a full-bleed hero aligned to that column, large readable type,

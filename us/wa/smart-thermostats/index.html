@@ -213,7 +213,7 @@
 <div class="faq-item"><h3>How many can I claim?</h3><p>Tacoma Power allows up to two, one per heating system. PSE allows one in five years at the same address for central systems.</p></div>
 <div class="faq-item"><h3>Is there a federal credit?</h3><p>No. The IRS says the home improvement credit covers improvements through December 31, 2025.</p></div>
 
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.pse.com/en/rebates/smart-thermostat" target="_blank" rel="noopener">PSE smart thermostat rebate</a>, <a href="https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/thermostats/" target="_blank" rel="noopener">Tacoma Power thermostats</a>, <a href="https://www.seattle.gov/city-light/residential-services/home-energy-solutions/heating-and-cooling-your-home" target="_blank" rel="noopener">Seattle City Light heating and cooling</a>, <a href="https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/" target="_blank" rel="noopener">Clark Public Utilities all rebates and incentives</a>.</p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.pse.com/en/rebates/smart-thermostat" target="_blank" rel="noopener">PSE smart thermostat rebate</a>, <a href="https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/thermostats/" target="_blank" rel="noopener">Tacoma Power thermostats</a>, <a href="https://www.seattle.gov/city-light/residential-services/home-energy-solutions/heating-and-cooling-your-home?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Seattle City Light heating and cooling</a>, <a href="https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/" target="_blank" rel="noopener">Clark Public Utilities all rebates and incentives</a>.</p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-washington-utilities-pay-for-smart-thermost">What Washington utilities pay for smart thermostats</a></li><li><a href="#rules-that-differ">Rules that differ</a></li><li><a href="#check-the-model-before-you-buy">Check the model before you buy</a></li><li><a href="#is-a-smart-thermostat-worth-buying">Is a smart thermostat worth buying?</a></li><li><a href="#other-washington-utilities">Other Washington utilities</a></li><li><a href="#how-to-claim-a-washington-thermostat-rebate">How to claim a Washington thermostat rebate</a></li><li><a href="#more-for-washington-homes">More for Washington homes</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=wa">See my rebates</a></div></aside>
@@ -456,6 +456,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

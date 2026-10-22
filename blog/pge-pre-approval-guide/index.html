@@ -240,9 +240,9 @@
 <h3>1. Confirm you're actually a PG&E electric customer</h3>
 <p>Some Bay Area cities use community choice energy providers for generation but PG&E still delivers the power and runs the rebate programs. Check a recent bill to be sure.</p>
 <h3>2. Check BayREN first</h3>
-<p>Before you touch PG&E's own site, check <a href="https://www.bayren.org/find-incentives" target="_blank" rel="noopener">BayREN's incentive finder</a>. BayREN (Bay Area Regional Energy Network) coordinates rebates across PG&E's Bay Area footprint and often has better offers than PG&E alone.</p>
+<p>Before you touch PG&E's own site, check <a href="https://www.bayren.org/find-incentives?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BayREN's incentive finder</a>. BayREN (Bay Area Regional Energy Network) coordinates rebates across PG&E's Bay Area footprint and often has better offers than PG&E alone.</p>
 <h3>3. Ask about income-qualified programs</h3>
-<p>If your household income is on the lower end, the <a href="https://www.bayren.org/homeowners/income-qualified-programs" target="_blank" rel="noopener">Climate Equity Hub</a> can provide a heat pump water heater at no cost. This is separate from the standard rebate and worth checking even if you don't think you'll qualify.</p>
+<p>If your household income is on the lower end, the <a href="https://www.bayren.org/homeowners/income-qualified-programs?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Climate Equity Hub</a> can provide a heat pump water heater at no cost. This is separate from the standard rebate and worth checking even if you don't think you'll qualify.</p>
 <h3>4. Get your written pre-approval before signing a contractor agreement</h3>
 <p>Both BayREN and PG&E programs generally require pre-approval before installation starts. Get the approval letter or confirmation number in writing before you pay a deposit.</p>
 <h3>5. Confirm your contractor is enrolled</h3>
@@ -504,6 +504,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

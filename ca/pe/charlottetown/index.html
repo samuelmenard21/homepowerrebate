@@ -210,7 +210,7 @@
 
 <h2 id="what-to-do-next">What to do next</h2>
 <p>Not sure where your home fits? Run the <a href="/calculator/pe/">Prince Edward Island rebate calculator</a>, or read the <a href="/ca/pe/">province guide</a>.</p>
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 21, 2026: <a href="https://www.princeedwardisland.ca/en/information/energy/heat-pumps" target="_blank" rel="noopener">Government of PEI: heat pumps</a>, <a href="https://www.princeedwardisland.ca/en/information/energy/home-insulation-programs" target="_blank" rel="noopener">Government of PEI: home insulation programs</a>, <a href="https://www.princeedwardisland.ca/en/information/energy/home-energy-assessments" target="_blank" rel="noopener">Government of PEI: home energy assessments</a>, <a href="https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/index.cfm?Lang=E" target="_blank" rel="noopener">Statistics Canada 2021 Census Profile</a>. <a href="/ca/pe/charlottetown/">All Charlottetown rebates &rarr;</a></p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 21, 2026: <a href="https://www.princeedwardisland.ca/en/information/energy/heat-pumps" target="_blank" rel="noopener">Government of PEI: heat pumps</a>, <a href="https://www.princeedwardisland.ca/en/information/energy/home-insulation-programs" target="_blank" rel="noopener">Government of PEI: home insulation programs</a>, <a href="https://www.princeedwardisland.ca/en/information/energy/home-energy-assessments" target="_blank" rel="noopener">Government of PEI: home energy assessments</a>, <a href="https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/index.cfm?Lang=E&amp;utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Statistics Canada 2021 Census Profile</a>. <a href="/ca/pe/charlottetown/">All Charlottetown rebates &rarr;</a></p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-is-open-for-charlottetown-homes-in-2026">What is open for Charlottetown homes in 2026</a></li><li><a href="#what-charlottetown-homes-look-like">What Charlottetown homes look like</a></li><li><a href="#if-you-rent-in-charlottetown">If you rent in Charlottetown</a></li><li><a href="#if-you-own-in-charlottetown">If you own in Charlottetown</a></li><li><a href="#where-to-go-in-charlottetown">Where to go in Charlottetown</a></li><li><a href="#what-about-a-heat-pump">What about a heat pump?</a></li><li><a href="#every-rebate-guide-for-charlottetown">Every rebate guide for Charlottetown</a></li><li><a href="#where-to-start-in-charlottetown">Where to start in Charlottetown</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=charlottetown&province=pe">See my rebates</a></div></aside>
@@ -452,6 +452,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

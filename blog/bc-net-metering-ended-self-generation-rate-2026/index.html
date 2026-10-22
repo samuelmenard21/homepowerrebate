@@ -293,7 +293,7 @@
 <h3>How much does BC Hydro pay for solar exports now?</h3><p>10 cents per kWh on RS 2289, credited every billing cycle.</p>
 <h3>What's the Peak Saver deadline for the battery rebate?</h3><p>You must enroll the battery in Peak Saver within 14 calendar days of the in-service date to get the higher rebate. BC Hydro says no exceptions.</p>
 <div class="hpr-cta"><h3>See your city's rebates</h3><p>Compare top-rated local installers, ranked by Google reviews. Free for homeowners, and we'll tell you honestly if the math doesn't work for your home.</p><a class="hpr-btn" href="/ca/bc/">See your city's rebates &rarr;</a></div>
-<p class="hpr-sources"><strong>Sources, checked September 26, 2026:</strong> <a href="https://www.bchydro.com/toolbar/about/strategies-plans-regulatory/rate-design/self-generation-rate-updates.html" target="_blank" rel="noopener">BC Hydro self-generation rate updates</a> · <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html" target="_blank" rel="noopener">BC Hydro solar and battery rebates</a> · <a href="https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/power-smart/residential/programs/solar-battery-rebate-terms-and-conditions.pdf" target="_blank" rel="noopener">BC Hydro solar and battery rebate terms (July 29, 2026)</a>.</p>
+<p class="hpr-sources"><strong>Sources, checked September 26, 2026:</strong> <a href="https://www.bchydro.com/toolbar/about/strategies-plans-regulatory/rate-design/self-generation-rate-updates.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro self-generation rate updates</a> · <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro solar and battery rebates</a> · <a href="https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/power-smart/residential/programs/solar-battery-rebate-terms-and-conditions.pdf" target="_blank" rel="noopener">BC Hydro solar and battery rebate terms (July 29, 2026)</a>.</p>
 <div class="related"><h4>Keep reading</h4><a href="/blog/bc-hydro-schedule-2289-battery-payback/">Schedule 2289 and your battery</a><a href="/blog/is-bc-hydro-solar-rebate-worth-it/">Is the BC Hydro solar rebate worth it?</a></div>
 </main>
 
@@ -434,6 +434,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

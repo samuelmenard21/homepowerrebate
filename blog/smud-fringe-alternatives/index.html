@@ -239,7 +239,7 @@
 
 <h2 id="your-real-options-as-a-pg-e-territory-homeowner">Your Real Options as a PG&E-Territory Homeowner</h2>
 <h3>1. BayREN</h3>
-<p>The <a href="https://www.bayren.org/find-incentives" target="_blank" rel="noopener">Bay Area Regional Energy Network</a> coordinates rebates across PG&E's Bay Area footprint and is usually the best starting point &mdash; often better than PG&E's own listed rebate.</p>
+<p>The <a href="https://www.bayren.org/find-incentives?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Bay Area Regional Energy Network</a> coordinates rebates across PG&E's Bay Area footprint and is usually the best starting point &mdash; often better than PG&E's own listed rebate.</p>
 <h3>2. Climate Equity Hub</h3>
 <p>Income-qualified households can get a free heat pump water heater through this program, run alongside BayREN.</p>
 <h3>3. Federal HEEHRA</h3>
@@ -248,7 +248,7 @@
 <h2 id="bottom-line">Bottom Line</h2>
 <p>You can't switch utilities to chase SMUD's rebate. But BayREN plus income-qualified programs plus federal credits can close a real chunk of that gap. Check every layer before assuming PG&E territory means a bad deal.</p>
 
-<p>Full guide: <a href="/blog/pge-pre-approval-guide/">PG&amp;E Pre-Approval Guide</a>. Local pages: <a href="/us/ca/bay-area/">Bay Area hub</a>, <a href="/us/ca/bay-area/fremont/">Fremont</a>. Source: <a href="https://www.bayren.org/find-incentives" target="_blank" rel="noopener">bayren.org</a>.</p>
+<p>Full guide: <a href="/blog/pge-pre-approval-guide/">PG&amp;E Pre-Approval Guide</a>. Local pages: <a href="/us/ca/bay-area/">Bay Area hub</a>, <a href="/us/ca/bay-area/fremont/">Fremont</a>. Source: <a href="https://www.bayren.org/find-incentives?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">bayren.org</a>.</p>
 
   </div>
 </article>
@@ -494,6 +494,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

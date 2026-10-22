@@ -246,7 +246,7 @@
 <p>If outages matter to you, solar paired with a battery is really a different product than solar alone &mdash; it's about resilience, not just bill savings. That changes the math in solar's favor even under NEM 3.0.</p>
 
 <h3>4. Which one do BayREN and income-qualified programs help with more?</h3>
-<p>Check <a href="https://www.bayren.org/find-incentives" target="_blank" rel="noopener">BayREN's incentive finder</a> for your specific address &mdash; sometimes one side of the decision has meaningfully better funding available than the other in a given year.</p>
+<p>Check <a href="https://www.bayren.org/find-incentives?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BayREN's incentive finder</a> for your specific address &mdash; sometimes one side of the decision has meaningfully better funding available than the other in a given year.</p>
 
 <h2 id="a-reasonable-default">A Reasonable Default</h2>
 <p>If your furnace is aging but functional and your roof is solid, many Bay Area homeowners are better served starting with the heat pump (lower upfront cost, replaces a system you'll need to replace eventually anyway) and revisiting solar once NEM 3.0 economics are clearer or panel prices drop further. But this isn't universal advice &mdash; run your own numbers with a local contractor before deciding.</p>
@@ -497,6 +497,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

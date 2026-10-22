@@ -212,7 +212,7 @@
 <div class="faq-item"><h3>Who runs the Flex program?</h3><p>Uplight runs it on behalf of PSE.</p></div>
 <div class="faq-item"><h3>Is there extra help for lower incomes?</h3><p>PSE lists higher battery incentives under Efficiency Boost. Check its page for amounts.</p></div>
 
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.pse.com/en/rebates/PSE-flex/flex-batteries" target="_blank" rel="noopener">PSE Flex Batteries</a>, <a href="https://www.pse.com/en/green-options/Renewable-Energy-Programs/storing-your-own-power" target="_blank" rel="noopener">PSE battery storage</a>, <a href="https://www.pse.com/en/rebates/efficiency-boost" target="_blank" rel="noopener">PSE Efficiency Boost</a>, <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS Residential Clean Energy Credit</a>.</p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.pse.com/en/rebates/PSE-flex/flex-batteries" target="_blank" rel="noopener">PSE Flex Batteries</a>, <a href="https://www.pse.com/en/green-options/Renewable-Energy-Programs/storing-your-own-power" target="_blank" rel="noopener">PSE battery storage</a>, <a href="https://www.pse.com/en/rebates/efficiency-boost" target="_blank" rel="noopener">PSE Efficiency Boost</a>, <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">IRS Residential Clean Energy Credit</a>.</p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-washington-utilities-pay-for-home-batteries">What Washington utilities pay for home batteries</a></li><li><a href="#how-flex-batteries-works">How Flex Batteries works</a></li><li><a href="#what-pse-says-about-installing-a-battery">What PSE says about installing a battery</a></li><li><a href="#batteries-without-a-rebate">Batteries without a rebate</a></li><li><a href="#lower-income-households">Lower-income households</a></li><li><a href="#how-to-approach-a-washington-battery-in-2026">How to approach a Washington battery in 2026</a></li><li><a href="#more-for-washington-homes">More for Washington homes</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=wa">See my rebates</a></div></aside>
@@ -455,6 +455,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

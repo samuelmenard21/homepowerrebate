@@ -212,7 +212,7 @@
 <div class="faq-item"><h3>What does a heat pump water heater get?</h3><p>$600, or up to $1,000 for income-eligible households.</p></div>
 <div class="faq-item"><h3>Do rental owners qualify?</h3><p>For the heat pump income bonus, no. They can use Home Performance with ENERGY STAR for rental property owners on one-to-four-unit buildings.</p></div>
 
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system" target="_blank" rel="noopener">Efficiency Vermont ductless heat pumps</a>, <a href="https://www.efficiencyvermont.com/rebates/list/home-performance-with-energy-star" target="_blank" rel="noopener">Efficiency Vermont Home Performance with ENERGY STAR</a>, <a href="https://www.efficiencyvermont.com/rebates/list/ground-source-heat-pumps" target="_blank" rel="noopener">Efficiency Vermont ground source heat pumps</a>, <a href="https://www.burlingtonelectric.com/heatpumps/" target="_blank" rel="noopener">Burlington Electric heat pumps</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Efficiency Vermont ductless heat pumps</a>, <a href="https://www.efficiencyvermont.com/rebates/list/home-performance-with-energy-star?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Efficiency Vermont Home Performance with ENERGY STAR</a>, <a href="https://www.efficiencyvermont.com/rebates/list/ground-source-heat-pumps?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Efficiency Vermont ground source heat pumps</a>, <a href="https://www.burlingtonelectric.com/heatpumps/" target="_blank" rel="noopener">Burlington Electric heat pumps</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-efficiency-vermont-pays-in-2026">What Efficiency Vermont pays in 2026</a></li><li><a href="#why-the-weatherization-figure-fell">Why the weatherization figure fell</a></li><li><a href="#how-your-utility-changes-the-number">How your utility changes the number</a></li><li><a href="#ducted-or-ductless">Ducted or ductless</a></li><li><a href="#financing-the-rest">Financing the rest</a></li><li><a href="#how-to-claim-efficiency-vermont-rebates">How to claim Efficiency Vermont rebates</a></li><li><a href="#our-pages-for-efficiency-vermont-customers">Our pages for Efficiency Vermont customers</a></li><li><a href="#guides">Guides</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">See my rebates</a></div></aside>
@@ -454,6 +454,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

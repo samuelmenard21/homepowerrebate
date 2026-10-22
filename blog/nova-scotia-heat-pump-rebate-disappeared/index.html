@@ -304,14 +304,14 @@
     <p>Important limits: replacing an existing heat pump doesn't qualify. Ducted mini-splits don't qualify. The installer must be a certified refrigeration mechanic, and the model must be on Efficiency Nova Scotia's list.</p>
 
     <h2 id="free-heat-pumps-in-nova-scotia-who-qualifies">Free heat pumps in Nova Scotia: who qualifies?</h2>
-    <p>There's no program just for seniors. The free option is <a href="https://www.efficiencyns.ca/programs-rebates/homewarming" target="_blank" rel="noopener">HomeWarming</a>, which is based on income, not age. You must own your home and live in it year-round. After-tax household income limits:</p>
+    <p>There's no program just for seniors. The free option is <a href="https://www.efficiencyns.ca/programs-rebates/homewarming?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">HomeWarming</a>, which is based on income, not age. You must own your home and live in it year-round. After-tax household income limits:</p>
     <ul>
       <li>1 person: $30,187</li>
       <li>2 to 4 people: $57,075</li>
       <li>5 or more people: $79,163</li>
     </ul>
     <p>A free energy advisor visit decides what you get. It may be insulation and draft-proofing, and sometimes a heat pump. Efficiency Nova Scotia warns of long wait times.</p>
-    <p>If your income is a bit higher, look at the <a href="https://www.efficiencyns.ca/programs-rebates/moderate-income-rebate" target="_blank" rel="noopener">Moderate Income Rebate</a>. The limit is $37,260 for 1 person up to $126,500 for 5 or more. Homes heated mainly with electricity can't use it.</p>
+    <p>If your income is a bit higher, look at the <a href="https://www.efficiencyns.ca/programs-rebates/moderate-income-rebate?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Moderate Income Rebate</a>. The limit is $37,260 for 1 person up to $126,500 for 5 or more. Homes heated mainly with electricity can't use it.</p>
 
     <h2 id="what-to-do-next">What to do next</h2>
     <ol>
@@ -340,7 +340,7 @@
       <li><a href="/blog/water-heater-buying-guide-ns/">Nova Scotia heat pump water heater guide</a></li>
     </ul>
 
-    <p style="font-size:13px; color:var(--ink-soft); margin-top:32px;">Sources, checked September 26, 2026: <a href="https://www.efficiencyns.ca/programs-rebates/home-heating-system-rebates" target="_blank" rel="noopener">Home Heating System Rebates (closed)</a>, <a href="https://www.efficiencyns.ca/programs-rebates/oil-to-heat-pump-affordability-program" target="_blank" rel="noopener">OHPA</a>, <a href="https://www.efficiencyns.ca/programs-rebates/moderate-income-rebate" target="_blank" rel="noopener">Moderate Income Rebate</a>, <a href="https://www.efficiencyns.ca/programs-rebates/homewarming" target="_blank" rel="noopener">HomeWarming</a>, <a href="https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf" target="_blank" rel="noopener">Home Energy Assessment Rebate Guide (Aug 2026)</a>, <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative" target="_blank" rel="noopener">NRCan</a>.</p>
+    <p style="font-size:13px; color:var(--ink-soft); margin-top:32px;">Sources, checked September 26, 2026: <a href="https://www.efficiencyns.ca/programs-rebates/home-heating-system-rebates?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Home Heating System Rebates (closed)</a>, <a href="https://www.efficiencyns.ca/programs-rebates/oil-to-heat-pump-affordability-program?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">OHPA</a>, <a href="https://www.efficiencyns.ca/programs-rebates/moderate-income-rebate?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Moderate Income Rebate</a>, <a href="https://www.efficiencyns.ca/programs-rebates/homewarming?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">HomeWarming</a>, <a href="https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf" target="_blank" rel="noopener">Home Energy Assessment Rebate Guide (Aug 2026)</a>, <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-initiative?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">NRCan</a>.</p>
 
   </div>
 </article>
@@ -586,6 +586,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

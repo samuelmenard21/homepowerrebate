@@ -253,7 +253,7 @@
         <tr><td>Smart charger enrolled in Peak Saver</td><td>$250 credit + $50/season</td></tr>
       </table>
     </div>
-    <p>Live in a condo or apartment? BC Hydro runs separate charger rebates for multi-unit buildings, applied for by the strata or building owner. Check <a href="https://www.bchydro.com/powersmart/electric-vehicles.html" target="_blank" rel="noopener">BC Hydro's EV page</a> for current amounts.</p>
+    <p>Live in a condo or apartment? BC Hydro runs separate charger rebates for multi-unit buildings, applied for by the strata or building owner. Check <a href="https://www.bchydro.com/powersmart/electric-vehicles.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro's EV page</a> for current amounts.</p>
 
     <h2>2. Cut your charging cost with the Time-of-Day rate</h2>
     <p>This is the one almost nobody uses. BC Hydro offers an <strong>optional Time-of-Day rate</strong> that prices power by when you use it:</p>
@@ -283,7 +283,7 @@
       <a href="/get-quotes/" class="btn-primary">Estimate my rebates &rarr;</a>
     </div>
 
-    <p style="font-size:13px;color:var(--ink-soft);margin-top:24px;">Sources: <a href="https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/rebates-home-chargers.html" target="_blank" rel="noopener">BC Hydro &mdash; home charger rebate</a>; <a href="https://www.bchydro.com/powersmart/residential/tips-technologies/time-of-day.html" target="_blank" rel="noopener">BC Hydro &mdash; Time-of-Day rate</a>. Confirm current amounts before you buy.</p>
+    <p style="font-size:13px;color:var(--ink-soft);margin-top:24px;">Sources: <a href="https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/rebates-home-chargers.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro &mdash; home charger rebate</a>; <a href="https://www.bchydro.com/powersmart/residential/tips-technologies/time-of-day.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro &mdash; Time-of-Day rate</a>. Confirm current amounts before you buy.</p>
   </div>
 </article>
 
@@ -525,6 +525,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

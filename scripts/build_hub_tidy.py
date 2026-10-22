@@ -28,7 +28,7 @@ CITY_ART = re.compile(r"cities( we cover)?$", re.I)
 
 def tidy_article(t, have):
     """Hubs that are one flat <article> of h2 blocks: fold the long ones, drop city lists the finder covers."""
-    m = re.search(r'<article class="article">(.*?)</article>', t, re.S)
+    m = re.search(r'<article class="article"[^>]*>(.*?)</article>', t, re.S)  # the restamp may already have tagged it role="main" id="main"
     if not m:
         return t
     body = m.group(1)
@@ -47,9 +47,18 @@ def tidy_article(t, have):
                 continue
         if ART_FOLD.search(title) and len(rest) > 1200:
             label = "Read the questions and answers" if re.search(r"questions", title, re.I) else "Open this section"
-            p = p[:h2.end()] + f'\n<details class="hub-fold"><summary>{label}</summary>' + rest + "</details>\n"
+            # the last block still carries the closers of the article's wrapper div: they must stay outside the <details>, or the
+            # markup nests wrongly, the restamp cannot wrap the page in <main>, and the hub CSS (main > .hub-block) never applies
+            tail = ""
+            for _ in range(max(0, len(re.findall(r"</div>", rest)) - len(re.findall(r"<div\b", rest)))):
+                k = re.search(r"\s*</div>\s*$", rest)
+                if not k:
+                    break
+                tail, rest = rest[k.start():] + tail, rest[:k.start()]
+            p = p[:h2.end()] + f'\n<details class="hub-fold"><summary>{label}</summary>' + rest + "</details>\n" + tail
         out.append(p)
-    return t[:m.start(1)] + "".join(out) + t[m.end(1):]
+    res = t[:m.start(1)] + "".join(out) + t[m.end(1):]
+    return re.sub(r"</div>(\s*)</details>(\s*)</article>", r"</details>\1</div>\2</article>", res)  # repair an earlier inverted fold
 
 
 TOC_SKIP = re.compile(r"not sure|weekly email|sources|newsletter|installers", re.I)

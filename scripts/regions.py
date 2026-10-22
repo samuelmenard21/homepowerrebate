@@ -30,7 +30,7 @@ COUNTRY_NAME_BY_PATH = {r["path"]: ("Canada" if r["country"] == "ca" else "Unite
 
 def region_dirs_exclusion():
     """Folder names to ignore when guessing a city from a URL path."""
-    return {"ca", "us"} | set(CODES) | {"stacking-calculator"}
+    return {"ca", "us", "fr"} | set(CODES) | {"stacking-calculator"}
 
 
 def nav_tabs_html(indent="      "):

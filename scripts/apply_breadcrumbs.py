@@ -34,7 +34,7 @@ EXCLUDE_DIRS = {".git", "node_modules", "scripts", ".claude", "_partials"}
 
 REGION_PREFIX_TO_CODE = dict(regions.CODE_BY_PREFIX)
 REGION_KEY_BY_CODE = {r["code"]: r["path"] for r in regions.REGIONS}
-CATEGORY_NAMES = {
+CATEGORY_NAMES = {"fr", 
     "heat-pump", "insulation", "solar", "battery", "water-heater",
     "smart-thermostats", "ev-charger", "windows-doors", "windows",
 }

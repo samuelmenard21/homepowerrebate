@@ -28,7 +28,7 @@ def main():
             continue
         t = page.read_text(encoding="utf-8")
         t = re.sub(r"\n?" + re.escape(S) + r".*?" + re.escape(E), "", t, flags=re.S)
-        if "hreflang" in t:
+        if re.search(r"<link[^>]+hreflang", t):  # a head alternate only: the visible "Version française" link also has an hreflang attribute
             page.write_text(t, encoding="utf-8")  # already has its own pair
             continue
         block = (f'\n{S}<link rel="alternate" hreflang="en-CA" href="{BASE}{d["en"]}"><link rel="alternate" hreflang="fr-CA" href="{BASE}{d["path"]}">'

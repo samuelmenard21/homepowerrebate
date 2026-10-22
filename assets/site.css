@@ -543,6 +543,9 @@ body:has(#hpr-search) .nav-search { display: none; }
 body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(--paper); }
 
 /* ---------- one column, one left edge ---------- */
+/* no side panel: one centred reading column; text fills it, so every edge lines up and no blank strip is left on the right */
+body.tpl-article:has(main:not(.has-rail)) { --article: clamp(720px, 56vw, 800px); }
+.tpl-article main:not(.has-rail) :is(p, li) { max-width: none; }
 .tpl-article main > *:not(.hero):not(.post-header):not(.page-rail) { width: 100%; max-width: calc(var(--article) + 2 * var(--gut)) !important; margin-left: auto !important; margin-right: auto !important; padding-left: var(--gut) !important; padding-right: var(--gut) !important; box-sizing: border-box; }
 .tpl-article main > * > .wrap, .tpl-article main > article > .wrap { max-width: none; padding: 0; margin: 0; }
 .tpl-article main > article { padding-top: 36px; padding-bottom: 40px; }

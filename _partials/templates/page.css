@@ -1,0 +1,10 @@
+/* tpl-page: older stand-alone pages (guides, tools, utility city pages, trackers). Each page still keeps its own variant CSS; these are
+   only defaults that apply where the variant says nothing (zero specificity via :where), so a page's own rules always win. The one exception is the 48em text cap, which has to beat older p{max-width:none} rules; it skips hero, header and centred text. */
+body.tpl-page { --page-gut: clamp(20px, 4vw, 40px); --page-col: 900px; }
+
+/* text never runs the full width of a wide screen: about 70 characters a line */
+body.tpl-page main :is(p, li, dd, blockquote):not(.hero *, header *, .cta *, .center, .centered, [class*="hero"] *, [style*="center"]) { max-width: 48em; }
+
+/* a band whose headings, text and lists sit straight inside the section (no wrapper) gets one centred column and a side gutter,
+   so nothing touches the screen edge on desktop and every block shares one left edge */
+:where(body.tpl-page main > section:not(.hero)) > :where(:not(.wrap, .container, .inner, script, style)) { width: min(var(--page-col), 100% - 2 * var(--page-gut)); max-width: none; margin-left: auto; margin-right: auto; box-sizing: border-box; }

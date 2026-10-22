@@ -1,0 +1,371 @@
+{
+ "code": "qc",
+ "name": "Quebec",
+ "country": "ca",
+ "currency": "CAD",
+ "hub": "/ca/qc/",
+ "installers": "/installers/",
+ "title": "Quebec Rebate Calculator 2026: LogisVert and Rénoclimat",
+ "h1": "Quebec Rebate Calculator 2026: What You Could Get Back",
+ "desc": "Free Quebec rebate calculator. Hydro-Québec LogisVert heat pump and thermal storage grants and the new Rénoclimat insulation, window and flood protection grants. Every number sourced.",
+ "intro": "Answer a few questions and see which Quebec rebates fit your home, with a source for every number.",
+ "short": "Hydro-Québec's LogisVert pays up to $6,700 for an eligible heat pump, $15,000 for an electric thermal storage system and $1,000 per kW for solar. Rénoclimat, changed on October 1, 2026, pays up to $7,000 for exterior walls, $2,000 for the roof and $300 per window for a house.",
+ "faq": [
+  [
+   "How much is the Quebec heat pump grant?",
+   "Up to $6,700 from Hydro-Québec's LogisVert program for an ENERGY STAR heat pump on its eligible list. Combine at least two measures in one application for a 5% bonus. The application portal is in French only."
+  ],
+  [
+   "What changed in Rénoclimat on October 1, 2026?",
+   "A pre-work energy evaluation is no longer required but is recommended, an evaluation grant is offered, and a flood protection stream was added. A new portal was still being built when we read the page."
+  ],
+  [
+   "Does Rénoclimat pay for a heat pump?",
+   "Not on the pages we read. Heat pump money comes from LogisVert. Rénoclimat pays for insulation, windows, a backup power connection and a fixed battery."
+  ],
+  [
+   "Are duplexes and triplexes covered?",
+   "Yes, with higher maximums: up to $5,000 for the roof, $11,000 for walls and $3,500 for foundations."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "home_type",
+   "label": "What kind of home?",
+   "type": "select",
+   "options": [
+    {
+     "value": "house",
+     "label": "A house"
+    },
+    {
+     "value": "plex",
+     "label": "A duplex, triplex or small apartment building"
+    }
+   ],
+   "optional": true
+  },
+  {
+   "id": "openings",
+   "label": "How many windows would you replace?",
+   "type": "select",
+   "options": [
+    {
+     "value": "1",
+     "label": "1"
+    },
+    {
+     "value": "2",
+     "label": "2"
+    },
+    {
+     "value": "3",
+     "label": "3"
+    },
+    {
+     "value": "4",
+     "label": "4"
+    },
+    {
+     "value": "5",
+     "label": "5"
+    },
+    {
+     "value": "6",
+     "label": "6"
+    },
+    {
+     "value": "7",
+     "label": "7"
+    },
+    {
+     "value": "8",
+     "label": "8"
+    },
+    {
+     "value": "9",
+     "label": "9"
+    },
+    {
+     "value": "10",
+     "label": "10"
+    },
+    {
+     "value": "11",
+     "label": "11"
+    },
+    {
+     "value": "12",
+     "label": "12"
+    },
+    {
+     "value": "13",
+     "label": "13"
+    },
+    {
+     "value": "14",
+     "label": "14"
+    },
+    {
+     "value": "15",
+     "label": "15"
+    },
+    {
+     "value": "16",
+     "label": "16"
+    },
+    {
+     "value": "17",
+     "label": "17"
+    },
+    {
+     "value": "18",
+     "label": "18"
+    },
+    {
+     "value": "19",
+     "label": "19"
+    },
+    {
+     "value": "20",
+     "label": "20 or more"
+    }
+   ],
+   "for": [
+    "windows"
+   ],
+   "optional": true,
+   "help": "Skip this to see the per-window rate."
+  },
+  {
+   "id": "central",
+   "label": "Which central heating system?",
+   "type": "select",
+   "options": [
+    {
+     "value": "ets",
+     "label": "Electric thermal storage system"
+    },
+    {
+     "value": "ets_hp",
+     "label": "Electric thermal storage plus a central heat pump"
+    }
+   ],
+   "for": [
+    "central"
+   ]
+  }
+ ],
+ "derived": {},
+ "pools": [],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump"
+  },
+  {
+   "id": "central",
+   "label": "Central heating replacement"
+  },
+  {
+   "id": "roof",
+   "label": "Roof insulation"
+  },
+  {
+   "id": "walls",
+   "label": "Wall insulation"
+  },
+  {
+   "id": "foundation",
+   "label": "Foundation insulation"
+  },
+  {
+   "id": "windows",
+   "label": "Windows"
+  },
+  {
+   "id": "solar",
+   "label": "Solar panels"
+  },
+  {
+   "id": "flood",
+   "label": "Flood protection"
+  }
+ ],
+ "programs": [
+  {
+   "id": "qc-hp",
+   "fact": "qc-0-logisvert-heat-pump",
+   "name": "LogisVert: heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 6700
+   },
+   "rules": "ENERGY STAR heat pump on Hydro-Québec's list. Portal in French only. A 5% bonus applies when you combine at least two measures."
+  },
+  {
+   "id": "qc-ets",
+   "fact": "qc-3-logisvert-thermal-storage-geothermal",
+   "name": "LogisVert: electric thermal storage system",
+   "upgrade": "central",
+   "amount": {
+    "max": 15000
+   },
+   "rules": "Authorized installer deducts it from the invoice.",
+   "when": {
+    "central": [
+     "ets"
+    ]
+   }
+  },
+  {
+   "id": "qc-ets-hp",
+   "fact": "qc-3-logisvert-thermal-storage-geothermal",
+   "name": "LogisVert: thermal storage plus central heat pump",
+   "upgrade": "central",
+   "amount": {
+    "max": 22000
+   },
+   "rules": "Authorized installer deducts it from the invoice.",
+   "when": {
+    "central": [
+     "ets_hp"
+    ]
+   }
+  },
+  {
+   "id": "qc-roof-lv",
+   "fact": "qc-6-logisvert-other-grants",
+   "name": "LogisVert: roof insulation and caulking",
+   "upgrade": "roof",
+   "amount": {
+    "max": 1500
+   },
+   "rules": "Conditions on Hydro-Québec's page.",
+   "group": "roof"
+  },
+  {
+   "id": "qc-roof-rc",
+   "fact": "qc-7-renoclimat-efficiency",
+   "name": "Rénoclimat: roof insulation",
+   "upgrade": "roof",
+   "amount": {
+    "by": "home_type",
+    "values": {
+     "house": 2000,
+     "plex": 5000
+    }
+   },
+   "rules": "New terms since October 1, 2026. Maximum for a house or for a duplex, triplex or multi-unit building.",
+   "group": "roof"
+  },
+  {
+   "id": "qc-walls",
+   "fact": "qc-7-renoclimat-efficiency",
+   "name": "Rénoclimat: exterior wall insulation",
+   "upgrade": "walls",
+   "amount": {
+    "by": "home_type",
+    "values": {
+     "house": 7000,
+     "plex": 11000
+    }
+   },
+   "rules": "New terms since October 1, 2026. Maximum for a house or for a duplex, triplex or multi-unit building."
+  },
+  {
+   "id": "qc-found",
+   "fact": "qc-7-renoclimat-efficiency",
+   "name": "Rénoclimat: foundation insulation",
+   "upgrade": "foundation",
+   "amount": {
+    "by": "home_type",
+    "values": {
+     "house": 2500,
+     "plex": 3500
+    }
+   },
+   "rules": "New terms since October 1, 2026. Maximum for a house or for a duplex, triplex or multi-unit building."
+  },
+  {
+   "id": "qc-win-house",
+   "fact": "qc-7-renoclimat-efficiency",
+   "name": "Rénoclimat: windows (house)",
+   "upgrade": "windows",
+   "amount": {
+    "per": {
+     "unit": "window",
+     "rate": 300,
+     "question": "openings",
+     "cap": 4500
+    }
+   },
+   "rules": "$300 per window up to $4,500 for a house.",
+   "when": {
+    "home_type": [
+     "house"
+    ]
+   }
+  },
+  {
+   "id": "qc-win-plex",
+   "fact": "qc-7-renoclimat-efficiency",
+   "name": "Rénoclimat: windows (duplex, triplex, multi-unit)",
+   "upgrade": "windows",
+   "amount": {
+    "per": {
+     "unit": "window",
+     "rate": 300,
+     "question": "openings",
+     "cap": 6000
+    }
+   },
+   "rules": "$300 per window up to $6,000 for a duplex, triplex or multi-unit building.",
+   "when": {
+    "home_type": [
+     "plex"
+    ]
+   }
+  },
+  {
+   "id": "qc-solar",
+   "fact": "qc-6-logisvert-other-grants",
+   "name": "LogisVert: solar panels",
+   "upgrade": "solar",
+   "amount": {
+    "label": "$1,000 per installed kW",
+    "max": 0
+   },
+   "rules": "Can cover up to 40% of the purchase and installation cost. Shown but not added to your total."
+  },
+  {
+   "id": "qc-flood",
+   "fact": "qc-8-renoclimat-adaptation",
+   "name": "Rénoclimat: flood protection",
+   "upgrade": "flood",
+   "amount": {
+    "label": "$700 to $1,000, up to $35,000 in a flood zone",
+    "max": 0
+   },
+   "rules": "Prevention work. A guided path starts with a mandatory climate resilience diagnostic. Shown but not added to your total."
+  },
+  {
+   "id": "fed-hp",
+   "fact": "federal-0-national-heat-pump-rebate",
+   "name": "National Heat Pump Rebate (federal, not open yet)",
+   "upgrade": "heat-pump",
+   "amount": {
+    "label": "Up to $10,000 or $2,000",
+    "max": 0
+   },
+   "rules": "Announced October 8, 2026 and expected to launch in early 2027. The income line, eligible homes and how it combines with provincial programs are not published, so this is shown but not added to your total."
+  }
+ ],
+ "closed_facts": [
+  "qc-5-federal-oil-to-heat-pump"
+ ],
+ "notes": [
+  "Rénoclimat's new portal was under development on October 21, 2026, so keep your invoices and the contractor's signed form.",
+  "Amounts are the most a program pays. Your rebate depends on your quote and final invoice."
+ ]
+}

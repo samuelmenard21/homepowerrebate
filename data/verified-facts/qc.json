@@ -1,78 +1,113 @@
 {
- "checked": "2026-10-10",
- "region": "Quebec",
- "facts": [
-  {
-   "id": "qc-0-logisvert-heat-pump",
-   "program": "Hydro-Québec LogisVert: heat pump",
-   "status": "active",
-   "verified_on": "2026-10-10",
-   "claim": "Grant of $50 per 1,000 BTU/h at -8°C for an ENERGY STAR certified air-to-air heat pump, or $120 per 1,000 BTU/h at -8°C if it is certified cold climate. Hydro-Québec advertises up to $6,700. Apply on the LogisVert portal within nine months of installation.",
-   "amount": "$50 or $120 per 1,000 BTU/h at -8°C (up to $6,700)",
-   "eligibility": "Home in Quebec whose main heating runs on electricity; new central split or wall-mounted mini-split system; outdoor unit at least 12,000 BTU/h cooling; bought from a Quebec retailer; installed by an RBQ-licensed company; owners get the grant (tenants are eligible only for the dryer and range). Replacing a failed heat pump, a single coil or unit, and indoor units outside the heated space are not eligible. Off-grid homes cannot use it to replace or add to a fuel-fired heating system.",
-   "dates": "Participant's guide dated September 15, 2026; no end date stated. Hydro-Québec page says requests are still processed normally after the October 8, 2026 federal announcement.",
-   "source_url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
-   "notes": "Guide read as PDF text on 2026-10-10: https://www.hydroquebec.com/data/logisvert/logisvert-guide-participation-residentiel-en.pdf (sections 2.3, 2.5, 2.7, Appendix I). Grant cannot exceed 100% of pre-tax purchase and installation cost. Processing 10 to 12 weeks. Portal is in French only. The $6,700 figure is from the Hydro-Québec page; the guide does not state a cap."
-  },
-  {
-   "id": "qc-1-logisvert-multi-unit-bonus",
-   "program": "LogisVert bonus for multi-unit dwellings",
-   "status": "active",
-   "verified_on": "2026-10-10",
-   "claim": "Bonus of $100 per 1,000 BTU/h at -8°C on top of the $120 cold-climate rate, for $220 total, for owners of eligible multi-unit buildings where tenants pay their own electricity.",
-   "amount": "$220 per 1,000 BTU/h at -8°C",
-   "eligibility": "Cold-climate ENERGY STAR wall-mounted mini-split; building in an area Hydro-Québec designates energy insecure (by postal code); built 1995 or earlier; property value per dwelling below the regional median; electric main heating; one meter per home. Condos and businesses are not eligible.",
-   "dates": "Installations on or after June 15, 2026.",
-   "source_url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
-   "notes": "Guide Appendix II. Cannot be combined with the 5% multiple-measure bonus."
-  },
-  {
-   "id": "qc-2-logisvert-multiple-measures",
-   "program": "LogisVert bonus for combining measures",
-   "status": "active",
-   "verified_on": "2026-10-10",
-   "claim": "5% added to the total grant when two or more measures are filed in one application (all within the nine-month window).",
-   "amount": "+5% of the total grant",
-   "eligibility": "Two or more LogisVert measures in the same application.",
-   "dates": "No end date stated.",
-   "source_url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
-   "notes": "Guide Appendix II."
-  },
-  {
-   "id": "qc-3-logisvert-thermal-storage-geothermal",
-   "program": "LogisVert: thermal storage and geothermal (deducted from installer invoice)",
-   "status": "active",
-   "verified_on": "2026-10-10",
-   "claim": "$22,000 for an electric thermal storage system plus a central heat pump, $15,000 for a thermal storage system replacing a central heating unit, and $750 per 1,000 BTU/h for a geothermal heat pump. The amount is deducted from the installer's invoice, so no application is filed.",
-   "amount": "$22,000 / $15,000 / $750 per 1,000 BTU/h",
-   "eligibility": "Authorized installers only for thermal storage; see Hydro-Québec's installer list.",
-   "dates": "No end date stated.",
-   "source_url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
-   "notes": "Replacing an existing geothermal heat pump pays $250 per 1,000 BTU/h (guide: capped at $18,000 per address)."
-  },
-  {
-   "id": "qc-4-renoclimat-no-heating",
-   "program": "Rénoclimat (Quebec government)",
-   "status": "info",
-   "verified_on": "2026-10-10",
-   "claim": "Rénoclimat pays for insulation, air sealing ($400 to $800) and ENERGY STAR doors and windows ($150 each) after an energy assessment, and no longer pays for installing or replacing a heating system. Its rules changed on October 1, 2026; a transition runs to October 12, 2026 for requesting an assessment before work under the old rules.",
-   "amount": "No heat pump amount",
-   "eligibility": "Energy assessment before work required; fees apply.",
-   "dates": "New rules from October 1, 2026; transition to October 12, 2026.",
-   "source_url": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat",
-   "notes": "Heating-system exclusion and LogisVert referral read on https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/aide-financiere/subvention-systemes-mecaniques (page dated 2025-10-02). The October 2026 change details were not opened."
-  },
-  {
-   "id": "qc-5-federal-oil-to-heat-pump",
-   "program": "Federal Oil to Heat Pump Affordability (Quebec)",
-   "status": "closed",
-   "verified_on": "2026-10-10",
-   "claim": "July 31, 2026 was the last day to apply. Applications sent before then are still processed; final receipts and the attestation form are due January 31, 2027. Homes in remote areas of Quebec were not eligible.",
-   "amount": "was up to $10,000",
-   "eligibility": "Closed. Applied to oil-heated homes at or below median household after-tax income.",
-   "dates": "Closed July 31, 2026",
-   "source_url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/oil-heat-pump-affordability-program",
-   "notes": "Page lists Quebec among the covered provinces; read 2026-10-10."
-  }
- ]
+  "checked": "2026-10-21",
+  "facts": [
+    {
+      "id": "qc-0-logisvert-heat-pump",
+      "program": "Hydro-Québec LogisVert: heat pump",
+      "status": "active",
+      "verified_on": "2026-10-21",
+      "claim": "Grant of $50 per 1,000 BTU/h at -8°C for an ENERGY STAR certified air-to-air heat pump, or $120 per 1,000 BTU/h at -8°C if it is certified cold climate. Hydro-Québec advertises up to $6,700. Apply on the LogisVert portal within nine months of installation. Hydro-Québec's LogisVert Efficient Homes Program pays a grant for an ENERGY STAR heat pump that is on its eligible list. A high-efficiency (cold climate) heat pump earns a higher grant. Apply on the LogisVert web portal, which is in French only. Hydro-Québec says the program is still available and the federal funding announced on October 8, 2026 does not change how requests are processed. Support: 1-833-396-1888, info@logisvert.ca.",
+      "amount": "$50 or $120 per 1,000 BTU/h at -8°C (up to $6,700) Up to $6,700. Multi-unit bonus: $100 more per 1,000 BTU/h at -8 C (a total of $220 per 1,000 BTU/h) for an ENERGY STAR cold climate wall-mounted heat pump in a building that meets the criteria, such as an area designated energy insecure. Combine at least two measures in one application and the total grant gets a 5% bonus.",
+      "eligibility": "Check the heat pump is on Hydro-Québec's eligible list before you buy. Certain conditions apply. Earlier note: Home in Quebec whose main heating runs on electricity; new central split or wall-mounted mini-split system; outdoor unit at least 12,000 BTU/h cooling; bought from a Quebec retailer; installed by an RBQ-licensed company; owners get the grant (tenants are eligible only for the dryer and range). Replacing a failed heat pump, a single coil or unit, and indoor units outside the heated space are not eligible. Off-grid homes cannot use it to replace or add to a fuel-fired heating system.",
+      "dates": "No closing date stated.",
+      "source_url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
+      "notes": "Read in the browser on 2026-10-21. The $6,700 headline is also on https://www.hydroquebec.com/residential/energy-wise/tips/windows-heating-air-conditioning/heat-pumps/financial-assistance.html Guide read as PDF text on 2026-10-10: https://www.hydroquebec.com/data/logisvert/logisvert-guide-participation-residentiel-en.pdf (sections 2.3, 2.5, 2.7, Appendix I). Grant cannot exceed 100% of pre-tax purchase and installation cost. Processing 10 to 12 weeks. Portal is in French only. The $6,700 figure is from the Hydro-Québec page; the guide does not state a cap."
+    },
+    {
+      "id": "qc-1-logisvert-multi-unit-bonus",
+      "program": "LogisVert bonus for multi-unit dwellings",
+      "status": "active",
+      "verified_on": "2026-10-10",
+      "claim": "Bonus of $100 per 1,000 BTU/h at -8°C on top of the $120 cold-climate rate, for $220 total, for owners of eligible multi-unit buildings where tenants pay their own electricity.",
+      "amount": "$220 per 1,000 BTU/h at -8°C",
+      "eligibility": "Cold-climate ENERGY STAR wall-mounted mini-split; building in an area Hydro-Québec designates energy insecure (by postal code); built 1995 or earlier; property value per dwelling below the regional median; electric main heating; one meter per home. Condos and businesses are not eligible.",
+      "dates": "Installations on or after June 15, 2026.",
+      "source_url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
+      "notes": "Guide Appendix II. Cannot be combined with the 5% multiple-measure bonus."
+    },
+    {
+      "id": "qc-2-logisvert-multiple-measures",
+      "program": "LogisVert bonus for combining measures",
+      "status": "active",
+      "verified_on": "2026-10-10",
+      "claim": "5% added to the total grant when two or more measures are filed in one application (all within the nine-month window).",
+      "amount": "+5% of the total grant",
+      "eligibility": "Two or more LogisVert measures in the same application.",
+      "dates": "No end date stated.",
+      "source_url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
+      "notes": "Guide Appendix II."
+    },
+    {
+      "id": "qc-3-logisvert-thermal-storage-geothermal",
+      "program": "LogisVert: thermal storage and geothermal (deducted from installer invoice)",
+      "status": "active",
+      "verified_on": "2026-10-21",
+      "claim": "$22,000 for an electric thermal storage system plus a central heat pump, $15,000 for a thermal storage system replacing a central heating unit, and $750 per 1,000 BTU/h for a geothermal heat pump. The amount is deducted from the installer's invoice, so no application is filed. Grants for replacing a central heating system. For these there is no application: the amount is taken off the authorized installer's invoice.",
+      "amount": "$22,000 / $15,000 / $750 per 1,000 BTU/h Electric thermal storage (ETS) system to replace your central heating unit $15,000. ETS system plus a central heat pump $22,000. Geothermal heat pump $750 per 1,000 BTU/h.",
+      "eligibility": "Use an installer from Hydro-Québec's list of authorized installers. Earlier note: Authorized installers only for thermal storage; see Hydro-Québec's installer list.",
+      "dates": "No closing date stated. The Québec government pays Hydro-Québec part of the ETS grant under its 2030 Plan for a Green Economy.",
+      "source_url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
+      "notes": "Read in the browser on 2026-10-21. Replacing an existing geothermal heat pump pays $250 per 1,000 BTU/h (guide: capped at $18,000 per address)."
+    },
+    {
+      "id": "qc-4-renoclimat-no-heating",
+      "program": "Rénoclimat (Quebec government)",
+      "status": "info",
+      "verified_on": "2026-10-10",
+      "claim": "Rénoclimat pays for insulation, air sealing ($400 to $800) and ENERGY STAR doors and windows ($150 each) after an energy assessment, and no longer pays for installing or replacing a heating system. Its rules changed on October 1, 2026; a transition runs to October 12, 2026 for requesting an assessment before work under the old rules.",
+      "amount": "No heat pump amount",
+      "eligibility": "Energy assessment before work required; fees apply.",
+      "dates": "New rules from October 1, 2026; transition to October 12, 2026.",
+      "source_url": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat",
+      "notes": "Heating-system exclusion and LogisVert referral read on https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/aide-financiere/subvention-systemes-mecaniques (page dated 2025-10-02). The October 2026 change details were not opened."
+    },
+    {
+      "id": "qc-5-federal-oil-to-heat-pump",
+      "program": "Federal Oil to Heat Pump Affordability (Quebec)",
+      "status": "closed",
+      "verified_on": "2026-10-10",
+      "claim": "July 31, 2026 was the last day to apply. Applications sent before then are still processed; final receipts and the attestation form are due January 31, 2027. Homes in remote areas of Quebec were not eligible.",
+      "amount": "was up to $10,000",
+      "eligibility": "Closed. Applied to oil-heated homes at or below median household after-tax income.",
+      "dates": "Closed July 31, 2026",
+      "source_url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/oil-heat-pump-affordability-program",
+      "notes": "Page lists Quebec among the covered provinces; read 2026-10-10."
+    },
+    {
+      "id": "qc-6-logisvert-other-grants",
+      "program": "LogisVert appliance, insulation and solar grants (Hydro-Québec)",
+      "status": "active",
+      "verified_on": "2026-10-21",
+      "claim": "LogisVert also pays for an induction range, a heat pump dryer, roof insulation with caulking, and solar panels.",
+      "amount": "Induction range $250 (induction cooktops do not qualify). Heat pump dryer $250. Roof insulation and caulking $1,500. Solar panels $1,000 per installed kilowatt, which can cover up to 40% of the purchase and installation cost. Replacement of a geothermal heat pump $250 per 1,000 BTU/h.",
+      "eligibility": "See the details and conditions for each measure on Hydro-Québec's page.",
+      "dates": "No closing date stated.",
+      "source_url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
+      "notes": "Read in the browser on 2026-10-21. The efficient pool pump grant is marked last chance and is not listed."
+    },
+    {
+      "id": "qc-7-renoclimat-efficiency",
+      "program": "Rénoclimat energy efficiency grants (Québec government)",
+      "status": "active",
+      "verified_on": "2026-10-21",
+      "claim": "New terms since October 1, 2026. A pre-work energy evaluation is no longer required but is recommended, and an evaluation grant is offered. Work must be done by a contractor holding the right licences. A secure online portal is under development and was promised for this fall; you can already do eligible work and should keep invoices and the contractor's signed compliance form. Transition: if your home had an evaluation under the old rules, finish the work and get the after-work evaluation by March 31, 2027 to use the old rules.",
+      "amount": "Maximum grants, house / duplex, triplex or multi-unit building: roof insulation $2,000 / $5,000. Exterior wall insulation $7,000 / $11,000. Foundation insulation $2,500 / $3,500. Window replacement $300 per window, up to $4,500 / $6,000. Connection to a backup power source up to $1,000 (new, principal residences and multi-unit buildings). Fixed battery up to $4,000 (new, same buildings). Energy evaluation up to $500 (optional).",
+      "eligibility": "Owners of houses, duplexes, triplexes and small multi-unit residential buildings (IRLM). Work must improve the home's energy performance.",
+      "dates": "In force since October 1, 2026. The portal was not open yet on the page we read.",
+      "source_url": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/nouveautes-adaptation-inondations",
+      "notes": "Read in the browser on 2026-10-21 (French). Rénoclimat no longer takes pre-work evaluation appointments under the old rules, per https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/apercu-programme-renoclimat"
+    },
+    {
+      "id": "qc-8-renoclimat-adaptation",
+      "program": "Rénoclimat flood adaptation grants (Québec government)",
+      "status": "active",
+      "verified_on": "2026-10-21",
+      "claim": "A new Rénoclimat stream for flood resilience, in force since October 1, 2026, for principal residences and multi-unit buildings. A simple path covers prevention measures. A guided path for homes in a flood zone starts with a mandatory climate resilience diagnostic.",
+      "amount": "Simple path: submersible pump with battery up to $1,000, backwater valve up to $700, removable flood barrier up to $800. Guided path: diagnostic up to $1,000, then foundation protection and related work up to $35,000 or 75% of eligible expenses paid before taxes.",
+      "eligibility": "Prevention only. For an actual flood loss, a separate disaster assistance program may apply.",
+      "dates": "In force since October 1, 2026. Diagnostic services were to be offered soon.",
+      "source_url": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/nouveautes-adaptation-inondations",
+      "notes": "Read in the browser on 2026-10-21 (French)."
+    }
+  ]
 }

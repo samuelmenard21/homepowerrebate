@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 588,
+ "count": 603,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -3977,9 +3977,11 @@
     "mb-3-manitoba-hydro-heel-financing"
    ],
    "used_by_pages": [
+    "/mb/brandon/",
+    "/mb/winnipeg/",
     "state-topics/mb-heat-pump"
    ],
-   "last_read": "2026-10-10"
+   "last_read": "2026-10-21"
   },
   {
    "url": "https://efficiencymb.ca/gshp-home/",
@@ -3995,6 +3997,17 @@
    "last_read": "2026-10-10"
   },
   {
+   "url": "https://efficiencymb.ca/my-home/",
+   "host": "efficiencymb.ca",
+   "region": "mb",
+   "check": "Instant rebates at Manitoba retailers (Efficiency Manitoba)",
+   "facts": [
+    "mb-8-instant-rebates"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-21"
+  },
+  {
    "url": "https://efficiencymb.ca/my-home/energy-efficiency-assistance-program/",
    "host": "efficiencymb.ca",
    "region": "mb",
@@ -4003,9 +4016,69 @@
     "mb-2-efficiency-manitoba-assistance-program"
    ],
    "used_by_pages": [
+    "/mb/brandon/",
+    "/mb/winnipeg/",
     "state-topics/mb-heat-pump"
    ],
-   "last_read": "2026-10-10"
+   "last_read": "2026-10-21"
+  },
+  {
+   "url": "https://efficiencymb.ca/my-home/home-insulation-rebate/",
+   "host": "efficiencymb.ca",
+   "region": "mb",
+   "check": "Efficiency Manitoba: home insulation rebate; Home Insulation Rebate (Efficiency Manitoba)",
+   "facts": [
+    "mb-5-home-insulation"
+   ],
+   "used_by_pages": [
+    "/mb/brandon/",
+    "/mb/winnipeg/"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
+   "url": "https://efficiencymb.ca/my-home/smart-thermostat-rebate/",
+   "host": "efficiencymb.ca",
+   "region": "mb",
+   "check": "Smart Thermostat Rebate (Efficiency Manitoba)",
+   "facts": [
+    "mb-7-smart-thermostat"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-21"
+  },
+  {
+   "url": "https://efficiencymb.ca/my-home/windows-and-doors-rebate/",
+   "host": "efficiencymb.ca",
+   "region": "mb",
+   "check": "Windows and Doors Rebate (Efficiency Manitoba)",
+   "facts": [
+    "mb-6-windows-doors"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-21"
+  },
+  {
+   "url": "https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/index.cfm?Lang=E",
+   "host": "www12.statcan.gc.ca",
+   "region": "mb-pages",
+   "check": "Statistics Canada 2021 Census Profile",
+   "facts": [],
+   "used_by_pages": [
+    "/mb/brandon/",
+    "/mb/winnipeg/",
+    "/nb/fredericton/",
+    "/nb/moncton/",
+    "/nt/yellowknife/",
+    "/pe/charlottetown/",
+    "/pe/summerside/",
+    "/qc/montreal/",
+    "/qc/quebec-city/",
+    "/sk/regina/",
+    "/sk/saskatoon/",
+    "/yt/whitehorse/"
+   ],
+   "last_read": ""
   },
   {
    "url": "https://www.efficiencymaine.com/at-home/mobile-home-initiative/",
@@ -4809,20 +4882,6 @@
     "/nb/moncton/"
    ],
    "last_read": "2026-10-21"
-  },
-  {
-   "url": "https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/index.cfm?Lang=E",
-   "host": "www12.statcan.gc.ca",
-   "region": "nb-pages",
-   "check": "Statistics Canada 2021 Census Profile",
-   "facts": [],
-   "used_by_pages": [
-    "/nb/fredericton/",
-    "/nb/moncton/",
-    "/pe/charlottetown/",
-    "/pe/summerside/"
-   ],
-   "last_read": ""
   },
   {
    "url": "https://ace.clearesult.com/shop-products",
@@ -5680,6 +5739,34 @@
     "/ns/halifax/solar/"
    ],
    "last_read": ""
+  },
+  {
+   "url": "https://aea.nt.ca/program/energy-efficient-products/",
+   "host": "aea.nt.ca",
+   "region": "nt",
+   "check": "Arctic Energy Alliance: Energy-Efficient Products; Energy-Efficient Products rebates (Arctic Energy Alliance); Home insulation rebates (Arctic Energy Alliance); Northwest Territories air-source heat p",
+   "facts": [
+    "nt-0-energy-efficient-products",
+    "nt-1-home-insulation",
+    "nt-3-no-air-source-heat-pump-rebate"
+   ],
+   "used_by_pages": [
+    "/nt/yellowknife/"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
+   "url": "https://aea.nt.ca/program/renewable-energy/",
+   "host": "aea.nt.ca",
+   "region": "nt",
+   "check": "Arctic Energy Alliance: Renewable Energy; Renewable Energy rebates (Arctic Energy Alliance)",
+   "facts": [
+    "nt-2-renewable-energy"
+   ],
+   "used_by_pages": [
+    "/nt/yellowknife/"
+   ],
+   "last_read": "2026-10-21"
   },
   {
    "url": "https://visionelements.customerapplication.com/Framework/Ny_statewide/NYS-Clean-Heat-Program-Manual.Pdf",
@@ -7417,17 +7504,20 @@
    "url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
    "host": "www.hydroquebec.com",
    "region": "qc",
-   "check": "Hydro-Québec LogisVert: heat pump; Hydro-Québec: LogisVert for residential customers; LogisVert bonus for combining measures; LogisVert bonus for multi-unit dwellings; LogisVert: thermal storage and g",
+   "check": "Hydro-Québec LogisVert: heat pump; Hydro-Québec: LogisVert for residential customers; LogisVert appliance, insulation and solar grants (Hydro-Québec); LogisVert bonus for combining measures; LogisVert",
    "facts": [
     "qc-0-logisvert-heat-pump",
     "qc-1-logisvert-multi-unit-bonus",
     "qc-2-logisvert-multiple-measures",
-    "qc-3-logisvert-thermal-storage-geothermal"
+    "qc-3-logisvert-thermal-storage-geothermal",
+    "qc-6-logisvert-other-grants"
    ],
    "used_by_pages": [
+    "/qc/montreal/",
+    "/qc/quebec-city/",
     "state-topics/qc-heat-pump"
    ],
-   "last_read": "2026-10-10"
+   "last_read": "2026-10-21"
   },
   {
    "url": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat",
@@ -7441,6 +7531,76 @@
     "state-topics/qc-heat-pump"
    ],
    "last_read": "2026-10-10"
+  },
+  {
+   "url": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/nouveautes-adaptation-inondations",
+   "host": "www.quebec.ca",
+   "region": "qc",
+   "check": "Québec government: Rénoclimat new terms (French); Rénoclimat energy efficiency grants (Québec government); Rénoclimat flood adaptation grants (Québec government)",
+   "facts": [
+    "qc-7-renoclimat-efficiency",
+    "qc-8-renoclimat-adaptation"
+   ],
+   "used_by_pages": [
+    "/qc/montreal/",
+    "/qc/quebec-city/"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
+   "url": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/apercu-programme-renoclimat",
+   "host": "www.quebec.ca",
+   "region": "qc-pages",
+   "check": "Québec government: Rénoclimat overview (French)",
+   "facts": [],
+   "used_by_pages": [
+    "/qc/montreal/",
+    "/qc/quebec-city/"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://www.saskenergy.com/residential-equipment-replacement-rebate-program",
+   "host": "www.saskenergy.com",
+   "region": "sk",
+   "check": "Residential Equipment Replacement Rebate (SaskEnergy); SaskEnergy: Residential Equipment Replacement Rebate",
+   "facts": [
+    "sk-0-saskenergy-equipment-rebate"
+   ],
+   "used_by_pages": [
+    "/sk/regina/",
+    "/sk/saskatoon/"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
+   "url": "https://www.saskpower.com/power-savings-and-programs/home/programs/energy-assistance-program",
+   "host": "www.saskpower.com",
+   "region": "sk",
+   "check": "Energy Assistance Program (SaskPower); SaskPower: Energy Assistance Program",
+   "facts": [
+    "sk-2-energy-assistance-program"
+   ],
+   "used_by_pages": [
+    "/sk/regina/",
+    "/sk/saskatoon/"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
+   "url": "https://www.saskpower.com/power-savings-and-programs/home/programs/home-efficiency-retrofit-rebate",
+   "host": "www.saskpower.com",
+   "region": "sk",
+   "check": "SaskPower Home Efficiency Retrofit Rebate (ended April 2026); SaskPower: Home Efficiency Retrofit Rebate; Saskatchewan provincial heat pump, insulation and window rebates",
+   "facts": [
+    "sk-1-home-efficiency-retrofit-rebate",
+    "sk-3-no-heat-pump-rebate"
+   ],
+   "used_by_pages": [
+    "/sk/regina/",
+    "/sk/saskatoon/"
+   ],
+   "last_read": "2026-10-21"
   },
   {
    "url": "https://cansumer.ca/hrv-erv-systems/",
@@ -9858,6 +10018,59 @@
     "/wa/seattle/"
    ],
    "last_read": ""
+  },
+  {
+   "url": "https://yukon.ca/en/home-insulation-air-sealing-rebate",
+   "host": "yukon.ca",
+   "region": "yt",
+   "check": "Good Energy insulation and air sealing rebates (Government of Yukon); Yukon: insulation and air sealing rebates",
+   "facts": [
+    "yt-3-insulation-air-sealing"
+   ],
+   "used_by_pages": [
+    "/yt/whitehorse/"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
+   "url": "https://yukon.ca/en/housing-and-property/home-energy-rebates/apply-rebate-reduce-home-electricity-use",
+   "host": "yukon.ca",
+   "region": "yt",
+   "check": "Dependable Grid Program rebates (Government of Yukon); Yukon: Dependable Grid rebates",
+   "facts": [
+    "yt-5-dependable-grid"
+   ],
+   "used_by_pages": [
+    "/yt/whitehorse/"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
+   "url": "https://yukon.ca/en/housing-and-property/home-energy-rebates/apply-rebate-your-home-heating-system",
+   "host": "yukon.ca",
+   "region": "yt",
+   "check": "Affordable Heat Pump Program (Government of Yukon, income-based); Good Energy heat pump rebate (Government of Yukon); Good Energy wood heating rebate (Government of Yukon); Yukon: rebate on your home ",
+   "facts": [
+    "yt-0-affordable-heat-pump",
+    "yt-1-heat-pump-rebate",
+    "yt-2-wood-heating"
+   ],
+   "used_by_pages": [
+    "/yt/whitehorse/"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
+   "url": "https://yukon.ca/en/window-energy-rebate",
+   "host": "yukon.ca",
+   "region": "yt",
+   "check": "Better Buildings financing (Government of Yukon); Good Energy ENERGY STAR window rebate (Government of Yukon)",
+   "facts": [
+    "yt-4-windows",
+    "yt-6-better-buildings"
+   ],
+   "used_by_pages": [],
+   "last_read": "2026-10-21"
   }
  ]
 }

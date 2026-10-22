@@ -1,0 +1,348 @@
+{
+ "code": "mb",
+ "name": "Manitoba",
+ "country": "ca",
+ "currency": "CAD",
+ "hub": "/ca/mb/",
+ "installers": "/installers/",
+ "title": "Manitoba Rebate Calculator 2026: Efficiency Manitoba Rebates",
+ "h1": "Manitoba Rebate Calculator 2026: What You Could Get Back",
+ "desc": "Free Manitoba rebate calculator. Efficiency Manitoba heat pump, window, thermostat and insulation rebates, plus free upgrades for lower incomes. Every number sourced.",
+ "intro": "Answer a few questions and see which Manitoba rebates fit your home, with a source for every number.",
+ "short": "Efficiency Manitoba pays $2,000 for a ducted cold climate heat pump and $1,500 for a ductless one, $100 for each triple pane window or door, and $50 for a smart thermostat. Income-qualifying households can get free or subsidized upgrades. Get approval before insulation work starts.",
+ "faq": [
+  [
+   "How much is the Manitoba heat pump rebate?",
+   "$2,000 for a centrally ducted cold climate air source heat pump and $1,500 for a ductless one. It must supplement electric or natural gas heat, or replace propane or oil, in an existing primary home, installed by a registered contractor."
+  ],
+  [
+   "Is there help for lower-income Manitobans?",
+   "Yes. The Energy Efficiency Assistance Program gives free and subsidized upgrades to income-qualifying households in single-detached or semi-detached homes. The limit is $46,264 for one person and $122,432 for seven or more."
+  ],
+  [
+   "How much is the window and door rebate?",
+   "$100 for each ENERGY STAR certified window, entry door or sliding glass door with at least triple pane glass. Apply within 90 days."
+  ],
+  [
+   "Do I need approval before insulation work?",
+   "Yes. Efficiency Manitoba says to get approval before buying materials or starting any work, including removing drywall or old insulation."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "heating",
+   "label": "What heats your home now?",
+   "type": "select",
+   "options": [
+    {
+     "value": "electric",
+     "label": "Electric resistance"
+    },
+    {
+     "value": "gas",
+     "label": "Natural gas"
+    },
+    {
+     "value": "propane_oil",
+     "label": "Propane or oil"
+    },
+    {
+     "value": "other",
+     "label": "Something else"
+    }
+   ],
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
+   "id": "hp_type",
+   "label": "Which kind of heat pump?",
+   "type": "select",
+   "options": [
+    {
+     "value": "ducted",
+     "label": "Centrally ducted"
+    },
+    {
+     "value": "ductless",
+     "label": "Ductless mini-split"
+    }
+   ],
+   "for": [
+    "heat-pump"
+   ]
+  },
+  {
+   "id": "openings",
+   "label": "How many windows or doors would you replace?",
+   "type": "select",
+   "options": [
+    {
+     "value": "1",
+     "label": "1"
+    },
+    {
+     "value": "2",
+     "label": "2"
+    },
+    {
+     "value": "3",
+     "label": "3"
+    },
+    {
+     "value": "4",
+     "label": "4"
+    },
+    {
+     "value": "5",
+     "label": "5"
+    },
+    {
+     "value": "6",
+     "label": "6"
+    },
+    {
+     "value": "7",
+     "label": "7"
+    },
+    {
+     "value": "8",
+     "label": "8"
+    },
+    {
+     "value": "9",
+     "label": "9"
+    },
+    {
+     "value": "10",
+     "label": "10"
+    },
+    {
+     "value": "11",
+     "label": "11"
+    },
+    {
+     "value": "12",
+     "label": "12"
+    },
+    {
+     "value": "13",
+     "label": "13"
+    },
+    {
+     "value": "14",
+     "label": "14"
+    },
+    {
+     "value": "15",
+     "label": "15 or more"
+    }
+   ],
+   "for": [
+    "windows"
+   ],
+   "optional": true,
+   "help": "Triple pane ENERGY STAR units. Skip this to see the per-unit rate."
+  },
+  {
+   "id": "household",
+   "label": "How many people live in your home?",
+   "type": "select",
+   "options": [
+    {
+     "value": "1",
+     "label": "1"
+    },
+    {
+     "value": "2",
+     "label": "2"
+    },
+    {
+     "value": "3",
+     "label": "3"
+    },
+    {
+     "value": "4",
+     "label": "4"
+    },
+    {
+     "value": "5",
+     "label": "5"
+    },
+    {
+     "value": "6",
+     "label": "6"
+    },
+    {
+     "value": "7",
+     "label": "7 or more"
+    }
+   ],
+   "optional": true
+  },
+  {
+   "id": "income",
+   "label": "Total household income before deductions (optional)",
+   "type": "money",
+   "optional": true,
+   "help": "Only used to check the income-based program. It never leaves your device."
+  }
+ ],
+ "derived": {
+  "income_level": {
+   "from": [
+    "household",
+    "income"
+   ],
+   "source_fact": "mb-2-efficiency-manitoba-assistance-program",
+   "limits": {
+    "L1": [
+     46264,
+     57595,
+     70806,
+     85968,
+     97504,
+     109967,
+     122432
+    ]
+   }
+  }
+ },
+ "pools": [],
+ "upgrades": [
+  {
+   "id": "heat-pump",
+   "label": "Heat pump"
+  },
+  {
+   "id": "windows",
+   "label": "Windows and doors"
+  },
+  {
+   "id": "thermostat",
+   "label": "Smart thermostat"
+  },
+  {
+   "id": "insulation",
+   "label": "Insulation"
+  },
+  {
+   "id": "support",
+   "label": "Free help for lower incomes"
+  }
+ ],
+ "programs": [
+  {
+   "id": "mb-hp-ducted",
+   "fact": "mb-0-efficiency-manitoba-ashp-rebate",
+   "name": "Efficiency Manitoba: ducted cold climate heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 2000
+   },
+   "rules": "Existing primary home. Registered contractor. Contractor applies within 90 days of installation.",
+   "when": {
+    "heating": [
+     "electric",
+     "gas",
+     "propane_oil"
+    ],
+    "hp_type": [
+     "ducted"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "mb-hp-ductless",
+   "fact": "mb-0-efficiency-manitoba-ashp-rebate",
+   "name": "Efficiency Manitoba: ductless cold climate heat pump",
+   "upgrade": "heat-pump",
+   "amount": {
+    "max": 1500
+   },
+   "rules": "Existing primary home. Registered contractor. Contractor applies within 90 days of installation.",
+   "when": {
+    "heating": [
+     "electric",
+     "gas",
+     "propane_oil"
+    ],
+    "hp_type": [
+     "ductless"
+    ]
+   },
+   "group": "hp"
+  },
+  {
+   "id": "mb-win",
+   "fact": "mb-6-windows-doors",
+   "name": "Efficiency Manitoba: windows and doors",
+   "upgrade": "windows",
+   "amount": {
+    "per": {
+     "unit": "window or door",
+     "rate": 100,
+     "question": "openings"
+    }
+   },
+   "rules": "ENERGY STAR with at least triple pane glass. NRCan reference number needed. Apply within 90 days."
+  },
+  {
+   "id": "mb-thermostat",
+   "fact": "mb-7-smart-thermostat",
+   "name": "Efficiency Manitoba: smart thermostat",
+   "upgrade": "thermostat",
+   "amount": {
+    "max": 50
+   },
+   "rules": "ENERGY STAR certified. Install and apply within 90 days. Peak Partners can add up to $100 more in the first year for an eligible ecobee."
+  },
+  {
+   "id": "mb-insulation",
+   "fact": "mb-5-home-insulation",
+   "name": "Efficiency Manitoba: insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "label": "$0.03 to $0.15 per sq ft per R added",
+    "max": 0
+   },
+   "rules": "Approval before any work. Attic, walls and foundation. Air sealing bonus up to $1,000. Shown but not added to your total."
+  },
+  {
+   "id": "mb-eeap",
+   "fact": "mb-2-efficiency-manitoba-assistance-program",
+   "name": "Energy Efficiency Assistance Program (income-based)",
+   "upgrade": "support",
+   "amount": {
+    "label": "Free or subsidized upgrades",
+    "max": 0
+   },
+   "rules": "Single-detached or semi-detached home, lived in year-round, household income at or under the limit for your household size.",
+   "when": {
+    "income_level": [
+     "L1"
+    ]
+   }
+  },
+  {
+   "id": "fed-hp",
+   "fact": "federal-0-national-heat-pump-rebate",
+   "name": "National Heat Pump Rebate (federal, not open yet)",
+   "upgrade": "heat-pump",
+   "amount": {
+    "label": "Up to $10,000 or $2,000",
+    "max": 0
+   },
+   "rules": "Announced October 8, 2026 and expected to launch in early 2027. The income line, eligible homes and how it combines with provincial programs are not published, so this is shown but not added to your total."
+  }
+ ],
+ "closed_facts": [
+  "mb-4-federal-oil-to-heat-pump"
+ ],
+ "notes": [
+  "Efficiency Manitoba's ground source heat pump program is financing, not a rebate, so it is not added to your total.",
+  "Amounts are the most a program pays. Your rebate depends on your quote and final invoice."
+ ]
+}

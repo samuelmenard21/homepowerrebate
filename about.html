@@ -58,7 +58,7 @@ document.addEventListener('click', function(e) {
    "@id": "https://homepowerrebate.com/#org",
    "name": "HomePowerRebate",
    "url": "https://homepowerrebate.com/",
-   "description": "Independent guide to home energy rebates in 153 cities across Canada and the United States. Every amount links to the official program and is re-checked monthly. Installers are ranked by Google reviews; nobody pays to be listed.",
+   "description": "Independent guide to home energy rebates in 161 cities across Canada and the United States. Every amount links to the official program and is re-checked monthly. Installers are ranked by Google reviews; nobody pays to be listed.",
    "founder": {
     "@id": "https://homepowerrebate.com/about#sam-menard"
    },
@@ -91,6 +91,26 @@ document.addEventListener('click', function(e) {
     {
      "@type": "AdministrativeArea",
      "name": "New Brunswick, Canada"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Manitoba, Canada"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Saskatchewan, Canada"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Quebec, Canada"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Yukon, Canada"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Northwest Territories, Canada"
     },
     {
      "@type": "AdministrativeArea",
@@ -254,6 +274,11 @@ document.addEventListener('click', function(e) {
         <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" class="nav-region-tab" aria-pressed="false">Minnesota</button>
         <button type="button" onclick="showProvinceCities('pe')" id="province-tab-pe" class="nav-region-tab" aria-pressed="false">PEI</button>
         <button type="button" onclick="showProvinceCities('nb')" id="province-tab-nb" class="nav-region-tab" aria-pressed="false">New Brunswick</button>
+        <button type="button" onclick="showProvinceCities('mb')" id="province-tab-mb" class="nav-region-tab" aria-pressed="false">Manitoba</button>
+        <button type="button" onclick="showProvinceCities('sk')" id="province-tab-sk" class="nav-region-tab" aria-pressed="false">Saskatchewan</button>
+        <button type="button" onclick="showProvinceCities('qc')" id="province-tab-qc" class="nav-region-tab" aria-pressed="false">Quebec</button>
+        <button type="button" onclick="showProvinceCities('yt')" id="province-tab-yt" class="nav-region-tab" aria-pressed="false">Yukon</button>
+        <button type="button" onclick="showProvinceCities('nt')" id="province-tab-nt" class="nav-region-tab" aria-pressed="false">NWT</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -311,6 +336,21 @@ document.addEventListener('click', function(e) {
     <div id="province-cities-nb" class="nav-region-cities" hidden>
       <a href="/ca/nb/moncton/">Moncton</a><a href="/ca/nb/fredericton/">Fredericton</a>
     </div>
+    <div id="province-cities-mb" class="nav-region-cities" hidden>
+      <a href="/ca/mb/winnipeg/">Winnipeg</a><a href="/ca/mb/brandon/">Brandon</a>
+    </div>
+    <div id="province-cities-sk" class="nav-region-cities" hidden>
+      <a href="/ca/sk/saskatoon/">Saskatoon</a><a href="/ca/sk/regina/">Regina</a>
+    </div>
+    <div id="province-cities-qc" class="nav-region-cities" hidden>
+      <a href="/ca/qc/montreal/">Montréal</a><a href="/ca/qc/quebec-city/">Quebec City</a>
+    </div>
+    <div id="province-cities-yt" class="nav-region-cities" hidden>
+      <a href="/ca/yt/whitehorse/">Whitehorse</a>
+    </div>
+    <div id="province-cities-nt" class="nav-region-cities" hidden>
+      <a href="/ca/nt/yellowknife/">Yellowknife</a>
+    </div>
     </div>
   </div>
 </nav>
@@ -334,9 +374,9 @@ document.addEventListener('click', function(e) {
     <p>HomePowerRebate was built because homeowners told us the same story again and again: they wanted to claim a heat pump, solar, or battery rebate, but every comparison site they tried sold their info to a dozen installers. They got buried in calls. The rebate cheque felt out of reach because the process was hostile.</p>
     <p>We do it the other way. In each city we list the top-rated installers, <a href="/installers/how-we-rank/">ranked only by Google reviews</a>. Nobody can pay to rank higher. You choose who to call. We never sell your details or auction your request. We are not part of any utility, and we link to the official page for every rebate we mention.</p>
 <!-- ABOUT-COVERAGE-START -->
-    <p>Today we cover 153 cities in 18 provinces and states. We add a new place only when we can read its programs on the official pages.</p>
+    <p>Today we cover 161 cities in 23 provinces and states. We add a new place only when we can read its programs on the official pages.</p>
     <ul>
-      <li><strong>Canada (7 provinces):</strong> <a href="/ca/on/">Ontario</a>, <a href="/ca/bc/">British Columbia</a>, <a href="/ca/ab/">Alberta</a>, <a href="/ca/ns/">Nova Scotia</a>, <a href="/ca/nl/">Newfoundland and Labrador</a>, <a href="/ca/pe/">Prince Edward Island</a>, <a href="/ca/nb/">New Brunswick</a></li>
+      <li><strong>Canada (12 provinces):</strong> <a href="/ca/on/">Ontario</a>, <a href="/ca/bc/">British Columbia</a>, <a href="/ca/ab/">Alberta</a>, <a href="/ca/ns/">Nova Scotia</a>, <a href="/ca/nl/">Newfoundland and Labrador</a>, <a href="/ca/pe/">Prince Edward Island</a>, <a href="/ca/nb/">New Brunswick</a>, <a href="/ca/mb/">Manitoba</a>, <a href="/ca/sk/">Saskatchewan</a>, <a href="/ca/qc/">Quebec</a>, <a href="/ca/yt/">Yukon</a>, <a href="/ca/nt/">Northwest Territories</a></li>
       <li><strong>the US (11 states):</strong> <a href="/us/ca/">California</a>, <a href="/us/ma/">Massachusetts</a>, <a href="/us/ny/">New York</a>, <a href="/us/pa/">Pennsylvania</a>, <a href="/us/co/">Colorado</a>, <a href="/us/vt/">Vermont</a>, <a href="/us/mi/">Michigan</a>, <a href="/us/nj/">New Jersey</a>, <a href="/us/il/">Illinois</a>, <a href="/us/wa/">Washington</a>, <a href="/us/mn/">Minnesota</a></li>
     </ul>
    
@@ -440,6 +480,11 @@ document.addEventListener('click', function(e) {
           <li><a href="/ca/nl/">Newfoundland and Labrador</a></li>
           <li><a href="/ca/pe/">Prince Edward Island</a></li>
           <li><a href="/ca/nb/">New Brunswick</a></li>
+          <li><a href="/ca/mb/">Manitoba</a></li>
+          <li><a href="/ca/sk/">Saskatchewan</a></li>
+          <li><a href="/ca/qc/">Quebec</a></li>
+          <li><a href="/ca/yt/">Yukon</a></li>
+          <li><a href="/ca/nt/">Northwest Territories</a></li>
         </ul>
       </div>
       <div>
@@ -510,7 +555,7 @@ function toggleCityDropdown() {
   modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn', 'pe', 'nb'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn', 'pe', 'nb', 'mb', 'sk', 'qc', 'yt', 'nt'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

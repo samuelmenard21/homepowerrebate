@@ -1,0 +1,181 @@
+{
+ "code": "sk",
+ "name": "Saskatchewan",
+ "country": "ca",
+ "currency": "CAD",
+ "hub": "/ca/sk/",
+ "installers": "/installers/",
+ "title": "Saskatchewan Rebate Calculator 2026: SaskEnergy Equipment Rebates",
+ "h1": "Saskatchewan Rebate Calculator 2026: What You Could Get Back",
+ "desc": "Free Saskatchewan rebate calculator. SaskEnergy gas furnace, boiler and water heater rebates and SaskPower's free Energy Assistance Program. Closed programs listed. Every number sourced.",
+ "intro": "Answer a few questions and see which Saskatchewan rebates fit your home, with a source for every number.",
+ "short": "SaskEnergy pays $325 for a 97% efficient gas furnace, $750 for a boiler, $800 for a combi boiler and $1,000 for a tankless or condensing water heater. SaskPower's Energy Assistance Program gives free upgrades. SaskPower's retrofit rebate ended in April 2026.",
+ "faq": [
+  [
+   "How much does SaskEnergy pay for a new furnace?",
+   "$325 for a furnace with at least 97.0% AFUE that is on SaskEnergy's list. It must replace a natural gas furnace that is out of warranty, installed by a licensed gas contractor. Apply within 120 days of installation."
+  ],
+  [
+   "Is there a heat pump rebate in Saskatchewan?",
+   "We found no SaskPower or SaskEnergy rebate for heat pumps, insulation or windows on October 21, 2026. SaskPower's Home Efficiency Retrofit Rebate ended in April 2026."
+  ],
+  [
+   "What is the Energy Assistance Program?",
+   "A free SaskPower program for homeowners, renters and landlords. It installs LED bulbs, aerators, showerheads, pipe wrap, a block heater timer and a smart thermostat if eligible, and says it can save up to $230 a year."
+  ],
+  [
+   "Can SaskEnergy change the rebate?",
+   "Yes. SaskEnergy says it may change or cancel the program at any time without notice, and the rebate amount is set by the schedule in effect when it receives your complete application."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "equip",
+   "label": "Which gas equipment are you replacing?",
+   "type": "select",
+   "options": [
+    {
+     "value": "furnace",
+     "label": "Furnace (97% AFUE or higher)"
+    },
+    {
+     "value": "boiler",
+     "label": "Boiler (95% AFUE or higher)"
+    },
+    {
+     "value": "combi",
+     "label": "Combi boiler (95% AFUE or higher)"
+    },
+    {
+     "value": "tankless",
+     "label": "Tankless water heater (0.87 UEF or higher)"
+    },
+    {
+     "value": "condensing",
+     "label": "Condensing water heater (0.80 UEF or higher)"
+    }
+   ],
+   "for": [
+    "equipment"
+   ]
+  }
+ ],
+ "derived": {},
+ "pools": [],
+ "upgrades": [
+  {
+   "id": "equipment",
+   "label": "Gas furnace, boiler or water heater"
+  },
+  {
+   "id": "support",
+   "label": "Free help"
+  }
+ ],
+ "programs": [
+  {
+   "id": "sk-furnace",
+   "fact": "sk-0-saskenergy-equipment-rebate",
+   "name": "SaskEnergy: high-efficiency gas furnace",
+   "upgrade": "equipment",
+   "amount": {
+    "max": 325
+   },
+   "rules": "Natural gas, part of the primary heating system, not new construction, TSASK-licensed gas contractor. Apply within 120 days.",
+   "when": {
+    "equip": [
+     "furnace"
+    ]
+   }
+  },
+  {
+   "id": "sk-boiler",
+   "fact": "sk-0-saskenergy-equipment-rebate",
+   "name": "SaskEnergy: high-efficiency gas boiler",
+   "upgrade": "equipment",
+   "amount": {
+    "max": 750
+   },
+   "rules": "Per boiler plant up to 300 MBH. Natural gas, TSASK-licensed gas contractor.",
+   "when": {
+    "equip": [
+     "boiler"
+    ]
+   }
+  },
+  {
+   "id": "sk-combi",
+   "fact": "sk-0-saskenergy-equipment-rebate",
+   "name": "SaskEnergy: combi boiler",
+   "upgrade": "equipment",
+   "amount": {
+    "max": 800
+   },
+   "rules": "Natural gas, TSASK-licensed gas contractor.",
+   "when": {
+    "equip": [
+     "combi"
+    ]
+   }
+  },
+  {
+   "id": "sk-tankless",
+   "fact": "sk-0-saskenergy-equipment-rebate",
+   "name": "SaskEnergy: tankless water heater",
+   "upgrade": "equipment",
+   "amount": {
+    "max": 1000
+   },
+   "rules": "Natural gas, 0.87 UEF or higher, TSASK-licensed gas contractor.",
+   "when": {
+    "equip": [
+     "tankless"
+    ]
+   }
+  },
+  {
+   "id": "sk-condensing",
+   "fact": "sk-0-saskenergy-equipment-rebate",
+   "name": "SaskEnergy: condensing water heater",
+   "upgrade": "equipment",
+   "amount": {
+    "max": 1000
+   },
+   "rules": "Natural gas, 0.80 UEF or higher, TSASK-licensed gas contractor.",
+   "when": {
+    "equip": [
+     "condensing"
+    ]
+   }
+  },
+  {
+   "id": "sk-eap",
+   "fact": "sk-2-energy-assistance-program",
+   "name": "SaskPower Energy Assistance Program",
+   "upgrade": "support",
+   "amount": {
+    "label": "Free upgrades",
+    "max": 0
+   },
+   "rules": "Homeowners, renters and landlords. Check your eligibility online. Not added to your total."
+  },
+  {
+   "id": "fed-hp",
+   "fact": "federal-0-national-heat-pump-rebate",
+   "name": "National Heat Pump Rebate (federal, not open yet)",
+   "upgrade": "heat-pump",
+   "amount": {
+    "label": "Up to $10,000 or $2,000",
+    "max": 0
+   },
+   "rules": "Announced October 8, 2026 and expected to launch in early 2027. The income line, eligible homes and how it combines with provincial programs are not published, so this is shown but not added to your total."
+  }
+ ],
+ "closed_facts": [
+  "sk-1-home-efficiency-retrofit-rebate"
+ ],
+ "notes": [
+  "We found no provincial heat pump, insulation or window rebate in Saskatchewan. That is a negative result, not proof none exists.",
+  "Amounts are the most a program pays. Your rebate depends on your quote and final invoice."
+ ]
+}

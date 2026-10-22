@@ -26,7 +26,7 @@ def exists(path):
 missing, redirected = Counter(), Counter()
 src = {}
 for f in subprocess.run(["git", "ls-files", "*.html"], cwd=ROOT, capture_output=True, text=True).stdout.split():
-    if f.startswith(("_partials/", "calculator/embed/", "ONTARIO_", "city-page-template", "scripts/", "CITY_PAGE_TEMPLATE")) or not (ROOT / f).exists():
+    if f.startswith(("_partials/", "calculator/embed/", "embed/", "ONTARIO_", "city-page-template", "scripts/", "CITY_PAGE_TEMPLATE")) or not (ROOT / f).exists():
         continue
     for h in set(re.findall(r'href="(/[^"#?]*)"', (ROOT / f).read_text(errors="ignore"))):
         k = h.rstrip("/") or "/"
@@ -38,7 +38,7 @@ for f in subprocess.run(["git", "ls-files", "*.html"], cwd=ROOT, capture_output=
             src.setdefault(h, f)
 shadowed = Counter()
 for t in tracked:
-    if t.endswith("/index.html") and not t.startswith(("_partials/", "calculator/embed/", "scripts/", "data/")):
+    if t.endswith("/index.html") and not t.startswith(("_partials/", "calculator/embed/", "embed/", "scripts/", "data/")):
         u = "/" + t[: -len("/index.html")]
         if u in red:
             shadowed[u] = 1

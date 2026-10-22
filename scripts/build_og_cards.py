@@ -104,7 +104,7 @@ def main():
         if rel.startswith(("_partials/", "scripts/", "data/", "drafts/")):
             continue
         s = (ROOT / rel).read_text(encoding="utf-8", errors="ignore")
-        if "CANONICAL-NAV-START" not in s or "calculator/embed/" in rel:
+        if "CANONICAL-NAV-START" not in s or "embed/" in rel:
             continue
         d = page_data(rel, s)
         if d["out"] in keep:  # two files for one URL (an old .html copy beside the folder page): one card

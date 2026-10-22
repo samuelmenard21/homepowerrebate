@@ -86,6 +86,11 @@
         <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" class="nav-region-tab" aria-pressed="false">Minnesota</button>
         <button type="button" onclick="showProvinceCities('pe')" id="province-tab-pe" class="nav-region-tab" aria-pressed="false">PEI</button>
         <button type="button" onclick="showProvinceCities('nb')" id="province-tab-nb" class="nav-region-tab" aria-pressed="false">New Brunswick</button>
+        <button type="button" onclick="showProvinceCities('mb')" id="province-tab-mb" class="nav-region-tab" aria-pressed="false">Manitoba</button>
+        <button type="button" onclick="showProvinceCities('sk')" id="province-tab-sk" class="nav-region-tab" aria-pressed="false">Saskatchewan</button>
+        <button type="button" onclick="showProvinceCities('qc')" id="province-tab-qc" class="nav-region-tab" aria-pressed="false">Quebec</button>
+        <button type="button" onclick="showProvinceCities('yt')" id="province-tab-yt" class="nav-region-tab" aria-pressed="false">Yukon</button>
+        <button type="button" onclick="showProvinceCities('nt')" id="province-tab-nt" class="nav-region-tab" aria-pressed="false">NWT</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -143,6 +148,21 @@
     <div id="province-cities-nb" class="nav-region-cities" hidden>
       <a href="/ca/nb/moncton/">Moncton</a><a href="/ca/nb/fredericton/">Fredericton</a>
     </div>
+    <div id="province-cities-mb" class="nav-region-cities" hidden>
+      <a href="/ca/mb/winnipeg/">Winnipeg</a><a href="/ca/mb/brandon/">Brandon</a>
+    </div>
+    <div id="province-cities-sk" class="nav-region-cities" hidden>
+      <a href="/ca/sk/saskatoon/">Saskatoon</a><a href="/ca/sk/regina/">Regina</a>
+    </div>
+    <div id="province-cities-qc" class="nav-region-cities" hidden>
+      <a href="/ca/qc/montreal/">Montréal</a><a href="/ca/qc/quebec-city/">Quebec City</a>
+    </div>
+    <div id="province-cities-yt" class="nav-region-cities" hidden>
+      <a href="/ca/yt/whitehorse/">Whitehorse</a>
+    </div>
+    <div id="province-cities-nt" class="nav-region-cities" hidden>
+      <a href="/ca/nt/yellowknife/">Yellowknife</a>
+    </div>
     </div>
   </div>
 </nav>
@@ -159,7 +179,7 @@
 <h2 class="hs-h">Find your city in Washington</h2>
 <p class="hs-sub">Each ring is the city's PowerScore out of 100. Tap a city for its full rebate guide and top-rated installers.</p>
 <div class="hs-ctl"><input type="search" id="hs-q" placeholder="Search 5 cities" aria-label="Search cities in Washington"><button type="button" class="hs-sort on" data-s="score">Top score</button><button type="button" class="hs-sort" data-s="az">A to Z</button></div>
-<div class="hs-grid" id="hs-grid"><a class="hs-city" href="/us/wa/bellevue/" data-name="bellevue" data-score="55.8" data-order="0"><span class="hs-ring" style="--d:201deg"><b>56</b></span><span class="hs-cn"><b>Bellevue</b><small>Open rebates worth up to $13,375</small><small>7 of 8 upgrades open · 16 installers ranked</small></span></a><a class="hs-city" href="/us/wa/vancouver/" data-name="vancouver" data-score="53.4" data-order="1"><span class="hs-ring" style="--d:192deg"><b>53</b></span><span class="hs-cn"><b>Vancouver</b><small>Open rebates worth up to $6,465</small><small>7 of 8 upgrades open · 37 installers ranked</small></span></a><a class="hs-city" href="/us/wa/tacoma/" data-name="tacoma" data-score="53.0" data-order="2"><span class="hs-ring" style="--d:191deg"><b>53</b></span><span class="hs-cn"><b>Tacoma</b><small>Open rebates worth up to $8,325</small><small>7 of 8 upgrades open · 31 installers ranked</small></span></a><a class="hs-city" href="/us/wa/spokane/" data-name="spokane" data-score="52.2" data-order="3"><span class="hs-ring" style="--d:188deg"><b>52</b></span><span class="hs-cn"><b>Spokane</b><small>Open rebates worth up to $5,275</small><small>7 of 8 upgrades open · 33 installers ranked</small></span></a><a class="hs-city" href="/us/wa/seattle/" data-name="seattle" data-score="42.0" data-order="4"><span class="hs-ring" style="--d:151deg"><b>42</b></span><span class="hs-cn"><b>Seattle</b><small>Open rebates worth up to $7,925</small><small>5 of 8 upgrades open · 34 installers ranked</small></span></a></div>
+<div class="hs-grid" id="hs-grid"><a class="hs-city" href="/us/wa/bellevue/" data-name="bellevue" data-score="55.5" data-order="0"><span class="hs-ring" style="--d:200deg"><b>56</b></span><span class="hs-cn"><b>Bellevue</b><small>Open rebates worth up to $13,375</small><small>7 of 8 upgrades open · 16 installers ranked</small></span></a><a class="hs-city" href="/us/wa/vancouver/" data-name="vancouver" data-score="53.4" data-order="1"><span class="hs-ring" style="--d:192deg"><b>53</b></span><span class="hs-cn"><b>Vancouver</b><small>Open rebates worth up to $6,465</small><small>7 of 8 upgrades open · 37 installers ranked</small></span></a><a class="hs-city" href="/us/wa/tacoma/" data-name="tacoma" data-score="52.3" data-order="2"><span class="hs-ring" style="--d:188deg"><b>52</b></span><span class="hs-cn"><b>Tacoma</b><small>Open rebates worth up to $8,325</small><small>7 of 8 upgrades open · 31 installers ranked</small></span></a><a class="hs-city" href="/us/wa/spokane/" data-name="spokane" data-score="51.1" data-order="3"><span class="hs-ring" style="--d:184deg"><b>51</b></span><span class="hs-cn"><b>Spokane</b><small>Open rebates worth up to $5,275</small><small>7 of 8 upgrades open · 33 installers ranked</small></span></a><a class="hs-city" href="/us/wa/seattle/" data-name="seattle" data-score="42.0" data-order="4"><span class="hs-ring" style="--d:151deg"><b>42</b></span><span class="hs-cn"><b>Seattle</b><small>Open rebates worth up to $7,925</small><small>5 of 8 upgrades open · 34 installers ranked</small></span></a></div>
 <h2 class="hs-h" style="margin-top:34px;">Biggest rebates by upgrade</h2>
 <p class="hs-sub">The largest amount found in Washington for each type of upgrade, and where.</p>
 <div class="hs-tiles"><a class="hs-tile" href="/us/wa/bellevue/heat-pump/"><span class="hs-ti">🔥</span><span class="hs-tt"><em>Heat Pump</em>up to <b>$4,000</b><small>best in Bellevue · open in 5 of 5 cities</small></span></a><a class="hs-tile" href="/us/wa/bellevue/insulation/"><span class="hs-ti">🌡️</span><span class="hs-tt"><em>Insulation</em>up to <b>$5,000</b><small>best in Bellevue · open in 4 of 5 cities</small></span></a><a class="hs-tile" href="/us/wa/solar/"><span class="hs-ti">☀️</span><span class="hs-tt"><em>Solar</em><b>No amount listed</b><small>see what is and is not open</small></span></a><a class="hs-tile" href="/us/wa/bellevue/"><span class="hs-ti">🔋</span><span class="hs-tt"><em>Battery Storage</em>up to <b>$1,000</b><small>best in Bellevue · open in 5 of 5 cities</small></span></a><a class="hs-tile" href="/us/wa/vancouver/water-heater/"><span class="hs-ti">💧</span><span class="hs-tt"><em>Water Heater</em>up to <b>$1,500</b><small>best in Vancouver · open in 5 of 5 cities</small></span></a><a class="hs-tile" href="/us/wa/bellevue/"><span class="hs-ti">🎛️</span><span class="hs-tt"><em>Smart Thermostat</em>up to <b>$175</b><small>best in Bellevue · open in 5 of 5 cities</small></span></a><a class="hs-tile" href="/us/wa/bellevue/"><span class="hs-ti">🚗</span><span class="hs-tt"><em>EV Charger</em>up to <b>$2,000</b><small>best in Bellevue · open in 5 of 5 cities</small></span></a><a class="hs-tile" href="/us/wa/spokane/windows-doors/"><span class="hs-ti">🪟</span><span class="hs-tt"><em>Windows &amp; Doors</em>up to <b>$600</b><small>best in Spokane · open in 4 of 5 cities</small></span></a></div>
@@ -218,6 +238,11 @@
           <li><a href="/ca/nl/">Newfoundland and Labrador</a></li>
           <li><a href="/ca/pe/">Prince Edward Island</a></li>
           <li><a href="/ca/nb/">New Brunswick</a></li>
+          <li><a href="/ca/mb/">Manitoba</a></li>
+          <li><a href="/ca/sk/">Saskatchewan</a></li>
+          <li><a href="/ca/qc/">Quebec</a></li>
+          <li><a href="/ca/yt/">Yukon</a></li>
+          <li><a href="/ca/nt/">Northwest Territories</a></li>
         </ul>
       </div>
       <div>
@@ -286,7 +311,7 @@ function toggleCityDropdown() {
   modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn', 'pe', 'nb'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn', 'pe', 'nb', 'mb', 'sk', 'qc', 'yt', 'nt'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

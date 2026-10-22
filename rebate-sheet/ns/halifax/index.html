@@ -108,6 +108,11 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter Tight', 'Inter 
         <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" class="nav-region-tab" aria-pressed="false">Minnesota</button>
         <button type="button" onclick="showProvinceCities('pe')" id="province-tab-pe" class="nav-region-tab" aria-pressed="false">PEI</button>
         <button type="button" onclick="showProvinceCities('nb')" id="province-tab-nb" class="nav-region-tab" aria-pressed="false">New Brunswick</button>
+        <button type="button" onclick="showProvinceCities('mb')" id="province-tab-mb" class="nav-region-tab" aria-pressed="false">Manitoba</button>
+        <button type="button" onclick="showProvinceCities('sk')" id="province-tab-sk" class="nav-region-tab" aria-pressed="false">Saskatchewan</button>
+        <button type="button" onclick="showProvinceCities('qc')" id="province-tab-qc" class="nav-region-tab" aria-pressed="false">Quebec</button>
+        <button type="button" onclick="showProvinceCities('yt')" id="province-tab-yt" class="nav-region-tab" aria-pressed="false">Yukon</button>
+        <button type="button" onclick="showProvinceCities('nt')" id="province-tab-nt" class="nav-region-tab" aria-pressed="false">NWT</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -164,6 +169,21 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter Tight', 'Inter 
     </div>
     <div id="province-cities-nb" class="nav-region-cities" hidden>
       <a href="/ca/nb/moncton/">Moncton</a><a href="/ca/nb/fredericton/">Fredericton</a>
+    </div>
+    <div id="province-cities-mb" class="nav-region-cities" hidden>
+      <a href="/ca/mb/winnipeg/">Winnipeg</a><a href="/ca/mb/brandon/">Brandon</a>
+    </div>
+    <div id="province-cities-sk" class="nav-region-cities" hidden>
+      <a href="/ca/sk/saskatoon/">Saskatoon</a><a href="/ca/sk/regina/">Regina</a>
+    </div>
+    <div id="province-cities-qc" class="nav-region-cities" hidden>
+      <a href="/ca/qc/montreal/">Montréal</a><a href="/ca/qc/quebec-city/">Quebec City</a>
+    </div>
+    <div id="province-cities-yt" class="nav-region-cities" hidden>
+      <a href="/ca/yt/whitehorse/">Whitehorse</a>
+    </div>
+    <div id="province-cities-nt" class="nav-region-cities" hidden>
+      <a href="/ca/nt/yellowknife/">Yellowknife</a>
     </div>
     </div>
   </div>
@@ -222,6 +242,11 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter Tight', 'Inter 
           <li><a href="/ca/nl/">Newfoundland and Labrador</a></li>
           <li><a href="/ca/pe/">Prince Edward Island</a></li>
           <li><a href="/ca/nb/">New Brunswick</a></li>
+          <li><a href="/ca/mb/">Manitoba</a></li>
+          <li><a href="/ca/sk/">Saskatchewan</a></li>
+          <li><a href="/ca/qc/">Quebec</a></li>
+          <li><a href="/ca/yt/">Yukon</a></li>
+          <li><a href="/ca/nt/">Northwest Territories</a></li>
         </ul>
       </div>
       <div>
@@ -290,7 +315,7 @@ function toggleCityDropdown() {
   modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn', 'pe', 'nb'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn', 'pe', 'nb', 'mb', 'sk', 'qc', 'yt', 'nt'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

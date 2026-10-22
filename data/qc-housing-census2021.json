@@ -1,0 +1,73 @@
+{
+ "montreal": {
+  "name": "Montréal",
+  "pop": 1762949,
+  "hh": 816340,
+  "owner": 297340,
+  "renter": 519020,
+  "struct": [
+   58065,
+   25740,
+   26175,
+   107565,
+   464420,
+   130615,
+   3350,
+   415
+  ],
+  "period": [
+   293880,
+   248030,
+   89700,
+   57865,
+   28770,
+   30795,
+   33075,
+   34235
+  ],
+  "major": 70075,
+  "median": 63600,
+  "inc": 816335,
+  "u35": 198505,
+  "u50": 314595,
+  "u60": 384145,
+  "u70": 446270
+ },
+ "quebec-city": {
+  "name": "Quebec City",
+  "pop": 549459,
+  "hh": 265710,
+  "owner": 136145,
+  "renter": 129565,
+  "struct": [
+   80885,
+   14020,
+   6945,
+   17110,
+   120775,
+   23520,
+   1080,
+   1380
+  ],
+  "period": [
+   55205,
+   80320,
+   39705,
+   29160,
+   13630,
+   15940,
+   15515,
+   16240
+  ],
+  "major": 13510,
+  "median": 70500,
+  "inc": 265710,
+  "u35": 48905,
+  "u50": 87545,
+  "u60": 111255,
+  "u70": 131830
+ },
+ "_source": "Statistics Canada, 2021 Census Profile (www12.statcan.gc.ca), read 2026-10-21. Household income is 2020 total household income before tax.",
+ "_struct_order": "single-detached, semi, row, duplex apartment, apartment under 5 storeys, apartment 5+ storeys, other single-attached, movable",
+ "_period_order": "<=1960, 1961-80, 1981-90, 1991-2000, 2001-05, 2006-10, 2011-15, 2016-21"
+}

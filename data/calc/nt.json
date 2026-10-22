@@ -1,0 +1,244 @@
+{
+ "code": "nt",
+ "name": "Northwest Territories",
+ "country": "ca",
+ "currency": "CAD",
+ "hub": "/ca/nt/",
+ "installers": "/installers/",
+ "title": "NWT Rebate Calculator 2026: Arctic Energy Alliance Rebates",
+ "h1": "Northwest Territories Rebate Calculator 2026: What You Could Get Back",
+ "desc": "Free Northwest Territories rebate calculator. Arctic Energy Alliance insulation, wood stove, drain water heat recovery and renewable energy rebates. Every number sourced.",
+ "intro": "Answer a few questions and see which Northwest Territories rebates fit your home, with a source for every number.",
+ "short": "The Arctic Energy Alliance pays up to $8,000 for exterior wall insulation, $1,500 for ceilings, 50% up to $2,000 for a wood or pellet stove and $700 for drain water heat recovery. Solar and ground-source heat pumps can get up to $20,000 with pre-approval.",
+ "faq": [
+  [
+   "Is there an NWT heat pump rebate?",
+   "We found no Arctic Energy Alliance rebate for air-source heat pumps. Ground-source heat pumps are listed under its Renewable Energy program, up to $20,000 with pre-approval."
+  ],
+  [
+   "How do AEA rebates work?",
+   "They are after-purchase mail-in rebates. The AEA must receive your application within 3 months of the purchase date on your receipt."
+  ],
+  [
+   "How much is the insulation rebate?",
+   "Up to $8,000 for exterior walls, $1,500 for ceilings, $500 for exposed floors, $2,500 for basements, $625 for basement headers and $2,000 for crawlspaces."
+  ],
+  [
+   "Can I get a rebate for a fossil fuel heating system?",
+   "No. The AEA says rebates are no longer available on heating systems that use fossil fuels."
+  ]
+ ],
+ "questions": [
+  {
+   "id": "part",
+   "label": "Which part of the home are you insulating?",
+   "type": "select",
+   "options": [
+    {
+     "value": "wall",
+     "label": "Exterior walls"
+    },
+    {
+     "value": "ceiling",
+     "label": "Ceiling"
+    },
+    {
+     "value": "floor",
+     "label": "Exposed floor"
+    },
+    {
+     "value": "basement",
+     "label": "Basement"
+    },
+    {
+     "value": "header",
+     "label": "Basement header"
+    },
+    {
+     "value": "crawl",
+     "label": "Crawlspace"
+    }
+   ],
+   "for": [
+    "insulation"
+   ]
+  },
+  {
+   "id": "stove",
+   "label": "Which wood heating appliance?",
+   "type": "select",
+   "options": [
+    {
+     "value": "wood",
+     "label": "Wood stove"
+    },
+    {
+     "value": "pellet",
+     "label": "Wood pellet stove"
+    }
+   ],
+   "for": [
+    "stove"
+   ]
+  }
+ ],
+ "derived": {},
+ "pools": [],
+ "upgrades": [
+  {
+   "id": "insulation",
+   "label": "Insulation"
+  },
+  {
+   "id": "stove",
+   "label": "Wood or pellet stove"
+  },
+  {
+   "id": "dwhr",
+   "label": "Drain water heat recovery"
+  },
+  {
+   "id": "renewable",
+   "label": "Solar or ground-source heat pump"
+  }
+ ],
+ "programs": [
+  {
+   "id": "nt-wall",
+   "fact": "nt-1-home-insulation",
+   "name": "AEA exterior wall insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 8000
+   },
+   "rules": "Residential Insulation Rebate Application Form. Mail-in rebate.",
+   "when": {
+    "part": [
+     "wall"
+    ]
+   }
+  },
+  {
+   "id": "nt-ceiling",
+   "fact": "nt-1-home-insulation",
+   "name": "AEA ceiling insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 1500
+   },
+   "rules": "Residential Insulation Rebate Application Form.",
+   "when": {
+    "part": [
+     "ceiling"
+    ]
+   }
+  },
+  {
+   "id": "nt-floor",
+   "fact": "nt-1-home-insulation",
+   "name": "AEA exposed floor insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 500
+   },
+   "rules": "Residential Insulation Rebate Application Form.",
+   "when": {
+    "part": [
+     "floor"
+    ]
+   }
+  },
+  {
+   "id": "nt-basement",
+   "fact": "nt-1-home-insulation",
+   "name": "AEA basement insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 2500
+   },
+   "rules": "Residential Insulation Rebate Application Form.",
+   "when": {
+    "part": [
+     "basement"
+    ]
+   }
+  },
+  {
+   "id": "nt-header",
+   "fact": "nt-1-home-insulation",
+   "name": "AEA basement header insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 625
+   },
+   "rules": "Residential Insulation Rebate Application Form.",
+   "when": {
+    "part": [
+     "header"
+    ]
+   }
+  },
+  {
+   "id": "nt-crawl",
+   "fact": "nt-1-home-insulation",
+   "name": "AEA crawlspace insulation",
+   "upgrade": "insulation",
+   "amount": {
+    "max": 2000
+   },
+   "rules": "Residential Insulation Rebate Application Form.",
+   "when": {
+    "part": [
+     "crawl"
+    ]
+   }
+  },
+  {
+   "id": "nt-stove",
+   "fact": "nt-0-energy-efficient-products",
+   "name": "AEA wood or pellet stove",
+   "upgrade": "stove",
+   "amount": {
+    "max": 2000
+   },
+   "rules": "50% of the purchase cost, not installation or accessories. Mail in within 3 months of purchase."
+  },
+  {
+   "id": "nt-dwhr",
+   "fact": "nt-0-energy-efficient-products",
+   "name": "AEA drain water heat recovery",
+   "upgrade": "dwhr",
+   "amount": {
+    "max": 700
+   },
+   "rules": "System with at least 30% efficiency. Mail in within 3 months of purchase."
+  },
+  {
+   "id": "nt-renew",
+   "fact": "nt-2-renewable-energy",
+   "name": "AEA Renewable Energy rebates",
+   "upgrade": "renewable",
+   "amount": {
+    "label": "Up to $20,000",
+    "max": 0
+   },
+   "rules": "Pre-approval, first come first served. Lower of 50% of cost or a savings calculation ($4.00 per watt for solar electric). Shown but not added to your total."
+  },
+  {
+   "id": "fed-hp",
+   "fact": "federal-0-national-heat-pump-rebate",
+   "name": "National Heat Pump Rebate (federal, not open yet)",
+   "upgrade": "heat-pump",
+   "amount": {
+    "label": "Up to $10,000 or $2,000",
+    "max": 0
+   },
+   "rules": "Announced October 8, 2026 and expected to launch in early 2027. The income line, eligible homes and how it combines with provincial programs are not published, so this is shown but not added to your total."
+  }
+ ],
+ "closed_facts": [],
+ "notes": [
+  "We found no AEA rebate for air-source heat pumps. That is a negative result, not proof none exists.",
+  "Amounts are the most a program pays. Your rebate depends on your quote and final invoice."
+ ]
+}

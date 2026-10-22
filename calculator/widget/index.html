@@ -89,6 +89,11 @@
         <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" class="nav-region-tab" aria-pressed="false">Minnesota</button>
         <button type="button" onclick="showProvinceCities('pe')" id="province-tab-pe" class="nav-region-tab" aria-pressed="false">PEI</button>
         <button type="button" onclick="showProvinceCities('nb')" id="province-tab-nb" class="nav-region-tab" aria-pressed="false">New Brunswick</button>
+        <button type="button" onclick="showProvinceCities('mb')" id="province-tab-mb" class="nav-region-tab" aria-pressed="false">Manitoba</button>
+        <button type="button" onclick="showProvinceCities('sk')" id="province-tab-sk" class="nav-region-tab" aria-pressed="false">Saskatchewan</button>
+        <button type="button" onclick="showProvinceCities('qc')" id="province-tab-qc" class="nav-region-tab" aria-pressed="false">Quebec</button>
+        <button type="button" onclick="showProvinceCities('yt')" id="province-tab-yt" class="nav-region-tab" aria-pressed="false">Yukon</button>
+        <button type="button" onclick="showProvinceCities('nt')" id="province-tab-nt" class="nav-region-tab" aria-pressed="false">NWT</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -146,6 +151,21 @@
     <div id="province-cities-nb" class="nav-region-cities" hidden>
       <a href="/ca/nb/moncton/">Moncton</a><a href="/ca/nb/fredericton/">Fredericton</a>
     </div>
+    <div id="province-cities-mb" class="nav-region-cities" hidden>
+      <a href="/ca/mb/winnipeg/">Winnipeg</a><a href="/ca/mb/brandon/">Brandon</a>
+    </div>
+    <div id="province-cities-sk" class="nav-region-cities" hidden>
+      <a href="/ca/sk/saskatoon/">Saskatoon</a><a href="/ca/sk/regina/">Regina</a>
+    </div>
+    <div id="province-cities-qc" class="nav-region-cities" hidden>
+      <a href="/ca/qc/montreal/">Montréal</a><a href="/ca/qc/quebec-city/">Quebec City</a>
+    </div>
+    <div id="province-cities-yt" class="nav-region-cities" hidden>
+      <a href="/ca/yt/whitehorse/">Whitehorse</a>
+    </div>
+    <div id="province-cities-nt" class="nav-region-cities" hidden>
+      <a href="/ca/nt/yellowknife/">Yellowknife</a>
+    </div>
     </div>
   </div>
 </nav>
@@ -154,11 +174,11 @@
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/calculator/">Calculators</a></li><li aria-current="page">Installer widget</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>A Rebate Calculator for Your Website</h1><p>Let your customers check which rebates they qualify for, without leaving your site.</p></div></header>
 <section class="body"><div class="wrap rc-wrap"><h2>Copy and paste</h2>
-<p><label for="wg-r"><b>Your province or state</b></label><br><select id="wg-r" style="min-height:44px;font:inherit;font-size:16px;padding:8px 12px;border:1px solid #d9d0c1;border-radius:8px;margin:6px 0 12px;"><option value="ab" selected>Alberta</option><option value="bc">British Columbia</option><option value="ca">California</option><option value="co">Colorado</option><option value="il">Illinois</option><option value="ma">Massachusetts</option><option value="mi">Michigan</option><option value="mn">Minnesota</option><option value="nb">New Brunswick</option><option value="nj">New Jersey</option><option value="ny">New York</option><option value="nl">Newfoundland and Labrador</option><option value="ns">Nova Scotia</option><option value="on">Ontario</option><option value="pa">Pennsylvania</option><option value="pe">Prince Edward Island</option><option value="vt">Vermont</option><option value="wa">Washington</option></select></p>
+<p><label for="wg-r"><b>Your province or state</b></label><br><select id="wg-r" style="min-height:44px;font:inherit;font-size:16px;padding:8px 12px;border:1px solid #d9d0c1;border-radius:8px;margin:6px 0 12px;"><option value="ab" selected>Alberta</option><option value="bc">British Columbia</option><option value="ca">California</option><option value="co">Colorado</option><option value="il">Illinois</option><option value="mb">Manitoba</option><option value="ma">Massachusetts</option><option value="mi">Michigan</option><option value="mn">Minnesota</option><option value="nb">New Brunswick</option><option value="nj">New Jersey</option><option value="ny">New York</option><option value="nl">Newfoundland and Labrador</option><option value="nt">Northwest Territories</option><option value="ns">Nova Scotia</option><option value="on">Ontario</option><option value="pa">Pennsylvania</option><option value="pe">Prince Edward Island</option><option value="qc">Quebec</option><option value="sk">Saskatchewan</option><option value="vt">Vermont</option><option value="wa">Washington</option><option value="yt">Yukon</option></select></p>
 <pre id="wg-code" style="background:#0a2a2e;color:#fff;padding:14px;border-radius:8px;overflow-x:auto;white-space:pre-wrap;">&lt;iframe src=&quot;https://homepowerrebate.com/calculator/embed/ab/&quot; title=&quot;Rebate calculator&quot; width=&quot;100%&quot; height=&quot;760&quot; style=&quot;max-width:820px;border:1px solid #d9d0c1;border-radius:12px;&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
 &lt;p&gt;&lt;a href=&quot;https://homepowerrebate.com/calculator/ab/&quot;&gt;Rebate calculator by HomePowerRebate&lt;/a&gt;&lt;/p&gt;</pre>
 <p><button type="button" id="wg-copy" style="min-height:44px;font:inherit;font-size:16px;font-weight:700;padding:10px 20px;color:#fff;background:#a4540a;border:0;border-radius:8px;cursor:pointer;">Copy code</button> <span id="wg-done" role="status"></span></p>
-<p>Or change <code>ab</code> in both places to your region's code: Alberta (<code>ab</code>), British Columbia (<code>bc</code>), California (<code>ca</code>), Colorado (<code>co</code>), Illinois (<code>il</code>), Massachusetts (<code>ma</code>), Michigan (<code>mi</code>), Minnesota (<code>mn</code>), New Brunswick (<code>nb</code>), New Jersey (<code>nj</code>), Newfoundland and Labrador (<code>nl</code>), Nova Scotia (<code>ns</code>), New York (<code>ny</code>), Ontario (<code>on</code>), Pennsylvania (<code>pa</code>), Prince Edward Island (<code>pe</code>), Vermont (<code>vt</code>), Washington (<code>wa</code>).</p>
+<p>Or change <code>ab</code> in both places to your region's code: Alberta (<code>ab</code>), British Columbia (<code>bc</code>), California (<code>ca</code>), Colorado (<code>co</code>), Illinois (<code>il</code>), Massachusetts (<code>ma</code>), Manitoba (<code>mb</code>), Michigan (<code>mi</code>), Minnesota (<code>mn</code>), New Brunswick (<code>nb</code>), New Jersey (<code>nj</code>), Newfoundland and Labrador (<code>nl</code>), Nova Scotia (<code>ns</code>), Northwest Territories (<code>nt</code>), New York (<code>ny</code>), Ontario (<code>on</code>), Pennsylvania (<code>pa</code>), Prince Edward Island (<code>pe</code>), Quebec (<code>qc</code>), Saskatchewan (<code>sk</code>), Vermont (<code>vt</code>), Washington (<code>wa</code>), Yukon (<code>yt</code>).</p>
 <h2>What you get</h2><ul><li>A working calculator for your province or state. It shows top-rated installers in the visitor's city, ranked by Google reviews.</li>
 <li>Rebate amounts that update on their own when a program changes. You never edit them.</li>
 <li>No script to install, no tracking, no cookies and no ads.</li></ul>
@@ -207,6 +227,11 @@ navigator.clipboard.writeText(c.textContent).then(function(){d.textContent='Copi
           <li><a href="/ca/nl/">Newfoundland and Labrador</a></li>
           <li><a href="/ca/pe/">Prince Edward Island</a></li>
           <li><a href="/ca/nb/">New Brunswick</a></li>
+          <li><a href="/ca/mb/">Manitoba</a></li>
+          <li><a href="/ca/sk/">Saskatchewan</a></li>
+          <li><a href="/ca/qc/">Quebec</a></li>
+          <li><a href="/ca/yt/">Yukon</a></li>
+          <li><a href="/ca/nt/">Northwest Territories</a></li>
         </ul>
       </div>
       <div>
@@ -275,7 +300,7 @@ function toggleCityDropdown() {
   modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn', 'pe', 'nb'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn', 'pe', 'nb', 'mb', 'sk', 'qc', 'yt', 'nt'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

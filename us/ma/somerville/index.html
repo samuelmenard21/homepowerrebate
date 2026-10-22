@@ -349,35 +349,35 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
         <span class="program-status status-open">Open</span>
         <h4>&#128167; Water Heater</h4>
         <div class="amount">$750</div>
-        <p><a href="https://www.masssave.com/residential/rebates-offers-services/water-heating/heat-pump-water-heaters" target="_blank" rel="noopener">Heat pump water heater rebate</a>. ENERGY STAR certified equipment required.</p>
+        <p><a href="https://www.masssave.com/residential/rebates-offers-services/water-heating/heat-pump-water-heaters?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Heat pump water heater rebate</a>. ENERGY STAR certified equipment required.</p>
       
       </div>
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
         <h4>&#129001; Windows &amp; Doors</h4>
         <div class="amount">$75/window</div>
-        <p>$75 per window when you replace single-pane windows with triple-pane windows. <a href="https://www.masssave.com/residential/rebates-offers-services/insulation-and-windows" target="_blank" rel="noopener">Windows & insulation &rarr;</a></p>
+        <p>$75 per window when you replace single-pane windows with triple-pane windows. <a href="https://www.masssave.com/residential/rebates-offers-services/insulation-and-windows?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Windows & insulation &rarr;</a></p>
       
       </div>
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
         <h4>&#128664; EV Charger</h4>
         <div class="amount">Varies by utility</div>
-        <p>Eversource and National Grid each run their own home EV charger programs; check your utility for current amounts. <a href="https://www.masssave.com/residential/rebates-offers-services/battery-storage-and-evs" target="_blank" rel="noopener">EV charger rebates &rarr;</a></p>
+        <p>Eversource and National Grid each run their own home EV charger programs; check your utility for current amounts. <a href="https://www.masssave.com/residential/rebates-offers-services/battery-storage-and-evs?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">EV charger rebates &rarr;</a></p>
       
       </div>
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
         <h4>&#127777;&#65039; Smart Thermostat</h4>
         <div class="amount">$100</div>
-        <p>Often installed free during your <a href="https://www.masssave.com/residential/rebates-offers-services" target="_blank" rel="noopener">home energy assessment</a>.</p>
+        <p>Often installed free during your <a href="https://www.masssave.com/residential/rebates-offers-services?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">home energy assessment</a>.</p>
       
       </div>
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
         <h4>&#128176; HEAT Loan</h4>
         <div class="amount">0% interest</div>
-        <p><a href="https://www.masssave.com/residential/rebates-offers-services/financing" target="_blank" rel="noopener">Up to $25,000, 0% interest, 0% fees, 7-year term</a>.</p>
+        <p><a href="https://www.masssave.com/residential/rebates-offers-services/financing?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Up to $25,000, 0% interest, 0% fees, 7-year term</a>.</p>
       </div>
       <div class="rebate-card">
         <span class="program-status status-open">Open</span>
@@ -937,6 +937,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

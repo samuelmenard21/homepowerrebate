@@ -314,7 +314,7 @@
 <h3>Did CleanBC rebates change in 2026?</h3><p>Yes. For invoices on or after July 6, 2026, the income-qualified maximums dropped. The top amount for a gas-to-heat-pump switch is now $13,000 at Level 1, and electric-to-heat-pump is $5,000 at Level 1 only.</p>
 <h3>Does the northern top-up apply in Fort St. John?</h3><p>Yes, if you qualify for the CleanBC Energy Savings Program at Income Level 1 or 2, are switching from fossil fuel, and are connected to BC Hydro. It adds $3,000 for ducted, multi-split or two single-head systems, or $1,500 for one single-head mini-split.</p>
 <div class="hpr-cta"><h3>Ready to check your home in Fort St. John?</h3><p>Compare top-rated local installers, ranked by Google reviews. Free for homeowners, and we'll tell you honestly if the math doesn't work for your home.</p><a class="hpr-btn" href="/get-quotes/?city=Fort+St.+John&province=BC">Compare top-rated Fort St. John installers &rarr;</a></div>
-<p class="hpr-sources"><strong>Sources, checked September 26, 2026:</strong> <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" target="_blank" rel="noopener">CleanBC Energy Savings Program rules (July 6, 2026)</a> · <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html" target="_blank" rel="noopener">BC Hydro heat pump rebates</a>.</p>
+<p class="hpr-sources"><strong>Sources, checked September 26, 2026:</strong> <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" target="_blank" rel="noopener">CleanBC Energy Savings Program rules (July 6, 2026)</a> · <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro heat pump rebates</a>.</p>
 <div class="related"><h4>Keep reading</h4><a href="/ca/bc/fort-st-john/heat-pump/">Fort St. John heat pump rebates and installers</a><a href="/ca/bc/fort-st-john/">All Fort St. John rebates</a><a href="/blog/cleanbc-rebate-changes-july-2026/">What changed in CleanBC rebates on July 6, 2026</a><a href="/blog/heat-pump-bc-winter-actually-works/">Do heat pumps work in a BC winter?</a><a href="/blog/heat-pump-rebate-guide-bc-2026/">The BC-wide heat pump rebate guide</a></div>
   </div>
 </article>
@@ -560,6 +560,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

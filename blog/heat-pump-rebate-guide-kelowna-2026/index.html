@@ -305,7 +305,7 @@
 <h3>Did CleanBC rebates change in 2026?</h3><p>Yes. For invoices on or after July 6, 2026, the income-qualified maximums dropped. The top amount for a gas-to-heat-pump switch is now $13,000 at Level 1, and electric-to-heat-pump is $5,000 at Level 1 only.</p>
 <h3>Can Kelowna homeowners use BC Hydro rebates?</h3><p>No. Kelowna's electricity comes from FortisBC, and FortisBC customers are not eligible for BC Hydro programs. FortisBC offers its own heat pump rebate (up to $4,000) and an income-qualified version (up to $12,000).</p>
 <div class="hpr-cta"><h3>Ready to check your home in Kelowna?</h3><p>Compare top-rated local installers, ranked by Google reviews. Free for homeowners, and we'll tell you honestly if the math doesn't work for your home.</p><a class="hpr-btn" href="/get-quotes/?city=Kelowna&province=BC">Compare top-rated Kelowna installers &rarr;</a></div>
-<p class="hpr-sources"><strong>Sources, checked September 26, 2026:</strong> <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" target="_blank" rel="noopener">CleanBC Energy Savings Program rules (July 6, 2026)</a> · <a href="https://www.fortisbc.com/rebates/detail/air-source-heat-pump-rebate" target="_blank" rel="noopener">FortisBC heat pump rebate</a> · <a href="https://www.fortisbc.com/rebates/detail/iqheatpump" target="_blank" rel="noopener">FortisBC income-qualified heat pump rebate</a>.</p>
+<p class="hpr-sources"><strong>Sources, checked September 26, 2026:</strong> <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" target="_blank" rel="noopener">CleanBC Energy Savings Program rules (July 6, 2026)</a> · <a href="https://www.fortisbc.com/rebates/detail/air-source-heat-pump-rebate?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">FortisBC heat pump rebate</a> · <a href="https://www.fortisbc.com/rebates/detail/iqheatpump?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">FortisBC income-qualified heat pump rebate</a>.</p>
 <div class="related"><h4>Keep reading</h4><a href="/ca/bc/kelowna/heat-pump/">Kelowna heat pump rebates and installers</a><a href="/ca/bc/kelowna/">All Kelowna rebates</a><a href="/blog/cleanbc-rebate-changes-july-2026/">What changed in CleanBC rebates on July 6, 2026</a><a href="/blog/heat-pump-bc-winter-actually-works/">Do heat pumps work in a BC winter?</a><a href="/blog/heat-pump-rebate-guide-bc-2026/">The BC-wide heat pump rebate guide</a></div>
   </div>
 </article>
@@ -551,6 +551,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

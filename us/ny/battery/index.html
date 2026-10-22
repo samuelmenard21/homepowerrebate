@@ -212,7 +212,7 @@
 <div class="faq-item"><h3>Can I apply myself?</h3><p>No. A participating contractor applies for you, and the incentive is taken off your price.</p></div>
 <div class="faq-item"><h3>Is the federal battery tax credit still available?</h3><p>No, not for systems installed in 2026.</p></div>
 
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://www.nyserda.ny.gov/All-Programs/Energy-Storage-Program/Home-Energy-Storage/Residential-Energy-Storage-Incentives" target="_blank" rel="noopener">NYSERDA residential storage incentives</a>, <a href="https://www.nyserda.ny.gov/All-Programs/Energy-Storage-Program/Energy-Storage-for-Your-Home/Incentives-for-Long-Island-Residents" target="_blank" rel="noopener">NYSERDA Long Island storage</a>, <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS residential clean energy credit</a>.</p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://www.nyserda.ny.gov/All-Programs/Energy-Storage-Program/Home-Energy-Storage/Residential-Energy-Storage-Incentives?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">NYSERDA residential storage incentives</a>, <a href="https://www.nyserda.ny.gov/All-Programs/Energy-Storage-Program/Energy-Storage-for-Your-Home/Incentives-for-Long-Island-Residents?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">NYSERDA Long Island storage</a>, <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">IRS residential clean energy credit</a>.</p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#new-york-battery-programs-in-2026">New York battery programs in 2026</a></li><li><a href="#outside-long-island-how-it-works">Outside Long Island: how it works</a></li><li><a href="#on-long-island-solar-comes-first">On Long Island: solar comes first</a></li><li><a href="#our-city-battery-pages">Our city battery pages</a></li><li><a href="#is-a-battery-right-for-your-home">Is a battery right for your home?</a></li><li><a href="#questions-to-ask-your-contractor">Questions to ask your contractor</a></li><li><a href="#how-to-claim-a-new-york-battery-incentive">How to claim a New York battery incentive</a></li><li><a href="#more-for-new-york-homes">More for New York homes</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=ny">See my rebates</a></div></aside>
@@ -454,6 +454,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

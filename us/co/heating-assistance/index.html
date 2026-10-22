@@ -199,7 +199,7 @@
 <div class="faq-item"><h3>Does LEAP pay my whole heating bill?</h3><p>No. The state says LEAP helps pay part of your energy costs and is not meant to cover the entire bill.</p></div>
 <div class="faq-item"><h3>Does LEAP help fix a broken furnace?</h3><p>LEAP households may also qualify for the Crisis Intervention Program, which helps repair or replace a furnace or woodburning stove.</p></div>
 
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 21, 2026: <a href="https://cdhs.colorado.gov/leap" target="_blank" rel="noopener">Colorado Department of Human Services: LEAP</a>, <a href="https://liheapch.acf.gov/" target="_blank" rel="noopener">LIHEAP Clearinghouse (HHS)</a>, <a href="https://acf.gov/ocs/programs/liheap" target="_blank" rel="noopener">U.S. HHS ACF: LIHEAP</a>.</p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 21, 2026: <a href="https://cdhs.colorado.gov/leap?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Colorado Department of Human Services: LEAP</a>, <a href="https://liheapch.acf.gov/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">LIHEAP Clearinghouse (HHS)</a>, <a href="https://acf.gov/ocs/programs/liheap?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">U.S. HHS ACF: LIHEAP</a>.</p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-we-found-for-colorado-heating-help">What we found for Colorado heating help</a></li><li><a href="#the-dates">The dates</a></li><li><a href="#who-can-apply">Who can apply</a></li><li><a href="#four-ways-to-apply">Four ways to apply</a></li><li><a href="#what-to-have-ready">What to have ready</a></li><li><a href="#why-this-page-has-no-income-table">Why this page has no income table</a></li><li><a href="#think-about-the-longer-fix">Think about the longer fix</a></li><li><a href="#crisis-help-for-the-furnace">Crisis help for the furnace</a></li><li><a href="#a-note-about-proof-of-lawful-presence">A note about proof of lawful presence</a></li><li><a href="#what-to-do-in-colorado-this-winter">What to do in Colorado this winter</a></li><li><a href="#more-for-colorado-homes">More for Colorado homes</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=heating-assistance&province=co">See my rebates</a></div></aside>
@@ -444,6 +444,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

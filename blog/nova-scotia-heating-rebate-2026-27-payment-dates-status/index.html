@@ -335,7 +335,7 @@
 <h2 id="how-to-check-your-heating-rebate-status">How to check your heating rebate status</h2>
 <ol>
 <li>Find the confirmation number you got when you applied online.</li>
-<li>Open the <a href="https://www.novascotia.ca/check-status-your-heating-assistance-rebate-application-heating-assistance-rebate-program" target="_blank" rel="noopener">province's status page</a> and follow the link to the status tool.</li>
+<li>Open the <a href="https://www.novascotia.ca/check-status-your-heating-assistance-rebate-application-heating-assistance-rebate-program?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">province's status page</a> and follow the link to the status tool.</li>
 <li>Type in your confirmation number and your postal code.</li>
 <li>Read what it says. The province says the page shows whether your application was received or approved.</li>
 </ol>
@@ -372,7 +372,7 @@
 <li><a href="/blog/nova-scotia-heat-pump-rebate-disappeared/">Nova Scotia heat pump rebates: what closed and what is left</a></li>
 <li><a href="/programs/nova-scotia-heating-assistance-rebate-harp/">Heating Assistance Rebate Program details</a></li>
 </ul>
-<p style="font-size:13px; color:var(--ink-soft); margin-top:32px;">Sources, read October 5, 2026: <a href="https://www.novascotia.ca/programs-and-services/heating-assistance-rebate-program-harp" target="_blank" rel="noopener">Province of Nova Scotia: Heating Assistance Rebate Program</a>, <a href="https://www.novascotia.ca/apply-heating-assistance-rebate-heating-assistance-rebate-program" target="_blank" rel="noopener">Province of Nova Scotia: apply</a>, <a href="https://www.novascotia.ca/check-status-your-heating-assistance-rebate-application-heating-assistance-rebate-program" target="_blank" rel="noopener">Province of Nova Scotia: check your status</a>.</p>
+<p style="font-size:13px; color:var(--ink-soft); margin-top:32px;">Sources, read October 5, 2026: <a href="https://www.novascotia.ca/programs-and-services/heating-assistance-rebate-program-harp?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Province of Nova Scotia: Heating Assistance Rebate Program</a>, <a href="https://www.novascotia.ca/apply-heating-assistance-rebate-heating-assistance-rebate-program?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Province of Nova Scotia: apply</a>, <a href="https://www.novascotia.ca/check-status-your-heating-assistance-rebate-application-heating-assistance-rebate-program?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Province of Nova Scotia: check your status</a>.</p>
 
   </div>
 </article>
@@ -618,6 +618,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

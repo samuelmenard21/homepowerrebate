@@ -213,7 +213,7 @@
 <div class="faq-item"><h3>Do I need a special contractor?</h3><p>For air sealing, insulation, duct sealing and window work, yes. They must be program-approved. For furnaces, boilers and water heaters, a professional installer is required unless the page says otherwise.</p></div>
 <div class="faq-item"><h3>Is there a limit per home?</h3><p>Smart thermostats are limited to one per household. Window rebates top out at $3,000, storm inserts at $1,000, and air sealing at $500.</p></div>
 
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.nicorgas.com/ways-to-save/residential-savings/rebates.html" target="_blank" rel="noopener">Nicor Gas residential rebates</a>, <a href="https://www.nicorgas.com/content/dam/southern-co-gas/nicor-gas/docs/energy-efficiency/residential/20251211-heer-residential-rebate-application.pdf" target="_blank" rel="noopener">Nicor Gas 2026 residential rebate application</a>, <a href="https://dceo.illinois.gov/communityservices/homeweatherization.html" target="_blank" rel="noopener">Illinois Home Weatherization Assistance Program</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.nicorgas.com/ways-to-save/residential-savings/rebates.html" target="_blank" rel="noopener">Nicor Gas residential rebates</a>, <a href="https://www.nicorgas.com/content/dam/southern-co-gas/nicor-gas/docs/energy-efficiency/residential/20251211-heer-residential-rebate-application.pdf" target="_blank" rel="noopener">Nicor Gas 2026 residential rebate application</a>, <a href="https://dceo.illinois.gov/communityservices/homeweatherization.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Illinois Home Weatherization Assistance Program</a>. <a href="/programs/">All rebate programs &rarr;</a></p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-nicor-gas-pays-in-2026">What Nicor Gas pays in 2026</a></li><li><a href="#who-gets-nicor-gas-rebates">Who gets Nicor Gas rebates</a></li><li><a href="#the-rule-about-replacing-gas-with-gas">The rule about replacing gas with gas</a></li><li><a href="#insulation-rules-in-plain-words">Insulation rules in plain words</a></li><li><a href="#window-rebates">Window rebates</a></li><li><a href="#free-help-for-lower-income-households">Free help for lower-income households</a></li><li><a href="#how-to-claim-a-nicor-gas-rebate">How to claim a Nicor Gas rebate</a></li><li><a href="#our-pages-for-nicor-gas-customers">Our pages for Nicor Gas customers</a></li><li><a href="#guides">Guides</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=on">See my rebates</a></div></aside>
@@ -455,6 +455,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

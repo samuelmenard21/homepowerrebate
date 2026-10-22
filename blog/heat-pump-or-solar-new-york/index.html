@@ -216,7 +216,7 @@
 <!-- MOBILE-TOC-END -->
 <article class="article">
   <div class="wrap">
-<div class="callout" style="border-left:4px solid var(--amber); background:#fff; padding:16px 18px; border-radius:10px; margin:18px 0;"><strong>Updated September 26, 2026 &mdash; what really stacks in New York:</strong> NYS Clean Heat <em>is</em> the heat pump rebate your utility pays (Con Edison up to $10,000, National Grid up to $10,000&ndash;$12,000, NYSEG/RG&amp;E up to $10,000, Central Hudson up to $8,000), so it never adds on top of a separate &ldquo;utility rebate&rdquo;. PSEG Long Island runs its own ($4,000&ndash;$7,500). There is no separate federal HEAR cheque: New York delivers the federal Home Energy Rebates through <a href="/blog/new-york-empower-plus-guide/">EmPower+</a> for income-eligible households. The federal 25C/25D tax credits ended December 31, 2025. Sources: <a href="https://cleanheat.ny.gov/assets/pdf/NYS%20Clean%20Heat%20Program%20Manual%202025_v2.pdf" rel="noopener">Clean Heat manual</a>, <a href="https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program" rel="noopener">EmPower+</a>, <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" rel="noopener">IRS</a>.</div>
+<div class="callout" style="border-left:4px solid var(--amber); background:#fff; padding:16px 18px; border-radius:10px; margin:18px 0;"><strong>Updated September 26, 2026 &mdash; what really stacks in New York:</strong> NYS Clean Heat <em>is</em> the heat pump rebate your utility pays (Con Edison up to $10,000, National Grid up to $10,000&ndash;$12,000, NYSEG/RG&amp;E up to $10,000, Central Hudson up to $8,000), so it never adds on top of a separate &ldquo;utility rebate&rdquo;. PSEG Long Island runs its own ($4,000&ndash;$7,500). There is no separate federal HEAR cheque: New York delivers the federal Home Energy Rebates through <a href="/blog/new-york-empower-plus-guide/">EmPower+</a> for income-eligible households. The federal 25C/25D tax credits ended December 31, 2025. Sources: <a href="https://cleanheat.ny.gov/assets/pdf/NYS%20Clean%20Heat%20Program%20Manual%202025_v2.pdf" rel="noopener">Clean Heat manual</a>, <a href="https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" data-official="1">EmPower+</a>, <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" data-official="1">IRS</a>.</div>
 
     <h2 id="the-short-answer">The Short Answer</h2>
     <p><strong>Heat pump wins everywhere in New York.</strong> A heat pump pays for itself in 3–6 years depending on your region. Solar takes 12–18 years. Do heat pump first. Then consider solar later if it makes sense for your roof and goals.</p>
@@ -577,6 +577,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

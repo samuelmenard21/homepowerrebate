@@ -211,7 +211,7 @@
 <div class="faq-item"><h3>Is there a fridge rebate in Massachusetts?</h3><p>Mass Save has offered a recycling pickup for old fridges and freezers, but we could not confirm the current reward, so check before you schedule.</p></div>
 <div class="faq-item"><h3>Can I get a rebate for a water heater?</h3><p>Yes. A heat pump water heater earns an instant $750 when it replaces an electric, oil, propane or gas water heater.</p></div>
 
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://goclean.masscec.com/homeowners/induction-cooking/" target="_blank" rel="noopener">MassCEC: induction cooking</a>, <a href="https://goclean.masscec.com/homeowners/heat-pump-clothes-dryer/" target="_blank" rel="noopener">MassCEC: heat pump clothes dryers</a>, <a href="https://goclean.masscec.com/homeowners/heat-pump-water-heater/" target="_blank" rel="noopener">MassCEC: heat pump water heaters</a>, <a href="https://goclean.masscec.com/homeowners/weatherization/" target="_blank" rel="noopener">MassCEC: weatherization</a>.</p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 3, 2026: <a href="https://goclean.masscec.com/homeowners/induction-cooking/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">MassCEC: induction cooking</a>, <a href="https://goclean.masscec.com/homeowners/heat-pump-clothes-dryer/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">MassCEC: heat pump clothes dryers</a>, <a href="https://goclean.masscec.com/homeowners/heat-pump-water-heater/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">MassCEC: heat pump water heaters</a>, <a href="https://goclean.masscec.com/homeowners/weatherization/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">MassCEC: weatherization</a>.</p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-massachusetts-pays-for-appliances">What Massachusetts pays for appliances</a></li><li><a href="#switching-from-gas-to-induction">Switching from gas to induction</a></li><li><a href="#the-heat-pump-dryer">The heat pump dryer</a></li><li><a href="#water-heaters-are-the-bigger-appliance">Water heaters are the bigger appliance</a></li><li><a href="#renters-and-condos">Renters and condos</a></li><li><a href="#why-we-kept-this-to-one-page">Why we kept this to one page</a></li><li><a href="#how-to-claim-a-massachusetts-appliance-rebate">How to claim a Massachusetts appliance rebate</a></li><li><a href="#more-for-massachusetts-homes">More for Massachusetts homes</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=&province=ma">See my rebates</a></div></aside>
@@ -458,6 +458,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

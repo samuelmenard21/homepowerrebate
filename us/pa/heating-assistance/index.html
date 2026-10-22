@@ -199,7 +199,7 @@
 <div class="faq-item"><h3>What is the income limit for Pennsylvania LIHEAP?</h3><p>For 2026-2027 it is $23,940 for one person, $32,460 for two, $40,980 for three and $49,500 for four, plus $8,520 for each extra person.</p></div>
 <div class="faq-item"><h3>Do I need to be on public assistance to get LIHEAP?</h3><p>No. You also do not need an unpaid heating bill, and you can rent or own your home.</p></div>
 
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 21, 2026: <a href="https://www.pa.gov/agencies/dhs/resources/liheap" target="_blank" rel="noopener">Pennsylvania DHS: LIHEAP</a>, <a href="https://liheapch.acf.gov/" target="_blank" rel="noopener">LIHEAP Clearinghouse (HHS)</a>, <a href="https://acf.gov/ocs/programs/liheap" target="_blank" rel="noopener">U.S. HHS ACF: LIHEAP</a>.</p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 21, 2026: <a href="https://www.pa.gov/agencies/dhs/resources/liheap?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Pennsylvania DHS: LIHEAP</a>, <a href="https://liheapch.acf.gov/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">LIHEAP Clearinghouse (HHS)</a>, <a href="https://acf.gov/ocs/programs/liheap?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">U.S. HHS ACF: LIHEAP</a>.</p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-we-found-for-pennsylvania-heating-help">What we found for Pennsylvania heating help</a></li><li><a href="#the-dates">The dates</a></li><li><a href="#who-qualifies">Who qualifies</a></li><li><a href="#what-you-get">What you get</a></li><li><a href="#crisis-grants">Crisis grants</a></li><li><a href="#how-to-get-ready">How to get ready</a></li><li><a href="#if-you-are-in-a-heat-pump-or-insulation-project">If you are in a heat pump or insulation project</a></li><li><a href="#keep-this-page-in-mind-for-november">Keep this page in mind for November</a></li><li><a href="#what-to-do-in-pennsylvania-this-winter">What to do in Pennsylvania this winter</a></li><li><a href="#more-for-pennsylvania-homes">More for Pennsylvania homes</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=heating-assistance&province=pa">See my rebates</a></div></aside>
@@ -443,6 +443,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

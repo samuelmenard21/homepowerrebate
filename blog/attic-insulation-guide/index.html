@@ -335,7 +335,7 @@
 <tr><td style="padding:8px;border-top:1px solid #d9d0c1;">6</td><td style="padding:8px;border-top:1px solid #d9d0c1;">4,000 to 4,999</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Prince George, Cranbrook, Whistler</td><td style="padding:8px;border-top:1px solid #d9d0c1;"><b>R-60</b> (RSI 10.6)</td></tr>
 <tr><td style="padding:8px;border-top:1px solid #d9d0c1;">7a to 8</td><td style="padding:8px;border-top:1px solid #d9d0c1;">5,000 and above</td><td style="padding:8px;border-top:1px solid #d9d0c1;">Fort St. John, Dawson Creek, Fort Nelson</td><td style="padding:8px;border-top:1px solid #d9d0c1;"><b>R-80</b> (RSI 14.1)</td></tr>
 </table></div>
-<p style="font-size:13.5px;color:#6b8e7f;">Sources: <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-2-your-house-works" rel="noopener" target="_blank">Natural Resources Canada, Table 2-1</a> · <a href="https://betterhomesbc.ca/definitions/climate-zones/" rel="noopener" target="_blank">Better Homes BC climate zones</a>. Checked September 29, 2026. These are guidelines, not code.</p>
+<p style="font-size:13.5px;color:#6b8e7f;">Sources: <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-2-your-house-works?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" target="_blank" data-official="1">Natural Resources Canada, Table 2-1</a> · <a href="https://betterhomesbc.ca/definitions/climate-zones/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" target="_blank" data-official="1">Better Homes BC climate zones</a>. Checked September 29, 2026. These are guidelines, not code.</p>
 <ul>
 <li><b>Rebates may stop short of the guideline.</b> Ontario's and Nova Scotia's attic rebates are for insulating up to R-50, which is below the guideline for zones 5 and up. You can add more at your own cost.</li>
 <li><b>Adding over old insulation with a plastic vapour barrier?</b> Natural Resources Canada says to put at least twice the insulating value above the barrier as below it (its example: R-12 below means at least R-24 on top). That keeps moisture from getting trapped.</li>
@@ -432,7 +432,7 @@
       <li><a href="/blog/what-happens-in-an-energy-audit/">What happens in an energy audit</a></li>
       <li><a href="/blog/home-energy-assessment-questions-to-ask/">Home energy assessment: questions to ask</a></li>
     </ul>
-    <p style="margin-top:32px;font-size:14px;color:var(--ink-soft);"><strong>Sources, checked September 26, 2026:</strong> <a href="https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values" target="_blank" rel="noopener">ENERGY STAR recommended R-values</a> &middot; <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-5-roofs-attics" target="_blank" rel="noopener">NRCan Keeping the Heat In: roofs and attics</a> &middot; <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-insulation.html" target="_blank" rel="noopener">BC Hydro insulation rebates</a> &middot; <a href="https://www.fortisbc.com/rebates/detail/insulation-rebates" target="_blank" rel="noopener">FortisBC insulation rebates</a> &middot; <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" target="_blank" rel="noopener">IRS 25C credit</a></p>
+    <p style="margin-top:32px;font-size:14px;color:var(--ink-soft);"><strong>Sources, checked September 26, 2026:</strong> <a href="https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">ENERGY STAR recommended R-values</a> &middot; <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-5-roofs-attics?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">NRCan Keeping the Heat In: roofs and attics</a> &middot; <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-insulation.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro insulation rebates</a> &middot; <a href="https://www.fortisbc.com/rebates/detail/insulation-rebates?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">FortisBC insulation rebates</a> &middot; <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">IRS 25C credit</a></p>
 
   </div>
 </article>
@@ -679,6 +679,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

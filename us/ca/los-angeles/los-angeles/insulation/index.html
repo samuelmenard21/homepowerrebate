@@ -215,7 +215,7 @@
 
 <h2 id="what-to-do-next">What to do next</h2>
 <p>See LADWP's <a href='https://www.ladwp.com/residential-services/programs-and-rebates-residential/attic-insulation-rebate-program' target='_blank' rel='noopener'>Attic Insulation Rebate Program page</a> for the application, or compare all Los Angeles offers on our <a href='/us/ca/los-angeles/los-angeles/'>Los Angeles hub</a>.</p>
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://www.ladwp.com/residential-services/programs-and-rebates-residential/attic-insulation-rebate-program" target="_blank" rel="noopener">LADWP Attic Insulation Rebate Program</a>, <a href="https://www.ladwp.com/residential-services/programs-and-rebates-residential" target="_blank" rel="noopener">LADWP residential programs and rebates</a>, <a href="https://www.ladbs.org/" target="_blank" rel="noopener">Los Angeles Department of Building and Safety</a>. <a href="/us/ca/los-angeles/los-angeles/">All Los Angeles rebates &rarr;</a> <a href="/programs/ladwp-rebates/">Every LADWP rebate &rarr;</a></p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://www.ladwp.com/residential-services/programs-and-rebates-residential/attic-insulation-rebate-program?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">LADWP Attic Insulation Rebate Program</a>, <a href="https://www.ladwp.com/residential-services/programs-and-rebates-residential?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">LADWP residential programs and rebates</a>, <a href="https://www.ladbs.org/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Los Angeles Department of Building and Safety</a>. <a href="/us/ca/los-angeles/los-angeles/">All Los Angeles rebates &rarr;</a> <a href="/programs/ladwp-rebates/">Every LADWP rebate &rarr;</a></p>
 </div></article>
 <!-- RANKINGS-LINK-START -->
 <section style="max-width:1100px;margin:0 auto 48px;padding:0 28px;" id="top-rated-installers"><h2 style="font-family:'Fraunces', 'Fraunces Fallback',Georgia,serif;font-size:26px;margin-bottom:8px;" id="compare-top-rated-installers-in-los-angeles">Compare top-rated installers in Los Angeles</h2><p style="font-size:15px;color:#1a3d42;margin-bottom:16px;">Free for homeowners. We rank local companies by their Google reviews, weighted so many good reviews beat a handful. <a href="/installers/how-we-rank/">How we rank</a>.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/installers/ca/los-angeles/insulation/" style="flex:1;min-width:240px;background:#fff;border:1px solid #d9d0c1;border-radius:10px;padding:18px 20px;text-decoration:none;color:#0a2a2e;display:block;"><strong style="font-size:17px;">Top-rated insulation installers in Los Angeles &rarr;</strong><span style="display:block;font-size:14px;color:#1a3d42;margin-top:6px;">12 local companies ranked by 571 Google reviews. Top picks: The Attic Insulation Specialists, Inc, Insulation Labs, USA Spray Me Spray Foam Insulation Contractor.</span></a></div></section>
@@ -461,6 +461,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

@@ -206,11 +206,11 @@ function u(){const x=+g('nm-x').value||0,r=(+g('nm-r').value||0)/100,c=(+g('nm-e
 
 <h2 id="where-it-applies">Where it applies</h2>
 <h3>British Columbia</h3>
-<p>BC Hydro's net metering rate (RS 1289) closed to new customers on <b>July 1, 2026</b>. New solar owners are on the self-generation rate (RS 2289), which pays <b>10 cents per kWh</b> for power you export, credited each billing cycle. Existing net metering customers stay on it until 10 years from their net metering start date, then move to RS 2289. (<a href="https://www.bchydro.com/toolbar/about/strategies-plans-regulatory/rate-design/self-generation-rate-updates.html" rel="noopener" target="_blank">BC Hydro source</a>.) Our <a href="/blog/bc-net-metering-ended-self-generation-rate-2026/">BC net metering guide</a> covers what to do if you're planning solar now, and the <a href="/programs/bc-hydro-rebates/">BC Hydro rebates</a> page lists the solar and battery rebates.</p>
+<p>BC Hydro's net metering rate (RS 1289) closed to new customers on <b>July 1, 2026</b>. New solar owners are on the self-generation rate (RS 2289), which pays <b>10 cents per kWh</b> for power you export, credited each billing cycle. Existing net metering customers stay on it until 10 years from their net metering start date, then move to RS 2289. (<a href="https://www.bchydro.com/toolbar/about/strategies-plans-regulatory/rate-design/self-generation-rate-updates.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" target="_blank" data-official="1">BC Hydro source</a>.) Our <a href="/blog/bc-net-metering-ended-self-generation-rate-2026/">BC net metering guide</a> covers what to do if you're planning solar now, and the <a href="/programs/bc-hydro-rebates/">BC Hydro rebates</a> page lists the solar and battery rebates.</p>
 <h3>California</h3>
-<p>PG&amp;E, SCE and SDG&amp;E customers who applied for new solar after April 14, 2023 are on the <b>Net Billing Tariff</b>. Exports are credited at hourly avoided-cost values, far below the retail price. SMUD and LADWP are not regulated by the state commission and set their own rules (SMUD has a Solar and Storage Rate). (<a href="https://www.cpuc.ca.gov/nbt" rel="noopener" target="_blank">CPUC source</a>.) See <a href="/us/ca/">California rebates</a> and <a href="/blog/smud-rebate-breakdown/">SMUD's programs</a>.</p>
+<p>PG&amp;E, SCE and SDG&amp;E customers who applied for new solar after April 14, 2023 are on the <b>Net Billing Tariff</b>. Exports are credited at hourly avoided-cost values, far below the retail price. SMUD and LADWP are not regulated by the state commission and set their own rules (SMUD has a Solar and Storage Rate). (<a href="https://www.cpuc.ca.gov/nbt?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" target="_blank" data-official="1">CPUC source</a>.) See <a href="/us/ca/">California rebates</a> and <a href="/blog/smud-rebate-breakdown/">SMUD's programs</a>.</p>
 <h3>Ontario</h3>
-<p>In Ontario the Home Renovation Savings solar rebate cannot be taken together with a net metering agreement with your local utility. Check with your utility before you sign a solar contract. (<a href="https://www.homerenovationsavings.ca/without-assessment/solar" rel="noopener" target="_blank">Program page</a>.) Our <a href="/blog/ontario-solar-rebate-vs-net-metering/">Ontario solar rebate vs net metering</a> guide walks through the choice.</p>
+<p>In Ontario the Home Renovation Savings solar rebate cannot be taken together with a net metering agreement with your local utility. Check with your utility before you sign a solar contract. (<a href="https://www.homerenovationsavings.ca/without-assessment/solar?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" target="_blank" data-official="1">Program page</a>.) Our <a href="/blog/ontario-solar-rebate-vs-net-metering/">Ontario solar rebate vs net metering</a> guide walks through the choice.</p>
 <h3>Anywhere else</h3>
 <p>We haven't verified the export rules for every province and state yet. Ask your utility two questions before you buy: <em>what do you credit me for power I send to the grid?</em> and <em>does that rate change after some number of years?</em></p>
 
@@ -466,6 +466,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

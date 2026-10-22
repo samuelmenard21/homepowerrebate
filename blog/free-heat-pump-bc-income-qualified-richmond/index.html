@@ -304,7 +304,7 @@
 <h3>Can I get the income-qualified rebate if I already have electric heat?</h3><p>Only at Income Level 1, up to $5,000. The Level 2 electric stream was discontinued in July 2026. BC Hydro's regular rebate (up to $4,000) is open to any income.</p>
 <h3>Is there still a Richmond heat pump top-up?</h3><p>We could not confirm one. The older top-up pages no longer load. Ask the City of Richmond before you count on it.</p>
 <div class="hpr-cta"><h3>Ready to check your home in Richmond?</h3><p>Compare top-rated local installers, ranked by Google reviews. Free for homeowners, and we'll tell you honestly if the math doesn't work for your home.</p><a class="hpr-btn" href="/get-quotes/?city=Richmond&province=BC">Compare top-rated Richmond installers &rarr;</a></div>
-<p class="hpr-sources"><strong>Sources, checked September 26, 2026:</strong> <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" target="_blank" rel="noopener">CleanBC Energy Savings Program rules (July 6, 2026)</a> · <a href="https://www.fortisbc.com/rebates/detail/free-home-energy-evaluation-and-upgrades" target="_blank" rel="noopener">ECAP: free home energy evaluation and upgrades</a> · <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/savings-based-on-income.html" target="_blank" rel="noopener">BC Hydro programs based on income</a>.</p>
+<p class="hpr-sources"><strong>Sources, checked September 26, 2026:</strong> <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" target="_blank" rel="noopener">CleanBC Energy Savings Program rules (July 6, 2026)</a> · <a href="https://www.fortisbc.com/rebates/detail/free-home-energy-evaluation-and-upgrades?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">ECAP: free home energy evaluation and upgrades</a> · <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/savings-based-on-income.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro programs based on income</a>.</p>
 <div class="related"><h4>Keep reading</h4><a href="/blog/heat-pump-rebate-guide-richmond-2026/">The full Richmond heat pump rebate guide</a><a href="/ca/bc/richmond/heat-pump/">Richmond heat pump installers</a><a href="/blog/heat-pump-rebates-income-tiers-bc-2026/">BC heat pump income tiers explained</a><a href="/blog/cleanbc-rebate-changes-july-2026/">What changed on July 6, 2026</a><a href="/blog/free-heat-pump-bc-income-qualified/">The BC-wide version of this guide</a></div>
   </div>
 </article>
@@ -550,6 +550,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

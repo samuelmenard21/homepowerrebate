@@ -221,7 +221,7 @@
 
 <h2 id="what-to-do-next">What to do next</h2>
 <p>See BWP's <a href='https://www.burbankwaterandpower.com/electrify-your-home' target='_blank' rel='noopener'>Electrify Your Home page</a>, or compare all Burbank offers on our <a href='/us/ca/los-angeles/burbank/'>Burbank hub</a>.</p>
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://www.burbankwaterandpower.com/electrify-your-home" target="_blank" rel="noopener">BWP Electrify Your Home rebates</a>, <a href="https://www.burbankwaterandpower.com/residential-rebates" target="_blank" rel="noopener">BWP residential rebates</a>, <a href="https://www.burbankwaterandpower.com/residential-ev-charging-stations-rebate" target="_blank" rel="noopener">BWP residential EV charging station rebate</a>. <a href="/us/ca/los-angeles/burbank/">All Burbank rebates &rarr;</a> <a href="/programs/burbank-water-and-power-rebates/">Every Burbank Water and Power rebate &rarr;</a></p>
+<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 2, 2026: <a href="https://www.burbankwaterandpower.com/electrify-your-home?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BWP Electrify Your Home rebates</a>, <a href="https://www.burbankwaterandpower.com/residential-rebates?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BWP residential rebates</a>, <a href="https://www.burbankwaterandpower.com/residential-ev-charging-stations-rebate?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BWP residential EV charging station rebate</a>. <a href="/us/ca/los-angeles/burbank/">All Burbank rebates &rarr;</a> <a href="/programs/burbank-water-and-power-rebates/">Every Burbank Water and Power rebate &rarr;</a></p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#what-burbank-water-and-power-pays">What Burbank Water and Power pays</a></li><li><a href="#it-has-to-replace-gas-and-the-gas-has-to-come-of">It has to replace gas, and the gas has to come off</a></li><li><a href="#compared-with-the-neighbors">Compared with the neighbors</a></li><li><a href="#your-utility-burbank-water-and-power">Your utility: Burbank Water and Power</a></li><li><a href="#where-the-tank-goes">Where the tank goes</a></li><li><a href="#other-money">Other money</a></li><li><a href="#installers-in-burbank">Installers in Burbank</a></li><li><a href="#how-to-claim-the-bwp-rebate">How to claim the BWP rebate</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=burbank&province=ca">See my rebates</a></div></aside>
@@ -463,6 +463,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

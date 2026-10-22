@@ -247,16 +247,16 @@
   <div class="wrap">
 
     <h2 id="what-vermont-pays">What Vermont pays for a heat pump</h2>
-    <p>Almost every home efficiency rebate in Vermont runs through one nonprofit, <a href="https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system" target="_blank" rel="noopener">Efficiency Vermont</a>. You do not pick a utility first. For a heat pump the rebate depends on the type of system:</p>
+    <p>Almost every home efficiency rebate in Vermont runs through one nonprofit, <a href="https://www.efficiencyvermont.com/rebates/list/heat-pump-heating-cooling-system?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Efficiency Vermont</a>. You do not pick a utility first. For a heat pump the rebate depends on the type of system:</p>
     <ul>
       <li><strong>Ductless (mini-split):</strong> up to $475.</li>
       <li><strong>Ducted (central):</strong> up to $2,200.</li>
-      <li><strong>Heat pump water heater:</strong> $600, or $1,000 if your income qualifies (<a href="https://www.efficiencyvermont.com/rebates/list/heat-pump-water-heaters" target="_blank" rel="noopener">official page</a>).</li>
+      <li><strong>Heat pump water heater:</strong> $600, or $1,000 if your income qualifies (<a href="https://www.efficiencyvermont.com/rebates/list/heat-pump-water-heaters?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">official page</a>).</li>
     </ul>
     <p>The equipment must be cold-climate rated and on Efficiency Vermont's qualified list, and you must be a Vermont electric customer. Ask your installer to confirm the exact model before you sign, because a heat pump that is not on the list gets nothing.</p>
 
     <h2 id="income-bonus">The income bonus and Green Mountain Power</h2>
-    <p>Households under the income limits get an extra $200 to $2,200 on top of the base rebate, depending on the system (<a href="https://www.efficiencyvermont.com/rebates/list/centrally-ducted-heat-pumps" target="_blank" rel="noopener">income limits took effect July 1, 2026</a>). Green Mountain Power customers at or below 80% of area median income can also get $2,000 for a heat pump (<a href="https://greenmountainpower.com/rebates-programs/home-and-yard/heat-pump/" target="_blank" rel="noopener">GMP rebate page</a>).</p>
+    <p>Households under the income limits get an extra $200 to $2,200 on top of the base rebate, depending on the system (<a href="https://www.efficiencyvermont.com/rebates/list/centrally-ducted-heat-pumps?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">income limits took effect July 1, 2026</a>). Green Mountain Power customers at or below 80% of area median income can also get $2,000 for a heat pump (<a href="https://greenmountainpower.com/rebates-programs/home-and-yard/heat-pump/" target="_blank" rel="noopener">GMP rebate page</a>).</p>
     <p>If your household might qualify, apply for the income-based amount first. It is worth more than the base rebate on a ducted system.</p>
 
     <h2 id="how-to-claim">How to claim</h2>
@@ -273,7 +273,7 @@
     </div>
 
     <h2 id="other-upgrades">Other Vermont rebates worth stacking</h2>
-    <p>Weatherization pays up to $3,000, or up to $7,000 if you are income-eligible, when you use an Efficiency Excellence Network contractor (<a href="https://www.efficiencyvermont.com/rebates/list/home-performance-with-energy-star" target="_blank" rel="noopener">official page</a>). Sealing and insulating before you size a heat pump often means you can buy a smaller system. Vermont Gas weatherization projects must be finished by December 31, 2026. Our guides cover <a href="/us/vt/appliances/">appliances and thermostats</a>, <a href="/us/vt/battery/">home batteries</a> and <a href="/us/vt/windows-doors/">windows and doors</a>.</p>
+    <p>Weatherization pays up to $3,000, or up to $7,000 if you are income-eligible, when you use an Efficiency Excellence Network contractor (<a href="https://www.efficiencyvermont.com/rebates/list/home-performance-with-energy-star?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">official page</a>). Sealing and insulating before you size a heat pump often means you can buy a smaller system. Vermont Gas weatherization projects must be finished by December 31, 2026. Our guides cover <a href="/us/vt/appliances/">appliances and thermostats</a>, <a href="/us/vt/battery/">home batteries</a> and <a href="/us/vt/windows-doors/">windows and doors</a>.</p>
 
     <div class="source-note">
       Amounts come from the Efficiency Vermont and Green Mountain Power program pages linked above, checked in October 2026. We are not affiliated with either program.
@@ -531,6 +531,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

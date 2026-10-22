@@ -382,7 +382,7 @@
     <p style="margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--rule); font-size: 14px; color: var(--ink-soft);">
       <strong>Read next:</strong> <a href="/blog/furnace-buying-guide/">Furnace buying guide</a> &middot; <a href="/blog/central-air-buying-guide/">Central air buying guide</a> &middot; <a href="/blog/heat-pump-rebate-guide-bc-2026/">BC heat pump rebate guide</a> &middot; <a href="/blog/hpcn-certification-what-it-means/">What HPCN means</a>
     </p>
-    <p style="margin-top:32px;font-size:14px;color:var(--ink-soft);"><strong>Sources, checked September 26, 2026:</strong> <a href="https://natural-resources.canada.ca/maps-tools-publications/publications/cooling-heating-season-performance-assessment-cold-climate-air-source-heat-pump-canadian-centre-housing-technology" target="_blank" rel="noopener">NRCan: cold-climate heat pump field test</a> &middot; <a href="https://natural-resources.canada.ca/energy-efficiency/energy-star/heating-cooling-heat-pump" target="_blank" rel="noopener">NRCan: heating and cooling with a heat pump</a> &middot; <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html" target="_blank" rel="noopener">BC Hydro heat pump rebates</a> &middot; <a href="https://betterhomesbc.ca/learn-about-programs/energy-savings-program/" target="_blank" rel="noopener">Better Homes BC Energy Savings Program</a> &middot; <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" target="_blank" rel="noopener">IRS 25C credit</a></p>
+    <p style="margin-top:32px;font-size:14px;color:var(--ink-soft);"><strong>Sources, checked September 26, 2026:</strong> <a href="https://natural-resources.canada.ca/maps-tools-publications/publications/cooling-heating-season-performance-assessment-cold-climate-air-source-heat-pump-canadian-centre-housing-technology?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">NRCan: cold-climate heat pump field test</a> &middot; <a href="https://natural-resources.canada.ca/energy-efficiency/energy-star/heating-cooling-heat-pump?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">NRCan: heating and cooling with a heat pump</a> &middot; <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro heat pump rebates</a> &middot; <a href="https://betterhomesbc.ca/learn-about-programs/energy-savings-program/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Better Homes BC Energy Savings Program</a> &middot; <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">IRS 25C credit</a></p>
     <!-- RELATED POSTS -->
     <div style="margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--rule);">
       <h3 style="font-size: 20px; color: var(--teal-deep); margin-bottom: 20px;">Related guides</h3>
@@ -651,6 +651,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

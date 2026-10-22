@@ -244,7 +244,7 @@
 <h3>Does Tesla Powerwall qualify for the BC Hydro battery rebate?</h3><p>No. Tesla products have not been eligible since March 12, 2025, unless the self-generation application was submitted before that date.</p>
 <h3>What batteries qualify for BC Hydro's rebate?</h3><p>Those on BC Hydro's qualified battery list, at least 5 kWh, installed by an HPCN member. Check the current list before buying.</p>
 <div class="hpr-cta"><h3>See your city's rebates</h3><p>Compare top-rated local installers, ranked by Google reviews. Free for homeowners, and we'll tell you honestly if the math doesn't work for your home.</p><a class="hpr-btn" href="/ca/bc/">See your city's rebates &rarr;</a></div>
-<p class="hpr-sources"><strong>Sources, checked September 26, 2026:</strong> <a href="https://www.bchydro.com/powersmart/ineligible-product-information.html" target="_blank" rel="noopener">BC Hydro ineligible products (Tesla)</a> · <a href="https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/power-smart/residential/programs/energy-storage-battery-list.pdf" target="_blank" rel="noopener">BC Hydro qualified battery list</a> · <a href="https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/power-smart/residential/programs/solar-battery-rebate-terms-and-conditions.pdf" target="_blank" rel="noopener">BC Hydro solar and battery rebate terms (July 29, 2026)</a> · <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html" target="_blank" rel="noopener">BC Hydro solar and battery rebates</a>.</p>
+<p class="hpr-sources"><strong>Sources, checked September 26, 2026:</strong> <a href="https://www.bchydro.com/powersmart/ineligible-product-information.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro ineligible products (Tesla)</a> · <a href="https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/power-smart/residential/programs/energy-storage-battery-list.pdf" target="_blank" rel="noopener">BC Hydro qualified battery list</a> · <a href="https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/power-smart/residential/programs/solar-battery-rebate-terms-and-conditions.pdf" target="_blank" rel="noopener">BC Hydro solar and battery rebate terms (July 29, 2026)</a> · <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro solar and battery rebates</a>.</p>
 <div class="related"><h4>Keep reading</h4><a href="/blog/bc-approved-home-battery-rebate/">How to choose an approved battery</a><a href="/blog/bc-hydro-peak-saver-battery-rebate-5000-vs-1500/">$5,000 vs $1,500 battery rebate</a></div>
 </main>
 
@@ -485,6 +485,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

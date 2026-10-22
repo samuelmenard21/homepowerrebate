@@ -297,7 +297,7 @@
 <h3>Does Level 3 get more than Level 2?</h3><p>No. Level 3 gets the least: up to $3,500 for a central system from fossil fuel, versus $7,000 at Level 2 and $13,000 at Level 1.</p>
 <h3>Can I get BC Hydro's rebate if I earn too much for CleanBC?</h3><p>Yes, if the heat pump replaces electric heat. BC Hydro's up-to-$4,000 rebate has no income test.</p>
 <div class="hpr-cta"><h3>See your city's rebates</h3><p>Compare top-rated local installers, ranked by Google reviews. Free for homeowners, and we'll tell you honestly if the math doesn't work for your home.</p><a class="hpr-btn" href="/ca/bc/">See your city's rebates &rarr;</a></div>
-<p class="hpr-sources"><strong>Sources, checked September 26, 2026:</strong> <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" target="_blank" rel="noopener">CleanBC Energy Savings Program rules (July 6, 2026)</a> · <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html" target="_blank" rel="noopener">BC Hydro heat pump rebates</a> · <a href="https://www.fortisbc.com/rebates/detail/iqheatpump" target="_blank" rel="noopener">FortisBC income-qualified heat pump rebate</a>.</p>
+<p class="hpr-sources"><strong>Sources, checked September 26, 2026:</strong> <a href="https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf" target="_blank" rel="noopener">CleanBC Energy Savings Program rules (July 6, 2026)</a> · <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro heat pump rebates</a> · <a href="https://www.fortisbc.com/rebates/detail/iqheatpump?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">FortisBC income-qualified heat pump rebate</a>.</p>
 <div class="related"><h4>Keep reading</h4><a href="/blog/cleanbc-income-qualified-free-heat-pump-2026/">Who qualifies for a free heat pump</a><a href="/blog/heat-pump-rebate-guide-bc-2026/">BC heat pump rebates 2026</a></div>
 </main>
 
@@ -438,6 +438,14 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
   });
 })();
+// Official-link clicks (scripts/tag_official_links.py marks the links): one GA4 event per click with the program's host and path and the page it
+// was clicked on, so we can tell each utility how many homeowners we sent to which program, by city page. No personal data is sent.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-official]');
+  if (!a || !window.gtag) return;
+  var u; try { u = new URL(a.href); } catch (x) { return; }
+  window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
+}, true);
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

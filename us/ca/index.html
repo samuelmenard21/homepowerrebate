@@ -40,7 +40,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=6e9039f91b" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=f26b151724" data-hpr-site-css>
 <!-- HUB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "California Heat Pump & Solar Rebates 2026: What's Open", "description": "Most statewide California rebates are closed or waitlisted in 2026: TECH Clean California and the HEEHRA heat pump rebate are fully reserved, and the federal tax credits ended on December 31, 2025. Your best money now depends on your utility: SMUD pays up to $3,000 for a heat pump and $6,000 for a battery, and city utilities in Glendale, Burbank and Pasadena have their own rebates. PG&E, SCE and SDG&E customers mostly have income-qualified programs.", "dateModified": "2026-10-01", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com"}, "mainEntityOfPage": "https://homepowerrebate.com/us/ca/"}</script><!-- HUB-LD-END -->
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -97,22 +97,35 @@
         <span style="opacity:.7;">&rarr;</span>
       </a>
       <div class="nav-region-tabs">
-        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" class="nav-region-tab is-on" aria-pressed="true">Ontario</button>
-        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" class="nav-region-tab" aria-pressed="false">British Columbia</button>
-        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" class="nav-region-tab" aria-pressed="false">California</button>
-        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" class="nav-region-tab" aria-pressed="false">Alberta</button>
-        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" class="nav-region-tab" aria-pressed="false">Nova Scotia</button>
-        <button type="button" onclick="showProvinceCities('nl')" id="province-tab-nl" class="nav-region-tab" aria-pressed="false">Newfoundland</button>
-        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" class="nav-region-tab" aria-pressed="false">Massachusetts</button>
-        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" class="nav-region-tab" aria-pressed="false">New York</button>
-        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" class="nav-region-tab" aria-pressed="false">Pennsylvania</button>
-        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" class="nav-region-tab" aria-pressed="false">Colorado</button>
-        <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" class="nav-region-tab" aria-pressed="false">Vermont</button>
-        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" class="nav-region-tab" aria-pressed="false">Michigan</button>
-        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" class="nav-region-tab" aria-pressed="false">New Jersey</button>
-        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" class="nav-region-tab" aria-pressed="false">Illinois</button>
-        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" class="nav-region-tab" aria-pressed="false">Washington</button>
-        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" class="nav-region-tab" aria-pressed="false">Minnesota</button>
+        <div class="nav-region-group" role="group" aria-label="Canada"><span class="nav-region-group-label">Canada</span>
+          <div class="nav-region-group-tabs">
+          <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" class="nav-region-tab" aria-pressed="false">Alberta</button>
+          <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" class="nav-region-tab" aria-pressed="false">British Columbia</button>
+          <button type="button" onclick="showProvinceCities('mb')" id="province-tab-mb" class="nav-region-tab" aria-pressed="false">Manitoba</button>
+          <button type="button" onclick="showProvinceCities('nt')" id="province-tab-nt" class="nav-region-tab" aria-pressed="false">NWT</button>
+          <button type="button" onclick="showProvinceCities('nb')" id="province-tab-nb" class="nav-region-tab" aria-pressed="false">New Brunswick</button>
+          <button type="button" onclick="showProvinceCities('nl')" id="province-tab-nl" class="nav-region-tab" aria-pressed="false">Newfoundland</button>
+          <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" class="nav-region-tab" aria-pressed="false">Nova Scotia</button>
+          <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" class="nav-region-tab is-on" aria-pressed="true">Ontario</button>
+          <button type="button" onclick="showProvinceCities('pe')" id="province-tab-pe" class="nav-region-tab" aria-pressed="false">PEI</button>
+          <button type="button" onclick="showProvinceCities('qc')" id="province-tab-qc" class="nav-region-tab" aria-pressed="false">Quebec</button>
+          <button type="button" onclick="showProvinceCities('sk')" id="province-tab-sk" class="nav-region-tab" aria-pressed="false">Saskatchewan</button>
+          <button type="button" onclick="showProvinceCities('yt')" id="province-tab-yt" class="nav-region-tab" aria-pressed="false">Yukon</button>
+          </div></div>
+        <div class="nav-region-group" role="group" aria-label="United States"><span class="nav-region-group-label">United States</span>
+          <div class="nav-region-group-tabs">
+          <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" class="nav-region-tab" aria-pressed="false">California</button>
+          <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" class="nav-region-tab" aria-pressed="false">Colorado</button>
+          <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" class="nav-region-tab" aria-pressed="false">Illinois</button>
+          <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" class="nav-region-tab" aria-pressed="false">Massachusetts</button>
+          <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" class="nav-region-tab" aria-pressed="false">Michigan</button>
+          <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" class="nav-region-tab" aria-pressed="false">Minnesota</button>
+          <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" class="nav-region-tab" aria-pressed="false">New Jersey</button>
+          <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" class="nav-region-tab" aria-pressed="false">New York</button>
+          <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" class="nav-region-tab" aria-pressed="false">Pennsylvania</button>
+          <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" class="nav-region-tab" aria-pressed="false">Vermont</button>
+          <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" class="nav-region-tab" aria-pressed="false">Washington</button>
+          </div></div>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -164,6 +177,27 @@
     <div id="province-cities-mn" class="nav-region-cities" hidden>
       <a href="/us/mn/minneapolis/">Minneapolis</a><a href="/us/mn/saint-paul/">Saint Paul</a><a href="/us/mn/rochester/">Rochester</a><a href="/us/mn/duluth/">Duluth</a>
     </div>
+    <div id="province-cities-pe" class="nav-region-cities" hidden>
+      <a href="/ca/pe/charlottetown/">Charlottetown</a><a href="/ca/pe/summerside/">Summerside</a>
+    </div>
+    <div id="province-cities-nb" class="nav-region-cities" hidden>
+      <a href="/ca/nb/moncton/">Moncton</a><a href="/ca/nb/fredericton/">Fredericton</a>
+    </div>
+    <div id="province-cities-mb" class="nav-region-cities" hidden>
+      <a href="/ca/mb/winnipeg/">Winnipeg</a><a href="/ca/mb/brandon/">Brandon</a>
+    </div>
+    <div id="province-cities-sk" class="nav-region-cities" hidden>
+      <a href="/ca/sk/saskatoon/">Saskatoon</a><a href="/ca/sk/regina/">Regina</a>
+    </div>
+    <div id="province-cities-qc" class="nav-region-cities" hidden>
+      <a href="/ca/qc/montreal/">Montréal</a><a href="/ca/qc/quebec-city/">Quebec City</a>
+    </div>
+    <div id="province-cities-yt" class="nav-region-cities" hidden>
+      <a href="/ca/yt/whitehorse/">Whitehorse</a>
+    </div>
+    <div id="province-cities-nt" class="nav-region-cities" hidden>
+      <a href="/ca/nt/yellowknife/">Yellowknife</a>
+    </div>
     </div>
   </div>
 </nav>
@@ -192,6 +226,10 @@
 <!-- CALC-LINK-START --><p style="max-width:880px;margin:12px auto;padding:0 20px;"><b>Not sure what you qualify for?</b> <a href="/calculator/ca/">Use the California rebate calculator</a>.</p><!-- CALC-LINK-END --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;" id="if-you-re-on-pg-amp-e-sce-or-sdg-amp-e">If you're on PG&amp;E, SCE or SDG&amp;E</h2><p>Upfront rebates are thin right now. Your best options: income-qualified free upgrades (SCE Energy Savings Assistance, and PG&amp;E's and SDG&amp;E's own programs), SGIP for a battery if you qualify, and joining the TECH or HEEHRA waitlist in case funds return. Before you sign, make sure a quote isn't counting on a rebate or tax credit that has closed.</p><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin-top:28px;" id="california-cities">California cities</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;"><a href="/us/ca/bakersfield/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Bakersfield</a><a href="/us/ca/bay-area/berkeley/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Berkeley</a><a href="/us/ca/los-angeles/burbank/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Burbank</a><a href="/us/ca/san-diego/chula-vista/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Chula Vista</a><a href="/us/ca/san-diego/escondido/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Escondido</a><a href="/us/ca/sacramento/folsom/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Folsom</a><a href="/us/ca/bay-area/fremont/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Fremont</a><a href="/us/ca/fresno/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Fresno</a><a href="/us/ca/los-angeles/glendale/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Glendale</a><a href="/us/ca/los-angeles/long-beach/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Long Beach</a><a href="/us/ca/los-angeles/los-angeles/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Los Angeles</a><a href="/us/ca/inland-empire/moreno-valley/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Moreno Valley</a><a href="/us/ca/bay-area/oakland/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Oakland</a><a href="/us/ca/inland-empire/ontario/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Ontario</a><a href="/us/ca/los-angeles/pasadena/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Pasadena</a><a href="/us/ca/sacramento/rancho-cordova/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Rancho Cordova</a><a href="/us/ca/inland-empire/riverside/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Riverside</a><a href="/us/ca/sacramento/roseville/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Roseville</a><a href="/us/ca/sacramento/sacramento/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Sacramento</a><a href="/us/ca/inland-empire/san-bernardino/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">San Bernardino</a><a href="/us/ca/san-diego/san-diego/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">San Diego</a><a href="/us/ca/bay-area/san-francisco/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">San Francisco</a><a href="/us/ca/bay-area/san-jose/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">San Jose</a><a href="/us/ca/los-angeles/santa-monica/" style="display:block;padding:12px 14px;background:#fff;border:1px solid #d9d0c1;border-radius:8px;text-decoration:none;color:#0a2a2e;font-weight:600;">Santa Monica</a></div><h2 style="font-family:Fraunces,Georgia,serif;font-size:24px;margin-top:28px;" id="common-questions">Common questions</h2><h3 style="font-size:18px;margin:18px 0 6px;">Can I still get the federal tax credit for a heat pump or solar in California?</h3><p>No, not for 2026 installs. The federal 25C and 25D credits ended for systems installed after December 31, 2025.</p><h3 style="font-size:18px;margin:18px 0 6px;">Is TECH Clean California still open?</h3><p>Not for new single-family requests. TECH&#x27;s heat pump incentives were fully reserved on November 14, 2025, and new requests go on a waitlist.</p><h3 style="font-size:18px;margin:18px 0 6px;">What about the HEEHRA heat pump rebate?</h3><p>HEEHRA, the income-qualified rebate that paid up to $8,000, was fully reserved statewide on February 24, 2026. New requests are waitlisted.</p><h3 style="font-size:18px;margin:18px 0 6px;">Which utility am I on?</h3><p>Look at the top of your electric bill. Most of the state is PG&amp;E, SCE or SDG&amp;E. Sacramento is SMUD, and Los Angeles, Glendale, Burbank and Pasadena have their own city utilities with their own rebates.</p><h3 style="font-size:18px;margin:18px 0 6px;">Is solar still worth it under net billing?</h3><p>Since April 15, 2023, new solar customers of PG&amp;E, SCE and SDG&amp;E are paid much less for power they send to the grid. Savings now depend on using your own solar power, which is why many quotes include a battery. Check any quote with our solar quote checker.</p><p><b>Related:</b> <a href="/rebate-tracker/">Rebate tracker</a> · <a href="/solar-quote-checker/">Solar quote checker</a> · <a href="/batteries/">Home battery guides</a> · <a href="/installers/">Top-rated installers by city</a></p></section><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I still get the federal tax credit for a heat pump or solar in California?", "acceptedAnswer": {"@type": "Answer", "text": "No, not for 2026 installs. The federal 25C and 25D credits ended for systems installed after December 31, 2025."}}, {"@type": "Question", "name": "Is TECH Clean California still open?", "acceptedAnswer": {"@type": "Answer", "text": "Not for new single-family requests. TECH's heat pump incentives were fully reserved on November 14, 2025, and new requests go on a waitlist."}}, {"@type": "Question", "name": "What about the HEEHRA heat pump rebate?", "acceptedAnswer": {"@type": "Answer", "text": "HEEHRA, the income-qualified rebate that paid up to $8,000, was fully reserved statewide on February 24, 2026. New requests are waitlisted."}}, {"@type": "Question", "name": "Which utility am I on?", "acceptedAnswer": {"@type": "Answer", "text": "Look at the top of your electric bill. Most of the state is PG&E, SCE or SDG&E. Sacramento is SMUD, and Los Angeles, Glendale, Burbank and Pasadena have their own city utilities with their own rebates."}}, {"@type": "Question", "name": "Is solar still worth it under net billing?", "acceptedAnswer": {"@type": "Answer", "text": "Since April 15, 2023, new solar customers of PG&E, SCE and SDG&E are paid much less for power they send to the grid. Savings now depend on using your own solar power, which is why many quotes include a battery. Check any quote with our solar quote checker."}}]}</script><!-- HUB-BODY-END -->
 <!-- FURNACE-LINK-START --><p style="max-width:760px;margin:24px auto;padding:14px 18px;background:#f5efe5;border-radius:8px;"><b>Replacing a furnace or air conditioner?</b> See what rebates really exist, and when a heat pump makes more sense: <a href="/furnace-rebates/california/">California furnace &amp; AC rebates</a></p><!-- FURNACE-LINK-END -->
 <!-- SMUD-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Sacramento-area homes on SMUD:</b> the <a href="/blog/smud-rebate-breakdown/">SMUD EV charger rebate (Charge@Home, up to $600) and other SMUD rebates</a>.</p></section><!-- SMUD-LINK-END -->
+<!-- Newsletter — every page, parameterize city dropdown default to  where relevant -->
+
+
+<!-- US-MORE-GUIDES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><h2>More CA guides by city and category</h2><ul><li><a href="/us/ca/bay-area/san-francisco/appliances/">Electric Cooking and Dryer Rebates in San Francisco</a></li><li><a href="/us/ca/bay-area/san-francisco/heat-pump/">Heat Pump Rebates in San Francisco</a></li><li><a href="/us/ca/bay-area/san-francisco/water-heater/">Heat Pump Water Heater Rebates in San Francisco</a></li><li><a href="/us/ca/bay-area/san-jose/ev-charger/">EV Charger Wiring Rebates in San Jose</a></li><li><a href="/us/ca/bay-area/san-jose/heat-pump/">Heat Pump Rebates in San Jose</a></li><li><a href="/us/ca/bay-area/san-jose/insulation/">Attic Insulation Rebates in San Jose</a></li><li><a href="/us/ca/bay-area/san-jose/water-heater/">Heat Pump Water Heater Rebates in San Jose</a></li><li><a href="/us/ca/inland-empire/riverside/ev-charger/">EV Charger Rebates in Riverside</a></li><li><a href="/us/ca/inland-empire/riverside/heat-pump/">Heat Pump Rebates in Riverside</a></li><li><a href="/us/ca/inland-empire/riverside/insulation/">Insulation and Window Rebates in Riverside</a></li><li><a href="/us/ca/los-angeles/burbank/appliances/">Appliance Rebates in Burbank</a></li><li><a href="/us/ca/los-angeles/burbank/ev-charger/">EV Charger Rebates in Burbank</a></li><li><a href="/us/ca/los-angeles/burbank/heat-pump/">Heat Pump Rebates in Burbank</a></li><li><a href="/us/ca/los-angeles/burbank/insulation/">Insulation Rebates in Burbank</a></li><li><a href="/us/ca/los-angeles/burbank/smart-thermostats/">Smart Thermostat Rebates in Burbank</a></li><li><a href="/us/ca/los-angeles/burbank/water-heater/">Heat Pump Water Heater Rebates in Burbank</a></li><li><a href="/us/ca/los-angeles/glendale/appliances/">Appliance Rebates in Glendale</a></li><li><a href="/us/ca/los-angeles/glendale/water-heater/">Heat Pump Water Heater Rebates in Glendale</a></li><li><a href="/us/ca/los-angeles/los-angeles/ev-charger/">EV Charger Rebates in Los Angeles</a></li><li><a href="/us/ca/los-angeles/los-angeles/heat-pump/">Heat Pump Rebates in Los Angeles</a></li><li><a href="/us/ca/los-angeles/los-angeles/insulation/">Attic Insulation Rebates in Los Angeles</a></li><li><a href="/us/ca/los-angeles/los-angeles/water-heater/">Heat Pump Water Heater Rebates in Los Angeles</a></li><li><a href="/us/ca/los-angeles/pasadena/ev-charger/">EV Charger Rebates in Pasadena</a></li><li><a href="/us/ca/los-angeles/pasadena/heat-pump/">Heat Pump Rebates in Pasadena</a></li><li><a href="/us/ca/los-angeles/pasadena/insulation/">Insulation Rebates in Pasadena</a></li><li><a href="/us/ca/los-angeles/pasadena/smart-thermostats/">Smart Thermostat Rebates in Pasadena</a></li><li><a href="/us/ca/los-angeles/pasadena/solar/">Solar and Battery Rebates in Pasadena</a></li><li><a href="/us/ca/los-angeles/pasadena/water-heater/">Heat Pump Water Heater Rebates in Pasadena</a></li><li><a href="/us/ca/sacramento/sacramento/appliances/">Appliance Rebates in Sacramento</a></li><li><a href="/us/ca/sacramento/sacramento/battery/">Home Battery Rebates in Sacramento</a></li><li><a href="/us/ca/sacramento/sacramento/ev-charger/">EV Charger Rebates in Sacramento</a></li><li><a href="/us/ca/sacramento/sacramento/heat-pump/">Heat Pump Rebates in Sacramento</a></li><li><a href="/us/ca/sacramento/sacramento/smart-thermostats/">Smart Thermostat Rebates in Sacramento</a></li><li><a href="/us/ca/san-diego/san-diego/ev-charger/">EV Charging Rewards in San Diego</a></li><li><a href="/us/ca/san-diego/san-diego/smart-thermostats/">Smart Thermostat Rewards in San Diego</a></li><li><a href="/us/ca/san-diego/san-diego/solar/">Solar and Battery Rebates in San Diego</a></li></ul></section><!-- US-MORE-GUIDES-END -->
 </main>
 <!-- DISCOVERED-LINKS-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>California guides:</b> <a href="/blog/insulation-buying-guide-ca/">Insulation Buying Guide for California Homes</a></p></section><!-- DISCOVERED-LINKS-END --><!-- STATE-US-CA-HEATING-ASSISTANCE-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/ca/heating-assistance/">California heating bill help: LIHEAP dates and income limits</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-CA-HEATING-ASSISTANCE-LINK-END -->
 <!-- CANONICAL-FOOTER-START -->
@@ -212,7 +250,6 @@
   </div>
 </section>
 
-<!-- US-MORE-GUIDES-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><h2>More CA guides by city and category</h2><ul><li><a href="/us/ca/bay-area/san-francisco/appliances/">Electric Cooking and Dryer Rebates in San Francisco</a></li><li><a href="/us/ca/bay-area/san-francisco/heat-pump/">Heat Pump Rebates in San Francisco</a></li><li><a href="/us/ca/bay-area/san-francisco/water-heater/">Heat Pump Water Heater Rebates in San Francisco</a></li><li><a href="/us/ca/bay-area/san-jose/ev-charger/">EV Charger Wiring Rebates in San Jose</a></li><li><a href="/us/ca/bay-area/san-jose/heat-pump/">Heat Pump Rebates in San Jose</a></li><li><a href="/us/ca/bay-area/san-jose/insulation/">Attic Insulation Rebates in San Jose</a></li><li><a href="/us/ca/bay-area/san-jose/water-heater/">Heat Pump Water Heater Rebates in San Jose</a></li><li><a href="/us/ca/inland-empire/riverside/ev-charger/">EV Charger Rebates in Riverside</a></li><li><a href="/us/ca/inland-empire/riverside/heat-pump/">Heat Pump Rebates in Riverside</a></li><li><a href="/us/ca/inland-empire/riverside/insulation/">Insulation and Window Rebates in Riverside</a></li><li><a href="/us/ca/los-angeles/burbank/appliances/">Appliance Rebates in Burbank</a></li><li><a href="/us/ca/los-angeles/burbank/ev-charger/">EV Charger Rebates in Burbank</a></li><li><a href="/us/ca/los-angeles/burbank/heat-pump/">Heat Pump Rebates in Burbank</a></li><li><a href="/us/ca/los-angeles/burbank/insulation/">Insulation Rebates in Burbank</a></li><li><a href="/us/ca/los-angeles/burbank/smart-thermostats/">Smart Thermostat Rebates in Burbank</a></li><li><a href="/us/ca/los-angeles/burbank/water-heater/">Heat Pump Water Heater Rebates in Burbank</a></li><li><a href="/us/ca/los-angeles/glendale/appliances/">Appliance Rebates in Glendale</a></li><li><a href="/us/ca/los-angeles/glendale/water-heater/">Heat Pump Water Heater Rebates in Glendale</a></li><li><a href="/us/ca/los-angeles/los-angeles/ev-charger/">EV Charger Rebates in Los Angeles</a></li><li><a href="/us/ca/los-angeles/los-angeles/heat-pump/">Heat Pump Rebates in Los Angeles</a></li><li><a href="/us/ca/los-angeles/los-angeles/insulation/">Attic Insulation Rebates in Los Angeles</a></li><li><a href="/us/ca/los-angeles/los-angeles/water-heater/">Heat Pump Water Heater Rebates in Los Angeles</a></li><li><a href="/us/ca/los-angeles/pasadena/ev-charger/">EV Charger Rebates in Pasadena</a></li><li><a href="/us/ca/los-angeles/pasadena/heat-pump/">Heat Pump Rebates in Pasadena</a></li><li><a href="/us/ca/los-angeles/pasadena/insulation/">Insulation Rebates in Pasadena</a></li><li><a href="/us/ca/los-angeles/pasadena/smart-thermostats/">Smart Thermostat Rebates in Pasadena</a></li><li><a href="/us/ca/los-angeles/pasadena/solar/">Solar and Battery Rebates in Pasadena</a></li><li><a href="/us/ca/los-angeles/pasadena/water-heater/">Heat Pump Water Heater Rebates in Pasadena</a></li><li><a href="/us/ca/sacramento/sacramento/appliances/">Appliance Rebates in Sacramento</a></li><li><a href="/us/ca/sacramento/sacramento/battery/">Home Battery Rebates in Sacramento</a></li><li><a href="/us/ca/sacramento/sacramento/ev-charger/">EV Charger Rebates in Sacramento</a></li><li><a href="/us/ca/sacramento/sacramento/heat-pump/">Heat Pump Rebates in Sacramento</a></li><li><a href="/us/ca/sacramento/sacramento/smart-thermostats/">Smart Thermostat Rebates in Sacramento</a></li><li><a href="/us/ca/san-diego/san-diego/ev-charger/">EV Charging Rewards in San Diego</a></li><li><a href="/us/ca/san-diego/san-diego/smart-thermostats/">Smart Thermostat Rewards in San Diego</a></li><li><a href="/us/ca/san-diego/san-diego/solar/">Solar and Battery Rebates in San Diego</a></li></ul></section><!-- US-MORE-GUIDES-END -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-top">
@@ -229,6 +266,13 @@
           <li><a href="/ca/ab/">Alberta</a></li>
           <li><a href="/ca/ns/">Nova Scotia</a></li>
           <li><a href="/ca/nl/">Newfoundland and Labrador</a></li>
+          <li><a href="/ca/pe/">Prince Edward Island</a></li>
+          <li><a href="/ca/nb/">New Brunswick</a></li>
+          <li><a href="/ca/mb/">Manitoba</a></li>
+          <li><a href="/ca/sk/">Saskatchewan</a></li>
+          <li><a href="/ca/qc/">Quebec</a></li>
+          <li><a href="/ca/yt/">Yukon</a></li>
+          <li><a href="/ca/nt/">Northwest Territories</a></li>
         </ul>
       </div>
       <div>
@@ -332,7 +376,7 @@ function toggleCityDropdown() {
   modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn', 'pe', 'nb', 'mb', 'sk', 'qc', 'yt', 'nt'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);
@@ -426,6 +470,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       f.hidden = true; done.textContent = "You're on the list! Check your inbox for a short note from us.";
       if (share) share.hidden = false;
       ev('fed_alert_signup');
+      try { localStorage.setItem('hpr-fed-done', '1'); } catch (e2) {}
     } catch (err) {
       done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
     }
@@ -456,6 +501,48 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     }
     r.addEventListener('change', upd); if (cs) cs.addEventListener('change', upd);
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
+  });
+})();
+// Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
+// the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
+// closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".
+(function () {
+  var path = location.pathname, CA = 'bc on ab ns nl pe nb mb sk qc yt nt nu'.split(' ');
+  if (path === '/' || /\/fr\/|^\/heat-pump-rebate-alert|^\/calculator\/embed|^\/(get-quotes\/)?(privacy|terms|unsubscribe)/.test(path)) return;
+  var m = path.match(/^\/(?:ca|calculator)\/([a-z]{2})\//), code = m && CA.indexOf(m[1]) >= 0 ? m[1].toUpperCase() : '';
+  function box() { return document.querySelector('.fed-alert:not([hidden]), .rc-fed'); }
+  if (!code && !box()) return;
+  try { if (localStorage.getItem('hpr-fed-done') || Date.now() - (+localStorage.getItem('hpr-fed-bar-x') || 0) < 14 * 864e5) return; } catch (e) {}
+  var API = 'https://leads.homepowerrebate.com', q = new URLSearchParams(location.search), src = q.get('src') || q.get('utm_source') || '';
+  var bar = document.createElement('div');
+  bar.className = 'fed-bar'; bar.setAttribute('role', 'region'); bar.setAttribute('aria-label', 'Heat pump rebate email alert'); bar.hidden = true;
+  bar.innerHTML = '<p><b>New:</b> Ottawa announced a heat pump rebate of up to $10,000. Applications open early 2027.</p>' +
+    '<form><label for="fed-bar-email" style="position:absolute;left:-9999px">Email</label><input id="fed-bar-email" type="email" required autocomplete="email" placeholder="Your email"><input class="fed-bar-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit"><span class="fb-l">Email me when it opens</span><span class="fb-s">Alert me</span></button></form>' +
+    '<button class="fed-bar-x" type="button" aria-label="Close">&times;</button>';
+  document.body.appendChild(bar);
+  function ev(name) { if (window.gtag) window.gtag('event', name, { page_path: path, alert_src: 'bar' }); }
+  function inView(el) { var r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight * 0.9; }
+  var shown = false, hid = false;
+  function place() {
+    var b = box(), on = !hid && window.scrollY > 500 && !(b && inView(b));
+    if (on === shown) return;
+    shown = on; bar.hidden = false; document.body.classList.toggle('has-fed-bar', on);
+    requestAnimationFrame(function () { bar.classList.toggle('on', on); });
+    if (on && !bar.dataset.v) { bar.dataset.v = 1; ev('fed_bar_view'); }
+  }
+  window.addEventListener('scroll', place, { passive: true }); window.addEventListener('resize', place); place();
+  bar.querySelector('.fed-bar-x').addEventListener('click', function () { hid = true; try { localStorage.setItem('hpr-fed-bar-x', Date.now()); } catch (e) {} place(); ev('fed_bar_close'); });
+  bar.querySelector('form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var f = e.target, b = f.querySelector('button'), t = b.innerHTML, p = bar.querySelector('p');
+    b.disabled = true; b.textContent = 'Saving...';
+    try {
+      var r = await fetch(API + '/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: 'federal-hp', email: f.querySelector('input[type="email"]').value, province: code, city: '', page: path + '?src=bar' + (src ? '-' + encodeURIComponent(src).slice(0, 40) : ''), website: f.querySelector('.fed-bar-hp').value }) });
+      if (!r.ok) throw new Error('bad');
+      f.hidden = true; p.className = 'fed-bar-msg'; p.textContent = "You're on the list! Check your inbox for a short note from us.";
+      try { localStorage.setItem('hpr-fed-done', '1'); } catch (e2) {}
+      ev('fed_alert_signup'); setTimeout(function () { hid = true; place(); }, 6000);
+    } catch (err) { b.disabled = false; b.innerHTML = t; p.textContent = 'That did not go through. Please try again.'; }
   });
 })();
 (function () {

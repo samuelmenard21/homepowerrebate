@@ -1,6 +1,6 @@
 {
  "generated": "see git log",
- "count": 604,
+ "count": 615,
  "sources": [
   {
    "url": "https://techcleanca.com/incentives/single-family-incentives/",
@@ -2320,6 +2320,19 @@
    "last_read": ""
   },
   {
+   "url": "https://cdhs.colorado.gov/leap",
+   "host": "cdhs.colorado.gov",
+   "region": "co",
+   "check": "Colorado Department of Human Services: LEAP; Colorado LEAP",
+   "facts": [
+    "co-26-leap-2026-27"
+   ],
+   "used_by_pages": [
+    "state-topics/co-heating-assistance"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
    "url": "https://co.my.xcelenergy.com/s/renewable/battery-connect",
    "host": "co.my.xcelenergy.com",
    "region": "co",
@@ -3287,6 +3300,19 @@
    "last_read": "2026-10-06"
   },
   {
+   "url": "https://dceo.illinois.gov/communityservices/utilitybillassistance/howtoapply.html",
+   "host": "dceo.illinois.gov",
+   "region": "il",
+   "check": "Illinois DCEO: LIHEAP how to apply; Illinois LIHEAP",
+   "facts": [
+    "il-30-liheap-2026-27"
+   ],
+   "used_by_pages": [
+    "state-topics/il-heating-assistance"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
    "url": "https://epa.illinois.gov/topics/energy/energy-rebates.html",
    "host": "epa.illinois.gov",
    "region": "il",
@@ -3887,6 +3913,20 @@
    "last_read": "2026-09-26"
   },
   {
+   "url": "https://www.mass.gov/orgs/home-energy-assistance-programs",
+   "host": "www.mass.gov",
+   "region": "ma",
+   "check": "Mass.gov: Home Energy Assistance Programs; Massachusetts HEAP; Massachusetts Middle-Income Heating Oil Relief",
+   "facts": [
+    "ma-36-heap-fy27",
+    "ma-37-middle-income-heating-oil-relief"
+   ],
+   "used_by_pages": [
+    "state-topics/ma-heating-assistance"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
    "url": "https://www.masssave.com/en/residential/rebates-offers-services/decarbonization-consultations",
    "host": "www.masssave.com",
    "region": "ma",
@@ -4435,6 +4475,19 @@
     "state-topics/mi-free-weatherization"
    ],
    "last_read": "2026-10-06"
+  },
+  {
+   "url": "https://www.michigan.gov/mpsc/consumer/energy-assistance",
+   "host": "www.michigan.gov",
+   "region": "mi",
+   "check": "Michigan Energy Assistance Program (MEAP); Michigan PSC: Michigan Energy Assistance Program",
+   "facts": [
+    "mi-20-meap"
+   ],
+   "used_by_pages": [
+    "state-topics/mi-heating-assistance"
+   ],
+   "last_read": "2026-10-21"
   },
   {
    "url": "https://mn.gov/commerce/energy/consumer/energy-programs/heat-pump.jsp",
@@ -5218,6 +5271,19 @@
    ],
    "used_by_pages": [],
    "last_read": "2026-10-06"
+  },
+  {
+   "url": "https://www.nj.gov/dca/news/news/2026/20261002.shtml",
+   "host": "www.nj.gov",
+   "region": "nj",
+   "check": "New Jersey DCA: LIHEAP application period now open; New Jersey LIHEAP and Universal Service Fund",
+   "facts": [
+    "nj-30-liheap-ffy2027"
+   ],
+   "used_by_pages": [
+    "state-topics/nj-heating-assistance"
+   ],
+   "last_read": "2026-10-21"
   },
   {
    "url": "https://www.nj.gov/treasury/taxation/lpt/lpt-abatements.shtml",
@@ -7277,6 +7343,19 @@
    "last_read": "2026-10-05"
   },
   {
+   "url": "https://www.pa.gov/agencies/dhs/resources/liheap",
+   "host": "www.pa.gov",
+   "region": "pa",
+   "check": "Pennsylvania DHS: LIHEAP; Pennsylvania LIHEAP cash grant",
+   "facts": [
+    "pa-28-liheap-2026-27"
+   ],
+   "used_by_pages": [
+    "state-topics/pa-heating-assistance"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
    "url": "https://www.peco.com/ways-to-save/for-your-home/rebates-discounts",
    "host": "www.peco.com",
    "region": "pa",
@@ -7613,6 +7692,25 @@
    "last_read": "2026-10-21"
   },
   {
+   "url": "https://acf.gov/ocs/programs/liheap",
+   "host": "acf.gov",
+   "region": "state-topics",
+   "check": "U.S. HHS ACF: LIHEAP",
+   "facts": [],
+   "used_by_pages": [
+    "state-topics/ca-heating-assistance",
+    "state-topics/co-heating-assistance",
+    "state-topics/il-heating-assistance",
+    "state-topics/ma-heating-assistance",
+    "state-topics/mi-heating-assistance",
+    "state-topics/nj-heating-assistance",
+    "state-topics/pa-heating-assistance",
+    "state-topics/vt-heating-assistance",
+    "state-topics/wa-heating-assistance"
+   ],
+   "last_read": ""
+  },
+  {
    "url": "https://cansumer.ca/hrv-erv-systems/",
    "host": "cansumer.ca",
    "region": "state-topics",
@@ -7643,6 +7741,25 @@
    "facts": [],
    "used_by_pages": [
     "state-topics/nj-battery"
+   ],
+   "last_read": ""
+  },
+  {
+   "url": "https://liheapch.acf.gov/",
+   "host": "liheapch.acf.gov",
+   "region": "state-topics",
+   "check": "LIHEAP Clearinghouse (HHS)",
+   "facts": [],
+   "used_by_pages": [
+    "state-topics/ca-heating-assistance",
+    "state-topics/co-heating-assistance",
+    "state-topics/il-heating-assistance",
+    "state-topics/ma-heating-assistance",
+    "state-topics/mi-heating-assistance",
+    "state-topics/nj-heating-assistance",
+    "state-topics/pa-heating-assistance",
+    "state-topics/vt-heating-assistance",
+    "state-topics/wa-heating-assistance"
    ],
    "last_read": ""
   },
@@ -8042,6 +8159,19 @@
     "/programs/sdge-rebates/"
    ],
    "last_read": "2026-09-28"
+  },
+  {
+   "url": "https://www.csd.ca.gov/pages/liheapprogram.aspx",
+   "host": "www.csd.ca.gov",
+   "region": "us-ca",
+   "check": "California CSD: LIHEAP; California LIHEAP",
+   "facts": [
+    "us-ca-69-liheap-csd"
+   ],
+   "used_by_pages": [
+    "state-topics/ca-heating-assistance"
+   ],
+   "last_read": "2026-10-21"
   },
   {
    "url": "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs",
@@ -9065,6 +9195,19 @@
    "last_read": ""
   },
   {
+   "url": "https://dcf.vermont.gov/benefits/fuel",
+   "host": "dcf.vermont.gov",
+   "region": "vt",
+   "check": "Vermont DCF: Fuel Assistance; Vermont Seasonal Fuel Assistance",
+   "facts": [
+    "vt-20-seasonal-fuel-assistance"
+   ],
+   "used_by_pages": [
+    "state-topics/vt-heating-assistance"
+   ],
+   "last_read": "2026-10-21"
+  },
+  {
    "url": "https://greenmountainpower.com/help/what-is-net-metering/",
    "host": "greenmountainpower.com",
    "region": "vt",
@@ -9527,6 +9670,19 @@
     "/wa/vancouver/windows-doors/"
    ],
    "last_read": "2026-10-06"
+  },
+  {
+   "url": "https://www.commerce.wa.gov/community-opportunities/liheap/",
+   "host": "www.commerce.wa.gov",
+   "region": "wa",
+   "check": "Washington Commerce: LIHEAP; Washington LIHEAP",
+   "facts": [
+    "wa-20-liheap"
+   ],
+   "used_by_pages": [
+    "state-topics/wa-heating-assistance"
+   ],
+   "last_read": "2026-10-21"
   },
   {
    "url": "https://www.commerce.wa.gov/energy-incentives/hear/",

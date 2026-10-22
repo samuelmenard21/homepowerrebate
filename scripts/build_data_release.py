@@ -74,11 +74,13 @@ def fact_diff(baseline, names):
 
 
 def movers(start):
+    """Compare the current powerscore-data.json with the snapshot before it: when the newest snapshot is today's data (the monthly run takes one first),
+    the one before that; otherwise the newest. So each monthly release compares one month with the last."""
     hist = sorted(p for p in (ROOT / "powerscore-history").glob("20*.json"))
-    prior = [p for p in hist if p.stem <= start.isoformat()]
-    old_f = prior[-1] if prior else (hist[0] if hist else None)
-    if not old_f:
+    if not hist:
         return None
+    cur_gen = json.loads((ROOT / "powerscore-data.json").read_text()).get("generated")
+    old_f = hist[-2] if len(hist) > 1 and json.loads(hist[-1].read_text()).get("generated") == cur_gen else hist[-1]
     old = json.loads(old_f.read_text())
     new = json.loads((ROOT / "powerscore-data.json").read_text())
 

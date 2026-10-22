@@ -531,7 +531,10 @@ h1, h2 { text-wrap: balance; }
 }
 /* search box in the menu, on every page */
 #city-dropdown-modal { position: absolute; top: 56px; right: 20px; z-index: 49; width: min(360px, calc(100vw - 32px)); max-height: 75vh; overflow-y: auto; background: #fff; border: 1px solid var(--rule, #e3dccf); border-radius: 12px; box-shadow: 0 8px 24px rgba(10, 42, 46, 0.12); text-align: left; }
-.nav-region-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.nav-region-tabs { margin-bottom: 14px; }
+.nav-region-group + .nav-region-group { margin-top: 12px; }
+.nav-region-group-label { display: block; margin: 0 0 6px; font: 700 11px/1 'Inter Tight', sans-serif; letter-spacing: .09em; text-transform: uppercase; color: var(--muted, #4a5f62); }
+.nav-region-group-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
 .nav-region-tab { flex: 0 0 auto; padding: 7px 11px; border: 1px solid var(--rule, #e3dccf); border-radius: 999px; background: #fff; color: var(--ink); font: 600 13px/1.2 'Inter Tight', sans-serif; white-space: nowrap; cursor: pointer; }
 .nav-region-tab:hover { border-color: var(--teal); }
 .nav-region-tab.is-on { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }

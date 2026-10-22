@@ -70,7 +70,7 @@ for region_key, region in DATA["regions"].items():
         city.categories = c["categories"]
         cities.append(city)
 
-cities.sort(key=lambda c: (c.region, c.label))
+cities.sort(key=lambda c: (regions.order_key(c.region.split("/")[-1]), c.label))  # Canada first, then the United States
 print(f"Loaded {len(cities)} cities")
 TOTAL_CITIES = len(cities)
 
@@ -689,9 +689,16 @@ def build_hub_page():
             "cats": cat_map,
         })
 
-    city_options = "\n".join(
-        f'<option value="{esc(c.region)}/{esc(c.slug)}">{esc(c.label)}, {esc(c.region_label)}</option>' for c in cities
-    )
+    city_options, _grp = [], None
+    for c in cities:  # one <optgroup> per province or state, Canada's first ("Canada: Ontario", "United States: New York")
+        if c.region != _grp:
+            if _grp is not None:
+                city_options.append("</optgroup>")
+            _grp = c.region
+            city_options.append(f'<optgroup label="{esc(regions.COUNTRY_LABELS[regions.COUNTRY_BY_CODE[c.region.split("/")[-1]]])}: {esc(c.region_label)}">')
+        city_options.append(f'<option value="{esc(c.region)}/{esc(c.slug)}">{esc(c.label)}, {esc(c.region_label)}</option>')
+    city_options.append("</optgroup>")
+    city_options = "\n".join(city_options)
 
     cat_checks = "\n".join(
         f'''<label class="cat-check" id="check-{cat}">

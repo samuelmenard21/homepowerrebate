@@ -28,24 +28,52 @@ TOP_NAMES = {r["path"]: {"code": r["abbr"], "name": r["name"]} for r in REGIONS}
 COUNTRY_NAME_BY_PATH = {r["path"]: ("Canada" if r["country"] == "ca" else "United States", r["name"]) for r in REGIONS}
 
 
+COUNTRY_LABELS = {"ca": "Canada", "us": "United States"}
+COUNTRY_BY_CODE = {r["code"]: r["country"] for r in REGIONS}
+
+
+def order_key(code):
+    """Sort key for any region list shown to a visitor: Canada first, then the United States, each A to Z by name."""
+    r = BY_CODE[code]
+    return (0 if r["country"] == "ca" else 1, r["name"])
+
+
+def grouped(key=lambda r: r["name"]):
+    """[(country label, [region dicts])]: Canada and its provinces and territories, then the United States and its states, A to Z in each."""
+    return [(COUNTRY_LABELS[cc], sorted((r for r in REGIONS if r["country"] == cc), key=key)) for cc in ("ca", "us")]
+
+
+def option_groups(value=lambda r: r["code"], label=lambda r: r["name"], selected=None):
+    """<optgroup>s for a province or state <select>: one group for Canada, one for the United States."""
+    import html as _h
+    out = []
+    for name, rs in grouped():
+        opts = "".join(f'<option value="{_h.escape(str(value(r)))}"{" selected" if selected == r["code"] else ""}>{_h.escape(label(r))}</option>' for r in rs)
+        out.append(f'<optgroup label="{name}">{opts}</optgroup>')
+    return "".join(out)
+
+
 def region_dirs_exclusion():
     """Folder names to ignore when guessing a city from a URL path."""
     return {"ca", "us", "fr"} | set(CODES) | {"stacking-calculator"}
 
 
 def nav_tabs_html(indent="      "):
-    """Province/state tab buttons in one wrapping row; the first (Ontario) is the default-highlighted tab."""
-    btns = [f"{indent}  <button type=\"button\" onclick=\"showProvinceCities('{r['code']}')\" id=\"province-tab-{r['code']}\" "
-            f"class=\"nav-region-tab{' is-on' if i == 0 else ''}\" aria-pressed=\"{'true' if i == 0 else 'false'}\">{r['tab_label']}</button>"
-            for i, r in enumerate(REGIONS)]
-    return f"{indent}<div class=\"nav-region-tabs\">\n" + "\n".join(btns) + f"\n{indent}</div>"
+    """Province and state tab buttons in two labelled groups (Canada, then the United States), A to Z in each; Ontario is the default-highlighted tab."""
+    groups = []
+    for name, rs in grouped(key=lambda r: r["tab_label"]):
+        btns = "\n".join(f"{indent}    <button type=\"button\" onclick=\"showProvinceCities('{r['code']}')\" id=\"province-tab-{r['code']}\" "
+                         f"class=\"nav-region-tab{' is-on' if r['code'] == 'on' else ''}\" aria-pressed=\"{'true' if r['code'] == 'on' else 'false'}\">{r['tab_label']}</button>" for r in rs)
+        groups.append(f"{indent}  <div class=\"nav-region-group\" role=\"group\" aria-label=\"{name}\"><span class=\"nav-region-group-label\">{name}</span>\n"
+                      f"{indent}    <div class=\"nav-region-group-tabs\">\n{btns}\n{indent}    </div></div>")
+    return f"{indent}<div class=\"nav-region-tabs\">\n" + "\n".join(groups) + f"\n{indent}</div>"
 
 
 def nav_panels_html(indent="    "):
     out = []
     for i, r in enumerate(REGIONS):
         links = "".join(f'<a href="{h}">{l}</a>' for h, l in r["cities"])
-        out.append(f'{indent}<div id="province-cities-{r["code"]}" class="nav-region-cities"{"" if i == 0 else " hidden"}>\n'
+        out.append(f'{indent}<div id="province-cities-{r["code"]}" class="nav-region-cities"{"" if r["code"] == "on" else " hidden"}>\n'
                    f'{indent}  {links}\n{indent}</div>')
     return "\n".join(out)
 

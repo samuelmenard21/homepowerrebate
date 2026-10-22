@@ -215,7 +215,8 @@ def picker(specs):
 def widget_page(specs):
     code = specs[0]["code"]
     names = ", ".join(f"{e(s['name'])} (<code>{s['code']}</code>)" for s in specs)
-    opts = "".join(f'<option value="{s["code"]}"{" selected" if s["code"] == code else ""}>{e(s["name"])}</option>' for s in sorted(specs, key=lambda s: s["name"]))
+    opts = "".join(f'<optgroup label="{g}">' + "".join(f'<option value="{s["code"]}"{" selected" if s["code"] == code else ""}>{e(s["name"])}</option>' for s in sorted(specs, key=lambda s: s["name"]) if s["country"] == cc) + "</optgroup>"
+                   for g, cc in (("Canada", "ca"), ("United States", "us")))
     snippet = (f'<iframe src="https://homepowerrebate.com/calculator/embed/{code}/" title="Rebate calculator" width="100%" height="760" '
                f'style="max-width:820px;border:1px solid #d9d0c1;border-radius:12px;" loading="lazy"></iframe>\n'
                f'<p><a href="https://homepowerrebate.com/calculator/{code}/">Rebate calculator by HomePowerRebate</a></p>')

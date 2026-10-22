@@ -44,7 +44,7 @@ var chipBox=$("gq-chips");
 UPG.forEach(function(u){var l=document.createElement("label");l.className="check-item";var c=document.createElement("input");c.type="checkbox";c.value=u[0];
  c.addEventListener("change",show);l.appendChild(c);var sp=document.createElement("span");sp.className="check-label";var h=document.createElement("h3");h.textContent=u[1]+" "+u[2];var p=document.createElement("p");p.textContent=u[3];sp.appendChild(h);sp.appendChild(p);l.appendChild(sp);chipBox.appendChild(l)});
 var rs=$("gq-region"),cs=$("gq-city");
-D.forEach(function(r){var o=document.createElement("option");o.value=r.code;o.textContent=r.name;rs.appendChild(o)});
+var G="",gl;D.forEach(function(r){if(r.g!==G){G=r.g;gl=document.createElement("optgroup");gl.label=G==="ca"?"Canada":"United States";rs.appendChild(gl)}var o=document.createElement("option");o.value=r.code;o.textContent=r.name;gl.appendChild(o)});
 function fillCities(){cs.textContent="";var ph=document.createElement("option");ph.value="";ph.textContent="Choose your city";cs.appendChild(ph);
  var r=D.filter(function(x){return x.code===rs.value})[0];if(!r)return;r.cities.forEach(function(c){var o=document.createElement("option");o.value=c[0];o.textContent=c[1];cs.appendChild(o)})}
 rs.addEventListener("change",function(){fillCities();show()});cs.addEventListener("change",show);
@@ -132,8 +132,9 @@ def main():
         for c in cities:
             d = ROOT / "installers" / "profiles" / (jdir or "") / c
             prof[c] = sorted(x.name for x in d.iterdir() if x.is_dir()) if d.exists() else []
-        data.append({"code": code, "name": name, "prov": prov, "jsonDir": jdir, "instDir": code, "hub": hub, "cityPage": cp,
+        data.append({"code": code, "name": name, "g": regions.COUNTRY_BY_CODE[code], "prov": prov, "jsonDir": jdir, "instDir": code, "hub": hub, "cityPage": cp,
                      "profiles": prof, "cities": [[c, OV.get(c, c.replace("-", " ").title())] for c in cities]})
+    data.sort(key=lambda r: regions.order_key(r["code"]))  # Canada, then the United States, A to Z
     js = JS.replace("__DATA__", json.dumps(data, separators=(",", ":")))
     body = f"""{S}
 <style>{CSS}</style>

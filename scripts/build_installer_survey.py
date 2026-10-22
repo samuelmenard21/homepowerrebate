@@ -113,7 +113,7 @@ def build():
 <div class="qf-row"><label>Email<input type="email" name="email" required autocomplete="email"></label>
 <label>Website<input name="company_site" placeholder="https://" autocomplete="url"></label></div>
 <div class="qf-row"><label>Where do you work?<select name="region" id="sv-region" required><option value="">Choose one</option>
-{"".join(f'<option value="{r}" data-cur="{c}">{e(n)}</option>' for r, n, c in REGIONS)}</select></label>
+{"".join(f'<optgroup label="{g}">' + "".join(f'<option value="{r}" data-cur="{c}">{e(n)}</option>' for r, n, c in REGIONS if r != "other" and _regions.BY_CODE[r]["country"] == cc) + '</optgroup>' for g, cc in (("Canada", "ca"), ("United States", "us")))}<option value="other" data-cur="">Somewhere else</option></select></label>
 <label>Main city<input name="city" required></label></div>
 <fieldset><legend>What do you install?</legend>{checks("services", SERVICES, "qf-grid")}</fieldset>
 

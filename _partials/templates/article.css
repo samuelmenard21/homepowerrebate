@@ -29,12 +29,12 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
   .tpl-article main.has-rail > :is(.hero, .post-header) > .wrap { grid-column: 2 / 4; max-width: none; margin: 0; padding: 0; }
 }
 /* the amount leads (2026-10-13): what this page can pay you is the headline, the page title sits under it */
-.tpl-article .hero .amount-badge { display: block; max-width: 18ch; margin: 0 0 16px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+.tpl-article .hero .amount-badge { display: block; max-width: 10.8em; margin: 0 0 16px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
   font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(34px, 4.6vw, 64px); font-weight: 600; line-height: 1.04; letter-spacing: -.025em; color: #f5b566; text-wrap: balance; }
 .tpl-article .hero .amount-badge::before { content: none; }
-.tpl-article :is(.hero, .post-header) h1 { margin: 0 0 18px; max-width: 20ch; font-size: clamp(36px, 5.2vw, 72px); font-weight: 600; line-height: 1.04; letter-spacing: -.025em; color: #fff; text-wrap: balance; }
-.tpl-article .hero .amount-badge + h1 { max-width: 28ch; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.18; letter-spacing: -.012em; color: #fff; }
-.tpl-article :is(.hero, .post-header) p { max-width: 62ch; margin: 0; font-size: clamp(17px, 1.45vw, 21px); line-height: 1.55; color: rgba(250, 247, 242, .86); text-wrap: pretty; }
+.tpl-article :is(.hero, .post-header) h1 { margin: 0 0 18px; max-width: 12em; font-size: clamp(36px, 5.2vw, 72px); font-weight: 600; line-height: 1.04; letter-spacing: -.025em; color: #fff; text-wrap: balance; }
+.tpl-article .hero .amount-badge + h1 { max-width: 16.8em; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.18; letter-spacing: -.012em; color: #fff; }
+.tpl-article :is(.hero, .post-header) p { max-width: 37.2em; margin: 0; font-size: clamp(17px, 1.45vw, 21px); line-height: 1.55; color: rgba(250, 247, 242, .86); text-wrap: pretty; }
 .tpl-article :is(.hero, .post-header) p a { color: #fff; }
 /* blog post header: eyebrow and byline */
 .tpl-article header.post-header .post-eyebrow { margin: 0 0 16px; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #f5b566; }
@@ -49,11 +49,11 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
 
 /* ---------- reading type ---------- */
 .tpl-article main p, .tpl-article main li { font-size: var(--read); line-height: 1.7; color: var(--ink-soft); }
-.tpl-article main p { max-width: 68ch; margin-bottom: 18px; }
-.tpl-article main li { max-width: 66ch; }
+.tpl-article main p { max-width: 40.8em; margin-bottom: 18px; }
+.tpl-article main li { max-width: 39.6em; }
 .tpl-article main a:not([class]) { color: var(--teal); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .tpl-article main a:not([class]):hover { color: var(--teal-deep); text-decoration-thickness: 2px; }
-.tpl-article main h2 { position: relative; max-width: 24ch; margin: 64px 0 18px; padding-top: 22px; font-size: clamp(27px, 2.5vw, 36px); font-weight: 600; line-height: 1.12; letter-spacing: -.018em; color: var(--teal-deep); text-wrap: balance; scroll-margin-top: 96px; }
+.tpl-article main h2 { position: relative; max-width: 14.4em; margin: 64px 0 18px; padding-top: 22px; font-size: clamp(27px, 2.5vw, 36px); font-weight: 600; line-height: 1.12; letter-spacing: -.018em; color: var(--teal-deep); text-wrap: balance; scroll-margin-top: 96px; }
 .tpl-article main h2::before { content: ""; position: absolute; top: 0; left: 0; width: 44px; height: 4px; border-radius: 4px; background: #e88a2e; }
 .tpl-article main article > .wrap > h2:first-child { margin-top: 4px; }
 .tpl-article main h3 { margin: 32px 0 10px; font-size: clamp(19px, 1.5vw, 22px); line-height: 1.25; letter-spacing: -.01em; }
@@ -92,7 +92,7 @@ body.tpl-article { --gut: clamp(20px, 4vw, 40px); --read: 17px; background: var(
 .tpl-article main .rebate-grid > .rebate-card:first-child:not(:only-child):not(:has(.status-closed, .status-limited)) { grid-column: 1 / -1; padding: 26px 28px 24px; border-color: #cfe0d6; background: linear-gradient(180deg, #fff 0%, #f6faf7 100%); }
 .tpl-article main .rebate-grid > .rebate-card:first-child:not(:only-child):not(:has(.status-closed, .status-limited)) .amount { font-size: clamp(34px, 3.4vw, 44px); }
 .tpl-article main .rebate-grid > .rebate-card:first-child:not(:only-child):not(:has(.status-closed, .status-limited)) :is(h3, h4) { font-size: 18px; }
-.tpl-article main .rebate-grid > .rebate-card:first-child:not(:only-child):not(:has(.status-closed, .status-limited)) p { max-width: 70ch; }
+.tpl-article main .rebate-grid > .rebate-card:first-child:not(:only-child):not(:has(.status-closed, .status-limited)) p { max-width: 42em; }
 .tpl-article main .fed-callout { margin: 0 0 32px; }
 .tpl-article main .rebate-card:has(.status-limited) .amount, .tpl-article main .rebate-card:has(.status-closed) .amount { color: #5f5849 !important; }
 

@@ -336,7 +336,7 @@ main.layout-home > .section, main.layout-home > section.hero, main.layout-home >
   main.layout-wide .region-grid { align-items: start !important; }
 }
 /* wide templates: a longer reading measure, and list rows that use the row instead of a 72-character strip */
-main.layout-wide p { max-width: min(90ch, 100%); }
+main.layout-wide p { max-width: min(54em, 100%); }
 main.layout-wide .hf-i, main.layout-wide .hf-i p { max-width: none; }
 @media (min-width: 900px) {
   main.layout-wide section:has(.hf-i) { max-width: min(var(--container), 1240px) !important; }
@@ -456,7 +456,7 @@ section:not([class*="hero"]) .eyebrow, .step-head .eyebrow, .status-pill-limited
 .footer .footer-col-links a { color: rgba(250, 247, 242, 0.8) !important; }
 .footer .footer-bottom, .footer .footer-bottom a, .footer .footer-tagline { color: rgba(250, 247, 242, 0.7) !important; }
 /* readable line length: running text stops at 72 characters */
-main p, article p, .wrap p, section p, .wrap li, article li, main li { max-width: 72ch; }
+main p, article p, .wrap p, section p, .wrap li, article li, main li { max-width: 43.2em; }
 .footer p, .footer li, nav p, nav li, table p, table li { max-width: none; }
 /* hero text is short and already centred or aligned by the page: never cap it (a cap would need a script to re-centre it after first paint) */
 .hero p, header.hero p, .hero .lead, .hero-sub, .hero li { max-width: none; }
@@ -608,7 +608,7 @@ body:has(#hpr-search) .nav-search { display: none; }
 @keyframes fed-fan { to { transform: rotate(360deg); } }
 .fed-alert .fed-alert-title { margin: 0; font-family: 'Fraunces', Georgia, serif; font-size: clamp(25px, 2.5vw, 34px); line-height: 1.12; font-weight: 600; letter-spacing: -.018em; color: var(--ink); text-wrap: balance; }
 .fed-alert .fed-alert-title em { font-style: normal; color: var(--amber-text); }
-.fed-alert .fed-alert-body { margin: 0 0 20px; max-width: 58ch; font-size: 18px; line-height: 1.6; font-weight: 500; color: var(--ink); }
+.fed-alert .fed-alert-body { margin: 0 0 20px; max-width: 34.8em; font-size: 18px; line-height: 1.6; font-weight: 500; color: var(--ink); }
 .fed-alert .fed-alert-amounts { margin: 0; padding: 0; }
 .fed-alert .fed-alert-amounts div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 18px; padding: 12px 0; border-top: 1px solid var(--card-rule); }
 .fed-alert .fed-alert-amounts div:last-child { border-bottom: 1px solid var(--card-rule); }

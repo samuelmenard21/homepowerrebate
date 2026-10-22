@@ -65,7 +65,7 @@ NOT_COUNTED = "It isn\u2019t open yet, so it\u2019s not in your total. We\u2019l
 CLOSED_PAGES = [("blog/greener-homes-grant-explained", ""), ("blog/ontario-loan-closed", "ON"), ("blog/nova-scotia-heat-pump-rebate-disappeared", "NS")]
 HARP_PAGES = ["programs/nova-scotia-heating-assistance-rebate-harp", "blog/nova-scotia-harp-heating-assistance-rebate-explained",
               "blog/nova-scotia-heating-rebate-2026-27-payment-dates-status"]
-FEDERAL_PAGES = ["programs/national-heat-pump-rebate", "blog/should-you-wait-federal-heat-pump-rebate",
+FEDERAL_PAGES = ["programs/national-heat-pump-rebate", "programs/national-heat-pump-rebate/do-i-qualify", "blog/should-you-wait-federal-heat-pump-rebate",
                  "blog/federal-heat-pump-rebate-stacking-by-province", "blog/heat-pump-natural-gas-home-federal-rebate",
                  "blog/heat-pumps-alberta-saskatchewan-cold-federal-rebate", "blog/fair-heat-pump-quote-canada",
                  "blog/federal-heat-pump-rebate-renters-condos-landlords"]

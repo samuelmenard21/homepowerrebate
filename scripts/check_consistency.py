@@ -28,7 +28,7 @@ A_RE = re.compile(r'<a\b([^>]*)href="([^"]*)"([^>]*)>(.*?)</a>', re.S | re.I)
 
 def pages():
     for f in sorted(tracked_files()):
-        if f.suffix != ".html" or not is_public(f) or f.as_posix().startswith("calculator/embed/") or not (ROOT / f).is_file():
+        if f.suffix != ".html" or not is_public(f) or f.as_posix().startswith(("calculator/embed/", "embed/")) or not (ROOT / f).is_file():
             continue
         yield f.as_posix(), (ROOT / f).read_text(encoding="utf-8", errors="ignore")
 

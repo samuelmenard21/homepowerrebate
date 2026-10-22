@@ -235,6 +235,7 @@ def widget_page(specs):
 <h2>What you get</h2><ul><li>A working calculator for your province or state. It shows top-rated installers in the visitor's city, ranked by Google reviews.</li>
 <li>Rebate amounts that update on their own when a program changes. You never edit them.</li>
 <li>No script to install, no tracking, no cookies and no ads.</li></ul>
+<h2>Federal heat pump rebate kit</h2><p>Ottawa's new heat pump rebate opens in early 2027. Our free <a href="/partners/federal-heat-pump-rebate/">partner kit</a> has a card for your site, a printable sheet with your name on it and email text.</p>
 <h2>What we ask</h2><p>Leave the "Rebate calculator by HomePowerRebate" link under the frame. It is a normal link. Listing here never changes where your company ranks: installers are ranked by Google reviews only.</p>
 <h2>Preview</h2><iframe id="wg-prev" src="/calculator/embed/{code}/" title="Rebate calculator preview" width="100%" height="760" style="max-width:820px;border:1px solid #d9d0c1;border-radius:12px;" loading="lazy"></iframe>
 </div></section>

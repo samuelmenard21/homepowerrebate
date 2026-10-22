@@ -25,7 +25,7 @@ def target(path):
 files = subprocess.run(["git", "ls-files", "*.html"], cwd=ROOT, capture_output=True, text=True).stdout.split()
 changed = links = 0
 for f in files:
-    if f.startswith(("_partials/", "calculator/embed/")):
+    if f.startswith(("_partials/", "calculator/embed/", "embed/")):
         continue
     p = ROOT / f
     if not p.exists():

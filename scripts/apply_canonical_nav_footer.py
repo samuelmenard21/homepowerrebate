@@ -843,7 +843,7 @@ def find_pages():
             continue
         if any(part in EXCLUDE_DIRS for part in rel.parts):
             continue
-        if p.name in EXCLUDE_FILES:
+        if p.name in EXCLUDE_FILES or "embed" in rel.parts:  # framed widgets (calculator/embed, embed/) are chrome-less on purpose
             continue
         pages.append(p)
     return sorted(pages)

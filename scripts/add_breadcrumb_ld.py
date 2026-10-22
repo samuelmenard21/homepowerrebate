@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://homepowerrebate.com"
 S, E = "<!-- BREADCRUMB-LD-START -->", "<!-- BREADCRUMB-LD-END -->"
 NAMES = {"blog": "Blog", "questions": "Questions", "us": "United States", "ca": "Canada", "installers": "Installers", "programs": "Rebate programs", "contact": "Contact", "powerscore": "PowerScore", "get-quotes": "Get quotes"}
-SKIP = ("dist/", "worktrees/", ".", "_partials/", "calculator/embed/", "scripts/", "data/", "node_modules/")
+SKIP = ("dist/", "worktrees/", ".", "_partials/", "calculator/embed/", "embed/", "scripts/", "data/", "node_modules/")
 
 
 def name_of(rel_dir):

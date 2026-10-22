@@ -487,6 +487,57 @@ def load_registered():
     return reg, progs
 
 
+BC_OFFICIAL = []
+_bcf = ROOT / "data" / "bc-registered-contractors.json"
+if _bcf.exists():
+    try:
+        BC_OFFICIAL = json.loads(_bcf.read_text(encoding="utf-8")).get("contractors", [])
+    except ValueError:
+        BC_OFFICIAL = []
+_BC_MATCHES = {}
+if (ROOT / "data" / "rebate-registered.json").exists():
+    for _m in json.loads((ROOT / "data" / "rebate-registered.json").read_text(encoding="utf-8")).get("matches", []):
+        if _m.get("region") == "bc":
+            _BC_MATCHES[(_m["service"], _m["business"].strip())] = _m.get("official_name", "")
+_BC_TYPE = {"heat-pump": "Heat pumps", "insulation": "Insulation"}
+_BC_DIR = "https://betterhomesbc.ca/get-support/contractors/"
+
+
+def _loc_key(s):
+    s = re.sub(r"[.]", "", (s or "").lower())
+    return re.sub(r"^(city|district|township|town|village) of ", "", s).strip()
+
+
+def registered_only_box(region, service, city_label, ranked):
+    """Program-registered contractors that list this city as a service area but are not on our Google-review ranking (BC heat pump and
+    insulation, 2026-10-22). A separate, labelled list below the ranking: alphabetical, never ranked, no review data. The list is Better Homes BC's
+    own public contractor list (data/bc-registered-contractors.json, scripts/refresh_bc_registered.py)."""
+    if region != "bc" or service not in _BC_TYPE or not BC_OFFICIAL:
+        return ""
+    utype, key = _BC_TYPE[service], _loc_key(city_label)
+    serving = [c for c in BC_OFFICIAL if utype in c["types"] and any(_loc_key(a) == key or (key == "langley" and _loc_key(a) == "langley") for a in c.get("areas", []))]
+    ranked_off = {_BC_MATCHES.get((service, r["name"].strip()), "") for r in ranked} - {""}
+    others = sorted((c for c in serving if c["name"] not in ranked_off), key=lambda c: c["name"].lower())
+    here = [c for c in others if _loc_key(c["city"]) == key]
+    n_rank = len(serving) - len(others)
+    if not serving:
+        return ""
+    unit = "heat pump" if service == "heat-pump" else "insulation"
+    rows = "".join(
+        f'<li><a href="{esc(c["url"])}" rel="noopener" target="_blank">{esc(c["name"].replace("&amp;", "&"))}</a>, head office {esc(c["city"] or "BC")}. '
+        f'Registered for {" and ".join(x.upper() for x in c["programs"]) or "the programs"}.</li>' for c in here[:40])
+    box = (f'<h2 id="registered-only">Other registered {unit} contractors that serve {esc(city_label)}</h2>'
+           f'<p>Better Homes BC lists {len(serving)} program-registered {unit} contractors that serve {esc(city_label)}. {n_rank} of them are on our ranking above. '
+           f'The rest are listed below from the official list, which is what the BC Hydro and CleanBC rebates require. They are not ranked, because we have no Google review data for them here. '
+           f'A company below can also appear in the ranking above if we could not confidently match its name to the official list. Check reviews yourself before you hire.</p>')
+    if here:
+        box += (f'<details class="regonly"><summary>{len(here)} with a head office in {esc(city_label)} (alphabetical, not a ranking)</summary><ul>{rows}</ul>'
+                + (f'<p class="small">Showing the first 40 of {len(here)}. </p>' if len(here) > 40 else "") + '</details>')
+    box += (f'<p class="small">Source: <a href="{_BC_DIR}" rel="noopener" target="_blank">Better Homes BC registered contractor list</a>, checked '
+            f'{date.fromisoformat(json.loads(_bcf.read_text(encoding="utf-8"))["checked"]).strftime("%B %-d, %Y")}. Use its service-region filter for the full list.</p>')
+    return box
+
+
 REGISTERED, REG_PROGRAMS = load_registered()
 
 PS_CITIES = {}
@@ -790,6 +841,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 {chr(10).join(items)}
 </ol>
 {reg_note}
+{registered_only_box(region, service, city_label, ranked)}
 {advisor_note(region, service, city_label)}
 <p class="small">Together these {n} companies average {avg:.1f}★ across {total_reviews:,} reviews. {esc(most_reviewed['name'])} has the most reviews ({most_reviewed['reviews']:,}).</p>
 

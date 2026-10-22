@@ -173,6 +173,8 @@
         <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" class="nav-region-tab" aria-pressed="false">Illinois</button>
         <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" class="nav-region-tab" aria-pressed="false">Washington</button>
         <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" class="nav-region-tab" aria-pressed="false">Minnesota</button>
+        <button type="button" onclick="showProvinceCities('pe')" id="province-tab-pe" class="nav-region-tab" aria-pressed="false">PEI</button>
+        <button type="button" onclick="showProvinceCities('nb')" id="province-tab-nb" class="nav-region-tab" aria-pressed="false">New Brunswick</button>
       </div>
     </div>
     <div style="padding:0 16px 16px;">
@@ -224,6 +226,12 @@
     <div id="province-cities-mn" class="nav-region-cities" hidden>
       <a href="/us/mn/minneapolis/">Minneapolis</a><a href="/us/mn/saint-paul/">Saint Paul</a><a href="/us/mn/rochester/">Rochester</a><a href="/us/mn/duluth/">Duluth</a>
     </div>
+    <div id="province-cities-pe" class="nav-region-cities" hidden>
+      <a href="/ca/pe/charlottetown/">Charlottetown</a><a href="/ca/pe/summerside/">Summerside</a>
+    </div>
+    <div id="province-cities-nb" class="nav-region-cities" hidden>
+      <a href="/ca/nb/moncton/">Moncton</a><a href="/ca/nb/fredericton/">Fredericton</a>
+    </div>
     </div>
   </div>
 </nav>
@@ -247,7 +255,7 @@
     </div>
   </div>
 </section>
-<div class="wrap" style="text-align:center; padding:14px 28px 0;"><a href="/powerscore/#city-ca-on-kingston" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:8px 18px; font-size:13px; font-weight:600; color:var(--teal-deep); text-decoration:none; box-shadow:0 1px 3px rgba(10,42,46,0.08);"><span aria-hidden="true">&#9889;</span><span>PowerScore: 58.2/100 &mdash; tied for #2 of 25 in Ontario</span></a></div>
+<div class="wrap" style="text-align:center; padding:14px 28px 0;"><a href="/powerscore/#city-ca-on-kingston" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:8px 18px; font-size:13px; font-weight:600; color:var(--teal-deep); text-decoration:none; box-shadow:0 1px 3px rgba(10,42,46,0.08);"><span aria-hidden="true">&#9889;</span><span>PowerScore: 59.5/100 &mdash; tied for #2 of 25 in Ontario</span></a></div>
 <div class="wrap" style="text-align:center; padding:10px 28px 0;"><a href="/stacking-calculator/ca/on/kingston/" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:8px 18px; font-size:13px; font-weight:600; color:var(--teal-deep); text-decoration:none; box-shadow:0 1px 3px rgba(10,42,46,0.08);"><span aria-hidden="true">&#128172;</span><span>Rebate Stacking Calculator for Kingston &rarr;</span></a></div>
 
 <section class="wrap" style="padding:32px 28px 8px;">
@@ -913,6 +921,8 @@ document.addEventListener('DOMContentLoaded', () => { new UnifiedInstallerCarous
           <li><a href="/ca/ab/">Alberta</a></li>
           <li><a href="/ca/ns/">Nova Scotia</a></li>
           <li><a href="/ca/nl/">Newfoundland and Labrador</a></li>
+          <li><a href="/ca/pe/">Prince Edward Island</a></li>
+          <li><a href="/ca/nb/">New Brunswick</a></li>
         </ul>
       </div>
       <div>
@@ -1018,7 +1028,7 @@ function toggleCityDropdown() {
   modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
 }
 function showProvinceCities(prov) {
-  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn'];
+  const regions = ['on', 'bc', 'ca', 'ab', 'ns', 'nl', 'ma', 'ny', 'pa', 'co', 'vt', 'mi', 'nj', 'il', 'wa', 'mn', 'pe', 'nb'];
   regions.forEach(function(r) {
     const panel = document.getElementById('province-cities-' + r);
     const tab = document.getElementById('province-tab-' + r);

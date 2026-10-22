@@ -247,3 +247,6 @@ The `monthly-rebate-check` scheduled task runs these steps itself (Step 5B) on t
 
 ## Heating bill help hub (added 2026-10-22)
 `/heating-assistance/` (`scripts/build_heating_assistance_hub.py`) lists every `data/state-topics/*-heating-assistance.json` page with status, amount and dates read from the facts they name. Rerun it after adding a region's heating page; each of those pages links back to it. Not yet verified on an official page, so not listed: New York HEAP (blank page), Minnesota EAP (bot check), Saskatchewan and other provinces.
+
+## Home battery rebate hub (added 2026-10-22)
+`/home-battery-rebates/` (`scripts/build_battery_rebate_hub.py`) lists the open battery programs from `calculator/data/<code>.json` (amount, first rule, source, checked date) and the cities with the biggest open battery rebate from `powerscore-data.json` (US dollars). It is separate from `/batteries/` (product guides), which links to it, as do the seven state battery pages. Rerun it after the calculators or PowerScore change. Added for Google Trends "home energy storage" +160%; Search Console showed only about 100 impressions on battery queries in the 28 days to 2026-10-18, so this is a Trends bet, not a Search Console one.

@@ -13,9 +13,33 @@
  "cards_heading": "Battery money in New Jersey in 2026",
  "cards_intro": "<p>Each card names the fact we keep on file, with the date we last read the official page.</p>",
  "cards": [
-  {"title": "PSE&G GridSmart Battery Program", "amount": "Up to $5,000", "note": "An instant rebate on the contractor's invoice, plus up to $25,000 of interest-free repayment on your bill. For PSE&amp;G electric or dual-fuel customers. New installs only.", "facts": ["nj-9-pseg-gridsmart-battery"], "href": "/programs/pseg-rebates/"},
-  {"title": "Garden State Energy Storage Program", "amount": "Proposal only", "note": "The state released a plan for about 150 megawatts of storage that includes options for home batteries. It has no amounts or start date yet.", "facts": ["nj-27-garden-state-energy-storage-program"], "status": "info"},
-  {"title": "Federal 25D battery credit", "amount": "Ended", "note": "The 30% credit does not apply to batteries paid for after December 31, 2025.", "facts": ["nj-28-federal-residential-clean-energy-credits-25c-25d"], "status": "closed"}
+  {
+   "title": "PSE&G GridSmart Battery Program",
+   "amount": "Up to $5,000",
+   "note": "An instant rebate on the contractor's invoice, plus up to $25,000 of interest-free repayment on your bill. For PSE&amp;G electric or dual-fuel customers. New installs only.",
+   "facts": [
+    "nj-9-pseg-gridsmart-battery"
+   ],
+   "href": "/programs/pseg-rebates/"
+  },
+  {
+   "title": "Garden State Energy Storage Program",
+   "amount": "Proposal only",
+   "note": "The state released a plan for about 150 megawatts of storage that includes options for home batteries. It has no amounts or start date yet.",
+   "facts": [
+    "nj-27-garden-state-energy-storage-program"
+   ],
+   "status": "info"
+  },
+  {
+   "title": "Federal 25D battery credit",
+   "amount": "Ended",
+   "note": "The 30% credit does not apply to batteries paid for after December 31, 2025.",
+   "facts": [
+    "nj-28-federal-residential-clean-energy-credits-25c-25d"
+   ],
+   "status": "closed"
+  }
  ],
  "after_cards": "<p>JCP&amp;L and Atlantic City Electric are not on the list. On the pages we read, neither utility offers a home battery rebate. Check your electric bill, because the answer depends on the name printed there.</p>",
  "sections": [
@@ -49,25 +73,85 @@
   "Pass the final inspection so your battery can join the program."
  ],
  "links": [
-  ["PSE&G rebates", "/programs/pseg-rebates/", "every PSE&amp;G offer"],
-  ["JCP&L rebates", "/programs/jcpl-rebates/", "no battery offer, but other help"],
-  ["Atlantic City Electric rebates", "/programs/atlantic-city-electric-rebates/", "no battery offer, but other help"],
-  ["Home solar incentives", "/us/nj/solar/", "credits and net metering"],
-  ["Newark home rebates", "/us/nj/newark/", "a PSE&amp;G city"],
-  ["Jersey City home rebates", "/us/nj/jersey-city/", "a PSE&amp;G city"]
+  [
+   "PSE&G rebates",
+   "/programs/pseg-rebates/",
+   "every PSE&amp;G offer"
+  ],
+  [
+   "JCP&L rebates",
+   "/programs/jcpl-rebates/",
+   "no battery offer, but other help"
+  ],
+  [
+   "Atlantic City Electric rebates",
+   "/programs/atlantic-city-electric-rebates/",
+   "no battery offer, but other help"
+  ],
+  [
+   "Home solar incentives",
+   "/us/nj/solar/",
+   "credits and net metering"
+  ],
+  [
+   "Newark home rebates",
+   "/us/nj/newark/",
+   "a PSE&amp;G city"
+  ],
+  [
+   "Jersey City home rebates",
+   "/us/nj/jersey-city/",
+   "a PSE&amp;G city"
+  ],
+  [
+   "Home battery rebates in every region",
+   "/home-battery-rebates/",
+   "every program, what it pays and the rules"
+  ]
  ],
  "faq": [
-  ["Is there a home battery rebate in New Jersey?", "Yes, for PSE&G customers: up to $5,000 through GridSmart. We found none from JCP&L or Atlantic City Electric."],
-  ["Can I use a Tesla Powerwall?", "Yes. Powerwall 3 is on PSE&G's approved list, along with Enphase 10C and 5P."],
-  ["Can I add a battery to a system I already have?", "Only new installations qualify at this time. A battery that is already installed does not."],
-  ["Is the federal battery credit open?", "No. It ended for spending after December 31, 2025."],
-  ["Will the state add a battery program?", "The state has released a proposal with options for home batteries, but it has no amounts or start date yet."]
+  [
+   "Is there a home battery rebate in New Jersey?",
+   "Yes, for PSE&G customers: up to $5,000 through GridSmart. We found none from JCP&L or Atlantic City Electric."
+  ],
+  [
+   "Can I use a Tesla Powerwall?",
+   "Yes. Powerwall 3 is on PSE&G's approved list, along with Enphase 10C and 5P."
+  ],
+  [
+   "Can I add a battery to a system I already have?",
+   "Only new installations qualify at this time. A battery that is already installed does not."
+  ],
+  [
+   "Is the federal battery credit open?",
+   "No. It ended for spending after December 31, 2025."
+  ],
+  [
+   "Will the state add a battery program?",
+   "The state has released a proposal with options for home batteries, but it has no amounts or start date yet."
+  ]
  ],
  "refs": [
-  ["PSE&G GridSmart Battery Program FAQ", "https://homeenergy.pseg.com/gridsmart-faqs"],
-  ["PSE&G GridSmart Battery Program", "https://homeenergy.pseg.com/gridsmart"],
-  ["NJBPU energy storage proposal", "https://cleanenergy.nj.gov/news/njbpu-advances-statewide-home-batteries-program-with-new-garden-state-energy-storage-proposal"],
-  ["IRS residential clean energy credit", "https://www.irs.gov/credits-deductions/residential-clean-energy-credit"]
+  [
+   "PSE&G GridSmart Battery Program FAQ",
+   "https://homeenergy.pseg.com/gridsmart-faqs"
+  ],
+  [
+   "PSE&G GridSmart Battery Program",
+   "https://homeenergy.pseg.com/gridsmart"
+  ],
+  [
+   "NJBPU energy storage proposal",
+   "https://cleanenergy.nj.gov/news/njbpu-advances-statewide-home-batteries-program-with-new-garden-state-energy-storage-proposal"
+  ],
+  [
+   "IRS residential clean energy credit",
+   "https://www.irs.gov/credits-deductions/residential-clean-energy-credit"
+  ]
  ],
- "facts": ["nj-9-pseg-gridsmart-battery", "nj-27-garden-state-energy-storage-program", "nj-28-federal-residential-clean-energy-credits-25c-25d"]
+ "facts": [
+  "nj-9-pseg-gridsmart-battery",
+  "nj-27-garden-state-energy-storage-program",
+  "nj-28-federal-residential-clean-energy-credits-25c-25d"
+ ]
 }

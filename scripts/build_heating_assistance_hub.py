@@ -31,7 +31,7 @@ def main():
         fact = facts[d["facts"][0]]
         country = "Canada" if d["path"].startswith("/ca/") else "United States"
         rows.append({"region": d["hub_name"], "country": country, "path": d["path"], "program": fact["program"], "status": fact["status"],
-                     "amount": d["cards"][0]["amount"], "dates": fact.get("dates", ""), "badge": d["badge"]})
+                     "amount": fact.get("amount") or d["cards"][0]["amount"], "dates": fact.get("dates", ""), "badge": d["badge"]})
     rows.sort(key=lambda r: (ORDER[r["status"]], r["country"] != "Canada", r["region"]))
     n_open = sum(1 for r in rows if r["status"] == "active")
 

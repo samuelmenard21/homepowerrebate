@@ -311,6 +311,7 @@ def hub_page():
 <div class="tw"><table><tr><th>Battery</th><th>Storage per unit</th><th>Power per unit</th><th>Solar inverter</th><th>BC Hydro rebate</th></tr>{cards}</table></div>
 <h2>Battery rebates by province and state</h2>
 {rebate_table({"short": "", "region_notes": {"bc": ("Depends on the model", "", "")}})}
+<p><a href="/home-battery-rebates/"><b>See every home battery rebate and utility program, region by region &rarr;</b></a></p>
 <p class="small">More battery guides are coming. Something out of date? Email <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a>.</p>
 </div></section>"""
     return path, shell("Home Battery Guides 2026: Specs & Rebates | HomePowerRebate",

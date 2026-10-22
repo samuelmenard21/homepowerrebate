@@ -60,7 +60,7 @@ def download():
     out = []
     for c in raw:
         out.append({"name": c.get("company_name") or c.get("title"), "city": c.get("head_office_location") or "", "site": c.get("company_website") or "", "email": c.get("email") or "",
-                    "phone": c.get("phone") or "", "programs": sorted(t["slug"] for t in (c.get("program_designations") or [])), "types": sorted(t["name"] for t in (c.get("types") or [])),
+                    "phone": c.get("phone") or "", "programs": sorted(t["slug"] for t in (c.get("program_designations") or [])), "types": sorted(t["name"] for t in (c.get("types") or [])), "areas": sorted(t["name"] for t in (c.get("locations") or [])),
                     "url": c.get("post_url") or ""})
     RAW.write_text(json.dumps({"checked": date.today().isoformat(), "source": PAGE, "contractors": out}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     return out

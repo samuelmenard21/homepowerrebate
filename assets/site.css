@@ -785,6 +785,11 @@ body.tpl-ranking { --gut: clamp(20px, 3.2vw, 56px); }
 @media (prefers-reduced-motion: reduce) { .tpl-ranking .rank:hover { transform: none; } }
 /* program-registered contractors not on the ranking (2026-10-22) */
 .regonly{margin:8px 0 16px}.regonly summary{cursor:pointer;font-weight:700;padding:6px 0}.regonly ul{margin:8px 0;padding-left:20px;font-size:14.5px;line-height:1.5}
+/* registered contractors made easier to see (2026-10-22) */
+.rank .nm .reg{font-size:13px;padding:2px 10px;color:#1b4332;background:#d8f3dc;border-color:#2d6a4f}
+.callout .reg{font-size:13px;padding:0 7px;color:#1b4332;background:#d8f3dc;border:1px solid #2d6a4f;border-radius:999px;cursor:auto}
+.sortbar button[data-f]{border-color:#2d6a4f;color:#1b4332}.sortbar button[data-f].on{background:#2d6a4f;color:#fff}
+.rank-list li[hidden]{display:none}
 
 /* ===== template design: hub (hub.css) ===== */
 /* Region hub design (body.tpl-hub): /ca/bc/, /ca/on/, /us/ma/ and the other province and state hubs.

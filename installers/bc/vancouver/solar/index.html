@@ -205,7 +205,7 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=ef04f84995" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
 <meta name="twitter:title" content="Best Solar Installers in Vancouver, BC (2026)">
 <meta name="twitter:description" content="The top-rated solar installers in Vancouver, BC, ranked by 1,086 Google reviews. Compare 13 local companies, plus what to ask before you hire.">
 <meta name="theme-color" content="#faf7f2">
@@ -378,7 +378,7 @@
 <div class="callout"><p><strong>Short answer:</strong> The top-rated solar installers in Vancouver are Davis Electrical (5.0★, 216 reviews), JZ Electric Ltd. (5.0★, 151 reviews), TDR Electric Inc. (4.9★, 322 reviews).</p></div>
 
 <h2 class="sec-h">Solar installers in Vancouver, ranked <span class="chip" aria-hidden="true">13 listed</span></h2>
-<div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button></div>
+<div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button><button type="button" data-f="reg" aria-pressed="false">✓ Registered only</button></div>
 <ol class="rank-list">
 <li class="rank top g1 has-prof" data-rank="1" data-reviews="216" data-rating="5.0"><div class="n"><a href="/installers/profiles/vancouver/davis-electrical/" aria-label="Davis Electrical profile">1</a></div><div class="nm"><a href="/installers/profiles/vancouver/davis-electrical/">Davis Electrical</a><span class="badge">Top pick</span><span class="bf">Highest rating (50+ reviews)</span><span class="reg" title="BC Hydro solar and battery rebates require an HPCN member contractor.">✓ HPCN member</span></div><div class="st"><span class="rt"><span class="stars" style="--p:100%" aria-hidden="true">★★★★★</span> <b>5.0</b></span> <span class="rv">(216 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:67%"></i></div><div class="adr">627 Moberly Rd, Vancouver, BC V5Z 4B1</div></div><div class="act"><a class="btn-call" href="tel:6049163903">Call (604) 916-3903</a><a class="btn-prof" href="/installers/profiles/vancouver/davis-electrical/">View profile</a><a class="lnk" href="https://maps.google.com/?cid=128776055293345206&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk em" href="mailto:info@daviselectrical.ca" aria-label="Email Davis Electrical">Email</a></div></li>
 <li class="rank has-prof" data-rank="2" data-reviews="151" data-rating="5.0"><div class="n"><a href="/installers/profiles/vancouver/jz-electric-ltd/" aria-label="JZ Electric Ltd. profile">2</a></div><div class="nm"><a href="/installers/profiles/vancouver/jz-electric-ltd/">JZ Electric Ltd.</a></div><div class="st"><span class="rt"><span class="stars" style="--p:100%" aria-hidden="true">★★★★★</span> <b>5.0</b></span> <span class="rv">(151 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:47%"></i></div><div class="adr">595 Burrard St, Vancouver, BC V7X 1A2</div></div><div class="act"><a class="btn-call" href="tel:6047257983">Call (604) 725-7983</a><a class="btn-prof" href="/installers/profiles/vancouver/jz-electric-ltd/">View profile</a><a class="lnk" href="https://maps.google.com/?cid=2265465300506858758&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk em" href="mailto:support@jzelectric.ca" aria-label="Email JZ Electric Ltd.">Email</a></div></li>
@@ -462,7 +462,8 @@ else{b.disabled=false;m.textContent='Something went wrong. Please try again or e
 </div></section>
 <script>
 (function(){var ol=document.querySelector('.rank-list');if(!ol)return;
-var btns=[].slice.call(document.querySelectorAll('.sortbar button'));
+var btns=[].slice.call(document.querySelectorAll('.sortbar button[data-s]'));
+var fb=document.querySelector('.sortbar button[data-f]');if(fb){fb.addEventListener('click',function(){var on=fb.getAttribute('aria-pressed')!=='true';fb.setAttribute('aria-pressed',on);fb.classList.toggle('on',on);[].slice.call(ol.children).forEach(function(x){x.hidden=on&&!x.querySelector('.reg');});});}
 function sortBy(k){var li=[].slice.call(ol.children);li.sort(function(a,b){
  if(k==='reviews')return b.dataset.reviews-a.dataset.reviews;
  if(k==='rating')return (b.dataset.rating-a.dataset.rating)||(b.dataset.reviews-a.dataset.reviews);

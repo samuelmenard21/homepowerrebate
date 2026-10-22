@@ -198,7 +198,7 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=ef04f84995" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -410,7 +410,8 @@
 </div></section>
 <script>
 (function(){var ol=document.querySelector('.rank-list');if(!ol)return;
-var btns=[].slice.call(document.querySelectorAll('.sortbar button'));
+var btns=[].slice.call(document.querySelectorAll('.sortbar button[data-s]'));
+var fb=document.querySelector('.sortbar button[data-f]');if(fb){fb.addEventListener('click',function(){var on=fb.getAttribute('aria-pressed')!=='true';fb.setAttribute('aria-pressed',on);fb.classList.toggle('on',on);[].slice.call(ol.children).forEach(function(x){x.hidden=on&&!x.querySelector('.reg');});});}
 function sortBy(k){var li=[].slice.call(ol.children);li.sort(function(a,b){
  if(k==='reviews')return b.dataset.reviews-a.dataset.reviews;
  if(k==='rating')return (b.dataset.rating-a.dataset.rating)||(b.dataset.reviews-a.dataset.reviews);

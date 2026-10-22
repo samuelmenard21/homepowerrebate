@@ -508,18 +508,25 @@ def _loc_key(s):
     return re.sub(r"^(city|district|township|town|village) of ", "", s).strip()
 
 
+def registered_counts(region, service, city_label, ranked):
+    """(serving, others, here, n_rank) for the registered-only list; serving is empty when the city or service has no official list."""
+    if region != "bc" or service not in _BC_TYPE or not BC_OFFICIAL:
+        return [], [], [], 0
+    utype, key = _BC_TYPE[service], _loc_key(city_label)
+    serving = [c for c in BC_OFFICIAL if utype in c["types"] and any(_loc_key(a) == key for a in c.get("areas", []))]
+    ranked_off = {_BC_MATCHES.get((service, r["name"].strip()), "") for r in ranked} - {""}
+    others = sorted((c for c in serving if c["name"] not in ranked_off), key=lambda c: c["name"].lower())
+    here = [c for c in others if _loc_key(c["city"]) == key]
+    return serving, others, here, len(serving) - len(others)
+
+
 def registered_only_box(region, service, city_label, ranked):
     """Program-registered contractors that list this city as a service area but are not on our Google-review ranking (BC heat pump and
     insulation, 2026-10-22). A separate, labelled list below the ranking: alphabetical, never ranked, no review data. The list is Better Homes BC's
     own public contractor list (data/bc-registered-contractors.json, scripts/refresh_bc_registered.py)."""
     if region != "bc" or service not in _BC_TYPE or not BC_OFFICIAL:
         return ""
-    utype, key = _BC_TYPE[service], _loc_key(city_label)
-    serving = [c for c in BC_OFFICIAL if utype in c["types"] and any(_loc_key(a) == key or (key == "langley" and _loc_key(a) == "langley") for a in c.get("areas", []))]
-    ranked_off = {_BC_MATCHES.get((service, r["name"].strip()), "") for r in ranked} - {""}
-    others = sorted((c for c in serving if c["name"] not in ranked_off), key=lambda c: c["name"].lower())
-    here = [c for c in others if _loc_key(c["city"]) == key]
-    n_rank = len(serving) - len(others)
+    serving, others, here, n_rank = registered_counts(region, service, city_label, ranked)
     if not serving:
         return ""
     unit = "heat pump" if service == "heat-pump" else "insulation"
@@ -531,7 +538,7 @@ def registered_only_box(region, service, city_label, ranked):
            f'The rest are listed below from the official list, which is what the BC Hydro and CleanBC rebates require. They are not ranked, because we have no Google review data for them here. '
            f'A company below can also appear in the ranking above if we could not confidently match its name to the official list. Check reviews yourself before you hire.</p>')
     if here:
-        box += (f'<details class="regonly"><summary>{len(here)} with a head office in {esc(city_label)} (alphabetical, not a ranking)</summary><ul>{rows}</ul>'
+        box += (f'<details class="regonly" open><summary>{len(here)} with a head office in {esc(city_label)} (alphabetical, not a ranking)</summary><ul>{rows}</ul>'
                 + (f'<p class="small">Showing the first 40 of {len(here)}. </p>' if len(here) > 40 else "") + '</details>')
     box += (f'<p class="small">Source: <a href="{_BC_DIR}" rel="noopener" target="_blank">Better Homes BC registered contractor list</a>, checked '
             f'{date.fromisoformat(json.loads(_bcf.read_text(encoding="utf-8"))["checked"]).strftime("%B %-d, %Y")}. Use its service-region filter for the full list.</p>')
@@ -782,6 +789,11 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
             f'<div class="act">{call}{"".join(acts)}</div></li>')
 
     reg_count = sum(1 for r in ranked if (region, service, r["name"]) in REGISTERED)
+    reg_filter = '<button type="button" data-f="reg" aria-pressed="false">✓ Registered only</button>' if reg_count else ""
+    _srv, _oth, _here, _nr = registered_counts(region, service, city_label, ranked)
+    reg_callout = (f'<p><strong>Rebates need a registered contractor.</strong> Better Homes BC lists {len(_srv)} program-registered {"heat pump" if service == "heat-pump" else "insulation"} '
+                   f'contractors that serve {esc(city_label)}. {reg_count} on this ranking are marked <span class="reg">✓</span>, and '
+                   f'<a href="#registered-only">{len(_oth)} more are listed below the ranking</a>.</p>') if _srv else ""
     reg_note = "".join(
         f'<p class="small"><span class="reg">✓</span> = on the official contractor list for {esc(p["name"])} '
         f'(checked {date.fromisoformat(p["checked"]).strftime("%B %-d, %Y")}, <a href="{esc(p["source_url"])}" rel="nofollow noopener" target="_blank">source</a>). '
@@ -833,10 +845,10 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 <section class="body"><div class="wrap">
 <div class="stats"><div class="stat"><b>{n}</b><span>Companies</span></div><div class="stat"><b>{total_reviews:,}</b><span>Google reviews</span></div><div class="stat"><b>{avg:.1f}★</b><span>Average rating</span></div><div class="stat"><b>{upd_short}</b><span>Data collected</span></div></div>
 <div class="trust"><span>Ranked by Google reviews</span><span>Never paid for</span><span>Free to compare</span></div>
-<div class="callout"><p><strong>Short answer:</strong> The top-rated {svc['pros_l']} in {esc(city_label)} are {esc(top_line)}.</p></div>
+<div class="callout"><p><strong>Short answer:</strong> The top-rated {svc['pros_l']} in {esc(city_label)} are {esc(top_line)}.</p>{reg_callout}</div>
 
 <h2 class="sec-h">{svc['pros_t'][:1] + svc['pros_t'][1:].lower() if service in ADVISORS else svc['name'] + ' installers'} in {esc(city_label)}, ranked <span class="chip" aria-hidden="true">{n} listed</span></h2>
-<div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button></div>
+<div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button>{reg_filter}</div>
 <ol class="rank-list">
 {chr(10).join(items)}
 </ol>
@@ -1170,7 +1182,8 @@ ICONS = {
 
 RANK_JS = """<script>
 (function(){var ol=document.querySelector('.rank-list');if(!ol)return;
-var btns=[].slice.call(document.querySelectorAll('.sortbar button'));
+var btns=[].slice.call(document.querySelectorAll('.sortbar button[data-s]'));
+var fb=document.querySelector('.sortbar button[data-f]');if(fb){fb.addEventListener('click',function(){var on=fb.getAttribute('aria-pressed')!=='true';fb.setAttribute('aria-pressed',on);fb.classList.toggle('on',on);[].slice.call(ol.children).forEach(function(x){x.hidden=on&&!x.querySelector('.reg');});});}
 function sortBy(k){var li=[].slice.call(ol.children);li.sort(function(a,b){
  if(k==='reviews')return b.dataset.reviews-a.dataset.reviews;
  if(k==='rating')return (b.dataset.rating-a.dataset.rating)||(b.dataset.reviews-a.dataset.reviews);

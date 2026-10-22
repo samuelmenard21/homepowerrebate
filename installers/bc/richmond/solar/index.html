@@ -151,7 +151,7 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=ef04f84995" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
 <meta name="twitter:title" content="Best Solar Installers in Richmond, BC (2026)">
 <meta name="twitter:description" content="The top-rated solar installers in Richmond, BC, ranked by 245 Google reviews. Compare 4 local companies, plus what to ask before you hire.">
 <meta name="theme-color" content="#faf7f2">
@@ -324,7 +324,7 @@
 <div class="callout"><p><strong>Short answer:</strong> The top-rated solar installers in Richmond are Season Energy (4.9★, 40 reviews), Vancouver Green Electric Ltd (4.8★, 39 reviews), Polaron Energy (4.5★, 87 reviews).</p></div>
 
 <h2 class="sec-h">Solar installers in Richmond, ranked <span class="chip" aria-hidden="true">4 listed</span></h2>
-<div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button></div>
+<div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button><button type="button" data-f="reg" aria-pressed="false">✓ Registered only</button></div>
 <ol class="rank-list">
 <li class="rank top g1 has-prof" data-rank="1" data-reviews="40" data-rating="4.9"><div class="n"><a href="/installers/profiles/richmond/season-energy/" aria-label="Season Energy profile">1</a></div><div class="nm"><a href="/installers/profiles/richmond/season-energy/">Season Energy</a><span class="badge">Top pick</span><span class="bf">Also installs heat pumps and insulation</span></div><div class="st"><span class="rt"><span class="stars" style="--p:98%" aria-hidden="true">★★★★★</span> <b>4.9</b></span> <span class="rv">(40 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:46%"></i></div><div class="adr">3751 Jacombs Rd Unit 240, Richmond, BC V6V 2R4</div></div><div class="act"><a class="btn-call" href="tel:6042031666">Call (604) 203-1666</a><a class="btn-prof" href="/installers/profiles/richmond/season-energy/">View profile</a><a class="lnk" href="https://maps.google.com/?cid=8927835696046280929&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk em" href="mailto:info@seasonenergy.ca" aria-label="Email Season Energy">Email</a></div></li>
 <li class="rank has-prof" data-rank="2" data-reviews="39" data-rating="4.8"><div class="n"><a href="/installers/profiles/richmond/vancouver-green-electric-ltd/" aria-label="Vancouver Green Electric Ltd profile">2</a></div><div class="nm"><a href="/installers/profiles/richmond/vancouver-green-electric-ltd/">Vancouver Green Electric Ltd</a><span class="bf">Also installs batteries</span></div><div class="st"><span class="rt"><span class="stars" style="--p:96%" aria-hidden="true">★★★★★</span> <b>4.8</b></span> <span class="rv">(39 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:45%"></i></div><div class="adr">11780 River Rd Unit 170, Richmond, BC V6X 1Z7</div></div><div class="act"><a class="btn-call" href="tel:6046440451">Call (604) 644-0451</a><a class="btn-prof" href="/installers/profiles/richmond/vancouver-green-electric-ltd/">View profile</a><a class="lnk" href="https://maps.google.com/?cid=16095059072190855167&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a></div></li>
@@ -399,7 +399,8 @@ else{b.disabled=false;m.textContent='Something went wrong. Please try again or e
 </div></section>
 <script>
 (function(){var ol=document.querySelector('.rank-list');if(!ol)return;
-var btns=[].slice.call(document.querySelectorAll('.sortbar button'));
+var btns=[].slice.call(document.querySelectorAll('.sortbar button[data-s]'));
+var fb=document.querySelector('.sortbar button[data-f]');if(fb){fb.addEventListener('click',function(){var on=fb.getAttribute('aria-pressed')!=='true';fb.setAttribute('aria-pressed',on);fb.classList.toggle('on',on);[].slice.call(ol.children).forEach(function(x){x.hidden=on&&!x.querySelector('.reg');});});}
 function sortBy(k){var li=[].slice.call(ol.children);li.sort(function(a,b){
  if(k==='reviews')return b.dataset.reviews-a.dataset.reviews;
  if(k==='rating')return (b.dataset.rating-a.dataset.rating)||(b.dataset.reviews-a.dataset.reviews);

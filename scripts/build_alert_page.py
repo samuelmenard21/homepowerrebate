@@ -38,6 +38,7 @@ ARTICLE = f"""<!-- FED-ALERT-HERE -->
 <p>That's it. No spam, and you can unsubscribe anytime. We don't sell your email.</p>
 <h2 id="who-we-are">Who are we?</h2>
 <p>HomePowerRebate is an independent site, not the Government of Canada. We track home energy rebates across Canada and link every amount to the official program. Ottawa also has <a href="{OTTAWA}" rel="noopener" target="_blank">its own sign-up</a>, and you can use both.</p>
+<p><a href="/programs/national-heat-pump-rebate/do-i-qualify/"><b>Check what Ottawa has said about your home &rarr;</b></a></p>
 <p><a href="/programs/national-heat-pump-rebate/"><b>Read everything we know so far about the federal rebate &rarr;</b></a></p>
 <h2 id="while-you-wait">While you wait: what your province pays today</h2>
 <ul>{"".join(f'<li><a href="{u}">{n}</a></li>' for n, u in PROVINCES)}</ul>"""

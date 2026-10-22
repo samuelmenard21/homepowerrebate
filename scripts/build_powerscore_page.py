@@ -1015,6 +1015,7 @@ MAIN = f'''
     <div class="ps-links">
       <h2>Head to head</h2>
       <p class="ps-body">Side-by-side comparisons of two cities, upgrade by upgrade.</p>
+      <p class="ps-body">Want the plain dollar ranking? See the <a href="/powerscore/leaderboard/">national leaderboard</a> of the cities with the most open rebates.</p>
       <div class="ps-chips">{render_compare_links()}</div>
     </div>
   </div>

@@ -317,6 +317,8 @@ a {{ color: var(--teal); }}
       <a class="btn" href="{url_b}">See {label_b}'s full rebate guide &rarr;</a>
     </div>
 
+    {best_html}
+
     <h2>Category-by-category PowerScore</h2>
     <div style="overflow-x:auto;">
     <table class="compare-table">
@@ -447,8 +449,82 @@ def build_page(city_a, city_b, same_region, generated_date):
         overall_a=overall_a,
         overall_b=overall_b,
         faq_html=faq_html,
+        best_html=best_in_class(city_a, city_b),
     )
     return pair_slug, html, canonical
+
+
+# ---- Best in class (2026-10-22): national standing by dollars, which are comparable across regions (PowerScore points are scaled inside each region) ----
+RANKS = {}
+
+
+def build_ranks(data):
+    """RANKS[cat] = list of (usd, region_key, slug, label, url) sorted high to low, open categories with a dollar amount only."""
+    for cat in data["category_labels"]:
+        rows = []
+        for rk, region in data["regions"].items():
+            for slug, c in region["cities"].items():
+                v = c["categories"].get(cat, {})
+                if v.get("status") == "open" and v.get("usd_value", 0) > 0:
+                    rows.append((v["usd_value"], rk, slug, c["label"], c["url"]))
+        rows.sort(key=lambda r: -r[0])
+        RANKS[cat] = rows
+
+
+def national_rank(cat, usd):
+    """(rank, ties_at_that_rank, total): rank is 1 + the number of cities with strictly more dollars."""
+    rows = RANKS.get(cat, [])
+    if usd <= 0 or not rows:
+        return None
+    return 1 + sum(1 for r in rows if r[0] > usd), sum(1 for r in rows if r[0] == usd), len(rows)
+
+
+def usd(v):
+    return "$" + format(round(v), ",")
+
+
+def best_in_class(city_a, city_b):
+    la, lb = city_a["label"], city_b["label"]
+    wins = {la: [], lb: []}
+    ties = []
+    rows, bests = [], []
+    for cat, cl in CATEGORY_LABELS.items():
+        va = city_a["categories"].get(cat, {}).get("usd_value", 0) if city_a["categories"].get(cat, {}).get("status") == "open" else 0
+        vb = city_b["categories"].get(cat, {}).get("usd_value", 0) if city_b["categories"].get(cat, {}).get("status") == "open" else 0
+        if va > vb:
+            wins[la].append(cl.lower())
+        elif vb > va:
+            wins[lb].append(cl.lower())
+        elif va > 0:
+            ties.append(cl.lower())
+        top = RANKS[cat][0] if RANKS.get(cat) else None
+        top_n = sum(1 for r in RANKS.get(cat, []) if top and r[0] == top[0])
+
+        def cell(label, v):
+            r = national_rank(cat, v)
+            if not r:
+                return "No open rebate"
+            tag = f"#{r[0]}" + (f" (tied with {r[1] - 1} more)" if r[1] > 1 else "")
+            return f"{tag} of {r[2]} &middot; {usd(v)}"
+        best = "None open"
+        if top:
+            best = f'<a href="{top[4]}">{top[3]}</a>' + (f" and {top_n - 1} more" if top_n > 1 else "") + f" &middot; {usd(top[0])}"
+        rows.append(f"<tr><td>{cl}</td><td>{cell(la, va)}</td><td>{cell(lb, vb)}</td><td>{best}</td></tr>")
+        for label, v in ((la, va), (lb, vb)):
+            if top and v > 0 and v == top[0]:
+                bests.append(f"<li><strong>{label}</strong> is at the top of the country for {cl.lower()} rebates: {usd(v)}" + (f", tied with {top_n - 1} other cit{'y' if top_n == 2 else 'ies'}" if top_n > 1 else "") + ".</li>")
+    na, nb = len(wins[la]), len(wins[lb])
+    if na == nb:
+        lead = f"{la} and {lb} each lead on {na} of the {len(CATEGORY_LABELS)} upgrades"
+    else:
+        w, l, nw, nl = (la, lb, na, nb) if na > nb else (lb, la, nb, na)
+        lead = f"{w} has the bigger open rebate for {nw} of the {len(CATEGORY_LABELS)} upgrades, and {l} for {nl}"
+    lead += f", with {len(ties)} tied." if ties else "."
+    lead += " Dollar amounts below are the most open programs pay, in US dollars (Canadian amounts converted at an approximate rate), so they can be compared across the border. Amounts are the most a program pays; the top figures are often for lower-income households."
+    bl = ("<ul>" + "".join(bests) + "</ul>") if bests else "<p>Neither city is at the top of the country for any upgrade. The last column shows who is.</p>"
+    return (f'<h2>Best in class</h2><p>{lead}</p>{bl}<h3>Where each city stands in the country</h3><div style="overflow-x:auto;"><table class="compare-table">'
+            f"<thead><tr><th>Upgrade</th><th>{la}</th><th>{lb}</th><th>Best in the country</th></tr></thead><tbody>" + "".join(rows) + '</tbody></table></div>'
+            '<p>Rank counts every city we score. <a href="/powerscore/leaderboard/">See the national leaderboard</a>.</p>')
 
 
 CATEGORY_LABELS = {}
@@ -475,6 +551,7 @@ def main():
     global CATEGORY_LABELS
     data = load_data()
     CATEGORY_LABELS = data["category_labels"]
+    build_ranks(data)
     generated_date = data.get("generated")
 
     extract_shared_markup()

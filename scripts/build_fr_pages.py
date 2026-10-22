@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""French Quebec heat pump page: /fr/qc/thermopompe/ from hand-written data/qc/fr-thermopompe.json.
+"""French pages: every file in data/fr/*.json plus the original /fr/qc/thermopompe/ (data/qc/fr-thermopompe.json), hand-written prose in French.
 Cards name verified facts in data/verified-facts/qc.json (status, date, source come from the facts). English menu and footer are the shared ones.
-Usage: python3 scripts/build_qc_fr_page.py"""
+Each file has: path (the French URL), en (the English counterpart, linked both ways with hreflang by add_hreflang.py), title, desc, h1, badge, lead, cards, sections, faq, refs, facts,
+optional crumb (last breadcrumb label) and crumb_mid ([[label, href], ...] between Canada and the page). Amounts live only in the facts files; check_fr_pages.py fails when a card figure is not in its fact.
+Usage: python3 scripts/build_fr_pages.py"""
 import html
 import json
 import re
@@ -28,9 +30,18 @@ def card(c):
             f'<p style="font-size:14px;margin:8px 0 0;">{c["note"]}</p></div>')
 
 
+def sources():
+    return [ROOT / "data/qc/fr-thermopompe.json"] + sorted((ROOT / "data/fr").glob("*.json"))
+
+
 def main():
-    d = json.loads((ROOT / "data/qc/fr-thermopompe.json").read_text())
+    for src in sources():
+        build(json.loads(src.read_text()))
+
+
+def build(d):
     path, en = d["path"], d["en"]
+    crumb, crumb_mid = d.get("crumb", "Thermopompe au Québec"), d.get("crumb_mid", [])
     fids = [i for cd in d["cards"] for i in cd.get("facts", [])] + d.get("facts", [])
     for i in fids:
         assert i in FACTS, f"unknown fact {i}"
@@ -79,7 +90,7 @@ def main():
            "datePublished": checked, "dateModified": checked, "mainEntityOfPage": BASE + path},
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Accueil", "item": BASE + "/"}, {"@type": "ListItem", "position": 2, "name": "Canada", "item": BASE + "/ca/"},
-              {"@type": "ListItem", "position": 3, "name": "Thermopompe au Québec", "item": BASE + path}]}, faq_ld]
+              ] + [{"@type": "ListItem", "position": 3 + i, "name": lb, "item": BASE + hr} for i, (lb, hr) in enumerate(crumb_mid)] + [{"@type": "ListItem", "position": 3 + len(crumb_mid), "name": crumb, "item": BASE + path}]}, faq_ld]
     lds = "".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in ld)
     alt = (f'<link rel="alternate" hreflang="fr-CA" href="{BASE}{path}"><link rel="alternate" hreflang="en-CA" href="{BASE}{en}"><link rel="alternate" hreflang="x-default" href="{BASE}{en}">')
     page = f"""<!DOCTYPE html>
@@ -96,7 +107,7 @@ def main():
 {ca.CSS}
 {lds}</head><body>
 {navfooter.render_nav("ca", "")}
-<nav class="hpr-breadcrumb" aria-label="Fil d'Ariane"><ol><li><a href="/">Accueil</a></li><li><a href="/ca/">Canada</a></li><li aria-current="page">Thermopompe au Québec</li></ol></nav>
+<nav class="hpr-breadcrumb" aria-label="Fil d'Ariane"><ol><li><a href="/">Accueil</a></li><li><a href="/ca/">Canada</a></li>{"".join(f'<li><a href="{hr}">{e(lb)}</a></li>' for lb, hr in crumb_mid)}<li aria-current="page">{e(crumb)}</li></ol></nav>
 <section class="hero"><div class="wrap"><div class="amount-badge">{e(d['badge'])}</div><h1>{e(d['h1'])}</h1><p>{d['lead']}</p></div></section>
 <article class="article"><div class="wrap">
 {article}

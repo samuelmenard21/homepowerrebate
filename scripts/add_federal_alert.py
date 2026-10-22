@@ -47,16 +47,16 @@ NAMES = {"st-albert": "St. Albert", "fort-st-john": "Fort St. John", "fort-mcmur
 # rebate to what the reader came for. Grade-6 words. Only claims from data/verified-facts/federal.json (amounts, early 2027,
 # stacking, $1,400 savings, $2 billion). Redesigned 2026-10-17: the headline used to change per page and never said "heat pump".
 # What a signup gets, shown as a list right above the email field (the promise the confirmation email and the list keep).
-GETS = ["A short hello now, so you know it worked", "One email the day applications open",
-        "One email when Ottawa says who gets $10,000"]
-HEADLINE = "Get an email the day Canada\u2019s new heat pump rebate opens"
+GETS = ["Launch-day email, with what to do first", "Who qualifies for the $10,000, once Ottawa says",
+        "A short hello now, so you know it worked"]
+HEADLINE = "Canada\u2019s new heat pump rebate is worth up to $10,000. Get an email the day it opens"
 FEDERAL = "Applications are not open yet. Ottawa says they open in early 2027, and that you can add this rebate on top of provincial ones."
 CITY = "Ottawa says you can add it on top of provincial rebates like the ones on this page."
 HARP = ("Getting the heating rebate? A bigger one is coming. Ottawa says homes that switch off oil, propane or electric "
         "baseboard heat save over $1,400 a year on average.")
 CLOSED = "The old rebate closed. Ottawa\u2019s new one opens in early 2027, and we\u2019ll tell you the day it does."
 HOME = ("Ottawa is putting $2 billion into heat pump rebates for Canadian homes. "
-        "We\u2019ll email you the moment applications open, so you can apply right away.")
+        "Be ready: we\u2019ll email you the day applications open.")
 HUB = "Ottawa says you can add it on top of the {province} rebates you can claim today."
 CITY_HUB = "Planning a heat pump in {city}? Ottawa says you can add this on top of provincial rebates."
 OTHER = "Planning a heat pump too? This one is on top of the rebates above, and we\u2019ll email you the day it opens."
@@ -118,12 +118,15 @@ def stack(province=""):
     lis = ""
     for c in codes:
         d, x = data[c], data[c]["row"]
-        amt = f'<b class="fs-amt">{html.escape(x["amt"])}</b>' if x else '<b class="fs-amt fs-none">None open</b>'
+        amt = f'<b class="fs-amt">{html.escape(x["amt"])}</b>' if x else '<b class="fs-amt fs-none">No open rebate</b>'
         lis += f'<li data-prov="{c}"><a href="{d["link"]}"><span class="fs-prov">{html.escape(d["name"])}</span>{amt}</a></li>'
     head = (f"Stack it with the {html.escape(data[codes[0]]['name'])} rebate open today" if province
             else "Stack it with the provincial rebate open today")
-    return (f'<div class="fed-alert-stack"><p class="fed-alert-stack-h">{head}</p><ul class="fed-alert-stack-list">{lis}</ul>'
-            '<p class="fed-alert-stack-note">Ottawa says you can combine them. Each program has its own rules.</p></div>')
+    note = '<p class="fed-alert-stack-note">Ottawa says you can combine them. Each program has its own rules. Amounts are the most you can get.</p>'
+    if province:
+        return f'<div class="fed-alert-stack"><p class="fed-alert-stack-h">{head}</p><ul class="fed-alert-stack-list">{lis}</ul>{note}</div>'
+    return (f'<details class="fed-alert-stack"><summary class="fed-alert-stack-h">{head} <span>Show all {len(codes)}</span></summary>'
+            f'<ul class="fed-alert-stack-list">{lis}</ul>{note}</details>')
 
 
 def share_row(open_=False):
@@ -162,10 +165,11 @@ def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=F
     attrs = f' id="{anchor}"' if anchor else ""
     if follow:
         attrs += f' data-follow="gq-region" data-follow-city="gq-city" data-provinces="{" ".join(c.lower() for c, _ in PROVINCES)}" hidden'
-    link = f'<p class="fed-alert-more"><a href="{GUIDE}">Read everything we know so far</a></p>' if more else ""
+    link = (f'<p class="fed-alert-more"><a href="{GUIDE}">Read everything we know so far</a> '
+            f'<span class="fed-alert-off">Official page: <a href="{OTTAWA}">canada.ca</a></span></p>') if more else ""
     steps = ""
     if big:
-        steps = ('<p class="fed-alert-steps-h">How Ottawa says it will work</p><ol class="fed-alert-steps">'
+        steps = ('<p class="fed-alert-steps-h">How Ottawa says it will work (plans, not final rules)</p><ol class="fed-alert-steps">'
                  + "".join(f"<li><b>{html.escape(a)}</b> {html.escape(b)}</li>" for a, b in STEPS) + "</ol>")
     pre, post = ('<div class="hp-fed-wrap">', "</div>") if wrap else ("", "")
     how = f'<div class="fed-alert-how">{steps}{link}</div>' if steps or link else ""
@@ -185,10 +189,9 @@ def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=F
             f'<form class="fed-alert-form" data-list="federal-hp"{data}>'
             '<label for="fed-alert-email">Email</label><input id="fed-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email">'
             f'{sel}<input class="fed-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
-            '<button type="submit">Email me when it opens</button></form>'
+            '<button type="submit">Notify me when it opens</button></form>'
             f'<p class="fed-alert-done" role="status" hidden></p>{share_row(share_open)}'
-            '<p class="fed-alert-note">Just these emails. No spam, no sales calls, unsubscribe anytime. '
-            f'Ottawa also has <a href="{OTTAWA}">its own sign-up</a>.</p></div></div>{how}</section>{post}{E}\n')
+            f'<p class="fed-alert-note">Only emails about this rebate. No spam, no sales calls. Unsubscribe anytime.</p></div></div>{how}</section>{post}{E}\n')
 
 
 def _after_grid(t):

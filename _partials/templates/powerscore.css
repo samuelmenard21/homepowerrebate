@@ -9,8 +9,8 @@ body.tpl-powerscore { --gut: clamp(20px, 3.2vw, 56px); }
 .tpl-powerscore header.hero::after { content: ""; position: absolute; right: -120px; top: 40px; width: 460px; height: 460px; border-radius: 50%; border: 76px solid rgba(232, 138, 46, .12); pointer-events: none; }
 .tpl-powerscore header.hero > .wrap { position: relative; z-index: 1; }
 .tpl-powerscore .hero .eyebrow { margin: 0 0 18px; font-size: 13px; letter-spacing: .1em; color: #f5b566; }
-.tpl-powerscore .hero h1 { max-width: 16ch; margin: 0 0 20px; font-size: clamp(38px, 5.6vw, 80px); font-weight: 600; line-height: 1.02; letter-spacing: -.025em; text-wrap: balance; }
-.tpl-powerscore .hero p.lead, .tpl-powerscore .hero > .wrap > p { max-width: 58ch; margin: 0; font-size: clamp(17px, 1.5vw, 21px); line-height: 1.5; color: rgba(250, 247, 242, .88); text-wrap: pretty; }
+.tpl-powerscore .hero h1 { max-width: 9.6em; margin: 0 0 20px; font-size: clamp(38px, 5.6vw, 80px); font-weight: 600; line-height: 1.02; letter-spacing: -.025em; text-wrap: balance; }
+.tpl-powerscore .hero p.lead, .tpl-powerscore .hero > .wrap > p { max-width: 34.8em; margin: 0; font-size: clamp(17px, 1.5vw, 21px); line-height: 1.5; color: rgba(250, 247, 242, .88); text-wrap: pretty; }
 .tpl-powerscore .hero-stats { display: grid; margin-top: clamp(28px, 3.4vw, 48px) !important; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(10px, 1.2vw, 16px); margin: 0; }
 .tpl-powerscore .hero-stat { padding: clamp(16px, 1.8vw, 24px) clamp(16px, 1.8vw, 26px); border-radius: 18px; background: #fff; text-align: left; box-shadow: 0 1px 2px rgba(10, 42, 46, .06), 0 18px 40px -18px rgba(10, 42, 46, .35); }
 .tpl-powerscore .hero-stat .num { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(26px, 2.6vw, 40px); font-weight: 600; line-height: 1.05; letter-spacing: -.02em; color: var(--teal-deep); }

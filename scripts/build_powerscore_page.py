@@ -463,7 +463,9 @@ cad = DATA.get('cad_to_usd', 0.73)
 _ys = DATA.get("yardstick_usd", {})
 yardstick_rows_html = "".join(f'<tr><td>{esc(CAT_LABELS[c])}</td><td>US${_ys.get(c, 0):,.0f} (about CA${_ys.get(c, 0) / cad:,.0f})</td></tr>' for c in CATEGORIES)
 sort_options_html = '<option value="overall">PowerScore</option><option value="potential">Open rebate money</option>' + "".join(f'<option value="{c}">{esc(SHORT_LABELS[c])} score</option>' for c in CATEGORIES)
-region_options_html = '<option value="all">All regions</option>' + "".join(f'<option value="{esc(reg)}">{esc(rs[0]["region_label"])}</option>' for reg, rs in sorted(BY_REGION.items(), key=lambda kv: kv[1][0]["region_label"]))
+region_options_html = '<option value="all">All regions</option>' + "".join(
+    f'<optgroup label="{g}">' + "".join(f'<option value="{esc(reg)}">{esc(rs[0]["region_label"])}</option>' for reg, rs in sorted(BY_REGION.items(), key=lambda kv: kv[1][0]["region_label"]) if (rs[0]["country"] == "Canada") == (g == "Canada")) + "</optgroup>"
+    for g in ("Canada", "United States"))
 profile_key_html = "".join(f"<li>{esc(SHORT_LABELS[c])}</li>" for c in CATEGORIES)
 jsonld_html = render_jsonld()
 date_nice = __import__("datetime").date.fromisoformat(data_date).strftime("%B %-d, %Y")

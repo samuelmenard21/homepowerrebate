@@ -49,7 +49,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/article-c0947b3c.css?v=7b04af6753" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=1e578083f7" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=433c87bbfa" data-hpr-site-css>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Home Energy Rebates in Lynn, MA (2026)", "description": "Lynn homes (National Grid) get Mass Save rebates: heat pumps up to $8,500 ($16,000 income-qualified), 75-100% off insulation, $750 water heaters, 0% HEAT Loan.", "datePublished": "2026-08-13", "dateModified": "2026-09-26", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com/"}, "mainEntityOfPage": "https://homepowerrebate.com/us/ma/lynn/"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What home energy rebates can Lynn residents get?", "acceptedAnswer": {"@type": "Answer", "text": "Lynn is a National Grid town, so Mass Save applies: a no-cost home energy assessment, 75-100% off insulation and air sealing, heat pumps up to $8,500 (up to $16,000 if income-qualified), a $750 heat pump water heater rebate, and the 0% HEAT Loan up to $25,000."}}, {"@type": "Question", "name": "How much is the heat pump rebate in Lynn?", "acceptedAnswer": {"@type": "Answer", "text": "Whole-home air-source systems get $2,650 per ton, up to $8,500. Partial-home systems get $1,125 per ton, up to $8,500. Income-qualified households can get up to $16,000, or no cost."}}, {"@type": "Question", "name": "Are there insulation rebates for Lynn residents?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. After a Mass Save assessment, most households get 75% off insulation and air sealing. Income-qualified households can get up to 100% off."}}, {"@type": "Question", "name": "Can Lynn landlords get HVAC rebates?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mass Save has assessment paths for landlords of 1-4 unit and 5+ unit buildings, and heat pump rebates apply to rental properties served by a Mass Save utility."}}, {"@type": "Question", "name": "Is Lynnfield eligible for Mass Save?", "acceptedAnswer": {"@type": "Answer", "text": "Not for electric-side rebates. Lynnfield is served by the Reading and Peabody municipal light plants. Ask them about their own rebates and the state's 0% MLP Z-Loan."}}]}</script>
 <meta name="theme-color" content="#faf7f2">
@@ -107,29 +107,35 @@
         <span style="opacity:.7;">&rarr;</span>
       </a>
       <div class="nav-region-tabs">
-        <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" class="nav-region-tab is-on" aria-pressed="true">Ontario</button>
-        <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" class="nav-region-tab" aria-pressed="false">British Columbia</button>
-        <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" class="nav-region-tab" aria-pressed="false">California</button>
-        <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" class="nav-region-tab" aria-pressed="false">Alberta</button>
-        <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" class="nav-region-tab" aria-pressed="false">Nova Scotia</button>
-        <button type="button" onclick="showProvinceCities('nl')" id="province-tab-nl" class="nav-region-tab" aria-pressed="false">Newfoundland</button>
-        <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" class="nav-region-tab" aria-pressed="false">Massachusetts</button>
-        <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" class="nav-region-tab" aria-pressed="false">New York</button>
-        <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" class="nav-region-tab" aria-pressed="false">Pennsylvania</button>
-        <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" class="nav-region-tab" aria-pressed="false">Colorado</button>
-        <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" class="nav-region-tab" aria-pressed="false">Vermont</button>
-        <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" class="nav-region-tab" aria-pressed="false">Michigan</button>
-        <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" class="nav-region-tab" aria-pressed="false">New Jersey</button>
-        <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" class="nav-region-tab" aria-pressed="false">Illinois</button>
-        <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" class="nav-region-tab" aria-pressed="false">Washington</button>
-        <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" class="nav-region-tab" aria-pressed="false">Minnesota</button>
-        <button type="button" onclick="showProvinceCities('pe')" id="province-tab-pe" class="nav-region-tab" aria-pressed="false">PEI</button>
-        <button type="button" onclick="showProvinceCities('nb')" id="province-tab-nb" class="nav-region-tab" aria-pressed="false">New Brunswick</button>
-        <button type="button" onclick="showProvinceCities('mb')" id="province-tab-mb" class="nav-region-tab" aria-pressed="false">Manitoba</button>
-        <button type="button" onclick="showProvinceCities('sk')" id="province-tab-sk" class="nav-region-tab" aria-pressed="false">Saskatchewan</button>
-        <button type="button" onclick="showProvinceCities('qc')" id="province-tab-qc" class="nav-region-tab" aria-pressed="false">Quebec</button>
-        <button type="button" onclick="showProvinceCities('yt')" id="province-tab-yt" class="nav-region-tab" aria-pressed="false">Yukon</button>
-        <button type="button" onclick="showProvinceCities('nt')" id="province-tab-nt" class="nav-region-tab" aria-pressed="false">NWT</button>
+        <div class="nav-region-group" role="group" aria-label="Canada"><span class="nav-region-group-label">Canada</span>
+          <div class="nav-region-group-tabs">
+          <button type="button" onclick="showProvinceCities('ab')" id="province-tab-ab" class="nav-region-tab" aria-pressed="false">Alberta</button>
+          <button type="button" onclick="showProvinceCities('bc')" id="province-tab-bc" class="nav-region-tab" aria-pressed="false">British Columbia</button>
+          <button type="button" onclick="showProvinceCities('mb')" id="province-tab-mb" class="nav-region-tab" aria-pressed="false">Manitoba</button>
+          <button type="button" onclick="showProvinceCities('nt')" id="province-tab-nt" class="nav-region-tab" aria-pressed="false">NWT</button>
+          <button type="button" onclick="showProvinceCities('nb')" id="province-tab-nb" class="nav-region-tab" aria-pressed="false">New Brunswick</button>
+          <button type="button" onclick="showProvinceCities('nl')" id="province-tab-nl" class="nav-region-tab" aria-pressed="false">Newfoundland</button>
+          <button type="button" onclick="showProvinceCities('ns')" id="province-tab-ns" class="nav-region-tab" aria-pressed="false">Nova Scotia</button>
+          <button type="button" onclick="showProvinceCities('on')" id="province-tab-on" class="nav-region-tab is-on" aria-pressed="true">Ontario</button>
+          <button type="button" onclick="showProvinceCities('pe')" id="province-tab-pe" class="nav-region-tab" aria-pressed="false">PEI</button>
+          <button type="button" onclick="showProvinceCities('qc')" id="province-tab-qc" class="nav-region-tab" aria-pressed="false">Quebec</button>
+          <button type="button" onclick="showProvinceCities('sk')" id="province-tab-sk" class="nav-region-tab" aria-pressed="false">Saskatchewan</button>
+          <button type="button" onclick="showProvinceCities('yt')" id="province-tab-yt" class="nav-region-tab" aria-pressed="false">Yukon</button>
+          </div></div>
+        <div class="nav-region-group" role="group" aria-label="United States"><span class="nav-region-group-label">United States</span>
+          <div class="nav-region-group-tabs">
+          <button type="button" onclick="showProvinceCities('ca')" id="province-tab-ca" class="nav-region-tab" aria-pressed="false">California</button>
+          <button type="button" onclick="showProvinceCities('co')" id="province-tab-co" class="nav-region-tab" aria-pressed="false">Colorado</button>
+          <button type="button" onclick="showProvinceCities('il')" id="province-tab-il" class="nav-region-tab" aria-pressed="false">Illinois</button>
+          <button type="button" onclick="showProvinceCities('ma')" id="province-tab-ma" class="nav-region-tab" aria-pressed="false">Massachusetts</button>
+          <button type="button" onclick="showProvinceCities('mi')" id="province-tab-mi" class="nav-region-tab" aria-pressed="false">Michigan</button>
+          <button type="button" onclick="showProvinceCities('mn')" id="province-tab-mn" class="nav-region-tab" aria-pressed="false">Minnesota</button>
+          <button type="button" onclick="showProvinceCities('nj')" id="province-tab-nj" class="nav-region-tab" aria-pressed="false">New Jersey</button>
+          <button type="button" onclick="showProvinceCities('ny')" id="province-tab-ny" class="nav-region-tab" aria-pressed="false">New York</button>
+          <button type="button" onclick="showProvinceCities('pa')" id="province-tab-pa" class="nav-region-tab" aria-pressed="false">Pennsylvania</button>
+          <button type="button" onclick="showProvinceCities('vt')" id="province-tab-vt" class="nav-region-tab" aria-pressed="false">Vermont</button>
+          <button type="button" onclick="showProvinceCities('wa')" id="province-tab-wa" class="nav-region-tab" aria-pressed="false">Washington</button>
+          </div></div>
       </div>
     </div>
     <div style="padding:0 16px 16px;">

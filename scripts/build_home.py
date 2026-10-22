@@ -243,7 +243,7 @@ def hero(regs, total, picker):
   </div>
 </section>
 <script>(function(){{var D=window.HPR_CITIES={json.dumps(picker, separators=(",", ":"))};var p=document.getElementById("hf-prov"),c=document.getElementById("hf-city");
-D.forEach(function(r){{var o=document.createElement("option");o.value=r.c;o.textContent=r.n;p.appendChild(o)}});
+var G="",gl;D.forEach(function(r){{if(r.g!==G){{G=r.g;gl=document.createElement("optgroup");gl.label=G==="ca"?"Canada":"United States";p.appendChild(gl)}}var o=document.createElement("option");o.value=r.c;o.textContent=r.n;gl.appendChild(o)}});
 function fill(){{c.textContent="";var h=document.createElement("option");h.value="";h.textContent="Choose your city";c.appendChild(h);
 var r=D.filter(function(x){{return x.c===p.value}})[0];if(r)r.k.forEach(function(k){{var o=document.createElement("option");o.value=k[0];o.textContent=k[1];c.appendChild(o)}})}}
 p.addEventListener("change",function(){{fill();if(window.HPR_SHEET&&p.value)window.HPR_SHEET(p.value)}});window.HPR_FILL=fill;}})();</script>
@@ -583,7 +583,8 @@ def main():
     foot = between(old, "<!-- CANONICAL-FOOTER-START -->", "<!-- CANONICAL-FOOTER-END -->")
     js = between(old, "<script>\n/* CANONICAL-NAV-FOOTER-JS-START */", "/* CANONICAL-NAV-FOOTER-JS-END */\n</script>")
     regs = region_data()
-    picker = [{"c": code, "n": name, "k": [[c, OV.get(c, c.replace("-", " ").title())] for c in city_slugs(code)]} for code, name, _, _ in REG]
+    picker = sorted(({"c": code, "n": name, "g": regions.COUNTRY_BY_CODE[code], "k": [[c, OV.get(c, c.replace("-", " ").title())] for c in city_slugs(code)]} for code, name, _, _ in REG),
+                    key=lambda r: regions.order_key(r["c"]))  # Canada, then the United States, A to Z
     total = sum(len(r["k"]) for r in picker)
     faqs = faq_items(regs, total)
     modified = max(x.get("verified_on", "") for x in FACTS.values())

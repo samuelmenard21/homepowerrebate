@@ -11,8 +11,8 @@ body{font-family:'Inter Tight', 'Inter Tight Fallback',-apple-system,BlinkMacSys
 .bdg-hero .bdg-wrap{position:relative;z-index:1;display:grid;gap:28px;align-items:center}
 .bdg-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber-bright);margin-bottom:14px}
 .bdg-eyebrow::before{content:"";width:22px;height:2px;background:var(--amber-bright)}
-.bdg-hero h1{color:#fff;font-weight:600;font-size:clamp(34px,8.4vw,60px);line-height:1.04;max-width:14ch;text-wrap:balance}
-.bdg-hero .bdg-sub{margin-top:16px;max-width:46ch;font-size:clamp(17px,1.5vw,20px);line-height:1.5;color:rgba(250,247,242,.86)}
+.bdg-hero h1{color:#fff;font-weight:600;font-size:clamp(34px,8.4vw,60px);line-height:1.04;max-width:8.4em;text-wrap:balance}
+.bdg-hero .bdg-sub{margin-top:16px;max-width:27.6em;font-size:clamp(17px,1.5vw,20px);line-height:1.5;color:rgba(250,247,242,.86)}
 .bdg-points{display:flex;flex-wrap:wrap;gap:8px 18px;margin:22px 0 0;padding:0;list-style:none;font-size:15px;color:rgba(250,247,242,.9)}
 .bdg-points li{display:flex;align-items:center;gap:8px}
 .bdg-points li::before{content:"";width:18px;height:18px;flex:none;border-radius:50%;background:var(--amber) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3L15 6.5' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
@@ -71,7 +71,7 @@ body{font-family:'Inter Tight', 'Inter Tight Fallback',-apple-system,BlinkMacSys
 .bdg-copy.done{background:var(--green-money)}
 @media(min-width:560px){.bdg-copy{width:auto}}
 .bdg-sec{padding:64px 0 0}
-.bdg-sec>.bdg-wrap>p.bdg-lead{margin-top:8px;color:var(--ink-soft);font-size:16.5px;max-width:60ch}
+.bdg-sec>.bdg-wrap>p.bdg-lead{margin-top:8px;color:var(--ink-soft);font-size:16.5px;max-width:36em}
 .bdg-how{display:grid;gap:14px;margin:26px 0 0;padding:0;list-style:none;counter-reset:how}
 @media(min-width:760px){.bdg-how{grid-template-columns:repeat(3,1fr)}}
 .bdg-how li{counter-increment:how;background:#fff;border:1px solid var(--rule);border-radius:16px;padding:22px 20px}
@@ -88,7 +88,7 @@ body{font-family:'Inter Tight', 'Inter Tight Fallback',-apple-system,BlinkMacSys
 .bdg-extra{margin:64px 0 72px;display:grid;gap:18px;align-items:center;background:var(--teal-deep);color:var(--paper);border-radius:20px;padding:28px 22px}
 @media(min-width:760px){.bdg-extra{grid-template-columns:1fr auto;padding:36px 40px}}
 .bdg-extra h2{color:#fff}
-.bdg-extra p{margin-top:8px;color:rgba(250,247,242,.85);font-size:16px;max-width:56ch}
+.bdg-extra p{margin-top:8px;color:rgba(250,247,242,.85);font-size:16px;max-width:33.6em}
 .bdg-extra a{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:12px;background:#fff;color:var(--teal-deep);font-weight:700;text-decoration:none;white-space:nowrap}
 .bdg-extra a:hover{background:var(--paper-warm)}
 #sticky-cta{display:none!important}

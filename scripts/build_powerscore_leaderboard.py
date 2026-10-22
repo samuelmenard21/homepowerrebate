@@ -103,6 +103,7 @@ def main():
 <p>Canadian amounts are converted to US dollars at {fx} so both countries share one list.</p>
 <h2 id="read">How to read this leaderboard</h2>
 <p>Only programs that are open today count. A program that is closed, paused or about to start adds nothing, so a city can drop when a program closes and climb when a new one opens. The biggest amounts are often for lower-income households, such as the CleanBC and Yukon income-qualified heat pump programs, so your own number can be much smaller. Where two cities share a utility and a province, they usually tie. For the score that also weighs how many upgrades are covered, see <a href="/powerscore/">PowerScore</a>, and for two cities side by side, the head-to-head comparisons linked from the same page.</p>
+<p>What moved since last month? See the <a href="/data-release/">monthly data release</a>.</p>
 <p>Want your own number? Use the <a href="/calculator/">rebate calculator</a> or <a href="/get-quotes/">see my rebates</a>.</p>
 <h2 id="faq">Common questions</h2>
 {kit.faq({"faq": FAQ})}

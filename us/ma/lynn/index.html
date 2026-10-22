@@ -49,7 +49,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/article-c0947b3c.css?v=7b04af6753" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=433c87bbfa" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=d8bb5f1aad" data-hpr-site-css>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Home Energy Rebates in Lynn, MA (2026)", "description": "Lynn homes (National Grid) get Mass Save rebates: heat pumps up to $8,500 ($16,000 income-qualified), 75-100% off insulation, $750 water heaters, 0% HEAT Loan.", "datePublished": "2026-08-13", "dateModified": "2026-09-26", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com/"}, "mainEntityOfPage": "https://homepowerrebate.com/us/ma/lynn/"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What home energy rebates can Lynn residents get?", "acceptedAnswer": {"@type": "Answer", "text": "Lynn is a National Grid town, so Mass Save applies: a no-cost home energy assessment, 75-100% off insulation and air sealing, heat pumps up to $8,500 (up to $16,000 if income-qualified), a $750 heat pump water heater rebate, and the 0% HEAT Loan up to $25,000."}}, {"@type": "Question", "name": "How much is the heat pump rebate in Lynn?", "acceptedAnswer": {"@type": "Answer", "text": "Whole-home air-source systems get $2,650 per ton, up to $8,500. Partial-home systems get $1,125 per ton, up to $8,500. Income-qualified households can get up to $16,000, or no cost."}}, {"@type": "Question", "name": "Are there insulation rebates for Lynn residents?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. After a Mass Save assessment, most households get 75% off insulation and air sealing. Income-qualified households can get up to 100% off."}}, {"@type": "Question", "name": "Can Lynn landlords get HVAC rebates?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mass Save has assessment paths for landlords of 1-4 unit and 5+ unit buildings, and heat pump rebates apply to rental properties served by a Mass Save utility."}}, {"@type": "Question", "name": "Is Lynnfield eligible for Mass Save?", "acceptedAnswer": {"@type": "Answer", "text": "Not for electric-side rebates. Lynnfield is served by the Reading and Peabody municipal light plants. Ask them about their own rebates and the state's 0% MLP Z-Loan."}}]}</script>
 <meta name="theme-color" content="#faf7f2">
@@ -877,6 +877,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
       f.hidden = true; done.textContent = "You're on the list! Check your inbox for a short note from us.";
       if (share) share.hidden = false;
       ev('fed_alert_signup');
+      try { localStorage.setItem('hpr-fed-done', '1'); } catch (e2) {}
     } catch (err) {
       done.textContent = 'That did not go through. Please try again, or email hello@homepowerrebate.com.'; b.disabled = false; b.textContent = t;
     }
@@ -907,6 +908,48 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     }
     r.addEventListener('change', upd); if (cs) cs.addEventListener('change', upd);
     new MutationObserver(upd).observe(r, { childList: true }); window.addEventListener('load', upd); upd();
+  });
+})();
+// Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
+// the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
+// closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".
+(function () {
+  var path = location.pathname, CA = 'bc on ab ns nl pe nb mb sk qc yt nt nu'.split(' ');
+  if (path === '/' || /\/fr\/|^\/heat-pump-rebate-alert|^\/calculator\/embed|^\/(get-quotes\/)?(privacy|terms|unsubscribe)/.test(path)) return;
+  var m = path.match(/^\/(?:ca|calculator)\/([a-z]{2})\//), code = m && CA.indexOf(m[1]) >= 0 ? m[1].toUpperCase() : '';
+  function box() { return document.querySelector('.fed-alert:not([hidden]), .rc-fed'); }
+  if (!code && !box()) return;
+  try { if (localStorage.getItem('hpr-fed-done') || Date.now() - (+localStorage.getItem('hpr-fed-bar-x') || 0) < 14 * 864e5) return; } catch (e) {}
+  var API = 'https://leads.homepowerrebate.com', q = new URLSearchParams(location.search), src = q.get('src') || q.get('utm_source') || '';
+  var bar = document.createElement('div');
+  bar.className = 'fed-bar'; bar.setAttribute('role', 'region'); bar.setAttribute('aria-label', 'Heat pump rebate email alert'); bar.hidden = true;
+  bar.innerHTML = '<p><b>New:</b> Ottawa announced a heat pump rebate of up to $10,000. Applications open early 2027.</p>' +
+    '<form><label for="fed-bar-email" style="position:absolute;left:-9999px">Email</label><input id="fed-bar-email" type="email" required autocomplete="email" placeholder="Your email"><input class="fed-bar-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit"><span class="fb-l">Email me when it opens</span><span class="fb-s">Alert me</span></button></form>' +
+    '<button class="fed-bar-x" type="button" aria-label="Close">&times;</button>';
+  document.body.appendChild(bar);
+  function ev(name) { if (window.gtag) window.gtag('event', name, { page_path: path, alert_src: 'bar' }); }
+  function inView(el) { var r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight * 0.9; }
+  var shown = false, hid = false;
+  function place() {
+    var b = box(), on = !hid && window.scrollY > 500 && !(b && inView(b));
+    if (on === shown) return;
+    shown = on; bar.hidden = false; document.body.classList.toggle('has-fed-bar', on);
+    requestAnimationFrame(function () { bar.classList.toggle('on', on); });
+    if (on && !bar.dataset.v) { bar.dataset.v = 1; ev('fed_bar_view'); }
+  }
+  window.addEventListener('scroll', place, { passive: true }); window.addEventListener('resize', place); place();
+  bar.querySelector('.fed-bar-x').addEventListener('click', function () { hid = true; try { localStorage.setItem('hpr-fed-bar-x', Date.now()); } catch (e) {} place(); ev('fed_bar_close'); });
+  bar.querySelector('form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var f = e.target, b = f.querySelector('button'), t = b.innerHTML, p = bar.querySelector('p');
+    b.disabled = true; b.textContent = 'Saving...';
+    try {
+      var r = await fetch(API + '/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: 'federal-hp', email: f.querySelector('input[type="email"]').value, province: code, city: '', page: path + '?src=bar' + (src ? '-' + encodeURIComponent(src).slice(0, 40) : ''), website: f.querySelector('.fed-bar-hp').value }) });
+      if (!r.ok) throw new Error('bad');
+      f.hidden = true; p.className = 'fed-bar-msg'; p.textContent = "You're on the list! Check your inbox for a short note from us.";
+      try { localStorage.setItem('hpr-fed-done', '1'); } catch (e2) {}
+      ev('fed_alert_signup'); setTimeout(function () { hid = true; place(); }, 6000);
+    } catch (err) { b.disabled = false; b.innerHTML = t; p.textContent = 'That did not go through. Please try again.'; }
   });
 })();
 (function () {

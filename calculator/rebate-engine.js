@@ -240,6 +240,7 @@
       box.appendChild(el("div", "rc-total-num", money(r.total, region.currency)));
       box.appendChild(el("p", "rc-total-sub", "Adds the biggest open offer for each upgrade you picked. Only programs open today are counted."));
       out.appendChild(box);
+      if (String(region.country || "").toLowerCase() === "ca" && plan.indexOf("heat-pump") >= 0) out.appendChild(fedPrompt(region, answers, opts));
       r.capNotes.forEach(function (n) { out.appendChild(el("p", "rc-hint", n)); });
       if (r.incomeUnknown) out.appendChild(el("p", "rc-hint", "Add your household size and income to check income-qualified programs. They pay the most."));
       else if (r.incomeLevel === "none") out.appendChild(el("p", "rc-hint", "Your income is above the income-qualified limits, so only the general programs apply."));
@@ -326,6 +327,38 @@
       out.appendChild(links);
     }
     render();
+  }
+
+  /* Canadian results with a heat pump picked: the federal rebate is not in the total (not open, rules not published), so say so and offer the launch alert. Same /alert route as the alert box on the guides. */
+  function fedPrompt(region, answers, opts) {
+    var done = false;
+    try { done = !!localStorage.getItem("hpr-fed-done"); } catch (e) { /* storage blocked */ }
+    var f = el("form", "rc-fed");
+    f.appendChild(el("h3", "rc-h", "The federal heat pump rebate is not in this total"));
+    f.appendChild(el("p", "rc-help", "Ottawa announced up to $10,000 for households below the median income and $2,000 for others. Applications open in early 2027, and the rules are not out yet, so we cannot add it. Get one email the day it opens."));
+    if (done) { f.appendChild(el("p", "rc-help", "You are already on the launch list. We will email you.")); return f; }
+    var i = el("input"); i.type = "email"; i.required = true; i.placeholder = "you@example.com"; i.setAttribute("aria-label", "Email address");
+    var h = el("input", "rc-hp"); h.type = "text"; h.tabIndex = -1; h.setAttribute("autocomplete", "off"); h.setAttribute("aria-hidden", "true");
+    var b = el("button", null, "Email me when it opens"); b.type = "submit";
+    var msg = el("p", "rc-help");
+    f.appendChild(i); f.appendChild(h); f.appendChild(b); f.appendChild(msg);
+    f.addEventListener("submit", function (e) {
+      e.preventDefault();
+      b.disabled = true;
+      var cq = region.questions.filter(function (q) { return q.id === "city"; })[0];
+      var co = cq && answers.city ? cq.options.filter(function (o) { return o.value === answers.city; })[0] : null;
+      fetch("https://leads.homepowerrebate.com/alert", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ list: "federal-hp", email: i.value, province: region.code.toUpperCase(), city: co ? co.label : "", page: location.pathname + (opts.embed ? "?src=calc-embed" : "?src=calc"), website: h.value })
+      }).then(function (r) {
+        if (!r.ok) throw new Error("bad");
+        try { localStorage.setItem("hpr-fed-done", "1"); } catch (e2) { /* storage blocked */ }
+        if (window.gtag) window.gtag("event", "fed_alert_signup", { page_path: location.pathname, alert_src: "calc" });
+        f.textContent = "";
+        f.appendChild(el("p", "rc-help", "You are on the list. Check your inbox for a short note from us."));
+      }).catch(function () { b.disabled = false; msg.textContent = "Something went wrong. Please try again."; });
+    });
+    return f;
   }
 
   function savePlan(region, answers) {

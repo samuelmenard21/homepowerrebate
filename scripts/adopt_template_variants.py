@@ -20,6 +20,8 @@ STYLE_RE = re.compile(r"<style>([\s\S]*?)</style>")
 # family -> (structure every page must have, text that identifies the family's own style block)
 FAMILIES = {
     "article": ((re.compile(r'<main[^>]*>.*?(<section class="hero"[^>]*>\s*<div class="wrap">.*?<article class="article"|<header class="post-header">\s*<div class="wrap">.*?<article>)', re.S),), (".hero", ".post-header")),
+    # installer ranking pages: the generator's own style block (new rules added to build_installer_rankings.py get a new hash)
+    "ranking": ((re.compile(r'class="hero-ico"'),), (".hero-ico",)),
 }
 
 

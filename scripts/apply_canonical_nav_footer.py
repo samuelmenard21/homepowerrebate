@@ -46,7 +46,7 @@ EXCLUDE_FILES = {
 PROV_CODES = set(regions.CODES)
 # ca/<x> or us/<x> path prefix -> province-tab code
 REGION_PREFIX_TO_CODE = dict(regions.CODE_BY_PREFIX)
-CATEGORY_NAMES = {
+CATEGORY_NAMES = {"fr", 
     "heat-pump", "insulation", "solar", "battery", "water-heater",
     "smart-thermostats", "ev-charger", "windows-doors", "windows", "appliances", "hrv",
 }
@@ -740,7 +740,8 @@ def ensure_landmarks(content: str) -> str:
                 seg = seg[:tag_end] + ' role="main" id="main"' + seg[tag_end:]
                 content = content[:a] + seg + content[b:]
         else:
-            content = content[:a] + '\n<main id="main" tabindex="-1">' + content[a:b] + "</main>\n" + content[b:]
+            seg = content[a:b].replace(' role="main" id="main"', "", 1)  # drop the fallback tag an earlier run put on the content container
+            content = content[:a] + '\n<main id="main" tabindex="-1">' + seg + "</main>\n" + content[b:]
     if 'class="skip-link"' not in content and 'id="main"' in content:
         content = re.sub(r"(<body[^>]*>)", lambda m: m.group(1) + '\n<a class="skip-link" href="#main">Skip to main content</a>', content, count=1)
     return content

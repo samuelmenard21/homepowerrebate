@@ -32,7 +32,7 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Which city has the better overall PowerScore, Boston or New York City?", "acceptedAnswer": {"@type": "Answer", "text": "Boston has the higher overall PowerScore at 50.1/100, compared to New York City's 49.5/100. PowerScore is a 0-100 average of 8 rebate categories built from real published rebate amounts, program status, and how many programs stack."}}, {"@type": "Question", "name": "Which city has better solar rebates, Boston or New York City?", "acceptedAnswer": {"@type": "Answer", "text": "Boston scores higher on solar, 3.8 vs 0.0 out of 100. Boston's strongest category overall is heat pump at 100.0, while New York City's strongest is insulation at 100.0."}}, {"@type": "Question", "name": "Is it fair to compare Boston and New York City directly?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Every city's PowerScore is measured against one shared yardstick in US dollars, so Boston (Massachusetts) and New York City (New York) are on the same scale. Canadian amounts are converted at an approximate rate, and programs have different rules, so treat scores within a few points of each other as a tie."}}]}</script>
 
 <link rel="stylesheet" href="/assets/tpl/powerscore-387a4e2f.css?v=fe1db59e97" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=079f070b82" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=ed60a46822" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -624,6 +624,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 (function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
 var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
+(function(){document.querySelectorAll('.hpr-quiz').forEach(function(z){z.classList.add('qz-ready');var qs=[].slice.call(z.querySelectorAll('.qz-q')),got=0,done=0;
+qs.forEach(function(q){var a=+q.dataset.a;q.querySelectorAll('.qz-opt').forEach(function(b,i){b.addEventListener('click',function(){if(q.classList.contains('done'))return;q.classList.add('done');done++;
+if(i===a){got++;b.classList.add('right')}else{b.classList.add('wrong');q.querySelectorAll('.qz-opt')[a].classList.add('right')}
+if(done===qs.length){var r=z.querySelector('.qz-result'),m=JSON.parse(z.dataset.msgs||'[]'),k=got===qs.length?2:got>=Math.ceil(qs.length/2)?1:0;
+r.querySelector('.qz-score').textContent='You got '+got+' of '+qs.length;r.querySelector('.qz-msg').textContent=m[k]||'';r.classList.add('on');
+if(window.gtag)gtag('event','quiz_complete',{quiz:z.id,score:got,total:qs.length})}})})})})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

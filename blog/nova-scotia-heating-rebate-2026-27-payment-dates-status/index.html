@@ -33,7 +33,7 @@
 <!-- FONT-PRELOAD-END -->
 
 <link rel="stylesheet" href="/assets/tpl/article-28f467de.css?v=9d7d233d21" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=079f070b82" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=ed60a46822" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -322,6 +322,8 @@
 <article class="article">
   <div class="wrap">
 <!-- PROG-ALERT-START --><section class="prog-alert" data-list="harp-ns" data-region="NS" aria-label="Email alert for Nova Scotia Heating Assistance Rebate (HARP)"><div class="prog-alert-text"><p class="prog-alert-h">Get one email when this changes</p><p>We will write once when Nova Scotia Heating Assistance Rebate (HARP) opens, closes or changes. Nothing else.</p></div><form class="prog-alert-form"><label for="prog-alert-email">Email</label><input id="prog-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email"><input class="prog-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">Email me</button></form><p class="prog-alert-done" role="status" hidden></p><p class="prog-alert-note">No spam. Unsubscribe anytime. We are an independent site, not the program.</p></section><!-- PROG-ALERT-END -->
+
+
 
 <div class="callout"><strong>Short answer:</strong> Applied October 1? Expect your $400 between November 26 and December 10. That is our math: the province says 8 to 10 weeks and publishes no payment calendar. To check your status, use the province's status page with your confirmation number and postal code (online applications only). You can apply until March 31, 2027.</div>
 <h2 id="payment-dates-for-2026-27">Payment dates for 2026-27</h2>
@@ -769,6 +771,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 (function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
 var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
+(function(){document.querySelectorAll('.hpr-quiz').forEach(function(z){z.classList.add('qz-ready');var qs=[].slice.call(z.querySelectorAll('.qz-q')),got=0,done=0;
+qs.forEach(function(q){var a=+q.dataset.a;q.querySelectorAll('.qz-opt').forEach(function(b,i){b.addEventListener('click',function(){if(q.classList.contains('done'))return;q.classList.add('done');done++;
+if(i===a){got++;b.classList.add('right')}else{b.classList.add('wrong');q.querySelectorAll('.qz-opt')[a].classList.add('right')}
+if(done===qs.length){var r=z.querySelector('.qz-result'),m=JSON.parse(z.dataset.msgs||'[]'),k=got===qs.length?2:got>=Math.ceil(qs.length/2)?1:0;
+r.querySelector('.qz-score').textContent='You got '+got+' of '+qs.length;r.querySelector('.qz-msg').textContent=m[k]||'';r.classList.add('on');
+if(window.gtag)gtag('event','quiz_complete',{quiz:z.id,score:got,total:qs.length})}})})})})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

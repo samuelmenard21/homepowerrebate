@@ -62,7 +62,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/article-180509fd.css?v=c7137bbc2b" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=079f070b82" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=ed60a46822" data-hpr-site-css>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How long does a Mass Save rebate take?", "acceptedAnswer": {"@type": "Answer", "text": "Mass Save's official processing window is 8 to 12 weeks. In practice it has often been longer. Some homeowners waited close to six months, and at least one case ran past a year."}}, {"@type": "Question", "name": "How do I check my Mass Save rebate status?", "acceptedAnswer": {"@type": "Answer", "text": "Call Mass Save and ask for a specific status update and a reference number for your case. Then confirm with your contractor that the claim was actually submitted, and ask for a copy of the submission confirmation."}}, {"@type": "Question", "name": "Why is my Mass Save rebate delayed?", "acceptedAnswer": {"@type": "Answer", "text": "The usual causes are missing signatures or incomplete contractor paperwork, a mismatch between the assessment record and the installed equipment, a backlog of heat pump and insulation claims, an old certification, or a contractor mistake you only find out about when you call."}}, {"@type": "Question", "name": "Who do I complain to if it has been more than 12 weeks?", "acceptedAnswer": {"@type": "Answer", "text": "Call Mass Save first. If it cannot give you a timeline, file a complaint with the Massachusetts DPU Consumer Division (877-886-5066), then with the Attorney General's consumer protection division (617-727-8400)."}}, {"@type": "Question", "name": "When should I follow up on my rebate?", "acceptedAnswer": {"@type": "Answer", "text": "At the 6-week mark, not the 12-week mark. A paperwork problem is much faster to fix early than after the file has gone quiet."}}, {"@type": "Question", "name": "What should I keep in case I need to escalate?", "acceptedAnswer": {"@type": "Answer", "text": "The contractor's invoice, the assessment report, your rebate application confirmation, and a log of every call with the date, the representative's name and what they said."}}]}</script>
 <link rel="stylesheet" href="/assets/tpl/article-ce18d2cc.css?v=ce18d2cc21" data-hpr-tpl>
 <meta name="theme-color" content="#faf7f2">
@@ -703,6 +703,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 (function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
 var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
+(function(){document.querySelectorAll('.hpr-quiz').forEach(function(z){z.classList.add('qz-ready');var qs=[].slice.call(z.querySelectorAll('.qz-q')),got=0,done=0;
+qs.forEach(function(q){var a=+q.dataset.a;q.querySelectorAll('.qz-opt').forEach(function(b,i){b.addEventListener('click',function(){if(q.classList.contains('done'))return;q.classList.add('done');done++;
+if(i===a){got++;b.classList.add('right')}else{b.classList.add('wrong');q.querySelectorAll('.qz-opt')[a].classList.add('right')}
+if(done===qs.length){var r=z.querySelector('.qz-result'),m=JSON.parse(z.dataset.msgs||'[]'),k=got===qs.length?2:got>=Math.ceil(qs.length/2)?1:0;
+r.querySelector('.qz-score').textContent='You got '+got+' of '+qs.length;r.querySelector('.qz-msg').textContent=m[k]||'';r.classList.add('on');
+if(window.gtag)gtag('event','quiz_complete',{quiz:z.id,score:got,total:qs.length})}})})})})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

@@ -137,6 +137,7 @@ $("gq-bar").addEventListener("submit",function(e){e.preventDefault();var m=$("gq
  m.style.display="none";setProject($("gq-proj").value);show();var o=$("gq-out");if(o.scrollIntoView)o.scrollIntoView({behavior:"smooth",block:"start"});
  if(window.gtag)gtag("event","finder_search",{city:cs.value,project:$("gq-proj").value||"all"})});
 if(rs.value&&cs.value){var nm=cs.options[cs.selectedIndex].textContent+", "+(D.filter(function(x){return x.code===rs.value})[0]||{}).name;$("gq-q").value=nm;$("gq-refine").open=true}
+var pj=P.get("project");if(pj&&$("gq-proj").querySelector('option[value="'+pj+'"]')){$("gq-proj").value=pj;setProject(pj)}
 show();
 })();
 """

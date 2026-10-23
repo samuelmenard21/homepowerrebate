@@ -82,3 +82,6 @@ body.tpl-hub { --gut: clamp(20px, 3.2vw, 56px); --hub-w: min(var(--container), 1
 .tpl-hub nav.toc .toc-lbl { font-weight: 700; color: var(--ink); margin-right: 2px; }
 .tpl-hub nav.toc a { color: var(--teal); text-decoration: none; padding: 4px 11px; border: 1px solid var(--rule); border-radius: 999px; white-space: nowrap; }
 .tpl-hub nav.toc a:hover { background: var(--paper-warm); border-color: var(--amber); color: #a4540a; }
+
+/* ---- Photo hero on region hubs (2026-10-23): same free-licence house photo as the finder, under a teal wash ---- */
+.tpl-hub header.hero.hub-hero { background: linear-gradient(180deg, rgba(8, 54, 63, .8), rgba(8, 54, 63, .94)), url(/assets/learn/modern-home-1200.webp) center / cover no-repeat !important; }

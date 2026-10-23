@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-STEPS = ["adopt_template_variants --family ranking", "apply_canonical_nav_footer", "restore_preserved_blocks", "build_internal_boosts", "build_installer_rankings --links-only", "fix_profile_quote_form", "build_calculator --links-only", "build_hpwh_ns --links-only", "add_deadline_notes", "add_federal_links", "add_federal_alert", "add_program_alerts", "add_youtube_embeds", "add_learn_blocks", "add_heat_pump_links", "add_breadcrumb_jsonld", "add_breadcrumb_ld",
+STEPS = ["adopt_template_variants --family ranking", "apply_canonical_nav_footer", "restore_preserved_blocks", "build_internal_boosts", "build_installer_rankings --links-only", "fix_profile_quote_form", "build_calculator --links-only", "build_hpwh_ns --links-only", "add_deadline_notes", "add_federal_links", "add_federal_alert", "add_program_alerts", "add_youtube_embeds", "add_learn_blocks", "add_hub_search", "add_heat_pump_links", "add_breadcrumb_jsonld", "add_breadcrumb_ld",
          "fix_seo_meta", "add_hreflang", "add_aeo_markup", "link_orphans", "link_discovered", "fix_redirected_links", "follow_official_sources", "tag_official_links", "fix_heading_order", "build_about_coverage",
          "apply_canonical_nav_footer", "apply_canonical_nav_footer"]
 

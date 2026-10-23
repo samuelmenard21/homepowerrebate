@@ -98,3 +98,74 @@ def figure(d):
         return ""
     return (f'<figure class="learn-photo"><img src="/assets/learn/{im["file"]}-1200.webp" width="1200" height="800" alt="{e(im["alt"])}" fetchpriority="high">'
             f'<figcaption>Photo: <a href="{e(im["url"])}" target="_blank" rel="noopener">{e(im["credit"])}</a></figcaption></figure>')
+
+
+# ---- open rebates by upgrade, read from the calculators (which read the verified facts) ----
+CAL = ROOT / "calculator" / "data"
+
+
+def _amount(a):
+    """(sort value, display text) for a calculator amount: a maximum, a per-unit rate with a cap, or a labelled amount."""
+    if not a:
+        return 0, ""
+    if a.get("label"):
+        return a.get("max", 0) or a.get("per", {}).get("cap", 0) or 0, a["label"]
+    if a.get("max"):
+        return a["max"], f"up to ${a['max']:,}"
+    per = a.get("per")
+    if per:
+        if per.get("cap"):
+            return per["cap"], f"up to ${per['cap']:,}"
+        return per.get("rate", 0), f"${per['rate']:,} per {per.get('unit', 'unit')}"
+    return 0, ""
+
+
+def open_programs(upgrade):
+    """Every open program for an upgrade across all regions: [{code, region, program, value, shown, source, checked, currency}], biggest first."""
+    out = []
+    for f in sorted(CAL.glob("*.json")):
+        d = json.loads(f.read_text(encoding="utf-8"))
+        for p in d["programs"]:
+            if p.get("upgrade") != upgrade or p.get("status") != "active":
+                continue
+            v, shown = _amount(p.get("amount"))
+            if v <= 0 or not shown:
+                continue
+            out.append({"code": d["code"], "region": d["name"], "country": d["country"], "program": p["name"], "value": v, "shown": shown,
+                        "source": p.get("source_url", ""), "checked": p.get("verified_on", ""), "currency": d["currency"]})
+    return sorted(out, key=lambda r: (r["country"] != "ca", r["region"], -r["value"]))
+
+
+def region_quiz(code):
+    """A quiz for a region built from its calculator programs (so every answer is a verified, dated amount). None when the region has too few."""
+    import zlib
+    d = json.loads((CAL / f"{code}.json").read_text(encoding="utf-8"))
+    cur = "CA$" if d["currency"] == "CAD" else "$"
+    rows = []
+    for p in d["programs"]:
+        v, shown = _amount(p.get("amount"))
+        if p.get("status") == "active" and v > 0 and shown.startswith("up to"):
+            rows.append((p["name"], v, shown, p.get("verified_on", ""), p.get("source_url", "")))
+    seen, uniq = set(), []
+    for r in rows:
+        if r[1] not in seen:
+            seen.add(r[1])
+            uniq.append(r)
+    if len(uniq) < 3:
+        return None
+    uniq = sorted(uniq, key=lambda r: zlib.crc32((code + r[0]).encode()))[:5]
+    values = [r[1] for r in uniq]
+    qs = []
+    for i, (name, v, shown, checked, src) in enumerate(uniq):
+        others = [x for x in values if x != v]
+        opts = sorted({v, *others[:2]})
+        while len(opts) < 3:
+            opts.append(max(opts) * 2)
+            opts = sorted(set(opts))
+        labels = [f"{cur}{x:,}" for x in opts]
+        when = checked and __import__("datetime").date.fromisoformat(checked).strftime("%B %-d, %Y")
+        qs.append({"q": f"The most this program can pay: {name}. How much?", "options": labels, "answer": opts.index(v),
+                   "why": f"{e(name)} pays {e(shown)}. " + (f'<a href="{e(src)}" target="_blank" rel="noopener">Official page</a>, checked {when}.' if src else f"Checked {when}.")})
+    return {"title": f"Quick quiz: {d['name']} rebates", "intro": "A few questions from the programs we track. Tap an answer to see why.", "qs": qs,
+            "messages": ["Worth another look at the programs above.", "Nice. You know the programs well.", "Perfect score. You know your rebates."],
+            "cta": f'<a href="/calculator/{code}/">Estimate your rebates</a>'}

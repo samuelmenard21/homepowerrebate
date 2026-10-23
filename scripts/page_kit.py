@@ -43,10 +43,23 @@ FONTS = """<link rel="preconnect" href="https://fonts.googleapis.com"><link rel=
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">"""
 
 
+# Who-it-is-for chips on a rebate card (2026-10-23). Each chip appears only when the verified fact's own eligibility text says so (never inferred).
+CHIP_RULES = [("Income-qualified", r"income[- ]qualified|income limit|low[- ]income|income below|household income"),
+              ("Single-family homes", r"single[- ]family|single detached"),
+              ("Replaces electric heat", r"replace electric heat|replacing electric heat|replaces electric heat"),
+              ("Registered installer", r"hpcn|registered (?:contractor|installer)|program[- ]registered|licensed and trained")]
+
+
+def chips(c):
+    txt = " ".join(FACTS[i].get("eligibility", "") for i in c.get("facts", []) if i in FACTS).lower()
+    got = [label for label, pat in CHIP_RULES if re.search(pat, txt)]
+    return '<div class="rebate-chips">' + "".join(f"<span>{e(x)}</span>" for x in got) + "</div>" if got else ""
+
+
 def card(c):
     cls, label = PILL[c.get("status", "active")]
     return (f'<div class="rebate-card"><span class="program-status {cls}">{label}</span><h3>{(f"<a href='{c['href']}'>" + e(c["title"]) + "</a>") if c.get("href") else e(c["title"])}</h3><div class="amount">{e(c["amount"])}</div>'
-            f'<p style="font-size:14px;margin:8px 0 0;">{c["note"]}</p></div>')
+            f'<p style="font-size:14px;margin:8px 0 0;">{c["note"]}</p>{chips(c)}</div>')
 
 
 def words(h):
@@ -69,6 +82,33 @@ def checked(fids):
 
 def cards(d):
     return "".join(card(x) for x in d["cards"])
+
+
+def _first_sentence(s, n=170):
+    s = re.sub(r"\s+", " ", s).strip()
+    m = re.match(r"(.{20,%d}?[.;])(\s|$)" % n, s)
+    return (m.group(1) if m else (s if len(s) <= n else s[:n].rsplit(" ", 1)[0] + "...")).rstrip(";")
+
+
+def glance(d):
+    """Who qualifies / How much / How to apply, read from the first card's verified fact (program pages, 2026-10-23). Rendered only when at least two parts have data."""
+    if not d["cards"] or not d["cards"][0].get("facts"):
+        return ""
+    c = d["cards"][0]
+    f = FACTS[c["facts"][0]]
+    parts = []
+    if c.get("amount") and not re.search(r"not confirmed|unverified|check", c["amount"], re.I):
+        parts.append(("How much", e(c["amount"])))
+    if f.get("eligibility"):
+        parts.append(("Who qualifies", e(_first_sentence(f["eligibility"]))))
+    link = f'<a href="{e(f["source_url"])}" target="_blank" rel="noopener">Official program page</a>' if f.get("source_url") else ""
+    when = date.fromisoformat(f["verified_on"]).strftime("%B %-d, %Y") if f.get("verified_on") else ""
+    how = " ".join(x for x in [e(f.get("dates", "")).rstrip("."), ] if x)
+    parts.append(("How to apply", " ".join(x for x in [how + "." if how else "", link, f"Checked {when}." if when else ""] if x)))
+    if len(parts) < 3:  # "How to apply" is always there, so at least one of amount and eligibility must be too
+        return ""
+    cells = "".join(f'<div class="glance-cell"><b>{h}</b><span>{b}</span></div>' for h, b in parts)
+    return f'<div class="glance" aria-label="Program at a glance">{cells}</div>\n'
 
 
 def claim(d):

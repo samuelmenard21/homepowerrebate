@@ -438,6 +438,8 @@ def render_jsonld():
         "creator": {"@type": "Organization", "name": "HomePowerRebate"},
         "variableMeasured": ["Overall PowerScore"] + [CAT_LABELS[c] + " PowerScore" for c in CATEGORIES],
         "temporalCoverage": "2026",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "isAccessibleForFree": True,
         "dateModified": DATA["generated"],
     }
     article = {

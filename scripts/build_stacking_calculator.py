@@ -742,6 +742,8 @@ def build_hub_page():
         "creator": {"@type": "Organization", "name": "HomePowerRebate"},
         "variableMeasured": [CAT_LABELS[c] for c in CATEGORIES],
         "temporalCoverage": "2026",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "isAccessibleForFree": True,
     }
     article_jsonld = {
         "@context": "https://schema.org",

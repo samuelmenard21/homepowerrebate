@@ -33,6 +33,9 @@ def place(f, t, block):
     if "<footer" not in t2 and navfooter.FOOTER_MARKER_START not in t2:
         return None
     i = navfooter.content_insert_point(t2)
+    j = t2.find("<!-- DISCOVERED-LINKS-START -->")
+    if 0 <= j < i:
+        i = j  # same order as a fresh rebuild: learn row, then the related-pages box (link_discovered inserts before the footer)
     return t2[:i] + block + t2[i:]
 
 

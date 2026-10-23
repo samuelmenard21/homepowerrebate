@@ -634,6 +634,8 @@ body:has(#hpr-search) .nav-search { display: none; }
 .learn-card h3,.learn-card .learn-meta{color:var(--ink)}
 .learn-card .learn-meta{color:var(--muted)}
 .learn-card .learn-chips span{color:var(--ink)}
+.learn-wrap{max-width:1180px;margin:0 auto;padding:8px clamp(20px,3vw,40px) 24px}
+.learn-wrap .learn-row{margin-top:32px}
 /* ---- /LEARN ---- */
 /* ===== template design: article (article.css) ===== */
 /* Article template design (category, city hub and program pages: body.tpl-article).

@@ -31,18 +31,21 @@ def card(slug, d):
             f'<span class="learn-more">Read more →</span></a>')
 
 
-def pick(service, n=3):
-    """The n articles that best fit a service (heat-pump, solar...); topped up with general ones."""
+def pick(service, n=3, key=""):
+    """The n articles that best fit a service (heat-pump, solar...); topped up with general ones. With several candidates the order
+    rotates by a hash of key (the page path), so neighbouring pages do not all show the same row."""
+    import zlib
     arts = articles()
-    fit = [s for s, d in arts.items() if service in d["services"]]
-    rest = [s for s in arts if s not in fit]
+    spin = lambda ss: sorted(ss, key=lambda s: zlib.crc32((key + s).encode()))
+    fit = spin([s for s, d in arts.items() if service in d["services"]])
+    rest = spin([s for s in arts if s not in fit])
     return [(s, arts[s]) for s in (fit + rest)[:n]]
 
 
-def not_ready_row(service):
-    cards = "".join(card(s, d) for s, d in pick(service))
-    return (f'<section class="learn-row"><h2>Not ready to talk to a contractor yet?</h2>'
-            f'<p class="learn-sub">Short reads and quick quizzes. Learn the rules first, then call.</p><div class="learn-grid">{cards}</div></section>')
+def not_ready_row(service, key="", heading="Not ready to talk to a contractor yet?", sub="Short reads and quick quizzes. Learn the rules first, then call."):
+    cards = "".join(card(s, d) for s, d in pick(service, key=key))
+    return (f'<section class="learn-row"><h2>{e(heading)}</h2>'
+            f'<p class="learn-sub">{e(sub)}</p><div class="learn-grid">{cards}</div></section>')
 
 
 def tips(unit):

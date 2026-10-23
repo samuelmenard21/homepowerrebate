@@ -488,6 +488,7 @@ def head(regs, total, faqs, modified, keep):
            "url": f"{SITE}/", "logo": f"{SITE}/logo.png", "email": "hello@homepowerrebate.com",
            "description": (f"Independent guide to home energy rebates in {total} cities across Canada and the United States. Every amount links to the "
                            "official program and is re-checked monthly. Installers are ranked by Google reviews; nobody pays to be listed."),
+           "sameAs": ["https://www.youtube.com/@HomePowerRebate", "https://www.facebook.com/profile.php?id=61592376033225"],
            "foundingDate": "2026", "founder": {"@type": "Person", "@id": f"{SITE}/about#sam-menard", "name": "Sam Menard", "url": f"{SITE}/about",
                                                 "sameAs": ["https://www.linkedin.com/in/sammenard/"]},
            "areaServed": area, "contactPoint": {"@type": "ContactPoint", "url": f"{SITE}/contact/", "contactType": "customer support", "availableLanguage": "English"}}

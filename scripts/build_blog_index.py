@@ -10,9 +10,12 @@ Usage: python3 scripts/build_blog_index.py   (git add -f data/blog-index.json)""
 import html
 import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "scripts"))
+import learn_kit as lk  # noqa: E402
 PAGE = ROOT / "blog" / "index.html"
 DATA = ROOT / "data" / "blog-index.json"
 S, E = "<!-- BLOG-INDEX-START -->", "<!-- BLOG-INDEX-END -->"
@@ -72,6 +75,9 @@ def build(data):
   </div>
 </section>
 """]
+    shelf = "".join(lk.card(sl, d) for sl, d in lk.articles().items())
+    out.append(f'<section id="quick-reads" style="padding:44px 0 8px;scroll-margin-top:90px;"><div class="wrap-wide"><h2 style="font-size:clamp(26px,4vw,34px);margin:0 0 8px;">Quick reads and quizzes</h2>'
+               f'<p style="margin:0 0 20px;color:var(--ink-soft);max-width:640px;">Listicles, myth busters and short quizzes. Learn the rules in five minutes, then call a contractor.</p><div class="learn-grid">{shelf}</div></div></section>\n')
     for s in secs:
         cards = "\n".join(card(p) for p in spread(s["posts"]))
         out.append(f"""<section id="{s['id']}" style="padding:44px 0 8px;scroll-margin-top:90px;">

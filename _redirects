@@ -1253,19 +1253,6 @@
 /us/ny/pseg/smithtown/heat-pump /us/ny/pseg/smithtown/ 301
 /us/ny/pseg/southampton/heat-pump/ /us/ny/pseg/southampton/ 301
 /us/ny/pseg/southampton/heat-pump /us/ny/pseg/southampton/ 301
-/us/ma/boston/hrv /us/ma/hrv/ 301
-/us/ma/brockton/hrv /us/ma/hrv/ 301
-/us/ma/cambridge/hrv /us/ma/hrv/ 301
-/us/ma/fall-river/hrv /us/ma/hrv/ 301
-/us/ma/lawrence/hrv /us/ma/hrv/ 301
-/us/ma/lowell/hrv /us/ma/hrv/ 301
-/us/ma/lynn/hrv /us/ma/hrv/ 301
-/us/ma/new-bedford/hrv /us/ma/hrv/ 301
-/us/ma/newton/hrv /us/ma/hrv/ 301
-/us/ma/quincy/hrv /us/ma/hrv/ 301
-/us/ma/somerville/hrv /us/ma/hrv/ 301
-/us/ma/springfield/hrv /us/ma/hrv/ 301
-/us/ma/worcester/hrv /us/ma/hrv/ 301
 /us/ma/boston/appliances/ /us/ma/appliances/ 301
 /us/ma/boston/appliances /us/ma/appliances/ 301
 /us/ma/brockton/appliances/ /us/ma/appliances/ 301
@@ -1768,6 +1755,9 @@
 /installers/bc/langley/insulation/ /ca/bc/langley/insulation/ 301
 /installers/bc/langley/insulation /ca/bc/langley/insulation/ 301
 
+/installers/profiles/ma/somerville/airsupp-heating-cooling/ /installers/ma/somerville/heat-pump/ 301
+/installers/profiles/ma/somerville/airsupp-heating-cooling /installers/ma/somerville/heat-pump/ 301
+
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 /installers/profiles/ab/red-deer/express-plumbing-heating-inc/ /installers/ab/red-deer/heat-pump/ 301
 /installers/profiles/ab/red-deer/express-plumbing-heating-inc /installers/ab/red-deer/heat-pump/ 301
@@ -1797,6 +1787,21 @@
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+/fr/qc/thermopompe/ /ca/qc/heat-pump/fr/ 301
+/fr/qc/thermopompe /ca/qc/heat-pump/fr/ 301
+/fr/qc/montreal/ /ca/qc/montreal/fr/ 301
+/fr/qc/montreal /ca/qc/montreal/fr/ 301
+/fr/qc/quebec/ /ca/qc/quebec-city/fr/ 301
+/fr/qc/quebec /ca/qc/quebec-city/fr/ 301
+/fr/qc/ /ca/qc/fr/ 301
+/fr/qc /ca/qc/fr/ 301
+/fr/nb/moncton/ /ca/nb/moncton/fr/ 301
+/fr/nb/moncton /ca/nb/moncton/fr/ 301
+/fr/nb/ /ca/nb/fr/ 301
+/fr/nb /ca/nb/fr/ 301
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+/us/ma/:city/hrv /us/ma/hrv/ 301
 /us/ma/:city/windows-doors /us/ma/:city/ 301
 /us/ma/:city/hrv/ /us/ma/hrv/ 301
 /us/ma/:city/smart-thermostats /us/ma/:city/ 301
@@ -1837,15 +1842,3 @@
 /ca/on/:city/ev-charger /ca/on/ev-charger/ 301
 /ca/on/:city/hrv/ /ca/on/hrv/ 301
 /ca/on/:city/hrv /ca/on/hrv/ 301
-/fr/qc/thermopompe/ /ca/qc/heat-pump/fr/ 301
-/fr/qc/thermopompe /ca/qc/heat-pump/fr/ 301
-/fr/qc/montreal/ /ca/qc/montreal/fr/ 301
-/fr/qc/montreal /ca/qc/montreal/fr/ 301
-/fr/qc/quebec/ /ca/qc/quebec-city/fr/ 301
-/fr/qc/quebec /ca/qc/quebec-city/fr/ 301
-/fr/qc/ /ca/qc/fr/ 301
-/fr/qc /ca/qc/fr/ 301
-/fr/nb/moncton/ /ca/nb/moncton/fr/ 301
-/fr/nb/moncton /ca/nb/moncton/fr/ 301
-/fr/nb/ /ca/nb/fr/ 301
-/fr/nb /ca/nb/fr/ 301

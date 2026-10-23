@@ -167,3 +167,12 @@ body.tpl-article section.hero.about-hero { background: linear-gradient(180deg, r
 .about-promise b { display: block; margin-bottom: 4px; font-family: 'Fraunces', Georgia, serif; font-size: 22px; line-height: 1.2; color: var(--ink); }
 .about-credit { font-size: 14px !important; color: var(--muted); }
 @media (max-width: 860px) { .about-stats .wrap { grid-template-columns: repeat(2, 1fr); } .about-promises { grid-template-columns: 1fr; } }
+
+/* ---- Rebate card chips and program "at a glance" row (2026-10-23) ---- */
+.tpl-article .rebate-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; order: 4; }
+.tpl-article .rebate-chips span { padding: 3px 10px; border-radius: 8px; background: #ece5d8; font-size: 13px; font-weight: 600; color: var(--ink); }
+.tpl-article .glance { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 0 0 8px; }
+.tpl-article .glance-cell { padding: 20px 22px; border-radius: 20px; background: #fff; border: 1px solid var(--card-rule); box-shadow: var(--shadow-card); }
+.tpl-article .glance-cell b { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--amber-text); }
+.tpl-article .glance-cell span { font-size: 18px; line-height: 1.45; color: var(--ink); }
+@media (max-width: 860px) { .tpl-article .glance { grid-template-columns: 1fr; } }

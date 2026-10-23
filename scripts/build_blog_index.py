@@ -77,7 +77,7 @@ def build(data):
 """]
     shelf = "".join(lk.card(sl, d) for sl, d in lk.articles().items())
     out.append(f'<section id="quick-reads" style="padding:44px 0 8px;scroll-margin-top:90px;"><div class="wrap-wide"><h2 style="font-size:clamp(26px,4vw,34px);margin:0 0 8px;">Quick reads and quizzes</h2>'
-               f'<p style="margin:0 0 20px;color:var(--ink-soft);max-width:640px;">Listicles, myth busters and short quizzes. Learn the rules in five minutes, then call a contractor.</p><div class="learn-grid">{shelf}</div></div></section>\n')
+               f'<p style="margin:0 0 20px;color:var(--ink-soft);max-width:640px;">Listicles, myth busters and short quizzes. Learn the rules in five minutes, then call a contractor.</p><div class="learn-grid">{shelf}</div><p style="margin:22px 0 0;font-size:18px;"><b>Learn by upgrade:</b> <a href="/learn/heat-pumps/">Heat pumps</a> · <a href="/learn/solar/">Solar</a> · <a href="/learn/batteries/">Batteries</a> · <a href="/learn/insulation/">Insulation</a> · <a href="/learn/water-heating/">Water heating</a></p></div></section>\n')
     for s in secs:
         cards = "\n".join(card(p) for p in spread(s["posts"]))
         out.append(f"""<section id="{s['id']}" style="padding:44px 0 8px;scroll-margin-top:90px;">

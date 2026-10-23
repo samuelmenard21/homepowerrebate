@@ -35,7 +35,7 @@ def build(slug):
     guides = "".join(f'<li><a href="{u}">{e(t)}</a></li>\n' for t, u in d.get("guides", []))
     steps = "".join(f"<li>{s}</li>\n" for s in d["claim_steps"])
     calc_url, calc_name = CALC.get(nav, ("/calculator/", "home") if d.get("no_region_calc") else CALC["ca"])
-    article = f"""<h2>{d['cards_heading']}</h2>
+    article = f"""{kit.glance(d)}<h2>{d['cards_heading']}</h2>
 {d['cards_intro']}
 <div class="rebate-grid">
 {kit.cards(d)}

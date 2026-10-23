@@ -5,7 +5,7 @@
   the card row (and, for BC and Ontario pages, one quiz), placed above the shared footer with navfooter.content_insert_point.
 Cards come from data/learn/*.json (learn_kit.pick: articles tagged for the page's service first, rotated by page path). A quiz is added only where
 the article's quiz_regions includes the page's region (the questions state BC and Ontario rules): region hubs, city hubs and heat pump pages.
-Everything sits between LEARN-START/END markers so re-runs replace it. Advisor and auditor ranking pages get nothing.
+Region hubs outside BC and Ontario get a quiz built from their verified amounts (learn_kit.region_quiz). Everything sits between LEARN-START/END markers so re-runs replace it. Advisor and auditor ranking pages get nothing.
 Styles and the quiz script are in _partials/nav-footer.html (shared CSS/JS).
 Usage: python3 scripts/add_learn_blocks.py"""
 import re
@@ -23,7 +23,7 @@ SKIP = {"energy-advisor", "energy-auditor"}
 OLD = re.compile(re.escape(S) + r"[\s\S]*?" + re.escape(E) + r"\n?")
 SERVICES = {"heat-pump", "solar", "battery"}
 # pages that sit just under the 90% near-duplicate limit: a row of identical card text pushed BC solar pages over it (check_duplicate_content.py)
-NO_ROW = {("bc", "solar")}
+NO_ROW = {("bc", "solar"), ("on", "index")}  # ("on", "index") means Ontario city hubs; the region hub keeps its row
 QUIZ_PAGES = {"index", "heat-pump"}  # hubs, city hubs and heat pump pages carry a quiz (BC and Ontario only)
 
 
@@ -39,10 +39,13 @@ def place(f, t, block):
     return t2[:i] + block + t2[i:]
 
 
-def quiz_for(region, kind, service, key):
+def quiz_for(region, kind, service, key, region_hub=False):
     """The one quiz for a page: the heat pump myths quiz on heat pump pages, otherwise the rebate-mistakes quiz."""
-    if kind not in QUIZ_PAGES:
-        return ""
+    if kind not in QUIZ_PAGES or (kind == "index" and not region_hub):
+        return ""  # city hubs carry no quiz: the same block on every city hub pushed Ontario hubs over the 90% near-duplicate limit
+    if region_hub and region not in ("bc", "on"):
+        q = lk.region_quiz(region) if (ROOT / "calculator" / "data" / f"{region}.json").exists() else None
+        return lk.quiz(f"{region}-rebates", q) if q else ""
     want = "heat-pump-myths-busted" if service == "heat-pump" else "7-ways-to-lose-your-home-energy-rebate"
     d = lk.articles().get(want)
     if not d or region not in d.get("quiz_regions", []):
@@ -97,7 +100,7 @@ def wide():
         t = f.read_text(encoding="utf-8")
         if "<footer" not in t and navfooter.FOOTER_MARKER_START not in t:
             continue
-        if (region, kind) in NO_ROW:
+        if (region, kind) in NO_ROW and not f.parent.parent.name in ("ca", "us"):
             t2 = OLD.sub("", t)
             if t2 != t:
                 f.write_text(t2, encoding="utf-8")
@@ -107,7 +110,7 @@ def wide():
             heading, sub = "Learn the rules before you apply", "Short reads and quick quizzes on how rebate programs work."
         else:
             heading, sub = "Not ready to talk to a contractor yet?", "Short reads and quick quizzes. Learn the rules first, then call."
-        body = lk.not_ready_row(service, key=str(f.relative_to(ROOT)), heading=heading, sub=sub) + quiz_for(region, kind, service, str(f.relative_to(ROOT)))
+        body = lk.not_ready_row(service, key=str(f.relative_to(ROOT)), heading=heading, sub=sub) + quiz_for(region, kind, service, str(f.relative_to(ROOT)), region_hub=f.parent.parent.name in ("ca", "us"))
         block = f'{S}\n<div class="learn-wrap">{body}</div>\n{E}\n'
         t2 = place(f, t, block)
         if t2 and t2 != t:

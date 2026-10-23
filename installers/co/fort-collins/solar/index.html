@@ -155,7 +155,13 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=079f070b82" data-hpr-site-css>
+<meta name="theme-color" content="#faf7f2">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="twitter:title" content="Best Solar Installers in Fort Collins, CO (2026)">
+<meta name="twitter:description" content="The top-rated solar installers in Fort Collins, CO, ranked by 795 Google reviews. Compare 6 local companies, plus what to ask before you hire.">
 <!-- OG-CARD-START -->
 <meta property="og:image" content="https://homepowerrebate.com/og/installers/co/fort-collins/solar.jpg?v=ed1d742387d9">
 <meta property="og:image:width" content="1200">
@@ -165,10 +171,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/installers/co/fort-collins/solar.jpg?v=ed1d742387d9">
 <!-- OG-CARD-END -->
-<meta name="theme-color" content="#faf7f2">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="/favicon.ico" sizes="48x48">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body class="tpl-ranking">
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -343,7 +345,7 @@
 <p class="small">Ranked by Google rating weighted by review count, collected September 2026. Rankings are never paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
 <p class="small"><b>Listed here?</b> <a href="/installers/badge/?r=co&amp;c=fort-collins&amp;s=solar">Get your top-rated badge</a> for your website or print the <a href="/rebate-sheet/co/fort-collins/">Fort Collins rebate sheet</a> for your customers.</p>
 
-<h2>What a solar costs in Fort Collins</h2><div class="cb"><div class="cb-row"><span>Typical installed price</span><b>about $22,400 to $38,500</b></div><p class="cb-note">For a 7 kW home system ($3.20 to $5.50 per watt, the middle 60% of US home systems in 2023). Your home may cost more or less.</p><div class="cb-row cb-reb"><span>Solar rebates open in Fort Collins</span><b>up to $1</b></div><div class="cb-row cb-reb"><span>Battery rebates open in Fort Collins</span><b>up to $5,000</b></div><p class="cb-note">That could cut your cost by up to <b>$5,001</b> if you qualify. Most rebates have rules (income, your current heating, a registered contractor, approval before work starts).</p></div><p class="small">Price source: <a href="https://emp.lbl.gov/tracking-the-sun" rel="nofollow noopener" target="_blank">Lawrence Berkeley National Lab, <em>Tracking the Sun</em></a>. Rebates: our verified program data, checked monthly. Always confirm the exact amount for your home.</p>
+<h2>What a solar costs in Fort Collins</h2><div class="cb"><div class="cb-row"><span>Typical installed price</span><b>about $22,400 to $38,500</b></div><p class="cb-note">For a 7 kW home system ($3.20 to $5.50 per watt, the middle 60% of US home systems in 2023). Your home may cost more or less.</p><div class="cb-row cb-reb"><span>Solar rebates open in Fort Collins</span><b>up to $1</b></div><div class="cb-row cb-reb"><span>Battery rebates open in Fort Collins</span><b>up to $5,000</b></div><p class="cb-note">That could cut your cost by up to <b>$5,001</b> if you qualify. Most rebates have rules (income, your current heating, a registered contractor, approval before work starts).</p></div><p class="small">Price source: <a href="https://emp.lbl.gov/tracking-the-sun?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" target="_blank" data-official="1">Lawrence Berkeley National Lab, <em>Tracking the Sun</em></a>. Rebates: our verified program data, checked monthly. Always confirm the exact amount for your home.</p>
 
 <div class="callout"><p><strong>Talk to a home energy auditor first.</strong> Some utility programs want an audit before any work starts. <a href="/installers/co/fort-collins/energy-auditor/">See the top-rated home energy auditors in Fort Collins</a>.</p></div>
 
@@ -662,6 +664,21 @@ document.addEventListener('click', function (e) {
   var u; try { u = new URL(a.href); } catch (x) { return; }
   window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
 }, true);
+// Program alert boxes (scripts/add_program_alerts.py): POST /alert with the box's list id and region; one confirmation email, one list per program.
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('prog-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.prog-alert'), done = box.querySelector('.prog-alert-done'), b = f.querySelector('button'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: box.dataset.list, email: f.querySelector('input[type="email"]').value, province: box.dataset.region || '', city: '', page: location.pathname, website: f.querySelector('.prog-alert-hp').value }) });
+    if (!r.ok) throw new Error('bad');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+    if (window.gtag) window.gtag('event', 'prog_alert_signup', { page_path: location.pathname, alert_list: box.dataset.list });
+  } catch (err) { done.textContent = 'That did not go through. Please try again.'; b.disabled = false; b.textContent = t; }
+  done.hidden = false;
+});
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

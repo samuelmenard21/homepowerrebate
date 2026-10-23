@@ -62,7 +62,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/article-180509fd.css?v=c7137bbc2b" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=079f070b82" data-hpr-site-css>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How long does a Mass Save rebate take?", "acceptedAnswer": {"@type": "Answer", "text": "Mass Save's official processing window is 8 to 12 weeks. In practice it has often been longer. Some homeowners waited close to six months, and at least one case ran past a year."}}, {"@type": "Question", "name": "How do I check my Mass Save rebate status?", "acceptedAnswer": {"@type": "Answer", "text": "Call Mass Save and ask for a specific status update and a reference number for your case. Then confirm with your contractor that the claim was actually submitted, and ask for a copy of the submission confirmation."}}, {"@type": "Question", "name": "Why is my Mass Save rebate delayed?", "acceptedAnswer": {"@type": "Answer", "text": "The usual causes are missing signatures or incomplete contractor paperwork, a mismatch between the assessment record and the installed equipment, a backlog of heat pump and insulation claims, an old certification, or a contractor mistake you only find out about when you call."}}, {"@type": "Question", "name": "Who do I complain to if it has been more than 12 weeks?", "acceptedAnswer": {"@type": "Answer", "text": "Call Mass Save first. If it cannot give you a timeline, file a complaint with the Massachusetts DPU Consumer Division (877-886-5066), then with the Attorney General's consumer protection division (617-727-8400)."}}, {"@type": "Question", "name": "When should I follow up on my rebate?", "acceptedAnswer": {"@type": "Answer", "text": "At the 6-week mark, not the 12-week mark. A paperwork problem is much faster to fix early than after the file has gone quiet."}}, {"@type": "Question", "name": "What should I keep in case I need to escalate?", "acceptedAnswer": {"@type": "Answer", "text": "The contractor's invoice, the assessment report, your rebate application confirmation, and a log of every call with the date, the representative's name and what they said."}}]}</script>
 <link rel="stylesheet" href="/assets/tpl/article-ce18d2cc.css?v=ce18d2cc21" data-hpr-tpl>
 <meta name="theme-color" content="#faf7f2">
@@ -572,6 +572,21 @@ document.addEventListener('click', function (e) {
   var u; try { u = new URL(a.href); } catch (x) { return; }
   window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
 }, true);
+// Program alert boxes (scripts/add_program_alerts.py): POST /alert with the box's list id and region; one confirmation email, one list per program.
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('prog-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.prog-alert'), done = box.querySelector('.prog-alert-done'), b = f.querySelector('button'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: box.dataset.list, email: f.querySelector('input[type="email"]').value, province: box.dataset.region || '', city: '', page: location.pathname, website: f.querySelector('.prog-alert-hp').value }) });
+    if (!r.ok) throw new Error('bad');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+    if (window.gtag) window.gtag('event', 'prog_alert_signup', { page_path: location.pathname, alert_list: box.dataset.list });
+  } catch (err) { done.textContent = 'That did not go through. Please try again.'; b.disabled = false; b.textContent = t; }
+  done.hidden = false;
+});
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

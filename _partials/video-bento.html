@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Inter+Tight:wght@600;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#faf7f2;font-family:'Inter Tight',system-ui,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;transition:none}
+.bg-dark{background:radial-gradient(90% 55% at 100% 0%,rgba(232,138,46,.25),rgba(232,138,46,0) 60%),linear-gradient(165deg,#0f5361 0%,#08363f 60%,#062c33 100%)}
+.bg-light{background:#faf7f2}
+.logo{position:absolute;left:60px;top:78px;font-family:'Fraunces',Georgia,serif;font-weight:800;font-size:46px;letter-spacing:-.01em;color:#faf7f2}
+.bg-light .logo{color:#0a2a2e}
+.logo b{color:#e88a2e}
+.tile{position:absolute;display:flex;flex-direction:column;justify-content:center;padding:36px 40px;border-radius:56px;will-change:transform}
+.bg-light .tile{box-shadow:0 18px 36px rgba(10,42,46,.14)}
+.tile.serif{font-family:'Fraunces',Georgia,serif;font-weight:800;letter-spacing:-.02em;line-height:1.02}
+.tile.sans{font-family:'Inter Tight',sans-serif;font-weight:800;line-height:1.08}
+.tile.center{align-items:center;text-align:center}
+.w{display:inline-block;will-change:transform;margin-right:.22em}
+.tile em{font-style:normal;color:#e88a2e}
+.tile.onamber em{color:#08363f}
+.sticker{position:absolute;font-family:'Inter Tight',sans-serif;font-weight:800;padding:20px 38px;border-radius:999px;background:#d4751c;color:#fff;border:10px solid #faf7f2;box-shadow:0 18px 40px rgba(0,0,0,.28);white-space:nowrap}
+.sticker.teal{background:#08363f;border-color:#ffe8c2;color:#fff}
+.sticker.cream{background:#ffe8c2;border-color:#fff;color:#7a4a00}
+.emoji{position:absolute;line-height:1;will-change:transform;filter:drop-shadow(0 14px 22px rgba(0,0,0,.3))}
+.src{position:absolute;left:60px;bottom:420px;font-weight:600;font-size:30px;opacity:.7;color:#faf7f2}
+.bg-light .src{color:#0a2a2e}
+</style></head><body><div id="stage"></div>
+<script>
+// Frame-by-frame renderer for bento + sticker + kinetic type videos (scripts/build_video.py, scripts/video/render_frames.js).
+// window.render(spec, t): draws the scenes active at time t. Items pop in with an overshoot, wobble a little while on screen, and shrink out at the end of the scene.
+function easeOutBack(x){var c1=1.9,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)}
+function clamp(x){return Math.max(0,Math.min(1,x))}
+window.render=function(spec,t){
+  var st=document.getElementById('stage'); st.innerHTML='';
+  var sc=spec.scenes.filter(function(s){return t>=s.at&&t<s.end})[0]||spec.scenes[spec.scenes.length-1];
+  st.className=sc.theme==='light'?'bg-light':'bg-dark';
+  var logo=document.createElement('div'); logo.className='logo'; logo.innerHTML='Home<b>Power</b>Rebate'; st.appendChild(logo);
+  var local=t-sc.at, outP=clamp((t-(sc.end-0.22))/0.22);
+  var idx=0;
+  function pop(delay){var p=clamp((local-delay)/0.5); return p<=0?0:easeOutBack(p)}
+  function place(el,it,k){
+    var s=pop(it.delay||0)*(1-outP); if(s<=0.001){el.style.display='none';return}
+    var wob=(local-(it.delay||0)>0.5)?Math.sin(t*3.2+k)*1.6:0;
+    el.style.left=it.x+'px'; el.style.top=it.y+'px'; if(it.w) el.style.width=it.w+'px'; if(it.h) el.style.height=it.h+'px';
+    el.style.transform='rotate('+((it.rot||0)+wob)+'deg) scale('+s+')'; el.style.transformOrigin='50% 50%';
+  }
+  (sc.items||[]).forEach(function(it,k){
+    var el=document.createElement('div');
+    if(it.type==='tile'){
+      el.className='tile '+(it.font||'serif')+(it.center?' center':'')+(it.bg==='#d4751c'?' onamber':'');
+      el.style.background=it.bg; el.style.color=it.color||'#0a2a2e'; el.style.fontSize=(it.size||96)+'px';
+      if(it.words){ var inner=document.createElement('div'); el.appendChild(inner); it.html.split(' ').forEach(function(w,j){var sp=document.createElement('span'); sp.className='w'; sp.innerHTML=w; var p=clamp((local-((it.delay||0)+0.12*j))/0.4); var s2=p<=0?0:easeOutBack(p); sp.style.transform='scale('+s2+') translateY('+((1-clamp(p))*30)+'px)'; sp.style.opacity=clamp(p*3); inner.appendChild(sp)}); }
+      else el.innerHTML=it.html;
+      st.appendChild(el); if(it.words){ var s=1-outP; var d=Math.max(0.001,s); el.style.left=it.x+'px'; el.style.top=it.y+'px'; if(it.w) el.style.width=it.w+'px'; if(it.h) el.style.height=it.h+'px'; var pp=clamp((local-(it.delay||0))/0.3); el.style.transform='rotate('+(it.rot||0)+'deg) scale('+(d*(0.92+0.08*pp))+')'; el.style.opacity=clamp(pp*4)*(1-outP); } else place(el,it,k);
+    } else if(it.type==='sticker'){
+      el.className='sticker '+(it.style||''); el.style.fontSize=(it.size||44)+'px'; el.innerHTML=it.html; st.appendChild(el); place(el,it,k);
+    } else if(it.type==='emoji'){
+      el.className='emoji'; el.style.fontSize=(it.size||200)+'px'; el.textContent=it.html; st.appendChild(el); place(el,it,k);
+    }
+  });
+  if(sc.foot){var f=document.createElement('div'); f.className='src'; f.textContent=sc.foot; f.style.opacity=.7*pop(0.3)*(1-outP); st.appendChild(f)}
+  return document.fonts.ready;
+};
+</script></body></html>

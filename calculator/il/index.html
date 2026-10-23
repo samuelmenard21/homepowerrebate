@@ -139,6 +139,22 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
 .rc-fed .rc-hp{position:absolute;left:-9999px}
 @media(max-width:480px){.rc-fed button{margin:8px 0 0;width:100%}}
 .rc-save button{min-height:44px;margin-left:8px;padding:0 18px;border:0;border-radius:8px;background:#d4751c;color:#fff;font-weight:700;cursor:pointer}
+.rc-quote{background:#fff;border:1px dashed #b9ae9c;border-radius:12px;padding:4px 18px 16px;margin:20px 0}
+.rc-quote-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.rc-quote button{min-height:44px;margin-top:12px;padding:0 18px;border:0;border-radius:8px;background:#0d4f5c;color:#fff;font-weight:700;cursor:pointer}
+.rc-print-head{display:none}
+@media(max-width:600px){.rc-quote-row{grid-template-columns:1fr}}
+@media print{
+ body *{visibility:hidden}
+ .rc-wrap #rc-mount,.rc-wrap #rc-mount *{visibility:visible}
+ .rc-wrap{max-width:none;padding:0}
+ .rc-form,.rc-save,.rc-fed,.rc-inst,.rc-quote,.rc-more,.rc-links,.rc-notes{display:none!important}
+ .rc-print-head{display:block!important;border-bottom:3px solid #d4751c;margin-bottom:12px;padding-bottom:8px}
+ .rc-print-head h2{font-size:20px;margin:0 0 4px}.rc-print-head p{margin:2px 0;font-size:12.5px}.rc-print-by{font-weight:700}.rc-print-net{font-size:13.5px!important;font-weight:700}
+ #rc-mount{position:absolute;left:0;top:0;width:100%}
+ .rc-total{background:#fff!important;color:#000!important;border:1px solid #000}.rc-total,.rc-total *{color:#000!important}
+ .rc-card{break-inside:avoid;font-size:11.5px}
+ @page{margin:12mm}
+}
 .rc-links{font-size:15px}
 .rc-inst{background:#fff;border:1px solid #d9d0c1;border-radius:12px;padding:4px 18px 12px;margin:20px 0}.rc-inst-list{margin:6px 0 0;padding-left:20px;line-height:1.9}
 .rc-plan{grid-column:1/-1;border:0;padding:0;margin:0}.rc-plan legend{font-weight:600;font-size:15px;margin-bottom:6px;padding:0}
@@ -147,12 +163,12 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
 @media(max-width:600px){.rc-form{grid-template-columns:1fr}.rc-total-num{font-size:38px}.rc-card-top{flex-direction:column;gap:2px}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Illinois Rebate Calculator 2026: ComEd, Nicor Gas, Peoples Gas and Naperville Rebates", "url": "https://homepowerrebate.com/calculator/il/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "description": "Free Illinois rebate calculator for ComEd, Naperville Electric, Nicor Gas and Peoples Gas customers. Heat pump, water heater, thermostat, furnace and insulation rebates, with the official source for every amount.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is there a statewide heat pump rebate in Illinois?", "acceptedAnswer": {"@type": "Answer", "text": "Not yet. The state's HOMES and HEAR rebates have not launched. Your electric utility is the main source: ComEd pays up to $900 to $2,000 and Naperville Electric pays $900 to $1,800."}}, {"@type": "Question", "name": "Why does the calculator ask for my gas company?", "acceptedAnswer": {"@type": "Answer", "text": "Gas companies pay rebates for furnaces, boilers, water heaters, thermostats and insulation that the electric company does not."}}, {"@type": "Question", "name": "Why does Ameren Illinois show no amount?", "acceptedAnswer": {"@type": "Answer", "text": "We could not read Ameren Illinois's rebate page, so we show no amount rather than guess."}}, {"@type": "Question", "name": "Is the federal tax credit still available?", "acceptedAnswer": {"@type": "Answer", "text": "No. The 25C and 25D credits ended after December 31, 2025."}}, {"@type": "Question", "name": "Can I add all the rebates together?", "acceptedAnswer": {"@type": "Answer", "text": "The total adds programs that pay for different upgrades. Check each program's rules, since a few cannot be combined."}}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com/"}, {"@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://homepowerrebate.com/calculator/"}, {"@type": "ListItem", "position": 3, "name": "Illinois"}]}</script><link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
+<meta name="twitter:title" content="Illinois Rebate Calculator 2026: ComEd">
+<meta name="twitter:description" content="Free Illinois rebate calculator for ComEd, Naperville Electric, Nicor Gas and Peoples Gas customers.">
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="twitter:title" content="Illinois Rebate Calculator 2026: ComEd">
-<meta name="twitter:description" content="Free Illinois rebate calculator for ComEd, Naperville Electric, Nicor Gas and Peoples Gas customers.">
 <!-- OG-CARD-START -->
 <meta property="og:image" content="https://homepowerrebate.com/og/calculator/il.jpg?v=81ee2785921d">
 <meta property="og:image:width" content="1200">
@@ -641,6 +657,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
         rb.appendChild(ra);
         out.appendChild(rb);
       }
+      out.appendChild(quoteSheet(region, r, answers, plan, copt, opts, out));
       var links = el("p", "rc-links");
       var a1 = el("a", null, "See installers ranked by Google reviews");
       a1.href = region.installers || "/installers/";
@@ -683,6 +700,41 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
         f.appendChild(el("p", "rc-help", "You are on the list. Check your inbox for a short note from us."));
       }).catch(function () { b.disabled = false; msg.textContent = "Something went wrong. Please try again."; });
     });
+    return f;
+  }
+
+  /* Rebate sheet for a customer (installers, 2026-10-23): business name, phone and an optional quote price turn this result into a one-page print-out.
+     The print header is hidden on screen and shown by the print CSS; everything else on the page is hidden when printing. Amounts stay "up to": the
+     net cost line says "as little as" and that the real amount depends on the home and income. Nothing typed here leaves the browser. */
+  function quoteSheet(region, r, answers, plan, copt, opts, out) {
+    var f = el("div", "rc-quote");
+    f.appendChild(el("h3", "rc-h", "Print a rebate sheet for your customer"));
+    f.appendChild(el("p", "rc-help", "Installers: add your details and the quote price, then print or save as a PDF. Nothing you type leaves your browser."));
+    function field(label, id, type, ph) {
+      var w = el("div", "rc-field"); var l = el("label", null, label); l.setAttribute("for", id); var i = el("input"); i.id = id; i.type = type; if (ph) i.placeholder = ph; i.autocomplete = "off";
+      w.appendChild(l); w.appendChild(i); return { w: w, i: i };
+    }
+    var n = field("Your business name", "rq-name", "text", "Smith Heating"), ph = field("Phone", "rq-phone", "tel", ""), pr = field("Quote price (optional)", "rq-price", "number", "e.g. 14500");
+    pr.i.min = "0"; pr.i.step = "100";
+    var row = el("div", "rc-quote-row"); row.appendChild(n.w); row.appendChild(ph.w); row.appendChild(pr.w); f.appendChild(row);
+    var b = el("button", null, "Print the sheet"); b.type = "button"; f.appendChild(b);
+    var head = el("div", "rc-print-head");
+    function fill() {
+      head.textContent = "";
+      var label = {}; region.upgrades.forEach(function (u) { label[u.id] = u.label; });
+      head.appendChild(el("h2", null, "Home energy rebates" + (copt ? " in " + copt.label : "") + ", " + region.name));
+      var by = [n.i.value.trim(), ph.i.value.trim()].filter(Boolean).join("  |  ");
+      if (by) head.appendChild(el("p", "rc-print-by", "Prepared for you by " + by));
+      head.appendChild(el("p", null, "Upgrades: " + plan.map(function (u) { return label[u] || u; }).join(", ") + "."));
+      var price = parseFloat(pr.i.value);
+      if (price > 0) {
+        var net = Math.max(0, price - r.total);
+        head.appendChild(el("p", "rc-print-net", "Quote: " + money(price, region.currency) + ". The most the open programs could pay for these upgrades: " + money(r.total, region.currency) + ". Quote after rebates: as little as " + money(net, region.currency) + ". Your amount depends on your home and income."));
+      }
+      head.appendChild(el("p", "rc-print-foot", "Amounts are the most each program pays and were checked " + (region.verified_on || "recently") + "; each program's official source is linked below. Not a quote or a guarantee. Rebate sheet by HomePowerRebate.com."));
+    }
+    b.addEventListener("click", function () { fill(); window.print(); });
+    out.insertBefore(head, out.firstChild);
     return f;
   }
 

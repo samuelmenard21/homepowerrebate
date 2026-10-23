@@ -57,6 +57,22 @@ CSS = """
 .rc-fed .rc-hp{position:absolute;left:-9999px}
 @media(max-width:480px){.rc-fed button{margin:8px 0 0;width:100%}}
 .rc-save button{min-height:44px;margin-left:8px;padding:0 18px;border:0;border-radius:8px;background:#d4751c;color:#fff;font-weight:700;cursor:pointer}
+.rc-quote{background:#fff;border:1px dashed #b9ae9c;border-radius:12px;padding:4px 18px 16px;margin:20px 0}
+.rc-quote-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.rc-quote button{min-height:44px;margin-top:12px;padding:0 18px;border:0;border-radius:8px;background:#0d4f5c;color:#fff;font-weight:700;cursor:pointer}
+.rc-print-head{display:none}
+@media(max-width:600px){.rc-quote-row{grid-template-columns:1fr}}
+@media print{
+ body *{visibility:hidden}
+ .rc-wrap #rc-mount,.rc-wrap #rc-mount *{visibility:visible}
+ .rc-wrap{max-width:none;padding:0}
+ .rc-form,.rc-save,.rc-fed,.rc-inst,.rc-quote,.rc-more,.rc-links,.rc-notes{display:none!important}
+ .rc-print-head{display:block!important;border-bottom:3px solid #d4751c;margin-bottom:12px;padding-bottom:8px}
+ .rc-print-head h2{font-size:20px;margin:0 0 4px}.rc-print-head p{margin:2px 0;font-size:12.5px}.rc-print-by{font-weight:700}.rc-print-net{font-size:13.5px!important;font-weight:700}
+ #rc-mount{position:absolute;left:0;top:0;width:100%}
+ .rc-total{background:#fff!important;color:#000!important;border:1px solid #000}.rc-total,.rc-total *{color:#000!important}
+ .rc-card{break-inside:avoid;font-size:11.5px}
+ @page{margin:12mm}
+}
 .rc-links{font-size:15px}
 .rc-inst{background:#fff;border:1px solid #d9d0c1;border-radius:12px;padding:4px 18px 12px;margin:20px 0}.rc-inst-list{margin:6px 0 0;padding-left:20px;line-height:1.9}
 .rc-plan{grid-column:1/-1;border:0;padding:0;margin:0}.rc-plan legend{font-weight:600;font-size:15px;margin-bottom:6px;padding:0}
@@ -236,6 +252,7 @@ def widget_page(specs):
 <li>Rebate amounts that update on their own when a program changes. You never edit them.</li>
 <li>No script to install, no tracking, no cookies and no ads.</li></ul>
 <h2>Federal heat pump rebate kit</h2><p>Ottawa's new heat pump rebate opens in early 2027. Our free <a href="/partners/federal-heat-pump-rebate/">partner kit</a> has a card for your site, a printable sheet with your name on it and email text.</p>
+<h2>Print a rebate sheet for a customer</h2><p>Every result has a "Print a rebate sheet for your customer" box under it. Add your business name, phone and the quote price, then print or save as a PDF. The sheet shows the open programs for the customer's city with the official source for each, and what the quote could come to after rebates (always "up to", never a promise). Nothing you type leaves your browser.</p>
 <h2>What we ask</h2><p>Leave the "Rebate calculator by HomePowerRebate" link under the frame. It is a normal link. Listing here never changes where your company ranks: installers are ranked by Google reviews only.</p>
 <h2>Preview</h2><iframe id="wg-prev" src="/calculator/embed/{code}/" title="Rebate calculator preview" width="100%" height="760" style="max-width:820px;border:1px solid #d9d0c1;border-radius:12px;" loading="lazy"></iframe>
 </div></section>

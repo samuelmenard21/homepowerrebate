@@ -316,6 +316,7 @@
         rb.appendChild(ra);
         out.appendChild(rb);
       }
+      out.appendChild(quoteSheet(region, r, answers, plan, copt, opts, out));
       var links = el("p", "rc-links");
       var a1 = el("a", null, "See installers ranked by Google reviews");
       a1.href = region.installers || "/installers/";
@@ -358,6 +359,41 @@
         f.appendChild(el("p", "rc-help", "You are on the list. Check your inbox for a short note from us."));
       }).catch(function () { b.disabled = false; msg.textContent = "Something went wrong. Please try again."; });
     });
+    return f;
+  }
+
+  /* Rebate sheet for a customer (installers, 2026-10-23): business name, phone and an optional quote price turn this result into a one-page print-out.
+     The print header is hidden on screen and shown by the print CSS; everything else on the page is hidden when printing. Amounts stay "up to": the
+     net cost line says "as little as" and that the real amount depends on the home and income. Nothing typed here leaves the browser. */
+  function quoteSheet(region, r, answers, plan, copt, opts, out) {
+    var f = el("div", "rc-quote");
+    f.appendChild(el("h3", "rc-h", "Print a rebate sheet for your customer"));
+    f.appendChild(el("p", "rc-help", "Installers: add your details and the quote price, then print or save as a PDF. Nothing you type leaves your browser."));
+    function field(label, id, type, ph) {
+      var w = el("div", "rc-field"); var l = el("label", null, label); l.setAttribute("for", id); var i = el("input"); i.id = id; i.type = type; if (ph) i.placeholder = ph; i.autocomplete = "off";
+      w.appendChild(l); w.appendChild(i); return { w: w, i: i };
+    }
+    var n = field("Your business name", "rq-name", "text", "Smith Heating"), ph = field("Phone", "rq-phone", "tel", ""), pr = field("Quote price (optional)", "rq-price", "number", "e.g. 14500");
+    pr.i.min = "0"; pr.i.step = "100";
+    var row = el("div", "rc-quote-row"); row.appendChild(n.w); row.appendChild(ph.w); row.appendChild(pr.w); f.appendChild(row);
+    var b = el("button", null, "Print the sheet"); b.type = "button"; f.appendChild(b);
+    var head = el("div", "rc-print-head");
+    function fill() {
+      head.textContent = "";
+      var label = {}; region.upgrades.forEach(function (u) { label[u.id] = u.label; });
+      head.appendChild(el("h2", null, "Home energy rebates" + (copt ? " in " + copt.label : "") + ", " + region.name));
+      var by = [n.i.value.trim(), ph.i.value.trim()].filter(Boolean).join("  |  ");
+      if (by) head.appendChild(el("p", "rc-print-by", "Prepared for you by " + by));
+      head.appendChild(el("p", null, "Upgrades: " + plan.map(function (u) { return label[u] || u; }).join(", ") + "."));
+      var price = parseFloat(pr.i.value);
+      if (price > 0) {
+        var net = Math.max(0, price - r.total);
+        head.appendChild(el("p", "rc-print-net", "Quote: " + money(price, region.currency) + ". The most the open programs could pay for these upgrades: " + money(r.total, region.currency) + ". Quote after rebates: as little as " + money(net, region.currency) + ". Your amount depends on your home and income."));
+      }
+      head.appendChild(el("p", "rc-print-foot", "Amounts are the most each program pays and were checked " + (region.verified_on || "recently") + "; each program's official source is linked below. Not a quote or a guarantee. Rebate sheet by HomePowerRebate.com."));
+    }
+    b.addEventListener("click", function () { fill(); window.print(); });
+    out.insertBefore(head, out.firstChild);
     return f;
   }
 

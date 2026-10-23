@@ -57,7 +57,7 @@ def rankings():
         if ANCHOR not in t:
             continue
         t2 = OLD.sub("", t)
-        block = f"{S}\n{lk.tips('installer')}\n{lk.not_ready_row(service, key=str(f))}\n{E}\n"
+        block = f"{S}\n{lk.tips('installer')}\n{lk.not_ready_row(service, key=str(f.relative_to(ROOT)))}\n{E}\n"
         i = t2.index(ANCHOR)
         t2 = t2[:i] + block + t2[i:]
         if t2 != t:
@@ -104,7 +104,7 @@ def wide():
             heading, sub = "Learn the rules before you apply", "Short reads and quick quizzes on how rebate programs work."
         else:
             heading, sub = "Not ready to talk to a contractor yet?", "Short reads and quick quizzes. Learn the rules first, then call."
-        body = lk.not_ready_row(service, key=str(f), heading=heading, sub=sub) + quiz_for(region, kind, service, str(f))
+        body = lk.not_ready_row(service, key=str(f.relative_to(ROOT)), heading=heading, sub=sub) + quiz_for(region, kind, service, str(f.relative_to(ROOT)))
         block = f'{S}\n<div class="learn-wrap">{body}</div>\n{E}\n'
         t2 = place(f, t, block)
         if t2 and t2 != t:

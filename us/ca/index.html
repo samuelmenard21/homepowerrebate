@@ -40,7 +40,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=079f070b82" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=ed60a46822" data-hpr-site-css>
 <!-- HUB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "California Heat Pump & Solar Rebates 2026: What's Open", "description": "Most statewide California rebates are closed or waitlisted in 2026: TECH Clean California and the HEEHRA heat pump rebate are fully reserved, and the federal tax credits ended on December 31, 2025. Your best money now depends on your utility: SMUD pays up to $3,000 for a heat pump and $6,000 for a battery, and city utilities in Glendale, Burbank and Pasadena have their own rebates. PG&E, SCE and SDG&E customers mostly have income-qualified programs.", "dateModified": "2026-10-01", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com"}, "mainEntityOfPage": "https://homepowerrebate.com/us/ca/"}</script><!-- HUB-LD-END -->
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -642,6 +642,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 (function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
 var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
+(function(){document.querySelectorAll('.hpr-quiz').forEach(function(z){z.classList.add('qz-ready');var qs=[].slice.call(z.querySelectorAll('.qz-q')),got=0,done=0;
+qs.forEach(function(q){var a=+q.dataset.a;q.querySelectorAll('.qz-opt').forEach(function(b,i){b.addEventListener('click',function(){if(q.classList.contains('done'))return;q.classList.add('done');done++;
+if(i===a){got++;b.classList.add('right')}else{b.classList.add('wrong');q.querySelectorAll('.qz-opt')[a].classList.add('right')}
+if(done===qs.length){var r=z.querySelector('.qz-result'),m=JSON.parse(z.dataset.msgs||'[]'),k=got===qs.length?2:got>=Math.ceil(qs.length/2)?1:0;
+r.querySelector('.qz-score').textContent='You got '+got+' of '+qs.length;r.querySelector('.qz-msg').textContent=m[k]||'';r.classList.add('on');
+if(window.gtag)gtag('event','quiz_complete',{quiz:z.id,score:got,total:qs.length})}})})})})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

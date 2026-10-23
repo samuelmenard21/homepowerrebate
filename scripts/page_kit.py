@@ -52,7 +52,10 @@ CHIP_RULES = [("Income-qualified", r"income[- ]qualified|income limit|low[- ]inc
 
 def chips(c):
     txt = " ".join(FACTS[i].get("eligibility", "") for i in c.get("facts", []) if i in FACTS).lower()
-    got = [label for label, pat in CHIP_RULES if re.search(pat, txt)]
+    def says(pat):
+        # a negated mention ("not single-family home chargers") is not a match
+        return any(not re.search(r"\b(?:not|no|never|excluding)\s+(?:\w+\s+){0,2}$", txt[max(0, m.start() - 24):m.start()]) for m in re.finditer(pat, txt))
+    got = [label for label, pat in CHIP_RULES if says(pat)]
     return '<div class="rebate-chips">' + "".join(f"<span>{e(x)}</span>" for x in got) + "</div>" if got else ""
 
 

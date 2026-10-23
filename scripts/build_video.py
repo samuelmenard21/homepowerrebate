@@ -77,7 +77,92 @@ def ns_harp_status_6():
     ]}
 
 
-BENTO = {"ns-harp-status-6": ns_harp_status_6}
+def _harp():
+    """The HARP fact, checked, plus the bits every cut needs."""
+    f = kit.FACTS["ns-16-heating-assistance-rebate-program-harp-province-of"]
+    claim = f["claim"]
+    for must in ("online applicants only", "confirmation number", "postal code", "about 8 weeks", "direct deposit", "postmarked"):
+        assert must in claim, f"fact changed ({must}): re-read it before rendering"
+    return {"amount": re.search(r"\$[\d,]+", f["amount"]).group(0), "end": nice(f["dates"].split(" to ")[-1].strip()),
+            "start": nice(re.search(r"\d{4}-\d{2}-\d{2}", f["dates"]).group(0)),
+            "foot": f"Source: {urlparse(f['source_url']).netloc.replace('www.', '')}. Checked {nice(f['verified_on'])}."}
+
+
+def tile(x, y, w, h, bg, color, size, **kw):
+    return {"type": "tile", "x": x, "y": y, "w": w, "h": h, "bg": bg, "color": color, "size": size, **kw}
+
+
+def sticker(x, y, html, style="cream", size=44, rot=-3, delay=0.8):
+    return {"type": "sticker", "x": x, "y": y, "html": html, "style": style, "size": size, "rot": rot, "delay": delay}
+
+
+def emoji(x, y, ch, size=220, rot=10, delay=0.45):
+    return {"type": "emoji", "x": x, "y": y, "html": ch, "size": size, "rot": rot, "delay": delay}
+
+
+def ns_harp_status_15():
+    """15 seconds: hook, the status tool, the two things, how long, where to look."""
+    h = _harp(); a = h["amount"]
+    return {"scenes": [
+        {"at": 0.0, "end": 2.5, "theme": "dark", "items": [
+            tile(60, 360, 960, 600, CREAM, TEAL, 150, words=True, html=f"Still waiting on your <em>{a}</em>?", rot=-1.5), emoji(770, 210, "\U0001F440", 230, 12),
+            sticker(90, 1030, "Nova Scotia heating rebate", size=50, rot=-4)]},
+        {"at": 2.5, "end": 5.5, "theme": "light", "items": [
+            tile(60, 300, 960, 560, TEAL, CREAM, 120, words=True, html="Good news: the <em>province</em> has a status tool \U0001F50E", rot=-1),
+            sticker(190, 930, "online applicants only", "teal", 46, -3, 0.9)]},
+        {"at": 5.5, "end": 8.5, "theme": "light", "items": [
+            tile(60, 250, 960, 300, "#ffffff", TEAL, 100, words=True, html="You just need <em>2 things</em>"),
+            tile(60, 600, 468, 460, AMBER, "#fff", 66, font="sans", center=True, html="Your confirmation number", rot=1.5, delay=0.5),
+            tile(552, 600, 468, 460, TAN, "#7a4a00", 66, font="sans", center=True, html="Your postal code", rot=-1.5, delay=0.7),
+            sticker(300, 1120, "that's it!", "teal", 46, -4, 1.0)]},
+        {"at": 8.5, "end": 11.5, "theme": "dark", "items": [
+            tile(60, 280, 960, 420, CREAM, TEAL, 120, words=True, html="How long? About <em>8 weeks</em> \u23F3", rot=1),
+            tile(60, 750, 960, 280, AMBER, "#fff", 62, font="sans", center=True, html="Longer if they need more info", rot=-1, delay=0.6)]},
+        {"at": 11.5, "end": 15.0, "theme": "dark", "foot": h["foot"], "items": [
+            tile(60, 330, 960, 450, CREAM, TEAL, 128, words=True, html="We'll show you <em>where</em> \U0001F447", rot=1),
+            tile(60, 830, 960, 260, AMBER, "#fff", 86, font="sans", center=True, html="homepowerrebate.com", rot=-1, delay=0.5),
+            sticker(650, 1150, "free guide", "cream", 46, 5, 0.9)]},
+    ]}
+
+
+def ns_harp_status_30():
+    """30 seconds: the same story with the money, the paper-form catch, how you get paid and the deadline."""
+    h = _harp(); a = h["amount"]
+    return {"scenes": [
+        {"at": 0.0, "end": 2.5, "theme": "dark", "items": [
+            tile(60, 360, 960, 600, CREAM, TEAL, 150, words=True, html=f"Still waiting on your <em>{a}</em>?", rot=-1.5), emoji(770, 210, "\U0001F440", 230, 12),
+            sticker(90, 1030, "Nova Scotia heating rebate", size=50, rot=-4)]},
+        {"at": 2.5, "end": 5.5, "theme": "light", "items": [
+            tile(60, 280, 960, 520, TEAL, CREAM, 118, words=True, html=f"It's <em>{a}</em> per home to help with winter heat", rot=-1),
+            sticker(150, 880, "2026-27 season", "cream", 48, 3, 0.9)]},
+        {"at": 5.5, "end": 9.0, "theme": "light", "items": [
+            tile(60, 300, 960, 560, AMBER, "#fff", 118, words=True, html="Applied online? The <em>province</em> has a status tool \U0001F50E", rot=1),
+            sticker(190, 930, "online applicants only", "teal", 46, -3, 1.0)]},
+        {"at": 9.0, "end": 12.5, "theme": "dark", "items": [
+            tile(60, 250, 960, 300, CREAM, TEAL, 100, words=True, html="Have <em>2 things</em> ready"),
+            tile(60, 600, 468, 460, AMBER, "#fff", 66, font="sans", center=True, html="Your confirmation number", rot=1.5, delay=0.5),
+            tile(552, 600, 468, 460, TAN, "#7a4a00", 66, font="sans", center=True, html="Your postal code", rot=-1.5, delay=0.7)]},
+        {"at": 12.5, "end": 16.0, "theme": "light", "items": [
+            tile(60, 280, 960, 520, TEAL, CREAM, 118, words=True, html="Mailed a paper form? \U0001F4EC The online tool <em>won't work</em>", rot=-1),
+            sticker(190, 880, "ask the program instead", "cream", 46, 3, 1.0)]},
+        {"at": 16.0, "end": 19.5, "theme": "dark", "items": [
+            tile(60, 280, 960, 440, CREAM, TEAL, 128, words=True, html="How long? About <em>8 weeks</em> \u23F3", rot=1),
+            tile(60, 770, 960, 260, AMBER, "#fff", 62, font="sans", center=True, html="Longer if they need more info", rot=-1, delay=0.6)]},
+        {"at": 19.5, "end": 23.0, "theme": "light", "items": [
+            tile(60, 250, 960, 330, "#ffffff", TEAL, 104, words=True, html="How do you <em>get paid</em>? \U0001F4B8"),
+            tile(60, 640, 468, 440, AMBER, "#fff", 50, font="sans", center=True, html="Direct deposit, if your tax refund comes that way", rot=1.5, delay=0.5),
+            tile(552, 640, 468, 440, TAN, "#7a4a00", 50, font="sans", center=True, html="Otherwise it comes by mail \u2709\uFE0F", rot=-1.5, delay=0.7)]},
+        {"at": 23.0, "end": 26.5, "theme": "dark", "items": [
+            tile(60, 280, 960, 440, CREAM, TEAL, 130, words=True, html=f"Apply by <em>{h['end']}</em> \u23F0", rot=-1),
+            tile(60, 770, 960, 260, AMBER, "#fff", 56, font="sans", center=True, html="Paper forms must be postmarked by then", rot=1, delay=0.6)]},
+        {"at": 26.5, "end": 30.0, "theme": "dark", "foot": h["foot"], "items": [
+            tile(60, 330, 960, 450, CREAM, TEAL, 128, words=True, html="We'll show you <em>where</em> \U0001F447", rot=1),
+            tile(60, 830, 960, 260, AMBER, "#fff", 86, font="sans", center=True, html="homepowerrebate.com", rot=-1, delay=0.5),
+            sticker(650, 1150, "free guide", "cream", 46, 5, 0.9)]},
+    ]}
+
+
+BENTO = {"ns-harp-status-6": ns_harp_status_6, "ns-harp-status-15": ns_harp_status_15, "ns-harp-status-30": ns_harp_status_30}
 
 
 def build_bento(name):

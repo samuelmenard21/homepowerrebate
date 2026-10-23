@@ -31,6 +31,7 @@
 // add a PROVINCE_CONTEXT entry below for any new region.
 import CITY_REBATE_LOOKUP from './city-rebate-lookup.json';
 import REGION_DATA from './data/regions.json';
+import ALERT_PROGRAMS from './data/alert-programs.json';
 
 // Region lists come from data/regions.json (the site's one list of regions), so a new region works here without editing this file.
 const REGION_LIST = REGION_DATA.regions;
@@ -794,7 +795,9 @@ async function runDripQueue(env) {
 // audience, because that is not what the person asked for (CASL). A repeat signup changes nothing and sends nothing,
 // so the form can't be used to flood someone's inbox.
 
-const ALERT_LISTS = new Set(['federal-hp']);
+// 'federal-hp' plus one list per program in data/alert-programs.json (heating bill help and the Nova Scotia HARP status pages).
+const ALERT_LISTS = new Set(['federal-hp', ...Object.keys(ALERT_PROGRAMS.programs)]);
+const US_STATES = new Set('AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY'.split(' '));
 const CA_ALL_PROVINCES = new Set(['AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'NT', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT']);
 // Provinces with a /ca/<code>/heat-pump/ page; the confirmation email links there, others get the federal page.
 const HEAT_PUMP_PAGE_PROVINCES = new Set(['AB', 'BC', 'MB', 'NS', 'ON', 'QC']);
@@ -813,7 +816,7 @@ async function handleAlertSignup(request, env) {
     id: crypto.randomUUID(),
     email,
     list,
-    province: CA_ALL_PROVINCES.has(province) ? province : '',
+    province: CA_ALL_PROVINCES.has(province) || (list !== 'federal-hp' && US_STATES.has(province)) ? province : '',
     city: cleanString(p.city).slice(0, 80),
     page: cleanString(p.page).slice(0, 200),
     created_at: new Date().toISOString()
@@ -827,7 +830,7 @@ async function handleAlertSignup(request, env) {
   if (!res.meta?.changes) return jsonResponse({ success: true }, 200);
 
   const tasks = [logToSheet({ record_type: 'alert', timestamp: record.created_at, email, list, province: record.province, city: record.city, source: record.page, status: 'new' }, env)];
-  if (env.RESEND_API_KEY) tasks.push(sendFederalAlertConfirmation(record, env));
+  if (env.RESEND_API_KEY) tasks.push(list === 'federal-hp' ? sendFederalAlertConfirmation(record, env) : sendProgramAlertConfirmation(record, ALERT_PROGRAMS.programs[list], env));
   const failures = (await Promise.allSettled(tasks)).filter(r => r.status === 'rejected');
   if (failures.length) console.error('Alert signup partial failure:', failures.map(f => f.reason?.message || f.reason));
   return jsonResponse({ success: true }, 200);
@@ -949,11 +952,45 @@ async function sendFederalAlertConfirmation(a, env) {
   });
 }
 
+
+// One short confirmation for a program alert (heating bill help, HARP). Says what the person signed up for and nothing else; the unsubscribe link
+// works for this row only. Announcements are sent by hand when a program opens, closes or changes (see CLAUDE.md, "Program alerts").
+async function sendProgramAlertConfirmation(a, prog, env) {
+  const site = 'https://homepowerrebate.com';
+  const name = prog.name;
+  const page = site + prog.page;
+  const unsub = `https://leads.homepowerrebate.com/unsubscribe?alert=${a.id}`;
+  const html = `<!doctype html><html><body style="margin:0;background:#faf7f2;font-family:-apple-system,Segoe UI,Roboto,sans-serif;color:#0a2a2e;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px 12px;"><table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:12px;">
+  <tr><td style="padding:28px 28px 8px;"><h1 style="font-size:22px;line-height:1.25;margin:0 0 12px;color:#08363f;">You're on the list</h1>
+    <p style="font-size:16px;line-height:1.6;margin:0 0 14px;">We'll email you once when <strong>${escapeHtml(name)}</strong> opens, closes or changes. That's the only thing we'll write to you about for this alert.</p>
+    <p style="font-size:16px;line-height:1.6;margin:0 0 14px;">Until then, the current dates, amounts and how to apply are on <a href="${page}" style="color:#a4540a;">our ${escapeHtml(name)} page</a>. Every figure there links to the official page.</p>
+    <p style="font-size:16px;line-height:1.6;margin:0 0 6px;">Talk soon,<br><strong>Sam</strong><br><span style="color:#5a6b6e;font-size:14px;">Founder, HomePowerRebate</span></p></td></tr>
+  <tr><td style="padding:12px 28px 24px;"><p style="font-size:13px;line-height:1.5;color:#5a6b6e;margin:0;border-top:1px solid #e3dacb;padding-top:14px;">You asked for this alert on homepowerrebate.com. We're an independent site, not the government or the program. <a href="${unsub}" style="color:#5a6b6e;">Unsubscribe</a>.</p></td></tr>
+</table></td></tr></table></body></html>`;
+  return resendEmail(env.RESEND_API_KEY, {
+    from: 'HomePowerRebate <hello@homepowerrebate.com>',
+    to: a.email,
+    subject: `You're on the list: ${name}`,
+    html
+  });
+}
+
 async function handleUnsubscribe(request, env) {
   const params = new URL(request.url).searchParams;
   const alertId = params.get('alert');
   if (alertId) {
-    if (env.OUTCOMES_DB) await env.OUTCOMES_DB.prepare('UPDATE alerts SET unsubscribed = 1 WHERE id = ?').bind(alertId).run();
+    let listId = 'federal-hp';
+    if (env.OUTCOMES_DB) {
+      const row = await env.OUTCOMES_DB.prepare('SELECT list FROM alerts WHERE id = ?').bind(alertId).first();
+      if (row?.list) listId = row.list;
+      await env.OUTCOMES_DB.prepare('UPDATE alerts SET unsubscribed = 1 WHERE id = ?').bind(alertId).run();
+    }
+    const prog = ALERT_PROGRAMS.programs[listId];
+    if (prog) {
+      return htmlResponse(`<h1 style="font-size:22px;">You're unsubscribed</h1>
+       <p>We won't email you about ${escapeHtml(prog.name)}. You can still check <a href="https://homepowerrebate.com${prog.page}">the current details</a> any time.</p>`, 200);
+    }
     return htmlResponse(`<h1 style="font-size:22px;">You're unsubscribed</h1>
        <p>We won't email you about the federal heat pump rebate. You can still check <a href="https://homepowerrebate.com/programs/national-heat-pump-rebate/">what's confirmed so far</a> any time.</p>`, 200);
   }

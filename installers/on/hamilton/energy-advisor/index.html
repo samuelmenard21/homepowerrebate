@@ -13,7 +13,7 @@
 <meta property="og:description" content="The top-rated energy advisors in Hamilton, ON, ranked by 2,276 Google reviews. Compare 18 local companies, plus what to ask before you hire.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://homepowerrebate.com/installers/on/hamilton/energy-advisor/">
-<meta property="og:image" content="https://homepowerrebate.com/og-image.svg">
+<meta property="og:image" content="https://homepowerrebate.com/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- FONT-PRELOAD-START -->
@@ -228,7 +228,7 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=079f070b82" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -419,7 +419,7 @@
 <p class="small">Ranked by Google rating weighted by review count, collected October 2026. Rankings are never paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
 <div class="callout"><p><strong>Are you one of the energy advisors in Hamilton?</strong> These are yours to use with clients:</p><ul><li><b>A rebate calculator for your website.</b> Clients answer a few questions and see the rebates they can stack. <a href="/calculator/widget/?r=on">Get the embed code</a>.</li><li><b>A one-page Hamilton rebate sheet</b> to print or email to clients, with every open program, the main rule and the official source. <a href="/rebate-sheet/on/hamilton/">Open the rebate sheet</a>.</li><li><b>Your top-rated badge</b>, if you are listed here. <a href="/installers/badge/?r=on&amp;c=hamilton&amp;s=energy-advisor">Get your badge</a>.</li></ul></div>
 
-<h2>What an energy advisor costs in Hamilton</h2><div class="cb"><div class="cb-row"><span>Typical price, both visits</span><b>$600 to $1,000</b></div><p class="cb-note">NRCan says the before and after evaluations together average $600 to $1,000, depending on the advisor and the province, and you usually pay after the work is done. Some programs pay for the evaluation or give a rebate on it. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes" rel="noopener" target="_blank">Source: Natural Resources Canada</a>.</p><div class="cb-row cb-reb"><span>Insulation rebates open in Hamilton</span><b>up to $7,700</b></div><div class="cb-row cb-reb"><span>Heat pump rebates open in Hamilton</span><b>up to $12,000</b></div><p class="cb-note">Check whether each one needs an energy advisor's evaluation before work starts. That could cut your cost by up to <b>$19,700</b> if you qualify. Most rebates have rules (income, your current heating, a registered contractor, approval before work starts).</p></div><p class="small">Rebates: our verified program data, checked monthly. Always confirm the exact amount for your home.</p>
+<h2>What an energy advisor costs in Hamilton</h2><div class="cb"><div class="cb-row"><span>Typical price, both visits</span><b>$600 to $1,000</b></div><p class="cb-note">NRCan says the before and after evaluations together average $600 to $1,000, depending on the advisor and the province, and you usually pay after the work is done. Some programs pay for the evaluation or give a rebate on it. <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" target="_blank" data-official="1">Source: Natural Resources Canada</a>.</p><div class="cb-row cb-reb"><span>Insulation rebates open in Hamilton</span><b>up to $7,700</b></div><div class="cb-row cb-reb"><span>Heat pump rebates open in Hamilton</span><b>up to $12,000</b></div><p class="cb-note">Check whether each one needs an energy advisor's evaluation before work starts. That could cut your cost by up to <b>$19,700</b> if you qualify. Most rebates have rules (income, your current heating, a registered contractor, approval before work starts).</p></div><p class="small">Rebates: our verified program data, checked monthly. Always confirm the exact amount for your home.</p>
 
 
 
@@ -704,6 +704,21 @@ document.addEventListener('click', function (e) {
   var u; try { u = new URL(a.href); } catch (x) { return; }
   window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
 }, true);
+// Program alert boxes (scripts/add_program_alerts.py): POST /alert with the box's list id and region; one confirmation email, one list per program.
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('prog-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.prog-alert'), done = box.querySelector('.prog-alert-done'), b = f.querySelector('button'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: box.dataset.list, email: f.querySelector('input[type="email"]').value, province: box.dataset.region || '', city: '', page: location.pathname, website: f.querySelector('.prog-alert-hp').value }) });
+    if (!r.ok) throw new Error('bad');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+    if (window.gtag) window.gtag('event', 'prog_alert_signup', { page_path: location.pathname, alert_list: box.dataset.list });
+  } catch (err) { done.textContent = 'That did not go through. Please try again.'; b.disabled = false; b.textContent = t; }
+  done.hidden = false;
+});
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

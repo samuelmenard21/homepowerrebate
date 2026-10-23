@@ -1,0 +1,92 @@
+{
+ "_note": "Program alert lists (scripts/add_program_alerts.py puts the box on each page; lead-router.js accepts exactly these list ids). Add a program here, rerun the script, then deploy the worker.",
+ "programs": {
+  "heating-bc": {
+   "name": "BC Hydro Customer Crisis Fund",
+   "page": "/ca/bc/heating-assistance/",
+   "region": "BC",
+   "country": "ca"
+  },
+  "heating-ca": {
+   "name": "California LIHEAP",
+   "page": "/us/ca/heating-assistance/",
+   "region": "CA",
+   "country": "us"
+  },
+  "heating-co": {
+   "name": "Colorado LEAP",
+   "page": "/us/co/heating-assistance/",
+   "region": "CO",
+   "country": "us"
+  },
+  "heating-il": {
+   "name": "Illinois LIHEAP",
+   "page": "/us/il/heating-assistance/",
+   "region": "IL",
+   "country": "us"
+  },
+  "heating-ma": {
+   "name": "Massachusetts HEAP",
+   "page": "/us/ma/heating-assistance/",
+   "region": "MA",
+   "country": "us"
+  },
+  "heating-mi": {
+   "name": "Michigan Energy Assistance Program (MEAP)",
+   "page": "/us/mi/heating-assistance/",
+   "region": "MI",
+   "country": "us"
+  },
+  "heating-nj": {
+   "name": "New Jersey LIHEAP and Universal Service Fund",
+   "page": "/us/nj/heating-assistance/",
+   "region": "NJ",
+   "country": "us"
+  },
+  "heating-nl": {
+   "name": "Home Heating Supplement Program (furnace and stove oil), Government of Newfoundland and Labrador",
+   "page": "/ca/nl/heating-assistance/",
+   "region": "NL",
+   "country": "ca"
+  },
+  "heating-on": {
+   "name": "Ontario Electricity Support Program (OESP)",
+   "page": "/ca/on/heating-assistance/",
+   "region": "ON",
+   "country": "ca"
+  },
+  "heating-pa": {
+   "name": "Pennsylvania LIHEAP cash grant",
+   "page": "/us/pa/heating-assistance/",
+   "region": "PA",
+   "country": "us"
+  },
+  "heating-vt": {
+   "name": "Vermont Seasonal Fuel Assistance",
+   "page": "/us/vt/heating-assistance/",
+   "region": "VT",
+   "country": "us"
+  },
+  "heating-wa": {
+   "name": "Washington LIHEAP",
+   "page": "/us/wa/heating-assistance/",
+   "region": "WA",
+   "country": "us"
+  },
+  "heating-yt": {
+   "name": "Yukon Pioneer Utility Grant",
+   "page": "/ca/yt/heating-assistance/",
+   "region": "YT",
+   "country": "ca"
+  },
+  "harp-ns": {
+   "name": "Nova Scotia Heating Assistance Rebate (HARP)",
+   "page": "/programs/nova-scotia-heating-assistance-rebate-harp/",
+   "region": "NS",
+   "country": "ca",
+   "extra_pages": [
+    "/blog/nova-scotia-heating-rebate-2026-27-payment-dates-status/"
+   ]
+  }
+ }
+}

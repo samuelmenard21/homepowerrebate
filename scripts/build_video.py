@@ -48,21 +48,54 @@ def ns_harp_status():
     ]
 
 
+# ---- bento cards + sticker type + kinetic motion (frame by frame, 30 fps) -----------------------------------------------------------------------
+CREAM, TEAL, AMBER, TAN = "#faf7f2", "#08363f", "#d4751c", "#ffe8c2"
+
+
 def ns_harp_status_6():
-    """6 seconds: hook, the one thing to know, where to look. Fun, grade 6, no corporate words."""
+    """6 seconds. Hook in the first 2 seconds, then the one thing to know, then where to look. Conversational, grade 6. The status tool is the PROVINCE's:
+    we never say people can check on our site, only that we show where."""
     f = kit.FACTS["ns-16-heating-assistance-rebate-program-harp-province-of"]
     amount = re.search(r"\$[\d,]+", f["amount"]).group(0)
     claim = f["claim"]
     assert "online applicants only" in claim and "confirmation number" in claim and "postal code" in claim, "fact changed: re-read it before rendering"
     host = urlparse(f["source_url"]).netloc.replace("www.", "")
-    return [
-        dict(theme="dark", seconds=2.0, size=138, headline=f"Did your <em>{amount}</em> land yet? \U0001F440", sub="Nova Scotia heating rebate"),
-        dict(theme="light", seconds=2.2, size=104, headline="Grab <em>2 things</em> \U0001F4DD", sub="Your confirmation number and your postal code. (Applied online? You're good.)"),
-        dict(theme="dark", seconds=1.8, size=112, headline="Then check your <em>status</em> \u2705", sub="homepowerrebate.com has the steps", foot=f"Source: {host}. Checked {nice(f['verified_on'])}."),
-    ]
+    return {"scenes": [
+        {"at": 0.0, "end": 2.0, "theme": "dark", "items": [
+            {"type": "tile", "x": 60, "y": 360, "w": 960, "h": 600, "bg": CREAM, "color": TEAL, "size": 150, "words": True, "html": f"Still waiting on your <em>{amount}</em>?", "rot": -1.5},
+            {"type": "emoji", "x": 770, "y": 210, "size": 230, "html": "\U0001F440", "rot": 12, "delay": 0.45},
+            {"type": "sticker", "x": 90, "y": 1030, "size": 50, "style": "cream", "html": "Nova Scotia heating rebate", "rot": -4, "delay": 0.7}]},
+        {"at": 2.0, "end": 4.2, "theme": "light", "items": [
+            {"type": "tile", "x": 60, "y": 270, "w": 960, "h": 470, "bg": TEAL, "color": CREAM, "size": 112, "words": True, "html": "The <em>province</em> has a status tool \U0001F50E", "rot": -1},
+            {"type": "tile", "x": 60, "y": 780, "w": 468, "h": 400, "bg": AMBER, "color": "#fff", "font": "sans", "size": 62, "center": True, "html": "Your confirmation number", "rot": 1.5, "delay": 0.5},
+            {"type": "tile", "x": 552, "y": 780, "w": 468, "h": 400, "bg": TAN, "color": "#7a4a00", "font": "sans", "size": 62, "center": True, "html": "Your postal code", "rot": -1.5, "delay": 0.7},
+            {"type": "sticker", "x": 230, "y": 1240, "size": 42, "style": "teal", "html": "online applicants only", "rot": -3, "delay": 1.0}]},
+        {"at": 4.2, "end": 6.0, "theme": "dark", "foot": f"Source: {host}. Checked {nice(f['verified_on'])}.", "items": [
+            {"type": "tile", "x": 60, "y": 330, "w": 960, "h": 450, "bg": CREAM, "color": TEAL, "size": 128, "words": True, "html": "We'll show you <em>where</em> \U0001F447", "rot": 1},
+            {"type": "tile", "x": 60, "y": 830, "w": 960, "h": 260, "bg": AMBER, "color": "#fff", "font": "sans", "size": 86, "center": True, "html": "homepowerrebate.com", "rot": -1, "delay": 0.45},
+            {"type": "sticker", "x": 650, "y": 1150, "size": 46, "style": "cream", "html": "free guide", "rot": 5, "delay": 0.8}]},
+    ]}
 
 
-VIDEOS = {"ns-harp-status": ns_harp_status, "ns-harp-status-6": ns_harp_status_6}
+BENTO = {"ns-harp-status-6": ns_harp_status_6}
+
+
+def build_bento(name):
+    spec = BENTO[name]()
+    out_dir = ROOT / "videos"
+    out_dir.mkdir(exist_ok=True)
+    tmp = Path(tempfile.mkdtemp(prefix="hpr-bento-"))
+    (tmp / "spec.json").write_text(json.dumps(spec))
+    subprocess.run(["node", str(ROOT / "scripts/video/render_frames.js"), str(tmp / "spec.json"), str(tmp / "frames"), "30", str(ROOT)], check=True)
+    final = out_dir / f"{name}.mp4"
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", "30", "-i", str(tmp / "frames" / "frame_%05d.jpg"), "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo", "-shortest",
+                    "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "96k", "-movflags", "+faststart", str(final)], check=True)
+    print("wrote", final, f"{spec['scenes'][-1]['end']:.0f}s")
+    subprocess.run(["rm", "-rf", str(tmp)])
+    return final
+
+
+VIDEOS = {"ns-harp-status": ns_harp_status}
 
 
 def build(name, keep=False):
@@ -102,6 +135,9 @@ def build(name, keep=False):
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    if not args or args[0] not in VIDEOS:
+    if args and args[0] in BENTO:
+        build_bento(args[0])
+    elif args and args[0] in VIDEOS:
+        build(args[0], keep="--keep" in sys.argv)
+    else:
         sys.exit(__doc__)
-    build(args[0], keep="--keep" in sys.argv)

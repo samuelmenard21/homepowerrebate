@@ -49,6 +49,7 @@ def ns_harp_status():
 
 
 # ---- bento cards + sticker type + kinetic motion (frame by frame, 30 fps) -----------------------------------------------------------------------
+VANITY = "homepowerrebate.com/harp"   # short URL: _redirects sends it to the HARP page with utm_source=video
 CREAM, TEAL, AMBER, TAN = "#faf7f2", "#08363f", "#d4751c", "#ffe8c2"
 
 
@@ -72,8 +73,8 @@ def ns_harp_status_6():
             {"type": "sticker", "x": 230, "y": 1240, "size": 42, "style": "teal", "html": "online applicants only", "rot": -3, "delay": 1.0}]},
         {"at": 4.2, "end": 6.0, "theme": "dark", "foot": f"Source: {host}. Checked {nice(f['verified_on'])}.", "items": [
             {"type": "tile", "x": 60, "y": 330, "w": 960, "h": 450, "bg": CREAM, "color": TEAL, "size": 128, "words": True, "html": "We'll show you <em>where</em> \U0001F447", "rot": 1},
-            {"type": "tile", "x": 60, "y": 830, "w": 960, "h": 260, "bg": AMBER, "color": "#fff", "font": "sans", "size": 86, "center": True, "html": "homepowerrebate.com", "rot": -1, "delay": 0.45},
-            {"type": "sticker", "x": 650, "y": 1150, "size": 46, "style": "cream", "html": "free guide", "rot": 5, "delay": 0.8}]},
+            {"type": "tile", "x": 60, "y": 830, "w": 960, "h": 260, "bg": AMBER, "color": "#fff", "font": "sans", "size": 62, "center": True, "html": VANITY, "rot": -1, "delay": 0.45},
+            {"type": "sticker", "x": 110, "y": 1150, "size": 40, "style": "cream", "html": "or search: NS heating rebate status", "rot": 3, "delay": 0.8}]},
     ]}
 
 
@@ -120,8 +121,8 @@ def ns_harp_status_15():
             tile(60, 750, 960, 280, AMBER, "#fff", 62, font="sans", center=True, html="Longer if they need more info", rot=-1, delay=0.6)]},
         {"at": 11.5, "end": 15.0, "theme": "dark", "foot": h["foot"], "items": [
             tile(60, 330, 960, 450, CREAM, TEAL, 128, words=True, html="We'll show you <em>where</em> \U0001F447", rot=1),
-            tile(60, 830, 960, 260, AMBER, "#fff", 86, font="sans", center=True, html="homepowerrebate.com", rot=-1, delay=0.5),
-            sticker(650, 1150, "free guide", "cream", 46, 5, 0.9)]},
+            tile(60, 830, 960, 260, AMBER, "#fff", 62, font="sans", center=True, html=VANITY, rot=-1, delay=0.5),
+            sticker(110, 1150, "or search: NS heating rebate status", "cream", 40, 3, 0.9)]},
     ]}
 
 
@@ -157,8 +158,8 @@ def ns_harp_status_30():
             tile(60, 770, 960, 260, AMBER, "#fff", 56, font="sans", center=True, html="Paper forms must be postmarked by then", rot=1, delay=0.6)]},
         {"at": 26.5, "end": 30.0, "theme": "dark", "foot": h["foot"], "items": [
             tile(60, 330, 960, 450, CREAM, TEAL, 128, words=True, html="We'll show you <em>where</em> \U0001F447", rot=1),
-            tile(60, 830, 960, 260, AMBER, "#fff", 86, font="sans", center=True, html="homepowerrebate.com", rot=-1, delay=0.5),
-            sticker(650, 1150, "free guide", "cream", 46, 5, 0.9)]},
+            tile(60, 830, 960, 260, AMBER, "#fff", 62, font="sans", center=True, html=VANITY, rot=-1, delay=0.5),
+            sticker(110, 1150, "or search: NS heating rebate status", "cream", 40, 3, 0.9)]},
     ]}
 
 

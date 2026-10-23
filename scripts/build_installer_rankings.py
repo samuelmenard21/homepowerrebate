@@ -844,7 +844,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 </div></header>
 <section class="body"><div class="wrap">
 <div class="stats"><div class="stat"><b>{n}</b><span>Companies</span></div><div class="stat"><b>{total_reviews:,}</b><span>Google reviews</span></div><div class="stat"><b>{avg:.1f}★</b><span>Average rating</span></div><div class="stat"><b>{upd_short}</b><span>Data collected</span></div></div>
-<div class="trust"><span>Ranked by Google reviews</span><span>Never paid for</span><span>Free to compare</span></div>
+<div class="trust"><span>Ranked by Google reviews</span><span>Not paid for</span><span>Free to compare</span></div>
 <div class="callout"><p><strong>Short answer:</strong> The top-rated {svc['pros_l']} in {esc(city_label)} are {esc(top_line)}.</p>{reg_callout}</div>
 
 <h2 class="sec-h">{svc['pros_t'][:1] + svc['pros_t'][1:].lower() if service in ADVISORS else svc['name'] + ' installers'} in {esc(city_label)}, ranked <span class="chip" aria-hidden="true">{n} listed</span></h2>
@@ -857,7 +857,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 {advisor_note(region, service, city_label)}
 <p class="small">Together these {n} companies average {avg:.1f}★ across {total_reviews:,} reviews. {esc(most_reviewed['name'])} has the most reviews ({most_reviewed['reviews']:,}).</p>
 
-<p class="small">Ranked by Google rating weighted by review count, collected {upd_h}. Rankings are never paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
+<p class="small">Ranked by Google rating weighted by review count, collected {upd_h}. Rankings are not paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
 {pro_box(region, service, city_slug, city_label)}
 
 {cost_box(region, service, city_label, hub)}

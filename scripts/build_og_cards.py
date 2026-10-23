@@ -22,8 +22,8 @@ import apply_canonical_nav_footer as nf  # noqa: E402
 
 OG = ROOT / "og"
 TRUST = {
-    "profile": "Ratings from Google Maps · Rankings never paid for",
-    "ranking": "Ranked by Google reviews · Never paid for · Free",
+    "profile": "Ratings from Google Maps · Rankings not paid for",
+    "ranking": "Ranked by Google reviews · Not paid for · Free",
     "default": "Free · Every amount links to the official program",
 }
 

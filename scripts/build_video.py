@@ -163,7 +163,125 @@ def ns_harp_status_30():
     ]}
 
 
-BENTO = {"ns-harp-status-6": ns_harp_status_6, "ns-harp-status-15": ns_harp_status_15, "ns-harp-status-30": ns_harp_status_30}
+# ---- heat pump series, 2026-10-23: teach one idea, then send people to the launch alert (/federal) ---------------------------------------------------
+FED_VANITY = "homepowerrebate.com/federal"
+
+
+def _fed():
+    """The federal facts the heat pump videos use, checked. Nothing about who qualifies, retroactivity or a start date beyond what the facts say."""
+    f0 = kit.FACTS["federal-0-national-heat-pump-rebate"]
+    f1 = kit.FACTS["federal-1-launch-and-retroactivity"]
+    f2 = kit.FACTS["federal-2-how-it-works"]
+    assert "$10,000" in f0["amount"] and "$2,000" in f0["amount"], "federal amounts changed: re-read before rendering"
+    assert "$1,400" in f0["eligibility"] and "not published" in f0["eligibility"], "federal eligibility changed: re-read before rendering"
+    assert "early 2027" in f0["dates"] and "early 2027" in f1["dates"], "federal launch wording changed: re-read before rendering"
+    assert "24 hours" in f2["claim"] and "five days" in f2["claim"] and "80 per cent" in f2["eligibility"], "federal process changed: re-read before rendering"
+    assert f0["status"] == "upcoming", "the rebate is no longer 'upcoming': rewrite the videos"
+    return {"foot": f"Source: canada.ca. Checked {nice(f0['verified_on'])}."}
+
+
+def _fed_cta(at, end, foot, line="Want to hear <em>first</em>? \U0001F4EC"):
+    return {"at": at, "end": end, "theme": "dark", "foot": foot, "items": [
+        tile(60, 300, 960, 460, CREAM, TEAL, 128, words=True, html=line, rot=1),
+        tile(60, 810, 960, 250, AMBER, "#fff", 62, font="sans", center=True, html=FED_VANITY, rot=-1, delay=0.5),
+        sticker(110, 1120, "one email the day it opens", "cream", 42, 3, 0.9)]}
+
+
+def hp_furnace_15():
+    """15 seconds. Hook: the furnace will die. Teaches: most people replace heat only after it breaks, and Ottawa's rebate is built for that moment."""
+    h = _fed()
+    return {"scenes": [
+        {"at": 0.0, "end": 2.5, "theme": "dark", "items": [
+            tile(60, 330, 960, 640, CREAM, TEAL, 140, words=True, html="Your furnace <em>will die</em>. Probably in the cold.", rot=-1.5), emoji(760, 170, "\U0001F976", 240, 12),
+            sticker(90, 1040, "Heat pump news from Ottawa", size=48, rot=-4)]},
+        {"at": 2.5, "end": 6.0, "theme": "light", "items": [
+            tile(60, 280, 960, 520, TEAL, CREAM, 118, words=True, html="Most people replace heat <em>after</em> it breaks \U0001F4A5", rot=-1),
+            tile(60, 850, 960, 230, AMBER, "#fff", 58, font="sans", center=True, html="Ottawa's own numbers: 8 in 10", rot=1, delay=0.7)]},
+        {"at": 6.0, "end": 10.5, "theme": "dark", "items": [
+            tile(60, 260, 960, 330, CREAM, TEAL, 104, words=True, html="Ottawa will pay for a <em>heat pump</em>", rot=1),
+            tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your home earns less than the middle", rot=1.5, delay=0.5),
+            tile(552, 640, 468, 440, TAN, "#7a4a00", 56, font="sans", center=True, html="<b>$2,000</b> for other homes", rot=-1.5, delay=0.7)]},
+        _fed_cta(10.5, 15.0, h["foot"], "Not open yet. Want to hear <em>first</em>? \U0001F4EC")]}
+
+
+def hp_furnace_30():
+    """30 seconds: the same hook, then how it is meant to work, what is still unknown, and the launch alert."""
+    h = _fed()
+    return {"scenes": [
+        {"at": 0.0, "end": 2.5, "theme": "dark", "items": [
+            tile(60, 330, 960, 640, CREAM, TEAL, 140, words=True, html="Your furnace <em>will die</em>. Probably in the cold.", rot=-1.5), emoji(760, 170, "\U0001F976", 240, 12),
+            sticker(90, 1040, "Heat pump news from Ottawa", size=48, rot=-4)]},
+        {"at": 2.5, "end": 5.5, "theme": "light", "items": [
+            tile(60, 280, 960, 520, TEAL, CREAM, 118, words=True, html="Most people replace heat <em>after</em> it breaks \U0001F4A5", rot=-1),
+            sticker(150, 870, "8 in 10, says Ottawa", "cream", 50, 3, 0.9)]},
+        {"at": 5.5, "end": 9.5, "theme": "dark", "items": [
+            tile(60, 260, 960, 330, CREAM, TEAL, 104, words=True, html="Ottawa just announced a <em>heat pump</em> rebate", rot=1),
+            tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your home earns less than the middle", rot=1.5, delay=0.5),
+            tile(552, 640, 468, 440, TAN, "#7a4a00", 56, font="sans", center=True, html="<b>$2,000</b> for other homes", rot=-1.5, delay=0.7)]},
+        {"at": 9.5, "end": 13.5, "theme": "light", "items": [
+            tile(60, 260, 960, 330, "#ffffff", TEAL, 100, words=True, html="Here's the plan, <em>step by step</em> \U0001FA9C"),
+            tile(60, 640, 960, 200, TEAL, CREAM, 56, font="sans", center=True, html="1. Apply online when your heat breaks or gets old", rot=-1, delay=0.5),
+            tile(60, 880, 960, 200, AMBER, "#fff", 56, font="sans", center=True, html="2. Hear back within a day", rot=1, delay=0.8)]},
+        {"at": 13.5, "end": 17.5, "theme": "light", "items": [
+            tile(60, 260, 960, 200, TAN, "#7a4a00", 56, font="sans", center=True, html="3. Buy and install your heat pump", rot=1),
+            tile(60, 500, 960, 200, TEAL, CREAM, 56, font="sans", center=True, html="4. Upload your receipts", rot=-1, delay=0.4),
+            tile(60, 740, 960, 340, AMBER, "#fff", 96, words=True, html="Paid within <em>5 days</em> \U0001F4B8", rot=1, delay=0.8)]},
+        {"at": 17.5, "end": 21.5, "theme": "dark", "items": [
+            tile(60, 280, 960, 440, CREAM, TEAL, 128, words=True, html="No home energy check <em>first</em> \u2705", rot=-1),
+            sticker(150, 800, "says Ottawa's plan", "cream", 48, 3, 0.8)]},
+        {"at": 21.5, "end": 25.5, "theme": "light", "items": [
+            tile(60, 260, 960, 440, AMBER, "#fff", 118, words=True, html="But it's <em>not open yet</em> \u23F3", rot=1),
+            tile(60, 750, 960, 300, TEAL, CREAM, 62, font="sans", center=True, html="Expected early 2027. Who qualifies isn't published yet.", rot=-1, delay=0.6)]},
+        _fed_cta(25.5, 30.0, h["foot"])]}
+
+
+def hp_cold_air_15():
+    """15 seconds. Hook: a machine that heats your home with cold air. Teaches: it moves heat, like a fridge in reverse."""
+    h = _fed()
+    return {"scenes": [
+        {"at": 0.0, "end": 2.5, "theme": "dark", "items": [
+            tile(60, 330, 960, 640, CREAM, TEAL, 140, words=True, html="This machine heats your home with <em>cold air</em>", rot=-1.5), emoji(760, 170, "\u2744\uFE0F", 240, 12),
+            sticker(90, 1040, "How a heat pump works", size=48, rot=-4)]},
+        {"at": 2.5, "end": 6.0, "theme": "light", "items": [
+            tile(60, 280, 960, 520, TEAL, CREAM, 118, words=True, html="It doesn't make heat. It <em>moves</em> it \U0001F69A", rot=-1),
+            sticker(160, 870, "like a fridge, but backwards \U0001F9CA", "cream", 46, 3, 0.9)]},
+        {"at": 6.0, "end": 10.5, "theme": "dark", "items": [
+            tile(60, 270, 960, 420, AMBER, "#fff", 112, words=True, html="Homes on oil, propane or plain electric heat save over <em>$1,400</em> a year", rot=1),
+            sticker(150, 760, "average, says Ottawa", "cream", 48, -3, 0.9)]},
+        _fed_cta(10.5, 15.0, h["foot"], "Ottawa will help pay. Hear <em>first</em>? \U0001F4EC")]}
+
+
+def hp_cold_air_30():
+    """30 seconds: the hook, the fridge idea in plain steps, the savings Ottawa cites, the rebate, and the alert."""
+    h = _fed()
+    return {"scenes": [
+        {"at": 0.0, "end": 2.5, "theme": "dark", "items": [
+            tile(60, 330, 960, 640, CREAM, TEAL, 140, words=True, html="This machine heats your home with <em>cold air</em>", rot=-1.5), emoji(760, 170, "\u2744\uFE0F", 240, 12),
+            sticker(90, 1040, "How a heat pump works", size=48, rot=-4)]},
+        {"at": 2.5, "end": 6.0, "theme": "light", "items": [
+            tile(60, 280, 960, 520, TEAL, CREAM, 118, words=True, html="It doesn't make heat. It <em>moves</em> it \U0001F69A", rot=-1),
+            sticker(190, 870, "that's the trick", "cream", 50, 3, 0.9)]},
+        {"at": 6.0, "end": 10.0, "theme": "dark", "items": [
+            tile(60, 260, 960, 380, CREAM, TEAL, 108, words=True, html="Think of a <em>fridge</em> \U0001F9CA", rot=1),
+            tile(60, 690, 960, 380, AMBER, "#fff", 62, font="sans", center=True, html="A fridge pulls heat out of the box and dumps it in your kitchen", rot=-1, delay=0.6)]},
+        {"at": 10.0, "end": 14.0, "theme": "light", "items": [
+            tile(60, 260, 960, 380, TEAL, CREAM, 108, words=True, html="A heat pump <em>flips it</em> \U0001F501", rot=-1),
+            tile(60, 690, 960, 380, TAN, "#7a4a00", 62, font="sans", center=True, html="It pulls heat out of the outside air and pushes it into your home", rot=1, delay=0.6)]},
+        {"at": 14.0, "end": 18.0, "theme": "dark", "items": [
+            tile(60, 280, 960, 440, CREAM, TEAL, 118, words=True, html="Even when it's <em>freezing</em> outside \U0001F976", rot=1),
+            sticker(110, 800, "pick a model made for cold winters", "cream", 44, -3, 0.8)]},
+        {"at": 18.0, "end": 22.0, "theme": "dark", "items": [
+            tile(60, 260, 960, 440, AMBER, "#fff", 108, words=True, html="Oil, propane or plain electric heat? Save over <em>$1,400</em> a year", rot=1),
+            sticker(150, 780, "on average, says Ottawa", "cream", 48, -3, 0.9)]},
+        {"at": 22.0, "end": 26.0, "theme": "light", "items": [
+            tile(60, 260, 960, 330, "#ffffff", TEAL, 100, words=True, html="And Ottawa will <em>help pay</em> \U0001F4B5"),
+            tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your home earns less than the middle", rot=1.5, delay=0.5),
+            tile(552, 640, 468, 440, TAN, "#7a4a00", 56, font="sans", center=True, html="<b>$2,000</b> for other homes", rot=-1.5, delay=0.7)]},
+        _fed_cta(26.0, 30.0, h["foot"], "Not open yet. Hear <em>first</em>? \U0001F4EC")]}
+
+
+BENTO = {"ns-harp-status-6": ns_harp_status_6, "ns-harp-status-15": ns_harp_status_15, "ns-harp-status-30": ns_harp_status_30,
+         "hp-furnace-15": hp_furnace_15, "hp-furnace-30": hp_furnace_30, "hp-cold-air-15": hp_cold_air_15, "hp-cold-air-30": hp_cold_air_30}
 
 
 def build_bento(name):

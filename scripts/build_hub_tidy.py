@@ -61,7 +61,7 @@ def tidy_article(t, have):
     return re.sub(r"</div>(\s*)</details>(\s*)</article>", r"</details>\1</div>\2</article>", res)  # repair an earlier inverted fold
 
 
-TOC_SKIP = re.compile(r"not sure|weekly email|sources|newsletter|installers", re.I)
+TOC_SKIP = re.compile(r"not sure|weekly email|sources|newsletter|installers|not ready to talk|learn the rules before|quiz", re.I)  # last three: the LEARN block (add_learn_blocks.py)
 
 
 TOC_LABELS = [(r"rebate finder|rebate program|by category|by utility", "Rebate finder"), (r"question|faq|what you should know", "FAQ"),

@@ -32,6 +32,30 @@ CSS = """
 .gq-h{font-family:'Fraunces',serif;font-size:22px;color:var(--teal-deep);margin:0 0 6px}.gq-sub{font-size:14px;color:var(--ink-soft);margin:0 0 10px}
 .gq-msg{margin-top:14px;padding:14px 16px;border-radius:8px;font-size:15px;display:none}.gq-msg.show{display:block}.gq-msg.ok{background:#eaf3ee;color:#1f5a3d}.gq-msg.err{background:#fef3e6;color:#8a4a06}
 .gq details summary{cursor:pointer;font-weight:700;font-size:17px}
+.gq-hero{position:relative;padding:clamp(48px,7vw,104px) 20px clamp(64px,8vw,112px);text-align:center;color:#fff;background:linear-gradient(180deg,rgba(8,54,63,.78),rgba(8,54,63,.92)),url(/assets/learn/modern-home-1600.webp) center/cover no-repeat}
+.gq-hero h1{max-width:14em;margin:0 auto 14px;font-family:Fraunces,Georgia,serif;font-size:clamp(40px,5.4vw,68px);font-weight:700;line-height:1.02;letter-spacing:-.03em;color:#fff;text-wrap:balance}
+.gq-hero p.gq-lead{max-width:34em;margin:0 auto 28px;font-size:clamp(19px,1.7vw,24px);line-height:1.45;color:rgba(250,247,242,.92)}
+.gq-bar{display:grid;grid-template-columns:1.6fr 1fr auto;gap:0;max-width:860px;margin:0 auto;padding:8px;border-radius:999px;background:#fff;box-shadow:0 18px 50px -18px rgba(0,0,0,.55)}
+.gq-bar-f{display:flex;align-items:center;min-width:0;border-right:1px solid var(--rule)}
+.gq-bar-f input,.gq-bar-f select{width:100%;min-height:56px;padding:0 22px;border:0;background:transparent;color:var(--ink);font:inherit;font-size:19px}
+.gq-bar-f input:focus,.gq-bar-f select:focus{outline:none}
+.gq-bar:focus-within{box-shadow:0 0 0 4px rgba(232,138,46,.55),0 18px 50px -18px rgba(0,0,0,.55)}
+.gq-bar-go{min-height:56px;padding:0 30px;border:0;border-radius:999px;background:var(--amber);color:#fff;font:inherit;font-size:19px;font-weight:700;cursor:pointer}
+.gq-bar-go:hover{background:var(--amber-text)}
+.gq-barmsg{display:none;max-width:860px;margin:12px auto 0;padding:10px 16px;border-radius:12px;background:#fdeccf;color:#6b3a05;font-size:17px;text-align:left}
+.gq-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 26px;margin:24px auto 0;font-size:17px;font-weight:600;color:rgba(250,247,242,.95)}
+.gq-trust span::before{content:"\\2713\\00a0";color:#e88a2e}
+.gq-refine summary{cursor:pointer;font-size:20px;font-weight:700;color:var(--teal-deep)}
+.gq-refine[open] summary{margin-bottom:16px}
+.gq-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:8px 0 40px}
+.gq-step{overflow:hidden;border-radius:22px;background:#f4efe6;border:1px solid var(--card-rule)}
+.gq-step img{display:block;width:100%;height:190px;object-fit:cover}
+.gq-step div{padding:18px 20px 22px}.gq-step h3{margin:0 0 8px;font-family:Fraunces,Georgia,serif;font-size:24px;line-height:1.15;letter-spacing:-.01em}
+.gq-step p{margin:0;font-size:18px;line-height:1.5}
+.gq p,.gq-sub{font-size:18px;line-height:1.55}.gq-sub{color:var(--ink-soft)}
+.gq-f label{font-size:16px}.gq-f input,.gq-f select{font-size:18px;min-height:52px}.gq-meta{font-size:16px}.gq-inst h3{font-size:20px}
+.gq-cta{font-size:18px}
+@media(max-width:760px){.gq-bar{grid-template-columns:1fr;border-radius:24px;padding:10px;gap:8px}.gq-bar-f{border-right:0;border-bottom:1px solid var(--rule)}.gq-bar-go{width:100%}.gq-steps{grid-template-columns:1fr}}
 @media(max-width:600px){.gq-row{grid-template-columns:1fr}.gq-inst{grid-template-columns:1fr}.gq-card{padding:18px}}
 """
 JS = r"""
@@ -102,6 +126,17 @@ $("gq-plan").addEventListener("submit",function(e){
 });
 $("gq-copy").addEventListener("click",function(){var b=$("gq-copy");var u=location.origin+location.pathname+"?province="+rs.value+"&city="+cs.value;
  (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){b.textContent="Link copied"},function(){b.textContent="Copy failed"});setTimeout(function(){b.textContent="Copy link to this list"},2500)});
+var dl=$("gq-cities"),map={};
+D.forEach(function(r){r.cities.forEach(function(c){var l=c[1]+", "+r.name;map[l.toLowerCase()]=[r.code,c[0]];var o=document.createElement("option");o.value=l;dl.appendChild(o)})});
+function pickCity(v){var q=v.trim().toLowerCase();if(!q)return false;var k=map[q];if(!k){var hits=Object.keys(map).filter(function(x){return x.indexOf(q)===0});if(hits.length===1)k=map[hits[0]]}
+ if(!k)return false;rs.value=k[0];fillCities();cs.value=k[1];return true}
+function setProject(p){[].forEach.call(document.querySelectorAll("#gq-chips input"),function(c){c.checked=!!p&&c.value===p;if(c.parentNode.classList)c.parentNode.classList.toggle("on",c.checked)})}
+$("gq-q").addEventListener("change",function(){if(pickCity(this.value))show()});
+$("gq-bar").addEventListener("submit",function(e){e.preventDefault();var m=$("gq-barmsg");
+ if(!pickCity($("gq-q").value)){m.textContent="Pick your city from the list, or open Refine below and choose your province or state.";m.style.display="block";return}
+ m.style.display="none";setProject($("gq-proj").value);show();var o=$("gq-out");if(o.scrollIntoView)o.scrollIntoView({behavior:"smooth",block:"start"});
+ if(window.gtag)gtag("event","finder_search",{city:cs.value,project:$("gq-proj").value||"all"})});
+if(rs.value&&cs.value){var nm=cs.options[cs.selectedIndex].textContent+", "+(D.filter(function(x){return x.code===rs.value})[0]||{}).name;$("gq-q").value=nm;$("gq-refine").open=true}
 show();
 })();
 """
@@ -138,12 +173,14 @@ def main():
     js = JS.replace("__DATA__", json.dumps(data, separators=(",", ":")))
     body = f"""{S}
 <style>{CSS}</style>
-<section class="hero"><div class="wrap"><h1>Your rebates and top-rated installers, in one place</h1>
-<p>Pick your city and see what you could get back, plus the best-reviewed local installers. No sign-up needed. Nobody pays to be listed.</p></div></section>
+<section class="gq-hero"><h1>Find the rebates for your home</h1>
+<p class="gq-lead">Type your city and see what you could get back, plus the best-reviewed local installers. No sign-up needed.</p>
+<form class="gq-bar" id="gq-bar" autocomplete="off"><div class="gq-bar-f"><input id="gq-q" list="gq-cities" placeholder="Your city, like Kelowna" aria-label="Your city" autocomplete="off"></div>
+<div class="gq-bar-f"><select id="gq-proj" aria-label="Your project"><option value="">All projects</option><option value="heat-pump">Heat pump</option><option value="solar">Solar panels</option><option value="battery">Home battery</option><option value="insulation">Insulation</option></select></div>
+<button class="gq-bar-go" type="submit">See my rebates</button></form><datalist id="gq-cities"></datalist>
+<div class="gq-barmsg" id="gq-barmsg" role="alert"></div>
+<div class="gq-trust"><span>Ranked by Google reviews</span><span>Never paid for</span><span>Every amount linked to the official page, with the date we checked</span></div></section>
 <section class="section"><div class="gq">
-<div class="gq-card"><div class="gq-row"><div class="gq-f"><label for="gq-region">Province or state</label><select id="gq-region"><option value="">Choose one</option></select></div>
-<div class="gq-f"><label for="gq-city">City</label><select id="gq-city"><option value="">Choose your city</option></select></div></div>
-<h2 class="gq-h" style="margin-top:6px">What are you planning? <span class="gq-meta">(optional)</span></h2><div class="checklist" id="gq-chips" style="margin:0"></div></div>
 <div id="gq-out" style="display:none">
 <div class="gq-card"><h2 class="gq-h" id="gq-r-title">Rebates</h2><p class="gq-sub">Every amount comes from the program's own page. We only add up programs that are open today.</p>
 <a class="gq-cta" id="gq-calc" href="/calculator/">Estimate my rebates</a><a class="gq-alt" id="gq-guide" href="/">City rebate guide</a></div>
@@ -155,7 +192,16 @@ def main():
 <input id="gq-web" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off" aria-hidden="true">
 <button class="gq-cta" id="gq-send" type="submit">Email me my plan</button><button class="gq-cta" id="gq-copy" type="button" style="margin-left:10px;background:var(--teal-deep)">Copy link</button>
 <div class="gq-msg" id="gq-msg"></div></form></div>
-</div></div></section>
+</div>
+<details class="gq-card gq-refine" id="gq-refine"><summary>Refine: pick your province or state, city and projects</summary><div class="gq-row"><div class="gq-f"><label for="gq-region">Province or state</label><select id="gq-region"><option value="">Choose one</option></select></div>
+<div class="gq-f"><label for="gq-city">City</label><select id="gq-city"><option value="">Choose your city</option></select></div></div>
+<h2 class="gq-h" style="margin-top:6px">What are you planning? <span class="gq-meta">(optional, pick as many as you like)</span></h2><div class="checklist" id="gq-chips" style="margin:0"></div></details>
+<h2 class="gq-h" style="margin:36px 0 14px;font-size:30px">How it works</h2>
+<div class="gq-steps"><div class="gq-step"><img src="/assets/learn/modern-home-640.webp" width="640" height="427" alt="A modern white house at dusk" loading="lazy"><div><h3>1. Pick your city</h3><p>Tell us where you live. Rebates change from city to city, so this is the one thing we need.</p></div></div>
+<div class="gq-step"><img src="/assets/learn/solar-roof-640.webp" width="640" height="427" alt="Solar panels on a tiled house roof" loading="lazy"><div><h3>2. See what is open today</h3><p>Every amount comes from the program\'s own page. We show the date we last checked it.</p></div></div>
+<div class="gq-step"><img src="/assets/learn/duplex-home-640.webp" width="640" height="427" alt="A single-story duplex house with a front porch" loading="lazy"><div><h3>3. Compare top-rated installers</h3><p>Ranked by Google reviews. You choose who to call. We never sell your details.</p></div></div></div>
+<p class="gq-sub" style="font-size:15px">Photos: <a href="https://unsplash.com/photos/t4FMbSdmeR0" rel="noopener">George Barros</a>, <a href="https://unsplash.com/photos/VAegToqdX3A" rel="noopener">Sergio Martins</a> and <a href="https://unsplash.com/photos/MnlEv7O5soI" rel="noopener">Josh Lemmon</a> on Unsplash.</p>
+</div></section>
 <script>{js}</script>
 {E}"""
     f = ROOT / "get-quotes" / "index.html"

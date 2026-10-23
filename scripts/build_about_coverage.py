@@ -56,6 +56,16 @@ def ld(total, by):
             + json.dumps({"@context": "https://schema.org", "@graph": [org, person, page]}, indent=1, ensure_ascii=False) + "\n</script>")
 
 
+def stats_html(total):
+    """The numbers strip under the hero: cities and regions from data/regions.json, sources and ranked lists from the monthly registry and rankings."""
+    srcs = json.loads((ROOT / "data" / "rebate-sources.json").read_text(encoding="utf-8"))["count"]
+    lists = len(json.loads((ROOT / "installers" / "rankings.json").read_text(encoding="utf-8")))
+    items = [(str(total), "cities covered"), (str(len(regions.REGIONS)), "provinces and states"), (f"{srcs:,}", "official program pages we re-read every month"),
+             (f"{lists:,}", "installer lists ranked by Google reviews")]
+    cells = "".join(f'<div class="about-stat"><b>{n}</b><span>{l}</span></div>' for n, l in items)
+    return f'<section class="about-stats"><div class="wrap">{cells}</div></section>'
+
+
 def stamp(html, name, body):
     pat = re.compile(rf"<!-- {name}-START -->.*?<!-- {name}-END -->", re.S)
     if not pat.search(html):
@@ -67,6 +77,7 @@ def main():
     total, by = counts()
     html = PAGE.read_text()
     new = stamp(html, "ABOUT-COVERAGE", "    " + coverage_html(total, by) + "\n   ")
+    new = stamp(new, "ABOUT-STATS", stats_html(total))
     new = stamp(new, "ABOUT-LD", ld(total, by))
     if new != html:
         PAGE.write_text(new)

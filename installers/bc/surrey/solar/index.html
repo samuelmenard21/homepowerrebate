@@ -163,7 +163,13 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=079f070b82" data-hpr-site-css>
+<meta name="theme-color" content="#faf7f2">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="twitter:title" content="Best Solar Installers in Surrey, BC (2026)">
+<meta name="twitter:description" content="The top-rated solar installers in Surrey, BC, ranked by 843 Google reviews. Compare 6 local companies, plus what to ask before you hire.">
 <!-- OG-CARD-START -->
 <meta property="og:image" content="https://homepowerrebate.com/og/installers/bc/surrey/solar.jpg?v=565d0b50dc62">
 <meta property="og:image:width" content="1200">
@@ -173,10 +179,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/installers/bc/surrey/solar.jpg?v=565d0b50dc62">
 <!-- OG-CARD-END -->
-<meta name="theme-color" content="#faf7f2">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="/favicon.ico" sizes="48x48">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body class="tpl-ranking">
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -343,7 +345,7 @@
 <li class="rank has-prof" data-rank="5" data-reviews="40" data-rating="4.9"><div class="n"><a href="/installers/profiles/surrey/saeryk-electrical-modernization-compliance-specialist/" aria-label="Saeryk Electrical - Modernization &amp; Compliance Specialist profile">5</a></div><div class="nm"><a href="/installers/profiles/surrey/saeryk-electrical-modernization-compliance-specialist/">Saeryk Electrical - Modernization &amp; Compliance Specialist</a><span class="bf">Also installs batteries</span></div><div class="st"><span class="rt"><span class="stars" style="--p:98%" aria-hidden="true">★★★★★</span> <b>4.9</b></span> <span class="rv">(40 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:7%"></i></div><div class="adr">112 Ave, Surrey, BC V3R 8Y8</div></div><div class="act"><a class="btn-call" href="tel:6043769566">Call (604) 376-9566</a><a class="btn-prof" href="/installers/profiles/surrey/saeryk-electrical-modernization-compliance-specialist/">View profile</a><a class="lnk" href="https://maps.google.com/?cid=3793000306302834766&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a></div></li>
 <li class="rank has-prof" data-rank="6" data-reviews="74" data-rating="4.4"><div class="n"><a href="/installers/profiles/surrey/greenfoot-energy-solutions/" aria-label="Greenfoot Energy Solutions profile">6</a></div><div class="nm"><a href="/installers/profiles/surrey/greenfoot-energy-solutions/">Greenfoot Energy Solutions</a><span class="bf">Also installs batteries</span><span class="reg" title="BC Hydro solar and battery rebates require an HPCN member contractor.">✓ HPCN member</span></div><div class="st"><span class="rt"><span class="stars" style="--p:88%" aria-hidden="true">★★★★★</span> <b>4.4</b></span> <span class="rv">(74 Google reviews)</span><div class="bar" title="Reviews compared with the most-reviewed company here"><i style="--w:14%"></i></div><div class="adr">3475 194 St unit 107, Surrey, BC V3Z 1A5</div></div><div class="act"><a class="btn-call" href="tel:7789071314">Call (778) 907-1314</a><a class="btn-prof" href="/installers/profiles/surrey/greenfoot-energy-solutions/">View profile</a><a class="lnk" href="https://maps.google.com/?cid=2050584546807520337&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" rel="nofollow noopener" target="_blank">Google reviews</a><a class="lnk em" href="mailto:info@greenfootenergy.ca" aria-label="Email Greenfoot Energy Solutions">Email</a></div></li>
 </ol>
-<p class="small"><span class="reg">✓</span> = on the official contractor list for Home Performance Contractor Network (Solar and Battery) (checked September 28, 2026, <a href="https://homeperformance.ca/find-a-contractor/" rel="nofollow noopener" target="_blank">source</a>). Most rebates require a registered contractor; confirm before you sign.</p>
+<p class="small"><span class="reg">✓</span> = on the official contractor list for Home Performance Contractor Network (Solar and Battery) (checked September 28, 2026, <a href="https://homeperformance.ca/find-a-contractor/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" rel="noopener" target="_blank" data-official="1">source</a>). Most rebates require a registered contractor; confirm before you sign.</p>
 
 
 <p class="small">Together these 6 companies average 4.9★ across 843 reviews. It&#x27;s On Electric Company has the most reviews (543).</p>
@@ -670,6 +672,21 @@ document.addEventListener('click', function (e) {
   var u; try { u = new URL(a.href); } catch (x) { return; }
   window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
 }, true);
+// Program alert boxes (scripts/add_program_alerts.py): POST /alert with the box's list id and region; one confirmation email, one list per program.
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('prog-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.prog-alert'), done = box.querySelector('.prog-alert-done'), b = f.querySelector('button'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: box.dataset.list, email: f.querySelector('input[type="email"]').value, province: box.dataset.region || '', city: '', page: location.pathname, website: f.querySelector('.prog-alert-hp').value }) });
+    if (!r.ok) throw new Error('bad');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+    if (window.gtag) window.gtag('event', 'prog_alert_signup', { page_path: location.pathname, alert_list: box.dataset.list });
+  } catch (err) { done.textContent = 'That did not go through. Please try again.'; b.disabled = false; b.textContent = t; }
+  done.hidden = false;
+});
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

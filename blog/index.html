@@ -45,7 +45,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/article-5ab8e817.css?v=d9aebca5e0" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=079f070b82" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -741,6 +741,21 @@ document.addEventListener('click', function (e) {
   var u; try { u = new URL(a.href); } catch (x) { return; }
   window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
 }, true);
+// Program alert boxes (scripts/add_program_alerts.py): POST /alert with the box's list id and region; one confirmation email, one list per program.
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('prog-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.prog-alert'), done = box.querySelector('.prog-alert-done'), b = f.querySelector('button'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: box.dataset.list, email: f.querySelector('input[type="email"]').value, province: box.dataset.region || '', city: '', page: location.pathname, website: f.querySelector('.prog-alert-hp').value }) });
+    if (!r.ok) throw new Error('bad');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+    if (window.gtag) window.gtag('event', 'prog_alert_signup', { page_path: location.pathname, alert_list: box.dataset.list });
+  } catch (err) { done.textContent = 'That did not go through. Please try again.'; b.disabled = false; b.textContent = t; }
+  done.hidden = false;
+});
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

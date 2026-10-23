@@ -191,7 +191,13 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=079f070b82" data-hpr-site-css>
+<meta name="theme-color" content="#faf7f2">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="twitter:title" content="Best Heat Pump Installers in Lethbridge, AB (2026)">
+<meta name="twitter:description" content="The top-rated heat pump installers in Lethbridge, AB, ranked by 2,128 Google reviews. Compare 12 local companies, plus what to ask before you hire.">
 <!-- OG-CARD-START -->
 <meta property="og:image" content="https://homepowerrebate.com/og/installers/ab/lethbridge/heat-pump.jpg?v=f218109c8d96">
 <meta property="og:image:width" content="1200">
@@ -201,10 +207,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/installers/ab/lethbridge/heat-pump.jpg?v=f218109c8d96">
 <!-- OG-CARD-END -->
-<meta name="theme-color" content="#faf7f2">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="/favicon.ico" sizes="48x48">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body class="tpl-ranking">
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -385,7 +387,7 @@
 <p class="small">Ranked by Google rating weighted by review count, collected September 2026. Rankings are never paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
 <p class="small"><b>Listed here?</b> <a href="/installers/badge/?r=ab&amp;c=lethbridge&amp;s=heat-pump">Get your top-rated badge</a> for your website or print the <a href="/rebate-sheet/ab/lethbridge/">Lethbridge rebate sheet</a> for your customers.</p>
 
-<h2>What a heat pump costs in Lethbridge</h2><div class="cb"><div class="cb-row"><span>Typical installed price</span><b>about $12,000 to $20,000</b></div><p class="cb-note">For a cold-climate central ducted heat pump in a detached house. Your home may cost more or less.</p><div class="cb-row"><span>Rebates open in Lethbridge</span><b>None confirmed right now</b></div><p class="cb-note">Financing or future programs may still help. Check the rebate page before you sign.</p></div><p class="small">Price source: <a href="https://climateinstitute.ca/wp-content/uploads/2023/09/2024-02-14_Dunsky-CCI-Heat-Pumps-Pay-Off-Revised-Technical-Report_FINAL-5-cities.pdf" rel="nofollow noopener" target="_blank">Canadian Climate Institute and Dunsky, <em>Heat Pumps Pay Off</em> (2023 dollars, modelled for Vancouver, Edmonton, Toronto, Montréal and Halifax)</a>. Rebates: our verified program data, checked monthly. Always confirm the exact amount for your home.</p>
+<h2>What a heat pump costs in Lethbridge</h2><div class="cb"><div class="cb-row"><span>Typical installed price</span><b>about $12,000 to $20,000</b></div><p class="cb-note">For a cold-climate central ducted heat pump in a detached house. Your home may cost more or less.</p><div class="cb-row"><span>Rebates open in Lethbridge</span><b>None confirmed right now</b></div><p class="cb-note">Financing or future programs may still help. Check the rebate page before you sign.</p></div><p class="small">Price source: <a href="https://climateinstitute.ca/wp-content/uploads/2023/09/2024-02-14_Dunsky-CCI-Heat-Pumps-Pay-Off-Revised-Technical-Report_FINAL-5-cities.pdf" rel="noopener" target="_blank">Canadian Climate Institute and Dunsky, <em>Heat Pumps Pay Off</em> (2023 dollars, modelled for Vancouver, Edmonton, Toronto, Montréal and Halifax)</a>. Rebates: our verified program data, checked monthly. Always confirm the exact amount for your home.</p>
 
 <div class="callout"><p><strong>Talk to a registered energy advisor first.</strong> Some rebates need an evaluation or heat load calculation before any work starts. <a href="/installers/ab/lethbridge/energy-advisor/">See the top-rated registered energy advisors in Lethbridge</a>. <a href="/energy-advisors/when-to-call-an-energy-advisor/">Read when to call an energy advisor</a>.</p></div>
 
@@ -704,6 +706,21 @@ document.addEventListener('click', function (e) {
   var u; try { u = new URL(a.href); } catch (x) { return; }
   window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
 }, true);
+// Program alert boxes (scripts/add_program_alerts.py): POST /alert with the box's list id and region; one confirmation email, one list per program.
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('prog-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.prog-alert'), done = box.querySelector('.prog-alert-done'), b = f.querySelector('button'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: box.dataset.list, email: f.querySelector('input[type="email"]').value, province: box.dataset.region || '', city: '', page: location.pathname, website: f.querySelector('.prog-alert-hp').value }) });
+    if (!r.ok) throw new Error('bad');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+    if (window.gtag) window.gtag('event', 'prog_alert_signup', { page_path: location.pathname, alert_list: box.dataset.list });
+  } catch (err) { done.textContent = 'That did not go through. Please try again.'; b.disabled = false; b.textContent = t; }
+  done.hidden = false;
+});
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

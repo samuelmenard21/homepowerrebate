@@ -49,7 +49,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/article-c0947b3c.css?v=7b04af6753" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=c372c536dd" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=079f070b82" data-hpr-site-css>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Home Energy Rebates in Lynn, MA (2026)", "description": "Lynn homes (National Grid) get Mass Save rebates: heat pumps up to $8,500 ($16,000 income-qualified), 75-100% off insulation, $750 water heaters, 0% HEAT Loan.", "datePublished": "2026-08-13", "dateModified": "2026-09-26", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com/"}, "mainEntityOfPage": "https://homepowerrebate.com/us/ma/lynn/"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What home energy rebates can Lynn residents get?", "acceptedAnswer": {"@type": "Answer", "text": "Lynn is a National Grid town, so Mass Save applies: a no-cost home energy assessment, 75-100% off insulation and air sealing, heat pumps up to $8,500 (up to $16,000 if income-qualified), a $750 heat pump water heater rebate, and the 0% HEAT Loan up to $25,000."}}, {"@type": "Question", "name": "How much is the heat pump rebate in Lynn?", "acceptedAnswer": {"@type": "Answer", "text": "Whole-home air-source systems get $2,650 per ton, up to $8,500. Partial-home systems get $1,125 per ton, up to $8,500. Income-qualified households can get up to $16,000, or no cost."}}, {"@type": "Question", "name": "Are there insulation rebates for Lynn residents?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. After a Mass Save assessment, most households get 75% off insulation and air sealing. Income-qualified households can get up to 100% off."}}, {"@type": "Question", "name": "Can Lynn landlords get HVAC rebates?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mass Save has assessment paths for landlords of 1-4 unit and 5+ unit buildings, and heat pump rebates apply to rental properties served by a Mass Save utility."}}, {"@type": "Question", "name": "Is Lynnfield eligible for Mass Save?", "acceptedAnswer": {"@type": "Answer", "text": "Not for electric-side rebates. Lynnfield is served by the Reading and Peabody municipal light plants. Ask them about their own rebates and the state's 0% MLP Z-Loan."}}]}</script>
 <meta name="theme-color" content="#faf7f2">
@@ -918,6 +918,21 @@ document.addEventListener('click', function (e) {
   var u; try { u = new URL(a.href); } catch (x) { return; }
   window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
 }, true);
+// Program alert boxes (scripts/add_program_alerts.py): POST /alert with the box's list id and region; one confirmation email, one list per program.
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('prog-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.prog-alert'), done = box.querySelector('.prog-alert-done'), b = f.querySelector('button'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: box.dataset.list, email: f.querySelector('input[type="email"]').value, province: box.dataset.region || '', city: '', page: location.pathname, website: f.querySelector('.prog-alert-hp').value }) });
+    if (!r.ok) throw new Error('bad');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+    if (window.gtag) window.gtag('event', 'prog_alert_signup', { page_path: location.pathname, alert_list: box.dataset.list });
+  } catch (err) { done.textContent = 'That did not go through. Please try again.'; b.disabled = false; b.textContent = t; }
+  done.hidden = false;
+});
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

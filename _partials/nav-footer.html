@@ -696,6 +696,22 @@ body:has(#hpr-search) .nav-search { display: none; }
 .fed-bar .fb-s { display: none; }
 @media (max-width: 560px) { .fed-bar { padding: 10px 12px 12px; justify-content: flex-start; } .fed-bar p { padding-right: 36px; } .fed-bar .fed-bar-x { top: 2px; right: 0; margin-top: 0; width: 40px; height: 40px; } .fed-bar .fb-l { display: none; } .fed-bar .fb-s { display: inline; } .fed-bar form { flex: 1 1 100%; } .fed-bar input[type="email"] { flex: 1 1 auto; width: auto; } body.has-fed-bar .sticky-cta { display: none !important; } }
 @media print { .fed-bar { display: none !important; } }
+/* Program alert box (scripts/add_program_alerts.py, 2026-10-23): a quiet one-line sign-up at the top of each program status page. */
+.prog-alert { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin: 0 0 24px; padding: 16px 20px; background: #f6f0e6; border: 1px solid var(--card-rule); border-left: 5px solid var(--amber); border-radius: var(--radius-card); }
+.prog-alert-text { flex: 1 1 260px; min-width: 0; }
+.prog-alert p { margin: 0; max-width: none; }
+.prog-alert .prog-alert-h { font-weight: 700; font-size: 17px; color: var(--ink); }
+.prog-alert-text p:last-child { font-size: 15px; line-height: 1.5; color: var(--muted); margin-top: 2px; }
+.prog-alert-form { display: flex; flex: 1 1 320px; gap: 8px; margin: 0; }
+.prog-alert-form label { position: absolute; left: -9999px; }
+.prog-alert-form input[type="email"] { flex: 1 1 auto; min-width: 0; min-height: 46px; padding: 0 12px; font: inherit; font-size: 16px; color: var(--ink); background: #fff; border: 1px solid #b9ae9c; border-radius: 8px; }
+.prog-alert-form button { min-height: 46px; padding: 0 18px; font: inherit; font-weight: 700; color: #fff; background: #a4540a; border: 0; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+.prog-alert-form button:hover { background: #8a4607; }
+.prog-alert-hp { position: absolute; left: -9999px; }
+.prog-alert .prog-alert-done { flex: 1 1 100%; font-weight: 700; color: var(--green-money); }
+.prog-alert .prog-alert-note { flex: 1 1 100%; font-size: 13px; color: var(--muted); }
+@media (max-width: 560px) { .prog-alert-form { flex: 1 1 100%; } }
+@media print { .prog-alert { display: none !important; } }
 </style>
 <!-- =========================== /SHARED CSS ========================== -->
 
@@ -845,6 +861,21 @@ document.addEventListener('click', function (e) {
   var u; try { u = new URL(a.href); } catch (x) { return; }
   window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
 }, true);
+// Program alert boxes (scripts/add_program_alerts.py): POST /alert with the box's list id and region; one confirmation email, one list per program.
+document.addEventListener('submit', async function (e) {
+  var f = e.target;
+  if (!f.classList || !f.classList.contains('prog-alert-form')) return;
+  e.preventDefault();
+  var box = f.closest('.prog-alert'), done = box.querySelector('.prog-alert-done'), b = f.querySelector('button'), t = b.textContent;
+  b.disabled = true; b.textContent = 'Saving...';
+  try {
+    var r = await fetch('https://leads.homepowerrebate.com/alert', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list: box.dataset.list, email: f.querySelector('input[type="email"]').value, province: box.dataset.region || '', city: '', page: location.pathname, website: f.querySelector('.prog-alert-hp').value }) });
+    if (!r.ok) throw new Error('bad');
+    f.hidden = true; done.textContent = "You're on the list. Check your inbox for a short note from us.";
+    if (window.gtag) window.gtag('event', 'prog_alert_signup', { page_path: location.pathname, alert_list: box.dataset.list });
+  } catch (err) { done.textContent = 'That did not go through. Please try again.'; b.disabled = false; b.textContent = t; }
+  done.hidden = false;
+});
 // Slim federal alert bar. Shown on Canadian pages (a /ca/ page, a Canadian calculator, or any page with a visible full alert box), not on
 // the homepage, French pages or the share page. Hidden while a full box or the calculator prompt is on screen, for 14 days after it is
 // closed, and for good after a signup anywhere (hpr-fed-done). Posts to the same /alert route as the box, with src "bar".

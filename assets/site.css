@@ -536,6 +536,22 @@ body:has(#hpr-search) .nav-search { display: none; }
 .fed-bar .fb-s { display: none; }
 @media (max-width: 560px) { .fed-bar { padding: 10px 12px 12px; justify-content: flex-start; } .fed-bar p { padding-right: 36px; } .fed-bar .fed-bar-x { top: 2px; right: 0; margin-top: 0; width: 40px; height: 40px; } .fed-bar .fb-l { display: none; } .fed-bar .fb-s { display: inline; } .fed-bar form { flex: 1 1 100%; } .fed-bar input[type="email"] { flex: 1 1 auto; width: auto; } body.has-fed-bar .sticky-cta { display: none !important; } }
 @media print { .fed-bar { display: none !important; } }
+/* Program alert box (scripts/add_program_alerts.py, 2026-10-23): a quiet one-line sign-up at the top of each program status page. */
+.prog-alert { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin: 0 0 24px; padding: 16px 20px; background: #f6f0e6; border: 1px solid var(--card-rule); border-left: 5px solid var(--amber); border-radius: var(--radius-card); }
+.prog-alert-text { flex: 1 1 260px; min-width: 0; }
+.prog-alert p { margin: 0; max-width: none; }
+.prog-alert .prog-alert-h { font-weight: 700; font-size: 17px; color: var(--ink); }
+.prog-alert-text p:last-child { font-size: 15px; line-height: 1.5; color: var(--muted); margin-top: 2px; }
+.prog-alert-form { display: flex; flex: 1 1 320px; gap: 8px; margin: 0; }
+.prog-alert-form label { position: absolute; left: -9999px; }
+.prog-alert-form input[type="email"] { flex: 1 1 auto; min-width: 0; min-height: 46px; padding: 0 12px; font: inherit; font-size: 16px; color: var(--ink); background: #fff; border: 1px solid #b9ae9c; border-radius: 8px; }
+.prog-alert-form button { min-height: 46px; padding: 0 18px; font: inherit; font-weight: 700; color: #fff; background: #a4540a; border: 0; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+.prog-alert-form button:hover { background: #8a4607; }
+.prog-alert-hp { position: absolute; left: -9999px; }
+.prog-alert .prog-alert-done { flex: 1 1 100%; font-weight: 700; color: var(--green-money); }
+.prog-alert .prog-alert-note { flex: 1 1 100%; font-size: 13px; color: var(--muted); }
+@media (max-width: 560px) { .prog-alert-form { flex: 1 1 100%; } }
+@media print { .prog-alert { display: none !important; } }
 /* ===== template design: article (article.css) ===== */
 /* Article template design (category, city hub and program pages: body.tpl-article).
    One reading column with one left edge, a full-bleed hero aligned to that column, large readable type,

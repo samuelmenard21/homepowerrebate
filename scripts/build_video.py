@@ -280,8 +280,63 @@ def hp_cold_air_30():
         _fed_cta(26.0, 30.0, h["foot"], "Not open yet. Hear <em>first</em>? \U0001F4EC")]}
 
 
+def hp_explainer_60():
+    """60 seconds: hook, how a heat pump works, why people switch, the national rebate (two levels, scale, how Ottawa says it will work, can be
+    combined with provincial programs), what is still unknown, and the launch alert. Facts only: federal-0/1/2/3. Never says who qualifies, which provinces,
+    gas homes, retroactivity or an exact start date."""
+    h = _fed()
+    f0 = kit.FACTS["federal-0-national-heat-pump-rebate"]
+    f3 = kit.FACTS["federal-3-stacking"]
+    assert "820,000" in f0["claim"] and "$2 billion" in f0["claim"] and "100,000" in f0["eligibility"], "federal scale changed: re-read before rendering"
+    assert "combined" in f3["claim"] and "provincial" in f3["claim"], "federal stacking wording changed: re-read before rendering"
+    return {"scenes": [
+        {"at": 0.0, "end": 2.5, "theme": "dark", "items": [
+            tile(60, 330, 960, 640, CREAM, TEAL, 140, words=True, html="Ottawa will pay up to <em>$10,000</em> for a heat pump \U0001F633", rot=-1.5),
+            sticker(90, 1040, "Here's the catch...", size=50, rot=-4)]},
+        {"at": 2.5, "end": 6.0, "theme": "light", "items": [
+            tile(60, 280, 960, 520, TEAL, CREAM, 118, words=True, html="First: what <em>is</em> a heat pump? \U0001F914", rot=-1),
+            sticker(150, 870, "it's not a pump for water", "cream", 46, 3, 0.9)]},
+        {"at": 6.0, "end": 10.0, "theme": "dark", "items": [
+            tile(60, 260, 960, 380, CREAM, TEAL, 108, words=True, html="It doesn't make heat. It <em>moves</em> it \U0001F69A", rot=1),
+            tile(60, 690, 960, 380, AMBER, "#fff", 62, font="sans", center=True, html="Like a fridge, but flipped: it pulls heat out of the outside air and pushes it into your home", rot=-1, delay=0.6)]},
+        {"at": 10.0, "end": 14.0, "theme": "light", "items": [
+            tile(60, 280, 960, 440, "#ffffff", TEAL, 118, words=True, html="Even when it's <em>freezing</em> out \U0001F976"),
+            sticker(110, 800, "pick a model made for cold winters", "teal", 46, -3, 0.8)]},
+        {"at": 14.0, "end": 18.5, "theme": "dark", "items": [
+            tile(60, 260, 960, 470, AMBER, "#fff", 108, words=True, html="Oil, propane or plain electric heat? Save over <em>$1,400</em> a year", rot=1),
+            sticker(150, 800, "on average, says Ottawa", "cream", 50, -3, 0.9)]},
+        {"at": 18.5, "end": 23.0, "theme": "light", "items": [
+            tile(60, 260, 960, 330, "#ffffff", TEAL, 100, words=True, html="That's why Ottawa made a <em>national</em> rebate \U0001F341"),
+            tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your home earns less than the middle", rot=1.5, delay=0.5),
+            tile(552, 640, 468, 440, TAN, "#7a4a00", 56, font="sans", center=True, html="<b>$2,000</b> for other eligible homes", rot=-1.5, delay=0.7)]},
+        {"at": 23.0, "end": 27.5, "theme": "dark", "items": [
+            tile(60, 260, 960, 440, CREAM, TEAL, 118, words=True, html="Built for <em>a lot</em> of Canadian homes", rot=-1),
+            tile(60, 750, 960, 300, TEAL, CREAM, 62, font="sans", center=True, html="$2 billion over 8 years, aimed at up to 820,000 households", rot=1, delay=0.6)]},
+        {"at": 27.5, "end": 32.0, "theme": "light", "items": [
+            tile(60, 260, 960, 300, "#ffffff", TEAL, 100, words=True, html="Here's the plan, <em>step by step</em> \U0001FA9C"),
+            tile(60, 610, 960, 200, TEAL, CREAM, 54, font="sans", center=True, html="1. Apply online when your heat breaks or gets old", rot=-1, delay=0.5),
+            tile(60, 850, 960, 200, AMBER, "#fff", 54, font="sans", center=True, html="2. Hear back within a day", rot=1, delay=0.8)]},
+        {"at": 32.0, "end": 36.5, "theme": "light", "items": [
+            tile(60, 250, 960, 190, TAN, "#7a4a00", 52, font="sans", center=True, html="3. Buy and install a heat pump from the approved list", rot=1),
+            tile(60, 480, 960, 190, TEAL, CREAM, 52, font="sans", center=True, html="4. Upload your receipts", rot=-1, delay=0.4),
+            tile(60, 710, 960, 340, AMBER, "#fff", 96, words=True, html="Paid within <em>5 days</em> \U0001F4B8", rot=1, delay=0.8)]},
+        {"at": 36.5, "end": 41.0, "theme": "dark", "items": [
+            tile(60, 260, 960, 440, CREAM, TEAL, 118, words=True, html="No home energy check <em>first</em> \u2705", rot=-1),
+            sticker(150, 780, "says Ottawa's plan", "cream", 48, 3, 0.8)]},
+        {"at": 41.0, "end": 46.0, "theme": "light", "items": [
+            tile(60, 260, 960, 400, TEAL, CREAM, 108, words=True, html="Your province may add <em>more</em> \U0001F4B0", rot=1),
+            tile(60, 710, 960, 340, AMBER, "#fff", 62, font="sans", center=True, html="Ottawa says it can be combined with provincial programs. Check your province's rules.", rot=-1, delay=0.6)]},
+        {"at": 46.0, "end": 51.0, "theme": "dark", "items": [
+            tile(60, 260, 960, 400, CREAM, TEAL, 112, words=True, html="What we <em>don't</em> know yet \U0001F937", rot=-1),
+            tile(60, 710, 960, 340, TEAL, CREAM, 60, font="sans", center=True, html="Where the income line is. Which homes and which heating types qualify.", rot=1, delay=0.6)]},
+        {"at": 51.0, "end": 55.0, "theme": "light", "items": [
+            tile(60, 260, 960, 440, AMBER, "#fff", 118, words=True, html="And it's <em>not open yet</em> \u23F3", rot=1),
+            tile(60, 750, 960, 280, TEAL, CREAM, 66, font="sans", center=True, html="Expected early 2027", rot=-1, delay=0.6)]},
+        _fed_cta(55.0, 60.0, h["foot"], "Be the first to <em>know</em> \U0001F4EC")]}
+
+
 BENTO = {"ns-harp-status-6": ns_harp_status_6, "ns-harp-status-15": ns_harp_status_15, "ns-harp-status-30": ns_harp_status_30,
-         "hp-furnace-15": hp_furnace_15, "hp-furnace-30": hp_furnace_30, "hp-cold-air-15": hp_cold_air_15, "hp-cold-air-30": hp_cold_air_30}
+         "hp-furnace-15": hp_furnace_15, "hp-furnace-30": hp_furnace_30, "hp-cold-air-15": hp_cold_air_15, "hp-cold-air-30": hp_cold_air_30, "hp-explainer-60": hp_explainer_60}
 
 
 def build_bento(name):

@@ -227,14 +227,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await submitForm(newsletterForm, '/newsletter');
 
       if (result.success) {
-        showMessage(newsletterForm, '✓ Check your inbox for weekly BC rebate insights!', true);
+        showMessage(newsletterForm, '✓ You\'re in! Check your inbox for a welcome email.', true);
         newsletterForm.reset();
       } else {
         showMessage(newsletterForm, `✗ Error: ${result.error}`, false);
       }
 
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Send me weekly insights';
+      submitBtn.textContent = 'Send me the monthly update';
     });
   }
 });

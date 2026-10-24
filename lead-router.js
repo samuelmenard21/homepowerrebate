@@ -32,6 +32,8 @@
 import CITY_REBATE_LOOKUP from './city-rebate-lookup.json';
 import REGION_DATA from './data/regions.json';
 import ALERT_PROGRAMS from './data/alert-programs.json';
+import NEWSLETTER_WELCOME from './data/newsletter/welcome.json';
+import { renderWelcome, renderDigest, renderWeeklySummary, parseIssuePage } from './lib/newsletter-email.js';
 
 // Region lists come from data/regions.json (the site's one list of regions), so a new region works here without editing this file.
 const REGION_LIST = REGION_DATA.regions;
@@ -219,6 +221,8 @@ export default {
   async scheduled(event, env, ctx) {
     ctx.waitUntil(runDripQueue(env));
     ctx.waitUntil(runLeadFollowupQueue(env));
+    ctx.waitUntil(runMonthlyNewsletter(env));
+    ctx.waitUntil(runWeeklySummary(env));
   }
 };
 
@@ -238,7 +242,8 @@ async function handleFetch(request, env, ctx) {
         : jsonResponse({ error: 'Method not allowed' }, 405);
     }
     if (path === '/unsubscribe') {
-      return request.method === 'GET'
+      // GET is the link in the email; POST is the mail app's one-click unsubscribe button (List-Unsubscribe-Post).
+      return request.method === 'GET' || request.method === 'POST'
         ? handleUnsubscribe(request, env)
         : jsonResponse({ error: 'Method not allowed' }, 405);
     }
@@ -259,7 +264,7 @@ async function handleFetch(request, env, ctx) {
 
     if (path === '/submit') return handleLeadSubmit(request, env);
     if (path === '/waitlist') return handleWaitlistSubmit(request, env);
-    if (path === '/newsletter') return handleNewsletter(request, env);
+    if (path === '/newsletter') return handleNewsletter(request, env, ctx);
     if (path === '/alert') return handleAlertSignup(request, env);
     if (path === '/alert/seen') return handleAlertSeen(request, env);
     if (path === '/estimate-lead') return handleEstimateLead(request, env);
@@ -654,7 +659,7 @@ async function sendOpsContactAlert(contact, env) {
 // high-intent subscribers by city. No installer routing — these are
 // subscribers, not yet referrals (no phone number).
 
-async function handleNewsletter(request, env) {
+async function handleNewsletter(request, env, ctx) {
   let p;
   try { p = await request.json(); } catch (e) { return jsonResponse({ error: 'Invalid JSON' }, 400); }
 
@@ -664,32 +669,36 @@ async function handleNewsletter(request, env) {
   }
 
   const record = {
-    record_type: 'subscriber',
-    timestamp: new Date().toISOString(),
     email: cleanString(p.email),
     city: cleanString(p.city || ''),
     province: cleanString(p.province || 'BC').toUpperCase(),
     heating: cleanString(p.heating || ''),
     income: cleanString(p.income || ''),
     estimate: cleanString(String(p.estimate || '')),
-    source: cleanString(p.source || p.page || ''),
-    status: 'new'
+    source: cleanString(p.source || p.page || '')
   };
 
-  const tasks = [logToSheet(record, env)];
+  // Everything slower than a database write runs after the reply (the Google Sheet call used to be awaited here and made the form hang for ~30 seconds).
+  // Signups are no longer logged to the Sheet: the subscribers table is the record, and the Monday summary email reports them.
+  const tasks = [];
   // Only add to the newsletter audience if they didn't opt out (CASL).
-  if (p.newsletter !== false) tasks.unshift(addToResendAudience(record.email, env));
-  // Results drip: sends the recap immediately, then a local-comparison and a
-  // lock-in-your-numbers email on a delay via the daily cron (see runDripQueue).
-  // `upgrades` (the services the homeowner ticked) and `plan: true` (they asked for their plan) come from the unified
-  // /get-quotes form. A plan request always sends the email, even to someone already on the list.
-  const upgrades = (Array.isArray(p.upgrades) ? p.upgrades : []).map(String).filter(u => PLAN_UPGRADES.has(u)).slice(0, 8);
-  tasks.push(startResultsDrip({ ...record, newsletter: p.newsletter, upgrades, resend: p.plan === true }, env));
-  const results = await Promise.allSettled(tasks);
-  const failures = results.filter(r => r.status === 'rejected');
-  if (failures.length) {
-    console.error('Newsletter signup partial failure:', failures.map(f => f.reason?.message || f.reason));
+  if (p.newsletter !== false) tasks.push(addToResendAudience(record.email, env));
+  // The calculator and plan forms send their estimate context: they get the results recap now, then the drip (see runDripQueue).
+  // `upgrades` (the services the homeowner ticked) and `plan: true` (they asked for their plan) come from the unified /get-quotes form.
+  // A plan request always sends the email, even to someone already on the list.
+  if (p.plan === true || record.estimate || record.heating) {
+    const upgrades = (Array.isArray(p.upgrades) ? p.upgrades : []).map(String).filter(u => PLAN_UPGRADES.has(u)).slice(0, 8);
+    tasks.push(startResultsDrip({ ...record, newsletter: p.newsletter, upgrades, resend: p.plan === true }, env));
+  } else if (p.newsletter !== false) {
+    // A plain "monthly update" signup (site footer, blog): the welcome email with the 10 best guides for their region.
+    const region = cleanString(p.province || '').toUpperCase();
+    tasks.push(startNewsletterWelcome({ ...record, province: CA_PROVINCES.has(region) || US_STATE_CODES.has(region) ? region : '' }, env));
   }
+  const work = Promise.allSettled(tasks).then((results) => {
+    const failures = results.filter(r => r.status === 'rejected');
+    if (failures.length) console.error('Newsletter signup partial failure:', failures.map(f => f.reason?.message || f.reason));
+  });
+  if (ctx && ctx.waitUntil) ctx.waitUntil(work); else await work;
 
   return jsonResponse({ success: true }, 200);
 }
@@ -786,6 +795,168 @@ async function runDripQueue(env) {
       console.error(`Drip send failed for subscriber ${sub.id} (step ${sub.step}):`, err.message || err);
     }
   }
+}
+
+// ===========================================================================
+// NEWSLETTER — welcome email, monthly update, Monday summary (2026-10-24)
+// ===========================================================================
+// Table: subscribers (schema-newsletter.sql adds welcome_sent_at and last_issue). Everyone on the list (unsubscribed = 0) gets the monthly update.
+// Email bodies live in lib/newsletter-email.js; the 10 guides per region are data/newsletter/welcome.json (scripts/build_newsletter.py welcome).
+// The monthly issue is NOT bundled here: scripts/build_newsletter.py issue YYYY-MM publishes it as a page, and the Worker reads that page.
+
+const NEWSLETTER_FROM = 'Sam at HomePowerRebate <hello@homepowerrebate.com>';
+const ISSUE_URL = 'https://homepowerrebate.com/embed/newsletter/latest/';
+const WELCOME_RESEND_AFTER_MS = 24 * 60 * 60 * 1000;
+const DIGEST_SEND_FROM_DAY = 2; // the issue goes out between these days of the month; the daily cron finishes a big list over several days
+const DIGEST_SEND_UNTIL_DAY = 10;
+const DIGEST_BATCH = 100; // Resend's batch endpoint takes up to 100 emails
+const DIGEST_BATCHES_PER_RUN = 20;
+
+function regionNameFor(abbr) {
+  return REGION_LIST.find(r => r.abbr === abbr)?.name || '';
+}
+
+function newsletterUrls(sub) {
+  const abbr = String(sub.province || '').toUpperCase();
+  const known = CA_PROVINCES.has(abbr) || US_STATE_CODES.has(abbr);
+  return {
+    calc: known ? calculatorUrl({ province: abbr, city: sub.city }) : 'https://homepowerrebate.com/calculator/',
+    installers: known && sub.city ? installersUrl({ province: abbr, city: sub.city }) : 'https://homepowerrebate.com/installers/',
+    unsub: `https://leads.homepowerrebate.com/unsubscribe?id=${sub.id}`
+  };
+}
+
+function listUnsubscribeHeaders(url) {
+  return { 'List-Unsubscribe': `<${url}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' };
+}
+
+async function startNewsletterWelcome(p, env) {
+  if (!env.OUTCOMES_DB || !p.email) return;
+  const email = String(p.email).toLowerCase();
+  const nowIso = new Date().toISOString();
+  const existing = await env.OUTCOMES_DB.prepare('SELECT id, province, city, unsubscribed FROM subscribers WHERE lower(email) = ?').bind(email).first();
+  let sub;
+  if (existing) {
+    // A fresh signup is a fresh opt-in, so it also brings back someone who had unsubscribed. Keep what we know about them unless the form told us more.
+    const province = p.province || existing.province || '';
+    const city = p.city || existing.city || '';
+    await env.OUTCOMES_DB.prepare('UPDATE subscribers SET unsubscribed = 0, province = ?, city = ? WHERE id = ?').bind(province, city, existing.id).run();
+    sub = { id: existing.id, email, province, city };
+  } else {
+    const id = crypto.randomUUID();
+    // step = 3: this person asked for the monthly update only, not the results drip.
+    await env.OUTCOMES_DB.prepare(
+      `INSERT INTO subscribers (id, email, city, province, heating, income, estimate, source, step, next_send_at, unsubscribed, created_at)
+       VALUES (?, ?, ?, ?, '', '', '', ?, 3, NULL, 0, ?)`
+    ).bind(id, email, p.city, p.province, p.source, nowIso).run();
+    sub = { id, email, province: p.province, city: p.city };
+  }
+  // Claim the send first so two quick clicks send one email; a repeat signup within a day sends nothing.
+  const cutoff = new Date(Date.now() - WELCOME_RESEND_AFTER_MS).toISOString();
+  const claim = await env.OUTCOMES_DB.prepare('UPDATE subscribers SET welcome_sent_at = ? WHERE id = ? AND (welcome_sent_at IS NULL OR welcome_sent_at < ?)').bind(nowIso, sub.id, cutoff).run();
+  if (!claim.meta?.changes) return;
+  const urls = newsletterUrls(sub);
+  const { subject, html } = renderWelcome({ province: sub.province, regionName: regionNameFor(sub.province), welcome: NEWSLETTER_WELCOME, urls });
+  try {
+    await resendEmail(env.RESEND_API_KEY, { from: NEWSLETTER_FROM, to: email, subject, html, reply_to: 'hello@homepowerrebate.com', headers: listUnsubscribeHeaders(urls.unsub) });
+  } catch (err) {
+    // Let the next signup try again.
+    await env.OUTCOMES_DB.prepare('UPDATE subscribers SET welcome_sent_at = NULL WHERE id = ?').bind(sub.id).run();
+    throw err;
+  }
+}
+
+async function fetchCurrentIssue() {
+  const res = await fetch(ISSUE_URL, { headers: { 'User-Agent': 'HomePowerRebate-newsletter/1.0' } });
+  if (!res.ok) return null;
+  return parseIssuePage(await res.text());
+}
+
+// Daily cron. Sends the monthly update once: only when the published issue's id is this month, it is marked ready, and today is inside the send window.
+// People who joined in the last 7 days just got the welcome email, so they are skipped for this issue (and marked so they are not sent it late).
+async function runMonthlyNewsletter(env) {
+  if (!env.OUTCOMES_DB || !env.RESEND_API_KEY) return;
+  const now = new Date();
+  const day = now.getUTCDate();
+  if (day < DIGEST_SEND_FROM_DAY || day > DIGEST_SEND_UNTIL_DAY) return;
+  const id = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
+  const issue = await fetchCurrentIssue();
+  if (!issue || issue.id !== id || !issue.ready || !Array.isArray(issue.items)) return;
+
+  const nowIso = now.toISOString();
+  await env.OUTCOMES_DB.prepare('INSERT OR IGNORE INTO newsletter_runs (issue, sent, failed, started_at) VALUES (?, 0, 0, ?)').bind(id, nowIso).run();
+  const recent = new Date(now.getTime() - 7 * DRIP_DAY_MS).toISOString();
+  await env.OUTCOMES_DB.prepare('UPDATE subscribers SET last_issue = ? WHERE unsubscribed = 0 AND created_at >= ? AND (last_issue IS NULL OR last_issue != ?)').bind(id, recent, id).run();
+
+  let sent = 0, failed = 0;
+  for (let b = 0; b < DIGEST_BATCHES_PER_RUN; b++) {
+    const due = await env.OUTCOMES_DB.prepare(
+      'SELECT id, email, city, province FROM subscribers WHERE unsubscribed = 0 AND (last_issue IS NULL OR last_issue != ?) LIMIT ?'
+    ).bind(id, DIGEST_BATCH).all();
+    const rows = due.results || [];
+    if (!rows.length) {
+      await env.OUTCOMES_DB.prepare('UPDATE newsletter_runs SET sent = sent + ?, failed = failed + ?, finished_at = ? WHERE issue = ?').bind(sent, failed, nowIso, id).run();
+      return;
+    }
+    // Mark the batch before sending so an overlapping run can't send it twice; a failed batch is put back and tried again tomorrow.
+    const marks = rows.map(r => env.OUTCOMES_DB.prepare('UPDATE subscribers SET last_issue = ? WHERE id = ?').bind(id, r.id));
+    await env.OUTCOMES_DB.batch(marks);
+    const emails = rows.map(r => {
+      const province = String(r.province || '').toUpperCase();
+      const scope = CA_PROVINCES.has(province) ? 'ca' : US_STATE_CODES.has(province) ? 'us' : '';
+      const urls = newsletterUrls({ id: r.id, province, city: r.city });
+      const { subject, html } = renderDigest({ issue, province: scope ? province : '', scope, regionName: scope ? regionNameFor(province) : '', urls });
+      return { from: NEWSLETTER_FROM, to: r.email, subject, html, reply_to: 'hello@homepowerrebate.com', headers: listUnsubscribeHeaders(urls.unsub) };
+    });
+    try {
+      await resendBatch(env.RESEND_API_KEY, emails);
+      sent += rows.length;
+    } catch (err) {
+      failed += rows.length;
+      console.error('Monthly newsletter batch failed:', err.message || err);
+      await env.OUTCOMES_DB.batch(rows.map(r => env.OUTCOMES_DB.prepare('UPDATE subscribers SET last_issue = NULL WHERE id = ?').bind(r.id)));
+      break;
+    }
+  }
+  await env.OUTCOMES_DB.prepare('UPDATE newsletter_runs SET sent = sent + ?, failed = failed + ? WHERE issue = ?').bind(sent, failed, id).run();
+}
+
+// Mondays (the daily cron calls this every day; it only acts on Monday). One email to OPS_EMAIL: new signups in the last 7 days and the state of the monthly email.
+async function runWeeklySummary(env) {
+  if (!env.OUTCOMES_DB || !env.RESEND_API_KEY || !env.OPS_EMAIL) return;
+  const now = new Date();
+  if (now.getUTCDay() !== 1) return;
+  const since = new Date(now.getTime() - 7 * DRIP_DAY_MS).toISOString();
+  const db = env.OUTCOMES_DB;
+  const one = async (sql, ...args) => (await db.prepare(sql).bind(...args).first()) || {};
+  const many = async (sql, ...args) => ((await db.prepare(sql).bind(...args).all()).results) || [];
+
+  const newSubs = (await one('SELECT COUNT(*) AS n FROM subscribers WHERE created_at >= ?', since)).n || 0;
+  const totalSubs = (await one('SELECT COUNT(*) AS n FROM subscribers WHERE unsubscribed = 0')).n || 0;
+  const newFed = (await one("SELECT COUNT(*) AS n FROM alerts WHERE list = 'federal-hp' AND created_at >= ?", since)).n || 0;
+  const totalFed = (await one("SELECT COUNT(*) AS n FROM alerts WHERE list = 'federal-hp' AND unsubscribed = 0")).n || 0;
+  const newProg = (await one("SELECT COUNT(*) AS n FROM alerts WHERE list != 'federal-hp' AND created_at >= ?", since)).n || 0;
+  const byProv = await many("SELECT COALESCE(NULLIF(province, ''), 'Not on a region page') AS k, COUNT(*) AS n FROM subscribers WHERE created_at >= ? GROUP BY k ORDER BY n DESC LIMIT 8", since);
+  const byPage = await many("SELECT COALESCE(NULLIF(source, ''), '(unknown)') AS k, COUNT(*) AS n FROM subscribers WHERE created_at >= ? GROUP BY k ORDER BY n DESC LIMIT 6", since);
+
+  const monthId = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
+  const run = await one('SELECT sent, failed, finished_at FROM newsletter_runs WHERE issue = ?', monthId);
+  let digestLine;
+  if (run.sent !== undefined) {
+    digestLine = `${monthId} issue: sent to ${run.sent}${run.failed ? `, ${run.failed} failed (will retry)` : ''}${run.finished_at ? '. Done.' : '. Still sending.'}`;
+  } else {
+    let issue = null;
+    try { issue = await fetchCurrentIssue(); } catch (e) { /* site unreachable: report below */ }
+    if (issue && issue.id === monthId) digestLine = issue.ready ? `${monthId} issue is published and goes out on the next daily run (days ${DIGEST_SEND_FROM_DAY} to ${DIGEST_SEND_UNTIL_DAY} of the month).` : `${monthId} issue is published but has fewer than 3 items, so it will not be sent.`;
+    else if (now.getUTCDate() <= DIGEST_SEND_UNTIL_DAY) digestLine = `No ${monthId} issue is published yet. Run scripts/build_newsletter.py issue ${monthId} and merge before day ${DIGEST_SEND_UNTIL_DAY}, or this month's email will be skipped.`;
+    else digestLine = `No ${monthId} issue was sent. The next one is built from the monthly check.`;
+  }
+  const label = `${new Date(now.getTime() - 7 * DRIP_DAY_MS).toISOString().slice(5, 10)} to ${now.toISOString().slice(5, 10)}`;
+  const { subject, html } = renderWeeklySummary({
+    week_label: label, new_subscribers: newSubs, total_subscribers: totalSubs, new_federal: newFed, total_federal: totalFed, new_program: newProg,
+    by_province: byProv.map(r => [r.k, r.n]), by_page: byPage.map(r => [r.k, r.n]), digest_line: digestLine
+  });
+  await resendEmail(env.RESEND_API_KEY, { from: 'HomePowerRebate <ops@homepowerrebate.com>', to: env.OPS_EMAIL, subject, html });
 }
 
 // ===========================================================================
@@ -996,13 +1167,22 @@ async function handleUnsubscribe(request, env) {
   }
   const id = params.get('id');
   if (id && env.OUTCOMES_DB) {
+    const row = await env.OUTCOMES_DB.prepare('SELECT email FROM subscribers WHERE id = ?').bind(id).first();
     await env.OUTCOMES_DB.prepare('UPDATE subscribers SET unsubscribed = 1, next_send_at = NULL WHERE id = ?').bind(id).run();
+    if (row?.email && env.RESEND_API_KEY) {
+      // Keep the Resend audience in step so nothing sent from there reaches them either.
+      await fetch(`https://api.resend.com/audiences/${RESEND_AUDIENCE_ID}/contacts/${encodeURIComponent(row.email)}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.RESEND_API_KEY}` },
+        body: JSON.stringify({ unsubscribed: true })
+      }).catch(() => {});
+    }
   }
   return new Response(
     `<!doctype html><html><head><title>Unsubscribed</title><meta name="viewport" content="width=device-width, initial-scale=1"></head>
      <body style="font-family:-apple-system,sans-serif;max-width:480px;margin:80px auto;text-align:center;color:#08363f;padding:0 20px;">
        <h1 style="font-size:22px;">You're unsubscribed</h1>
-       <p>No more emails from this sequence. If that was a mistake, just resubmit the calculator on <a href="https://homepowerrebate.com">homepowerrebate.com</a>.</p>
+       <p>You won't get any more emails from us. If that was a mistake, just sign up again on <a href="https://homepowerrebate.com">homepowerrebate.com</a>.</p>
      </body></html>`,
     { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8', ...CORS_HEADERS } }
   );
@@ -2493,6 +2673,7 @@ async function resendEmail(apiKey, params) {
   if (params.cc) body.cc = params.cc;
   if (params.bcc) body.bcc = params.bcc;
   if (params.reply_to) body.reply_to = params.reply_to;
+  if (params.headers) body.headers = params.headers;
 
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -2507,6 +2688,18 @@ async function resendEmail(apiKey, params) {
     const text = await response.text();
     throw new Error(`Resend failed: ${response.status} ${text}`);
   }
+  return response.json();
+}
+
+// Up to 100 emails in one request (the monthly update). Throws if Resend refuses the batch.
+async function resendBatch(apiKey, emails) {
+  if (!apiKey) throw new Error('RESEND_API_KEY not configured');
+  const response = await fetch('https://api.resend.com/emails/batch', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+    body: JSON.stringify(emails)
+  });
+  if (!response.ok) throw new Error(`Resend batch failed: ${response.status} ${await response.text()}`);
   return response.json();
 }
 

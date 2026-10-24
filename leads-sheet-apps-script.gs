@@ -32,7 +32,7 @@
 // ====== CONFIG — edit these ======
 var SHEET_ID = '1MQAx_i-e4DqEf1E9eXCWjE-nFWD08YR9P2OHfTKi-8M'; // the leads Google Sheet (from its URL)
 var NOTIFY_EMAIL = 'samuelmenard@gmail.com';   // where lead alerts go
-var NOTIFY_ON = ['lead', 'subscriber', 'waitlist']; // record types that email you
+var NOTIFY_ON = ['lead', 'waitlist']; // record types that email you (subscribers are reported in the Monday summary instead)
 // ==================================
 
 var TAB_FOR = {

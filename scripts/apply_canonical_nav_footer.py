@@ -340,7 +340,7 @@ def _set_body_classes(content: str, add=(), drop=lambda c: False) -> str:
 
 CANON_RE = re.compile(r'<link rel="canonical" href="https://homepowerrebate\.com(/[^"]*)"')
 # every page belongs to exactly one family (body class tpl-<family>); see page_family()
-FAMILIES = ("article", "ranking", "hub", "profile", "advisor", "stacking", "powerscore", "calculator", "home", "page")
+FAMILIES = ("article", "ranking", "hub", "profile", "advisor", "stacking", "powerscore", "calculator", "home", "page", "alertpage")
 
 
 def page_family(content: str, linked: list) -> str:

@@ -150,6 +150,22 @@ UNIT = ('<svg class="fed-alert-unit" viewBox="0 0 64 56" aria-hidden="true" focu
         '<path d="M12 47v5M52 47v5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>')
 
 
+def stub(sel="", data="", share_open=False, ask="Join the launch alert"):
+    """The dark sign-up panel (badge, what you get, email form, share row). Shared by block() and the share page."""
+    gets = "".join(f"<li>{x}</li>" for x in GETS)
+    return ('<div class="fed-alert-stub">'
+            '<p class="fed-alert-badge"><span aria-hidden="true"></span>Applications open early 2027</p>'
+            f'<p class="fed-alert-ask">{ask}</p>'
+            f'<ul class="fed-alert-gets" aria-label="What you get">{gets}</ul>'
+            '<p class="fed-alert-count" hidden></p>'
+            f'<form class="fed-alert-form" data-list="federal-hp"{data}>'
+            '<label for="fed-alert-email">Email</label><input id="fed-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email">'
+            f'{sel}<input class="fed-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
+            '<button type="submit">Notify me when it opens</button></form>'
+            f'<p class="fed-alert-done" role="status" hidden></p>{share_row(share_open)}'
+            f'<p class="fed-alert-note">Only emails about this rebate. No spam, no sales calls. Unsubscribe anytime.</p></div>')
+
+
 def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=False, more=True, share_open=False):
     """The one alert box: a light notice (headline, lead line, the two amounts, how it will work) and a dark sign-up stub.
     province "" shows a province picker; follow=True is the rebate finder version, hidden until a Canadian province is
@@ -173,7 +189,6 @@ def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=F
                  + "".join(f"<li><b>{html.escape(a)}</b> {html.escape(b)}</li>" for a, b in STEPS) + "</ol>")
     pre, post = ('<div class="hp-fed-wrap">', "</div>") if wrap else ("", "")
     how = f'<div class="fed-alert-how">{steps}{link}</div>' if steps or link else ""
-    gets = "".join(f"<li>{x}</li>" for x in GETS)
     return (f'{S}{pre}<section class="fed-alert{" fed-alert-big" if big else ""}"{attrs} aria-label="Heat pump rebate email alert"><div class="fed-alert-in">'
             '<div class="fed-alert-left"><div class="fed-alert-main">'
             f'<div class="fed-alert-head">{UNIT}<p class="fed-alert-title">{html.escape(HEADLINE).replace("heat pump rebate", "<em>heat pump rebate</em>")}</p></div>'
@@ -181,17 +196,7 @@ def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=F
             '<dl class="fed-alert-amounts"><div><dt>Up to $10,000</dt><dd>if your household earns below the median income</dd></div>'
             '<div><dt>$2,000</dt><dd>for other homeowners who qualify</dd></div></dl></div>'
             f'{stack(province)}</div>'
-            '<div class="fed-alert-stub">'
-            '<p class="fed-alert-badge"><span aria-hidden="true"></span>Applications open early 2027</p>'
-            '<p class="fed-alert-ask">Join the launch alert</p>'
-            f'<ul class="fed-alert-gets" aria-label="What you get">{gets}</ul>'
-            '<p class="fed-alert-count" hidden></p>'
-            f'<form class="fed-alert-form" data-list="federal-hp"{data}>'
-            '<label for="fed-alert-email">Email</label><input id="fed-alert-email" type="email" name="email" required autocomplete="email" placeholder="Your email">'
-            f'{sel}<input class="fed-alert-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
-            '<button type="submit">Notify me when it opens</button></form>'
-            f'<p class="fed-alert-done" role="status" hidden></p>{share_row(share_open)}'
-            f'<p class="fed-alert-note">Only emails about this rebate. No spam, no sales calls. Unsubscribe anytime.</p></div></div>{how}</section>{post}{E}\n')
+            f'{stub(sel, data, share_open)}</div>{how}</section>{post}{E}\n')
 
 
 def _after_grid(t):
@@ -273,7 +278,7 @@ def canadian_pages():
     ca = [r for r in regions if r["country"] == "ca"]
     city_dirs = {(r["code"], c[0].strip("/").split("/")[-1]): c[1] for r in ca for c in r["cities"]}
     out = [("index.html", HOME, "", "", ("after:<!-- HOME-HERO-END -->",), {"anchor": "federal-alert", "big": True, "wrap": True}),
-           (SHARE_PAGE.strip("/"), HOME, "", "", ("here",), {"anchor": "federal-alert", "big": True, "share_open": True}),
+           # the share page (SHARE_PAGE) builds its own sign-up panel with stub(); see build_alert_page.py
            ("ca", HUB.replace("the {province} rebates", "provincial rebates"), "", "", ("after:<!-- HP-LINKS-END -->", "h2"), {"big": True, "wrap": True}),
            ("get-quotes", NOT_COUNTED, "", "", ("finder",), {"follow": True})]
     for r in ca:

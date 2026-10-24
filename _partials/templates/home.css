@@ -247,3 +247,4 @@ html[data-country="US"] .tpl-home .hm-col-us, html[data-country="US"] .tpl-home 
 .tpl-home .hm-steps-photos b { font-size: 21px; }
 .tpl-home .hm-credit { margin: 18px 0 0; font-size: 13px; color: var(--muted); }
 .tpl-home .hm-learn .learn-row { margin: 0; }
+@media (max-width: 760px) { .tpl-home .hm-steps-photos li { padding: 0; } }

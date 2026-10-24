@@ -15,8 +15,10 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import regions  # noqa: E402
 
 S, E = "<!-- HUB-SEARCH-START -->", "<!-- HUB-SEARCH-END -->"
-OLD = re.compile(re.escape(S) + r"[\s\S]*?" + re.escape(E) + r"\n?")
+OLD = re.compile(r"\n?" + re.escape(S) + r"[\s\S]*?" + re.escape(E))
 e = html.escape
+# one photo per upgrade for the hero of city category pages (free-licence Unsplash set in assets/learn)
+PHOTO = {"heat-pump": "heat-pump-house", "solar": "solar-roof", "battery": "modern-home", "insulation": "rebate-plans", "windows": "duplex-home", "windows-doors": "duplex-home", "water-heater": "duplex-home", "index": "modern-home"}
 PROJECTS = [("", "All projects"), ("heat-pump", "Heat pump"), ("solar", "Solar panels"), ("battery", "Home battery"), ("insulation", "Insulation")]
 
 
@@ -38,8 +40,55 @@ def city_bar(code, slug, name):
             f'<div class="hub-search-f">{proj_select()}</div><button type="submit">See my rebates</button></form></div>{E}')
 
 
-def main():
+def country_bar(codes):
+    """Province or state, then project: for /ca/, /us/ and /installers/. The finder opens with that region chosen and its Refine drawer open."""
+    import regions as R
+    groups = []
+    for label, rs in R.grouped():
+        rs = [r for r in rs if r["code"] in codes]
+        if rs:
+            groups.append(f'<optgroup label="{label}">' + "".join(f'<option value="{r["code"]}">{e(r["name"])}</option>' for r in rs) + "</optgroup>")
+    return (f'{S}<div class="hub-search-wrap"><form class="hub-search" action="/get-quotes/" method="get"><div class="hub-search-f"><select name="province" aria-label="Your province or state" required>'
+            f'<option value="">Pick your province or state</option>{"".join(groups)}</select></div><div class="hub-search-f">{proj_select()}</div><button type="submit">See my rebates</button></form></div>{E}')
+
+
+def country_pages():
     n = 0
+    jobs = [(ROOT / "ca" / "index.html", {r["code"] for r in regions.REGIONS if r["country"] == "ca"}),
+            (ROOT / "us" / "index.html", {r["code"] for r in regions.REGIONS if r["country"] == "us"}),
+            (ROOT / "installers" / "index.html", {r["code"] for r in regions.REGIONS})]
+    for f, codes in jobs:
+        if not f.exists():
+            continue
+        t = f.read_text(encoding="utf-8")
+        t2 = OLD.sub("", t)
+        m = re.search(r'<section class="hero([^"]*)"([\s\S]*?)</section>', t2)
+        if not m:
+            continue
+        head = f'<section class="hero{m.group(1) if "hero-photo" in m.group(1) else m.group(1) + " hero-photo"}"'
+        t2 = t2[:m.start()] + head + m.group(2) + "</section>\n" + country_bar(codes) + t2[m.end():]
+        if t2 != t:
+            f.write_text(t2, encoding="utf-8")
+            n += 1
+    return n
+
+
+def calculator_heroes():
+    """Photo hero on the calculators (the calculator itself is untouched)."""
+    n = 0
+    for f in sorted(ROOT.glob("calculator/*/index.html")):
+        if f.parent.name in ("embed", "data", "widget"):
+            continue
+        t = f.read_text(encoding="utf-8")
+        t2 = re.sub(r'<(section|header) class="hero(?: hero-photo)?"', r'<\1 class="hero hero-photo"', t, count=1)
+        if t2 != t:
+            f.write_text(t2, encoding="utf-8")
+            n += 1
+    return n
+
+
+def main():
+    n = country_pages() + calculator_heroes()
     names = {}
     for code, r in regions.BY_CODE.items():
         for h, nm in r["cities"]:
@@ -64,10 +113,14 @@ def main():
                 continue
             t = f.read_text(encoding="utf-8")
             t2 = OLD.sub("", t)
-            m = re.search(r'<(section|header) class="hero[^"]*"[\s\S]*?</\1>', t2)
+            m = re.search(r'<(section|header) class="hero([^"]*)"([\s\S]*?)</\1>', t2)
             if not m:
                 continue
-            t2 = t2[:m.end()] + "\n" + city_bar(code, slug, names[(code, slug)]) + t2[m.end():]
+            cat = f.parts[-2] if f.parent.parent != base else "index"
+            img = PHOTO.get(cat, "modern-home")
+            tag = m.group(1)
+            hero = f'<{tag} class="hero{m.group(2).replace(" hero-photo", "").split(" hero-img-")[0]} hero-photo hero-img-{img}"{m.group(3)}</{tag}>'
+            t2 = t2[:m.start()] + hero + "\n" + city_bar(code, slug, names[(code, slug)]) + t2[m.end():]
             if t2 != t:
                 f.write_text(t2, encoding="utf-8")
                 n += 1

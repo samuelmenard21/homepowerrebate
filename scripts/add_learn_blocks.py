@@ -91,6 +91,17 @@ def pages():
             out.append((f, reg, name, name if name in SERVICES else "general"))
     for f in sorted(ROOT.glob("programs/*/index.html")):
         out.append((f, "", "program", "general"))
+    own = set(lk.articles()) | set(h.stem for h in (ROOT / "data" / "learn-hubs").glob("*.json"))
+    for f in sorted(ROOT.glob("blog/*/index.html")):
+        if f.parent.name not in own:
+            slug = f.parent.name
+            svc = next((s for k, s in (("heat-pump", "heat-pump"), ("solar", "solar"), ("battery", "battery"), ("insulation", "insulation")) if k in slug), "general")
+            out.append((f, "", "blog", svc))
+    for f in sorted(ROOT.glob("questions/*/index.html")):
+        out.append((f, "", "question", "general"))
+    for f in sorted(ROOT.glob("calculator/*/index.html")):
+        if f.parent.name not in ("embed", "data", "widget"):
+            out.append((f, "", "calculator", "general"))
     return out
 
 
@@ -106,8 +117,9 @@ def wide():
                 f.write_text(t2, encoding="utf-8")
                 n += 1
             continue
-        if kind == "program":
-            heading, sub = "Learn the rules before you apply", "Short reads and quick quizzes on how rebate programs work."
+        if kind in ("program", "blog", "question", "calculator"):
+            heading = "Keep learning" if kind in ("blog", "question") else "Learn the rules before you apply"
+            sub = "Short reads and quick quizzes on how rebate programs work."
         else:
             heading, sub = "Not ready to talk to a contractor yet?", "Short reads and quick quizzes. Learn the rules first, then call."
         body = lk.not_ready_row(service, key=str(f.relative_to(ROOT)), heading=heading, sub=sub) + quiz_for(region, kind, service, str(f.relative_to(ROOT)), region_hub=f.parent.parent.name in ("ca", "us"))

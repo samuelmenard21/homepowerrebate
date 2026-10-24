@@ -22,6 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import regions  # noqa: E402
+import learn_kit as lk  # noqa: E402
 from build_get_quotes import REG, OV, city_slugs  # noqa: E402
 from status_pills import STATUS  # noqa: E402
 
@@ -266,14 +267,25 @@ def federal():
 
 
 def how():
-    return '''<section class="hm-sec hm-how" aria-labelledby="hm-how-h">
+    steps = [("modern-home", "A modern white house at dusk", "Pick your city.", "Rebates depend on where you live and who sends your power bill, so we start there."),
+             ("solar-roof", "Solar panels on a tiled house roof", "See every rebate, open or closed.", "Each one shows the amount, who qualifies, its status and a link to the official page."),
+             ("duplex-home", "A single-story duplex house with a front porch", "Compare top-rated installers.", "We rank local companies by Google reviews. You choose who to call, and we never sell your details.")]
+    lis = "".join(f'<li><img src="/assets/learn/{f}-640.webp" width="640" height="427" alt="{esc(alt)}" loading="lazy"><b>{esc(h)}</b> {esc(b)}</li>' for f, alt, h, b in steps)
+    return f'''<section class="hm-sec hm-how" aria-labelledby="hm-how-h">
   <div class="hm-wrap">
     <h2 id="hm-how-h">How it works</h2>
-    <ol class="hm-steps">
-      <li><b>Pick your city.</b> Rebates depend on where you live and who sends your power bill, so we start there.</li>
-      <li><b>See every rebate, open or closed.</b> Each one shows the amount, who qualifies, its status and a link to the official page.</li>
-      <li><b>Compare top-rated installers.</b> We rank local companies by Google reviews. You choose who to call, and we never sell your details.</li>
-    </ol>
+    <ol class="hm-steps hm-steps-photos">{lis}</ol>
+    <p class="hm-credit">Photos on Unsplash: <a href="https://unsplash.com/photos/t4FMbSdmeR0" rel="noopener">George Barros</a>, <a href="https://unsplash.com/photos/VAegToqdX3A" rel="noopener">Sergio Martins</a>, <a href="https://unsplash.com/photos/MnlEv7O5soI" rel="noopener">Josh Lemmon</a>.</p>
+  </div>
+</section>'''
+
+
+def learn():
+    cards = lk.not_ready_row("heat-pump", key="/", heading="Quick reads and quizzes", sub="Learn the rules in five minutes, then pick your city.")
+    ups = " &middot; ".join(f'<a href="/learn/{s}/">{n}</a>' for s, n in [("heat-pumps", "Heat pumps"), ("solar", "Solar"), ("batteries", "Batteries"), ("insulation", "Insulation"), ("water-heating", "Water heating")])
+    return f'''<section class="hm-sec hm-learn" aria-labelledby="hm-learn-h">
+  <div class="hm-wrap">{cards.replace("<h2>", '<h2 id="hm-learn-h">', 1)}
+    <p class="hm-hp"><b>Learn by upgrade:</b> {ups}</p>
   </div>
 </section>'''
 
@@ -590,7 +602,7 @@ def main():
     faqs = faq_items(regs, total)
     modified = max(x.get("verified_on", "") for x in FACTS.values())
     body = "\n".join([
-        hero(regs, total, picker), federal(), how(), region_ledger(regs), powerscore(), changes(), trust(regs), guides(), faq(faqs), close(),
+        hero(regs, total, picker), federal(), how(), region_ledger(regs), powerscore(), changes(), trust(regs), guides(), learn(), faq(faqs), close(),
     ])
     out = (head(regs, total, faqs, modified, keep) + '\n<body class="tpl-home">\n<a class="skip-link" href="#main">Skip to main content</a>\n'
            + sprite() + "\n" + nav + '\n<main id="main" tabindex="-1" class="layout-wide layout-home">\n' + body + "\n</main>\n" + foot + "\n"

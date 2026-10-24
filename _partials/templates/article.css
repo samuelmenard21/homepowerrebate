@@ -176,3 +176,7 @@ body.tpl-article section.hero.about-hero { background: linear-gradient(180deg, r
 .tpl-article .glance-cell b { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--amber-text); }
 .tpl-article .glance-cell span { font-size: 18px; line-height: 1.45; color: var(--ink); }
 @media (max-width: 860px) { .tpl-article .glance { grid-template-columns: 1fr; } }
+
+/* ---- Wide tables scroll inside their box on phones instead of being cut off (learn hubs, 2026-10-23) ---- */
+.tpl-article .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tpl-article .table-wrap table { min-width: 520px; }

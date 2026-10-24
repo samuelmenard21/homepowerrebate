@@ -30,7 +30,7 @@
 <!-- FONT-PRELOAD-END -->
 
 <link rel="stylesheet" href="/assets/tpl/page-2a8f8908.css?v=fb42b5d0ee" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=62bbc67a0a" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=1485694d13" data-hpr-site-css>
 <!-- BREADCRUMB-LD-START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://homepowerrebate.com/"}, {"@type": "ListItem", "position": 2, "name": "Get quotes", "item": "https://homepowerrebate.com/get-quotes/"}]}</script><!-- BREADCRUMB-LD-END -->
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -346,7 +346,7 @@ $("gq-bar").addEventListener("submit",function(e){e.preventDefault();var m=$("gq
  if(!pickCity($("gq-q").value)){m.textContent="Pick your city from the list, or open Refine below and choose your province or state.";m.style.display="block";return}
  m.style.display="none";setProject($("gq-proj").value);show();var o=$("gq-out");if(o.scrollIntoView)o.scrollIntoView({behavior:"smooth",block:"start"});
  if(window.gtag)gtag("event","finder_search",{city:cs.value,project:$("gq-proj").value||"all"})});
-if(rs.value&&cs.value){var nm=cs.options[cs.selectedIndex].textContent+", "+(D.filter(function(x){return x.code===rs.value})[0]||{}).name;$("gq-q").value=nm;$("gq-refine").open=true}
+if(rs.value&&cs.value){var nm=cs.options[cs.selectedIndex].textContent+", "+(D.filter(function(x){return x.code===rs.value})[0]||{}).name;$("gq-q").value=nm;$("gq-refine").open=true}else if(rs.value){$("gq-refine").open=true}
 var pj=P.get("project");if(pj&&$("gq-proj").querySelector('option[value="'+pj+'"]')){$("gq-proj").value=pj;setProject(pj)}
 show();
 })();

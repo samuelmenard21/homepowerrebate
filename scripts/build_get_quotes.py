@@ -136,7 +136,7 @@ $("gq-bar").addEventListener("submit",function(e){e.preventDefault();var m=$("gq
  if(!pickCity($("gq-q").value)){m.textContent="Pick your city from the list, or open Refine below and choose your province or state.";m.style.display="block";return}
  m.style.display="none";setProject($("gq-proj").value);show();var o=$("gq-out");if(o.scrollIntoView)o.scrollIntoView({behavior:"smooth",block:"start"});
  if(window.gtag)gtag("event","finder_search",{city:cs.value,project:$("gq-proj").value||"all"})});
-if(rs.value&&cs.value){var nm=cs.options[cs.selectedIndex].textContent+", "+(D.filter(function(x){return x.code===rs.value})[0]||{}).name;$("gq-q").value=nm;$("gq-refine").open=true}
+if(rs.value&&cs.value){var nm=cs.options[cs.selectedIndex].textContent+", "+(D.filter(function(x){return x.code===rs.value})[0]||{}).name;$("gq-q").value=nm;$("gq-refine").open=true}else if(rs.value){$("gq-refine").open=true}
 var pj=P.get("project");if(pj&&$("gq-proj").querySelector('option[value="'+pj+'"]')){$("gq-proj").value=pj;setProject(pj)}
 show();
 })();

@@ -76,7 +76,7 @@ def front(cities):
               "f.addEventListener('submit',function(ev){ev.preventDefault();var k=q.value.trim().toLowerCase(),c=D[k];if(!c){var h=Object.keys(D).filter(function(x){return x.indexOf(k)===0});if(h.length===1)c=D[h[0]]}"
               "if(!c){m.textContent='Pick your city from the list so we can open its installer ranking.';m.hidden=false;return}"
               "var u=c[s.value];if(!u){u=c['heat-pump']||c.solar||c.battery||c.insulation||c['energy-advisor'];m.textContent='We do not have that list for this city yet. Showing the closest one.'}"
-              "if(window.gtag)gtag('event','installer_search',{service:s.value});location.href=u})})();")
+              "if(window.gtag)gtag('event','installer_search',{service:s.value});location.href=u});var P=new URLSearchParams(location.search);if(P.get('city')){q.value=P.get('city');if(P.get('service'))s.value=P.get('service');f.dispatchEvent(new Event('submit',{cancelable:true}))}})();")
     return f"""{FS}
 <section class="if-front"><div class="if-in">
 <form class="if-bar" id="if-bar" autocomplete="off"><div class="hub-search-f"><input id="if-q" list="if-cities" placeholder="Your city, like Kelowna" aria-label="Your city"></div>

@@ -166,7 +166,7 @@ def stub(sel="", data="", share_open=False, ask="Join the launch alert"):
             f'<p class="fed-alert-note">Only emails about this rebate. No spam, no sales calls. Unsubscribe anytime.</p></div>')
 
 
-def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=False, more=True, share_open=False):
+def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=False, more=True, share_open=False, slim=False):
     """The one alert box: a light notice (headline, lead line, the two amounts, how it will work) and a dark sign-up stub.
     province "" shows a province picker; follow=True is the rebate finder version, hidden until a Canadian province is
     picked there (the shared JS reads data-follow). big=True adds "how it will work" (homepage, hubs, federal and heat pump
@@ -189,7 +189,7 @@ def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=F
                  + "".join(f"<li><b>{html.escape(a)}</b> {html.escape(b)}</li>" for a, b in STEPS) + "</ol>")
     pre, post = ('<div class="hp-fed-wrap">', "</div>") if wrap else ("", "")
     how = f'<div class="fed-alert-how">{steps}{link}</div>' if steps or link else ""
-    return (f'{S}{pre}<section class="fed-alert{" fed-alert-big" if big else ""}"{attrs} aria-label="Heat pump rebate email alert"><div class="fed-alert-in">'
+    return (f'{S}{pre}<section class="fed-alert{" fed-alert-big" if big else ""}{" fed-slim" if slim else ""}"{attrs} aria-label="Heat pump rebate email alert"><div class="fed-alert-in">'
             '<div class="fed-alert-left"><div class="fed-alert-main">'
             f'<div class="fed-alert-head">{UNIT}<p class="fed-alert-title">{html.escape(HEADLINE).replace("heat pump rebate", "<em>heat pump rebate</em>")}</p></div>'
             f'<p class="fed-alert-body">{html.escape(lead)}</p>'
@@ -277,7 +277,7 @@ def canadian_pages():
     regions = json.loads((ROOT / "data" / "regions.json").read_text(encoding="utf-8"))["regions"]
     ca = [r for r in regions if r["country"] == "ca"]
     city_dirs = {(r["code"], c[0].strip("/").split("/")[-1]): c[1] for r in ca for c in r["cities"]}
-    out = [("index.html", HOME, "", "", ("after:<!-- HOME-HERO-END -->",), {"anchor": "federal-alert", "big": True, "wrap": True}),
+    out = [("index.html", HOME, "", "", ("after:<!-- HOME-HERO-END -->",), {"anchor": "federal-alert", "big": True, "wrap": True, "slim": True}),
            # the share page (SHARE_PAGE) builds its own sign-up panel with stub(); see build_alert_page.py
            ("ca", HUB.replace("the {province} rebates", "provincial rebates"), "", "", ("after:<!-- HP-LINKS-END -->", "h2"), {"big": True, "wrap": True}),
            ("get-quotes", NOT_COUNTED, "", "", ("finder",), {"follow": True})]

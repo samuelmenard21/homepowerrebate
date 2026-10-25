@@ -1684,6 +1684,46 @@ html[data-country="US"] .tpl-home .hm-col-us, html[data-country="US"] .tpl-home 
 .tpl-home .hm-learn .learn-row { margin: 0; }
 @media (max-width: 760px) { .tpl-home .hm-steps-photos li { padding: 0; } }
 
+/* ---- Homepage rebuild (2026-10-25): one-line search, slim federal banner, planning tiles, quiz, installers strip, compact places ---- */
+.tpl-home .hm-bar { display: grid; grid-template-columns: 1.5fr 1fr auto; padding: 8px; border-radius: 999px; background: #fff; box-shadow: 0 18px 50px -18px rgba(0, 0, 0, .55); }
+.tpl-home .hm-bar input, .tpl-home .hm-bar select { width: 100%; min-height: 56px; padding: 0 22px; border: 0; border-right: 1px solid var(--rule); background: transparent; color: var(--ink); font: inherit; font-size: 19px; }
+.tpl-home .hm-bar select { border-right: 0; }
+.tpl-home .hm-bar input:focus, .tpl-home .hm-bar select:focus { outline: none; }
+.tpl-home .hm-bar:focus-within { box-shadow: 0 0 0 4px rgba(232, 138, 46, .55), 0 18px 50px -18px rgba(0, 0, 0, .55); }
+.tpl-home .hm-bar .hm-btn { min-height: 56px; margin: 0; padding: 0 28px; border-radius: 999px; font-size: 19px; white-space: nowrap; }
+.tpl-home .hm-find-msg { margin: 12px 0 0; padding: 10px 16px; border-radius: 12px; background: #fdeccf; color: #6b3a05; font-size: 17px; }
+.tpl-home .hm-bar-sm { max-width: 760px; border: 1px solid var(--card-rule); box-shadow: none; }
+.tpl-home .hm-bar-sm input, .tpl-home .hm-bar-sm select { min-height: 52px; font-size: 18px; }
+.tpl-home .hm-bar-sm .hm-btn { min-height: 52px; font-size: 18px; }
+.tpl-home .hm-tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.tpl-home .hm-tile { position: relative; display: block; border-radius: 22px; overflow: hidden; aspect-ratio: 4 / 5; background: var(--teal-deep); text-decoration: none; color: #fff; }
+.tpl-home .hm-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .3s; }
+.tpl-home .hm-tile:hover img { transform: scale(1.05); }
+.tpl-home .hm-tile-b { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 16px 16px; background: linear-gradient(180deg, rgba(8, 54, 63, 0), rgba(8, 54, 63, .92)); }
+.tpl-home .hm-tile-b b { display: block; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(21px, 2vw, 26px); line-height: 1.1; }
+.tpl-home .hm-tile-b em { display: block; margin-top: 6px; font-style: normal; font-size: 16px; font-weight: 700; color: var(--amber-bright); }
+.tpl-home .hm-quiz .hpr-quiz { margin: 0; }
+.tpl-home .hm-inst-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(20px, 4vw, 56px); align-items: center; }
+.tpl-home .hm-inst-grid img { width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 24px; object-fit: cover; }
+.tpl-home .hm-det > summary { display: inline-flex; align-items: center; min-height: 52px; padding: 0 24px; border: 2px solid var(--teal-deep); border-radius: 999px; background: #fff; color: var(--teal-deep); font-size: 18px; font-weight: 800; cursor: pointer; list-style: none; }
+.tpl-home .hm-det > summary::-webkit-details-marker { display: none; }
+.tpl-home .hm-det[open] > summary { margin-bottom: 18px; }
+.tpl-home .hm-trustbox { margin: 36px 0 0; }
+.tpl-home .hm-faq details { margin: 0 0 12px; border: 1px solid var(--card-rule); border-radius: 18px; background: #fff; overflow: hidden; }
+.tpl-home .hm-faq summary { position: relative; padding: 18px 62px 18px 22px; font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-size: clamp(19px, 1.8vw, 23px); line-height: 1.25; cursor: pointer; list-style: none; }
+.tpl-home .hm-faq summary::-webkit-details-marker { display: none; }
+.tpl-home .hm-faq summary::after { content: "+"; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--amber); color: #fff; font: 700 22px/1 'Inter Tight', sans-serif; }
+.tpl-home .hm-faq details[open] summary::after { content: "\2212"; background: var(--teal-deep); }
+.tpl-home .hm-faq details > p { margin: 0; padding: 0 22px 20px; font-size: clamp(17px, 1.5vw, 19px); line-height: 1.55; }
+/* slim federal banner: headline and sign-up only */
+.hp-fed-wrap .fed-alert.fed-slim { margin-top: 0; }
+.fed-alert.fed-slim .fed-alert-amounts, .fed-alert.fed-slim .fed-alert-how, .fed-alert.fed-slim .fed-alert-body, .fed-alert.fed-slim .fed-alert-gets, .fed-alert.fed-slim .fed-alert-badge { display: none; }
+@media (max-width: 900px) { .tpl-home .hm-tiles { grid-template-columns: repeat(2, 1fr); } .tpl-home .hm-inst-grid { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .tpl-home .hm-bar { grid-template-columns: 1fr; border-radius: 24px; gap: 4px; } .tpl-home .hm-bar input, .tpl-home .hm-bar select { border-right: 0; border-bottom: 1px solid var(--rule); } .tpl-home .hm-bar .hm-btn { width: 100%; } }
+.tpl-home .hm-find .hm-bar { grid-template-columns: 1fr 1fr; border-radius: 30px; }
+.tpl-home .hm-find .hm-bar .hm-btn { grid-column: 1 / -1; margin-top: 6px; justify-content: center; }
+.tpl-home .hm-find .hm-bar select { border-right: 0; }
+
 /* ===== template design: page (page.css) ===== */
 /* tpl-page: older stand-alone pages (guides, tools, utility city pages, trackers). Each page still keeps its own variant CSS; these are
    only defaults that apply where the variant says nothing (zero specificity via :where), so a page's own rules always win. The one exception is the 48em text cap, which has to beat older p{max-width:none} rules; it skips hero, header and centred text. */

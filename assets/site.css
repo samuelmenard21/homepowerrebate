@@ -1723,6 +1723,9 @@ html[data-country="US"] .tpl-home .hm-col-us, html[data-country="US"] .tpl-home 
 .tpl-home .hm-find .hm-bar { grid-template-columns: 1fr 1fr; border-radius: 30px; }
 .tpl-home .hm-find .hm-bar .hm-btn { grid-column: 1 / -1; margin-top: 6px; justify-content: center; }
 .tpl-home .hm-find .hm-bar select { border-right: 0; }
+.tpl-home .hm-bar input, .tpl-home .hm-bar select { min-width: 0; }
+.tpl-home .hm-find .hm-bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 760px) { .tpl-home .hm-find .hm-bar { grid-template-columns: minmax(0, 1fr); } }
 
 /* ===== template design: page (page.css) ===== */
 /* tpl-page: older stand-alone pages (guides, tools, utility city pages, trackers). Each page still keeps its own variant CSS; these are

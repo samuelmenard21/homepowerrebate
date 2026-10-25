@@ -218,6 +218,8 @@ def sheet(r):
 
 def hero(regs, total, picker):
     default = regs[0]
+    popular = " ".join(f'<a href="{u}">{n}</a>' for u, n in [("/ca/on/toronto/", "Toronto"), ("/ca/bc/vancouver/", "Vancouver"), ("/ca/ab/calgary/", "Calgary"), ("/us/ma/boston/", "Boston"),
+                                                             ("/us/ca/los-angeles/", "Los Angeles"), ("/us/co/denver/", "Denver")])  # the biggest cities we cover
     return f'''<!-- HOME-HERO-START -->
 <section class="hm-hero" aria-labelledby="hm-h1">
   <div class="hm-wrap hm-hero-grid">
@@ -226,13 +228,12 @@ def hero(regs, total, picker):
       <a class="hm-news hm-for-us" href="#regions"><b>US update</b> The 30% federal tax credits ended. State and utility rebates are still open. <span>Pick your state</span></a>
       <h1 id="hm-h1">Find every home energy rebate in your city.</h1>
       <p class="hm-lede" data-city-count="{total}">Heat pumps, solar, batteries, insulation and more, in {total} cities across Canada and the US. Every amount links to the official program, and we check them every month.</p>
-      <form id="hero-find" class="hm-find" action="/get-quotes/" method="get" autocomplete="off">
-        <div class="hm-bar"><label class="sr-only" for="hf-q">Your city or province</label><input id="hf-q" list="hf-list" placeholder="Your city, like Kelowna" autocomplete="off">
-          <label class="sr-only" for="hf-proj">Your project</label><select id="hf-proj" name="project"><option value="">All projects</option><option value="heat-pump">Heat pump</option><option value="solar">Solar panels</option><option value="battery">Home battery</option><option value="insulation">Insulation</option></select>
-          <button type="submit" class="hm-btn">See my rebates {icon("arrow", "hm-ar")}</button></div>
-        <select id="hf-prov" name="province" hidden><option value="">Choose one</option></select><select id="hf-city" name="city" hidden><option value="">Choose your city</option></select>
-        <datalist id="hf-list"></datalist><p id="hf-msg" class="hm-find-msg" role="alert" hidden></p>
+      <form id="hero-find" class="hm-find" action="/get-quotes/" method="get">
+        <div class="hm-bar"><label class="sr-only" for="hf-prov">Province or state</label><select id="hf-prov" name="province" required><option value="">Province or state</option></select>
+          <label class="sr-only" for="hf-city">City</label><select id="hf-city" name="city" required><option value="">City</option></select>
+          <button type="submit" class="hm-btn">Go to my city {icon("arrow", "hm-ar")}</button></div>
         <p class="hm-find-note">Free. No email needed to see the numbers, and no sales calls.</p>
+        <p class="hm-pop"><span>Popular:</span> {popular}</p>
       </form>
       <ul class="hm-proof">
         <li>{icon("check", "hm-ck")}Every amount has its source and check date</li>
@@ -240,7 +241,6 @@ def hero(regs, total, picker):
         <li>{icon("check", "hm-ck")}<span><a href="/installers/how-we-rank/">Installers ranked by Google reviews</a>. Nobody pays to be listed</span></li>
       </ul>
     </div>
-    {sheet(default)}
   </div>
 </section>
 <script>(function(){{var D=window.HPR_CITIES={json.dumps(picker, separators=(",", ":"))};var p=document.getElementById("hf-prov"),c=document.getElementById("hf-city");
@@ -248,13 +248,10 @@ var G="",gl;D.forEach(function(r){{if(r.g!==G){{G=r.g;gl=document.createElement(
 function fill(){{c.textContent="";var h=document.createElement("option");h.value="";h.textContent="Choose your city";c.appendChild(h);
 var r=D.filter(function(x){{return x.c===p.value}})[0];if(r)r.k.forEach(function(k){{var o=document.createElement("option");o.value=k[0];o.textContent=k[1];c.appendChild(o)}})}}
 p.addEventListener("change",function(){{fill();if(window.HPR_SHEET&&p.value)window.HPR_SHEET(p.value)}});window.HPR_FILL=fill;
-var dl=document.getElementById("hf-list"),M={{}};D.forEach(function(r){{var o=document.createElement("option");o.value=r.n;dl.appendChild(o);M[r.n.toLowerCase()]=[r.c,""];r.k.forEach(function(k){{var l=k[1]+", "+r.n,x=document.createElement("option");x.value=l;dl.appendChild(x);M[l.toLowerCase()]=[r.c,k[0]]}})}});
-window.HPR_MAP=M;var q=document.getElementById("hf-q"),msg=document.getElementById("hf-msg");
-function pick(){{var v=q.value.trim().toLowerCase(),k=M[v];if(!k){{var h=Object.keys(M).filter(function(x){{return x.indexOf(v)===0}});if(v&&h.length===1)k=M[h[0]]}}
-if(!k)return false;p.value=k[0];fill();c.value=k[1];if(window.HPR_SHEET)window.HPR_SHEET(k[0]);return true}}
-q.addEventListener("change",pick);
-document.getElementById("hero-find").addEventListener("submit",function(ev){{if(!pick()){{ev.preventDefault();msg.textContent="Pick your city or province from the list, like Kelowna.";msg.hidden=false;return}}msg.hidden=true;if(!c.value){{c.removeAttribute("name")}}
-if(window.gtag)gtag("event","home_search",{{province:p.value}})}});}})();</script>
+var U={{}};D.forEach(function(r){{r.k.forEach(function(k){{U[r.c+"|"+k[0]]=k[2]||""}})}});
+document.getElementById("hero-find").addEventListener("submit",function(ev){{ev.preventDefault();if(!p.value||!c.value)return;var u=U[p.value+"|"+c.value]||("/get-quotes/?province="+encodeURIComponent(p.value)+"&city="+encodeURIComponent(c.value));
+if(window.gtag)gtag("event","home_city_go",{{province:p.value}});location.href=u}});
+p.addEventListener("change",function(){{}});}})();</script>
 <!-- HOME-HERO-END -->'''
 
 
@@ -283,7 +280,6 @@ def how(regs=None):
     <h2 id="hm-how-h">How it works, and how we keep it honest</h2>
     <ol class="hm-steps hm-steps-photos">{lis}</ol>
     {trust_inner(regs) if regs else ""}
-    <p class="hm-credit">Photos on Unsplash: <a href="https://unsplash.com/photos/t4FMbSdmeR0" rel="noopener">George Barros</a>, <a href="https://unsplash.com/photos/VAegToqdX3A" rel="noopener">Sergio Martins</a>, <a href="https://unsplash.com/photos/MnlEv7O5soI" rel="noopener">Josh Lemmon</a>.</p>
   </div>
 </section>'''
 
@@ -512,8 +508,8 @@ function ic(n,c){{return '<svg class="'+(c||"hm-ic")+'" viewBox="0 0 24 24" aria
 function row(x){{var s=x.src,a=s?'<a href="'+e(s)+'"'+(s.indexOf("http")===0?' rel="noopener"':"")+'>'+e(x.name)+'</a>':e(x.name);
 return '<li class="hm-row" data-cat="'+x.cat+'">'+ic(x.cat)+'<div class="hm-row-t"><b>'+e(x.label)+'</b><span class="hm-row-p">'+a+(x.iq?'<span class="hm-iq">Lower incomes</span>':"")+'</span>'+(x.more?'<span class="hm-row-m">'+e(x.more)+'</span>':"")+'</div><div class="hm-row-a"><span class="hm-amt">'+e(x.amt)+'</span><span class="rb-status rb-'+x.st+'">'+L[x.st]+'</span></div></li>'}}
 var sh=document.querySelector(".hm-sheet");
-window.HPR_SHEET=function(c){{var r=R[c];if(!r||!sh)return;var q=function(k){{return sh.querySelector('[data-s="'+k+'"]')}};
-q("name").textContent=r.n;document.querySelectorAll(".hm-tile").forEach(function(tl){{var x=r.rows.filter(function(y){{return y.cat===tl.dataset.cat&&!y.fed&&y.label.indexOf("Federal")<0}})[0];tl.querySelector("[data-amt]").textContent=x?x.amt:"See the guide"}});var w=document.querySelector("[data-plan-where]");if(w)w.textContent=r.n;q("sub").textContent="The biggest open rebate for each upgrade, in "+(r.cur==="CAD"?"Canadian":"US")+" dollars. Most homes get less, and each one has its own rules.";
+window.HPR_SHEET=function(c){{var r=R[c];if(!r)return;document.querySelectorAll(".hm-tile").forEach(function(tl){{var x=r.rows.filter(function(y){{return y.cat===tl.dataset.cat&&!y.fed&&y.label.indexOf("Federal")<0}})[0];tl.querySelector("[data-amt]").textContent=x?x.amt:"See the guide"}});var w=document.querySelector("[data-plan-where]");if(w)w.textContent=r.n;if(!sh)return;var q=function(k){{return sh.querySelector('[data-s="'+k+'"]')}};
+q("name").textContent=r.n;q("sub").textContent="The biggest open rebate for each upgrade, in "+(r.cur==="CAD"?"Canadian":"US")+" dollars. Most homes get less, and each one has its own rules.";
 q("rows").innerHTML=r.rows.map(row).join("");q("checked").textContent=(r.checked?"Last checked "+r.checked:"Checked monthly")+" against the official program pages.";
 var h=q("hub");h.href=r.hub;h.firstChild.textContent="All "+r.n+" programs ";sh.classList.remove("hm-in");void sh.offsetWidth;sh.classList.add("hm-in")}};
 var z="";try{{z=Intl.DateTimeFormat().resolvedOptions().timeZone||""}}catch(x){{}}
@@ -642,13 +638,14 @@ def main():
     foot = between(old, "<!-- CANONICAL-FOOTER-START -->", "<!-- CANONICAL-FOOTER-END -->")
     js = between(old, "<script>\n/* CANONICAL-NAV-FOOTER-JS-START */", "/* CANONICAL-NAV-FOOTER-JS-END */\n</script>")
     regs = region_data()
-    picker = sorted(({"c": code, "n": name, "g": regions.COUNTRY_BY_CODE[code], "k": [[c, OV.get(c, c.replace("-", " ").title())] for c in city_slugs(code)]} for code, name, _, _ in REG),
+    hubs = {code: {h.strip("/").split("/")[-1]: h for h, _ in regions.BY_CODE[code]["cities"]} for code, _, _, _ in REG}
+    picker = sorted(({"c": code, "n": name, "g": regions.COUNTRY_BY_CODE[code], "k": [[c, OV.get(c, c.replace("-", " ").title()), hubs[code].get(c, "")] for c in city_slugs(code)]} for code, name, _, _ in REG),
                     key=lambda r: regions.order_key(r["c"]))  # Canada, then the United States, A to Z
     total = sum(len(r["k"]) for r in picker)
     faqs = faq_items(regs, total)
     modified = max(x.get("verified_on", "") for x in FACTS.values())
     body = "\n".join([
-        hero(regs, total, picker), federal(), planning(regs), quiz_section(), installers_strip(), powerscore(), region_ledger(regs), changes(), how(regs), guides(), faq(faqs), close(),
+        hero(regs, total, picker), federal(), quiz_section(), planning(regs), installers_strip(), powerscore(), region_ledger(regs), changes(), how(regs), guides(), faq(faqs), close(),
     ])
     out = (head(regs, total, faqs, modified, keep) + '\n<body class="tpl-home">\n<a class="skip-link" href="#main">Skip to main content</a>\n'
            + sprite() + "\n" + nav + '\n<main id="main" tabindex="-1" class="layout-wide layout-home">\n' + body + "\n</main>\n" + foot + "\n"

@@ -201,7 +201,6 @@ def main():
 <div class="gq-steps"><div class="gq-step"><img src="/assets/learn/modern-home-640.webp" width="640" height="427" alt="A modern white house at dusk" loading="lazy"><div><h3>1. Pick your city</h3><p>Tell us where you live. Rebates change from city to city, so this is the one thing we need.</p></div></div>
 <div class="gq-step"><img src="/assets/learn/solar-roof-640.webp" width="640" height="427" alt="Solar panels on a tiled house roof" loading="lazy"><div><h3>2. See what is open today</h3><p>Every amount comes from the program\'s own page. We show the date we last checked it.</p></div></div>
 <div class="gq-step"><img src="/assets/learn/duplex-home-640.webp" width="640" height="427" alt="A single-story duplex house with a front porch" loading="lazy"><div><h3>3. Compare top-rated installers</h3><p>Ranked by Google reviews. You choose who to call. We never sell your details.</p></div></div></div>
-<p class="gq-sub" style="font-size:15px">Photos: <a href="https://unsplash.com/photos/t4FMbSdmeR0" rel="noopener">George Barros</a>, <a href="https://unsplash.com/photos/VAegToqdX3A" rel="noopener">Sergio Martins</a> and <a href="https://unsplash.com/photos/MnlEv7O5soI" rel="noopener">Josh Lemmon</a> on Unsplash.</p>
 </div></section>
 <script>{js}</script>
 {E}"""

@@ -99,7 +99,7 @@ def figure(d):
     if not im:
         return ""
     return (f'<figure class="learn-photo"><img src="/assets/learn/{im["file"]}-1200.webp" width="1200" height="800" alt="{e(im["alt"])}" fetchpriority="high">'
-            f'<figcaption>Photo: <a href="{e(im["url"])}" target="_blank" rel="noopener">{e(im["credit"])}</a></figcaption></figure>')
+            '</figure>')
 
 
 # ---- open rebates by upgrade, read from the calculators (which read the verified facts) ----
@@ -200,4 +200,4 @@ def photo_for(slug, title=""):
 def post_figure(slug, title=""):
     f, alt, credit, url = photo_for(slug, title)
     return (f'<figure class="learn-photo"><img src="/assets/learn/{f}-1200.webp" width="1200" height="800" alt="{e(alt)}" fetchpriority="high">'
-            f'<figcaption>Photo: <a href="{e(url)}" target="_blank" rel="noopener">{e(credit)}</a></figcaption></figure>')
+            '</figure>')

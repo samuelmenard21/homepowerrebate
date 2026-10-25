@@ -60,8 +60,8 @@ def build(d):
             refs.append((f"{r['region']}: {r['program']}", r["source"]))
     refs_html = ", ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>' for t, u in refs)
     article = f"""<p class="byline">By <a href="/about">Sam Menard</a> · Rebate amounts checked {nice}</p>
-{facts}
 {quiz}
+{facts}
 {d["intro"]}
 <h2>What to check before you buy</h2>
 <ul>{checks}</ul>
@@ -75,8 +75,7 @@ def build(d):
 {blog_strip(d["keywords"], skip={s for s, _ in arts})}
 <h2>Common questions</h2>
 {kit.faq(d)}
-<p style="font-size:14px;">Sources, read {nice}: {refs_html}.</p>
-<p style="font-size:13px;">Photo: <a href="{e(d["credit"][1])}" target="_blank" rel="noopener">{e(d["credit"][0])}</a> on Unsplash.</p>"""
+<p style="font-size:14px;">Sources, read {nice}: {refs_html}.</p>"""
     w = kit.quality_gate(article, d, path, loose_refs=True, min_words=700)
     trail = [("Home", "/"), ("Learn", "/learn/"), (d["h1"], path)]
     lds = kit.ld_scripts([kit.article_ld(d["h1"], d["desc"], latest, path, published=d["published"]), kit.breadcrumb_ld(trail), kit.faq_ld(d)])

@@ -150,9 +150,9 @@ def wide():
         quiz = post_quiz(f.parent.name) if kind == "blog" else quiz_for(region, kind, service, key, region_hub=region_hub)
         # the quiz goes at the top of the page (the most engaging thing); the card row stays at the bottom
         t2 = QOLD.sub("", OLD.sub("", t))
-        anchor = next((m for m in ("<!-- HUB-STATS-END -->" if region_hub else "", "<!-- HUB-SEARCH-END -->", "<!-- BLOG-PHOTO-END -->") if m and m in t2), None)
+        anchor = next((m for m in ("<!-- HUB-STATS-END -->" if region_hub else "", "<!-- HUB-SEARCH-END -->", "<!-- BLOG-PHOTO-START -->") if m and m in t2), None)
         if quiz and anchor:
-            i = t2.index(anchor) + len(anchor)
+            i = t2.index(anchor) + (0 if anchor.endswith("PHOTO-START -->") else len(anchor))  # blog posts: the quiz goes above the photo
             t2 = t2[:i] + f"\n{QS}\n<div class=\"learn-wrap\">{quiz}</div>\n{QE}" + t2[i:]
         elif quiz:
             row += quiz  # no top anchor on this page: the quiz sits with the row

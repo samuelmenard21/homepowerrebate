@@ -173,10 +173,16 @@ JS_MARKER_START = "/* CANONICAL-NAV-FOOTER-JS-START */"
 JS_MARKER_END = "/* CANONICAL-NAV-FOOTER-JS-END */"
 
 
-def render_nav(prov, city_slug):
-    html = NAV_RAW
+def fill_quote_links(html, prov, city_slug):
+    """Fill the placeholders and drop empty query parts (no "?city=&province=" URLs)."""
     html = html.replace("{{CURRENT_CITY_SLUG}}", city_slug)
     html = html.replace("{{CURRENT_PROVINCE}}", prov)
+    q = "&".join(x for x in (f"city={city_slug}" if city_slug else "", f"province={prov}" if prov else "") if x)
+    return html.replace(f"/get-quotes/?city={city_slug}&province={prov}", "/get-quotes/" + ("?" + q if q else ""))
+
+
+def render_nav(prov, city_slug):
+    html = fill_quote_links(NAV_RAW, prov, city_slug)
     # highlight the current province's tab instead of the template default ("on")
     if prov and prov != "on":
         html = html.replace(
@@ -203,7 +209,7 @@ def render_footer(prov, city_slug, city_label, page_path, skip_newsletter=False)
     if skip_newsletter:
         # The page already has its own newsletter form. Two forms share the same ids (only the first works) and read as a duplicate.
         html = NEWSLETTER_SECTION_RE.sub("", html, count=1)
-    html = html.replace("{{CURRENT_CITY_SLUG}}", city_slug)
+    html = fill_quote_links(html, prov, city_slug)
     html = html.replace("{{CURRENT_CITY_LABEL}}", city_label)
     html = html.replace("{{PAGE_PATH}}", page_path)
     return f"{FOOTER_MARKER_START}\n{html}\n{FOOTER_MARKER_END}"

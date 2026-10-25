@@ -251,11 +251,13 @@ def stable_date(key, content, fallback=None):
     norm = re.sub(r"<!-- CANONICAL-NAV-START -->[\s\S]*?<!-- CANONICAL-NAV-END -->", "", norm)
     norm = re.sub(r"<!-- CANONICAL-FOOTER-START -->[\s\S]*?<!-- CANONICAL-FOOTER-END -->", "", norm)
     norm = re.sub(r"<nav class=\"nav\"[\s\S]*?</nav>", "", norm, count=1)
-    h = "v3:" + hashlib.sha1(norm.encode()).hexdigest()[:16]
+    # link targets, image sources and tracking values are not content: fixing a URL must not re-date the page (v4, 2026-10-25)
+    norm = re.sub(r'\s(?:href|src|srcset|content|action|data-[\w-]+)="[^"]*"', "", norm)
+    h = "v4:" + hashlib.sha1(norm.encode()).hexdigest()[:16]
     old = _DATES.get(key)
     if old and old["hash"] == h:
         return old["date"]
-    first = old is None or not old["hash"].startswith("v3:")  # never seen, or saved before this fingerprint: keep the date the page shows
+    first = old is None or not old["hash"].startswith("v4:")  # never seen, or saved before this fingerprint: keep the date the page shows
     d = fallback if (first and fallback) else date.today().isoformat()
     _DATES[key] = {"hash": h, "date": d}
     return d

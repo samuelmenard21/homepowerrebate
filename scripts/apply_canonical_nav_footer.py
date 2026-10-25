@@ -212,6 +212,8 @@ def render_footer(prov, city_slug, city_label, page_path, skip_newsletter=False)
     html = fill_quote_links(html, prov, city_slug)
     html = html.replace("{{CURRENT_CITY_LABEL}}", city_label)
     html = html.replace("{{PAGE_PATH}}", page_path)
+    html = html.replace("{{NL_REGION_OPTIONS}}", regions.option_groups(value=lambda r: r["abbr"]))
+    html = html.replace("{{NL_CITIES_JSON}}", json.dumps({r["abbr"]: [l for _, l in r["cities"]] for r in regions.REGIONS}, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/"))
     return f"{FOOTER_MARKER_START}\n{html}\n{FOOTER_MARKER_END}"
 
 

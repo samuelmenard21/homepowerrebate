@@ -226,12 +226,12 @@ def hero(regs, total, picker):
       <a class="hm-news hm-for-us" href="#regions"><b>US update</b> The 30% federal tax credits ended. State and utility rebates are still open. <span>Pick your state</span></a>
       <h1 id="hm-h1">Find every home energy rebate in your city.</h1>
       <p class="hm-lede" data-city-count="{total}">Heat pumps, solar, batteries, insulation and more, in {total} cities across Canada and the US. Every amount links to the official program, and we check them every month.</p>
-      <form id="hero-find" class="hm-find" action="/get-quotes/" method="get">
-        <div class="hm-find-row">
-          <div><label for="hf-prov">Province or state</label><select id="hf-prov" name="province" required><option value="">Choose one</option></select></div>
-          <div><label for="hf-city">City</label><select id="hf-city" name="city" required><option value="">Choose your city</option></select></div>
-        </div>
-        <button type="submit" class="hm-btn">See my rebates {icon("arrow", "hm-ar")}</button>
+      <form id="hero-find" class="hm-find" action="/get-quotes/" method="get" autocomplete="off">
+        <div class="hm-bar"><label class="sr-only" for="hf-q">Your city or province</label><input id="hf-q" list="hf-list" placeholder="Your city, like Kelowna" autocomplete="off">
+          <label class="sr-only" for="hf-proj">Your project</label><select id="hf-proj" name="project"><option value="">All projects</option><option value="heat-pump">Heat pump</option><option value="solar">Solar panels</option><option value="battery">Home battery</option><option value="insulation">Insulation</option></select>
+          <button type="submit" class="hm-btn">See my rebates {icon("arrow", "hm-ar")}</button></div>
+        <select id="hf-prov" name="province" hidden><option value="">Choose one</option></select><select id="hf-city" name="city" hidden><option value="">Choose your city</option></select>
+        <datalist id="hf-list"></datalist><p id="hf-msg" class="hm-find-msg" role="alert" hidden></p>
         <p class="hm-find-note">Free. No email needed to see the numbers, and no sales calls.</p>
       </form>
       <ul class="hm-proof">
@@ -247,7 +247,14 @@ def hero(regs, total, picker):
 var G="",gl;D.forEach(function(r){{if(r.g!==G){{G=r.g;gl=document.createElement("optgroup");gl.label=G==="ca"?"Canada":"United States";p.appendChild(gl)}}var o=document.createElement("option");o.value=r.c;o.textContent=r.n;gl.appendChild(o)}});
 function fill(){{c.textContent="";var h=document.createElement("option");h.value="";h.textContent="Choose your city";c.appendChild(h);
 var r=D.filter(function(x){{return x.c===p.value}})[0];if(r)r.k.forEach(function(k){{var o=document.createElement("option");o.value=k[0];o.textContent=k[1];c.appendChild(o)}})}}
-p.addEventListener("change",function(){{fill();if(window.HPR_SHEET&&p.value)window.HPR_SHEET(p.value)}});window.HPR_FILL=fill;}})();</script>
+p.addEventListener("change",function(){{fill();if(window.HPR_SHEET&&p.value)window.HPR_SHEET(p.value)}});window.HPR_FILL=fill;
+var dl=document.getElementById("hf-list"),M={{}};D.forEach(function(r){{var o=document.createElement("option");o.value=r.n;dl.appendChild(o);M[r.n.toLowerCase()]=[r.c,""];r.k.forEach(function(k){{var l=k[1]+", "+r.n,x=document.createElement("option");x.value=l;dl.appendChild(x);M[l.toLowerCase()]=[r.c,k[0]]}})}});
+window.HPR_MAP=M;var q=document.getElementById("hf-q"),msg=document.getElementById("hf-msg");
+function pick(){{var v=q.value.trim().toLowerCase(),k=M[v];if(!k){{var h=Object.keys(M).filter(function(x){{return x.indexOf(v)===0}});if(v&&h.length===1)k=M[h[0]]}}
+if(!k)return false;p.value=k[0];fill();c.value=k[1];if(window.HPR_SHEET)window.HPR_SHEET(k[0]);return true}}
+q.addEventListener("change",pick);
+document.getElementById("hero-find").addEventListener("submit",function(ev){{if(!pick()){{ev.preventDefault();msg.textContent="Pick your city or province from the list, like Kelowna.";msg.hidden=false;return}}msg.hidden=true;if(!c.value){{c.removeAttribute("name")}}
+if(window.gtag)gtag("event","home_search",{{province:p.value}})}});}})();</script>
 <!-- HOME-HERO-END -->'''
 
 
@@ -255,7 +262,7 @@ def federal():
     """Canada: the shared federal alert box (add_federal_alert.block, FED-ALERT markers, right after HOME-HERO-END, so the
     alert post-step can replace it in place). US: the 25C/25D note from fact general-8."""
     import add_federal_alert as fa
-    box = fa.block(fa.HOME, anchor="federal-alert", big=True, wrap=True).strip()  # same call as add_federal_alert.canadian_pages()
+    box = fa.block(fa.HOME, anchor="federal-alert", big=True, wrap=True, slim=True).strip()  # same call as add_federal_alert.canadian_pages()
     us = FACTS["general-8-us-federal-25c-25d-tax-credits"]
     return f'''{box}
 <section class="hm-usfed" aria-labelledby="hm-usfed-h">
@@ -266,16 +273,56 @@ def federal():
 </section>'''
 
 
-def how():
+def how(regs=None):
     steps = [("modern-home", "A modern white house at dusk", "Pick your city.", "Rebates depend on where you live and who sends your power bill, so we start there."),
              ("solar-roof", "Solar panels on a tiled house roof", "See every rebate, open or closed.", "Each one shows the amount, who qualifies, its status and a link to the official page."),
              ("duplex-home", "A single-story duplex house with a front porch", "Compare top-rated installers.", "We rank local companies by Google reviews. You choose who to call, and we never sell your details.")]
     lis = "".join(f'<li><img src="/assets/learn/{f}-640.webp" width="640" height="427" alt="{esc(alt)}" loading="lazy"><b>{esc(h)}</b> {esc(b)}</li>' for f, alt, h, b in steps)
     return f'''<section class="hm-sec hm-how" aria-labelledby="hm-how-h">
   <div class="hm-wrap">
-    <h2 id="hm-how-h">How it works</h2>
+    <h2 id="hm-how-h">How it works, and how we keep it honest</h2>
     <ol class="hm-steps hm-steps-photos">{lis}</ol>
+    {trust_inner(regs) if regs else ""}
     <p class="hm-credit">Photos on Unsplash: <a href="https://unsplash.com/photos/t4FMbSdmeR0" rel="noopener">George Barros</a>, <a href="https://unsplash.com/photos/VAegToqdX3A" rel="noopener">Sergio Martins</a>, <a href="https://unsplash.com/photos/MnlEv7O5soI" rel="noopener">Josh Lemmon</a>.</p>
+  </div>
+</section>'''
+
+
+PLAN = [("heat-pump", "heat-pumps", "Heat pumps", "heat-pump-house"), ("solar", "solar", "Solar panels", "solar-roof"), ("battery", "batteries", "Home battery", "modern-home"),
+        ("insulation", "insulation", "Insulation", "rebate-plans"), ("water-heater", "water-heating", "Water heating", "kitchen")]
+
+
+def planning(regs):
+    r0 = regs[0]
+    amt = {x["cat"]: x["amt"] for x in r0["rows"] if not x.get("fed") and "Federal" not in x["label"]}
+    tiles = "".join(
+        f'<a class="hm-tile" href="/learn/{slug}/" data-cat="{cat}"><img src="/assets/learn/{img}-640.webp" width="640" height="427" alt="" loading="lazy">'
+        f'<span class="hm-tile-b"><b>{esc(name)}</b><em data-amt>{esc(amt.get(cat, "See the guide"))}</em></span></a>' for cat, slug, name, img in PLAN)
+    return f'''<section class="hm-sec hm-plan" aria-labelledby="hm-plan-h">
+  <div class="hm-wrap">
+    <h2 id="hm-plan-h">What are you planning?</h2>
+    <p class="hm-intro">Pick an upgrade for a plain guide and the biggest rebate open in <span data-plan-where>{esc(r0["n"])}</span> today.</p>
+    <div class="hm-tiles">{tiles}</div>
+  </div>
+</section>'''
+
+
+def quiz_section():
+    d = lk.articles()["7-ways-to-lose-your-home-energy-rebate"]
+    return f'''<section class="hm-sec hm-quiz" aria-label="Quick quiz"><div class="hm-wrap">{lk.quiz("7-ways-to-lose-your-home-energy-rebate", d["quiz"])}</div></section>'''
+
+
+def installers_strip():
+    return '''<section class="hm-sec hm-inst" aria-labelledby="hm-inst-h">
+  <div class="hm-wrap hm-inst-grid">
+    <div>
+      <h2 id="hm-inst-h">Find top-rated installers near you</h2>
+      <p class="hm-intro">Ranked by Google reviews, with a badge where a program keeps its own list of registered contractors. Nobody pays to rank higher.</p>
+      <form class="hm-bar hm-bar-sm" action="/installers/" method="get" autocomplete="off"><input name="city" list="hf-list" placeholder="Your city, like Kelowna" aria-label="Your city">
+        <select name="service" aria-label="What you need"><option value="heat-pump">Heat pump</option><option value="solar">Solar panels</option><option value="battery">Home battery</option><option value="insulation">Insulation</option><option value="energy-advisor">Energy advisor</option></select>
+        <button type="submit" class="hm-btn">See installers</button></form>
+    </div>
+    <img src="/assets/learn/hiring-roof-1200.webp" width="1200" height="800" alt="Two workers handling ductwork on a rooftop beside outdoor air conditioning units" loading="lazy">
   </div>
 </section>'''
 
@@ -317,10 +364,12 @@ def region_ledger(regs):
         cols += f'<div class="hm-col hm-col-{country}"><h3>{name} <span>{len(rs)} {"provinces" if country == "ca" else "states"}, {sum(r["count"] for r in rs)} cities</span></h3><ul class="hm-regs">{"".join(reg_row(r) for r in rs)}</ul></div>'
     return f'''<section class="hm-sec hm-ledger" id="regions" aria-labelledby="hm-reg-h">
   <div class="hm-wrap">
-    <h2 id="hm-reg-h">Pick your province or state</h2>
+    <h2 id="hm-reg-h">Or pick your province or state</h2>
+    <details class="hm-det hub-fold"><summary>Browse all {len(regs)} provinces and states</summary>
     <p class="hm-intro">Each place has its own programs. Here is the biggest single rebate open in each one today. Most homes get less, and some are only for lower incomes.</p>
     <div class="hm-tabs" role="group" aria-label="Show the biggest rebate for one upgrade">{tabs}</div>
     <div class="hm-cols">{cols}</div>
+    </details>
   </div>
 </section>'''
 
@@ -354,14 +403,14 @@ def changes():
     coming = sorted([x for x in d if x["status"] == "coming"], key=lambda x: x["date"])
     recent = sorted([x for x in d if x["status"] != "coming"], key=lambda x: x["date"], reverse=True)[:5]
     items = ""
-    for x in coming + recent:
+    for x in coming[:1] + recent[:2]:
         lab, tone = CHANGE_TAG[x["status"]]
         reg = esc(reg_name.get(x["region"], x["region"]))
         where = f'<a href="{hub[x["region"]]}">{reg}</a>' if x["region"] in hub else reg
         items += (f'<li><span class="hm-chg hm-chg-{tone}">{lab}</span><div><b>{esc(x["program"])}</b>'
                   f'<span class="hm-meta">{where} &middot; {esc(x["date"])}</span><p>{esc(x["change"])}</p></div></li>')
     dl = "".join(f'<li class="hf-close" data-deadline="{x["date"]}"><b class="hf-when">{esc(fmt(x["date"]))}</b>'
-                 f'<a href="{x["page"]}">{esc(x["program"])}</a><span class="hm-meta">{esc(DL_REGIONS[x["region"]])}</span></li>' for x in open_rows()[:6])
+                 f'<a href="{x["page"]}">{esc(x["program"])}</a><span class="hm-meta">{esc(DL_REGIONS[x["region"]])}</span></li>' for x in open_rows()[:3])
     return f'''<section class="hm-sec hm-changes" aria-labelledby="hm-chg-h">
   <div class="hm-wrap hm-chg-grid">
     <div>
@@ -380,21 +429,18 @@ def changes():
 <script>document.querySelectorAll(".hf-close").forEach(function(e){{var t=new Date(e.dataset.deadline+"T23:59:59");var d=Math.ceil((t-new Date())/864e5);var w=e.querySelector(".hf-when");if(d<0)e.remove();else w.textContent+=" \\u00b7 "+(d===0?"today":d+" day"+(d>1?"s":"")+" left")}});</script>'''
 
 
-def trust(regs):
+def trust_inner(regs):
     n = len(FACTS)
     shut = sum(1 for x in FACTS.values() if x.get("status") in ("closed", "paused", "waitlist"))
     latest = max(x.get("verified_on", "") for x in FACTS.values())
-    return f'''<section class="hm-sec hm-trust" aria-labelledby="hm-trust-h">
-  <div class="hm-wrap">
-    <h2 id="hm-trust-h">How we keep it honest</h2>
+    return f'''<div class="hm-trustbox">
     <div class="hm-trust-grid">
       <p><b>{n:,}</b>rebate amounts and rules we track. Each one has the official page we read it on and the date we read it. The latest check was {esc(short_date(latest))}.</p>
       <p><b>{shut}</b>of them are closed, paused or on hold right now. We show them that way instead of hiding them, so you know what not to count on.</p>
       <p><b>$0</b>paid by any installer to be listed or to rank higher. We rank by Google reviews only, and our <a href="/installers/how-we-rank/">ranking page</a> will say so if that ever changes.</p>
     </div>
     <p class="hm-founder">HomePowerRebate is independent. It is not run by a utility, an installer or a government. It was built by <a href="/about">Sam Menard</a>. Spot a mistake? <a href="/contact/">Tell us</a> and we will fix it.</p>
-  </div>
-</section>'''
+</div>'''
 
 
 def guides():
@@ -467,7 +513,7 @@ function row(x){{var s=x.src,a=s?'<a href="'+e(s)+'"'+(s.indexOf("http")===0?' r
 return '<li class="hm-row" data-cat="'+x.cat+'">'+ic(x.cat)+'<div class="hm-row-t"><b>'+e(x.label)+'</b><span class="hm-row-p">'+a+(x.iq?'<span class="hm-iq">Lower incomes</span>':"")+'</span>'+(x.more?'<span class="hm-row-m">'+e(x.more)+'</span>':"")+'</div><div class="hm-row-a"><span class="hm-amt">'+e(x.amt)+'</span><span class="rb-status rb-'+x.st+'">'+L[x.st]+'</span></div></li>'}}
 var sh=document.querySelector(".hm-sheet");
 window.HPR_SHEET=function(c){{var r=R[c];if(!r||!sh)return;var q=function(k){{return sh.querySelector('[data-s="'+k+'"]')}};
-q("name").textContent=r.n;q("sub").textContent="The biggest open rebate for each upgrade, in "+(r.cur==="CAD"?"Canadian":"US")+" dollars. Most homes get less, and each one has its own rules.";
+q("name").textContent=r.n;document.querySelectorAll(".hm-tile").forEach(function(tl){{var x=r.rows.filter(function(y){{return y.cat===tl.dataset.cat&&!y.fed&&y.label.indexOf("Federal")<0}})[0];tl.querySelector("[data-amt]").textContent=x?x.amt:"See the guide"}});var w=document.querySelector("[data-plan-where]");if(w)w.textContent=r.n;q("sub").textContent="The biggest open rebate for each upgrade, in "+(r.cur==="CAD"?"Canadian":"US")+" dollars. Most homes get less, and each one has its own rules.";
 q("rows").innerHTML=r.rows.map(row).join("");q("checked").textContent=(r.checked?"Last checked "+r.checked:"Checked monthly")+" against the official program pages.";
 var h=q("hub");h.href=r.hub;h.firstChild.textContent="All "+r.n+" programs ";sh.classList.remove("hm-in");void sh.offsetWidth;sh.classList.add("hm-in")}};
 var z="";try{{z=Intl.DateTimeFormat().resolvedOptions().timeZone||""}}catch(x){{}}
@@ -602,7 +648,7 @@ def main():
     faqs = faq_items(regs, total)
     modified = max(x.get("verified_on", "") for x in FACTS.values())
     body = "\n".join([
-        hero(regs, total, picker), federal(), how(), region_ledger(regs), powerscore(), changes(), trust(regs), guides(), learn(), faq(faqs), close(),
+        hero(regs, total, picker), federal(), planning(regs), quiz_section(), installers_strip(), powerscore(), region_ledger(regs), changes(), how(regs), guides(), faq(faqs), close(),
     ])
     out = (head(regs, total, faqs, modified, keep) + '\n<body class="tpl-home">\n<a class="skip-link" href="#main">Skip to main content</a>\n'
            + sprite() + "\n" + nav + '\n<main id="main" tabindex="-1" class="layout-wide layout-home">\n' + body + "\n</main>\n" + foot + "\n"

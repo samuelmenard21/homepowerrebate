@@ -38,7 +38,7 @@ def main():
     m = re.search(r'name="description" content="([^"]*)"', home)
     desc = m.group(1) if m else ""
     m = re.search(r"window\.HPR_CITIES=(\[.*?\]);", home)
-    picker = {r["c"]: {c for c, _ in r["k"]} for r in json.loads(m.group(1))} if m else {}
+    picker = {r["c"]: {k[0] for k in r["k"]} for r in json.loads(m.group(1))} if m else {}
     m = re.search(r"const SURVEY_REGIONS = \[([^\]]*)\]", router)
     survey = set(re.findall(r"'([a-z]+)'", m.group(1))) if m else set()
     if "import REGION_DATA from './data/regions.json'" in router and "REGION_LIST.map(r => r.code)" in router:

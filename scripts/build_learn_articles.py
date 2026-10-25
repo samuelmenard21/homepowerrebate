@@ -24,8 +24,8 @@ def build(slug, d):
     refs = ", ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>' for t, u in d["refs"])
     quote = f'<blockquote class="learn-quote">{d["quote"]}</blockquote>' if d.get("quote") else ""
     article = f"""<p class="byline">By <a href="/about">Sam Menard</a> · {e(d["read"])} · Updated {nice}</p>
-{lk.figure(d)}
 {lk.quiz(slug, d["quiz"])}
+{lk.figure(d)}
 {lk.takeaways(d)}
 {d["intro"]}
 <h2>{d["list_heading"]}</h2>

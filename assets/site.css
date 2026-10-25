@@ -1726,6 +1726,20 @@ html[data-country="US"] .tpl-home .hm-col-us, html[data-country="US"] .tpl-home 
 .tpl-home .hm-bar input, .tpl-home .hm-bar select { min-width: 0; }
 .tpl-home .hm-find .hm-bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 @media (max-width: 760px) { .tpl-home .hm-find .hm-bar { grid-template-columns: minmax(0, 1fr); } }
+/* hero is just the way to a city page (2026-10-25) */
+.tpl-home .hm-hero-grid { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; }
+.tpl-home .hm-hero h1 { max-width: 12em; margin-left: auto; margin-right: auto; }
+.tpl-home .hm-lede { max-width: 34em; margin-left: auto; margin-right: auto; }
+.tpl-home .hm-news { margin-left: auto; margin-right: auto; text-align: left; }
+.tpl-home .hm-find { width: 100%; max-width: 780px; margin: 0 auto; }
+.tpl-home .hm-find .hm-bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; border-radius: 999px; }
+.tpl-home .hm-find .hm-bar .hm-btn { grid-column: auto; margin-top: 0; }
+.tpl-home .hm-find .hm-bar select { border-right: 1px solid var(--rule); }
+.tpl-home .hm-pop { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 14px 0 0; font-size: 17px; color: rgba(250, 247, 242, .86); }
+.tpl-home .hm-pop span { font-weight: 700; }
+.tpl-home .hm-pop a { color: #fff; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.tpl-home .hm-proof { justify-items: center; }
+@media (max-width: 760px) { .tpl-home .hm-find .hm-bar { grid-template-columns: minmax(0, 1fr); border-radius: 24px; } .tpl-home .hm-find .hm-bar select { border-right: 0; } }
 
 /* ===== template design: page (page.css) ===== */
 /* tpl-page: older stand-alone pages (guides, tools, utility city pages, trackers). Each page still keeps its own variant CSS; these are

@@ -25,12 +25,12 @@ def build(slug, d):
     quote = f'<blockquote class="learn-quote">{d["quote"]}</blockquote>' if d.get("quote") else ""
     article = f"""<p class="byline">By <a href="/about">Sam Menard</a> · {e(d["read"])} · Updated {nice}</p>
 {lk.figure(d)}
+{lk.quiz(slug, d["quiz"])}
 {lk.takeaways(d)}
 {d["intro"]}
 <h2>{d["list_heading"]}</h2>
 {lk.listicle(d)}
 {quote}
-{lk.quiz(slug, d["quiz"])}
 <div class="callout"><strong>Want a number for your home?</strong> Run our <a href="{d.get("calc", "/calculator/on/")}" style="color:var(--teal,#0d4f5c); font-weight:600;">rebate calculator</a>, or <a href="/get-quotes/" style="color:var(--teal,#0d4f5c); font-weight:600;">see your rebates and the top-rated installers near you</a>.</div>
 <h2>Common questions</h2>
 {kit.faq(d)}

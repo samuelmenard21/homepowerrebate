@@ -102,7 +102,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/page-e05471c2.css?v=9602639fe7" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=52b612d58a" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=25bf72b7ce" data-hpr-site-css>
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -262,7 +262,10 @@
   </div>
 </nav>
 <!-- CANONICAL-NAV-END -->
-<main id="main" tabindex="-1">
+<main id="main" tabindex="-1"><!-- BLOG-PHOTO-START --><div class="wrap"><figure class="learn-photo"><img src="/assets/learn/hiring-roof-1200.webp" width="1200" height="800" alt="Two workers handling ductwork on a rooftop beside outdoor air conditioning units" fetchpriority="high"><figcaption>Photo: <a href="https://unsplash.com/photos/iS5GDeLDk0E" target="_blank" rel="noopener">Singapore Stock Photos, Unsplash</a></figcaption></figure></div><!-- BLOG-PHOTO-END -->
+<!-- LEARN-QUIZ-START -->
+<div class="learn-wrap"><section class="hpr-quiz" id="quiz-7-ways-to-lose-your-home-energy-rebate" data-msgs="[&quot;Worth another read of the seven traps.&quot;, &quot;Good instincts. Keep the program pages open while you shop.&quot;, &quot;Perfect. Your rebate is in safe hands.&quot;]"><span class="qz-kick">Quick quiz</span><h2>Quick quiz: would you keep your rebate?</h2><p class="qz-intro">Five questions. Tap an answer to see why.</p><fieldset class="qz-q" data-a="1"><legend>1. You have a gas furnace in BC. Does BC Hydro&#x27;s heat pump rebate apply?</legend><div class="qz-opts"><button type="button" class="qz-opt">Yes, up to $4,000</button><button type="button" class="qz-opt">No, it is for replacing electric heat</button><button type="button" class="qz-opt">Yes, if you use a cheap model</button></div><p class="qz-why">BC Hydro's rebate is for replacing electric heat. Gas homes should look at other programs, such as FortisBC for its own customers.</p></fieldset><fieldset class="qz-q" data-a="1"><legend>2. In Ontario&#x27;s heat pump stream, what comes first?</legend><div class="qz-opts"><button type="button" class="qz-opt">The install</button><button type="button" class="qz-opt">Written pre-approval</button><button type="button" class="qz-opt">The final invoice</button></div><p class="qz-why">Written pre-approval comes before the install.</p></fieldset><fieldset class="qz-q" data-a="0"><legend>3. What does a BC Hydro battery need to reach the $5,000 rebate?</legend><div class="qz-opts"><button type="button" class="qz-opt">Peak Saver enrollment</button><button type="button" class="qz-opt">A Tesla battery</button><button type="button" class="qz-opt">A solar system on a barn</button></div><p class="qz-why">Peak Saver enrollment, within 14 days of the in-service date. Tesla battery models are excluded.</p></fieldset><fieldset class="qz-q" data-a="1"><legend>4. A solar system under an Ontario net metering agreement is eligible for the Home Renovation Savings stream.</legend><div class="qz-opts"><button type="button" class="qz-opt">True</button><button type="button" class="qz-opt">False</button></div><p class="qz-why">False. The stream's requirements say systems under net metering are not eligible.</p></fieldset><fieldset class="qz-q" data-a="0"><legend>5. When should you check a product against the qualified list?</legend><div class="qz-opts"><button type="button" class="qz-opt">Before you buy</button><button type="button" class="qz-opt">After the install</button><button type="button" class="qz-opt">When the rebate is denied</button></div><p class="qz-why">Before. Swapping equipment after the fact is the hardest fix.</p></fieldset><div class="qz-result" aria-live="polite"><div class="qz-ring"><span class="qz-score"></span></div><span class="qz-msg"></span><div class="qz-acts"><span class="qz-cta-wrap"><a class="qz-cta" href="/get-quotes/">See your rebates</a></span><button type="button" class="qz-again">Play again</button><button type="button" class="qz-share">Share my score</button></div></div></section></div>
+<!-- LEARN-QUIZ-END -->
 <!-- CANONICAL-BREADCRUMB-START -->
 <nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">Is My Contractor&#x27;s Rebate Quote a Scam?</li></ol></nav>
 <!-- CANONICAL-BREADCRUMB-END -->
@@ -752,12 +755,23 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 (function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
 var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
-(function(){document.querySelectorAll('.hpr-quiz').forEach(function(z){z.classList.add('qz-ready');var qs=[].slice.call(z.querySelectorAll('.qz-q')),got=0,done=0;
-qs.forEach(function(q){var a=+q.dataset.a;q.querySelectorAll('.qz-opt').forEach(function(b,i){b.addEventListener('click',function(){if(q.classList.contains('done'))return;q.classList.add('done');done++;
-if(i===a){got++;b.classList.add('right')}else{b.classList.add('wrong');q.querySelectorAll('.qz-opt')[a].classList.add('right')}
-if(done===qs.length){var r=z.querySelector('.qz-result'),m=JSON.parse(z.dataset.msgs||'[]'),k=got===qs.length?2:got>=Math.ceil(qs.length/2)?1:0;
-r.querySelector('.qz-score').textContent='You got '+got+' of '+qs.length;r.querySelector('.qz-msg').textContent=m[k]||'';r.classList.add('on');
-if(window.gtag)gtag('event','quiz_complete',{quiz:z.id,score:got,total:qs.length})}})})})})})();
+(function(){document.querySelectorAll('.hpr-quiz').forEach(function(z){z.classList.add('qz-ready');var qs=[].slice.call(z.querySelectorAll('.qz-q')),got=0,idx=0,L='ABCDE';
+var bar=document.createElement('div');bar.className='qz-bar';bar.innerHTML='<span class="qz-track"><span class="qz-fill"></span></span><span class="qz-count"></span>';var intro=z.querySelector('.qz-intro');intro.parentNode.insertBefore(bar,intro.nextSibling);
+var fill=bar.querySelector('.qz-fill'),cnt=bar.querySelector('.qz-count'),res=z.querySelector('.qz-result');
+function show(i){qs.forEach(function(q,n){q.classList.toggle('active',n===i)});cnt.textContent='Question '+(i+1)+' of '+qs.length;fill.style.width=(i/qs.length*100)+'%'}
+function finish(){qs.forEach(function(q){q.classList.remove('active')});bar.style.display='none';var m=JSON.parse(z.dataset.msgs||'[]'),k=got===qs.length?2:got>=Math.ceil(qs.length/2)?1:0,pct=Math.round(got/qs.length*100);
+res.querySelector('.qz-score').textContent=got+'/'+qs.length;res.querySelector('.qz-ring').style.setProperty('--p',pct);res.querySelector('.qz-msg').textContent=m[k]||'';res.classList.add('on');
+if(got===qs.length){['#e88a2e','#6fd39b','#fff','#f5b566','#0d4f5c'].forEach(function(c,n){for(var j=0;j<6;j++){var s=document.createElement('i');s.className='qz-conf';s.style.left=(8+Math.random()*84)+'%';s.style.background=c;s.style.animationDelay=(Math.random()*.5)+'s';z.appendChild(s);setTimeout(function(){s.remove()},2400)}})}
+if(window.gtag)gtag('event','quiz_complete',{quiz:z.id,score:got,total:qs.length})}
+qs.forEach(function(q,qi){var a=+q.dataset.a,why=q.querySelector('.qz-why'),opts=q.querySelectorAll('.qz-opt');
+opts.forEach(function(b,i){var k=document.createElement('span');k.className='qz-key';k.textContent=L[i];b.insertBefore(k,b.firstChild);
+b.addEventListener('click',function(){if(q.classList.contains('done'))return;q.classList.add('done');
+if(i===a){got++;b.classList.add('right');why.setAttribute('data-verdict','Right')}else{b.classList.add('wrong');opts[a].classList.add('right');why.setAttribute('data-verdict','Not quite')}
+var nx=document.createElement('button');nx.type='button';nx.className='qz-next';nx.textContent=qi===qs.length-1?'See my score':'Next question';q.appendChild(nx);nx.focus({preventScroll:true});
+fill.style.width=((qi+1)/qs.length*100)+'%';nx.addEventListener('click',function(){qi===qs.length-1?finish():show(qi+1)})})})});
+var again=res.querySelector('.qz-again');if(again)again.addEventListener('click',function(){got=0;res.classList.remove('on');bar.style.display='';qs.forEach(function(q){q.classList.remove('done');var n=q.querySelector('.qz-next');n&&n.remove();q.querySelectorAll('.qz-opt').forEach(function(o){o.classList.remove('right','wrong')})});show(0);z.scrollIntoView({behavior:'smooth',block:'start'})});
+var sh=res.querySelector('.qz-share');if(sh)sh.addEventListener('click',function(){var tx='I got '+got+'/'+qs.length+' on the HomePowerRebate quiz. Try it:';var u=location.href.split('#')[0]+'#'+z.id;if(navigator.share){navigator.share({text:tx,url:u}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(tx+' '+u);sh.textContent='Link copied'}});
+show(0)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

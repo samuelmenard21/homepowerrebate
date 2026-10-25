@@ -71,14 +71,16 @@ def listicle(d):
 
 
 def quiz(slug, q):
+    """A one-question-at-a-time quiz (shared CSS and JS in _partials/nav-footer.html). Without JavaScript every question and its explanation show."""
     qs = []
     for n, item in enumerate(q["qs"]):
         opts = "".join(f'<button type="button" class="qz-opt">{e(o)}</button>' for o in item["options"])
         qs.append(f'<fieldset class="qz-q" data-a="{item["answer"]}"><legend>{n + 1}. {e(item["q"])}</legend><div class="qz-opts">{opts}</div>'
                   f'<p class="qz-why">{item["why"]}</p></fieldset>')
     msgs = e(json.dumps(q["messages"]), quote=True)
-    return (f'<section class="hpr-quiz" id="quiz-{slug}" data-msgs="{msgs}"><h2>{e(q["title"])}</h2><p>{e(q["intro"])}</p>{"".join(qs)}'
-            f'<div class="qz-result" aria-live="polite"><b class="qz-score"></b><span class="qz-msg"></span> {q["cta"]}</div></section>')
+    return (f'<section class="hpr-quiz" id="quiz-{slug}" data-msgs="{msgs}"><span class="qz-kick">Quick quiz</span><h2>{e(q["title"])}</h2><p class="qz-intro">{e(q["intro"])}</p>{"".join(qs)}'
+            f'<div class="qz-result" aria-live="polite"><div class="qz-ring"><span class="qz-score"></span></div><span class="qz-msg"></span>'
+            f'<div class="qz-acts"><span class="qz-cta-wrap">{q["cta"].replace("<a ", "<a class=\"qz-cta\" ", 1)}</span><button type="button" class="qz-again">Play again</button><button type="button" class="qz-share">Share my score</button></div></div></section>')
 
 
 def strip(links):
@@ -169,3 +171,33 @@ def region_quiz(code):
     return {"title": f"Quick quiz: {d['name']} rebates", "intro": "A few questions from the programs we track. Tap an answer to see why.", "qs": qs,
             "messages": ["Worth another look at the programs above.", "Nice. You know the programs well.", "Perfect score. You know your rebates."],
             "cta": f'<a href="/calculator/{code}/">Estimate your rebates</a>'}
+
+
+# ---- photo for any article (2026-10-24): one free-licence photo per topic, chosen by words in the slug and title ----
+_PHOTOS = json.loads((ROOT / "data" / "learn-photos.json").read_text(encoding="utf-8"))
+_TOPIC = [(r"ev-|-ev\b|charger|electric vehicle", "ev-charger"), (r"solar|net-meter|roof", "solar-roof"), (r"thermostat|smart-home", "thermostat"),
+          (r"insulation|attic|air-seal|weatheri|draft|window|door", "rebate-plans"), (r"water-heater|appliance|induction|stove|dryer|cook|kitchen", "kitchen"),
+          (r"installer|quote|contractor|hire|vet|scam|audit|advisor|assessment", "hiring-roof"),
+          (r"income|renter|condo|strata|apartment|landlord|low-income|assistance|bill|heating-rebate|harp|supplement|crisis", "living-room"),
+          (r"heat-pump|furnace|cold|hvac|cooling|ductless|mini-split|geothermal", "heat-pump-house")]
+_FALLBACK = ["modern-home", "duplex-home", "living-room", "heat-pump-house"]
+
+
+def photo_for(slug, title=""):
+    """(file, alt, credit, url) for a blog post: first topic whose words appear in the slug or title, else a stable pick by hash of the slug."""
+    import re
+    import zlib
+    text = f"{slug} {title}".lower().replace(" ", "-")
+    for pat, f in _TOPIC:
+        if re.search(pat, text):
+            break
+    else:
+        f = _FALLBACK[zlib.crc32(slug.encode()) % len(_FALLBACK)]
+    p = _PHOTOS[f]
+    return f, p["alt"], p["credit"], p["url"]
+
+
+def post_figure(slug, title=""):
+    f, alt, credit, url = photo_for(slug, title)
+    return (f'<figure class="learn-photo"><img src="/assets/learn/{f}-1200.webp" width="1200" height="800" alt="{e(alt)}" fetchpriority="high">'
+            f'<figcaption>Photo: <a href="{e(url)}" target="_blank" rel="noopener">{e(credit)}</a></figcaption></figure>')

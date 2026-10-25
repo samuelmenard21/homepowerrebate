@@ -51,6 +51,8 @@ def build(d):
     facts = (f'<div class="learn-facts"><div class="learn-fact"><b>{nreg}</b><span>provinces and states with an open {e(d["noun"])} rebate we track</span></div>'
              f'<div class="learn-fact"><b>{e(top["shown"].replace("up to ", ""))}</b><span>the biggest single amount: {e(top["program"])}, {e(top["region"])} ({top["currency"]})</span></div>'
              f'<div class="learn-fact"><b>{len(progs)}</b><span>open programs, each with its official page and the date we checked it</span></div></div>')
+    pick = "heat-pump-myths-busted" if slug == "heat-pumps" else "7-ways-to-lose-your-home-energy-rebate"
+    quiz = lk.quiz(pick, lk.articles()[pick]["quiz"])
     checks = "".join(f"<li>{c}</li>" for c in d["checks"])
     refs = list(d["refs"])
     for r in progs[:6]:
@@ -59,6 +61,7 @@ def build(d):
     refs_html = ", ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>' for t, u in refs)
     article = f"""<p class="byline">By <a href="/about">Sam Menard</a> · Rebate amounts checked {nice}</p>
 {facts}
+{quiz}
 {d["intro"]}
 <h2>What to check before you buy</h2>
 <ul>{checks}</ul>

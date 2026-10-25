@@ -49,48 +49,79 @@ def spread(posts):
 
 
 def card(p):
-    return (f'<a href="/blog/{p["slug"]}/" class="post-card"><span class="tag">{e(p["region"])}</span>'
-            f'<h3>{e(p["title"])}</h3><p>{e(p["desc"])}</p></a>')
+    f, alt, _, _ = lk.photo_for(p["slug"], p["title"])
+    return (f'<a href="/blog/{p["slug"]}/" class="post-card"><img class="pc-photo" src="/assets/learn/{f}-640.webp" width="640" height="427" alt="{e(alt)}" loading="lazy">'
+            f'<div class="pc-body"><span class="tag">{e(p["region"])}</span><h3>{e(p["title"])}</h3><p>{e(p["desc"])}</p></div></a>')
+
+
+TOPIC_TILES = {"start": "Start here", "heat": "Heat pumps", "solar": "Solar and batteries", "shell": "Insulation and windows", "bills": "Lower your bills", "avoid": "Avoid mistakes", "rank": "What is changing"}
+EDITORS = ["should-you-wait-federal-heat-pump-rebate", "9-questions-to-ask-heat-pump-installer", "7-ways-to-lose-your-home-energy-rebate", "heat-pump-myths-busted",
+           "fair-heat-pump-quote-canada", "why-insulation-first-energy-retrofit", "what-happens-in-an-energy-audit", "is-my-contractors-rebate-quote-a-scam"]
+JS = r"""
+(function(){var root=document.getElementById('bx');if(!root)return;
+root.querySelectorAll('.bx-row').forEach(function(row){var car=row.querySelector('.bx-car');
+ row.querySelectorAll('.bx-arrow').forEach(function(b){b.addEventListener('click',function(){car.scrollBy({left:(b.dataset.d==='1'?1:-1)*Math.min(car.clientWidth*.9,720),behavior:'smooth'})})});
+ var all=row.querySelector('.bx-all');if(all)all.addEventListener('click',function(){var on=row.classList.toggle('is-grid');all.textContent=on?'Show as a row':'View all '+all.dataset.n})});
+var q=document.getElementById('bx-q'),pl=document.getElementById('bx-place'),msg=document.getElementById('bx-none');
+function filter(){var s=(q.value||'').trim().toLowerCase(),p=pl.value,shown=0;
+ root.querySelectorAll('.post-card').forEach(function(c){var ok=(!p||c.dataset.r===p)&&(!s||c.dataset.t.indexOf(s)>-1);c.hidden=!ok;if(ok)shown++});
+ root.querySelectorAll('.bx-row').forEach(function(r){r.hidden=!r.querySelector('.post-card:not([hidden])')});
+ msg.hidden=shown>0;if(window.gtag&&s)gtag('event','blog_search',{term:s})}
+q.addEventListener('input',filter);pl.addEventListener('change',filter);
+})();
+"""
+
+
+def cards_row(posts, rid, heading, intro, region_attr=True):
+    cs = "\n".join(card(p).replace('<a href=', f'<a data-r="{e(p["region"])}" data-t="{e((p["title"] + " " + p["desc"]).lower())}" href=', 1) for p in posts)
+    return (f'<section class="bx-row" id="{rid}"><div class="bx-head"><div><h2>{e(heading)}</h2><p>{e(intro)}</p></div><div class="bx-ctl">'
+            f'<button type="button" class="bx-all" data-n="{len(posts)}">View all {len(posts)}</button>'
+            f'<button type="button" class="bx-arrow" data-d="-1" aria-label="Scroll left">&larr;</button><button type="button" class="bx-arrow" data-d="1" aria-label="Scroll right">&rarr;</button></div></div>'
+            f'<div class="bx-car">{cs}</div></section>')
 
 
 def build(data):
     secs = data["sections"]
-    areas = "".join(f'<a href="{u}" style="{CHIP}background:rgba(250,247,242,.1);color:#fff;'
-                    f'border:1px solid rgba(250,247,242,.35);">{e(n)}</a>' for n, u in AREAS)
-    topics = "".join(f'<a href="#{s["id"]}" style="{CHIP}background:#fff;color:var(--teal);'
-                     f'border:1px solid var(--rule);">{e(s["heading"].split(":")[0])}</a>' for s in secs)
-    out = [S, """
-<header class="hub-hero">
-  <div class="wrap-wide">
-    <div class="eyebrow">Rebate guides</div>
-    <h1>Understand the rebates in your city.</h1>
-    <p class="sub">Plain guides to heat pump, solar, battery, insulation and other home energy rebates. Learn who qualifies, how much you can get and how to apply where you live.</p>
-    <p style="margin:26px 0 10px;font-size:14px;font-weight:600;color:rgba(250,247,242,.82);">Find the rebates for your area:</p>
-    <nav aria-label="Rebates by area" style="display:flex;flex-wrap:wrap;justify-content:flex-start;gap:8px;padding:0;background:none;border:0;position:static;">""" + areas + """</nav>
-  </div>
-</header>
-<section style="padding:36px 0 0;">
-  <div class="wrap-wide">
-    <p style="margin:0 0 10px;font-size:14px;font-weight:600;color:var(--ink-soft);">Jump to a topic:</p><nav aria-label="Guide topics" style="display:flex;flex-wrap:wrap;justify-content:flex-start;gap:8px;padding:0;background:none;border:0;position:static;">""" + topics + """</nav>
-  </div>
-</section>
+    by = {p["slug"]: p for s in secs for p in s["posts"]}
+    regions_seen = sorted({p["region"] for p in by.values()})
+    place = '<option value="">Everywhere</option>' + "".join(f'<option value="{e(r)}">{e(r)}</option>' for r in regions_seen)
+    chips = "".join(f'<a href="#{s["id"]}" class="bx-chip">{e(TOPIC_TILES.get(s["id"], s["heading"]))}</a>' for s in secs)
+    quiz = lk.articles()["heat-pump-myths-busted"]
+    quiz_html = lk.quiz("heat-pump-myths-busted", quiz["quiz"])
+    more = "".join(lk.card(sl, a) for sl, a in lk.articles().items())
+    editors = [by[s] for s in EDITORS if s in by]
+    ups = "".join(
+        f'<a class="learn-card" href="/learn/{s}/"><div class="learn-tile t-{tone}"><img src="/assets/learn/{img}-640.webp" width="640" height="427" alt="" loading="lazy"><span class="learn-kick">Guide</span><span class="learn-big">{e(n)}</span></div>'
+        f'<span class="learn-more">Open the guide →</span></a>'
+        for s, n, img, tone in [("heat-pumps", "Heat pumps", "heat-pump-house", "teal"), ("solar", "Solar", "solar-roof", "amber"), ("batteries", "Batteries", "modern-home", "ink"),
+                                ("insulation", "Insulation", "rebate-plans", "sage"), ("water-heating", "Water heating", "kitchen", "teal")])
+    out = [S, f"""
+<header class="bx-hero hero hero-photo"><div class="wrap-wide">
+  <div class="eyebrow">Learn</div>
+  <h1>Learn what your home can get.</h1>
+  <p class="sub">Plain guides, quick quizzes and checklists on heat pumps, solar, batteries, insulation and more. Pick a topic, or search for your question.</p>
+  <div class="bx-tools"><label class="bx-search"><span class="sr-only">Search guides</span><input id="bx-q" type="search" placeholder="Search guides, like heat pump quote" autocomplete="off"></label>
+  <label class="bx-place"><span class="sr-only">Show guides for</span><select id="bx-place">{place}</select></label></div>
+  <nav class="bx-chips" aria-label="Topics">{chips}<a href="#quizzes" class="bx-chip bx-chip-quiz">Quizzes</a></nav>
+</div></header>
+<div id="bx">
+<section class="learn-wrap" id="quizzes"><h2 class="bx-h">Start with a quick quiz</h2>{quiz_html}</section>
+{cards_row(editors, "editors", "Editor's picks", "The guides we would read first.")}
 """]
-    shelf = "".join(lk.card(sl, d) for sl, d in lk.articles().items())
-    out.append(f'<section id="quick-reads" style="padding:44px 0 8px;scroll-margin-top:90px;"><div class="wrap-wide"><h2 style="font-size:clamp(26px,4vw,34px);margin:0 0 8px;">Quick reads and quizzes</h2>'
-               f'<p style="margin:0 0 20px;color:var(--ink-soft);max-width:640px;">Listicles, myth busters and short quizzes. Learn the rules in five minutes, then call a contractor.</p><div class="learn-grid">{shelf}</div><p style="margin:22px 0 0;font-size:18px;"><b>Learn by upgrade:</b> <a href="/learn/heat-pumps/">Heat pumps</a> · <a href="/learn/solar/">Solar</a> · <a href="/learn/batteries/">Batteries</a> · <a href="/learn/insulation/">Insulation</a> · <a href="/learn/water-heating/">Water heating</a></p></div></section>\n')
     for s in secs:
-        cards = "\n".join(card(p) for p in spread(s["posts"]))
-        out.append(f"""<section id="{s['id']}" style="padding:44px 0 8px;scroll-margin-top:90px;">
-  <div class="wrap-wide">
-    <h2 style="font-size:clamp(26px,4vw,34px);margin:0 0 8px;">{e(s['heading'])}</h2>
-    <p style="margin:0;color:var(--ink-soft);max-width:640px;">{e(s['intro'])}</p>
-    <div class="post-grid" style="margin-top:24px;">
-{cards}
-    </div>
-  </div>
-</section>
+        intro = s["intro"]
+        out.append(cards_row(list(spread(s["posts"])), s["id"], s["heading"].split(":")[0] if s["id"] == "start" else s["heading"], intro))
+    out.append(f"""<section class="bx-row bx-quizrow" id="more-quizzes"><div class="bx-head"><div><h2>More reads and quizzes</h2><p>Listicles, myth busters and short quizzes. Five minutes each.</p></div></div>
+<div class="learn-wrap" style="padding:0"><div class="learn-grid">{more}</div></div></section>
+<section class="bx-row" id="by-upgrade"><div class="bx-head"><div><h2>Learn by upgrade</h2><p>One guide for each upgrade, with every open rebate we track.</p></div></div>
+<div class="learn-wrap" style="padding:0"><div class="learn-grid bx-five">{ups}</div></div></section>
+<p id="bx-none" class="bx-none" hidden>No guides match that. Try a shorter search, or choose Everywhere.</p>
+</div>
+<section class="bx-places"><div class="wrap-wide"><h2>Rebates by place</h2><nav aria-label="Rebates by area">{"".join(f'<a href="{u}" class="bx-chip">{e(n)}</a>' for n, u in AREAS)}</nav></div></section>
+<script>{JS}</script>
+<div style="height:48px;"></div>
 """)
-    out.append('<div style="height:48px;"></div>\n' + E)
+    out.append(E)
     return "".join(out)
 
 

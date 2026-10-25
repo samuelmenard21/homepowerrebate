@@ -72,7 +72,7 @@
 
 <link rel="stylesheet" href="/assets/tpl/page-0131c069.css?v=e9e7ad770f" data-hpr-tpl>
 
-<link rel="stylesheet" href="/assets/site.css?v=52b612d58a" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=25bf72b7ce" data-hpr-site-css>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -854,12 +854,23 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 (function(){var r=document.querySelector('.page-rail');if(!r||!('IntersectionObserver' in window))return;var links={};r.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
 var hs=Object.keys(links).map(function(i){return document.getElementById(i)}).filter(Boolean);if(!hs.length)return;
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});links[e.target.id].setAttribute('aria-current','true')}})},{rootMargin:'-90px 0px -70% 0px'});hs.forEach(function(h){io.observe(h)})})();
-(function(){document.querySelectorAll('.hpr-quiz').forEach(function(z){z.classList.add('qz-ready');var qs=[].slice.call(z.querySelectorAll('.qz-q')),got=0,done=0;
-qs.forEach(function(q){var a=+q.dataset.a;q.querySelectorAll('.qz-opt').forEach(function(b,i){b.addEventListener('click',function(){if(q.classList.contains('done'))return;q.classList.add('done');done++;
-if(i===a){got++;b.classList.add('right')}else{b.classList.add('wrong');q.querySelectorAll('.qz-opt')[a].classList.add('right')}
-if(done===qs.length){var r=z.querySelector('.qz-result'),m=JSON.parse(z.dataset.msgs||'[]'),k=got===qs.length?2:got>=Math.ceil(qs.length/2)?1:0;
-r.querySelector('.qz-score').textContent='You got '+got+' of '+qs.length;r.querySelector('.qz-msg').textContent=m[k]||'';r.classList.add('on');
-if(window.gtag)gtag('event','quiz_complete',{quiz:z.id,score:got,total:qs.length})}})})})})})();
+(function(){document.querySelectorAll('.hpr-quiz').forEach(function(z){z.classList.add('qz-ready');var qs=[].slice.call(z.querySelectorAll('.qz-q')),got=0,idx=0,L='ABCDE';
+var bar=document.createElement('div');bar.className='qz-bar';bar.innerHTML='<span class="qz-track"><span class="qz-fill"></span></span><span class="qz-count"></span>';var intro=z.querySelector('.qz-intro');intro.parentNode.insertBefore(bar,intro.nextSibling);
+var fill=bar.querySelector('.qz-fill'),cnt=bar.querySelector('.qz-count'),res=z.querySelector('.qz-result');
+function show(i){qs.forEach(function(q,n){q.classList.toggle('active',n===i)});cnt.textContent='Question '+(i+1)+' of '+qs.length;fill.style.width=(i/qs.length*100)+'%'}
+function finish(){qs.forEach(function(q){q.classList.remove('active')});bar.style.display='none';var m=JSON.parse(z.dataset.msgs||'[]'),k=got===qs.length?2:got>=Math.ceil(qs.length/2)?1:0,pct=Math.round(got/qs.length*100);
+res.querySelector('.qz-score').textContent=got+'/'+qs.length;res.querySelector('.qz-ring').style.setProperty('--p',pct);res.querySelector('.qz-msg').textContent=m[k]||'';res.classList.add('on');
+if(got===qs.length){['#e88a2e','#6fd39b','#fff','#f5b566','#0d4f5c'].forEach(function(c,n){for(var j=0;j<6;j++){var s=document.createElement('i');s.className='qz-conf';s.style.left=(8+Math.random()*84)+'%';s.style.background=c;s.style.animationDelay=(Math.random()*.5)+'s';z.appendChild(s);setTimeout(function(){s.remove()},2400)}})}
+if(window.gtag)gtag('event','quiz_complete',{quiz:z.id,score:got,total:qs.length})}
+qs.forEach(function(q,qi){var a=+q.dataset.a,why=q.querySelector('.qz-why'),opts=q.querySelectorAll('.qz-opt');
+opts.forEach(function(b,i){var k=document.createElement('span');k.className='qz-key';k.textContent=L[i];b.insertBefore(k,b.firstChild);
+b.addEventListener('click',function(){if(q.classList.contains('done'))return;q.classList.add('done');
+if(i===a){got++;b.classList.add('right');why.setAttribute('data-verdict','Right')}else{b.classList.add('wrong');opts[a].classList.add('right');why.setAttribute('data-verdict','Not quite')}
+var nx=document.createElement('button');nx.type='button';nx.className='qz-next';nx.textContent=qi===qs.length-1?'See my score':'Next question';q.appendChild(nx);nx.focus({preventScroll:true});
+fill.style.width=((qi+1)/qs.length*100)+'%';nx.addEventListener('click',function(){qi===qs.length-1?finish():show(qi+1)})})})});
+var again=res.querySelector('.qz-again');if(again)again.addEventListener('click',function(){got=0;res.classList.remove('on');bar.style.display='';qs.forEach(function(q){q.classList.remove('done');var n=q.querySelector('.qz-next');n&&n.remove();q.querySelectorAll('.qz-opt').forEach(function(o){o.classList.remove('right','wrong')})});show(0);z.scrollIntoView({behavior:'smooth',block:'start'})});
+var sh=res.querySelector('.qz-share');if(sh)sh.addEventListener('click',function(){var tx='I got '+got+'/'+qs.length+' on the HomePowerRebate quiz. Try it:';var u=location.href.split('#')[0]+'#'+z.id;if(navigator.share){navigator.share({text:tx,url:u}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(tx+' '+u);sh.textContent='Link copied'}});
+show(0)})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

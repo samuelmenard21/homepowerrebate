@@ -44,6 +44,7 @@ vars) — do not eyeball it.
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
       <a href="/get-quotes/?city={{CURRENT_CITY_SLUG}}&province={{CURRENT_PROVINCE}}" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
       <svg class="nav-search-glass" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -927,6 +928,25 @@ body :is(section,header).hero.hero-img-duplex-home{background-image:linear-gradi
 .if-old>summary{padding:16px 20px;border:1px solid var(--card-rule);border-radius:16px;background:#fff;font-size:18px;font-weight:700;cursor:pointer}
 @media(max-width:760px){.if-bar{grid-template-columns:1fr;border-radius:24px;gap:6px;margin-top:-20px}.if-bar .hub-search-f{border-right:0;border-bottom:1px solid var(--rule)}.if-bar button{width:100%}}
 body .ps .ps-hero{background-image:linear-gradient(180deg,rgba(8,54,63,.84),rgba(8,54,63,.95)),url(/assets/learn/modern-home-1200.webp)!important;background-size:cover!important;background-position:center!important}
+body .faq-item{margin:0 0 12px!important;padding:0!important;border:1px solid var(--card-rule)!important;border-radius:18px!important;background:#fff;overflow:hidden;box-shadow:none}
+body .faq-item>h3{position:relative;margin:0!important;padding:18px 62px 18px 22px!important;font-family:Fraunces,Georgia,serif;font-size:clamp(19px,1.8vw,23px)!important;line-height:1.25!important;letter-spacing:-.01em;color:var(--ink)}
+body .faq-item>p{margin:0!important;padding:0 22px 20px!important;font-size:clamp(17px,1.5vw,19px)!important;line-height:1.55!important;max-width:none!important}
+body .faq-item.faq-a>h3{cursor:pointer}
+body .faq-item.faq-a>h3::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--amber);color:#fff;font:700 22px/1 Inter,sans-serif;transition:transform .2s}
+body .faq-item.faq-a.open>h3::after{content:"\2212";background:var(--teal-deep)}
+body .faq-item.faq-a:not(.open)>p{display:none}
+body .faq-item.faq-a>h3:focus-visible{outline:3px solid var(--amber-bright);outline-offset:-3px}
+.faq-d{margin:0 0 12px;border:1px solid var(--card-rule);border-radius:18px;background:#fff;overflow:hidden}
+.faq-d>summary{position:relative;padding:18px 62px 18px 22px;font-family:Fraunces,Georgia,serif;font-size:clamp(19px,1.8vw,23px);line-height:1.25;cursor:pointer;list-style:none}
+.faq-d>summary::-webkit-details-marker{display:none}
+.faq-d>summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--amber);color:#fff;font:700 22px/1 Inter,sans-serif}
+.faq-d[open]>summary::after{content:"\2212";background:var(--teal-deep)}
+.faq-d>div{padding:0 22px 20px;font-size:clamp(17px,1.5vw,19px);line-height:1.55}
+.faq-d>div p{margin:0 0 8px}
+.faq-d .src{font-size:14px;color:var(--muted)}
+.faq-cats{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 20px}
+.faq-cats button{padding:10px 18px;border-radius:999px;border:2px solid var(--teal-deep);background:#fff;color:var(--teal-deep);font:inherit;font-size:17px;font-weight:700;cursor:pointer}
+.faq-cats button[aria-pressed="true"]{background:var(--teal-deep);color:#fff}
 /* ---- /LEARN ---- */
 <!-- =========================== /SHARED CSS ========================== -->
 
@@ -1224,5 +1244,9 @@ fill.style.width=((qi+1)/qs.length*100)+'%';nx.addEventListener('click',function
 var again=res.querySelector('.qz-again');if(again)again.addEventListener('click',function(){got=0;res.classList.remove('on');bar.style.display='';qs.forEach(function(q){q.classList.remove('done');var n=q.querySelector('.qz-next');n&&n.remove();q.querySelectorAll('.qz-opt').forEach(function(o){o.classList.remove('right','wrong')})});show(0);z.scrollIntoView({behavior:'smooth',block:'start'})});
 var sh=res.querySelector('.qz-share');if(sh)sh.addEventListener('click',function(){var tx='I got '+got+'/'+qs.length+' on the HomePowerRebate quiz. Try it:';var u=location.href.split('#')[0]+'#'+z.id;if(navigator.share){navigator.share({text:tx,url:u}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(tx+' '+u);sh.textContent='Link copied'}});
 show(0)})})();
+(function(){var d=document.documentElement;var items=[].slice.call(document.querySelectorAll('.faq-item'));if(!items.length)return;
+items.forEach(function(it,i){var h=it.querySelector(':scope > h3');if(!h)return;it.classList.add('faq-a');h.setAttribute('role','button');h.setAttribute('tabindex','0');h.setAttribute('aria-expanded','false');
+function tg(){var o=it.classList.toggle('open');h.setAttribute('aria-expanded',o?'true':'false')}
+h.addEventListener('click',tg);h.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tg()}})})})();
 </script>
 <!-- =========================== /SHARED JS ============================ -->

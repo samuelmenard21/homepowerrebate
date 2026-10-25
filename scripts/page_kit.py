@@ -245,12 +245,17 @@ def stable_date(key, content, fallback=None):
     if _DATES is None:
         _DATES = json.loads(_DATES_FILE.read_text()) if _DATES_FILE.exists() else {}
     import hashlib
-    # cache-busting versions (site.css?v=..., og images) change with unrelated edits: leave them out of the fingerprint
-    h = "v2:" + hashlib.sha1(re.sub(r"\?v=[0-9a-f]+", "", content).encode()).hexdigest()[:16]
+    # the fingerprint ignores what is not the page's own content (2026-10-25): cache-busting versions (site.css?v=..., og images) and the shared
+    # menu and footer, so adding a menu link or restyling the footer does not re-date every generated page
+    norm = re.sub(r"\?v=[0-9a-f]+", "", content)
+    norm = re.sub(r"<!-- CANONICAL-NAV-START -->[\s\S]*?<!-- CANONICAL-NAV-END -->", "", norm)
+    norm = re.sub(r"<!-- CANONICAL-FOOTER-START -->[\s\S]*?<!-- CANONICAL-FOOTER-END -->", "", norm)
+    norm = re.sub(r"<nav class=\"nav\"[\s\S]*?</nav>", "", norm, count=1)
+    h = "v3:" + hashlib.sha1(norm.encode()).hexdigest()[:16]
     old = _DATES.get(key)
     if old and old["hash"] == h:
         return old["date"]
-    first = old is None or not old["hash"].startswith("v2:")  # never seen, or saved before this fingerprint
+    first = old is None or not old["hash"].startswith("v3:")  # never seen, or saved before this fingerprint: keep the date the page shows
     d = fallback if (first and fallback) else date.today().isoformat()
     _DATES[key] = {"hash": h, "date": d}
     return d

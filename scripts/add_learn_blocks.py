@@ -101,6 +101,9 @@ def pages():
             slug = f.parent.name
             svc = next((s for k, s in (("heat-pump", "heat-pump"), ("solar", "solar"), ("battery", "battery"), ("insulation", "insulation")) if k in slug), "general")
             out.append((f, "", "blog", svc))
+    for f in (ROOT / "energy-advisors" / "index.html", ROOT / "energy-auditors" / "index.html", ROOT / "powerscore" / "index.html", ROOT / "powerscore" / "leaderboard" / "index.html"):
+        if f.exists():
+            out.append((f, "", "program", "general"))
     for f in sorted(ROOT.glob("questions/*/index.html")):
         out.append((f, "", "question", "general"))
     for f in sorted(ROOT.glob("calculator/*/index.html")):

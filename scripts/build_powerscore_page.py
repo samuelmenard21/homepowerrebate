@@ -733,6 +733,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter Tight'
  .ps .ps-facts b{font-size:18px}
 }
 """
+PS_CSS = re.sub(r"font-size:(1[0-4])px", lambda m: f"font-size:{int(m.group(1)) + 2}px", PS_CSS)  # larger type (2026-10-25): the smallest sizes were 11 to 14px
 
 
 PS_JS = r"""(function(){

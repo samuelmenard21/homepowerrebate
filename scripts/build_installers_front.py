@@ -61,7 +61,8 @@ def front(cities):
             cs = sorted((c for c in cities.values() if c["code"] == r["code"]), key=lambda c: c["label"])
             if not cs:
                 continue
-            lis = "".join(f'<li><a href="{best(c)}">{e(c["label"])}</a></li>' for c in cs)
+            names = {"heat-pump": "Heat pump", "solar": "Solar", "battery": "Battery", "insulation": "Insulation", "energy-advisor": "Advisor"}
+            lis = "".join(f'<li><b>{e(c["label"])}</b><span>' + " ".join(f'<a href="{c["services"][s]}">{names[s]}</a>' for s in names if s in c["services"]) + "</span></li>" for c in cs)
             cards.append(f'<details class="if-region"><summary><b>{e(r["name"])}</b><span>{len(cs)} cities</span></summary><ul>{lis}</ul></details>')
         groups.append(f'<h3 class="if-h3">{e(label)}</h3><div class="if-regions">{"".join(cards)}</div>')
     quiz = lk.articles()["9-questions-to-ask-heat-pump-installer"]
@@ -93,6 +94,33 @@ def front(cities):
 {FE}"""
 
 
+FAQ_RE = re.compile(r'<section class="section[^"]*" id="faq">[\s\S]*?</section>')
+
+
+def faq_section(old):
+    """Rebuild the "Questions homeowners ask before hiring" block as grouped accordions with category chips (same questions, answers and sources)."""
+    intro = re.search(r'<p class="is-433de30b">([\s\S]*?)</p>', old)
+    groups = []
+    for g in re.finditer(r'<h3 class="[^"]*">([^<]+)</h3>([\s\S]*?)(?=<h3 class="|<p class="is-d0927fc1">|</div>\s*<p class)', old):
+        items = []
+        for it in re.finditer(r'<div class="faq-item[^"]*">\s*<p class="[^"]*">([\s\S]*?)</p>\s*<p class="[^"]*">([\s\S]*?)</p>\s*(?:<p class="src[^"]*">([\s\S]*?)</p>)?', g.group(2)):
+            items.append((it.group(1).strip(), it.group(2).strip(), (it.group(3) or "").strip()))
+        if items:
+            groups.append((html.unescape(g.group(1).strip()), items))
+    note = re.search(r'<p class="is-d0927fc1">([\s\S]*?)</p>', old)
+    chips = '<button type="button" aria-pressed="true" data-g="">All</button>' + "".join(f'<button type="button" aria-pressed="false" data-g="{i}">{e(n)}</button>' for i, (n, _) in enumerate(groups))
+    body = "".join(
+        f'<div class="faq-grp" data-g="{i}"><h3 class="if-h3">{e(n)}</h3>' + "".join(
+            f'<details class="faq-d"><summary>{q}</summary><div><p>{a}</p>' + (f'<p class="src">{s}</p>' if s else "") + "</div></details>" for q, a, s in its) + "</div>"
+        for i, (n, its) in enumerate(groups))
+    js = ("(function(){var s=document.getElementById('faq');if(!s)return;s.querySelectorAll('.faq-cats button').forEach(function(b){b.addEventListener('click',function(){"
+          "s.querySelectorAll('.faq-cats button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});"
+          "s.querySelectorAll('.faq-grp').forEach(function(g){g.hidden=b.dataset.g!==''&&g.dataset.g!==b.dataset.g})})})})();")
+    return (f'<section class="section" id="faq"><div class="if-in"><div class="eyebrow">Before you hire</div><h2 class="if-h2" style="margin-top:6px">Questions homeowners ask before hiring an installer</h2>'
+            f'<p style="font-size:19px;max-width:44em">{intro.group(1).strip() if intro else ""}</p><div class="faq-cats">{chips}</div>{body}'
+            f'<p style="font-size:15px;color:var(--muted)">{note.group(1).strip() if note else ""}</p></div></section><script>{js}</script>')
+
+
 def main():
     t = PAGE.read_text(encoding="utf-8")
     cities = data()
@@ -108,11 +136,18 @@ def main():
     t = re.sub(re.escape(FS) + r"[\s\S]*?" + re.escape(FE) + r"\n?", "", t)
     i = t.index("</section>", t.index('<section class="hero hero-photo">')) + len("</section>")
     t = t[:i] + "\n" + front(cities) + t[i:]
-    # fold the old step-by-step finder
-    if OS not in t:
-        a = t.index('<section class="section finder-tool">')
-        b = t.index("</section>", a) + len("</section>")
-        t = t[:a] + f'{OS}<details class="if-old"><summary>Prefer the step-by-step finder? Open it here</summary>' + t[a:b] + f"</details>{OE}" + t[b:]
+    # retire the old step-by-step finder, its filters, the near-you box, the city lists and the 1,300-line static directory:
+    # the search and province cards above replace them (2026-10-25)
+    t = re.sub(re.escape(OS) + r"[\s\S]*?" + re.escape(OE), "", t)
+    t = re.sub(r'<section class="section finder-tool">[\s\S]*?</section>', "", t, count=1)
+    t = re.sub(r'<section class="section[^"]*" id="program-filter-section">[\s\S]*?</section>', "", t, count=1)
+    t = re.sub(r'<section class="section near-you[^"]*" id="near-you">[\s\S]*?</section>', "", t, count=1)
+    t = re.sub(r"<!-- RANKINGS-INDEX-START -->[\s\S]*?<!-- RANKINGS-INDEX-END -->", "", t)
+    t = re.sub(r'<section class="section[^"]*" id="full-directory"[\s\S]*?</section>\s*(?=<section class="section[^"]*" id="faq")', "", t, count=1)
+    t = re.sub(r"<script>\s*// IMPORTANT: adding a city to any of the \*_CITIES[\s\S]*?</script>", "", t, count=1)
+    m = FAQ_RE.search(t)
+    if m and 'class="faq-item' in m.group(0):
+        t = t[:m.start()] + faq_section(m.group(0)) + t[m.end():]
     # stats strip
     t = t.replace('<div class="stat-num">1,300+</div>\n        <div class="stat-label">Google-rated installers</div>', f'<div class="stat-num">{lists}</div>\n        <div class="stat-label">Installer lists ranked by Google reviews</div>')
     t = re.sub(r'<div class="stat-num" id="stat-cities">[^<]*</div>\s*<div class="stat-label">[^<]*</div>', f'<div class="stat-num" id="stat-cities">{total}</div>\n        <div class="stat-label">Cities in {nreg} provinces and states</div>', t, count=1)

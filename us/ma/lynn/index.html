@@ -49,7 +49,7 @@
 </script>
 
 <link rel="stylesheet" href="/assets/tpl/article-c0947b3c.css?v=7b04af6753" data-hpr-tpl>
-<link rel="stylesheet" href="/assets/site.css?v=25bf72b7ce" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=977ea4accb" data-hpr-site-css>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Home Energy Rebates in Lynn, MA (2026)", "description": "Lynn homes (National Grid) get Mass Save rebates: heat pumps up to $8,500 ($16,000 income-qualified), 75-100% off insulation, $750 water heaters, 0% HEAT Loan.", "datePublished": "2026-08-13", "dateModified": "2026-09-26", "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com/"}, "mainEntityOfPage": "https://homepowerrebate.com/us/ma/lynn/"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What home energy rebates can Lynn residents get?", "acceptedAnswer": {"@type": "Answer", "text": "Lynn is a National Grid town, so Mass Save applies: a no-cost home energy assessment, 75-100% off insulation and air sealing, heat pumps up to $8,500 (up to $16,000 if income-qualified), a $750 heat pump water heater rebate, and the 0% HEAT Loan up to $25,000."}}, {"@type": "Question", "name": "How much is the heat pump rebate in Lynn?", "acceptedAnswer": {"@type": "Answer", "text": "Whole-home air-source systems get $2,650 per ton, up to $8,500. Partial-home systems get $1,125 per ton, up to $8,500. Income-qualified households can get up to $16,000, or no cost."}}, {"@type": "Question", "name": "Are there insulation rebates for Lynn residents?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. After a Mass Save assessment, most households get 75% off insulation and air sealing. Income-qualified households can get up to 100% off."}}, {"@type": "Question", "name": "Can Lynn landlords get HVAC rebates?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mass Save has assessment paths for landlords of 1-4 unit and 5+ unit buildings, and heat pump rebates apply to rental properties served by a Mass Save utility."}}, {"@type": "Question", "name": "Is Lynnfield eligible for Mass Save?", "acceptedAnswer": {"@type": "Answer", "text": "Not for electric-side rebates. Lynnfield is served by the Reading and Peabody municipal light plants. Ask them about their own rebates and the state's 0% MLP Z-Loan."}}]}</script>
 <meta name="theme-color" content="#faf7f2">
@@ -87,6 +87,7 @@
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
       <a href="/get-quotes/?city=lynn&province=ma" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
       <svg class="nav-search-glass" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -1070,6 +1071,10 @@ fill.style.width=((qi+1)/qs.length*100)+'%';nx.addEventListener('click',function
 var again=res.querySelector('.qz-again');if(again)again.addEventListener('click',function(){got=0;res.classList.remove('on');bar.style.display='';qs.forEach(function(q){q.classList.remove('done');var n=q.querySelector('.qz-next');n&&n.remove();q.querySelectorAll('.qz-opt').forEach(function(o){o.classList.remove('right','wrong')})});show(0);z.scrollIntoView({behavior:'smooth',block:'start'})});
 var sh=res.querySelector('.qz-share');if(sh)sh.addEventListener('click',function(){var tx='I got '+got+'/'+qs.length+' on the HomePowerRebate quiz. Try it:';var u=location.href.split('#')[0]+'#'+z.id;if(navigator.share){navigator.share({text:tx,url:u}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(tx+' '+u);sh.textContent='Link copied'}});
 show(0)})})();
+(function(){var d=document.documentElement;var items=[].slice.call(document.querySelectorAll('.faq-item'));if(!items.length)return;
+items.forEach(function(it,i){var h=it.querySelector(':scope > h3');if(!h)return;it.classList.add('faq-a');h.setAttribute('role','button');h.setAttribute('tabindex','0');h.setAttribute('aria-expanded','false');
+function tg(){var o=it.classList.toggle('open');h.setAttribute('aria-expanded',o?'true':'false')}
+h.addEventListener('click',tg);h.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tg()}})})})();
 /* CANONICAL-NAV-FOOTER-JS-END */
 </script>
 </body>

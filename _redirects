@@ -6,6 +6,7 @@
 # Vetting page described the retired model (case studies, SLAs, removals); rankings come from Google reviews (2026-10-14).
 /how-we-vet-installers /installers/how-we-rank/ 301
 /how-we-vet-installers/ /installers/how-we-rank/ 301
+/how-we-vet-installers.html /installers/how-we-rank/ 301
 /partners/preview /installers/badge/ 301
 
 # Old flat city URLs -> canonical folder URLs.
@@ -91,6 +92,7 @@
 
 # about-us.html was an orphaned duplicate of /about, merged and removed
 /about-us /about 301
+/about-us.html /about 301
 
 # folsom moved under the sacramento metro cluster; catch stray/old links
 /us/ca/folsom/ /us/ca/sacramento/folsom/ 301
@@ -1253,31 +1255,18 @@
 /us/ny/pseg/smithtown/heat-pump /us/ny/pseg/smithtown/ 301
 /us/ny/pseg/southampton/heat-pump/ /us/ny/pseg/southampton/ 301
 /us/ny/pseg/southampton/heat-pump /us/ny/pseg/southampton/ 301
-/us/ma/boston/appliances/ /us/ma/appliances/ 301
 /us/ma/boston/appliances /us/ma/appliances/ 301
-/us/ma/brockton/appliances/ /us/ma/appliances/ 301
 /us/ma/brockton/appliances /us/ma/appliances/ 301
-/us/ma/cambridge/appliances/ /us/ma/appliances/ 301
 /us/ma/cambridge/appliances /us/ma/appliances/ 301
-/us/ma/fall-river/appliances/ /us/ma/appliances/ 301
 /us/ma/fall-river/appliances /us/ma/appliances/ 301
-/us/ma/lawrence/appliances/ /us/ma/appliances/ 301
 /us/ma/lawrence/appliances /us/ma/appliances/ 301
-/us/ma/lowell/appliances/ /us/ma/appliances/ 301
 /us/ma/lowell/appliances /us/ma/appliances/ 301
-/us/ma/lynn/appliances/ /us/ma/appliances/ 301
 /us/ma/lynn/appliances /us/ma/appliances/ 301
-/us/ma/new-bedford/appliances/ /us/ma/appliances/ 301
 /us/ma/new-bedford/appliances /us/ma/appliances/ 301
-/us/ma/newton/appliances/ /us/ma/appliances/ 301
 /us/ma/newton/appliances /us/ma/appliances/ 301
-/us/ma/quincy/appliances/ /us/ma/appliances/ 301
 /us/ma/quincy/appliances /us/ma/appliances/ 301
-/us/ma/somerville/appliances/ /us/ma/appliances/ 301
 /us/ma/somerville/appliances /us/ma/appliances/ 301
-/us/ma/springfield/appliances/ /us/ma/appliances/ 301
 /us/ma/springfield/appliances /us/ma/appliances/ 301
-/us/ma/worcester/appliances/ /us/ma/appliances/ 301
 /us/ma/worcester/appliances /us/ma/appliances/ 301
 /ca/ab/calgary/appliances/ /ca/ab/calgary/ 301
 /ca/ab/calgary/appliances /ca/ab/calgary/ 301
@@ -1801,6 +1790,16 @@
 /fr/nb /ca/nb/fr/ 301
 
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+# Short URL for the Nova Scotia HARP explainer videos (2026-10-23); tagged so analytics shows video visits
+/harp /programs/nova-scotia-heating-assistance-rebate-harp/?utm_source=video&utm_medium=short&utm_campaign=harp 302
+/harp/ /programs/nova-scotia-heating-assistance-rebate-harp/?utm_source=video&utm_medium=short&utm_campaign=harp 302
+/federal /heat-pump-rebate-alert/?utm_source=video&utm_medium=short&utm_campaign=federal 302
+/federal/ /heat-pump-rebate-alert/?utm_source=video&utm_medium=short&utm_campaign=federal 302
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+/us/ma/:city/appliances/ /us/ma/appliances/ 301
 /us/ma/:city/hrv /us/ma/hrv/ 301
 /us/ma/:city/windows-doors /us/ma/:city/ 301
 /us/ma/:city/hrv/ /us/ma/hrv/ 301
@@ -1842,20 +1841,3 @@
 /ca/on/:city/ev-charger /ca/on/ev-charger/ 301
 /ca/on/:city/hrv/ /ca/on/hrv/ 301
 /ca/on/:city/hrv /ca/on/hrv/ 301
-/fr/qc/thermopompe/ /ca/qc/heat-pump/fr/ 301
-/fr/qc/thermopompe /ca/qc/heat-pump/fr/ 301
-/fr/qc/montreal/ /ca/qc/montreal/fr/ 301
-/fr/qc/montreal /ca/qc/montreal/fr/ 301
-/fr/qc/quebec/ /ca/qc/quebec-city/fr/ 301
-/fr/qc/quebec /ca/qc/quebec-city/fr/ 301
-/fr/qc/ /ca/qc/fr/ 301
-/fr/qc /ca/qc/fr/ 301
-/fr/nb/moncton/ /ca/nb/moncton/fr/ 301
-/fr/nb/moncton /ca/nb/moncton/fr/ 301
-/fr/nb/ /ca/nb/fr/ 301
-/fr/nb /ca/nb/fr/ 301
-# Short URL for the Nova Scotia HARP explainer videos (2026-10-23); tagged so analytics shows video visits
-/harp /programs/nova-scotia-heating-assistance-rebate-harp/?utm_source=video&utm_medium=short&utm_campaign=harp 302
-/harp/ /programs/nova-scotia-heating-assistance-rebate-harp/?utm_source=video&utm_medium=short&utm_campaign=harp 302
-/federal /heat-pump-rebate-alert/?utm_source=video&utm_medium=short&utm_campaign=federal 302
-/federal/ /heat-pump-rebate-alert/?utm_source=video&utm_medium=short&utm_campaign=federal 302

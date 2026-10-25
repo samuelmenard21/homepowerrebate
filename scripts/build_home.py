@@ -43,7 +43,8 @@ TZ = {  # browser time zone -> region shown in the sheet first (Canadian zones a
     "America/St_Johns": "nl", "America/Los_Angeles": "ca", "America/New_York": "ny", "America/Chicago": "il", "America/Denver": "co",
     "America/Detroit": "mi",
 }
-FEATURED = ["should-you-wait-federal-heat-pump-rebate", "7-california-heat-pump-rebates-you-can-stack", "is-my-contractors-rebate-quote-a-scam"]
+FEATURED = ["should-you-wait-federal-heat-pump-rebate", "9-questions-to-ask-heat-pump-installer", "is-my-contractors-rebate-quote-a-scam", "7-ways-to-lose-your-home-energy-rebate", "heat-pump-myths-busted",
+            "7-california-heat-pump-rebates-you-can-stack", "fair-heat-pump-quote-canada", "why-insulation-first-energy-retrofit"]
 GUIDES = [
     ("/guides/heat-pump-buyers-guide/", "Heat pump buyer's guide"), ("/guides/solar-battery-decision-guide/", "Solar or battery: which first?"),
     ("/insulation-rebates/", "Insulation rebates"), ("/heat-pump-water-heater/", "Heat pump water heaters"), ("/batteries/", "Home batteries compared"),
@@ -285,19 +286,19 @@ def how(regs=None):
 
 
 PLAN = [("heat-pump", "heat-pumps", "Heat pumps", "heat-pump-house"), ("solar", "solar", "Solar panels", "solar-roof"), ("battery", "batteries", "Home battery", "modern-home"),
-        ("insulation", "insulation", "Insulation", "rebate-plans"), ("water-heater", "water-heating", "Water heating", "kitchen")]
+        ("insulation", "insulation", "Insulation", "rebate-plans"), ("water-heater", "water-heating", "Water heating", "kitchen"),
+        ("ev", "ev-chargers", "EV chargers", "ev-charger"), ("thermostat", "smart-thermostats", "Smart thermostats", "thermostat")]
 
 
 def planning(regs):
-    r0 = regs[0]
-    amt = {x["cat"]: x["amt"] for x in r0["rows"] if not x.get("fed") and "Federal" not in x["label"]}
+    amt = {}  # no place is assumed: amounts appear once a province or state is picked
     tiles = "".join(
         f'<a class="hm-tile" href="/learn/{slug}/" data-cat="{cat}"><img src="/assets/learn/{img}-640.webp" width="640" height="427" alt="" loading="lazy">'
-        f'<span class="hm-tile-b"><b>{esc(name)}</b><em data-amt>{esc(amt.get(cat, "See the guide"))}</em></span></a>' for cat, slug, name, img in PLAN)
+        f'<span class="hm-tile-b"><b>{esc(name)}</b><em data-amt>See the guide</em></span></a>' for cat, slug, name, img in PLAN)
     return f'''<section class="hm-sec hm-plan" aria-labelledby="hm-plan-h">
   <div class="hm-wrap">
     <h2 id="hm-plan-h">What are you planning?</h2>
-    <p class="hm-intro">Pick an upgrade for a plain guide and the biggest rebate open in <span data-plan-where>{esc(r0["n"])}</span> today.</p>
+    <p class="hm-intro">Pick an upgrade for a plain guide and the biggest rebate open in <span data-plan-where>your province or state</span> today. Pick yours above to see it.</p>
     <div class="hm-tiles">{tiles}</div>
   </div>
 </section>'''
@@ -309,16 +310,10 @@ def quiz_section():
 
 
 def installers_strip():
-    return '''<section class="hm-sec hm-inst" aria-labelledby="hm-inst-h">
-  <div class="hm-wrap hm-inst-grid">
-    <div>
-      <h2 id="hm-inst-h">Find top-rated installers near you</h2>
-      <p class="hm-intro">Ranked by Google reviews, with a badge where a program keeps its own list of registered contractors. Nobody pays to rank higher.</p>
-      <form class="hm-bar hm-bar-sm" action="/installers/" method="get" autocomplete="off"><input name="city" list="hf-list" placeholder="Your city, like Kelowna" aria-label="Your city">
-        <select name="service" aria-label="What you need"><option value="heat-pump">Heat pump</option><option value="solar">Solar panels</option><option value="battery">Home battery</option><option value="insulation">Insulation</option><option value="energy-advisor">Energy advisor</option></select>
-        <button type="submit" class="hm-btn">See installers</button></form>
-    </div>
-    <img src="/assets/learn/hiring-roof-1200.webp" width="1200" height="800" alt="Two workers handling ductwork on a rooftop beside outdoor air conditioning units" loading="lazy">
+    return '''<section class="hm-banner" aria-labelledby="hm-inst-h">
+  <div class="hm-wrap hm-banner-in">
+    <div><h2 id="hm-inst-h">Looking for an installer?</h2><p>See the top-rated companies in your city, ranked by Google reviews. Nobody pays to rank higher.</p></div>
+    <a href="/installers/" class="hm-btn">Find top-rated installers {icon("arrow", "hm-ar")}</a>
   </div>
 </section>'''
 
@@ -352,20 +347,31 @@ def reg_row(r):
 
 
 def region_ledger(regs):
-    tabs = '<button type="button" class="hm-tab" aria-pressed="true" data-cat="">Biggest overall</button>' + "".join(
-        f'<button type="button" class="hm-tab" aria-pressed="false" data-cat="{c}">{icon(c)}{esc(l)}</button>' for c, l, _ in CATS)
-    cols = ""
-    for country, name in (("ca", "Canada"), ("us", "United States")):
+    """Compare places (2026-10-25): one row per province or state, one column per upgrade, the biggest open amount in each cell.
+    The hero already gets a visitor to a city; this section is for comparing places and browsing to a region hub."""
+    cols = [(c, l) for c, l, _ in CATS]
+    head = '<th scope="col">Place</th>' + "".join(f'<th scope="col">{icon(c)}<span>{esc(l)}</span></th>' for c, l in cols)
+    body = ""
+    for country, name, cur, unit in (("ca", "Canada", "CAD", "provinces and territories"), ("us", "United States", "USD", "states")):
         rs = [r for r in regs if r["country"] == country]
-        cols += f'<div class="hm-col hm-col-{country}"><h3>{name} <span>{len(rs)} {"provinces" if country == "ca" else "states"}, {sum(r["count"] for r in rs)} cities</span></h3><ul class="hm-regs">{"".join(reg_row(r) for r in rs)}</ul></div>'
+        best = {c: max([next((x["n"] for x in r["rows"] if x["cat"] == c and not x.get("fed")), 0) for r in rs] or [0]) for c, _ in cols}
+        body += f'<tr class="hm-mx-grp"><th colspan="{len(cols) + 1}" scope="colgroup">{name} <span>amounts in {cur}, {len(rs)} {unit}</span></th></tr>'
+        for r in rs:
+            cells = ""
+            for c, _ in cols:
+                x = next((x for x in r["rows"] if x["cat"] == c and not x.get("fed")), None)
+                if not x:
+                    cells += '<td class="hm-mx-none"><span aria-label="No open program found">&ndash;</span></td>'
+                    continue
+                a = x["amt"][len("Up to "):] if x["amt"].startswith("Up to ") else x["amt"]
+                hot = ' class="hm-mx-hot"' if x["n"] > 0 and x["n"] == best[c] else ""
+                cells += f'<td{hot}><a href="{r["hub"]}" title="{esc(x["name"])}">{esc(a)}</a></td>'
+            body += f'<tr><th scope="row"><a href="{r["hub"]}">{esc(r["n"])}</a><span>{r["count"]} {"city" if r["count"] == 1 else "cities"}</span></th>{cells}</tr>'
     return f'''<section class="hm-sec hm-ledger" id="regions" aria-labelledby="hm-reg-h">
   <div class="hm-wrap">
-    <h2 id="hm-reg-h">Or pick your province or state</h2>
-    <details class="hm-det hub-fold"><summary>Browse all {len(regs)} provinces and states</summary>
-    <p class="hm-intro">Each place has its own programs. Here is the biggest single rebate open in each one today. Most homes get less, and some are only for lower incomes.</p>
-    <div class="hm-tabs" role="group" aria-label="Show the biggest rebate for one upgrade">{tabs}</div>
-    <div class="hm-cols">{cols}</div>
-    </details>
+    <h2 id="hm-reg-h">Compare places</h2>
+    <p class="hm-intro">The biggest open rebate for each upgrade, by province and state. The highest in each column is marked. Most homes get less, and each program has its own rules. Tap a place to see its cities.</p>
+    <div class="hm-mx-wrap"><table class="hm-mx"><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>
   </div>
 </section>'''
 
@@ -441,19 +447,23 @@ def trust_inner(regs):
 
 def guides():
     idx = {p["slug"]: p for s in json.loads((ROOT / "data" / "blog-index.json").read_text())["sections"] for p in s["posts"]}
-    posts = "".join(f'<li><a href="/blog/{s}/"><span class="hm-tag">{esc(idx[s]["region"])}</span><b>{esc(idx[s]["title"])}</b>'
-                    f'<span>{esc(idx[s]["desc"])}</span></a></li>' for s in FEATURED if s in idx)
+    from build_blog_index import card as post_card
+    posts = "".join(post_card(idx[s]) for s in FEATURED if s in idx)
     links = "".join(f'<li><a href="{h}">{esc(t)}</a></li>' for h, t in GUIDES)
+    js = ("(function(){var r=document.getElementById('hm-guides-row');if(!r)return;var c=r.querySelector('.bx-car');r.querySelectorAll('.bx-arrow').forEach(function(b){b.addEventListener('click',"
+          "function(){c.scrollBy({left:(b.dataset.d==='1'?1:-1)*Math.min(c.clientWidth*.9,720),behavior:'smooth'})})})})();")
     return f'''<section class="hm-sec hm-guides" aria-labelledby="hm-g-h">
   <div class="hm-wrap">
-    <h2 id="hm-g-h">Read this before you sign anything</h2>
-    <ul class="hm-posts">{posts}</ul>
+    <div class="bx-row hm-g-row" id="hm-guides-row"><div class="bx-head"><div><h2 id="hm-g-h">Read this before you sign anything</h2><p>Short guides on what to check, what to ask and what to avoid.</p></div>
+      <div class="bx-ctl"><button type="button" class="bx-arrow" data-d="-1" aria-label="Scroll left">&larr;</button><button type="button" class="bx-arrow" data-d="1" aria-label="Scroll right">&rarr;</button></div></div>
+      <div class="bx-car">{posts}</div></div>
     <h3>Guides by upgrade</h3>
     <ul class="hm-links">{links}</ul>
     <p class="hm-hp">Heat pump rebates by province: {" &middot; ".join(f'<a href="{h}">{t}</a>' for h, t in HP_BY_PROVINCE)}</p>
     <p><a href="/blog/" class="hm-btn-line">Read all articles</a></p>
   </div>
-</section>'''
+</section>
+<script>{js}</script>'''
 
 
 def faq_items(regs, total):
@@ -515,8 +525,6 @@ var h=q("hub");h.href=r.hub;h.firstChild.textContent="All "+r.n+" programs ";sh.
 var z="";try{{z=Intl.DateTimeFormat().resolvedOptions().timeZone||""}}catch(x){{}}
 var g=TZ[z],p=document.getElementById("hf-prov"),K=(document.documentElement.getAttribute("data-country")||"").toLowerCase();
 if(K==="us"||K==="ca"){{var cur=K==="us"?"USD":"CAD";if(!g||!R[g]||R[g].cur!==cur){{g="";for(var k in R){{if(R[k].cur===cur){{g=k;break}}}}}}}}
-if(g&&g!=="on")window.HPR_SHEET(g);
-if(g&&p&&!p.value&&["bc","ab","on","ns","nl"].indexOf(g)>-1){{p.value=g;window.HPR_FILL&&window.HPR_FILL()}}
 document.querySelectorAll(".hm-tab").forEach(function(b){{b.addEventListener("click",function(){{var c=b.dataset.cat;
 document.querySelectorAll(".hm-tab").forEach(function(x){{x.setAttribute("aria-pressed",x===b?"true":"false")}});
 document.querySelectorAll(".hm-reg").forEach(function(li){{var r=R[li.dataset.c];if(!r)return;var rows=r.rows.filter(function(x){{return !x.fed&&x.label.indexOf("Federal")<0}});

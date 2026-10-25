@@ -78,7 +78,8 @@ def main():
         src = items[idx][1][0]
         if src.endswith(".html") and not src.endswith("/index.html"):
             b = src[:-5]
-            if b in srcs or b + "/" in srcs:
+            # Pages only 308s "/x.html" to "/x" when the file exists; a removed page needs its own rule
+            if (b in srcs or b + "/" in srcs) and (ROOT / src.lstrip("/")).exists():
                 keep.discard(idx)
         elif src.endswith("/index.html"):
             b = src[:-10]

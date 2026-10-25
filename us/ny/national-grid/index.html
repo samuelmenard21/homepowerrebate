@@ -41,7 +41,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/assets/site.css?v=cc29e9ea70" data-hpr-site-css>
+<link rel="stylesheet" href="/assets/site.css?v=ec8aa53223" data-hpr-site-css>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -424,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function () { showProvinceCities('
           <li><a href="/technology/">Technology</a></li>
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?city=national-grid&province={{CURRENT_PROVINCE}}">See My Rebates</a></li>
+          <li><a href="/get-quotes/?city=national-grid&province=ny">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -488,10 +488,26 @@ document.addEventListener('DOMContentLoaded', function () {
   var m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
   if (m) showProvinceCities(m[1]);
 });
+(function () {
+  // Region and city pickers: the welcome email's ten guides, calculator and installer links follow what the visitor picks here.
+  const regionSel = document.getElementById('newsletter-region'), citySel = document.getElementById('newsletter-city'), dataEl = document.getElementById('newsletter-cities');
+  if (!regionSel || !citySel || !dataEl) return;
+  let cities = {};
+  try { cities = JSON.parse(dataEl.textContent); } catch (e) {}
+  const fill = (code, keep) => {
+    citySel.innerHTML = '<option value="">Closest city (optional)</option>';
+    (cities[code] || []).forEach((n) => { const o = document.createElement('option'); o.value = n; o.textContent = n; citySel.appendChild(o); });
+    if (keep) citySel.value = keep;
+  };
+  const m = location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})(?:\/|$)/);
+  if (m) { regionSel.value = m[1].toUpperCase(); fill(regionSel.value, citySel.dataset.current); }
+  regionSel.addEventListener('change', () => fill(regionSel.value));
+})();
 document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('newsletter-email').value;
   const city = document.getElementById('newsletter-city').value;
+  const region = document.getElementById('newsletter-region').value;
   const page = document.getElementById('newsletter-page').value;
   const responseEl = document.getElementById('newsletter-response');
   const button = document.querySelector('#newsletter-form button');
@@ -502,7 +518,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async (e)
     const response = await fetch('https://leads.homepowerrebate.com/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, city, page, province: (location.pathname.match(/^\/(?:ca|us)\/([a-z]{2})\//) || [])[1]?.toUpperCase() || '' })
+      body: JSON.stringify({ email, city, page, province: region })
     });
     if (!response.ok) throw new Error('Subscription failed');
     responseEl.textContent = "You're in! Check your inbox for a welcome email.";

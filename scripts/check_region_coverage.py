@@ -52,7 +52,7 @@ def main():
         need = {
             "hub page": (ROOT / r["path"] / "index.html").exists(),
             "homepage structured data": f'"{name}, ' in home,
-            "homepage region card": f'href="{hub}" class="hm-reg-name"' in home,
+            "homepage region card": f'<th scope="row"><a href="{hub}">' in home,  # the "Compare places" table (was the region cards)
             "homepage picker": code in picker,
             "llms.txt": hub in llms,
             "rebate finder": f'"c":"{code}"' in gq.replace(" ", "") or f'"code": "{code}"' in gq or f'"code":"{code}"' in gq,

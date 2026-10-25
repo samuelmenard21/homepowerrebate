@@ -56,7 +56,7 @@ def country_pages():
     n = 0
     jobs = [(ROOT / "ca" / "index.html", {r["code"] for r in regions.REGIONS if r["country"] == "ca"}),
             (ROOT / "us" / "index.html", {r["code"] for r in regions.REGIONS if r["country"] == "us"}),
-            (ROOT / "installers" / "index.html", {r["code"] for r in regions.REGIONS})]
+            ]  # /installers/ has its own front (build_installers_front.py)
     for f, codes in jobs:
         if not f.exists():
             continue
@@ -76,8 +76,8 @@ def country_pages():
 def calculator_heroes():
     """Photo hero on the calculators (the calculator itself is untouched)."""
     n = 0
-    for f in sorted(ROOT.glob("calculator/*/index.html")):
-        if f.parent.name in ("embed", "data", "widget"):
+    for f in sorted(ROOT.glob("calculator/*/index.html")) + [ROOT / "energy-advisors" / "index.html", ROOT / "energy-auditors" / "index.html"]:
+        if f.parent.name in ("embed", "data", "widget") or not f.exists():
             continue
         t = f.read_text(encoding="utf-8")
         t2 = re.sub(r'<(section|header) class="hero(?: hero-photo)?"', r'<\1 class="hero hero-photo"', t, count=1)

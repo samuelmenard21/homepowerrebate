@@ -1073,36 +1073,13 @@ HUB_START, HUB_END = "<!-- RANKINGS-INDEX-START -->", "<!-- RANKINGS-INDEX-END -
 
 
 def update_installers_hub(index):
+    """/installers/ no longer carries a city-by-city list (it duplicated the province cards built by build_installers_front.py from rankings.json);
+    this only removes the old RANKINGS-INDEX block if one is still there."""
     hub_path = ROOT / "installers" / "index.html"
     s = hub_path.read_text(encoding="utf-8")
-    by_region = {}
-    for m in index:
-        if m.get("indexed"):
-            by_region.setdefault(m["region"], {}).setdefault(m["city"], {})[m["service"]] = m["url"]
-    blocks = []
-    for code, (_, _, _, long_name) in REGIONS.items():
-        cities = by_region.get(code)
-        if not cities:
-            continue
-        rows = []
-        for city in sorted(cities):
-            links = " · ".join(f'<a href="{cities[city][sv]}">{SERVICES[sv]["name"]}</a>'
-                               for sv in SERVICES if sv in cities[city])
-            rows.append(f'<li><strong>{esc(city)}</strong>: {links}</li>')
-        blocks.append(f'<details style="margin-bottom:10px;"><summary style="cursor:pointer;font-weight:700;font-size:17px;">{long_name} ({len(cities)} cities)</summary>'
-                      f'<ul style="columns:2 220px;margin:12px 0 0 18px;font-size:15px;line-height:1.9;">{"".join(rows)}</ul></details>')
-    section = (f'{HUB_START}\n<section class="section" id="top-rated-by-city"><div class="wrap">'
-               '<h2>Top-Rated Installers by City</h2>'
-               '<p>Each city page ranks local heat pump, solar, insulation and battery companies by Google reviews, weighted so lots of good reviews count more than a few. '
-               '<a href="/installers/how-we-rank/">How we rank</a>.</p>'
-               + "".join(blocks) + f'</div></section>\n{HUB_END}')
-    if HUB_START in s:
-        s = re.sub(re.escape(HUB_START) + r".*?" + re.escape(HUB_END), lambda m: section, s, count=1, flags=re.S)
-    else:
-        anchor = '<section class="section" id="full-directory"'
-        assert anchor in s, "installers hub anchor missing"
-        s = s.replace(anchor, section + "\n\n" + anchor, 1)
-    hub_path.write_text(s, encoding="utf-8")
+    s2 = re.sub(r"\n?" + re.escape(HUB_START) + r".*?" + re.escape(HUB_END) + r"\n?", "\n", s, flags=re.S)
+    if s2 != s:
+        hub_path.write_text(s2, encoding="utf-8")
 
 
 LINK_START, LINK_END = "<!-- RANKINGS-LINK-START -->", "<!-- RANKINGS-LINK-END -->"

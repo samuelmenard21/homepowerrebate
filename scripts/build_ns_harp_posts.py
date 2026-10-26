@@ -27,6 +27,8 @@ def build(path):
     for pat, val in [(r'(name="description" content=")[^"]*', d["desc"]), (r'(property="og:title" content=")[^"]*', d["title"]),
                      (r'(property="og:description" content=")[^"]*', d["desc"])]:
         t = re.sub(pat, lambda m: m.group(1) + e(val, quote=True), t, count=1)
+    for pat, val in [(r'(name="twitter:title" content=")[^"]*', d["title"]), (r'(name="twitter:description" content=")[^"]*', d["desc"])]:
+        t = re.sub(pat, lambda m: m.group(1) + e(val, quote=True), t, count=1)
     t = t.replace("https://homepowerrebate.com/blog/nova-scotia-heat-pump-rebate-disappeared/", url)
     # swap all JSON-LD blocks in the head for ours
     t = re.sub(r'<script type="application/ld\+json">[\s\S]*?</script>\s*', "", t)

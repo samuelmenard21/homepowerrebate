@@ -27,7 +27,7 @@ SKIP = {"energy-advisor", "energy-auditor"}
 OLD = re.compile(re.escape(S) + r"[\s\S]*?" + re.escape(E) + r"\n?")
 SERVICES = {"heat-pump", "solar", "battery"}
 # pages that sit just under the 90% near-duplicate limit: a row of identical card text pushed BC solar pages over it (check_duplicate_content.py)
-NO_ROW = {("bc", "solar"), ("on", "index")}  # ("on", "index") means Ontario city hubs; the region hub keeps its row
+NO_ROW = {("bc", "solar"), ("on", "index"), ("on", "battery")}  # ("on", "index") means Ontario city hubs; the region hub keeps its row
 QUIZ_PAGES = {"index", "heat-pump"}  # hubs, city hubs and heat pump pages carry a quiz (BC and Ontario only)
 
 

@@ -18,6 +18,7 @@ S, E = "<!-- HUB-SEARCH-START -->", "<!-- HUB-SEARCH-END -->"
 OLD = re.compile(r"\n?" + re.escape(S) + r"[\s\S]*?" + re.escape(E))
 e = html.escape
 # one photo per upgrade for the hero of city category pages (free-licence Unsplash set in assets/learn)
+NO_BAR = {("bc", "solar")}  # near-duplicate guard: these city pages sit at the 90% limit, so they carry no shared search bar
 PHOTO = {"heat-pump": "heat-pump-house", "solar": "solar-roof", "battery": "modern-home", "insulation": "rebate-plans", "windows": "duplex-home", "windows-doors": "duplex-home", "water-heater": "duplex-home", "index": "modern-home"}
 PROJECTS = [("", "All projects"), ("heat-pump", "Heat pump"), ("solar", "Solar panels"), ("battery", "Home battery"), ("insulation", "Insulation")]
 
@@ -120,7 +121,8 @@ def main():
             img = PHOTO.get(cat, "modern-home")
             tag = m.group(1)
             hero = f'<{tag} class="hero{m.group(2).replace(" hero-photo", "").split(" hero-img-")[0]} hero-photo hero-img-{img}"{m.group(3)}</{tag}>'
-            t2 = t2[:m.start()] + hero + "\n" + city_bar(code, slug, names[(code, slug)]) + t2[m.end():]
+            bar = "" if (code, cat) in NO_BAR else "\n" + city_bar(code, slug, names[(code, slug)])
+            t2 = t2[:m.start()] + hero + bar + t2[m.end():]
             if t2 != t:
                 f.write_text(t2, encoding="utf-8")
                 n += 1

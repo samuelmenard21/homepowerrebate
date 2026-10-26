@@ -30,12 +30,14 @@ SITE = "https://homepowerrebate.com"
 esc = html.escape
 CATS = [  # homepage upgrade buckets: (id, label, calc upgrade ids)
     ("heat-pump", "Heat pump", ("heat-pump",)),
-    ("insulation", "Insulation and windows", ("insulation", "windows")),
+    ("insulation", "Insulation", ("insulation",)),
+    ("windows", "Windows and doors", ("windows",)),
     ("solar", "Solar panels", ("solar",)),
     ("battery", "Home battery", ("battery",)),
     ("water-heater", "Water heater", ("water-heater",)),
     ("ev", "EV charger", ("ev",)),
     ("thermostat", "Smart thermostat", ("thermostat",)),
+    ("appliances", "Appliances", ("appliances",)),
 ]
 CAT_OF = {u: c for c, _, us in CATS for u in us}
 TZ = {  # browser time zone -> region shown in the sheet first (Canadian zones also preselect the province)
@@ -66,6 +68,8 @@ ICON = {  # one stroke family, 24px grid, 1.7 stroke
     "water-heater": '<rect x="6" y="3" width="12" height="18" rx="5"/><path d="M12 9c-1.6 2-2.4 3.2-2.4 4.3a2.4 2.4 0 0 0 4.8 0c0-1.1-.8-2.3-2.4-4.3z"/>',
     "ev": '<path d="M9 3v4M15 3v4M7 7h10v4a5 5 0 0 1-10 0z"/><path d="M12 16v2.5a2.5 2.5 0 0 0 2.5 2.5H18"/>',
     "thermostat": '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v4.5l3 2"/><path d="M7.5 17.5h9" opacity=".0"/>',
+    "windows": '<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M12 3v18M4 12h16"/>',
+    "appliances": '<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M8 6.5h.01M11 6.5h.01"/>',
     "arrow": '<path d="M5 12h14M13 6l6 6-6 6"/>',
     "check": '<path d="M5 12.5 10 17l9-10"/>',
 }
@@ -287,7 +291,8 @@ def how(regs=None):
 
 PLAN = [("heat-pump", "heat-pumps", "Heat pumps", "heat-pump-house"), ("solar", "solar", "Solar panels", "solar-roof"), ("battery", "batteries", "Home battery", "modern-home"),
         ("insulation", "insulation", "Insulation", "rebate-plans"), ("water-heater", "water-heating", "Water heating", "kitchen"),
-        ("ev", "ev-chargers", "EV chargers", "ev-charger"), ("thermostat", "smart-thermostats", "Smart thermostats", "thermostat")]
+        ("windows", "windows", "Windows and doors", "living-room"), ("ev", "ev-chargers", "EV chargers", "ev-charger"), ("thermostat", "smart-thermostats", "Smart thermostats", "thermostat"),
+        ("appliances", "appliances", "Appliances", "kitchen")]
 
 
 def planning(regs):
@@ -381,7 +386,7 @@ def powerscore():
     names = regions.ABBR_BY_PATH
     cols = ""
     for country in ("Canada", "United States"):
-        top = [c for c in d["leaderboard_overall"] if c["country"] == country][:5]
+        top = [c for c in d["leaderboard_overall"] if c["country"] == country][:4]
         lis = "".join(f'<li><a href="{c["url"]}"><span class="hm-ps-city">{esc(c["label"])}, {names[c["region"]]}</span>'
                       f'<span class="hm-ps-bar" style="--s:{round(c["overall"])}"></span><b>{round(c["overall"])}</b></a></li>' for c in top)
         cols += f'<div class="hm-ps-{"ca" if country == "Canada" else "us"}"><h3>{country}</h3><ol class="hm-ps">{lis}</ol></div>'
@@ -457,8 +462,7 @@ def guides():
     <div class="bx-row hm-g-row" id="hm-guides-row"><div class="bx-head"><div><h2 id="hm-g-h">Read this before you sign anything</h2><p>Short guides on what to check, what to ask and what to avoid.</p></div>
       <div class="bx-ctl"><button type="button" class="bx-arrow" data-d="-1" aria-label="Scroll left">&larr;</button><button type="button" class="bx-arrow" data-d="1" aria-label="Scroll right">&rarr;</button></div></div>
       <div class="bx-car">{posts}</div></div>
-    <h3>Guides by upgrade</h3>
-    <ul class="hm-links">{links}</ul>
+    <details class="hm-det hm-more"><summary>More guides by upgrade</summary><ul class="hm-links">{links}</ul></details>
     <p class="hm-hp">Heat pump rebates by province: {" &middot; ".join(f'<a href="{h}">{t}</a>' for h, t in HP_BY_PROVINCE)}</p>
     <p><a href="/blog/" class="hm-btn-line">Read all articles</a></p>
   </div>

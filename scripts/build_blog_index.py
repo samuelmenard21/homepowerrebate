@@ -94,7 +94,8 @@ def build(data):
         f'<a class="learn-card" href="/learn/{s}/"><div class="learn-tile t-{tone}"><img src="/assets/learn/{img}-640.webp" width="640" height="427" alt="" loading="lazy"><span class="learn-kick">Guide</span><span class="learn-big">{e(n)}</span></div>'
         f'<span class="learn-more">Open the guide →</span></a>'
         for s, n, img, tone in [("heat-pumps", "Heat pumps", "heat-pump-house", "teal"), ("solar", "Solar", "solar-roof", "amber"), ("batteries", "Batteries", "modern-home", "ink"),
-                                ("insulation", "Insulation", "rebate-plans", "sage"), ("water-heating", "Water heating", "kitchen", "teal")])
+                                ("insulation", "Insulation", "rebate-plans", "sage"), ("water-heating", "Water heating", "kitchen", "teal"), ("windows", "Windows and doors", "living-room", "sage"),
+                                ("ev-chargers", "EV chargers", "ev-charger", "teal"), ("smart-thermostats", "Thermostats", "thermostat", "amber"), ("appliances", "Appliances", "kitchen", "amber")])
     out = [S, f"""
 <header class="bx-hero hero hero-photo"><div class="wrap-wide">
   <div class="eyebrow">Learn</div>

@@ -122,7 +122,7 @@ def _amount(a):
     return 0, ""
 
 
-def open_programs(upgrade):
+def open_programs(upgrade, labelled=False):
     """Every open program for an upgrade across all regions: [{code, region, program, value, shown, source, checked, currency}], biggest first."""
     out = []
     for f in sorted(CAL.glob("*.json")):
@@ -131,8 +131,8 @@ def open_programs(upgrade):
             if p.get("upgrade") != upgrade or p.get("status") != "active":
                 continue
             v, shown = _amount(p.get("amount"))
-            if v <= 0 or not shown:
-                continue
+            if (v <= 0 and not (labelled and shown)) or not shown:
+                continue  # labelled=True also lists programs whose amount is a range we show but do not add up (appliances)
             out.append({"code": d["code"], "region": d["name"], "country": d["country"], "program": p["name"], "value": v, "shown": shown,
                         "source": p.get("source_url", ""), "checked": p.get("verified_on", ""), "currency": d["currency"]})
     return sorted(out, key=lambda r: (r["country"] != "ca", r["region"], -r["value"]))

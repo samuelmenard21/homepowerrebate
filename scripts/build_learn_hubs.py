@@ -40,9 +40,10 @@ def blog_strip(keywords, skip=()):
 def build(d):
     slug, up = d["slug"], d["upgrade"]
     path = f"/learn/{slug}/"
-    progs = lk.open_programs(up)
+    progs = lk.open_programs(up, labelled=bool(d.get("labelled")))
     assert progs, f"no open programs for {up}"
-    top = max(progs, key=lambda r: r["value"] * (0.73 if r["currency"] == "CAD" else 1))  # roughly comparable in US dollars
+    top = max(progs, key=lambda r: r["value"] * (0.73 if r["currency"] == "CAD" else 1))
+    top_shown = top["shown"].replace("up to ", "").replace("Up to ", "")  # roughly comparable in US dollars
     nreg = len({r["code"] for r in progs})
     latest = max(r["checked"] for r in progs if r["checked"])
     nice = date.fromisoformat(latest).strftime("%B %-d, %Y")

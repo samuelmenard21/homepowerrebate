@@ -336,3 +336,15 @@ html[data-country="US"] .tpl-home .hm-col-us, html[data-country="US"] .tpl-home 
 .tpl-home .hm-mx tbody th[scope="row"] span { display: inline; margin-left: 8px; }
 .tpl-home .hm-banner-in { box-sizing: border-box; }
 @media (max-width: 760px) { .tpl-home .hm-banner-in { width: calc(100% - 40px); margin-left: auto; margin-right: auto; padding: 22px; } }
+.tpl-home .hm-more { margin: 8px 0 22px; }
+.tpl-home .hm-more .hm-links { margin-top: 6px; }
+/* phones: rows that swipe instead of long stacks */
+@media (max-width: 760px) {
+  .tpl-home .hm-tiles, .tpl-home .hm-steps-photos { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2px 2px 14px; margin-right: -20px; }
+  .tpl-home .hm-tile { flex: 0 0 62vw; max-width: 260px; scroll-snap-align: start; }
+  .tpl-home .hm-steps-photos li { flex: 0 0 76vw; max-width: 320px; scroll-snap-align: start; }
+  .tpl-home .hm-steps-photos img { height: 150px; }
+  .tpl-home .hm-ps-cols { gap: 10px; }
+}
+@media (min-width: 761px) { .tpl-home .hm-tiles { grid-template-columns: repeat(5, 1fr); } .tpl-home .hm-tile { aspect-ratio: 5 / 4; } }
+@media (min-width: 761px) and (max-width: 1000px) { .tpl-home .hm-tiles { grid-template-columns: repeat(3, 1fr); } }

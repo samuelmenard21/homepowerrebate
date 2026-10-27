@@ -62,18 +62,19 @@ RULES = {
         "rent": ["notyet", "Ottawa has not said whether tenants, or landlords for rental units, can claim. A separate part of the plan is for building owners (mortgage insurance and financing for apartment retrofits).", "federal-5"],
     },
     "state": {
-        "broken": ["said", "Ottawa says the process is built for the moment a heating system breaks or nears the end of its life: apply in an online portal, get approval within 24 hours, then buy and install a pre-approved heat pump and upload the receipts. The portal is not open yet. Ottawa has not said whether a heat pump bought before launch counts. CBC reports officials are eyeing fall 2026, but that is not confirmed. If you must replace now, keep every invoice and do not count on the rebate.", "federal-2"],
+        "broken": ["said", "Ottawa says the process is built for the moment a heating system breaks or nears the end of its life: apply in an online portal, get approval within 24 hours, then buy and install a pre-approved heat pump and upload the receipts. The portal is not open yet. Ottawa says its retroactivity period starts on November 1, 2026, so a heat pump installed from that date can apply once the portal opens. It has said nothing about installs before November 1. If you must replace before then, keep every invoice and do not count on the rebate.", "federal-2"],
         "ending": ["said", "Ottawa says the process is built for homes whose heating system is breaking or near the end of its life. If yours is old but working, our guide on whether to wait weighs the cost of waiting against what is open today.", "federal-2"],
         "fine": ["partial", "Ottawa describes the rebate around systems that break or near end of life, and says 80 per cent of heating replacements happen when the system breaks (as reported by CBC from a government document). It has not said whether a working system can qualify.", "federal-2"],
     },
 }
 
 NOT_YET = ["The income line that decides $10,000 or $2,000", "Which home types qualify (houses, semis, row homes, condos, mobile homes, rentals)", "Which heating fuels qualify, including natural gas",
-           "The exact launch date (Ottawa says early 2027)", "Whether purchases made before launch count", "Which provincial programs allow stacking, and how (Ottawa says it can be combined with provincial programs)"]
+           "The exact launch date (Ottawa says early 2027)", "Whether anything installed before November 1, 2026 counts (Ottawa says its retroactivity period starts on that date)", "Which provincial programs allow stacking, and how (Ottawa says it can be combined with provincial programs)"]
 SAID = [("Up to $10,000 for households below the median income and $2,000 for other eligible homeowners.", "federal-0"),
         ("One rebate per person.", "federal-0"),
         ("The heat pump must be on the Eligible Products List (over 100,000 options).", "federal-0"),
         ("Launch is expected in early 2027. It was announced on October 8, 2026.", "federal-0"),
+        ("The retroactivity period starts on November 1, 2026: eligible heat pumps installed from that date can apply once the portal opens. Ottawa says full details will be published as of November 1, 2026.", "federal-1"),
         ("It can be combined with provincial programs. Each program has its own stacking rules, which we have not read against this one.", "federal-3"),
         ("Apply online, get approval within 24 hours, buy and install, upload receipts, payment within five days by direct deposit, and no energy audit before or after (as reported by CBC from the government document).", "federal-2")]
 
@@ -159,7 +160,7 @@ def build():
 FAQ = [("Do I qualify for the federal heat pump rebate?", "Ottawa has not published the income line, home types or heating fuels that qualify, so no one can say yes or no yet. This page shows what is known for your home."),
        ("How much is the rebate?", "Up to $10,000 for households below the median income and $2,000 for other eligible homeowners. Ottawa has not said where the income line falls."),
        ("When can I apply?", "Ottawa expects to launch in early 2027. Applications are not open. Join the alert on this page and we will email you the day they open."),
-       ("Can I get the rebate if I buy a heat pump now?", "Ottawa has not said whether purchases made before launch count. CBC reports officials are eyeing fall 2026, but that is not confirmed. Keep your invoices, and do not count on it."),
+       ("Can I get the rebate if I buy a heat pump now?", "Ottawa says installs from November 1, 2026 can apply once the portal opens in early 2027. It has said nothing about earlier installs. Keep your invoices."),
        ("Can I combine it with provincial rebates?", "Ottawa says it can be combined with provincial programs. Each program has its own rules, so check yours.")]
 
 

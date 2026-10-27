@@ -71,8 +71,9 @@ REGIONS = {
     },
     "ontario": {
         "slug": "ontario", "nav": "on", "name": "Ontario", "long": "Ontario", "rank_region": "on",
+        "checked": "October 26, 2026", "iso": "2026-10-26",
         "title": "Ontario New Furnace Rebate 2026: $0 Gas, Heat Pump to $7,500",
-        "desc": "Is there a new furnace rebate in Ontario? Not for gas furnaces in 2026. Heat pumps get up to $2,000 for Enbridge gas homes, or $7,500 with electric, oil or propane.",
+        "desc": "Is there a new furnace rebate in Ontario? Not for gas furnaces in 2026. Heat pumps get up to $2,000 (gas homes) or $7,500 (electric, oil, propane).",
         "h1": "Is There an Ontario Rebate for a New Furnace? (2026)",
         "short": "<b>No. There is no Ontario rebate for a new gas furnace in 2026.</b> The Home Renovation Savings Program (run by Enbridge Gas and Save on Energy) pays for cold-climate heat pumps instead. "
                  "If your home heats with Enbridge gas, you can get $500 per ton, up to $2,000. If you heat with electricity, oil, propane or wood, it's $1,250 per ton, up to $7,500. "
@@ -116,7 +117,7 @@ REGIONS = {
             "<h2>Ontario gas furnace rebate: why there isn't one anymore</h2>"
             "<p>Ontario's home rebates used to include high-efficiency gas furnaces. They don't now. Enbridge Gas and Save on Energy merged their offers into one program, Home Renovation Savings, and it pays $0 for a gas furnace, new or replacement. "
             "The money moved to cold-climate heat pumps, insulation, windows and smart thermostats. A heat pump heats and cools, so it can replace both a furnace and an air conditioner. "
-            "We read the program's heat pump page and its full list of upgrades on October 6, 2026. A furnace is not on either one (see <a href=\"/programs/home-renovation-savings/\">every Home Renovation Savings rebate</a> and <a href=\"/programs/enbridge-gas-rebates/\">Enbridge Gas rebates</a>). "
+            "We re-read the program's home page and heat pump page on October 26, 2026. A furnace is not on either one (see <a href=\"/programs/home-renovation-savings/\">every Home Renovation Savings rebate</a> and <a href=\"/programs/enbridge-gas-rebates/\">Enbridge Gas rebates</a>). "
             "If a contractor quotes you an \"Enbridge furnace rebate\" in 2026, ask them to show you the program page. It is most likely an old offer or a store discount.</p>"
             "<h2>Gas furnace vs heat pump: what the rebate changes</h2>"
             "<p>Say your home heats with Enbridge gas and you need about 3 tons of heating. A new furnace gets no rebate. A cold-climate heat pump gets $500 per ton, so $1,500, and a 4-ton system reaches the $2,000 cap. "
@@ -242,7 +243,7 @@ def page(r):
     others = " · ".join(f'<a href="/furnace-rebates/{o["slug"]}/">{o["long"]}</a>' for o in REGIONS.values() if o is not r)
     ld = [
         {"@context": "https://schema.org", "@type": "Article", "headline": r["h1"], "description": r["desc"],
-         "datePublished": ISO, "dateModified": ISO, "author": AUTHOR,
+         "datePublished": ISO, "dateModified": r.get("iso", ISO), "author": AUTHOR,
          "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": BASE},
          "mainEntityOfPage": BASE + path},
         {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
@@ -254,7 +255,7 @@ def page(r):
     ]
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/furnace-rebates/">Furnace rebates</a></li><li aria-current="page">{e(r['long'])}</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>{e(r['h1'])}</h1>
-<p>Updated {CHECKED}. Written by <a href="/about" style="color:inherit;text-decoration:underline;">Sam Menard</a>.</p></div></header>
+<p>Updated {r.get("checked", CHECKED)}. Written by <a href="/about" style="color:inherit;text-decoration:underline;">Sam Menard</a>.</p></div></header>
 <section class="body"><div class="wrap">
 <div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;margin-bottom:28px;"><p style="margin:0;"><b>Short answer:</b> {r['short']}</p></div>
 <h2>What rebates exist for heating and cooling in {e(r['name'])}?</h2>
@@ -274,7 +275,7 @@ def page(r):
 <p><a href="/installers/">See every city &rarr;</a></p>
 <h2>Common questions</h2>
 {faq}
-<p style="font-size:14px;color:#1a3d42;margin-top:28px;"><b>Sources, checked {CHECKED}:</b> {srcs}. Amounts change; confirm with the program before you buy.</p>
+<p style="font-size:14px;color:#1a3d42;margin-top:28px;"><b>Sources, checked {r.get("checked", CHECKED)}:</b> {srcs}. Amounts change; confirm with the program before you buy.</p>
 <p><b>Related:</b> {links}</p>
 <p><b>Other regions:</b> {others}</p>
 </div></section>"""

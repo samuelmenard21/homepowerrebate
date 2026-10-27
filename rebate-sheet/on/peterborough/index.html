@@ -566,7 +566,7 @@ document.addEventListener('submit', async function (e) {
 })();
 (function () {
   var box = document.querySelector('article.article, section.body .wrap');
-  if (!box || box.querySelector('.hpr-toc')) return;
+  if (!box || box.querySelector('.hpr-toc') || document.querySelector('.page-rail, .toc-mobile')) return;   // the side panel and the folded phone list already carry the contents
   var hs = [].filter.call(box.querySelectorAll('h2'), function (h) { return !h.closest('footer, form, .cta, aside, nav') && h.textContent.trim().length > 3; });
   var words = (box.innerText || '').split(/\s+/).length;
   if (hs.length < 5 || words < 1200) return;

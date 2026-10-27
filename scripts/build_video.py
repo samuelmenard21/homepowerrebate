@@ -168,7 +168,7 @@ FED_VANITY = "homepowerrebate.com/federal"
 
 
 def _fed():
-    """The federal facts the heat pump videos use, checked. Nothing about who qualifies, retroactivity or a start date beyond what the facts say."""
+    """The federal facts the heat pump videos use, checked. Nothing about who qualifies or a start date beyond what the facts say; the November 1, 2026 retroactivity start is in federal-1."""
     f0 = kit.FACTS["federal-0-national-heat-pump-rebate"]
     f1 = kit.FACTS["federal-1-launch-and-retroactivity"]
     f2 = kit.FACTS["federal-2-how-it-works"]
@@ -176,6 +176,7 @@ def _fed():
     assert "$1,400" in f0["eligibility"] and "not published" in f0["eligibility"], "federal eligibility changed: re-read before rendering"
     assert "early 2027" in f0["dates"] and "early 2027" in f1["dates"], "federal launch wording changed: re-read before rendering"
     assert "24 hours" in f2["claim"] and "five days" in f2["claim"] and "80 per cent" in f2["eligibility"], "federal process changed: re-read before rendering"
+    assert "November 1, 2026" in f1["claim"], "federal retroactivity wording changed: re-read before rendering"
     assert f0["status"] == "upcoming", "the rebate is no longer 'upcoming': rewrite the videos"
     return {"foot": f"Source: canada.ca. Checked {nice(f0['verified_on'])}."}
 
@@ -231,7 +232,7 @@ def hp_furnace_30():
             sticker(150, 800, "says Ottawa's plan", "cream", 48, 3, 0.8)]},
         {"at": 21.5, "end": 25.5, "theme": "light", "items": [
             tile(60, 260, 960, 440, AMBER, "#fff", 118, words=True, html="But it's <em>not open yet</em> \u23F3", rot=1),
-            tile(60, 750, 960, 300, TEAL, CREAM, 62, font="sans", center=True, html="Expected early 2027. Who qualifies isn't published yet.", rot=-1, delay=0.6)]},
+            tile(60, 750, 960, 300, TEAL, CREAM, 62, font="sans", center=True, html="Expected early 2027. Installs from Nov 1, 2026 can apply. Who qualifies isn't published yet.", rot=-1, delay=0.6)]},
         _fed_cta(25.5, 30.0, h["foot"])]}
 
 
@@ -331,7 +332,7 @@ def hp_explainer_60():
             tile(60, 710, 960, 340, TEAL, CREAM, 60, font="sans", center=True, html="Where the income line is. Which homes and which heating types qualify.", rot=1, delay=0.6)]},
         {"at": 51.0, "end": 55.0, "theme": "light", "items": [
             tile(60, 260, 960, 440, AMBER, "#fff", 118, words=True, html="And it's <em>not open yet</em> \u23F3", rot=1),
-            tile(60, 750, 960, 280, TEAL, CREAM, 66, font="sans", center=True, html="Expected early 2027", rot=-1, delay=0.6)]},
+            tile(60, 750, 960, 280, TEAL, CREAM, 66, font="sans", center=True, html="Expected early 2027. Installs from Nov 1, 2026 can apply.", rot=-1, delay=0.6)]},
         _fed_cta(55.0, 60.0, h["foot"], "Be the first to <em>know</em> \U0001F4EC")]}
 
 

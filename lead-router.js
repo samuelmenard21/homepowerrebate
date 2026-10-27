@@ -1052,7 +1052,7 @@ const FED_ALERT_PROVINCE_NOW = {
 };
 
 // Fun but factual. Every figure follows data/verified-facts/federal.json (federal-0 to federal-3), "as announced":
-// never the income line, home types, a launch date or retroactivity until an official page states them.
+// never the income line, home types or a launch date until an official page states them. Retroactivity: Canada.ca says the period starts Nov 1, 2026 (federal-1).
 async function sendFederalAlertConfirmation(a, env) {
   const site = 'https://homepowerrebate.com';
   const hub = HEAT_PUMP_PAGE_PROVINCES.has(a.province) ? `${site}/ca/${a.province.toLowerCase()}/heat-pump/` : `${site}/programs/national-heat-pump-rebate/`;
@@ -1097,8 +1097,11 @@ async function sendFederalAlertConfirmation(a, env) {
       ${step(4, 'Upload your receipts. Ottawa says payment is approved within five days and sent by direct deposit.')}
     </table>
 
+    <h2 style="${h2}">One date to know: November 1</h2>
+    <p style="${p}">Ottawa says its retroactivity period starts on <strong>November 1, 2026</strong>. If you meet the rules and install an eligible heat pump from that date, you can apply once the portal opens in early 2027. Ottawa says it will publish the full details on November 1.</p>
+
     <h2 style="${h2}">Still a mystery</h2>
-    <p style="${p}">Ottawa hasn't said where the income line is, which homes qualify, or the exact start date. Lots of websites are guessing. We won't. When Ottawa fills in a blank, you'll hear it from us.</p>
+    <p style="${p}">Ottawa hasn't said where the income line is, which homes qualify, or the exact start date. It has said nothing about heat pumps installed before November 1. Lots of websites are guessing. We won't. When Ottawa fills in a blank, you'll hear it from us.</p>
 
     <h2 style="${h2}">Three smart things to do while you wait</h2>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">

@@ -36,9 +36,10 @@ PROVS = [("bc", "British Columbia"), ("on", "Ontario"), ("ab", "Alberta"), ("sk"
 
 SAID = ["Up to $10,000 for households below the median income, and $2,000 for other eligible homeowners.",
         "Applications are expected to open in early 2027. They are not open yet.",
+        "Installs from November 1, 2026 can apply once the portal opens. Ottawa says full details will be published as of November 1, 2026.",
         "One rebate per person, and the heat pump must be on the Eligible Products List.",
         "It can be combined with provincial programs. Each program has its own rules."]
-NOT_YET = ["The income line that decides $10,000 or $2,000", "Which home types and heating fuels qualify, including natural gas", "The exact launch date, and whether purchases made before launch count"]
+NOT_YET = ["The income line that decides $10,000 or $2,000", "Which home types and heating fuels qualify, including natural gas", "The exact launch date, and whether anything installed before November 1, 2026 counts"]
 STEPS = "Ottawa's plan, as reported by CBC from the government document: apply in an online portal, get approval within 24 hours, buy and install an approved heat pump, upload receipts, payment within five days. No energy audit before or after."
 
 
@@ -163,7 +164,7 @@ def sheet_article(pdata):
 <h2>What Ottawa has not said yet</h2><ul>{notyet}</ul>
 <h2 id="o-prov-h">Open today for a heat pump</h2>
 <div id="o-prov"><p class="ps-small">Pick a province above to list the heat pump rebates that are open today there.</p></div>
-<h2>What to do now</h2><ul><li>Find out what heats your home today and what your heat pump options are.</li><li>If your system fails before launch, keep every invoice. Ottawa has not said whether earlier purchases count, so do not count on the rebate.</li><li>Get the launch alert and check your home at homepowerrebate.com{QUALIFY}</li></ul>
+<h2>What to do now</h2><ul><li>Find out what heats your home today and what your heat pump options are.</li><li>If your system fails before launch, keep every invoice. Ottawa says installs from November 1, 2026 can apply once the portal opens. It has said nothing about earlier installs.</li><li>Get the launch alert and check your home at homepowerrebate.com{QUALIFY}</li></ul>
 <p class="ps-small">Independent information from HomePowerRebate (homepowerrebate.com{GUIDE}). This is not from the Government of Canada: check canada.ca for official news. Amounts are the most a program pays; your amount depends on your home, utility and income.</p>
 <p class="ps-small" id="o-foot" hidden></p>
 </article></div>

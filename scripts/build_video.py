@@ -335,8 +335,83 @@ def hp_explainer_60():
         _fed_cta(55.0, 60.0, h["foot"], "Be the first to <em>know</em> \U0001F4EC")]}
 
 
+NL_VANITY = "homepowerrebate.com/nl-oil"   # _redirects sends it to the NL heating assistance page with utm_source=video
+
+
+def _nl():
+    """The Newfoundland oil supplement fact, checked."""
+    f = kit.FACTS["nl-4-home-heating-supplement"]
+    claim, elig = f["claim"], f["eligibility"]
+    for must in ("from $500 to $1,000", "from $200 to $400", "do not need to apply again", "second payment"):
+        assert must in claim, f"fact changed ({must}): re-read it before rendering"
+    for must in ("$100,000 or less", "$150,000", "250 litres"):
+        assert must in elig, f"fact changed ({must}): re-read it before rendering"
+    assert f["amount"] == "$400 to $1,000" and f["status"] == "active" and "January 15, 2027" in f["dates"]
+    return {"foot": f"Source: {urlparse(f['source_url']).netloc.replace('www.', '')}. Checked {nice(f['verified_on'])}."}
+
+
+def _nl_hook():
+    return {"at": 0.0, "end": 2.5, "theme": "dark", "items": [
+        tile(60, 340, 960, 640, CREAM, TEAL, 150, words=True, html="Your oil rebate just <em>doubled</em>!", rot=-1.5), emoji(770, 190, "\U0001F4B0", 240, 12),
+        sticker(90, 1040, "Newfoundland and Labrador", size=50, rot=-4)]}
+
+
+def _nl_cta(at, end, foot):
+    return {"at": at, "end": end, "theme": "dark", "foot": foot, "items": [
+        tile(60, 330, 960, 450, CREAM, TEAL, 120, words=True, html="Here's <em>how to apply</em> \U0001F447", rot=1),
+        tile(60, 830, 960, 260, AMBER, "#fff", 62, font="sans", center=True, html=NL_VANITY, rot=-1, delay=0.5),
+        sticker(110, 1150, "or search: NL oil rebate 2026", "cream", 40, 3, 0.9)]}
+
+
+def nl_oil_15():
+    """15 seconds: doubled, the new amounts, who gets the full amount, already applied, link."""
+    h = _nl()
+    return {"scenes": [
+        _nl_hook(),
+        {"at": 2.5, "end": 5.5, "theme": "light", "items": [
+            tile(60, 280, 960, 300, "#ffffff", TEAL, 100, words=True, html="It was $200 to $500. Now it's <em>$400 to $1,000</em>"),
+            tile(60, 640, 960, 360, AMBER, "#fff", 70, font="sans", center=True, html="For homes heated with <b>furnace or stove oil</b>", rot=-1, delay=0.6)]},
+        {"at": 5.5, "end": 9.0, "theme": "dark", "items": [
+            tile(60, 260, 960, 330, CREAM, TEAL, 104, words=True, html="The full <em>$1,000</em> if your family earned $100,000 or less", rot=1),
+            tile(60, 640, 960, 340, TAN, "#7a4a00", 62, font="sans", center=True, html="Earned up to $150,000? You get at least $400", rot=-1, delay=0.6)]},
+        {"at": 9.0, "end": 11.5, "theme": "light", "items": [
+            tile(60, 300, 960, 520, TEAL, CREAM, 124, words=True, html="Already applied? <em>Relax.</em> \u2705", rot=-1),
+            sticker(150, 890, "you don't need to apply again", "cream", 46, 3, 0.8)]},
+        _nl_cta(11.5, 15.0, h["foot"])]}
+
+
+def nl_oil_30():
+    """30 seconds: the same hook, the two amounts, what counts, already applied, how to apply, the deadline."""
+    h = _nl()
+    return {"scenes": [
+        _nl_hook(),
+        {"at": 2.5, "end": 6.0, "theme": "light", "items": [
+            tile(60, 260, 960, 300, "#ffffff", TEAL, 100, words=True, html="Before: <em>$200 to $500</em>"),
+            tile(60, 610, 960, 440, AMBER, "#fff", 128, words=True, html="Now: <em>$400 to $1,000</em> \U0001F389", rot=1, delay=0.6)]},
+        {"at": 6.0, "end": 10.5, "theme": "dark", "items": [
+            tile(60, 240, 960, 260, CREAM, TEAL, 90, words=True, html="Who gets the <em>full $1,000</em>?", rot=-1),
+            tile(60, 540, 960, 280, AMBER, "#fff", 62, font="sans", center=True, html="Your family earned <b>$100,000 or less</b> in 2025", rot=1, delay=0.5),
+            tile(60, 860, 960, 230, TAN, "#7a4a00", 56, font="sans", center=True, html="Earned up to $150,000? You get at least $400", rot=-1, delay=0.9)]},
+        {"at": 10.5, "end": 15.0, "theme": "light", "items": [
+            tile(60, 250, 960, 300, "#ffffff", TEAL, 100, words=True, html="What you <em>need</em> \U0001F9FE"),
+            tile(60, 600, 960, 220, TEAL, CREAM, 56, font="sans", center=True, html="You pay for the oil yourself", rot=-1, delay=0.5),
+            tile(60, 860, 960, 230, AMBER, "#fff", 56, font="sans", center=True, html="Bills for 250+ litres bought in 2026. <b>Keep them!</b>", rot=1, delay=0.9)]},
+        {"at": 15.0, "end": 19.0, "theme": "dark", "items": [
+            tile(60, 280, 960, 440, CREAM, TEAL, 118, words=True, html="Already applied? Don't apply <em>again</em>", rot=-1),
+            tile(60, 770, 960, 300, AMBER, "#fff", 60, font="sans", center=True, html="Already paid? A second payment is coming later this year \U0001F4B8", rot=1, delay=0.6)]},
+        {"at": 19.0, "end": 23.5, "theme": "light", "items": [
+            tile(60, 250, 960, 300, "#ffffff", TEAL, 100, words=True, html="Two ways to <em>apply</em> \U0001F4DD"),
+            tile(60, 600, 468, 460, TEAL, CREAM, 66, font="sans", center=True, html="Online", rot=1.5, delay=0.5),
+            tile(552, 600, 468, 460, TAN, "#7a4a00", 66, font="sans", center=True, html="A paper form, by mail", rot=-1.5, delay=0.7)]},
+        {"at": 23.5, "end": 27.0, "theme": "dark", "items": [
+            tile(60, 280, 960, 440, AMBER, "#fff", 118, words=True, html="Last day: <em>January 15, 2027</em> \u23F0", rot=1),
+            tile(60, 770, 960, 280, CREAM, TEAL, 62, font="sans", center=True, html="Late forms are not accepted", rot=-1, delay=0.6)]},
+        _nl_cta(27.0, 30.0, h["foot"])]}
+
+
 BENTO = {"ns-harp-status-6": ns_harp_status_6, "ns-harp-status-15": ns_harp_status_15, "ns-harp-status-30": ns_harp_status_30,
-         "hp-furnace-15": hp_furnace_15, "hp-furnace-30": hp_furnace_30, "hp-cold-air-15": hp_cold_air_15, "hp-cold-air-30": hp_cold_air_30, "hp-explainer-60": hp_explainer_60}
+         "hp-furnace-15": hp_furnace_15, "hp-furnace-30": hp_furnace_30, "hp-cold-air-15": hp_cold_air_15, "hp-cold-air-30": hp_cold_air_30, "hp-explainer-60": hp_explainer_60,
+         "nl-oil-15": nl_oil_15, "nl-oil-30": nl_oil_30}
 
 
 def build_bento(name):

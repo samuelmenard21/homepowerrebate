@@ -109,8 +109,8 @@ def build():
                              f'<td>{e(w)}</td><td>{e(t)}</td></tr>' for _, _, p, a, w, t, src in rows)
                    + "</table></div>")
     nv = ", ".join(f'<a href="{u}">{e(n)}</a>' for n, u in NOT_VERIFIED)
-    short = ("The best deals right now: up to 5 free Mysa or Sinopé thermostats for BC Hydro customers with baseboard heat, "
-             "$125 back in Ontario through Home Renovation Savings, and a free installed thermostat for electrically heated homes in Nova Scotia. "
+    short = ("Ontario pays $125 back on a smart thermostat. BC Hydro gives up to 5 free Mysa or Sinopé thermostats to homes with baseboard heat. "
+             "Nova Scotia installs one free in electrically heated homes. Find your province in the tables below. "
              "First check your heat type: baseboard heaters need a different thermostat than a furnace or heat pump.")
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Smart thermostat rebates</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>Smart Thermostat Rebates 2026: Every Program in Canada and the US</h1>
@@ -152,8 +152,8 @@ def build():
         {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in FAQ]},
     ]
-    page = shell("Smart Thermostat Rebates 2026: Canada & US Programs | HomePowerRebate",
-                 "Every smart thermostat rebate in 2026: free Mysa thermostats in BC, $125 in Ontario, free installs in Nova Scotia, plus California and New York utility rebates.",
+    page = shell("Smart Thermostat Rebates 2026: $125 Back, Free in BC | HomePowerRebate",
+                 "Smart thermostat rebates in 2026: Ontario pays $125 back. BC Hydro gives up to 5 free. Nova Scotia installs one free. Find yours by province or state.",
                  PATH, "on", body, ld)
     page = page.replace("</style>", css + "</style>", 1)
     out = ROOT / PATH.strip("/") / "index.html"

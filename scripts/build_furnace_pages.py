@@ -186,15 +186,16 @@ REGIONS = {
     },
     "alberta": {
         "slug": "alberta", "nav": "ab", "name": "Alberta", "long": "Alberta", "rank_region": "ab",
-        "title": "Alberta Furnace Rebates 2026: What's Actually Left",
-        "desc": "Alberta has no provincial or utility furnace or AC rebate in 2026. Here's what's left: free upgrades for low-income Calgarians and CEIP financing where it's open.",
+        "title": "Alberta Air Conditioner & Furnace Rebates 2026: Is There One?",
+        "desc": "Is there an air conditioner rebate in Alberta? We found none from the province or your power company in 2026. See what help is left for AC and furnaces.",
         "h1": "Alberta Furnace and Air Conditioner Rebates (2026)",
-        "short": "<b>Alberta has no provincial or utility rebate for a new furnace or air conditioner in 2026,</b> and we found no ENMAX, ATCO, EPCOR or FortisAlberta heat pump rebate either. "
+        "short": "<b>No. We found no Alberta rebate for a new air conditioner or furnace in 2026,</b> from the province or from ENMAX, ATCO, EPCOR or FortisAlberta. We found no heat pump rebate from them either. "
                  "The federal Greener Homes grant and loan are closed, and the federal oil-to-heat-pump grant closed to Albertans on July 31, 2026. "
-                 "What's left: free upgrades (including furnaces) for income-qualified Calgarians, and low-interest CEIP financing in towns where it's open.",
+                 "What's left: free upgrades (including furnaces) for income-qualified Calgarians, low-interest CEIP financing in towns where it's open, and $50 from EPCOR if you have central AC and a smart thermostat in a select Edmonton neighbourhood.",
         "table": [
             ("New furnace", "Province / utilities", "None found."),
             ("New air conditioner", "Province / utilities", "None found."),
+            ("Central AC with a smart thermostat you already own", "EPCOR Peak Rewards pilot (select Edmonton neighbourhoods)", "$50 prepaid Mastercard to join, then $25 a season."),
             ("Heat pump", "Province / utilities", "None found. Federal grants are closed."),
             ("Free furnace and insulation (income-qualified)", "Calgary Home Upgrades Program", "Free. Waitlist in 2026."),
             ("Low-interest financing", "Clean Energy Improvement Program (CEIP)", "Calgary: closed until winter 2026/27. Lethbridge: at capacity. St. Albert: waitlist. Check your town's status."),
@@ -207,7 +208,7 @@ REGIONS = {
         ],
         "faq": [
             ("Are there furnace rebates in Alberta?", "Not from the province or the major utilities in 2026. Income-qualified Calgarians can get a free furnace through the Calgary Home Upgrades Program."),
-            ("Is there an air conditioner rebate in Alberta?", "We found none in 2026. If you're buying cooling, a heat pump costs about the same as central AC and also heats."),
+            ("Is there an air conditioner rebate in Alberta?", "We found none in 2026. Neither the province nor the big power companies pay for a new AC. If you have central AC and a smart thermostat in a select Edmonton neighbourhood, EPCOR's Peak Rewards pilot pays $50 to join and $25 a season. If you're buying cooling, a heat pump costs about the same as central AC and also heats."),
             ("Is the Canada Greener Homes Grant still open?", "No. The Greener Homes grant and loan are closed, and the federal oil-to-heat-pump grant closed to Albertans on July 31, 2026."),
             ("Does ENMAX or ATCO offer a heat pump rebate?", "We couldn't find one on their official sites in September 2026."),
         ],

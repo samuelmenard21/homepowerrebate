@@ -348,13 +348,15 @@ def _nl():
     for must in ("$100,000 or less", "$150,000", "250 litres"):
         assert must in elig, f"fact changed ({must}): re-read it before rendering"
     assert f["amount"] == "$400 to $1,000" and f["status"] == "active" and "January 15, 2027" in f["dates"]
+    o = kit.FACTS["nl-0-oil-to-electric-amounts"]
+    assert o["status"] == "active" and "up to $22,000 income-qualified" in o["amount"], "Oil to Electric fact changed: re-read it before rendering"
     return {"foot": f"Source: {urlparse(f['source_url']).netloc.replace('www.', '')}. Checked {nice(f['verified_on'])}."}
 
 
 def _nl_hook():
     return {"at": 0.0, "end": 2.5, "theme": "dark", "items": [
         tile(60, 340, 960, 640, CREAM, TEAL, 150, words=True, html="Your oil rebate just <em>doubled</em>!", rot=-1.5), emoji(770, 190, "\U0001F4B0", 240, 12),
-        sticker(90, 1040, "Newfoundland and Labrador", size=50, rot=-4)]}
+        sticker(60, 1040, "Home Heating Supplement \u00B7 Newfoundland", size=46, rot=-4)]}
 
 
 def _nl_cta(at, end, foot):
@@ -382,7 +384,7 @@ def nl_oil_15():
 
 
 def nl_oil_30():
-    """30 seconds: the same hook, the two amounts, what counts, already applied, how to apply, the deadline."""
+    """33 seconds: the same hook, the two amounts, what counts, already applied, how to apply, the deadline, a pointer to Oil to Electric."""
     h = _nl()
     return {"scenes": [
         _nl_hook(),
@@ -407,7 +409,11 @@ def nl_oil_30():
         {"at": 23.5, "end": 27.0, "theme": "dark", "items": [
             tile(60, 280, 960, 440, AMBER, "#fff", 118, words=True, html="Last day: <em>January 15, 2027</em> \u23F0", rot=1),
             tile(60, 770, 960, 280, CREAM, TEAL, 62, font="sans", center=True, html="Late forms are not accepted", rot=-1, delay=0.6)]},
-        _nl_cta(27.0, 30.0, h["foot"])]}
+        {"at": 27.0, "end": 30.5, "theme": "light", "items": [
+            tile(60, 260, 960, 440, TEAL, CREAM, 104, words=True, html="Want to <em>quit oil</em> for good? \u2744\uFE0F", rot=-1),
+            tile(60, 750, 960, 300, AMBER, "#fff", 58, font="sans", center=True, html="Oil to Electric can pay up to <b>$22,000</b> for a heat pump", rot=1, delay=0.6),
+            sticker(80, 1110, "a different program", "cream", 40, 3, 1.0), sticker(260, 1190, "for lower-income homes", "teal", 40, -2, 1.3)]},
+        _nl_cta(30.5, 33.5, h["foot"])]}
 
 
 BENTO = {"ns-harp-status-6": ns_harp_status_6, "ns-harp-status-15": ns_harp_status_15, "ns-harp-status-30": ns_harp_status_30,

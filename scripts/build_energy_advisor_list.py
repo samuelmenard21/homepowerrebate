@@ -73,6 +73,9 @@ def tokens(n):
 
 
 # Google matches rejected by hand on 2026-10-17 (a doctor, a tax office, a lawn company... with a similar name).
+# NRCan lists these under the wrong province (the company told us on 2026-10-26; its FSAs and office are in Calgary).
+ORG_PROVINCE_FIX = {("ON", "AmeriSpec of Canada (Calgary)"): "AB"}
+
 REJECT = {
     "US-MA|John Hayes", "US-NY|Alexander Schwartz", "US-NJ|Neil Goldman", "US-MA|Victoria Services, Inc.",
     "US-CO|Absolute Green", "US-MA|Outer Cape Energy", "US-NY|Energy Master & Environmental Solutions",
@@ -170,6 +173,12 @@ def main():
     args = ap.parse_args()
     orgs = json.loads(NRCAN.read_text())["organizations"]
     cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    for o in orgs:   # NRCan's table has a few rows under the wrong province; reuse the cached Google match
+        fixed = ORG_PROVINCE_FIX.get((o["p"], o["n"]))
+        if fixed:
+            if f"{o['p']}|{o['n']}" in cache:
+                cache.setdefault(f"{fixed}|{o['n']}", cache[f"{o['p']}|{o['n']}"])
+            o["p"] = fixed
     us_cities = us_city_coords()
     resnet = [c for c in json.loads(RESNET.read_text())["companies"] if c["state"].lower() in us_cities]
     want = sorted({(o["p"], o["n"]) for o in orgs} - set(map(tuple, (k.split("|", 1) for k in cache))))

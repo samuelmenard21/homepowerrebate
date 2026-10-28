@@ -8,6 +8,7 @@ import html
 import json
 import re
 import sys
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -18,6 +19,14 @@ import page_kit as kit  # noqa: E402
 e = html.escape
 RAW = json.loads((ROOT / "data/nl/participating-installers.json").read_text(encoding="utf-8"))
 PAGE = json.loads((ROOT / "data/nl/installers-page.json").read_text(encoding="utf-8"))
+_PL = ROOT / "data/nl/installer-places.json"  # from scripts/lookup_nl_installer_ratings.py (Google place id, rating, review count)
+PLACES = {k: v for k, v in (json.loads(_PL.read_text(encoding="utf-8")) if _PL.exists() else {}).items() if v.get("match") == "ok"}
+
+
+def score(r):
+    """The same review-weighted score as our installer rankings (see /installers/how-we-rank/): 25 reviews of weight, prior 4.5."""
+    n = r["reviews"]
+    return n / (n + 25) * r["rating"] + 25 / (n + 25) * 4.5
 
 AREAS = [("avalon", "St. John's and the Avalon"), ("bonavista", "Bonavista and Eastern"), ("burin", "Burin Peninsula"), ("central", "Central"),
          ("western", "Western"), ("northern", "Northern Peninsula"), ("southwest", "South West Coast"), ("labrador", "Labrador")]
@@ -82,7 +91,7 @@ def merge():
 
     def get(name):
         k = key(name)
-        return cos.setdefault(k, {"name": DISPLAY.get(k, name), "areas": set(), "area_text": [], "phones": [], "names": [], "hp": False, "eb": False, "brands": []})
+        return cos.setdefault(k, {"key": k, "name": DISPLAY.get(k, name), "areas": set(), "area_text": [], "phones": [], "names": [], "hp": False, "eb": False, "brands": []})
     for lst, tag in (("heat_pump_mechanics", "hp"), ("brand_certified", "hp"), ("boiler_furnace", "eb")):
         for r in RAW[lst]:
             c = get(r["company"])
@@ -109,7 +118,7 @@ def brand_key(b):
     return re.sub(r"[^a-z0-9]", "", b.lower())
 
 
-def card(c):
+def card(c, idx=0):
     ph, extra = phones(c["phones"])
     areas = " ".join(a for a, _ in AREAS if a in c["areas"])
     svc = " ".join(s for s, on in (("hp", c["hp"]), ("eb", c["eb"])) if on)
@@ -127,8 +136,15 @@ def card(c):
     rest = [f"{p}{(' ext. ' + x) if x else ''}" for p, _t, x in ph[3:]] + extra
     more = f'<p class="nli-note">Also on the list: {e(", ".join(rest))}</p>' if rest else ""
     who = f'<p class="nli-who">Ask for: {e(", ".join(c["names"][:4]))}</p>' if c["names"] else ""
-    return (f'<li class="nli-card" data-areas="{areas}" data-svc="{svc}" data-brands="{brands}" data-search="{e(search, quote=True)}">'
-            f'<h3>{e(c["name"])}</h3><p class="nli-where"><b>Works in:</b> {e(where)}</p><p class="nli-tags">{tags}{mech}</p>{br}{who}'
+    pl = PLACES.get(c["key"])
+    rating = ""
+    sc = ""
+    if pl:
+        sc = f"{score(pl):.3f}"
+        rating = (f'<p class="nli-rating"><span class="nli-star" aria-hidden="true">&#9733;</span> <b>{pl["rating"]:.1f}</b> '
+                  f'<span>({pl["reviews"]:,} Google reviews)</span> <a href="https://www.google.com/maps/place/?q=place_id:{pl["place_id"]}" target="_blank" rel="noopener">Google Maps</a></p>')
+    return (f'<li class="nli-card" data-i="{idx}" data-score="{sc}" data-areas="{areas}" data-svc="{svc}" data-brands="{brands}" data-search="{e(search, quote=True)}">'
+            f'<h3>{e(c["name"])}</h3>{rating}<p class="nli-where"><b>Works in:</b> {e(where)}</p><p class="nli-tags">{tags}{mech}</p>{br}{who}'
             f'<div class="nli-calls">{calls}</div>{more}</li>')
 
 
@@ -139,7 +155,9 @@ def widget(cos):
         for b in c["brands"]:
             all_brands.setdefault(brand_key(b), b)
     brand_opts = "".join(f'<option value="{k}">{e(v)}</option>' for k, v in sorted(all_brands.items(), key=lambda kv: kv[1].lower()))
-    cards = "".join(card(c) for c in cos)
+    cards = "".join(card(c, i) for i, c in enumerate(cos))
+    has_ratings = any(c["key"] in PLACES for c in cos)
+    sort_ui = ('<div><label class="nli-lab" for="nli-sort">Sort by</label><select id="nli-sort" class="nli-sel"><option value="">A to Z (default)</option><option value="top">Top rated on Google</option></select></div>') if has_ratings else ""
     return f'''<div class="nli nli-scope" id="nli">
 <div class="nli-bar">
 <label class="nli-lab" for="nli-q">Search by company, town or name</label>
@@ -149,7 +167,7 @@ def widget(cos):
 <div class="nli-row"><div><label class="nli-lab" for="nli-svc">What do you need installed?</label>
 <select id="nli-svc" class="nli-sel"><option value="">Anything</option><option value="hp">A heat pump</option><option value="eb">An electric furnace or boiler</option></select></div>
 <div><label class="nli-lab" for="nli-brand">Heat pump brand</label>
-<select id="nli-brand" class="nli-sel"><option value="">Any brand</option>{brand_opts}</select></div></div>
+<select id="nli-brand" class="nli-sel"><option value="">Any brand</option>{brand_opts}</select></div>{sort_ui}</div>
 <p class="nli-count" id="nli-count" aria-live="polite">Showing all {len(cos)} companies</p>
 <button type="button" class="nli-reset" id="nli-reset" hidden>Clear filters</button>
 </div>
@@ -160,7 +178,7 @@ def widget(cos):
 (function(){{
   var list=document.getElementById('nli-list'); if(!list) return;
   var cards=[].slice.call(list.children), q=document.getElementById('nli-q'), svc=document.getElementById('nli-svc'), br=document.getElementById('nli-brand'),
-      chips=[].slice.call(document.querySelectorAll('.nli-chip')), cnt=document.getElementById('nli-count'), emp=document.getElementById('nli-empty'), rs=document.getElementById('nli-reset'), area='';
+      srt=document.getElementById('nli-sort'), chips=[].slice.call(document.querySelectorAll('.nli-chip')), cnt=document.getElementById('nli-count'), emp=document.getElementById('nli-empty'), rs=document.getElementById('nli-reset'), area='';
   function run(){{
     var t=q.value.trim().toLowerCase(), n=0;
     cards.forEach(function(c){{
@@ -172,8 +190,16 @@ def widget(cos):
     emp.hidden=n>0; rs.hidden=!on;
   }}
   chips.forEach(function(b){{ b.addEventListener('click',function(){{ var same=area===b.dataset.area; area=same?'':b.dataset.area; chips.forEach(function(x){{ x.setAttribute('aria-pressed',String(x.dataset.area===area)); }}); run(); }}); }});
+  function order(){{
+    var top=srt&&srt.value==='top';
+    cards.slice().sort(function(a,b){{
+      if(top){{ var x=parseFloat(a.dataset.score)||0, y=parseFloat(b.dataset.score)||0; if(x!==y) return y-x; }}
+      return (+a.dataset.i)-(+b.dataset.i);
+    }}).forEach(function(c){{ list.appendChild(c); }});
+  }}
+  if(srt) srt.addEventListener('change',order);
   [q,svc,br].forEach(function(el){{ el.addEventListener('input',run); el.addEventListener('change',run); }});
-  rs.addEventListener('click',function(){{ q.value=''; svc.value=''; br.value=''; area=''; chips.forEach(function(x){{ x.setAttribute('aria-pressed','false'); }}); run(); }});
+  rs.addEventListener('click',function(){{ q.value=''; svc.value=''; br.value=''; area=''; if(srt){{ srt.value=''; order(); }} chips.forEach(function(x){{ x.setAttribute('aria-pressed','false'); }}); run(); }});
   var h=(location.hash||'').replace('#',''); chips.forEach(function(b){{ if(b.dataset.area===h){{ b.click(); }} }});
 }})();
 </script>'''
@@ -202,6 +228,9 @@ STYLE = """<style>
 .nli-scope .nli-tag-hp { color: #1b4332; background: #d8f3dc; }
 .nli-scope .nli-tag-eb { color: #7a4a00; background: #ffe8c2; }
 .nli-scope .nli-tag-m { color: #08363f; background: #dbeaee; }
+.nli-scope .nli-rating { color: var(--ink, #0a2a2e); }
+.nli-scope .nli-rating span { color: var(--muted, #5a6b6e); }
+.nli-scope .nli-star { color: #d4751c; }
 .nli-scope .nli-who, .nli-scope .nli-note { color: var(--muted, #5a6b6e); font-size: 14px !important; }
 .nli-scope .nli-calls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 .nli-scope .nli-call { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; font-size: 15px; font-weight: 700; color: #fff; background: #a4540a; border-radius: 10px; text-decoration: none; }
@@ -223,9 +252,19 @@ def build():
     links = "".join(f'<li><a href="{u}">{e(t)}</a>: {b}</li>\n' for t, u, b in d["links"])
     hp = sum(1 for c in cos if c["hp"])
     eb = sum(1 for c in cos if c["eb"])
+    if PLACES:
+        got = [r for r in PLACES.values()]
+        when = date.fromisoformat(max(r["fetched"] for r in got)).strftime("%B %Y")
+        for s in d["sections"]:
+            if s[0].startswith("Why we do not rank"):
+                s[0] = "How to read the Google ratings"
+                s[1] = (f"<p>takeCHARGE's list decides who can do Oil to Electric work. We then added each company's Google rating and review count where we found a matching Google listing: {len(got)} of the {n} companies. "
+                        f"The page starts A to Z. Pick \"Top rated on Google\" to sort by our review-weighted score, the same one we use on our installer rankings: a 4.9 from 200 reviews beats a 5.0 from 3. Companies without a rating stay at the bottom, A to Z. "
+                        f"A rating is a guide, not a stamp. takeCHARGE does not endorse any company, so read the recent reviews and get two or three quotes. Ratings and review counts from Google Maps, collected {when}. "
+                        f"<a href=\"/installers/how-we-rank/\">How we rank</a>.</p>")
     top = (f'<div class="callout"><strong>Short answer:</strong> Only installers on takeCHARGE\'s list can earn you the Oil to Electric rebate. '
            f'There are {n} companies on it: {hp} for heat pumps and {eb} for electric furnaces and boilers. Get a written quote from one of them '
-           f'<em>before</em> you apply. takeCHARGE does not endorse any company, so we list them A to Z and do not rank them.</div>')
+           f'<em>before</em> you apply. takeCHARGE does not endorse any company, so the list starts A to Z.{" You can sort by Google rating." if PLACES else ""}</div>')
     article = f"""{top}
 <h2>Find an installer near you</h2>
 <p>Tap your area, or type a town or company name. Tap a phone number on your phone to call. The list is takeCHARGE's, dated February 2024, and we read it on October 27, 2026. <a href="https://takechargenl.ca/wp-content/uploads/2023/07/Oil-to-Electric-Participating-Installers.pdf" target="_blank" rel="noopener">See the original PDF</a>.</p>

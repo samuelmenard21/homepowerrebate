@@ -133,6 +133,7 @@ def share_row(open_=False):
     """Share buttons. Hidden until a signup on every page except the share page itself; each link carries its own src."""
     u = lambda s: f"{SHARE_URL}?src={s}"
     links = [("Facebook", "facebook", f"https://www.facebook.com/sharer/sharer.php?u={quote(u('share-facebook'), safe='')}"),
+             ("LinkedIn", "linkedin", f"https://www.linkedin.com/sharing/share-offsite/?url={quote(u('share-linkedin'), safe='')}"),
              ("Email", "email", f"mailto:?subject={quote('Heat pump rebate of up to $10,000 is coming')}&body={quote(SHARE_TEXT + ' ' + u('share-email'))}"),
              ("Text message", "text", f"sms:?&body={quote(SHARE_TEXT + ' ' + u('share-text'))}")]
     btns = "".join(f'<a href="{html.escape(h)}" data-method="{m}" rel="noopener" target="_blank">{n}</a>' for n, m, h in links)

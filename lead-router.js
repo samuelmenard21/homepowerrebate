@@ -1114,7 +1114,7 @@ async function sendFederalAlertConfirmation(a, env) {
       <a href="${hub}" style="display:block;padding:14px 20px;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;">See the heat pump rebates open now &rarr;</a></td></tr></table>
 
     <p style="${p}margin-top:24px;">Talk soon,<br><strong>Sam</strong><br><span style="color:#5a6b6e;font-size:14px;">Founder, HomePowerRebate. Got a question? Just hit reply. A real person reads every email.</span></p>
-    <p style="font-size:13px;line-height:1.5;color:#5a6b6e;margin:20px 0 0;border-top:1px solid #e3dacb;padding-top:14px;">You asked for this alert on homepowerrebate.com, so we'll only email you about this rebate. We're independent and not part of the Government of Canada, and Ottawa has <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html" style="color:#5a6b6e;">its own sign-up</a> too. <a href="${unsub}" style="color:#5a6b6e;">Unsubscribe</a></p>
+    <p style="font-size:13px;line-height:1.5;color:#5a6b6e;margin:20px 0 0;border-top:1px solid #e3dacb;padding-top:14px;">You asked for this alert on homepowerrebate.com, so we'll only email you about this rebate. We're independent and not part of the Government of Canada, and Ottawa has <a href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html" style="color:#5a6b6e;">its own sign-up</a> too. We also post rebate news on <a href="https://www.youtube.com/@HomePowerRebate" style="color:#5a6b6e;">YouTube</a> and <a href="https://www.linkedin.com/company/homepowerrebate/" style="color:#5a6b6e;">LinkedIn</a>. <a href="${unsub}" style="color:#5a6b6e;">Unsubscribe</a></p>
   </td></tr>
 </table></td></tr></table></body></html>`;
 
@@ -1413,7 +1413,7 @@ function dripEmailFooter(sub) {
   return `
     <p style="margin:24px 0 0;font-size:12px;color:#6b7d80;text-align:center;">
       HomePowerRebate &middot; Independent installer matching service<br>
-      <a href="https://homepowerrebate.com" style="color:#6b7d80;">homepowerrebate.com</a> &middot; <a href="${unsubUrl}" style="color:#6b7d80;">Unsubscribe</a>
+      <a href="https://homepowerrebate.com" style="color:#6b7d80;">homepowerrebate.com</a> &middot; <a href="https://www.youtube.com/@HomePowerRebate" style="color:#6b7d80;">YouTube</a> &middot; <a href="https://www.linkedin.com/company/homepowerrebate/" style="color:#6b7d80;">LinkedIn</a> &middot; <a href="${unsubUrl}" style="color:#6b7d80;">Unsubscribe</a>
     </p>`;
 }
 

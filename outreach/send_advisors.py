@@ -30,7 +30,7 @@ def body(r, address):
 <p>Here is your dedicated page: <a href="{r['profile_url']}" {LINK}>{name} on HomePowerRebate</a>.</p>
 <p>I'm trying to learn what {role} are dealing with right now. If you're open to it, tell me what's going on in your business: what's working, what's slowing you down, anything at all.</p>
 <p>There's no pitch in this email. I read every reply myself, and I'll write back.</p>
-<p>Best regards,<br>Sam Menard<br>Founder, HomePowerRebate<br><a href="https://homepowerrebate.com/">homepowerrebate.com</a></p>
+<p>Best regards,<br>Sam Menard<br>Founder, HomePowerRebate<br><a href="https://homepowerrebate.com/">homepowerrebate.com</a> &middot; <a href="https://www.linkedin.com/company/homepowerrebate/">LinkedIn</a></p>
 <p style="font-size:12px;color:#777">HomePowerRebate, {html.escape(address)}<br>You're receiving this because your business is on a public register of {role}. Reply "remove" and we won't email you again.</p>"""
 
 def main():

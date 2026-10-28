@@ -112,7 +112,7 @@ def body(r, address):
 <p>Here's your profile: <a href="{r['profile_url']}">{name} on HomePowerRebate</a>.</p>
 <p>I'm building this around what installers actually need, so I have one question: <b>what are the 3 biggest challenges in your business right now?</b> Finding good customers, rebate paperwork, hiring, slow seasons, anything at all.</p>
 <p>Just reply with a few lines. I read every answer myself, and I'll tell you honestly whether I can help.</p>
-<p>Best regards,<br>Sam Menard<br>Founder, HomePowerRebate<br><a href="https://homepowerrebate.com/">homepowerrebate.com</a></p>
+<p>Best regards,<br>Sam Menard<br>Founder, HomePowerRebate<br><a href="https://homepowerrebate.com/">homepowerrebate.com</a> &middot; <a href="https://www.linkedin.com/company/homepowerrebate/">LinkedIn</a></p>
 <p style="font-size:12px;color:#777">HomePowerRebate, {html.escape(address)}<br>You're receiving this because your business email is listed on Google Maps. Reply "remove" and we won't email you again.</p>"""
 
 def send(to, subject, htm, key):

@@ -52,8 +52,7 @@ def build(d):
     facts = (f'<div class="learn-facts"><div class="learn-fact"><b>{nreg}</b><span>provinces and states with an open {e(d["noun"])} rebate we track</span></div>'
              f'<div class="learn-fact"><b>{e(top["shown"].replace("up to ", ""))}</b><span>the biggest single amount: {e(top["program"])}, {e(top["region"])} ({top["currency"]})</span></div>'
              f'<div class="learn-fact"><b>{len(progs)}</b><span>open programs, each with its official page and the date we checked it</span></div></div>')
-    pick = "heat-pump-myths-busted" if slug == "heat-pumps" else "7-ways-to-lose-your-home-energy-rebate"
-    quiz = lk.quiz(pick, lk.articles()[pick]["quiz"])
+    quiz = lk.general_quiz(slug)  # ten questions about the device itself, no province or state named
     checks = "".join(f"<li>{c}</li>" for c in d["checks"])
     refs = list(d["refs"])
     for r in progs[:6]:

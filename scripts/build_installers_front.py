@@ -65,7 +65,6 @@ def front(cities):
             lis = "".join(f'<li><b>{e(c["label"])}</b><span>' + " ".join(f'<a href="{c["services"][s]}">{names[s]}</a>' for s in names if s in c["services"]) + "</span></li>" for c in cs)
             cards.append(f'<details class="if-region"><summary><b>{e(r["name"])}</b><span>{len(cs)} cities</span></summary><ul>{lis}</ul></details>')
         groups.append(f'<h3 class="if-h3">{e(label)}</h3><div class="if-regions">{"".join(cards)}</div>')
-    quiz = lk.articles()["9-questions-to-ask-heat-pump-installer"]
     how = "".join(f'<a class="about-promise" href="{h}"><img src="/assets/learn/{img}-640.webp" width="640" height="427" alt="" loading="lazy"><span><b>{e(t)}</b>{e(b)}</span></a>'
                   for h, img, t, b in [("/installers/how-we-rank/", "duplex-home", "Ranked by Google reviews", "A rating weighted by how many reviews a company has. Nobody pays to rank higher, and rankings are not paid for."),
                                       ("/blog/9-questions-to-ask-heat-pump-installer/", "hiring-roof", "Ask nine questions first", "What to ask before you sign, and how to read the answers."),
@@ -85,7 +84,7 @@ def front(cities):
 <p id="if-msg" class="if-msg" role="alert" hidden></p>
 <div class="if-trust"><span>Ranked by Google reviews</span><span>Not paid for</span><span>Rebates linked to the official page</span></div>
 <h2 class="if-h2">What do you need done?</h2><div class="if-tiles">{tiles}</div>
-<div class="learn-wrap" style="padding:0">{lk.quiz("9-questions-to-ask-heat-pump-installer", quiz["quiz"])}</div>
+<div class="learn-wrap" style="padding:0">{lk.general_quiz("hiring")}</div>
 <h2 class="if-h2">Or pick your province or state</h2>{"".join(groups)}
 <h2 class="if-h2">How we rank, and how to choose</h2><div class="about-promises">{how}</div>
 <div class="learn-wrap" style="padding:0">{row}</div>

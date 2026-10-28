@@ -14,12 +14,17 @@ S, E = "<!-- YT-EMBED-START -->", "<!-- YT-EMBED-END -->"
 SITE = "https://homepowerrebate.com"
 
 
+def upload_date(d):
+    """Google wants a time zone on uploadDate; a bare date is flagged."""
+    return d if "T" in d else d + "T12:00:00-07:00"
+
+
 def block(cfg, v, path, heading=None):
     v = {**v, "heading": heading or v["heading"]}
     sub = cfg["channel"] + "?sub_confirmation=1&utm_source=homepowerrebate&utm_medium=embed&utm_campaign=" + v["id"]
     watch = f"https://www.youtube.com/shorts/{v['id']}"
     ld = {"@context": "https://schema.org", "@type": "VideoObject", "name": v["name"], "description": v["description"],
-          "thumbnailUrl": [f"https://i.ytimg.com/vi/{v['id']}/hqdefault.jpg"], "uploadDate": v["uploaded"], "duration": v["duration"],
+          "thumbnailUrl": [f"https://i.ytimg.com/vi/{v['id']}/hqdefault.jpg"], "uploadDate": upload_date(v["uploaded"]), "duration": v["duration"],
           "embedUrl": f"https://www.youtube-nocookie.com/embed/{v['id']}", "contentUrl": watch, "inLanguage": "en",
           "publisher": {"@id": f"{SITE}/#org"}}
     tr = ""

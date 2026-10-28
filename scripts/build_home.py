@@ -310,12 +310,11 @@ def planning(regs):
 
 
 def quiz_section():
-    d = lk.articles()["7-ways-to-lose-your-home-energy-rebate"]
-    return f'''<section class="hm-sec hm-quiz" aria-label="Quick quiz"><div class="hm-wrap">{lk.quiz("7-ways-to-lose-your-home-energy-rebate", d["quiz"])}</div></section>'''
+    return f'''<section class="hm-sec hm-quiz" aria-label="Quick quiz"><div class="hm-wrap">{lk.general_quiz("rebate-basics")}</div></section>'''
 
 
 def installers_strip():
-    return '''<section class="hm-banner" aria-labelledby="hm-inst-h">
+    return f'''<section class="hm-banner" aria-labelledby="hm-inst-h">
   <div class="hm-wrap hm-banner-in">
     <div><h2 id="hm-inst-h">Looking for an installer?</h2><p>See the top-rated companies in your city, ranked by Google reviews. Nobody pays to rank higher.</p></div>
     <a href="/installers/" class="hm-btn">Find top-rated installers {icon("arrow", "hm-ar")}</a>

@@ -22,11 +22,15 @@ def block(cfg, v, path, heading=None):
           "thumbnailUrl": [f"https://i.ytimg.com/vi/{v['id']}/hqdefault.jpg"], "uploadDate": v["uploaded"], "duration": v["duration"],
           "embedUrl": f"https://www.youtube-nocookie.com/embed/{v['id']}", "contentUrl": watch, "inLanguage": "en",
           "publisher": {"@id": f"{SITE}/#org"}}
+    tr = ""
+    if v.get("transcript"):
+        tr = ('<details class="yt-transcript"><summary>Read what the video says</summary>'
+              + "".join(f"<p>{html.escape(line)}</p>" for line in v["transcript"]) + "</details>")
     return (f'{S}<section class="yt-embed" aria-label="{html.escape(v["heading"])}">'
             f'<div class="yt-frame"><iframe src="https://www.youtube-nocookie.com/embed/{v["id"]}?rel=0" title="{html.escape(v["name"])}" loading="lazy" '
             'allow="accelerometer; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>'
             f'<div class="yt-text"><p class="yt-h">{html.escape(v["heading"])}</p><p>{html.escape(v["description"])}</p>'
-            f'<p class="yt-links"><a href="{watch}" rel="noopener">Watch on YouTube</a> <a href="{sub}" rel="noopener">Subscribe</a></p></div>'
+            f'<p class="yt-links"><a href="{watch}" rel="noopener">Watch on YouTube</a> <a href="{sub}" rel="noopener">Subscribe</a></p>{tr}</div>'
             f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script></section>{E}')
 
 

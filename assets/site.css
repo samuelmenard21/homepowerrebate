@@ -369,6 +369,14 @@ h1, h2 { text-wrap: balance; }
   .nav-mobile-only a { padding: 0 10px; }
   .nav-pick { font-size: 13px !important; padding: 0 14px !important; }
 }
+/* phones (2026-10-28): logo and "Pick your city" share row 1, links row 2, search row 3: one row shorter than before */
+@media (max-width: 560px) {
+  .nav-inner { justify-content: space-between !important; align-items: center; }
+  .logo { flex: 1 1 auto !important; justify-content: flex-start !important; order: 0; }
+  .nav-pick { order: 1; margin-left: auto; }
+  .nav-mobile-only { order: 2; flex: 1 0 100% !important; justify-content: space-around !important; }
+  .nav-search { order: 3; flex: 1 0 100%; }
+}
 /* search box in the menu, on every page */
 #city-dropdown-modal { position: absolute; top: 56px; right: 20px; z-index: 49; width: min(360px, calc(100vw - 32px)); max-height: 75vh; overflow-y: auto; background: #fff; border: 1px solid var(--rule, #e3dccf); border-radius: 12px; box-shadow: 0 8px 24px rgba(10, 42, 46, 0.12); text-align: left; }
 .nav-region-tabs { margin-bottom: 14px; }

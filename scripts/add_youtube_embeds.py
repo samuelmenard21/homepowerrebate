@@ -58,6 +58,10 @@ def main():
             if pg["where"] == "top":
                 at = s2.find("<h2", a)
                 at = at if 0 < at < end else end
+                # a quiz wrapper puts its own h2 on the same line: insert before the wrapper
+                w = s2.rfind('<div class="learn-wrap">', a, at)
+                if 0 < at < end and w >= 0 and "\n" not in s2[w:at]:
+                    at = w
             else:
                 at = end
             s2 = s2[:at] + block(cfg, v, pg["path"], pg.get("heading")) + "\n" + s2[at:]

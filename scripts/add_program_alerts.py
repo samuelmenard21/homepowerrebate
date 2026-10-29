@@ -40,7 +40,7 @@ def main():
                 print("missing page:", path)
                 continue
             s = f.read_text(encoding="utf-8")
-            s2 = re.sub(re.escape(S) + ".*?" + re.escape(E) + r"\n?", "", s, flags=re.S)
+            s2 = re.sub(r"\n?" + re.escape(S) + ".*?" + re.escape(E) + r"\n?", "", s, flags=re.S)
             m = ANCHOR.search(s2)
             if not m:
                 print("no article anchor:", path)

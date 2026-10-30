@@ -32,3 +32,7 @@
 /* Links inside the dark "Is this your company?" box were teal on teal and invisible */
 .tpl-profile .ip-quote a { color: var(--amber-bright, #e88a2e); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
 .tpl-profile .ip-quote li { color: #c9d8d5; font-size: 14.5px; margin-bottom: 8px; }
+
+/* QA 2026-10-30: 13px floor, readable footer note, 44px tap height for stand-alone links */
+.tpl-profile .ip-footer-note { font-size: 13px; color: #5b5648; }
+.tpl-profile .ip-city-link, .tpl-profile .ip-verify-links a { display: inline-flex; align-items: center; min-height: 44px; }

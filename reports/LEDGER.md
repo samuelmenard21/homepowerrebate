@@ -20,6 +20,8 @@ Rules:
 
 | 2026-10-27 | /ca/qc/heat-pump/ and /ca/qc/heat-pump/fr/ | logivert, programme logivert, subvention logivert | ~60-90 / 418 combined (week of 10-17) | seo | Added the common misspelling "Logivert" in the intro and a new first FAQ ("Is it Logivert or LogisVert?"), English and French | 2027-01-25 |
 | 2026-10-27 | /furnace-rebates/alberta/ | air conditioner rebate alberta | 30.1 / 77 (week of 10-17, landed on /ca/ab/) | seo | Retitled "Alberta Air Conditioner & Furnace Rebates 2026" (another session landed the same retitle; kept theirs); I added links from /ca/ab/, /ca/ab/heat-pump/, Calgary, Edmonton and the central air guide | 2027-01-25 |
+| unknown (before 10-21 data) | /ca/nl/heating-assistance/ | oil rebate nl 2026, home heating rebate 2026, home heating rebate nl 2026 | 8-9 / 789 combined, 2 clicks (week of 10-21) | seo | Title "NL Oil Rebate 2026: $400 to $1,000 Heating Supplement" is answer-first; git history only shows later site-wide commits, so the real change date is not recorded | 2027-01-27 |
+| unknown (before 10-21 data) | /us/ma/heating-assistance/, /us/pa/heating-assistance/, /ca/on/heating-assistance/, /ca/yt/heating-assistance/ | fuel assistance income guidelines 2026, liheap 2026-2027, pioneer utility grant | 4-10 / under 20 each (week of 10-21) | seo | Titles already answer-first; change date not recorded. Treat the week of 10-21 as baseline | 2027-01-27 |
 
 ## Open items for the next review (2026-11-02)
 - Read the 11-02 week as a baseline for the rows above. Recommend edits to them only if a page clearly fails to answer its query.

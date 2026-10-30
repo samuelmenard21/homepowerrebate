@@ -263,13 +263,42 @@ STYLE_RE = re.compile(r'<style(?: id="([\w-]+)")?>([\s\S]*?)</style>\n?')
 TPL_LINK_RE = re.compile(r'<link rel="stylesheet" href="/assets/tpl/([a-z0-9-]+)\.css\?v=[0-9a-f]+" data-hpr-tpl(?: id="[\w-]+")?>\n?')
 
 
+# Families only a few pages use are served as /assets/fam/<family>.css, linked right after site.css on pages of that family
+# (2026-10-30), so a blog post or city page no longer downloads the home page's 38 KB. Every rule in these files is scoped under
+# .tpl-<family> (or a class only that family emits), checked with scripts/style_digest.js. article and ranking stay in site.css (most pages).
+SPLIT_FAMILIES = ("home", "advisor", "profile", "powerscore", "hub")
+
+
 def _template_css() -> str:
     out = []
     for name in FAMILIES:
         p = TEMPLATES_DIR / f"{name}.css"
-        if p.exists():
+        if p.exists() and name not in SPLIT_FAMILIES:
             out.append(f"/* ===== template design: {name} ({p.name}) ===== */\n" + p.read_text(encoding="utf-8"))
     return "\n".join(out)
+
+
+_FAM_CSS = {}
+
+
+def family_css_body(name: str) -> str:
+    if name not in _FAM_CSS:
+        p = TEMPLATES_DIR / f"{name}.css"
+        _FAM_CSS[name] = (f"/* HomePowerRebate {name} page design. Generated from _partials/templates/{name}.css by scripts/apply_canonical_nav_footer.py; edit that, not this file. */\n"
+                          + add_font_fallbacks(p.read_text(encoding="utf-8")) + "\n")
+    return _FAM_CSS[name]
+
+
+FAM_CSS_LINK_RE = re.compile(r'\n?<link rel="stylesheet" href="/assets/fam/[a-z]+\.css\?v=[0-9a-f]+" data-hpr-fam-css>')
+
+
+def family_css_link(content: str) -> str:
+    """The extra stylesheet link for a page whose body class names a split family; empty for every other page."""
+    m = re.search(r'<body[^>]*\bclass="[^"]*\btpl-(' + "|".join(SPLIT_FAMILIES) + r')\b', content)
+    if not m:
+        return ""
+    h = __import__("hashlib").sha1(family_css_body(m.group(1)).encode()).hexdigest()[:10]
+    return f'\n<link rel="stylesheet" href="/assets/fam/{m.group(1)}.css?v={h}" data-hpr-fam-css>'
 
 
 _TPL_LINKS = {}
@@ -432,6 +461,13 @@ def _write_site_css():
     body = site_css_body()
     if not SITE_CSS_PATH.exists() or SITE_CSS_PATH.read_text() != body:
         SITE_CSS_PATH.write_text(body)
+    fam_dir = SITE_CSS_PATH.parent / "fam"
+    fam_dir.mkdir(exist_ok=True)
+    for name in SPLIT_FAMILIES:
+        fb = family_css_body(name)
+        fp = fam_dir / f"{name}.css"
+        if not fp.exists() or fp.read_text() != fb:
+            fp.write_text(fb)
 
 
 OG_S, OG_E = "<!-- OG-CARD-START -->", "<!-- OG-CARD-END -->"
@@ -467,12 +503,14 @@ def ensure_shared_assets(content: str) -> str:
     content = ensure_template(content)
     content = ensure_og(content)
     # the link sits exactly where the inline block was, so the cascade order is unchanged
+    content = FAM_CSS_LINK_RE.sub("", content)
+    fam = family_css_link(content)
     if OLD_CSS_BLOCK_RE.search(content):
-        content = OLD_CSS_BLOCK_RE.sub(lambda m: site_css_link(), content, count=1)
+        content = OLD_CSS_BLOCK_RE.sub(lambda m: site_css_link() + fam, content, count=1)
     elif SITE_CSS_LINK_RE.search(content):
-        content = SITE_CSS_LINK_RE.sub(lambda m: site_css_link(), content, count=1)
+        content = SITE_CSS_LINK_RE.sub(lambda m: site_css_link() + fam, content, count=1)
     else:
-        content = content.replace("</head>", site_css_link() + "\n</head>", 1)
+        content = content.replace("</head>", site_css_link() + fam + "\n</head>", 1)
     if OLD_JS_BLOCK_RE.search(content):
         content = OLD_JS_BLOCK_RE.sub(lambda m: js_block, content, count=1)
     else:
@@ -539,8 +577,9 @@ def add_font_fallbacks(content: str) -> str:
     return "".join(p if i % 2 else _FAMILY_RE.sub(fix, p) for i, p in enumerate(parts))
 
 
-FONT_FILES = ("https://fonts.gstatic.com/s/fraunces/v38/6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeP2Xz5c.woff2",
-              "https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsH8ahuQ2e8.woff2")
+# self-hosted (2026-10-30): the same two latin variable files Google served, copied into /assets/fonts (cached a year by _headers),
+# so the first visit skips two extra connections. A new font version needs a new file name.
+FONT_FILES = ("/assets/fonts/fraunces-v38-latin.woff2", "/assets/fonts/intertight-v9-latin.woff2")
 _LATIN = ("U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, "
           "U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD")
 FONT_HEAD = (
@@ -716,6 +755,7 @@ def ensure_fast_head(content: str) -> str:
     # The inline latin faces cover English text; the Google stylesheet would re-declare them with a swap after first paint, which shifts the layout. Drop it.
     content = re.sub(r'<link rel="preload" as="style" href="https://fonts\.googleapis\.com/css2[^"]*" onload="[^"]*">\n?', "", content)
     content = re.sub(r'<noscript><link rel="stylesheet" href="https://fonts\.googleapis\.com/css2[^"]*"></noscript>\n?', "", content)
+    content = re.sub(r'<link rel="preconnect" href="https://fonts\.(?:googleapis|gstatic)\.com"(?: crossorigin)?>\n?', "", content)
     if 'rel="icon"' not in content and "</head>" in content:
         content = content.replace("</head>", ICON_LINKS + "\n</head>", 1)
     content = re.sub(r'<script src="(/form-handlers[^"]*\.js)"></script>', r'<script defer src="\1"></script>', content)

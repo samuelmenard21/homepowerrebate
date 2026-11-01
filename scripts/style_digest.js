@@ -13,7 +13,7 @@ const DIGEST = () => {
   document.querySelectorAll('body *').forEach((e, i) => {
     if (e.closest('script,style,noscript,[hidden]')) return;
     const c = getComputedStyle(e); const props = [];
-    for (let k = 0; k < c.length; k++) { const p = c[k]; if (/^(transition|animation|-webkit-)/.test(p)) continue; props.push(p + ':' + c.getPropertyValue(p)); }
+    for (let k = 0; k < c.length; k++) { const p = c[k]; if (/^(transition|animation|-webkit-)/.test(p)) continue; props.push(p + ':' + (p.startsWith('--') ? c.getPropertyValue(p).replace(/\s+/g, '') : c.getPropertyValue(p))); } // custom properties are compared without whitespace: minifying changes only their spaces
     const s = props.sort().join(';') + ';'; // custom properties list in no fixed order, so sort
     if (window.__dbg && i === 0) out.push('PROPS ' + s);
     out.push(i + ':' + e.tagName + '.' + String(e.className && e.className.baseVal !== undefined ? e.className.baseVal : e.className).slice(0, 40) + '=' + h(s));

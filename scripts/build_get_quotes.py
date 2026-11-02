@@ -32,7 +32,9 @@ CSS = """
 .gq-h{font-family:'Fraunces',serif;font-size:22px;color:var(--teal-deep);margin:0 0 6px}.gq-sub{font-size:14px;color:var(--ink-soft);margin:0 0 10px}
 .gq-msg{margin-top:14px;padding:14px 16px;border-radius:8px;font-size:15px;display:none}.gq-msg.show{display:block}.gq-msg.ok{background:#eaf3ee;color:#1f5a3d}.gq-msg.err{background:#fef3e6;color:#8a4a06}
 .gq details summary{cursor:pointer;font-weight:700;font-size:17px}
-.gq-hero{position:relative;padding:clamp(48px,7vw,104px) 20px clamp(64px,8vw,112px);text-align:center;color:#fff;background:linear-gradient(180deg,rgba(8,54,63,.78),rgba(8,54,63,.92)),url(/assets/learn/modern-home-1600.webp) center/cover no-repeat}
+.gq-hero{position:relative;padding:clamp(48px,7vw,104px) 20px clamp(64px,8vw,112px);text-align:center;color:#fff;background:linear-gradient(180deg,rgba(8,54,63,.78),rgba(8,54,63,.92)),url(/assets/learn/modern-home-640.webp) center/cover no-repeat}
+@media(min-width:701px){.gq-hero{background-image:linear-gradient(180deg,rgba(8,54,63,.78),rgba(8,54,63,.92)),url(/assets/learn/modern-home-1200.webp)}}
+@media(min-width:1500px){.gq-hero{background-image:linear-gradient(180deg,rgba(8,54,63,.78),rgba(8,54,63,.92)),url(/assets/learn/modern-home-1600.webp)}}
 .gq-hero h1{max-width:14em;margin:0 auto 14px;font-family:Fraunces,Georgia,serif;font-size:clamp(40px,5.4vw,68px);font-weight:700;line-height:1.02;letter-spacing:-.03em;color:#fff;text-wrap:balance}
 .gq-hero p.gq-lead{max-width:34em;margin:0 auto 28px;font-size:clamp(19px,1.7vw,24px);line-height:1.45;color:rgba(250,247,242,.92)}
 .gq-bar{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:0;max-width:860px;margin:0 auto;padding:8px;border-radius:999px;background:#fff;box-shadow:0 18px 50px -18px rgba(0,0,0,.55)}

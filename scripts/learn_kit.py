@@ -5,9 +5,12 @@ Articles come from data/learn/<slug>.json (see build_learn_articles.py)."""
 import html
 import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "scripts"))
+import regions as _regions
 e = html.escape
 
 
@@ -97,20 +100,43 @@ def _deep_cta(cta, ctx):
     return re.sub(r'href="[^"]*"', f'href="{href}"', cta, count=1)
 
 
+def _optin(ctx):
+    """The opt-in under the result (2026-11-01). Canada: the federal heat pump rebate alert (/alert, list federal-hp), which promises only emails about that rebate.
+    Everywhere else: the monthly update for the visitor's state (/newsletter). Shown only when the quiz knows a province or state, or (national quiz) asks for one.
+    The wording says exactly what they will get; the script that posts it is in _partials/nav-footer.html."""
+    mode = ctx.get("optin")
+    if mode not in ("federal", "news"):
+        return ""
+    if mode == "federal":
+        head = "Want one email the day federal heat pump applications open?"
+        small = "We will email you when applications open and when Ottawa says who qualifies. Nothing else. Unsubscribe any time."
+    else:
+        head = f"Want one email a month when {e(ctx.get('place') or 'your')} rebates change?"
+        small = "The monthly update for your state, with new and closing programs. Unsubscribe any time."
+    sel = ""
+    if mode == "federal" and not ctx.get("prov"):
+        import regions
+        opts = "".join(f'<option value="{r["abbr"]}">{e(r["name"])}</option>' for r in sorted((r for r in regions.REGIONS if r["country"] == "ca"), key=lambda r: r["name"]))
+        sel = f'<label class="qz-lab">Your province<select name="province" required><option value="">Choose one</option>{opts}</select></label>'
+    return (f'<form class="qz-optin" hidden novalidate><h3>{head}</h3>{sel}<label class="qz-lab">Your email<input type="email" name="email" autocomplete="email" required></label>'
+            f'<input type="text" name="website" class="qz-hp" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">Email me</button>'
+            f'<p class="qz-optin-small">{small}</p><p class="qz-optin-msg" role="status"></p></form>')
+
+
 def quiz(slug, q):
     """A one-question-at-a-time quiz (shared CSS and JS in _partials/nav-footer.html). Without JavaScript every question and its explanation show."""
     qs = []
     for n, item in enumerate(q["qs"]):
         opts = "".join(f'<button type="button" class="qz-opt">{e(o)}</button>' for o in item["options"])
-        qs.append(f'<fieldset class="qz-q" data-a="{item["answer"]}"><legend>{n + 1}. {e(item["q"])}</legend><div class="qz-opts">{opts}</div>'
+        qs.append(f'<fieldset class="qz-q" id="quiz-{slug}-q{n + 1}" data-a="{item["answer"]}"><legend>{n + 1}. {e(item["q"])}</legend><div class="qz-opts">{opts}</div>'
                   f'<p class="qz-why">{item["why"]}</p></fieldset>')
     msgs = e(json.dumps(q["messages"]), quote=True)
     ctx = q.get("ctx") or {}
     cta = _deep_cta(q["cta"], ctx)
-    attrs = "".join(f' data-{k}="{e(str(ctx[k]), quote=True)}"' for k in ("place", "what") if ctx.get(k))
+    attrs = "".join(f' data-{k}="{e(str(ctx[k]), quote=True)}"' for k in ("place", "what", "city", "prov", "hook", "optin") if ctx.get(k))
     return (f'<section class="hpr-quiz" id="quiz-{slug}" data-msgs="{msgs}"{attrs}><span class="qz-kick">Quick quiz</span><h2>{e(q["title"])}</h2><p class="qz-intro">{e(q["intro"])}</p>{"".join(qs)}'
             f'<div class="qz-result" aria-live="polite"><div class="qz-ring"><span class="qz-score"></span></div><span class="qz-msg"></span>'
-            f'<div class="qz-acts"><span class="qz-cta-wrap">{cta.replace("<a ", "<a class=\"qz-cta\" ", 1)}</span><button type="button" class="qz-again">Play again</button><button type="button" class="qz-share">Share my score</button></div></div></section>')
+            f'{_optin(ctx)}<div class="qz-acts"><span class="qz-cta-wrap">{cta.replace("<a ", "<a class=\"qz-cta\" ", 1)}</span><button type="button" class="qz-again">Play again</button><button type="button" class="qz-share">Share my score</button></div></div></section>')
 
 
 def strip(links):
@@ -204,7 +230,8 @@ def region_quiz(code, upgrades=None):
     return {"title": f"Quick quiz: {d['name']} rebates", "intro": "A few questions from the programs we track. Tap an answer to see why.", "qs": qs,
             "messages": ["Worth another look at the programs above.", "Nice. You know the programs well.", "Perfect score. You know your rebates."],
             "cta": f'<a href="/calculator/{code}/">Estimate my rebates</a>',
-            "ctx": {"region": code, "place": d["name"], "upgrade": upgrades[0] if upgrades and len(upgrades) == 1 else ""}}
+            "ctx": {"region": code, "place": d["name"], "upgrade": upgrades[0] if upgrades and len(upgrades) == 1 else "",
+                    "prov": _regions.BY_CODE[code]["abbr"], "optin": "federal" if _regions.BY_CODE[code]["country"] == "ca" else "news"}}
 
 
 # ---- general quizzes (no province or state named; they teach how the device works) and city quizzes (2026-10-28) ----
@@ -240,6 +267,46 @@ def _shuffled(correct, wrong, seed):
     return opts, opts.index(correct)
 
 
+# ---- national standing (2026-11-01): PowerScore ranks cities by dollars in US dollars, one yardstick for Canada and the US ----
+_PS = json.loads((ROOT / "powerscore-data.json").read_text(encoding="utf-8"))
+_RANKS = {}
+
+
+def _ps_rows(cat):
+    """Every city with an open rebate for the upgrade, as (usd, label, region name), highest first."""
+    if cat not in _RANKS:
+        rows = []
+        for rk, reg in _PS["regions"].items():
+            for slug, c in reg["cities"].items():
+                v = c["categories"].get(cat, {})
+                if v.get("status") == "open" and v.get("usd_value", 0) > 0:
+                    rows.append((v["usd_value"], c["label"], reg["label"], v.get("dollar_value", 0), reg["country"]))
+        _RANKS[cat] = sorted(rows, key=lambda r: (-r[0], r[1]))
+    return _RANKS[cat]
+
+
+def _rank_line(code, city, service, name, what):
+    """One sentence for the explanation of the amount question: where the city stands among all cities we track, and who is first. Empty if unknown."""
+    cat = "heat-pump" if service == "hub" else service
+    c = _PS["regions"].get(_regions.BY_CODE[code]["path"], {}).get("cities", {}).get(city)
+    v = (c or {}).get("categories", {}).get(cat, {})
+    if not c or v.get("status") != "open" or v.get("usd_value", 0) <= 0:
+        return ""
+    rows = _ps_rows(cat)
+    usd = v["usd_value"]
+    rank = 1 + sum(1 for r in rows if r[0] > usd)
+    tied = sum(1 for r in rows if r[0] == usd) - 1
+    top = rows[0]
+    topn = sum(1 for r in rows if r[0] == top[0])
+    thing = "heat pump" if service == "hub" else what
+    tie = f", tied with {tied} other cit{'y' if tied == 1 else 'ies'}" if tied else ""
+    best = (f"Cities share the top spot ({topn} at about US${round(top[0]):,}), including {e(top[1])}." if topn > 1
+            else f"The biggest is {e(top[1])} ({e(top[2])}) at about US${round(top[0]):,}.")
+    return (f' <strong>Nationally:</strong> {e(name)} ranks #{rank} of {len(rows)} cities for open {e(thing)} rebates{tie} (dollars compared in US dollars). {best} '
+            f'<a href="/powerscore/leaderboard/">See the leaderboard</a>.')
+
+
+
 def city_quiz(code, city, service="hub", country="ca"):
     """Quiz about one city, built only from our own city data: its utility, weather sample, solar hours, the biggest 'up to' amount we list for the
     upgrade, and (where we hold it) the renter share. None when fewer than three questions can be made."""
@@ -252,6 +319,7 @@ def city_quiz(code, city, service="hub", country="ca"):
     name = row["city"]
     us = country == "us"
     qs = []
+    hook = ""
 
     def say(*variants):
         """One of several phrasings of a question, picked by the city and page, so sibling city pages do not repeat the same sentence."""
@@ -283,6 +351,7 @@ def city_quiz(code, city, service="hub", country="ca"):
         def t(x):
             return f"{round(x * 9 / 5 + 32)} °F" if us else f"{round(x)} °C"
         step = 9 if us else 5
+        hook = f"{name}'s average January low is {t(v)}."
         add(say(f"On average, how low does the temperature fall in {name} in January?", f"What is a typical January night low in {name}?", f"In January, {name} nights usually bottom out near:"), t(v), [t(v + sh[0] * step), t(v + sh[1] * step)],
             f"Our weather sample for {e(name)} ({cl['sample_years']}) shows an average January low of {t(v)}. Cold-climate heat pumps are tested at low temperatures, so check the rating at your coldest days, not just the average.")
         if service == "heat-pump" and cl.get("coldest_recorded_c") is not None:
@@ -292,6 +361,7 @@ def city_quiz(code, city, service="hub", country="ca"):
     so = _SOLAR.get(key)
     if service in ("solar", "battery", "hub") and so:
         h = so["approx_peak_sun_hours"]
+        hook = hook or f"{name} gets about {h:.1f} peak sun hours a day."
         wrong = [f"{max(h + sh[0], 0.5):.1f}", f"{max(h + sh[1], 0.9):.1f}"]
         add(say(f"About how many peak sun hours a day does {name} get on average?", f"A solar panel in {name} sees about how many full-sun hours a day?", f"Daily peak sun hours in {name} average about:"), f"{h:.1f}", wrong,
             f"Our {so['sample_years']} sunshine sample for {e(name)} averages about {h:.1f} peak sun hours a day. Fewer hours means less solar power per panel, so the size of the system matters.")
@@ -303,7 +373,7 @@ def city_quiz(code, city, service="hub", country="ca"):
         wrong = [x for x in dict.fromkeys(sorted(set(nums) - {top}) + [top * 2, max(top // 2, 100), top * 3]) if x != top][:2]
         what = _NAME.get(service, "heat pump") if service != "hub" else "heat pump"
         add(say(f"We list {what} rebates for {name}. What is the biggest 'up to' amount?", f"What is the largest 'up to' {what} figure on our {name} summary?", f"Across the {what} programs we list for {name}, the top 'up to' amount is:"), f"${top:,}", [f"${x:,}" for x in wrong],
-            f"Our summary for {e(name)}: {e(txt)}. The amount you get depends on your home, income and utility, so use the calculator.")
+            f"Our summary for {e(name)}: {e(txt)}. The amount you get depends on your home, income and utility, so use the calculator." + _rank_line(code, city, service, name, what))
     cen = ROOT / "data" / f"{code}-housing-census2021.json"
     if cen.exists():
         c = json.loads(cen.read_text(encoding="utf-8")).get(city)
@@ -319,7 +389,51 @@ def city_quiz(code, city, service="hub", country="ca"):
     cta = f'<a href="/calculator/{code}/">Estimate my rebates</a>' if (CAL / f"{code}.json").exists() else '<a href="/get-quotes/">See my rebates</a>'
     return {"title": f"Quick quiz: {what} in {name}", "intro": f"Questions about {name}, from the data behind this page. Tap an answer to see why.", "qs": qs[:5],
             "messages": ["Worth another look at the page above.", f"Nice. You know {name} well.", f"Perfect score. You know {name}."], "cta": cta,
-            "ctx": {"region": code, "city": city, "place": name, "upgrade": service if service != "hub" else "", "what": what if service != "hub" else ""}}
+            "ctx": {"region": code, "city": city, "place": name, "upgrade": service if service != "hub" else "", "what": what if service != "hub" else "",
+                    "prov": _regions.BY_CODE[code]["abbr"], "optin": "federal" if country == "ca" else "news", "hook": hook}}
+
+
+def national_quiz():
+    """A quiz about the whole country, built from PowerScore data and the federal facts, so it cannot drift: which cities top the open rebates, what Ottawa's
+    heat pump rebate pays, how many cities we compare. Used on the PowerScore leaderboard and the federal pages (scripts/add_national_quiz.py)."""
+    import zlib
+    qs = []
+    for cat, what in (("heat-pump", "heat pump"), ("battery", "home battery"), ("solar", "solar")):
+        rows = _ps_rows(cat)
+        if len(rows) < 6:
+            continue
+        top = [r for r in rows if r[0] == rows[0][0]]
+        right = sorted(top, key=lambda r: zlib.crc32((cat + r[1]).encode()))[0]
+        low = [r for r in rows if r[0] < rows[0][0] * 0.85 and r[2] != right[2]]
+        wrong, seen = [], set()
+        for r in sorted(low, key=lambda r: zlib.crc32((cat + "w" + r[1]).encode())):
+            if r[2] not in seen:
+                seen.add(r[2])
+                wrong.append(r)
+            if len(wrong) == 2:
+                break
+        if len(wrong) < 2:
+            continue
+        opts, a = _shuffled(right[1], [w[1] for w in wrong], "nat" + cat)
+        share = f"{len(top)} cities share the top spot" if len(top) > 1 else "It is first on its own"
+        qs.append({"q": f"Which of these cities has the biggest open {what} rebate we track in Canada and the US?", "options": opts, "answer": a,
+                   "why": f"{e(right[1])} ({e(right[2])}), at about US${round(right[0]):,}. {share}. Dollars are compared in US dollars. "
+                          f'<a href="/powerscore/leaderboard/">See the leaderboard</a>.'})
+    fed = next(f for f in json.loads((ROOT / "data" / "verified-facts" / "federal.json").read_text(encoding="utf-8"))["facts"] if f["id"].startswith("federal-0"))
+    assert "$10,000" in fed["amount"] and "$2,000" in fed["amount"], "federal-0 wording changed: rewrite the national quiz"
+    when = __import__("datetime").date.fromisoformat(fed["verified_on"]).strftime("%B %-d, %Y")
+    qs.append({"q": "What is the most the National Heat Pump Rebate can pay, as Ottawa announced it?", "options": ["$2,000", "$10,000", "$20,000"], "answer": 1,
+               "why": f'Up to $10,000 for households below median income, and $2,000 for other eligible homeowners. Ottawa has not opened applications yet. '
+                      f'<a href="/programs/national-heat-pump-rebate/">Latest details</a>, checked {when}.'})
+    n = sum(len(r["cities"]) for r in _PS["regions"].values())
+    opts, a = _shuffled(str(n), [str(n - 60), str(n + 90)], "natcount")
+    qs.append({"q": "How many cities does our PowerScore compare?", "options": opts, "answer": a,
+               "why": f"{n} cities across Canada and the US, each scored on the rebates open today. <a href=\"/powerscore/\">How PowerScore works</a>."})
+    if len(qs) < 4:
+        return None
+    return {"title": "Quick quiz: rebates across Canada and the US", "intro": "Five questions from our national data. Tap an answer to see why.", "qs": qs[:5],
+            "messages": ["Worth a look at the leaderboard.", "Nice. You know the national picture.", "Perfect score. You know the rebates."],
+            "cta": '<a href="/get-quotes/">See my rebates</a>', "ctx": {"optin": "federal", "place": "", "what": "heat pump"}}
 
 
 # ---- photo for any article (2026-10-24): one free-licence photo per topic, chosen by words in the slug and title ----

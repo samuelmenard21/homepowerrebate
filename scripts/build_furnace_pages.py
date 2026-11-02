@@ -63,7 +63,7 @@ REGIONS = {
         "sources": [
             ("BC Hydro heat pump rebate", "https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html"),
             ("BC Hydro product rebates", "https://www.bchydro.com/powersmart/residential/rebates-programs/product-rebates.html"),
-            ("CleanBC Energy Savings Program (July 6, 2026 rules)", "https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf"),
+            ("CleanBC Energy Savings Program (July 6, 2026 rules)", "https://betterhomesbc.ca/learn-about-programs/energy-savings-program/energy-savings-program-requirements/"),
             ("FortisBC rebates and offers", "https://www.fortisbc.com/rebates-and-energy-savings/rebates-and-offers"),
             ("FortisBC ECAP free upgrades", "https://www.fortisbc.com/rebates/detail/free-home-energy-evaluation-and-upgrades"),
         ],

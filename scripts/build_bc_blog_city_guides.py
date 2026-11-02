@@ -39,7 +39,7 @@ S = {
     "bch_ev": ("BC Hydro home EV charger rebate", "https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/rebates-home-chargers.html"),
     "bch_evtop": ("BC Hydro charger rebate top-ups", "https://www.bchydro.com/powersmart/electric-vehicles/rebates-incentives/local-rebate-top-ups.html"),
     "thermo": ("B.C. government: free smart thermostats (2026)", "https://news.gov.bc.ca/releases/2026ECS0037-000794"),
-    "esp": ("CleanBC Energy Savings Program rules (July 6, 2026)", "https://betterhomesbc.ca/wp-content/uploads/2026/07/RebateEligibilityRequirements_ESP_6July2026.pdf"),
+    "esp": ("CleanBC Energy Savings Program rules (July 6, 2026)", "https://betterhomesbc.ca/learn-about-programs/energy-savings-program/energy-savings-program-requirements/"),
     "fb_hp": ("FortisBC heat pump rebate", "https://www.fortisbc.com/rebates/detail/air-source-heat-pump-rebate"),
     "fb_iq": ("FortisBC income-qualified heat pump rebate", "https://www.fortisbc.com/rebates/detail/iqheatpump"),
     "fb_win": ("FortisBC window and door rebates", "https://www.fortisbc.com/rebates/detail/door-window-rebates"),

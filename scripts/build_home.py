@@ -310,12 +310,11 @@ def planning(regs):
 
 
 def quiz_section():
-    d = lk.articles()["7-ways-to-lose-your-home-energy-rebate"]
-    return f'''<section class="hm-sec hm-quiz" aria-label="Quick quiz"><div class="hm-wrap">{lk.quiz("7-ways-to-lose-your-home-energy-rebate", d["quiz"])}</div></section>'''
+    return f'''<section class="hm-sec hm-quiz" aria-label="Quick quiz"><div class="hm-wrap">{lk.general_quiz("rebate-basics")}</div></section>'''
 
 
 def installers_strip():
-    return '''<section class="hm-banner" aria-labelledby="hm-inst-h">
+    return f'''<section class="hm-banner" aria-labelledby="hm-inst-h">
   <div class="hm-wrap hm-banner-in">
     <div><h2 id="hm-inst-h">Looking for an installer?</h2><p>See the top-rated companies in your city, ranked by Google reviews. Nobody pays to rank higher.</p></div>
     <a href="/installers/" class="hm-btn">Find top-rated installers {icon("arrow", "hm-ar")}</a>
@@ -363,14 +362,14 @@ def region_ledger(regs):
         body += f'<tr class="hm-mx-grp"><th colspan="{len(cols) + 1}" scope="colgroup">{name} <span>amounts in {cur}, {len(rs)} {unit}</span></th></tr>'
         for r in rs:
             cells = ""
-            for c, _ in cols:
+            for c, lab in cols:
                 x = next((x for x in r["rows"] if x["cat"] == c and not x.get("fed")), None)
                 if not x:
-                    cells += '<td class="hm-mx-none"><span aria-label="No open program found">&ndash;</span></td>'
+                    cells += f'<td class="hm-mx-none" data-label="{esc(lab)}"><span aria-label="No open program found">&ndash;</span></td>'
                     continue
                 a = x["amt"][len("Up to "):] if x["amt"].startswith("Up to ") else x["amt"]
                 hot = ' class="hm-mx-hot"' if x["n"] > 0 and x["n"] == best[c] else ""
-                cells += f'<td{hot}><a href="{r["hub"]}" title="{esc(x["name"])}">{esc(a)}</a></td>'
+                cells += f'<td{hot} data-label="{esc(lab)}"><a href="{r["hub"]}" title="{esc(x["name"])}">{esc(a)}</a></td>'
             body += f'<tr><th scope="row"><a href="{r["hub"]}">{esc(r["n"])}</a><span>{r["count"]} {"city" if r["count"] == 1 else "cities"}</span></th>{cells}</tr>'
     return f'''<section class="hm-sec hm-ledger" id="regions" aria-labelledby="hm-reg-h">
   <div class="hm-wrap">

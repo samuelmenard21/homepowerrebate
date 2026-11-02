@@ -1,0 +1,30 @@
+# Fast guard rails on every pull request: the same checks CLAUDE.md asks for before any commit (about 20 seconds in all).
+# check_generator_sync.py is not here: it rebuilds every page and takes minutes, so run it locally before changing a generator.
+name: site checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Facts have id, status and verified_on
+        run: python3 scripts/check_facts.py
+      - name: Hub layout
+        run: python3 scripts/check_hub_layout.py
+      - name: Consistency (glossary, pill labels, banned terms)
+        run: python3 scripts/check_consistency.py
+      - name: Every region and city is listed everywhere
+        run: python3 scripts/check_region_coverage.py
+      - name: French pages match their facts
+        run: python3 scripts/check_fr_pages.py
+      - name: Internal links, redirects and shadowed pages
+        run: python3 scripts/check_internal_links.py
+      - name: Redirect rule limit (Cloudflare Pages allows 2,000 static and 100 dynamic)
+        run: python3 scripts/compact_redirects.py --check

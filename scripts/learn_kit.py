@@ -138,13 +138,16 @@ def open_programs(upgrade, labelled=False):
     return sorted(out, key=lambda r: (r["country"] != "ca", r["region"], -r["value"]))
 
 
-def region_quiz(code):
-    """A quiz for a region built from its calculator programs (so every answer is a verified, dated amount). None when the region has too few."""
+def region_quiz(code, upgrades=None):
+    """A quiz for a region built from its calculator programs (so every answer is a verified, dated amount). None when the region has too few.
+    upgrades limits it to programs for those upgrade ids (a region's heat pump page asks about heat pump programs)."""
     import zlib
     d = json.loads((CAL / f"{code}.json").read_text(encoding="utf-8"))
     cur = "CA$" if d["currency"] == "CAD" else "$"
     rows = []
     for p in d["programs"]:
+        if upgrades and p.get("upgrade") not in upgrades:
+            continue
         v, shown = _amount(p.get("amount"))
         if p.get("status") == "active" and v > 0 and shown.startswith("up to"):
             rows.append((p["name"], v, shown, p.get("verified_on", ""), p.get("source_url", "")))
@@ -170,7 +173,120 @@ def region_quiz(code):
                    "why": f"{e(name)} pays {e(shown)}. " + (f'<a href="{e(src)}" target="_blank" rel="noopener">Official page</a>, checked {when}.' if src else f"Checked {when}.")})
     return {"title": f"Quick quiz: {d['name']} rebates", "intro": "A few questions from the programs we track. Tap an answer to see why.", "qs": qs,
             "messages": ["Worth another look at the programs above.", "Nice. You know the programs well.", "Perfect score. You know your rebates."],
-            "cta": f'<a href="/calculator/{code}/">Estimate your rebates</a>'}
+            "cta": f'<a href="/calculator/{code}/">Estimate my rebates</a>'}
+
+
+# ---- general quizzes (no province or state named; they teach how the device works) and city quizzes (2026-10-28) ----
+QZ = ROOT / "data" / "quizzes"
+
+
+def general_quiz(name, slug=None):
+    """A device-knowledge quiz from data/quizzes/<name>.json. The file lists the right answer first; the order is shuffled by a hash of the question so the
+    answer is not always the first button. Never names a province or state."""
+    import zlib
+    q = json.loads((QZ / f"{name}.json").read_text(encoding="utf-8"))
+    qs = []
+    for item in q["qs"]:
+        opts = sorted(item["options"], key=lambda o: zlib.crc32((item["q"] + o).encode()))
+        qs.append({**item, "options": opts, "answer": opts.index(item["options"][item["answer"]])})
+    return quiz(slug or f"{name}-basics", {**q, "qs": qs})
+
+
+_LOOKUP = json.loads((ROOT / "city-rebate-lookup.json").read_text(encoding="utf-8"))
+_CLIMATE = json.loads((ROOT / "city-climate-data.json").read_text(encoding="utf-8"))
+_SOLAR = json.loads((ROOT / "city-solar-data.json").read_text(encoding="utf-8"))
+_CAT = {"heat-pump": "heat_pump", "solar": "solar", "battery": "battery", "water-heater": "water_heater", "insulation": "insulation",
+        "windows-doors": "windows", "ev-charger": "ev_charger", "smart-thermostats": "thermostat", "hrv": "hrv"}
+_COLD = {"heat-pump", "insulation", "windows-doors", "water-heater", "smart-thermostats", "hub"}
+_NAME = {"heat-pump": "heat pump", "solar": "solar", "battery": "battery", "water-heater": "water heater", "insulation": "insulation",
+         "windows-doors": "windows and doors", "ev-charger": "EV charger", "smart-thermostats": "smart thermostat", "hub": "home energy"}
+
+
+def _shuffled(correct, wrong, seed):
+    import zlib
+    opts = sorted([correct, *wrong], key=lambda o: zlib.crc32((seed + o).encode()))
+    return opts, opts.index(correct)
+
+
+def city_quiz(code, city, service="hub", country="ca"):
+    """Quiz about one city, built only from our own city data: its utility, weather sample, solar hours, the biggest 'up to' amount we list for the
+    upgrade, and (where we hold it) the renter share. None when fewer than three questions can be made."""
+    import re
+    import zlib
+    key = f"{code}|{city.replace('-', ' ')}"
+    row = _LOOKUP.get(key)
+    if not row:
+        return None
+    name = row["city"]
+    us = country == "us"
+    qs = []
+
+    def say(*variants):
+        """One of several phrasings of a question, picked by the city and page, so sibling city pages do not repeat the same sentence."""
+        return variants[zlib.crc32((key + service + variants[0]).encode()) % len(variants)]
+
+    def add(q, correct, wrong, why):
+        opts, a = _shuffled(correct, wrong, key + q)
+        num = lambda o: float(re.sub(r"[^\d.\-]", "", o))
+        if all(re.match(r"^[\$\-]?\d", o) for o in opts):  # numbers read best in order
+            opts = sorted(opts, key=num)
+            a = opts.index(correct)
+        qs.append({"q": q, "options": opts, "answer": a, "why": why})
+
+    others = []  # other utilities from the same country only (a Vermont quiz never offers a BC utility), same province or state first
+    import regions
+    same = {r["code"] for r in regions.REGIONS if r["country"] == next((x["country"] for x in regions.REGIONS if x["code"] == code), "")}
+    for first in (True, False):
+        for k, v in _LOOKUP.items():
+            u = v["utility"]
+            if u != row["utility"] and "(" not in u and u not in others and v["region"].lower() in same and (v["region"] == row["region"]) == first:
+                others.append(u)
+    if len(others) >= 2:
+        add(say(f"Which utility's programs apply to our {name} rebate guide?", f"Rebates in {name} often depend on the utility. Which one do we use for {name}?", f"Whose programs should a {name} homeowner check first?"), row["utility"], others[:2],
+            f"{e(row['utility'])} is the utility we use for {e(name)}. Rebates often depend on who supplies your power or gas, so check yours first.")
+    sh = [(1, 2), (-2, -1), (-1, 1), (1, 3), (-3, -1)][zlib.crc32((key + service).encode()) % 5]  # where the wrong numbers sit, so the right one is not always in the middle
+    cl = _CLIMATE.get(key)
+    if service in _COLD and cl:
+        v = cl["avg_january_low_c"]
+        def t(x):
+            return f"{round(x * 9 / 5 + 32)} °F" if us else f"{round(x)} °C"
+        step = 9 if us else 5
+        add(say(f"On average, how low does the temperature fall in {name} in January?", f"What is a typical January night low in {name}?", f"In January, {name} nights usually bottom out near:"), t(v), [t(v + sh[0] * step), t(v + sh[1] * step)],
+            f"Our weather sample for {e(name)} ({cl['sample_years']}) shows an average January low of {t(v)}. Cold-climate heat pumps are tested at low temperatures, so check the rating at your coldest days, not just the average.")
+        if service == "heat-pump" and cl.get("coldest_recorded_c") is not None:
+            c = cl["coldest_recorded_c"]
+            add(say(f"What was the coldest reading in our {cl['sample_years']} weather sample for {name}?", f"How cold did {name} get at its worst between {cl['sample_years'].replace('-', ' and ')}?", f"The coldest spell in {name} in {cl['sample_years']} reached:"), t(c), [t(c + sh[0] * 2 * step), t(c + sh[1] * 2 * step)],
+                f"The lowest temperature in the sample for {e(name)} was {t(c)}. A right-sized heat pump is chosen for your coldest design day, not the average.")
+    so = _SOLAR.get(key)
+    if service in ("solar", "battery", "hub") and so:
+        h = so["approx_peak_sun_hours"]
+        wrong = [f"{max(h + sh[0], 0.5):.1f}", f"{max(h + sh[1], 0.9):.1f}"]
+        add(say(f"About how many peak sun hours a day does {name} get on average?", f"A solar panel in {name} sees about how many full-sun hours a day?", f"Daily peak sun hours in {name} average about:"), f"{h:.1f}", wrong,
+            f"Our {so['sample_years']} sunshine sample for {e(name)} averages about {h:.1f} peak sun hours a day. Fewer hours means less solar power per panel, so the size of the system matters.")
+    cat = _CAT.get(service, "heat_pump" if service == "hub" else None)
+    txt = row.get("categories", {}).get(cat, "") if cat else ""
+    nums = [int(n.replace(",", "")) for n in re.findall(r"[Uu]p to \$([\d,]+)", txt)]
+    if nums and max(nums) > 0:
+        top = max(nums)
+        wrong = [x for x in dict.fromkeys(sorted(set(nums) - {top}) + [top * 2, max(top // 2, 100), top * 3]) if x != top][:2]
+        what = _NAME.get(service, "heat pump") if service != "hub" else "heat pump"
+        add(say(f"We list {what} rebates for {name}. What is the biggest 'up to' amount?", f"What is the largest 'up to' {what} figure on our {name} summary?", f"Across the {what} programs we list for {name}, the top 'up to' amount is:"), f"${top:,}", [f"${x:,}" for x in wrong],
+            f"Our summary for {e(name)}: {e(txt)}. The amount you get depends on your home, income and utility, so use the calculator.")
+    cen = ROOT / "data" / f"{code}-housing-census2021.json"
+    if cen.exists():
+        c = json.loads(cen.read_text(encoding="utf-8")).get(city)
+        if isinstance(c, dict) and c.get("renter") and c.get("households"):
+            v = round(100 * c["renter"] / c["households"])
+            wrong = [f"{min(max(v + sh[0] * 12, 3), 95)}%", f"{min(max(v + sh[1] * 12, 3), 95)}%"]
+            if len({f"{v}%", *wrong}) == 3:
+                add(say(f"About what share of homes in {name} are rented?", f"Out of 100 homes in {name}, about how many are rented?", f"Renters make up what share of {name} households?"), f"{v}%", wrong,
+                    f"The 2021 Census counts {c['renter']:,.0f} renter households out of {c['households']:,.0f} in {e(name)}. Many rebates go to owners, and some programs have separate rules for landlords and tenants.")
+    if len(qs) < (3 if service == "hub" else 2):
+        return None
+    what = _NAME.get(service, "home energy")
+    cta = f'<a href="/calculator/{code}/">Estimate my rebates</a>' if (CAL / f"{code}.json").exists() else '<a href="/get-quotes/">See my rebates</a>'
+    return {"title": f"Quick quiz: {what} in {name}", "intro": f"Questions about {name}, from the data behind this page. Tap an answer to see why.", "qs": qs[:5],
+            "messages": ["Worth another look at the page above.", f"Nice. You know {name} well.", f"Perfect score. You know {name}."], "cta": cta}
 
 
 # ---- photo for any article (2026-10-24): one free-licence photo per topic, chosen by words in the slug and title ----

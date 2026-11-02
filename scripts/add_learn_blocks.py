@@ -28,7 +28,6 @@ OLD = re.compile(re.escape(S) + r"[\s\S]*?" + re.escape(E) + r"\n?")
 SERVICES = {"heat-pump", "solar", "battery"}
 # pages that sit just under the 90% near-duplicate limit: a row of identical card text pushed BC solar pages over it (check_duplicate_content.py)
 NO_ROW = {("bc", "solar"), ("on", "index"), ("on", "battery")}  # ("on", "index") means Ontario city hubs; the region hub keeps its row
-QUIZ_PAGES = {"index", "heat-pump"}  # hubs, city hubs and heat pump pages carry a quiz (BC and Ontario only)
 
 
 def place(f, t, block):
@@ -43,18 +42,30 @@ def place(f, t, block):
     return t2[:i] + block + t2[i:]
 
 
-def quiz_for(region, kind, service, key, region_hub=False):
-    """The one quiz for a page: the heat pump myths quiz on heat pump pages, otherwise the rebate-mistakes quiz."""
-    if kind not in QUIZ_PAGES or (kind == "index" and not region_hub):
-        return ""  # city hubs carry no quiz: the same block on every city hub pushed Ontario hubs over the 90% near-duplicate limit
-    if region_hub and region not in ("bc", "on"):
-        q = lk.region_quiz(region) if (ROOT / "calculator" / "data" / f"{region}.json").exists() else None
-        return lk.quiz(f"{region}-rebates", q) if q else ""
-    want = "heat-pump-myths-busted" if service == "heat-pump" else "7-ways-to-lose-your-home-energy-rebate"
-    d = lk.articles().get(want)
-    if not d or region not in d.get("quiz_regions", []):
+def quiz_for(f, region, kind, service, region_hub=False):
+    """The one quiz for a page, and it only names places the page is about: a region hub or region category page gets a quiz from that region's own
+    verified programs; a city hub or city category page gets a quiz about that city (learn_kit.city_quiz). Anywhere else: none."""
+    if kind in ("program", "question", "calculator", "blog"):
         return ""
-    return lk.quiz(want, d["quiz"])
+    has_cal = (ROOT / "calculator" / "data" / f"{region}.json").exists()
+    if region_hub:
+        q = lk.region_quiz(region) if has_cal else None
+        return lk.quiz(f"{region}-rebates", q) if q else ""
+    parts = f.relative_to(ROOT).parts  # ca/on/ottawa/index.html, ca/on/ottawa/heat-pump/index.html or ca/on/heat-pump/index.html
+    country = parts[0]
+    if len(parts) == 5:
+        city, svc = parts[2], parts[3]
+    else:
+        city, svc = parts[2], "hub"
+    q = lk.city_quiz(region, city, svc if svc in lk._CAT else "hub", country)
+    if q:
+        return lk.quiz(f"{region}-{city}-{svc}", q)
+    if len(parts) == 4 and has_cal:  # a region category page (/ca/on/heat-pump/): that region's programs for the upgrade
+        up = {"heat-pump": ["heat-pump"], "solar": ["solar"], "battery": ["battery"], "water-heater": ["water-heater"], "insulation": ["insulation"],
+              "smart-thermostats": ["thermostat"], "appliances": ["appliances"], "windows-doors": ["windows"], "ev-charger": ["ev"], "hrv": ["hrv"]}.get(parts[2])
+        q = lk.region_quiz(region, up) if up else None
+        return lk.quiz(f"{region}-{parts[2]}", q) if q else ""
+    return ""
 
 
 def rankings():
@@ -113,18 +124,20 @@ def pages():
 
 
 def post_quiz(slug):
-    """A quiz for a blog post: the region's own quiz (from its verified amounts) when the post names one region, otherwise a rotating general one."""
-    import zlib
+    """A quiz for a blog post: the region's own quiz (from its verified amounts) when the post names one region; otherwise a device-knowledge quiz for the
+    post's topic with no province or state in it, else the general rebate basics."""
     idx = {p["slug"]: p["region"] for s in json.loads((ROOT / "data" / "blog-index.json").read_text(encoding="utf-8"))["sections"] for p in s["posts"]}
     label = idx.get(slug, "Everywhere")
     code = next((r["code"] for r in regions.REGIONS if label in (r["name"], r.get("abbr"))), "")
-    if code and code not in ("bc", "on") and (ROOT / "calculator" / "data" / f"{code}.json").exists():
+    if code and (ROOT / "calculator" / "data" / f"{code}.json").exists():
         q = lk.region_quiz(code)
         if q:
             return lk.quiz(f"{code}-rebates", q)
-    pick = ("heat-pump-myths-busted", "7-ways-to-lose-your-home-energy-rebate", "9-questions-to-ask-heat-pump-installer")[zlib.crc32(slug.encode()) % 3]
-    d = lk.articles()[pick]
-    return lk.quiz(pick, d["quiz"])
+    topics = (("heat-pump", "heat-pumps"), ("furnace", "heat-pumps"), ("solar", "solar"), ("battery", "batteries"), ("powerwall", "batteries"), ("insulation", "insulation"),
+              ("attic", "insulation"), ("water-heater", "water-heating"), ("window", "windows"), ("ev-", "ev-chargers"), ("charger", "ev-chargers"),
+              ("thermostat", "smart-thermostats"), ("appliance", "appliances"), ("induction", "appliances"), ("installer", "hiring"), ("contractor", "hiring"))
+    name = next((n for k, n in topics if k in slug), "rebate-basics")
+    return lk.general_quiz(name, f"{name}-{slug}"[:60])
 
 
 def wide():
@@ -147,7 +160,7 @@ def wide():
         key = str(f.relative_to(ROOT))
         region_hub = f.parent.parent.name in ("ca", "us")
         row = lk.not_ready_row(service, key=key, heading=heading, sub=sub)
-        quiz = post_quiz(f.parent.name) if kind == "blog" else quiz_for(region, kind, service, key, region_hub=region_hub)
+        quiz = post_quiz(f.parent.name) if kind == "blog" else quiz_for(f, region, kind, service, region_hub=region_hub)
         # the quiz goes at the top of the page (the most engaging thing); the card row stays at the bottom
         t2 = QOLD.sub("", OLD.sub("", t))
         anchor = next((m for m in ("<!-- HUB-STATS-END -->" if region_hub else "", "<!-- HUB-SEARCH-END -->", "<!-- BLOG-PHOTO-START -->") if m and m in t2), None)

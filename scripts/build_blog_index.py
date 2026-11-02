@@ -86,8 +86,7 @@ def build(data):
     regions_seen = sorted({p["region"] for p in by.values()})
     place = '<option value="">Everywhere</option>' + "".join(f'<option value="{e(r)}">{e(r)}</option>' for r in regions_seen)
     chips = "".join(f'<a href="#{s["id"]}" class="bx-chip">{e(TOPIC_TILES.get(s["id"], s["heading"]))}</a>' for s in secs)
-    quiz = lk.articles()["heat-pump-myths-busted"]
-    quiz_html = lk.quiz("heat-pump-myths-busted", quiz["quiz"])
+    quiz_html = lk.general_quiz("heat-pumps")
     more = "".join(lk.card(sl, a) for sl, a in lk.articles().items())
     editors = [by[s] for s in EDITORS if s in by]
     ups = "".join(

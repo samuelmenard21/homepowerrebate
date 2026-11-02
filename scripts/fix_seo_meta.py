@@ -33,7 +33,7 @@ def fit_title(t, limit=60):
         if sep in plain:
             head, tail = plain.split(sep, 1)
             out = head
-            for clause in re.split(r",\s*|\s+and\s+", tail.strip()):
+            for clause in re.split(r",\s+|\s+and\s+", tail.strip()):
                 nxt = f"{head}: {clause}" if out == head else f"{out}, {clause}"
                 if len(nxt) <= limit:
                     out = nxt

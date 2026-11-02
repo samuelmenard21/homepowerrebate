@@ -269,6 +269,24 @@ TPL_LINK_RE = re.compile(r'<link rel="stylesheet" href="/assets/tpl/([a-z0-9-]+)
 SPLIT_FAMILIES = ("home", "advisor", "profile", "powerscore", "hub")
 
 
+_CSS_KEEP_RE = re.compile(r"""(\"(?:[^"\\]|\\.)*\"|'(?:[^'\\]|\\.)*'|url\([^)]*\))""")
+
+
+def minify_css(css: str) -> str:
+    """Strip comments and layout whitespace from the served stylesheets (Lighthouse: Minify CSS, 2026-11-01). Strings and url() bodies
+    are set aside first so nothing inside them changes; spaces around > + ~ : and inside calc() are kept as written."""
+    keep = []
+    def stash(m):
+        keep.append(m.group(0))
+        return f"\x00{len(keep) - 1}\x00"
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    css = _CSS_KEEP_RE.sub(stash, css)
+    css = re.sub(r"\s+", " ", css)
+    css = re.sub(r" ?([{};,]) ?", r"\1", css)
+    css = css.replace(";}", "}").strip()
+    return re.sub(r"\x00(\d+)\x00", lambda m: keep[int(m.group(1))], css) + "\n"
+
+
 def _template_css() -> str:
     out = []
     for name in FAMILIES:
@@ -285,7 +303,7 @@ def family_css_body(name: str) -> str:
     if name not in _FAM_CSS:
         p = TEMPLATES_DIR / f"{name}.css"
         _FAM_CSS[name] = (f"/* HomePowerRebate {name} page design. Generated from _partials/templates/{name}.css by scripts/apply_canonical_nav_footer.py; edit that, not this file. */\n"
-                          + add_font_fallbacks(p.read_text(encoding="utf-8")) + "\n")
+                          + minify_css(add_font_fallbacks(p.read_text(encoding="utf-8"))))
     return _FAM_CSS[name]
 
 
@@ -350,7 +368,7 @@ def site_css_body() -> str:
     """The shared CSS as served from /assets/site.css (with the metric-matched fallback fonts in every font stack)."""
     if "body" not in _SITE_CSS:
         _SITE_CSS["body"] = ("/* HomePowerRebate shared styles. Generated from _partials/nav-footer.html and _partials/templates/ by scripts/apply_canonical_nav_footer.py; edit those, not this file. */\n"
-                             + add_font_fallbacks(CSS_RAW + "\n" + _template_css()) + "\n")
+                             + minify_css(add_font_fallbacks(CSS_RAW + "\n" + _template_css())))
     return _SITE_CSS["body"]
 
 
@@ -762,6 +780,35 @@ def ensure_fast_head(content: str) -> str:
     return add_font_fallbacks(content)
 
 
+HERO_PRE_S, HERO_PRE_E = "<!-- HERO-PRELOAD-START -->", "<!-- HERO-PRELOAD-END -->"
+_HERO_PRE_RE = re.compile(re.escape(HERO_PRE_S) + r".*?" + re.escape(HERO_PRE_E) + r"\n?", re.S)
+_HERO_IMG_RE = re.compile(r'<(?:section|header)\b[^>]*\bclass="[^"]*\b(?:hero-img-([a-z-]+)|hero-photo|hm-hero|gq-hero)\b[^"]*"')
+
+
+def ensure_hero_preload(content: str) -> str:
+    """The hero photo is a CSS background, so the browser only finds it after the stylesheet arrives (Lighthouse: LCP request
+    discovery, 2026-11-01). Preload the file the CSS will pick for the visitor's width: 640 px on phones, 1200 px from 701 px,
+    1600 px from 1500 px on the home page. The widths match the @media rules in nav-footer.html, home.css and build_get_quotes.py."""
+    content = _HERO_PRE_RE.sub("", content)
+    m = _HERO_IMG_RE.search(content)
+    if not m or "</head>" not in content:
+        return content
+    name = m.group(1) or "modern-home"
+    home = "hm-hero" in m.group(0)
+    def tag(size, media):
+        return f'<link rel="preload" as="image" type="image/webp" href="/assets/learn/{name}-{size}.webp" media="{media}" fetchpriority="high">\n'
+    block = HERO_PRE_S + "\n" + tag(640, "(max-width: 700px)")
+    block += tag(1200, "(min-width: 701px) and (max-width: 1499px)") if home else tag(1200, "(min-width: 701px)")
+    if home:
+        block += tag(1600, "(min-width: 1500px)")
+    block += HERO_PRE_E + "\n"
+    m2 = re.search(r"<!-- FONT-PRELOAD-END -->\n?", content)
+    if m2:
+        return content[:m2.end()] + block + content[m2.end():]
+    return content.replace("</head>", block + "</head>", 1)
+
+
+
 def ensure_landmarks(content: str) -> str:
     """Skip link, <main id="main"> between the canonical nav and footer, and theme-color. Idempotent."""
     if 'name="theme-color"' not in content and "</head>" in content:
@@ -854,6 +901,7 @@ def process_file(path: Path, dry_run: bool):
     content = ensure_wide(content, rel)
     content = ensure_layout_wide(content, rel)
     content = ensure_fast_head(content)
+    content = ensure_hero_preload(content)
 
     # Safety net (added 2026-09-28): some pages had real content (e.g. "Learn more about
     # <city> rebates" guide cards) sitting between the old footer markers, and a restamp

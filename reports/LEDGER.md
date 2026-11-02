@@ -20,7 +20,10 @@ Rules:
 
 | 2026-10-27 | /ca/qc/heat-pump/ and /ca/qc/heat-pump/fr/ | logivert, programme logivert, subvention logivert | ~60-90 / 418 combined (week of 10-17) | seo | Added the common misspelling "Logivert" in the intro and a new first FAQ ("Is it Logivert or LogisVert?"), English and French | 2027-01-25 |
 | 2026-10-27 | /furnace-rebates/alberta/ | air conditioner rebate alberta | 30.1 / 77 (week of 10-17, landed on /ca/ab/) | seo | Retitled "Alberta Air Conditioner & Furnace Rebates 2026" (another session landed the same retitle; kept theirs); I added links from /ca/ab/, /ca/ab/heat-pump/, Calgary, Edmonton and the central air guide | 2027-01-25 |
+| 2026-10-27 | /ca/nl/heating-assistance/ | home heating rebate nl 2026, nl oil rebate 2026, home heating rebate 2026 | ~9 / 786 impr (week of 10-23) | seo | Clearer H1, form links, cost answer, more FAQs (d1e369d); Supplement updated to $400-$1,000 (e258d37); video embed (3cbce9fbb) | 2027-01-25 |
+| 2026-10-27 | /ca/nl/heating-assistance/ | oil rebate nl 2026, home heating rebate nl 2026 | ~9 / 786 impr, 2 clicks (week of 10-23 to 10-29, baseline) | fact+seo | Home Heating Supplement updated to $400 to $1,000, clearer H1, form links, cost answer, more FAQs (commits e258d37, d1e369d, 89b025a) | 2027-01-25 |
+| 2026-11-01 | /blog/bc-hydro-product-rebates-appliances/ | bc hydro air fryer rebate, bc hydro rebate air fryer | 8.1 / 183, 1 click (week of 10-23) | seo | Meta description and Twitter description now lead with the yes answer: $25 air fryer until Mar 5, 2027, no furnace rebate (not yet committed) | 2027-01-30 |
 
-## Open items for the next review (2026-11-02)
+## Open items for the next review (2026-11-09)
 - Read the 11-02 week as a baseline for the rows above. Recommend edits to them only if a page clearly fails to answer its query.
 - Pages in the 10-17 to 10-23 data that are NOT in this ledger and are fair game: Logivert (Quebec) pages, /us/pa/, /us/co/, Hamilton and Kitchener installer pages, /furnace-rebates/bc/, the Bosch vs Mitsubishi and Mysa comparison posts, /blog/bc-hydro-product-rebates-appliances/.

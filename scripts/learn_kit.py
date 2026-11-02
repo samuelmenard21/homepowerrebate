@@ -4,6 +4,7 @@ Styles and the quiz script live in _partials/nav-footer.html (SHARED CSS / SHARE
 Articles come from data/learn/<slug>.json (see build_learn_articles.py)."""
 import html
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -70,6 +71,32 @@ def listicle(d):
     return "".join(out)
 
 
+# What the calculator's "plan" box calls each upgrade a quiz can be about, and what the get-quotes "project" box accepts (2026-11-01).
+_PLAN = {"heat-pump": "heat-pump", "solar": "solar", "battery": "battery", "water-heater": "water-heater", "insulation": "insulation",
+         "windows-doors": "insulation", "windows": "insulation", "ev-charger": "ev", "ev": "ev", "smart-thermostats": "thermostat", "thermostat": "thermostat"}
+_PROJECT = {"heat-pump", "solar", "battery", "insulation"}
+
+
+def _deep_cta(cta, ctx):
+    """Point the result button at the visitor's own place and upgrade: the region calculator with ?city= and ?plan= filled in, or get-quotes with ?project=.
+    The quiz knows the place and the topic; the destinations already read these parameters. The button text is unchanged (glossary label)."""
+    if not ctx:
+        return cta
+    code, city, up = ctx.get("region"), ctx.get("city"), ctx.get("upgrade")
+    plan = _PLAN.get(up or "")
+    if code and (CAL / f"{code}.json").exists():
+        have = {u["id"] for u in json.loads((CAL / f"{code}.json").read_text(encoding="utf-8")).get("upgrades", [])}
+        qs = [f"city={city}"] if city else []
+        if plan in have:
+            qs.append(f"plan={plan}")
+        href = f"/calculator/{code}/?" + "&amp;".join(qs + ["src=quiz"])
+    elif up in _PROJECT:
+        href = f"/get-quotes/?project={up}&amp;src=quiz"
+    else:
+        return cta
+    return re.sub(r'href="[^"]*"', f'href="{href}"', cta, count=1)
+
+
 def quiz(slug, q):
     """A one-question-at-a-time quiz (shared CSS and JS in _partials/nav-footer.html). Without JavaScript every question and its explanation show."""
     qs = []
@@ -78,9 +105,12 @@ def quiz(slug, q):
         qs.append(f'<fieldset class="qz-q" data-a="{item["answer"]}"><legend>{n + 1}. {e(item["q"])}</legend><div class="qz-opts">{opts}</div>'
                   f'<p class="qz-why">{item["why"]}</p></fieldset>')
     msgs = e(json.dumps(q["messages"]), quote=True)
-    return (f'<section class="hpr-quiz" id="quiz-{slug}" data-msgs="{msgs}"><span class="qz-kick">Quick quiz</span><h2>{e(q["title"])}</h2><p class="qz-intro">{e(q["intro"])}</p>{"".join(qs)}'
+    ctx = q.get("ctx") or {}
+    cta = _deep_cta(q["cta"], ctx)
+    attrs = "".join(f' data-{k}="{e(str(ctx[k]), quote=True)}"' for k in ("place", "what") if ctx.get(k))
+    return (f'<section class="hpr-quiz" id="quiz-{slug}" data-msgs="{msgs}"{attrs}><span class="qz-kick">Quick quiz</span><h2>{e(q["title"])}</h2><p class="qz-intro">{e(q["intro"])}</p>{"".join(qs)}'
             f'<div class="qz-result" aria-live="polite"><div class="qz-ring"><span class="qz-score"></span></div><span class="qz-msg"></span>'
-            f'<div class="qz-acts"><span class="qz-cta-wrap">{q["cta"].replace("<a ", "<a class=\"qz-cta\" ", 1)}</span><button type="button" class="qz-again">Play again</button><button type="button" class="qz-share">Share my score</button></div></div></section>')
+            f'<div class="qz-acts"><span class="qz-cta-wrap">{cta.replace("<a ", "<a class=\"qz-cta\" ", 1)}</span><button type="button" class="qz-again">Play again</button><button type="button" class="qz-share">Share my score</button></div></div></section>')
 
 
 def strip(links):
@@ -173,7 +203,8 @@ def region_quiz(code, upgrades=None):
                    "why": f"{e(name)} pays {e(shown)}. " + (f'<a href="{e(src)}" target="_blank" rel="noopener">Official page</a>, checked {when}.' if src else f"Checked {when}.")})
     return {"title": f"Quick quiz: {d['name']} rebates", "intro": "A few questions from the programs we track. Tap an answer to see why.", "qs": qs,
             "messages": ["Worth another look at the programs above.", "Nice. You know the programs well.", "Perfect score. You know your rebates."],
-            "cta": f'<a href="/calculator/{code}/">Estimate my rebates</a>'}
+            "cta": f'<a href="/calculator/{code}/">Estimate my rebates</a>',
+            "ctx": {"region": code, "place": d["name"], "upgrade": upgrades[0] if upgrades and len(upgrades) == 1 else ""}}
 
 
 # ---- general quizzes (no province or state named; they teach how the device works) and city quizzes (2026-10-28) ----
@@ -189,7 +220,8 @@ def general_quiz(name, slug=None):
     for item in q["qs"]:
         opts = sorted(item["options"], key=lambda o: zlib.crc32((item["q"] + o).encode()))
         qs.append({**item, "options": opts, "answer": opts.index(item["options"][item["answer"]])})
-    return quiz(slug or f"{name}-basics", {**q, "qs": qs})
+    up = {"heat-pumps": "heat-pump", "solar": "solar", "batteries": "battery", "insulation": "insulation"}.get(name, "")
+    return quiz(slug or f"{name}-basics", {**q, "qs": qs, "ctx": {"upgrade": up, "what": _NAME.get(up, "")} if up else {}})
 
 
 _LOOKUP = json.loads((ROOT / "city-rebate-lookup.json").read_text(encoding="utf-8"))
@@ -286,7 +318,8 @@ def city_quiz(code, city, service="hub", country="ca"):
     what = _NAME.get(service, "home energy")
     cta = f'<a href="/calculator/{code}/">Estimate my rebates</a>' if (CAL / f"{code}.json").exists() else '<a href="/get-quotes/">See my rebates</a>'
     return {"title": f"Quick quiz: {what} in {name}", "intro": f"Questions about {name}, from the data behind this page. Tap an answer to see why.", "qs": qs[:5],
-            "messages": ["Worth another look at the page above.", f"Nice. You know {name} well.", f"Perfect score. You know {name}."], "cta": cta}
+            "messages": ["Worth another look at the page above.", f"Nice. You know {name} well.", f"Perfect score. You know {name}."], "cta": cta,
+            "ctx": {"region": code, "city": city, "place": name, "upgrade": service if service != "hub" else "", "what": what if service != "hub" else ""}}
 
 
 # ---- photo for any article (2026-10-24): one free-licence photo per topic, chosen by words in the slug and title ----

@@ -164,6 +164,9 @@ class Region:
         hub = f"/{self.path}/" if state else f"/{self.city_dir(slug)}/"
         is_hub = cat == "index"
         path = hub if is_hub else f"{hub}{cat}/"
+        note = self.cfg.get("category_notes", {}).get(cat)  # a shared block for one category (Ontario solar and battery: rebate or net metering)
+        if note:
+            d["facts"] = list(d.get("facts", [])) + [f for f in note.get("facts", []) if f not in d.get("facts", [])]
         fids = kit.fact_ids(d)
         if self.cfg.get("card_status_from_facts"):
             for cd in d["cards"]:
@@ -193,6 +196,7 @@ class Region:
 {kit.cards(d)}
 </div>
 {d.get('after_cards', '')}
+{(ROOT / note["file"]).read_text().replace("{name}", e(name)) if note else ""}
 {kit.sections(d)}
 {"" if self.cfg.get("no_guides") else guides + chr(10)}{inst + chr(10) if self.cfg.get("installer_block", True) else ""}{kit.claim(d)}
 {kit.callout(f"/calculator/{self.code}/", self.calc_label, quotes, name, self.cfg.get("callout_near_you", False))}

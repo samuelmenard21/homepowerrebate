@@ -78,8 +78,8 @@ PROGRAMS = {
         "rows": [
             ("Heat pump", "$1,250 to $2,000 per ton, up to $12,000", "Amount depends on your home and track.", "https://homerenovationsavings.ca/heat-pumps"),
             ("Heat pump, Enbridge gas customers", "$500 per ton, up to $2,000", "Active Enbridge Gas account.", "https://homerenovationsavings.ca/heat-pumps"),
-            ("Solar", "$1,000 per kW, up to $5,000", "Max 50% of cost. No net-metering agreement.", "https://www.homerenovationsavings.ca/without-assessment/solar"),
-            ("Battery", "$300 per kWh, up to $5,000", "Max 50% of cost.", "https://www.homerenovationsavings.ca/without-assessment/solar"),
+            ("Solar", "$1,000 per kW, up to $5,000", "Max 50% of cost. No net-metering agreement: you pick the rebate or net metering, not both. The Toronto Star reports the province's own analysis found a slower payback on the rebate path.", "https://www.homerenovationsavings.ca/without-assessment/solar"),
+            ("Battery", "$300 per kWh, up to $5,000", "Max 50% of cost. Only with new solar in the same project, so it also means no net metering.", "https://www.homerenovationsavings.ca/without-assessment/solar"),
             ("Insulation (with assessment)", "Up to $7,700", "Attic, walls, basement and more; pre- and post-work assessment.", "https://homerenovationsavings.ca/with-assessment"),
             ("Attic insulation (no assessment)", "Up to $1,250", "", "https://homerenovationsavings.ca/"),
             ("Windows and doors", "$100 per opening", "Assessment track.", "https://homerenovationsavings.ca/with-assessment"),
@@ -90,9 +90,10 @@ PROGRAMS = {
                   "For the assessment track, book a registered energy advisor before any work starts.",
                   "Do the work, then submit receipts (within 60 days for a thermostat) or book the post-work assessment."],
         "faq": [("Does Home Renovation Savings cover a new gas furnace?", "No. Gas furnaces get $0. Heat pumps, insulation, windows and thermostats are covered."),
-                ("Can I take the solar rebate and keep net metering?", "No. If you take the Home Renovation Savings solar rebate, you can't also sign a net-metering agreement with your utility.")],
+                ("Can I take the solar rebate and keep net metering?", "No. If you take the Home Renovation Savings solar rebate, you can't also sign a net-metering agreement with your utility. The Toronto Star reported on November 1, 2026 that the Ministry of Energy's own analysis found a payback of 30 to 40 years for solar on the rebate path and 23 to 29 years with net metering, so ask installers for both numbers before you choose."),
+                ("Is the solar and battery rebate worth taking?", "It depends on your roof and your daytime use. The same analysis, as reported by the Star, found 73 to 100+ years for solar and a battery with the rebate alone. Only 339 people have received a solar or battery rebate since January 2025, according to the IESO. Read our guide to the choice before you sign.")],
         "keys": ["Home Renovation Savings", "RetrofitWR"],
-        "related": [("/smart-thermostats/", "Smart thermostat rebates"), ("/furnace-rebates/ontario/", "Ontario furnace and AC rebates"), ("/batteries/", "Home battery guides")],
+        "related": [("/blog/ontario-solar-rebate-vs-net-metering/", "Solar: rebate or net metering?"), ("/smart-thermostats/", "Smart thermostat rebates"), ("/furnace-rebates/ontario/", "Ontario furnace and AC rebates"), ("/batteries/", "Home battery guides")],
     },
     "nys-clean-heat": {
         "name": "NYS Clean Heat", "region": "NY", "hub": "/us/ny/", "rank_region": "ny",

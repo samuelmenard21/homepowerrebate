@@ -53,7 +53,7 @@ HUBS = {
               "rows": [
                   ("Heat pump", "Home Renovation Savings", "$1,250 per ton, up to $7,500 (air-source); ground-source $2,000 per ton, up to $12,000", "Electric, oil, propane or wood heat. Pre-approval and a participating contractor are required.", "https://homerenovationsavings.ca/heat-pumps"),
                   ("Heat pump (Enbridge gas customers)", "Home Renovation Savings", "$500 per ton, up to $2,000", "Active Enbridge Gas account.", "https://homerenovationsavings.ca/heat-pumps"),
-                  ("Solar and battery", "Home Renovation Savings", "Up to $5,000 each, $10,000 combined", "Max 50% of cost. No net-metering agreement with your utility.", "https://www.homerenovationsavings.ca/without-assessment/solar"),
+                  ("Solar and battery", "Home Renovation Savings", "Up to $5,000 each, $10,000 combined", "Max 50% of cost. You give up net metering to take it, and the province's own analysis (Toronto Star, Nov. 1, 2026) found a slower payback on the rebate path. Ask installers for both.", "https://www.homerenovationsavings.ca/without-assessment/solar"),
                   ("Insulation", "Home Renovation Savings", "Up to $7,700 with an assessment; attic up to $1,250 without", "Pre- and post-work assessment for the bigger amount.", "https://homerenovationsavings.ca/with-assessment"),
                   ("Smart thermostat", "Home Renovation Savings", "$125", "First thermostat rebate only. Claim within 60 days.", "https://homerenovationsavings.ca/without-assessment/smart-thermostat"),
                   ("Free upgrades", "Energy Affordability Program", "Free", "Income-qualified owners and renters.", "https://saveonenergy.ca/For-Your-Home/Energy-Affordability-Program"),

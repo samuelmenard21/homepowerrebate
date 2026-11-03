@@ -809,6 +809,88 @@ def ensure_hero_preload(content: str) -> str:
 
 
 
+_LEARN_IMG_RE = re.compile(r'<img\b[^>]*\bsrc="/assets/learn/([a-z-]+)-640\.webp"[^>]*>')
+# displayed widths measured at 390 and 1280 px (2026-11-02): home tiles 224-242, post cards 326-340, home steps 296-368, get-quotes steps 246-252
+_IMG_SIZES = (("pc-photo", "(min-width:760px) 340px, 328px"), ("hm-tile", "(min-width:760px) 224px, 242px"),
+              ("gq-step", "(min-width:760px) 246px, 252px"), ("<li>", "(min-width:760px) 368px, 296px"))
+
+
+def ensure_img_srcset(content: str) -> str:
+    """Photos shown at 200 to 370 px got the 640 px file (Lighthouse: Improve image delivery, 199 KB on the home page). Every
+    /assets/learn photo now offers a 400 px file too, and photos with no srcset get one, so phones and 1x screens download the small file."""
+    def fix(m):
+        tag, name = m.group(0), m.group(1)
+        if f"{name}-400.webp" in tag:
+            return tag
+        if 'srcset="' in tag:
+            return tag.replace('srcset="', f'srcset="/assets/learn/{name}-400.webp 400w, ', 1)
+        before = content[max(0, m.start() - 60):m.start()] + tag
+        sizes = next((v for k, v in _IMG_SIZES if k in before), "(min-width:760px) 340px, 92vw")
+        return tag.replace(f'src="/assets/learn/{name}-640.webp"',
+                           f'src="/assets/learn/{name}-640.webp" srcset="/assets/learn/{name}-400.webp 400w, /assets/learn/{name}-640.webp 640w" sizes="{sizes}"', 1)
+    return _LEARN_IMG_RE.sub(fix, content)
+
+
+CRIT_S, CRIT_E = "<!-- CRITICAL-CSS-START -->", "<!-- CRITICAL-CSS-END -->"
+_CRIT_BLOCK_RE = re.compile(re.escape(CRIT_S) + r".*?" + re.escape(CRIT_E) + r"\n?", re.S)
+_CRIT_NOSCRIPT_RE = re.compile(r'<noscript><link rel="stylesheet" href="/assets/[^"]+"></noscript>')
+_CRIT_SWAP = " onload=\"this.onload=null;this.rel='stylesheet'\""
+_CRIT_ASYNC_RE = re.compile(r'<link rel="preload" as="style" href="(/assets/[^"]+)"' + re.escape(_CRIT_SWAP))
+_CRIT_LINK_RE = re.compile(r'<link rel="stylesheet" href="(/assets/[^"]+)"')
+_CRIT_MAP = {}
+
+
+def _critical_map() -> dict:
+    """links tuple (no ?v) -> critical CSS text, from _partials/critical/index.json (scripts/build_critical_css.py)."""
+    if not _CRIT_MAP:
+        idx = ROOT / "_partials" / "critical" / "index.json"
+        _CRIT_MAP["_"] = {}
+        if idx.exists():
+            for sid, info in json.loads(idx.read_text(encoding="utf-8")).items():
+                f = ROOT / "_partials" / "critical" / f"{sid}.css"
+                if f.exists():
+                    _CRIT_MAP["_"][tuple(info["links"])] = f.read_text(encoding="utf-8").strip()
+    return _CRIT_MAP["_"]
+
+
+def undo_critical(content: str) -> str:
+    """Back to plain blocking links, so every other step sees the page as it was before ensure_critical_css."""
+    content = _CRIT_BLOCK_RE.sub("", content)
+    content = _CRIT_NOSCRIPT_RE.sub("", content)
+    return _CRIT_ASYNC_RE.sub(lambda m: f'<link rel="stylesheet" href="{m.group(1)}"', content)
+
+
+def ensure_critical_css(content: str) -> str:
+    """First paint without waiting for stylesheets (Lighthouse: Render-blocking requests, 2026-11-02). Pages whose stylesheet set has
+    critical CSS inline it, then load the full files with preload + onload (a noscript link keeps them working without JavaScript).
+    The links keep their place, so the cascade is the same once they load. Pages with no critical CSS are left as they are."""
+    if "</head>" not in content:
+        return content
+    head_end = content.index("</head>")
+    head = content[:head_end]
+    links = tuple(re.findall(r'<link rel="stylesheet" href="(/assets/[^"?]+)', head))
+    css = _critical_map().get(links)
+    if not css:
+        return content
+    first = []
+
+    def conv(m):
+        if not first:
+            first.append(m.start())
+        return f'<link rel="preload" as="style" href="{m.group(1)}"' + _CRIT_SWAP
+    # the rest of each tag (data-hpr-* attribute and ">") follows unchanged; a noscript copy is added after the tag
+    out, last = [], 0
+    for m in _CRIT_LINK_RE.finditer(head):
+        end = head.index(">", m.end()) + 1
+        out.append(head[last:m.start()])
+        out.append(conv(m) + head[m.end():end] + f'<noscript><link rel="stylesheet" href="{m.group(1)}"></noscript>')
+        last = end
+    out.append(head[last:])
+    new_head = "".join(out)
+    block = f"{CRIT_S}<style>{css}</style>{CRIT_E}\n"
+    return new_head[:first[0]] + block + new_head[first[0]:] + content[head_end:]
+
+
 def ensure_landmarks(content: str) -> str:
     """Skip link, <main id="main"> between the canonical nav and footer, and theme-color. Idempotent."""
     if 'name="theme-color"' not in content and "</head>" in content:
@@ -847,6 +929,8 @@ def process_file(path: Path, dry_run: bool):
     content = path.read_text(errors="ignore")
     if "<html" not in content.lower():
         return None
+    on_disk = content
+    content = undo_critical(content)
 
     # strip any pre-existing canonical nav/footer before context-sniffing so
     # a restamp run doesn't mistake the nav's own city links (or a stale
@@ -902,6 +986,8 @@ def process_file(path: Path, dry_run: bool):
     content = ensure_layout_wide(content, rel)
     content = ensure_fast_head(content)
     content = ensure_hero_preload(content)
+    content = ensure_img_srcset(content)
+    content = ensure_critical_css(content)
 
     # Safety net (added 2026-09-28): some pages had real content (e.g. "Learn more about
     # <city> rebates" guide cards) sitting between the old footer markers, and a restamp
@@ -919,7 +1005,7 @@ def process_file(path: Path, dry_run: bool):
         return {"path": str(rel), "province": prov, "city": city_label,
                 "actions": action + ["SKIPPED:would-remove-content"], "changed": False, "lost": lost}
 
-    if content != original and not dry_run:
+    if content != on_disk and not dry_run:
         path.write_text(content)
 
     return {
@@ -927,7 +1013,7 @@ def process_file(path: Path, dry_run: bool):
         "province": prov,
         "city": city_label,
         "actions": action,
-        "changed": content != original,
+        "changed": content != on_disk,
     }
 
 

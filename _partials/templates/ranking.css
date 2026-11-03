@@ -96,3 +96,12 @@ body.tpl-ranking { --gut: clamp(20px, 3.2vw, 56px); }
 .callout .reg{font-size:13px;padding:0 7px;color:#1b4332;background:#d8f3dc;border:1px solid #2d6a4f;border-radius:999px;cursor:auto}
 .sortbar button[data-f]{border-color:#2d6a4f;color:#1b4332}.sortbar button[data-f].on{background:#2d6a4f;color:#fff}
 .rank-list li[hidden]{display:none}
+/* search-match blocks on heat pump pages (2026-11-03): jump bar, areas, nearby cities */
+.tpl-ranking .jump{display:flex;flex-wrap:wrap;gap:8px 10px;margin:14px 0 4px;font-size:14.5px}
+.tpl-ranking .jump a{padding:6px 14px;border:1px solid var(--card-rule,#d9d0c1);border-radius:999px;background:#fff;color:var(--teal-deep,#08363f);text-decoration:none;font-weight:600}
+.tpl-ranking .jump a:hover{border-color:var(--teal,#0d4f5c)}
+.tpl-ranking ul.areas{margin:8px 0 12px;padding-left:20px;line-height:1.55}
+.tpl-ranking ul.nearby{list-style:none;margin:10px 0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.tpl-ranking ul.nearby a{display:block;padding:14px 16px;border:1px solid var(--card-rule,#d9d0c1);border-radius:var(--radius-card,12px);background:#fff;text-decoration:none;color:var(--ink,#0a2a2e)}
+.tpl-ranking ul.nearby a span{display:block;font-size:13.5px;color:var(--muted,#4a5d60);margin-top:2px}
+.tpl-ranking [id]{scroll-margin-top:84px}

@@ -252,6 +252,11 @@ async function handleFetch(request, env, ctx) {
         ? handleAlertCount(request, env)
         : jsonResponse({ error: 'Method not allowed' }, 405);
     }
+    if (path === '/quiz/stats') {
+      return request.method === 'GET'
+        ? handleQuizStats(request, env)
+        : jsonResponse({ error: 'Method not allowed' }, 405);
+    }
     if (path === '/lead-followup') {
       return request.method === 'GET'
         ? handleLeadFollowupResponse(request, env)
@@ -267,6 +272,7 @@ async function handleFetch(request, env, ctx) {
     if (path === '/newsletter') return handleNewsletter(request, env, ctx);
     if (path === '/alert') return handleAlertSignup(request, env);
     if (path === '/alert/seen') return handleAlertSeen(request, env);
+    if (path === '/quiz/stat') return handleQuizStat(request, env);
     if (path === '/estimate-lead') return handleEstimateLead(request, env);
     if (path === '/outcomes/submit') return handleOutcomeSubmit(request, env);
     if (path === '/contact') return handleContactSubmit(request, env);
@@ -1009,6 +1015,41 @@ async function handleAlertSignup(request, env) {
 
 // GET /alert/count?list=federal-hp — how many people are on a list, for the "Join N Canadians" line on the box.
 // Only the count leaves the database. Cached five minutes at the edge and in the browser.
+// ROUTE — /quiz/stat and /quiz/stats (aggregate answer counts for the quizzes, table `quiz_stats`, schema-quiz.sql)
+// One counter per quiz section id and question number: how many answered right and how many wrong. No IP, cookie, email or person is stored.
+// The page shows "7 in 10 visitors get this one wrong" only once a question has 50 answers.
+async function handleQuizStat(request, env) {
+  let p;
+  try { p = JSON.parse(await request.text()); } catch (e) { return new Response(null, { status: 204, headers: CORS_HEADERS }); }
+  const quiz = cleanString(p.quiz).slice(0, 80);
+  const q = parseInt(p.q, 10);
+  if (!/^quiz-[a-z0-9-]+$/.test(quiz) || !(q >= 1 && q <= 20) || !env.OUTCOMES_DB) return new Response(null, { status: 204, headers: CORS_HEADERS });
+  const ok = p.ok ? 1 : 0;
+  await env.OUTCOMES_DB.prepare(
+    `INSERT INTO quiz_stats (quiz, q, right_n, wrong_n) VALUES (?, ?, ?, ?)
+     ON CONFLICT(quiz, q) DO UPDATE SET right_n = right_n + excluded.right_n, wrong_n = wrong_n + excluded.wrong_n`
+  ).bind(quiz, q, ok, 1 - ok).run();
+  return new Response(null, { status: 204, headers: CORS_HEADERS });
+}
+
+async function handleQuizStats(request, env) {
+  const quiz = cleanString(new URL(request.url).searchParams.get('quiz') || '').slice(0, 80);
+  if (!/^quiz-[a-z0-9-]+$/.test(quiz)) return jsonResponse({ error: 'Unknown quiz' }, 400);
+  const cache = caches.default;
+  const key = new Request(`https://leads.homepowerrebate.com/quiz/stats?quiz=${quiz}`);
+  const hit = await cache.match(key);
+  if (hit) return hit;
+  if (!env.OUTCOMES_DB) return jsonResponse({ error: 'Not configured' }, 500);
+  const rows = await env.OUTCOMES_DB.prepare('SELECT q, right_n, wrong_n FROM quiz_stats WHERE quiz = ?').bind(quiz).all();
+  const out = {};
+  for (const r of rows.results || []) out[r.q] = [r.right_n, r.wrong_n];
+  const res = new Response(JSON.stringify(out), {
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=300', ...CORS_HEADERS }
+  });
+  await cache.put(key, res.clone());
+  return res;
+}
+
 async function handleAlertCount(request, env) {
   const url = new URL(request.url);
   const list = cleanString(url.searchParams.get('list') || 'federal-hp');

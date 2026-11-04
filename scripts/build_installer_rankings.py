@@ -666,7 +666,24 @@ def faq_items(region, service, city_label, hub, ranked, n, total_reviews, avg, m
                   "system and compare the price per watt.")
     cost_q = {"heat-pump": "a heat pump installation", "solar": "solar installation", "battery": "a home battery installation", "insulation": "insulation",
               ADVISOR: "an energy advisor's evaluation", "energy-auditor": "a home energy audit"}[service]
-    items.append((f"How much does {cost_q} cost in {city_label}?", cost_a))
+    if service in SEARCH_V2:
+        # worded like Google's "People also ask" for "heat pump installers near me" (seen 2026-11-03, Burlington ON)
+        items.append((f"What is the average cost of {cost_q} in {city_label}?", cost_a))
+        if price:
+            items.append((f"How much should labour cost to install a {low}?",
+                          f"There is no official labour-only price, so we do not quote one. The {price[0]} range above is the installed price: equipment, labour and the usual extras together. "
+                          f"Ask every company for an itemized quote that lists the equipment, labour, electrical work, permits and removal of the old system on separate lines, "
+                          f"then compare line by line. A much lower labour line usually means something is left out."))
+            items.append((f"How much does it cost to install a {low} in a 1,500 square foot house?",
+                          f"Square footage alone does not set the price. The size of the system comes from how much heat your house loses, so a well-insulated 1,500 square foot house can need a smaller system than a drafty one. "
+                          f"The source above prices {_plain(price[1])} at {price[0]}. Ask for a written heat-loss calculation before you accept a quote, and use it to compare sizes."))
+        where = "the US" if us else "Canada"
+        items.append((f"What is the most reliable {low} in {where}?",
+                      f"We could not find an independent reliability ranking by brand that we can verify, so we do not name one. What you can check: that the model is rated for cold climates, "
+                      f"that it is on the qualified product list for the rebate you want, the length of the warranty on parts and labour, and the installer's reviews. "
+                      f"Installation quality matters as much as the brand, which is why the {pros} above are ranked by Google reviews."))
+    else:
+        items.append((f"How much does {cost_q} cost in {city_label}?", cost_a))
     city = PS_CITIES.get(hub["url"]) if hub else None
     cats = {"heat-pump": ["heat-pump"], "solar": ["solar", "battery"], "insulation": ["insulation"], "battery": ["battery"],
             ADVISOR: ["insulation", "heat-pump"], "energy-auditor": ["insulation", "heat-pump"]}[service]
@@ -841,10 +858,12 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
     if v2:
         # the searcher's words ("installation", the city), under 60 characters so Google keeps the whole title
         inst = f"{svc['name']} Installation"
+        _d = (((PS_CITIES.get(hub["url"]) if hub else None) or {}).get("categories") or {}).get(svc["rebate_cat"]) or {}
+        _reb = round(_d["dollar_value"]) if _d.get("status") == "open" and _d.get("dollar_value") else 0
         title = next(t for t in (f"{inst} in {city_label}: {n} Top-Rated Installers", f"{inst} in {city_label}: Top-Rated Installers",
                                  f"{inst} in {city_label}, {short}", f"{inst} in {city_label}") if len(t) <= 60 or t == f"{inst} in {city_label}")
         desc = (f"Compare {n} top-rated {svc['pro_l']}s near you in {city_label}, {short}, ranked by "
-                f"{total_reviews:,} Google reviews. See typical cost and open rebates.")
+                f"{total_reviews:,} Google reviews. " + (f"Heat pump rebates open: up to ${_reb:,.0f}." if _reb else "See typical cost and open rebates."))
         h1_text = f"{inst} in {city_label}, {short}: Top-Rated Installers"
     top_line = ", ".join(f"{display_name(r['name'])} ({r['rating']:.1f}★, {r['reviews']:,} reviews)" for r in top3)
 

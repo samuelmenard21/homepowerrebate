@@ -19,6 +19,9 @@ SKIP = ("node_modules", ".claude", "scripts", "_partials", "embed", "calculator/
 LINK_RE = re.compile(r'<link rel="stylesheet" href="(/assets/[^"?]+)')
 
 
+BODY_LINKED = set()
+
+
 def signatures():
     sig = collections.defaultdict(list)
     for p in sorted(ROOT.rglob("*.html")):
@@ -31,9 +34,11 @@ def signatures():
             continue
         if "<html" not in h or "</head>" not in h:
             continue
-        links = tuple(LINK_RE.findall(h.split("</head>")[0]))
+        links = tuple(LINK_RE.findall(h))  # whole page: a few hand-assembled pages link a second variant in the body
         if links:
             sig[links].append(rel)
+            if LINK_RE.findall(h.split("</head>", 1)[1]):
+                BODY_LINKED.add(links)
     return sig
 
 
@@ -59,11 +64,15 @@ def main():
     ap.add_argument("--min-pages", type=int, default=10)
     ap.add_argument("--samples", type=int, default=5)
     ap.add_argument("--base", default="http://localhost:8888")
+    ap.add_argument("--update", action="store_true", help="only combinations with a stylesheet link in the body; keep the other files")
     ap.add_argument("--reuse", help="reuse a saved capture json instead of running Chrome")
     a = ap.parse_args()
     sys.path.insert(0, str(ROOT / "scripts"))
     from apply_canonical_nav_footer import minify_css
-    sigs = {k: v for k, v in signatures().items() if len(v) >= a.min_pages or "/assets/fam/home.css" in k or any("hub" in l for l in k)}
+    allsigs = signatures()
+    sigs = {k: v for k, v in allsigs.items() if len(v) >= a.min_pages or "/assets/fam/home.css" in k or any("hub" in l for l in k)}
+    if a.update:
+        sigs = {k: v for k, v in allsigs.items() if k in BODY_LINKED}
     samples = {k: pick(v, a.samples * 2 if len(v) >= 100 else a.samples) for k, v in sigs.items()}
     paths = sorted({url_of(r) for v in samples.values() for r in v})
     cap = Path(a.reuse) if a.reuse else Path(tempfile.gettempdir()) / "critical-capture.json"
@@ -72,9 +81,10 @@ def main():
         subprocess.run(["node", str(ROOT / "scripts" / "critical_css.js"), a.base, str(cap)] + paths, check=True)
     data = json.loads(cap.read_text())
     OUT.mkdir(parents=True, exist_ok=True)
-    for old in OUT.glob("*.css"):
-        old.unlink()
-    index = {}
+    index = json.loads((OUT / "index.json").read_text()) if a.update and (OUT / "index.json").exists() else {}
+    if not a.update:
+        for old in OUT.glob("*.css"):
+            old.unlink()
     for links, pages in sigs.items():
         order = {l: i for i, l in enumerate(links)}
         items = {}

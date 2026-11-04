@@ -866,29 +866,24 @@ def ensure_critical_css(content: str) -> str:
     The links keep their place, so the cascade is the same once they load. Pages with no critical CSS are left as they are."""
     if "</head>" not in content:
         return content
-    head_end = content.index("</head>")
-    head = content[:head_end]
-    links = tuple(re.findall(r'<link rel="stylesheet" href="(/assets/[^"?]+)', head))
+    # the whole page, not only the head: a few hand-assembled pages link a second variant stylesheet in the body
+    links = tuple(re.findall(r'<link rel="stylesheet" href="(/assets/[^"?]+)', content))
     css = _critical_map().get(links)
     if not css:
         return content
     first = []
-
-    def conv(m):
+    out, last = [], 0
+    for m in _CRIT_LINK_RE.finditer(content):
         if not first:
             first.append(m.start())
-        return f'<link rel="preload" as="style" href="{m.group(1)}"' + _CRIT_SWAP
-    # the rest of each tag (data-hpr-* attribute and ">") follows unchanged; a noscript copy is added after the tag
-    out, last = [], 0
-    for m in _CRIT_LINK_RE.finditer(head):
-        end = head.index(">", m.end()) + 1
-        out.append(head[last:m.start()])
-        out.append(conv(m) + head[m.end():end] + f'<noscript><link rel="stylesheet" href="{m.group(1)}"></noscript>')
+        end = content.index(">", m.end()) + 1
+        out.append(content[last:m.start()])
+        out.append(f'<link rel="preload" as="style" href="{m.group(1)}"' + _CRIT_SWAP + content[m.end():end] + f'<noscript><link rel="stylesheet" href="{m.group(1)}"></noscript>')
         last = end
-    out.append(head[last:])
-    new_head = "".join(out)
+    out.append(content[last:])
+    new = "".join(out)
     block = f"{CRIT_S}<style>{css}</style>{CRIT_E}\n"
-    return new_head[:first[0]] + block + new_head[first[0]:] + content[head_end:]
+    return new[:first[0]] + block + new[first[0]:]
 
 
 def ensure_landmarks(content: str) -> str:

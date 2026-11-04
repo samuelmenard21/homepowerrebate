@@ -143,23 +143,17 @@ def main():
         from datetime import date
         when = date.fromisoformat(data_date).strftime("%B %Y")
     except ValueError:
-        when = data_date or "September 2026"
+        when = data_date or "October 2026"
     draft = ("" if LIVE else f'<div class="callout"><p><strong>Draft, not published.</strong> Ratings were collected in {e(when)} and will be refreshed before the winners are announced. '
              'Do not share this page.</p></div>')
+    names = {r["code"]: r for r in regions_mod.REGIONS}
     rules = (f"<p>Each city page ranks local installers by their Google rating, weighted by how many reviews they have, so a company with hundreds of good reviews ranks above one with a handful. "
              f"The award goes to the <b>top {WINNERS}</b> in each city and category. Three equal winners, listed in alphabetical order, because the scores at the top are often very close and one company should not be called the best on a tiny difference.</p>"
              f"<ul><li>The city has at least {MIN_COMPANIES} ranked companies.</li><li>A winner has at least {MIN_REVIEWS} Google reviews and a rating of {MIN_RATING:.1f} or better.</li>"
              f"<li>Its phone number or website still works, and it has not asked to be removed or to stop hearing from us.</li>"
              f"<li>If a company does not meet a test, the next one on the ranking takes its place.</li><li>Nobody pays, applies or is asked to buy anything. Money never changes a ranking.</li></ul>"
              f"<p>Ratings and review counts are from Google Maps, collected {e(when)}.</p>")
-    cats_html = ""
-    for sv, (label, plural) in CATS.items():
-        cs = out[sv]
-        cats_html += (f'<div style="display:flex;gap:18px;align-items:center;margin:16px 0"><img src="/assets/awards/shield-{sv}-{YEAR}.svg" width="120" height="124" alt="Award Winner {YEAR} badge for {e(label.lower())}">'
-                      f'<div><h3 style="margin:0"><a href="{BASE}{sv}/">{e(label)}: {sum(len(c["winners"]) for c in cs)} winners in {len(cs)} cities</a></h3>'
-                      f'<p style="margin:4px 0 0">See the winners in your city and why they were picked.</p></div></div>')
     sp_rows = ""
-    names = {r["code"]: r for r in regions_mod.REGIONS}
     for rg in sorted({rg for sv in special.values() for rg in sv}, key=lambda k: (names[k]["country"] != "ca", names[k]["name"])):
         cells = "".join(f'<td>{e(special[sv][rg]["name"])}<br><span class="muted">{e(special[sv][rg]["city"])}, {special[sv][rg]["reviews"]:,} reviews</span></td>' if rg in special[sv] else "<td>n/a</td>" for sv in CATS)
         sp_rows += f"<tr><td>{e(names[rg]['name'])}</td>{cells}</tr>"
@@ -171,46 +165,76 @@ def main():
             ("Why three winners and not one?", "Because the scores at the top are often very close. A tiny gap in a rating is not a good reason to name one company the best, so the top three are all winners, listed in alphabetical order."),
             ("I think my company's rating or listing is wrong. What can I do?", "Email hello@homepowerrebate.com. Ratings and review counts come from Google Maps, so a fix to your Google listing shows up in the next refresh. If you do not want to be listed, we remove you the same day."),
             ("Why is my city missing?", f"A city needs at least {MIN_COMPANIES} ranked companies in a category before we name winners, and at least {WINNERS} of them must meet the review and rating tests.")]
-    blurbs = {"heat-pump": "Warm in winter, cool in summer. See who your neighbours trust.", "battery": "Lights on when the grid goes off. See who your neighbours trust.",
-              "solar": "Sunshine, handled. See who your neighbours trust."}
-    cats_html = ""
-    for sv, (label, plural) in CATS.items():
-        cs = out[sv]
-        cats_html += (f'<div style="display:flex;gap:18px;align-items:center;margin:16px 0"><img src="/assets/awards/shield-{sv}-{YEAR}.svg" width="120" height="124" alt="Award Winner {YEAR} badge for {e(label.lower())}">'
-                      f'<div><h3 style="margin:0"><a href="{BASE}{sv}/">Best {e(SINGULAR[sv].lower())} installers: {sum(len(c["winners"]) for c in cs)} winners in {len(cs)} cities</a></h3>'
-                      f'<p style="margin:4px 0 0">{blurbs[sv]}</p></div></div>')
+    # one record per city across categories, for the finder and the city index
+    cmap = {}
+    for sv, cs in out.items():
+        for c in cs:
+            d = cmap.setdefault(f'{c["region"]}|{c["slug"]}', {"label": c["city"], "abbr": names[c["region"]]["abbr"], "region": c["region"], "slug": c["slug"], "cats": {}})
+            d["cats"][sv] = {"label": SINGULAR[sv], "ranking": c["ranking_url"], "winners": [{"n": w["name"], "r": w["rating"], "c": w["reviews"], "p": w["profile"]} for w in c["winners"]]}
+    order = sorted(cmap, key=lambda k: (names[cmap[k]["region"]]["country"] != "ca", names[cmap[k]["region"]]["name"], cmap[k]["label"]))
+    opts, last = "", None
+    for k in order:
+        rg = names[cmap[k]["region"]]
+        if rg["name"] != last:
+            opts += ("</optgroup>" if last else "") + f'<optgroup label="{e(rg["name"])}">'
+            last = rg["name"]
+        opts += f'<option value="{e(k)}">{e(cmap[k]["label"])}, {e(rg["abbr"])}</option>'
+    opts += "</optgroup>"
+    finder = (f'<div class="callout" style="padding:22px 24px"><label for="aw-city" style="font-family:Fraunces,Georgia,serif;font-weight:700;font-size:24px;display:block;margin-bottom:10px">Find your city</label>'
+              f'<select id="aw-city" style="width:100%;max-width:460px;min-height:48px;font-size:17px;padding:0 12px;border:1.5px solid #cfdcd9;border-radius:10px;background:#fff"><option value="">Choose your city...</option>{opts}</select>'
+              f'<div id="aw-result" aria-live="polite"></div></div>'
+              f'<script>var AW={json.dumps(cmap, ensure_ascii=False, separators=(",", ":"))};(function(){{var s=document.getElementById("aw-city"),o=document.getElementById("aw-result");'
+              'function x(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\\"":"&quot;"}[c]})}'
+              's.addEventListener("change",function(){var d=AW[s.value];if(!d){o.innerHTML="";return}var h="<h2 style=\\"margin:22px 0 4px\\">"+x(d.label)+", "+x(d.abbr)+"</h2>";'
+              'for(var sv in d.cats){var c=d.cats[sv];h+="<div style=\\"display:flex;gap:16px;align-items:flex-start;margin:16px 0\\"><img src=\\"/assets/awards/shield-"+sv+"-' + YEAR + '.svg\\" width=\\"84\\" height=\\"87\\" alt=\\"Award Winner ' + YEAR + ' badge\\"><div>'
+              '<h3 style=\\"margin:0 0 6px\\">Best "+x(c.label.toLowerCase())+" installers in "+x(d.label)+"</h3><ul style=\\"margin:0;padding-left:18px\\">";'
+              'c.winners.forEach(function(w){h+="<li>"+(w.p?"<a href=\\""+x(w.p)+"\\">"+x(w.n)+"</a>":x(w.n))+" <span class=\\"muted\\">"+w.r.toFixed(1)+"\\u2605 \\u00b7 "+w.c.toLocaleString("en-US")+" reviews</span></li>"});'
+              'h+="</ul><p style=\\"margin:8px 0 0\\"><a href=\\""+x(c.ranking)+"\\">See the full ranking</a></p></div></div>"}'
+              'o.innerHTML=h;if(window.gtag)gtag("event","awards_city_view",{city:s.value})})})();</script>')
+    blurbs = {"heat-pump": "Warm in winter, cool in summer.", "battery": "Lights on when the grid goes off.", "solar": "Sunshine, handled."}
+    trades = "".join(f'<a href="{BASE}{sv}/" style="display:flex;gap:14px;align-items:center;text-decoration:none;color:inherit;margin:14px 0"><img src="/assets/awards/shield-{sv}-{YEAR}.svg" width="96" height="100" alt="Award Winner {YEAR} badge for {e(CATS[sv][0].lower())}">'
+                     f'<span><b style="font-size:20px;display:block;color:#08363f">Best {e(SINGULAR[sv].lower())} installers</b>{blurbs[sv]} See every winner.</span></a>' for sv in CATS)
+    index = ""
+    for rg in sorted({cmap[k]["region"] for k in cmap}, key=lambda c: (names[c]["country"] != "ca", names[c]["name"])):
+        chips = ""
+        for k in [k for k in order if cmap[k]["region"] == rg]:
+            d = cmap[k]
+            first = next(iter(d["cats"]))
+            others = " ".join(f'<a href="{BASE}{sv}/#{d["slug"]}">{e(SINGULAR[sv].lower())}</a>' for sv in d["cats"])
+            chips += f'<li style="margin:4px 0"><b>{e(d["label"])}:</b> {others}</li>'
+        index += f'<h3>{e(names[rg]["name"])}</h3><ul style="columns:2;margin:0 0 8px;padding-left:18px;list-style:disc">{chips}</ul>'
     write(BASE, f"Best Installers {YEAR}: Heat Pump, Solar and Battery Award Winners",
-          f"The best-reviewed heat pump, solar and battery installers in your city, picked from {n_reviews:,} Google reviews. Nobody pays to win.",
+          f"The best-reviewed heat pump, solar and battery installers in your city for {YEAR}, picked from Google reviews. Nobody pays to win.",
           f"The {YEAR} Best Installers", "And the winners are...",
-          f"Your neighbours left {n_reviews:,} Google reviews. We counted every one. Here are the {total_w:,} companies they loved most, city by city. Nobody paid to be here.",
+          "Your neighbours left the reviews. These are the companies they loved most. Pick your city to meet them.",
           [("Installers", "/installers/"), ("Awards " + YEAR, None)],
-          draft + f'<div class="callout"><p><strong>The short version:</strong> {total_w:,} companies won in {sum(len(v) for v in out.values())} city lists. '
-          f"Each one is in the top {WINNERS} for its city, with {MIN_REVIEWS}+ reviews and a {MIN_RATING:.1f}+ rating. No fees, no ads, no paid spots.</p></div><h2>Pick your trade</h2>{cats_html}"
+          draft + finder + f"<h2>Or pick your trade</h2>{trades}<h2>Every winning city</h2>{index}"
           f"<h2>How we picked the winners</h2>{rules}{sp}", faqs)
     for sv, (label, plural) in CATS.items():
         cs = out[sv]
         close = sum(1 for c in cs if c["third_vs_fourth_gap"] is not None and c["third_vs_fourth_gap"] < 0.02)
         repl = sum(1 for c in cs if c["replaced"])
-        body = draft + (f'<div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap"><img src="/assets/awards/shield-{sv}-{YEAR}.svg" width="150" height="155" alt="Award Winner {YEAR} badge for {e(label.lower())}">'
-                        f'<div class="callout" style="flex:1;min-width:260px"><p><strong>Short answer:</strong> {sum(len(c["winners"]) for c in cs):,} {e(plural)} won in {len(cs)} cities. '
-                        f"In each city the top {WINNERS} on the ranking won, listed alphabetically.</p></div></div>")
+        jump = "".join(f'<optgroup label="{e(rg["name"])}">' + "".join(f'<option value="{c["slug"]}">{e(c["city"])}</option>' for c in cl) + "</optgroup>" for rg, cl in region_groups(cs))
+        body = draft + (f'<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><img src="/assets/awards/shield-{sv}-{YEAR}.svg" width="150" height="155" alt="Award Winner {YEAR} badge for {e(label.lower())}">'
+                        f'<div style="flex:1;min-width:240px"><label for="aw-jump" style="font-family:Fraunces,Georgia,serif;font-weight:700;font-size:24px;display:block;margin-bottom:10px">Jump to your city</label>'
+                        f'<select id="aw-jump" onchange="if(this.value)location.hash=this.value" style="width:100%;max-width:420px;min-height:48px;font-size:17px;padding:0 12px;border:1.5px solid #cfdcd9;border-radius:10px;background:#fff">'
+                        f'<option value="">Choose your city...</option>{jump}</select></div></div>')
+        body += "<h2>The winners</h2>"
+        for rg, cl in region_groups(cs):
+            body += f'<h3 id="{rg["code"]}">{e(rg["name"])}</h3><div class="table-wrap"><table class="hub-table"><thead><tr><th>City</th><th>Award winners (alphabetical)</th></tr></thead><tbody>'
+            for c in cl:
+                body += (f'<tr id="{c["slug"]}"><td><a href="{c["ranking_url"]}"><b>{e(c["city"])}</b></a><br><span class="muted">{c["companies"]} companies ranked</span></td>'
+                         f'<td><ul style="margin:0;padding-left:18px">{"".join(winner_li(w) for w in c["winners"])}</ul></td></tr>')
+            body += "</tbody></table></div>"
         body += (f"<h2>Why these companies</h2>{rules}<p>For {e(label.lower())}: {len(cs)} cities had enough ranked companies and enough that met the tests. "
                  f"In {close} of them the third and fourth place were within 0.02 of each other, which is why we do not rank the winners against each other. "
                  f"In {repl} cities a company that would have placed in the top {WINNERS} was skipped because it failed a test, and the next one took its place.</p>")
-        body += f"<h2>Winners by city</h2>"
-        for rg, cl in region_groups(cs):
-            body += f'<h3 id="{rg["code"]}">{e(rg["name"])} ({len(cl)} cities)</h3><div class="table-wrap"><table class="hub-table"><thead><tr><th>City</th><th>Award winners (alphabetical)</th></tr></thead><tbody>'
-            for c in cl:
-                body += (f'<tr><td><a href="{c["ranking_url"]}"><b>{e(c["city"])}</b></a><br><span class="muted">{c["companies"]} companies ranked</span></td>'
-                         f'<td><ul style="margin:0;padding-left:18px">{"".join(winner_li(w) for w in c["winners"])}</ul></td></tr>')
-            body += "</tbody></table></div>"
-        write(f"{BASE}{sv}/", f"Best {SINGULAR[sv]} Installers {YEAR}: Award Winners by City", f"The best-reviewed {plural} in {len(cs)} cities, picked from Google reviews for the {YEAR} awards. Nobody pays to win.",
-              f"Best {SINGULAR[sv]} installers {YEAR}", "Your neighbours' favourites", f"The top {WINNERS} in each of {len(cs)} cities, picked from Google reviews. Find yours.",
+        write(f"{BASE}{sv}/", f"Best {SINGULAR[sv]} Installers {YEAR}: Award Winners by City", f"The best-reviewed {plural} in your city for {YEAR}, picked from Google reviews. Nobody pays to win.",
+              f"Best {SINGULAR[sv]} installers {YEAR}", "Your neighbours' favourites", "The three your neighbours rated highest in each city. Find yours.",
               [("Installers", "/installers/"), ("Awards " + YEAR, BASE), (label, None)], body, faqs[:4])
     for sv, cs in out.items():
         print(sv, len(cs), "cities,", sum(len(c["winners"]) for c in cs), "winners,", sum(1 for c in cs if c["replaced"]), "cities with a skipped company")
     print(len(audit), "city lists with no award;", "ratings collected", data_date, "; LIVE =", LIVE)
-
 
 if __name__ == "__main__":
     main()

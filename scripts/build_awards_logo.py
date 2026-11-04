@@ -113,6 +113,34 @@ def city_seal(year, band):
     return emblem(year, band=band, bottom="")   # the ribbon sits over the bottom arc, so that text is dropped
 
 
+def shield(category, year="2026", city=None):
+    """The chosen design (canvas round 5): a five-star shield with a banner. category e.g. "HEAT PUMPS"; city (optional) makes it a city seal."""
+    stars = "".join(f'<polygon transform="translate({x} 80) scale(1.35)" points="0,-10 2.35,-3.24 9.51,-3.09 3.8,1.23 5.88,8.09 0,4 -5.88,8.09 -3.8,1.23 -9.51,-3.09 -2.35,-3.24" fill="#fbbc04"/>' for x in (120, 150, 180, 210, 240))
+    if city:
+        mid = (f'<text x="180" y="212" text-anchor="middle" font-family="{SERIF}" font-weight="700" font-size="30" letter-spacing="1" fill="{BRIGHT}">{city.upper()}</text>'
+               f'<text x="180" y="234" text-anchor="middle" font-family="{SANS}" font-weight="700" font-size="14" letter-spacing="4" fill="{PAPER}">{category}</text>'
+               f'<text x="180" y="276" text-anchor="middle" font-family="{SERIF}" font-weight="700" font-size="42" letter-spacing="1" fill="{PAPER}">{year}</text>')
+    else:
+        mid = (f'<text x="180" y="208" text-anchor="middle" font-family="{SANS}" font-weight="700" font-size="19" letter-spacing="4.5" fill="{BRIGHT}">{category}</text>'
+               f'<text x="180" y="270" text-anchor="middle" font-family="{SERIF}" font-weight="700" font-size="62" fill="{PAPER}">{year}</text>')
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 372" role="img" aria-label="Award Winner {year}, {(city + ", ") if city else ""}{category.title()}">'
+            f'<title>Award Winner {year}: {(city + ", ") if city else ""}{category.title()}</title>'
+            f'<path d="M 180 16 L 308 54 L 308 200 Q 308 290 180 352 Q 52 290 52 200 L 52 54 Z" fill="#000" opacity="0.2" transform="translate(4 6)"/>'
+            f'<path d="M 180 16 L 308 54 L 308 200 Q 308 290 180 352 Q 52 290 52 200 L 52 54 Z" fill="{DEEP}" stroke="{BRIGHT}" stroke-width="5" stroke-linejoin="round"/>'
+            f'<path d="M 180 33 L 294 66 L 294 200 Q 294 278 180 334 Q 66 278 66 200 L 66 66 Z" fill="none" stroke="{BRIGHT}" stroke-width="1.3" opacity="0.7"/>'
+            f'{stars}'
+            f'<text x="180" y="128" text-anchor="middle" font-family="{SERIF}" font-weight="700" font-size="34" letter-spacing="4" fill="{PAPER}">AWARD</text>'
+            f'<text x="180" y="164" text-anchor="middle" font-family="{SERIF}" font-weight="700" font-size="34" letter-spacing="4" fill="{PAPER}">WINNER</text>'
+            f'<line x1="132" y1="178" x2="228" y2="178" stroke="{BRIGHT}" stroke-width="2"/>'
+            f'{mid}'
+            f'<path d="M 20 292 L 340 292 L 322 312 L 340 332 L 20 332 L 38 312 Z" fill="{BRIGHT}"/>'
+            f'<path d="M 20 292 L 340 292 L 340 297 L 20 297 Z" fill="#ffffff" opacity="0.25"/>'
+            f'<text x="180" y="319" text-anchor="middle" font-family="{SANS}" font-weight="700" font-size="19" letter-spacing="1.5" fill="{INK}">HomePowerRebate.com</text></svg>')
+
+
+SHIELDS = {"heat-pump": "HEAT PUMPS", "battery": "BATTERIES", "solar": "SOLAR", "insulation": "INSULATION"}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--year", default="2026")
@@ -122,6 +150,8 @@ def main():
     (out / "top-rated-awards-emblem.svg").write_text(emblem(a.year), encoding="utf-8")
     (out / "top-rated-awards-lockup.svg").write_text(lockup(a.year), encoding="utf-8")
     (out / "top-rated-awards-city-sample.svg").write_text(city_seal(a.year, "HAMILTON · HEAT PUMPS"), encoding="utf-8")
+    for k, v in SHIELDS.items():
+        (out / f"shield-{k}-{a.year}.svg").write_text(shield(v, a.year), encoding="utf-8")
     print("wrote", ", ".join(p.name for p in sorted(out.glob("*.svg"))))
 
 

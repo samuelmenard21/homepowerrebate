@@ -153,7 +153,8 @@ def main():
         hub_url = f"/ca/{code}/" if names[code]["country"] == "ca" else f"/us/{code}/"
         body = (f'<div class="callout">{short}</div>{reg_note}<h2>{e(name)} cities, with the top-rated company in each</h2>{table(cs)}'
                 f'<p>Want the rebates first? See <a href="{hub_url}">heat pump and other rebates in {e(name)}</a>, then come back to compare companies.</p>'
-                f'<p><a href="{NAT}">Heat pump installers in all {n_c} cities</a></p>')
+                + ('<p>Looking for contractors in Mass Save\'s own network? See <a href="/us/ma/heat-pump-installer-network/">the Mass Save Heat Pump Installer Network by county</a>.</p>' if code == "ma" else "")
+                + f'<p><a href="{NAT}">Heat pump installers in all {n_c} cities</a></p>')
         page(f"{NAT}{code}/", f"Heat Pump Installers in {name}: Top-Rated by City"[:80],
              f"Top-rated heat pump installers in {n_ci} {name} cities, ranked by {n_rv:,} Google reviews. See the best company in each city plus open rebates.",
              f"Heat Pump Installers in {name}", f"{n_ci} cities",

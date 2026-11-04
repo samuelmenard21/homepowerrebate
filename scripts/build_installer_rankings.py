@@ -520,7 +520,48 @@ def registered_counts(region, service, city_label, ranked):
     return serving, others, here, len(serving) - len(others)
 
 
+MA_HPIN = {}
+_maf = ROOT / "data" / "ma-hpin-contractors.json"
+if _maf.exists():
+    MA_HPIN = json.loads(_maf.read_text(encoding="utf-8"))
+MA_COUNTY = {"Boston": "Suffolk", "Brockton": "Plymouth", "Cambridge": "Middlesex", "Fall River": "Bristol", "Lawrence": "Essex", "Lowell": "Middlesex",
+             "Lynn": "Essex", "New Bedford": "Bristol", "Newton": "Middlesex", "Quincy": "Norfolk", "Somerville": "Middlesex", "Springfield": "Hampden",
+             "Worcester": "Worcester"}
+MA_HPIN_PAGE = "/us/ma/heat-pump-installer-network/"
+
+
+def ma_hpin_box(city_label, ranked):
+    """Mass Save Heat Pump Installer Network contractors that serve this city's county but are not on our ranking (2026-11-04).
+    From Mass Save's own spreadsheet (data/ma-hpin-contractors.json, scripts/refresh_ma_hpin.py). Alphabetical, never ranked."""
+    county = MA_COUNTY.get(city_label)
+    if not county or not MA_HPIN:
+        return ""
+    ranked_off = {_ma for _ma in (REGISTERED.get(("ma", "heat-pump", r["name"].strip())) and r["name"].strip() for r in ranked) if _ma}
+    matched = {m["official_name"] for m in json.loads((ROOT / "data" / "rebate-registered.json").read_text(encoding="utf-8")).get("matches", [])
+               if m.get("program") == "ma_hpin" and m["business"].strip() in {r["name"].strip() for r in ranked}}
+    serving = [c for c in MA_HPIN["contractors"] if county in c["counties"] and "Residential" in c["property_types"]]
+    others = sorted((c for c in serving if c["name"] not in matched), key=lambda c: c["name"].lower())
+    here = [c for c in others if c["city"].lower() == city_label.lower()]
+    unit = f'{len(serving)} residential contractors in Mass Save\'s Heat Pump Installer Network serve {esc(county)} County'
+    rows = "".join(f'<li>{(f'<a href="{esc(c["website"])}" rel="nofollow noopener" target="_blank">{esc(c["name"])}</a>' if c["website"] else esc(c["name"]))}, {esc(c["city"].title())}'
+                   f'{", instant rebate" if c["instant_rebate"] == "Yes" else ""}.</li>' for c in here[:40])
+    box = (f'<h2 id="registered-only">Mass Save network contractors that serve {esc(city_label)}</h2>'
+           f'<p>{unit}, which includes {esc(city_label)}. {len(serving) - len(others)} of them are on our ranking above. The rest come from Mass Save\'s own list and are not ranked, '
+           f'because we have no Google review data for them here. Check reviews yourself before you hire. <a href="{MA_HPIN_PAGE}">See the full list by county</a>.</p>')
+    if here:
+        box += f'<details class="regonly" open><summary>{len(here)} with an office in {esc(city_label)} (alphabetical, not a ranking)</summary><ul>{rows}</ul></details>'
+    box += (f'<p class="small">Source: Mass Save Heat Pump Installer Network contractor list, revised {date.fromisoformat(MA_HPIN["checked"]).strftime("%B %-d, %Y")}. '
+            f'Mass Save does not endorse or warrant these contractors.</p>')
+    return box
+
+
 def registered_only_box(region, service, city_label, ranked):
+    if region == "ma" and service == "heat-pump":
+        return ma_hpin_box(city_label, ranked)
+    return _bc_registered_only_box(region, service, city_label, ranked)
+
+
+def _bc_registered_only_box(region, service, city_label, ranked):
     """Program-registered contractors that list this city as a service area but are not on our Google-review ranking (BC heat pump and
     insulation, 2026-10-22). A separate, labelled list below the ranking: alphabetical, never ranked, no review data. The list is Better Homes BC's
     own public contractor list (data/bc-registered-contractors.json, scripts/refresh_bc_registered.py)."""
@@ -677,6 +718,23 @@ def faq_items(region, service, city_label, hub, ranked, n, total_reviews, avg, m
             items.append((f"How much does it cost to install a {low} in a 1,500 square foot house?",
                           f"Square footage alone does not set the price. The size of the system comes from how much heat your house loses, so a well-insulated 1,500 square foot house can need a smaller system than a drafty one. "
                           f"The source above prices {_plain(price[1])} at {price[0]}. Ask for a written heat-loss calculation before you accept a quote, and use it to compare sizes."))
+        if service == "insulation":
+            # worded like Google's "People also ask" for insulation near-me searches (seen 2026-11-04, Burlington ON). No price is stated:
+            # we have no sourced insulation price survey, so the answers say what sets the price and how to compare quotes.
+            items.append(("How much does it cost to insulate a 2,000 square foot house?",
+                          "We do not quote one price, because the size of the house is not what sets it. The price depends on which parts you insulate (attic, walls, basement or crawl space), "
+                          "the R-value you end up with, what is already there, and how much air sealing is needed. In a two-storey house only part of the floor area sits under the roof. "
+                          "Ask each company for a price per area and the R-value, then add them up to compare quotes."))
+            items.append(("How much does 1,500 square feet of insulation cost?",
+                          "That depends on where the 1,500 square feet is and what goes in it. Blown-in attic insulation, spray foam and wall insulation are priced differently, and a higher R-value costs more. "
+                          "We have no verified price survey, so we do not state a number. Get at least two written quotes that list the area, the material and the final R-value."))
+            items.append(("What is the average labour cost to install insulation?",
+                          "There is no official labour-only price we can verify, so we do not quote one. Ask for an itemized quote with the material, the labour, air sealing, and removal of any old insulation on separate lines, "
+                          "then compare line by line. A very low labour line often means a step is left out."))
+            items.append(("What is the 2/3 rule of insulation?",
+                          "It is a rule of thumb, not a building code rule, for walls and roofs that mix insulation inside and outside the vapour barrier. The idea is to keep the vapour barrier warm enough that moisture does not condense on it: "
+                          "put it no further out than about one third of the way through the total R-value, so about two thirds of the insulation sits outside it. People adjust the split for milder climates, and some builders disagree with the rule. "
+                          "Green Building Advisor's forum discusses it. Follow your local building code, and ask your contractor how they plan to manage moisture in your wall or roof."))
         where = "the US" if us else "Canada"
         if service == "heat-pump": items.append((f"What is the most reliable {low} in {where}?",
                       f"We could not find an independent reliability ranking by brand that we can verify, so we do not name one. What you can check: that the model is rated for cold climates, "
@@ -702,9 +760,14 @@ def faq_items(region, service, city_label, hub, ranked, n, total_reviews, avg, m
     items.append((f"Are there rebates for {plural} in {city_label}?", reb_a))
     if reg_count:
         progs = " and ".join(sorted(p["name"] for p in reg_used.values()))
-        items.append((f"Do I need a registered contractor to get the {low} rebate?",
-                      f"Most rebate programs require one. {reg_count} of the {n} {low} companies listed here appear on the official contractor list for {progs}. "
-                      f"Confirm that your installer is registered before you sign."))
+        if all(p.get("required", True) for p in reg_used.values()):
+            items.append((f"Do I need a registered contractor to get the {low} rebate?",
+                          f"Most rebate programs require one. {reg_count} of the {n} {low} companies listed here appear on the official contractor list for {progs}. "
+                          f"Confirm that your installer is registered before you sign."))
+        else:
+            items.append((f"Which {low} installers in {city_label} are in the {progs}?",
+                          f"{reg_count} of the {n} {low} companies listed here appear on Mass Save's list of Heat Pump Installer Network contractors. Mass Save says network contractors have shown proof of EPA certification "
+                          f"and Massachusetts insurance and completed heat pump installation training. Mass Save does not endorse their work. Ask Mass Save which contractors qualify for the rebate you want, then check reviews."))
     # city climate or sun data
     sec = climate_section(region, service, city_label)
     ps = re.findall(r"<p>(.*?)</p>", sec, re.S)
@@ -921,8 +984,9 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
     reg_note = "".join(
         f'<p class="small"><span class="reg">✓</span> = on the official contractor list for {esc(p["name"])} '
         f'(checked {date.fromisoformat(p["checked"]).strftime("%B %-d, %Y")}, <a href="{esc(p["source_url"])}" rel="nofollow noopener" target="_blank">source</a>). '
-        f'Most rebates require a registered contractor; confirm before you sign.</p>'
-        for p in reg_used.values())
+        + ("Most rebates require a registered contractor; confirm before you sign." if p.get("required", True) else
+           "Mass Save lists these contractors as members of its network. Ask Mass Save which contractors qualify for the rebate you want before you sign.")
+        + '</p>' for p in reg_used.values())
 
     city_hub_url = hub["url"] if hub else ""
     rebate_url = (city_hub_url + svc["rebate_cat"] + "/") if city_hub_url and (ROOT / (city_hub_url.strip("/") + "/" + svc["rebate_cat"]) / "index.html").exists() else city_hub_url

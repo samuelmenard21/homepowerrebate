@@ -3,7 +3,7 @@
 
 Why: Search Console showed "heat pump installers near me" landing on random city pages. There was no page for the head
 term. These hubs list every city we rank (one row per city: how many companies, the top-rated one, the open heat pump
-rebate), grouped by country and region, and link straight to each city's ranking. No postal code box: the choice is the city.
+rebate), grouped by country and region, and link straight to each city's ranking. City only (no postal code or ZIP box): a type-ahead city finder and a nearest-city button.
 
 Every number comes from the same data as the ranking pages (installers/*-installers-real.csv through
 build_installer_rankings.load_rows, powerscore-data.json for the open rebate), so a hub cannot disagree with a city page.
@@ -57,6 +57,43 @@ def city_rows():
     return sorted(out, key=lambda c: (c["region"], c["city"]))
 
 
+FIND_JS = r"""(function(){var d=JSON.parse(document.getElementById('hp-cities').textContent),q=document.getElementById('hp-q'),ul=document.getElementById('hp-res'),
+msg=document.getElementById('hp-msg'),btn=document.getElementById('hp-near');
+function ev(n,p){try{if(window.gtag)gtag('event',n,p||{});}catch(e){}}
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();}
+function show(list){ul.innerHTML='';list.slice(0,8).forEach(function(c){var li=document.createElement('li'),a=document.createElement('a');a.href=c.u;a.textContent=c.n+', '+c.r;
+a.addEventListener('click',function(){ev('hp_finder_pick',{how:c.how||'type',city:c.u});});li.appendChild(a);ul.appendChild(li);});ul.hidden=!list.length;}
+q.addEventListener('input',function(){var t=norm(q.value);msg.textContent='';if(t.length<2){show([]);return;}
+var m=d.filter(function(c){return (' '+norm(c.n)).indexOf(' '+t)>-1||norm(c.n+' '+c.r).indexOf(t)===0;});
+m.sort(function(a,b){return (norm(a.n).indexOf(t)===0?0:1)-(norm(b.n).indexOf(t)===0?0:1)||b.k-a.k;});
+show(m);if(!m.length)msg.textContent='We do not rank that city yet. Pick the closest one from the lists below.';});
+q.addEventListener('keydown',function(e){if(e.key==='Enter'){var a=ul.querySelector('a');if(a){e.preventDefault();a.click();location.href=a.href;}}});
+function km(a,b,c,e){var r=Math.PI/180,x=(e-b)*r*Math.cos((a+c)*r/2),y=(c-a)*r;return 6371*Math.sqrt(x*x+y*y);}
+btn.addEventListener('click',function(){if(!navigator.geolocation){msg.textContent='Your browser cannot share its location. Type your city instead.';return;}
+msg.textContent='Finding the closest city...';ev('hp_finder_locate');
+navigator.geolocation.getCurrentPosition(function(p){var best=null,bd=1e9;d.forEach(function(c){var k=km(p.coords.latitude,p.coords.longitude,c.y,c.x);if(k<bd){bd=k;best=c;}});
+var near=d.map(function(c){return {c:c,k:km(p.coords.latitude,p.coords.longitude,c.y,c.x)};}).sort(function(a,b){return a.k-b.k;}).filter(function(o){return o.k<=100;}).slice(0,5);
+if(!near.length){msg.textContent='No city we rank is within 100 km of you. Type your city, or pick one from the lists below.';show([]);return;}
+msg.textContent='Closest cities we rank (straight-line distance; your location stays in your browser):';
+show(near.map(function(o){return {n:o.c.n+' ('+Math.round(o.k)+' km)',r:o.c.r,u:o.c.u,how:'locate'};}));},
+function(){msg.textContent='We could not get your location. Type your city instead.';},{timeout:10000,maximumAge:600000});});})();"""
+
+
+def finder(cities, names):
+    """City-only finder for the national hub: type-ahead plus a nearest-city button. City names and centres are public geography; the visitor's
+    position is compared in the browser and never sent anywhere. Installer order on every page stays review-based."""
+    centres = json.loads((ROOT / "data" / "city-centres.json").read_text(encoding="utf-8"))
+    data = [{"n": c["city"], "r": names[c["region"]]["name"], "u": c["url"], "y": centres[c["url"]][0], "x": centres[c["url"]][1], "k": c["n"]}
+            for c in cities]
+    blob = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    return ('<div class="hp-find"><h2 class="hp-find-h">Find your city</h2>'
+            '<label for="hp-q" class="hp-find-l">Type your city</label>'
+            '<div class="hp-find-row"><input id="hp-q" type="search" autocomplete="off" placeholder="For example: Hamilton" aria-controls="hp-res">'
+            '<button type="button" id="hp-near" class="hp-find-btn">Use my location</button></div>'
+            '<p id="hp-msg" class="hp-find-msg" role="status" aria-live="polite"></p><ul id="hp-res" class="hp-find-res" hidden></ul>'
+            f'<script id="hp-cities" type="application/json">{blob}</script><script>{FIND_JS}</script></div>')
+
+
 def table(cities):
     rows = "".join(
         f'<tr><td><a href="{c["url"]}"><b>Heat pump installers in {e(c["city"])}</b></a></td><td>{c["n"]}</td>'
@@ -74,8 +111,8 @@ def faq(scope, n_cities, n_companies, n_reviews, region_name=None):
          f"The {n_companies:,} companies on {scope} have {n_reviews:,} Google reviews between them. Nobody pays to be listed or to rank higher."),
         ("Is heat pump installation free to compare?",
          "Yes. Comparing installers is free for homeowners, and the listed companies pay nothing to appear. Each city page also shows the heat pump rebates open in that city, so you can see what could come off the price before you call."),
-        ("Why can't I search by my postal code or ZIP code?",
-         "We rank installers city by city, because rebates, climate and rules change by city. Pick the closest city in the table. Each city page also lists nearby cities with their own rankings."),
+        ("How do I find installers near me?",
+         "Type your city at the top of the page, or tap Use my location to see the closest cities we rank. We rank installers city by city, because rebates, climate and rules change by city. Each city page also lists nearby cities with their own rankings."),
         ("What should I check before I hire a heat pump installer?",
          "Ask for the exact model and its cold-climate rating, a written heat-loss calculation, whether the company is registered for the rebate you want, and a quote you can compare line by line. Each city page has a checklist and a cost range."),
     ]
@@ -114,7 +151,8 @@ def main():
 
     # ---- national hub ----
     parts = [f'<div class="callout"><p><strong>Short answer:</strong> pick your city below. Each row opens a ranking of the top-rated heat pump installers there, '
-             f'with typical cost, open rebates and what to ask before you hire. We cover {n_c} cities and {n_i:,} companies, ranked by {n_r:,} Google reviews.</p></div>']
+             f'with typical cost, open rebates and what to ask before you hire. We cover {n_c} cities and {n_i:,} companies, ranked by {n_r:,} Google reviews.</p></div>',
+             finder(cities, names)]
     for country, label in (("ca", "Canada"), ("us", "United States")):
         codes = sorted((c for c in by_region if names[c]["country"] == country), key=region_label)
         if not codes:

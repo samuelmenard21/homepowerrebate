@@ -26,6 +26,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "scripts"))
+import apply_canonical_nav_footer as navfooter  # noqa: E402
 TODAY = "2026-09-26"
 TODAY_H = "September 26, 2026"
 
@@ -506,15 +508,29 @@ FAMILIES = [
     (win_slug, "window-doors-replacement-rebates-bc-guide", build_win),
 ]
 
-CSS = """<style id="bcblog-css">
-.hpr-table{overflow-x:auto;margin:20px 0}.hpr-table table{width:100%;border-collapse:collapse;font-size:15px;background:#fff}
-.hpr-table th,.hpr-table td{border:1px solid var(--rule,#d9d0c1);padding:10px 12px;text-align:left;vertical-align:top}
-.hpr-table th{background:var(--paper-warm,#f5efe5)}
-.hpr-cta{background:var(--teal-deep,#08363f);color:#fff;border-radius:16px;padding:28px 24px;margin:36px 0;text-align:center}
-.hpr-cta h3{color:#fff;margin-bottom:8px}.hpr-cta p{color:rgba(255,255,255,.88)!important}
-.hpr-btn{display:inline-block;background:var(--amber,#d4751c);color:#fff!important;padding:12px 22px;border-radius:999px;text-decoration:none!important;font-weight:600}
-.hpr-sources{font-size:14px!important}.hpr-cities{font-size:15px!important;line-height:1.9}
-</style>"""
+# the guides use the shared article template: its baseline variant plus the family CSS (components are in _partials/templates/article.css).
+# Older pages carried their own variant copies (article-xxxx, common-xxxx) and an inline <style id="bcblog-css">; both are dropped here.
+BASELINE = '<link rel="stylesheet" href="/assets/tpl/article.css?v=ebfbf306a0" data-hpr-tpl>'
+_VARIANT_LINK_RE = re.compile(r'<link rel="[a-z]+"[^>]*href="/assets/tpl/(?:article|common)-[0-9a-f]+\.css[^"]*"[^>]*>\s*(?:<noscript>.*?</noscript>\s*)?', re.S)
+_BCBLOG_CSS_RE = re.compile(r'<style id="bcblog-css">.*?</style>\s*', re.S)
+_SITE_LINK_RE = re.compile(r'<link rel="stylesheet" href="/assets/site\.css[^"]*"[^>]*>')
+
+
+def shared_css(t):
+    """Page head with exactly one site.css link, the shared baseline link right before it, and nothing page-specific."""
+    t = navfooter.undo_critical(t)
+    t = _BCBLOG_CSS_RE.sub("", t)
+    t = _VARIANT_LINK_RE.sub("", t)
+    t = re.sub(r'<link rel="stylesheet" href="/assets/tpl/article\.css[^"]*"[^>]*>\s*', "", t)
+    links = list(_SITE_LINK_RE.finditer(t))
+    if links:
+        for m in reversed(links[1:]):
+            t = t[:m.start()] + t[m.end():]
+        m = links[0]
+        t = t[:m.start()] + BASELINE + "\n" + t[m.start():]
+    else:
+        t = t.replace("</head>", BASELINE + "\n</head>", 1)
+    return t
 
 
 def jld(obj):
@@ -560,8 +576,7 @@ def rewrite(path, slug_dir, title, desc, crumb, eyebrow, faqs, body, sub):
     if first < 0:
         first = t.find("</head>")
     t = t[:first] + new_ld + t[first:]
-    if 'id="bcblog-css"' not in t:
-        t = t.replace("</head>", CSS + "\n</head>", 1)
+    t = shared_css(t)
     # breadcrumb label
     t = re.sub(r'(<nav class="hpr-breadcrumb".*?<li aria-current="page">).*?(</li>)', lambda m: m.group(1) + esc(crumb) + m.group(2), t, count=1, flags=re.S)
     # body region

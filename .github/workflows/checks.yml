@@ -28,3 +28,5 @@ jobs:
         run: python3 scripts/check_internal_links.py
       - name: Redirect rule limit (Cloudflare Pages allows 2,000 static and 100 dynamic)
         run: python3 scripts/compact_redirects.py --check
+      - name: No new one-off stylesheet combinations (pages must use the shared templates)
+        run: python3 scripts/check_stylesheet_combos.py

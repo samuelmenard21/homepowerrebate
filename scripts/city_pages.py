@@ -225,6 +225,28 @@ class Region:
         return path, w
 
 
+    def group_hub(self, g):
+        """/<region>/<group>/ (a New York utility) from data/<code>/pages/<group>/hub.json: title, desc, h1, lead, short (the short answer),
+        facts, sections [[h2, html]], faq, refs. The same layout as a city hub, without the rebate cards."""
+        src = ROOT / "data" / self.code / "pages" / g / "hub.json"
+        if not src.exists():
+            return None
+        d = json.loads(src.read_text())
+        path = f"/{self.path}/{g}/"
+        iso, when = kit.checked(d["facts"])
+        article = (f'<div class="callout">{d["short"]}</div>\n' + kit.sections(d) + f"\n<h2>Common questions</h2>\n{kit.faq(d)}\n"
+                   f'<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}. <a href="/{self.path}/">All {e(self.name)} rebates &rarr;</a></p>')
+        w = kit.quality_gate(article, d, path, loose_refs=True, min_words=450)
+        name = self.groups[g]["name"]
+        trail = [("Home", "/"), (self.name, f"/{self.path}/"), (name, path)]
+        lds = kit.ld_scripts([kit.article_ld(d["title"], d["desc"], iso, path), kit.breadcrumb_ld(trail), kit.faq_ld(d)])
+        crumb = kit.breadcrumb([(e(n), p) for n, p in trail])
+        hero = f'<section class="hero"><div class="wrap"><h1>{e(d["h1"])}</h1><p>{d["lead"]}</p></div></section>'
+        kit.write_page(path, d["title"], d["desc"], lds, navfooter.render_nav(self.code, ""), crumb, hero, None, article,
+                       navfooter.render_footer(self.code, "", "", path))
+        return path, w
+
+
     # ---- the region hub base page (the hub pipeline then adds the stats, table, city finder and contents) ----
     def state_hub(self):
         """/<region>/ from data/<code>/pages/state-hub.json (or data/<code>/state-hub.json): eyebrow, h1, sub, program_links,
@@ -284,6 +306,13 @@ def main(code, argv=None):
             continue
         for cat in cats:
             r = reg.build(slug, cat)
+            if r:
+                print("built", r[0], r[1], "words")
+    if "--hubs" in argv:  # group hubs (the New York utilities)
+        for g in reg.groups:
+            if only and g not in only:
+                continue
+            r = reg.group_hub(g)
             if r:
                 print("built", r[0], r[1], "words")
 

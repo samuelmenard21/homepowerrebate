@@ -1,0 +1,40 @@
+{
+"on/hamilton": {
+ "chamber": {"name":"Hamilton Chamber of Commerce","url":"https://www.hamiltonchamber.ca","member_directory":"https://www.hamiltonchamber.ca/directory/","resources":null,"resources_note":"No green-business page. Related only: https://www.hamiltonchamber.ca/what-we-do/energy-harvesting-study/ (industrial focus)","read_on":"https://hamiltonchamber.ca"},
+ "city_office": {"name":"City of Hamilton Office of Climate Change Initiatives / Better Homes Hamilton","url":"https://hamilton.ca/betterhomeshamilton","rebate_page":"https://hamilton.ca/betterhomeshamilton","note":"Page read; 0% loan pilot (50 projects) per search. External rebate links not visible in the part read, so unclear whether the page has a resource list. Climate office path from menu: /home-neighbourhood/environmental-stewardship/environmental-plans-strategies/hamiltons-climate-8 (relative, domain hamilton.ca)."},
+ "community_groups": [
+  {"name":"Green Venture","url":"https://www.greenventure.ca","resources_url":"https://greenventure.ca/home-energy-efficiency","contact_url":"https://greenventure.ca/ecohouse","note":"Hamilton non-profit with home energy efficiency program; no dedicated contact page, phone/address on site. Not a neutral recipient if it sells audits."},
+  {"name":"Environment Hamilton","url":"https://www.environmenthamilton.org","resources_url":"https://www.environmenthamilton.org/buildings","contact_url":"https://www.environmenthamilton.org/contact_us","note":"Buildings issue page URL listed in nav; its content not read."}
+ ],
+ "news": [
+  {"name":"Hamilton Spectator","url":"https://www.thespec.com","reporter":null,"contact_page":null,"note":"Fetch blocked by tool; section and reporters not read."},
+  {"name":"CBC Hamilton","url":"https://www.cbc.ca/news/canada/hamilton","reporter":null,"contact_page":null,"note":"403 to fetcher; a CBC story on the city climate office was seen in search (https://www.cbc.ca/lite/story/1.6545064) but byline not read."}
+ ],
+ "notes": "Best fit is the Better Homes Hamilton page (city-run loan program, so a rebate resource link is natural) plus Green Venture. Awkward: the city program competes for the same audience; news outlets could not be read."
+},
+"on/burlington": {
+ "chamber": {"name":"Burlington Chamber of Commerce","url":"https://burlingtonchamber.com","member_directory":"https://www.burlingtonchamber.com/membership/member-directory/","resources":null,"resources_note":"No sustainability or green-business page found; only trade hub and member discounts.","read_on":"https://burlingtonchamber.com"},
+ "city_office": {"name":"City of Burlington Better Homes Burlington","url":"https://burlington.ca/en/home-property-and-environment/better-homes-burlington.aspx","rebate_page":"https://burlington.ca/en/home-property-and-environment/better-homes-burlington.aspx","note":"URL appeared in search results but returned 404 to the fetcher, so content unread. Search says contact is burlington.ca/betterhomes. Whether the 2023 heat pump loan still runs is unconfirmed."},
+ "community_groups": [
+  {"name":"BurlingtonGreen","url":"https://www.burlingtongreen.org","resources_url":"https://www.burlingtongreen.org/live-green/individuals-and-families/","contact_url":"https://www.burlingtongreen.org/contact-us/","note":"Registered charity; Live Green resources, no dedicated home energy page; Make the Switch program https://www.burlingtongreen.org/programs/make-the-switch/ not confirmed as home energy."}
+ ],
+ "news": [
+  {"name":"Burlington Gazette","url":"https://burlingtongazette.ca","reporter":null,"contact_page":null,"note":"Site 403 to fetcher; it has covered the retrofit program (search result https://burlingtongazette.ca/details-on-loan-program-to-help-homeowners-recover-energy-efficiency-upgrade-costs-now-available-call-if-youre-interested). Reporter not read."},
+  {"name":"Inside Halton / Burlington Post","url":"https://www.insidehalton.com","reporter":null,"contact_page":null,"note":"Fetch blocked; content not read."}
+ ],
+ "notes": "Best fit is BurlingtonGreen plus the city's Better Homes Burlington page, but the city page was unreadable and only 1 community group was found. Only one group and no reporter names found."
+},
+"on/greater-sudbury": {
+ "chamber": {"name":"Greater Sudbury Chamber of Commerce","url":"https://sudburychamber.ca","member_directory":"https://business.sudburychamber.ca/member-directory","resources":null,"resources_note":"Directory URL is a 301 target from https://sudburychamber.ca/membershipdirectory/ ; the new URL returned 403 to the fetcher. Nearly 850 members per search snippet.","read_on":"search result only"},
+ "city_office": {"name":"City of Greater Sudbury CHIRP Home Retrofit Support (Planning and Development)","url":"https://www.greatersudbury.ca/CHIRP","rebate_page":"https://www.greatersudbury.ca/CHIRP","note":"Page read; launched March 2026; already lists external rebate links (Home Renovation Savings, Enbridge Winterproofing), so a resource link fits. News release: https://www.greatersudbury.ca/city-hall/news-and-public-notices/2026/city-of-greater-sudbury-introduces-chirp-home-retrofit-support-program/ . 311 email on that release."},
+ "community_groups": [
+  {"name":"reThink Green","url":"https://www.rethinkgreen.ca","resources_url":"https://www.rethinkgreen.ca/retrofits","contact_url":"https://www.rethinkgreen.ca/contact","note":"Paths were relative on the page; domain from fetch URL."},
+  {"name":"Coalition for a Liveable Sudbury (Net Zero Sudbury)","url":null,"resources_url":null,"contact_url":null,"note":"Named on https://www.greatersudbury.ca/live/environment-and-sustainability1/climate-action/ceep/whos-taking-action/other-actions/ but no URL given there; not looked up."}
+ ],
+ "news": [
+  {"name":"Sudbury.com","url":"https://www.sudbury.com","reporter":null,"contact_page":null,"note":"Site 403 to fetcher; has run retrofit columns (https://www.sudbury.com/green-living/green-living-heres-how-you-can-benefit-from-retrofitting-your-home-4719219)."},
+  {"name":"CBC Sudbury","url":"https://www.cbc.ca/news/canada/sudbury","reporter":null,"contact_page":null,"note":"403 to fetcher; byline not read."}
+ ],
+ "notes": "Best fit is reThink Green (has a retrofits page) and the City's CHIRP page, which already links rebate resources. Awkward: CHIRP is a one-on-one city service that could view a ranking page as overlap; news and chamber pages blocked."
+}
+}

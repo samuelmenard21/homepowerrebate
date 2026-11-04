@@ -1,0 +1,53 @@
+{
+"ca/chula-vista": {
+ "chamber": {"name":"Chula Vista Chamber of Commerce","url":"https://chulavistachamber.org","member_directory":"https://web.chulavistachamber.org/2022/Chamber-Members","resources_page":"https://chulavistachamber.org/business-resources/","note":"Read via fetch of the home page and the Chamber-Members page. No green-business page found; only Business Resources, Economic Development and an SDG&E TEAS program page (contents not read). Public directory lists 500+ members; it has no confirmed HVAC category (not checked)."},
+ "city_office": {"name":"City of Chula Vista, Conservation (Clean / Environmental Services)","url":"https://chulavistaca.gov/departments/clean/conservation/renewable-efficient-energy-residents","resource_link_fit":"Renewable & Efficient Energy - Residents page (names TECH Clean California heat pump incentives). Fetch returned 403, so the name and content come only from a search-result excerpt; page layout and a link spot were not seen.","mass_save":null},
+ "community_groups": [
+  {"name":"Citizens' Climate Lobby (San Diego chapter), host of the May 16, 2026 Chula Vista Home Electrification Fair (city-endorsed, San Diego Community Power sponsored)","url":"https://www.kpbs.org/events/2026/05/16/chula-vista-home-electrification-fair","resources_url":"https://www.chulavistaca.gov/Home/Components/News/News/4047/3175","note":"URLs are the KPBS event listing and the city news release, seen in search results only. The group's own site was not found or read. Fair info site reported as ElectrificationWG.org (unread)."},
+  {"name":"San Diego 350","url":"https://sandiego350.org","resources_url":null,"note":"Appeared in search results only; page not read, Chula Vista focus unconfirmed."}
+ ],
+ "news": [
+  {"name":"Chula Vista Star-News","url":"https://www.thestarnews.com","contact_page":"https://www.thestarnews.com/contact/","about_page":"https://www.thestarnews.com/about-us/","reporter":"Bylines seen on the site for Chula Vista news: Debbie L. Sklar, Tina Indalecio. No energy or environment section; no confirmed energy beat."},
+  {"name":"KPBS (San Diego public media)","url":"https://www.kpbs.org","contact_page":null,"reporter":null,"note":"Runs the event listing for the Chula Vista electrification fair; no named energy reporter confirmed, contact page not read."},
+  {"name":"Voice of San Diego","url":"https://voiceofsandiego.org","contact_page":null,"reporter":"Mackenzie Elmer (described as environment and energy reporter in an undated podcast transcript; current role unconfirmed)","note":"Site itself not fetched."}
+ ],
+ "notes":"Best fit is the city Conservation page plus the Citizens' Climate Lobby electrification fair network; the chamber has a public directory but no green page. Awkward: city page blocks automated fetch, so confirm it in a browser, and local rebate amounts (SDG&E, TECH, city top-up) conflict across sources."
+},
+"ab/st-albert": {
+ "chamber": {"name":"St. Albert and District Chamber of Commerce","url":"https://www.stalbertchamber.com","member_directory":"https://business.stalbertchamber.com/directory","resources_page":"https://www.stalbertchamber.com/grantresources/","note":"Read on the home page. No green-business page; Grant Resources is the closest."},
+ "city_office": {"name":"City of St. Albert, Environment (Energy Conservation and GHG Emissions)","url":"https://stalbert.ca/city/environment/energy-conservation/programs","resource_link_fit":"Same page lists Clean Energy Improvement Program (administered by Alberta Municipalities) and Canada Greener Homes Loan (closed); Home Energy Assessment Toolkit, Solar Energy and Greenhouse Gas Reduction Tips subpages are linked from it. Contact listed: environment@stalbert.ca (general department address published on the page). As read 2026-11-04: CEIP closed pre-qualification submissions Oct 1, 2026 and is at capacity.","mass_save":null},
+ "community_groups": [
+  {"name":"PACE Alberta (Leigh Bond, a St. Albert resident, named as president in a 2022 St. Albert Gazette article)","url":null,"resources_url":null,"note":"Org website not found or read; only seen in news coverage. Current status unconfirmed."},
+  {"name":"Alberta Ecotrust Foundation (awards page records a St. Albert environmental achievement)","url":"https://emeraldfoundation.ca/aef_awards/environmental-achievements-of-the-city-of-st-albert","resources_url":null,"note":"Emerald Awards page, not a program page; no St. Albert retrofit non-profit confirmed."}
+ ],
+ "news": [
+  {"name":"St. Albert Gazette (Great West Media)","url":"https://www.stalbertgazette.com","contact_page":"https://www.stalberttoday.ca/directory/media/st-albert-gazette-14157/contact/95805","reporter":"Tristan Oram (reports on city council per a search snippet); Jen Henderson listed as editor on a directory page (undated). Main site contact page not read."},
+  {"name":"City of St. Albert Media Enquiries (for city-side press contact)","url":"https://stalbert.ca/cosa/news/media-enquiries/","contact_page":"https://stalbert.ca/cosa/news/media-enquiries/","reporter":null,"note":"Seen in search results only."}
+ ],
+ "notes":"Best fit is the city Energy Conservation programs page and the Gazette, which has covered CEIP and the home energy grant; awkward that CEIP is at capacity and the city grant window (2022 start, three years) may be over, so a heat pump installer ranking must not imply a city rebate."
+},
+"ma/newton": {
+ "chamber": {"name":"Charles River Regional Chamber (formerly Newton-Needham Regional Chamber)","url":"https://www.charlesriverchamber.com","member_directory":"https://crrc.charlesriverchamber.com/list/FindStartsWith?term=G","resources_page":null,"note":"Rename and URL from a search result (2021 rename); the directory URL is a search-result page, home page not fetched. No green-business page found. Old nnchamber.com no longer works."},
+ "city_office": {"name":"City of Newton, Climate and Sustainability","url":"https://www.newtonma.gov/government/climate-and-sustainability/take-action-4-our-future/heat-pump-outreach","resource_link_fit":"Heat Pump Information page (also Heat & Cool Smart: https://www.newtonma.gov/government/climate-and-sustainability/heat-cool-smart). The city fetch returned 403, so content comes from search excerpts: the page sends residents to a no-cost Mass Save Home Energy Assessment and the city issued an RFI for local heat pump installers.","mass_save":"Yes per search excerpts (Mass Save Community First Partnership with Eversource and National Grid; https://www.masssave.com/newton). Heat Pump Installer Network not seen; unverified because page unreadable."},
+ "community_groups": [
+  {"name":"Green Newton","url":"https://greennewton.org","resources_url":"https://greennewton.org/resources/heat-pump-incentives-2026","note":"Read: runs a free Energy Advocate for residents and a Green Pages business directory (https://greennewton.org/green-pages/); contact page https://greennewton.org/contact. Its heat pump page mentions Mass Save but not the Heat Pump Installer Network. Nonprofit status not stated on the page. Names a preferred installer partner (Heritage Home Service) elsewhere, which could make a neutral ranking awkward."},
+  {"name":"HeatSmart Newton","url":"https://heatsmart.greennewton.org/","resources_url":null,"note":"Green Newton sub-site, seen in search results only."}
+ ],
+ "news": [
+  {"name":"Figure City News","url":"https://www.figcitynews.com","contact_page":null,"reporter":null,"note":"Ran a story on Green Newton's door-to-door heat pump push (search result only); byline not seen, contact not read."}
+ ],
+ "notes":"Best fit is Green Newton (resources and Green Pages) and the city heat pump page; awkward that Green Newton promotes a preferred installer, and no Newton news outlet with a named energy or housing reporter was found."
+},
+"ma/cambridge": {
+ "chamber": {"name":"Cambridge Chamber of Commerce","url":"https://www.cambridgechamber.org","member_directory":"https://business.cambridgechamber.org/list","resources_page":"https://www.cambridgechamber.org/resources/","note":"Read on the home page; no sustainability page found, Resources page contents not described."},
+ "city_office": {"name":"City of Cambridge, Office of Sustainability (Chief Climate Officer Julie Wormser listed as contact on the release), with Cambridge Energy Alliance","url":"https://www.cambridgema.gov/Departments/officeofsustainability/News/2025/09/cambridgeencouragesresidentstotakestepstoavoidwintergasheatingpricespikes","resource_link_fit":"Cambridge Energy Alliance (https://cambridgeenergyalliance.org) lists no-cost assessments, financing and solar pages; Electrify Cambridge at https://cambridgema.gov/electrify. Both are places a resource link might fit.","mass_save":"Yes, both the release and CEA mention Mass Save assessments and heat pump incentives and 0% HEAT Loan. Heat Pump Installer Network not mentioned on either page."},
+ "community_groups": [
+  {"name":"HEET (Home Energy Efficiency Team)","url":"https://www.idealist.org/en/nonprofit/03a0a42b07ae488d9e12911f2b18e9e0-heet-home-energy-efficiency-team-cambridge","resources_url":null,"note":"Cambridge nonprofit seen only on an Idealist listing; own site not read."},
+  {"name":"Cambridge Energy Alliance (city service, not independent)","url":"https://cambridgeenergyalliance.org","resources_url":"https://cambridgeenergyalliance.org/no-cost-energy-assessment/","note":"Run by the City of Cambridge; outreach address published on its page is outreach@cambridgeenergyalliance.org."}
+ ],
+ "news": [
+  {"name":"Cambridge Day","url":"https://www.cambridgeday.com","contact_page":"https://www.cambridgeday.com/team/","reporter":"No energy beat; masthead lists Jane Petersen, Anna Albrecht, John Hawkinson and others (beat per person not confirmed). Nonprofit newsroom; Environment section at https://www.cambridgeday.com/category/arts-and-culture/nature-environment/."}
+ ],
+ "notes":"Best fit is the Office of Sustainability and Cambridge Energy Alliance pages, since the city already routes residents to Mass Save; awkward that the city funnels people to free no-cost assessments and Electrify Cambridge, so an installer ranking is a later step in the journey, not a replacement."
+}
+}

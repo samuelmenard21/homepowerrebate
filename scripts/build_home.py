@@ -316,7 +316,7 @@ def quiz_section():
 def installers_strip():
     return f'''<section class="hm-banner" aria-labelledby="hm-inst-h">
   <div class="hm-wrap hm-banner-in">
-    <div><h2 id="hm-inst-h">Looking for an installer?</h2><p>See the top-rated companies in your city, ranked by Google reviews. Nobody pays to rank higher.</p></div>
+    <div><h2 id="hm-inst-h">Looking for an installer?</h2><p>See the top-rated companies in your city, ranked by Google reviews. Nobody pays to rank higher. Replacing your heating? <a href="/installers/heat-pump/">Heat pump installers by city</a>.</p></div>
     <a href="/installers/" class="hm-btn">Find top-rated installers {icon("arrow", "hm-ar")}</a>
   </div>
 </section>'''

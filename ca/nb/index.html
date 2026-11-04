@@ -142,6 +142,7 @@
 
 
 
+
 <!-- HREFLANG-START --><link rel="alternate" hreflang="en-CA" href="https://homepowerrebate.com/ca/nb/"><link rel="alternate" hreflang="fr-CA" href="https://homepowerrebate.com/ca/nb/fr/"><link rel="alternate" hreflang="x-default" href="https://homepowerrebate.com/ca/nb/"><!-- HREFLANG-END -->
 <!-- OG-CARD-START -->
 <meta property="og:image" content="https://homepowerrebate.com/og/ca/nb.jpg?v=aa130d8c436b">
@@ -334,6 +335,8 @@
 <p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 21, 2026: <a href="https://www.saveenergynb.ca/en/save-energy/residential/total-home-energy-savings-program/" target="_blank" rel="noopener">NB Power Total Home Energy Savings Program</a>, <a href="https://www.saveenergynb.ca/en/for-home/total-home/rebates/space-heating-equipment-rebates/" target="_blank" rel="noopener">Space heating equipment rebates</a>, <a href="https://www.saveenergynb.ca/en/for-home/total-home/rebates/insulation-rebates/" target="_blank" rel="noopener">Insulation rebates</a>, <a href="https://www.saveenergynb.ca/en/for-home/total-home/rebates/additional-rebates/" target="_blank" rel="noopener">Additional rebates</a>, <a href="https://www.saveenergynb.ca/en/for-home/enhanced-energy-savings-program/eligibility/" target="_blank" rel="noopener">Enhanced Energy Savings Program</a>.</p></details>
 
 </div></article>
+<!-- INSTALLER-HUB-START --><section style="max-width:880px;margin:24px auto;padding:16px 22px;background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;font-size:15.5px;line-height:1.6;"><b>Ready to hire?</b> <a href="/installers/heat-pump/">See the top-rated heat pump installers in your city</a> (ranked by Google reviews). Free to compare.</section><!-- INSTALLER-HUB-END -->
+
 </main>
 <!-- LEARN-START -->
 <div class="learn-wrap"><section class="learn-row"><h2>Not ready to talk to a contractor yet?</h2><p class="learn-sub">Short reads and quick quizzes. Learn the rules first, then call.</p><div class="learn-grid"><a class="learn-card is-num has-img" href="/blog/7-ways-to-lose-your-home-energy-rebate/"><div class="learn-tile t-sage"><img src="/assets/learn/rebate-plans-640.webp" srcset="/assets/learn/rebate-plans-400.webp 400w, /assets/learn/rebate-plans-640.webp 640w, /assets/learn/rebate-plans-1200.webp 1200w" sizes="(min-width:760px) 360px, 90vw" width="640" height="427" alt="Two construction workers in hard hats reviewing plans on a tablet beside insulated wall framing" loading="lazy"><span class="learn-kick">Ways to lose it</span><span class="learn-big">7</span></div><h3>7 Sneaky Ways to Lose Your Rebate (and the Easy Fix for Each)</h3><div class="learn-meta">Sam Menard · 6 min read</div><div class="learn-chips"><span>Rebates</span><span>Mistakes</span></div><span class="learn-more">Read more →</span></a><a class="learn-card has-img" href="/blog/heat-pump-myths-busted/"><div class="learn-tile t-teal"><img src="/assets/learn/myths-cats-640.webp" srcset="/assets/learn/myths-cats-400.webp 400w, /assets/learn/myths-cats-640.webp 640w, /assets/learn/myths-cats-1200.webp 1200w" sizes="(min-width:760px) 360px, 90vw" width="640" height="427" alt="Two cats resting on top of outdoor air conditioning units beside a brick building" loading="lazy"><span class="learn-kick">Quiz</span><span class="learn-big">Myth or true?</span></div><h3>Heat Pump Myths, Busted: 6 Things Your Brother-in-Law Got Wrong</h3><div class="learn-meta">Sam Menard · 6 min read</div><div class="learn-chips"><span>Heat pumps</span><span>Myths</span></div><span class="learn-more">Read more →</span></a><a class="learn-card is-num has-img" href="/blog/9-questions-to-ask-heat-pump-installer/"><div class="learn-tile t-amber"><img src="/assets/learn/hiring-roof-640.webp" srcset="/assets/learn/hiring-roof-400.webp 400w, /assets/learn/hiring-roof-640.webp 640w, /assets/learn/hiring-roof-1200.webp 1200w" sizes="(min-width:760px) 360px, 90vw" width="640" height="427" alt="Two workers handling ductwork on a rooftop beside rows of outdoor air conditioning units" loading="lazy"><span class="learn-kick">Questions to ask</span><span class="learn-big">9</span></div><h3>9 Questions That Make a Heat Pump Installer Sweat (In a Good Way)</h3><div class="learn-meta">Sam Menard · 7 min read</div><div class="learn-chips"><span>Heat pumps</span><span>Hiring</span></div><span class="learn-more">Read more →</span></a></div></section></div>
@@ -601,6 +604,24 @@ document.addEventListener('click', function (e) {
   var u; try { u = new URL(a.href); } catch (x) { return; }
   window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
 }, true);
+// Installer ranking pages: which lead actions each city page earns (2026-11-04). One GA4 event per click on a ranking card's call, email, profile,
+// website or Google reviews link, with the city, service and rank (read from the page path and the card), and one when someone starts the quote
+// form. generate_lead (on submit) already exists. No personal data: no phone number, email or company name is sent.
+(function () {
+  var m = location.pathname.match(/^\/installers\/([a-z]{2})\/([a-z0-9-]+)\/([a-z-]+)\/$/);
+  if (!m || !document.querySelector('.rank-list')) return;
+  var ctx = { region: m[1], city: m[2], service: m[3], page_path: location.pathname };
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('.rank-list a');
+    if (!a || !window.gtag) return;
+    var kind = a.classList.contains('btn-call') ? 'call' : a.classList.contains('em') ? 'email' : a.classList.contains('btn-prof') ? (/^https?:/.test(a.getAttribute('href')) ? 'website' : 'profile')
+      : a.classList.contains('lnk') ? 'reviews' : 'profile';
+    var li = a.closest('li');
+    window.gtag('event', 'installer_click', Object.assign({ action: kind, rank: li ? +li.dataset.rank : 0, transport_type: 'beacon' }, ctx));
+  }, true);
+  var qf = document.getElementById('qf-form'), started = false;
+  if (qf) qf.addEventListener('change', function () { if (started || !window.gtag) return; started = true; window.gtag('event', 'quote_start', ctx); });
+})();
 // Program alert boxes (scripts/add_program_alerts.py): POST /alert with the box's list id and region; one confirmation email, one list per program.
 document.addEventListener('submit', async function (e) {
   var f = e.target;

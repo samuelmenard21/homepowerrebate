@@ -13,7 +13,8 @@ PARTS = ROOT / "data" / "city-areas-parts"
 MIN_INSIDE = 3
 PLACE = {"bc/langley": "the Township of Langley"}   # the cited page covers the Township, not the City of Langley
 DROP = {"ny/albany": {"Helderberg"}, "ca/roseville": {"Fountains at Roseville"}, "ca/folsom": {"Carpenter Hill"},
-        "ca/rancho-cordova": {"Barrel District", "Villages of Zinfandel"}}
+        "ca/rancho-cordova": {"Barrel District", "Villages of Zinfandel"},
+        "mn/rochester": {"Eastside Pioneers", "Lowertown", "Arborglen"}}   # park-volunteer associations, not neighbourhoods
 
 
 def main():

@@ -52,7 +52,7 @@ def city_rows():
         rebate = d.get("dollar_value") if d.get("status") == "open" and d.get("dollar_value") else None
         out.append({"region": region, "city": hub["label"] if hub else city, "url": url, "n": len(ranked),
                     "reviews": sum(r["reviews"] for r in ranked), "top": br.display_name(top["name"]), "rating": top["rating"],
-                    "top_reviews": top["reviews"], "rebate": rebate, "hub_url": hub["url"] if hub else "",
+                    "top_reviews": top["reviews"], "avg": sum(r["rating"] * r["reviews"] for r in ranked) / max(sum(r["reviews"] for r in ranked), 1), "rebate": rebate, "hub_url": hub["url"] if hub else "",
                     "registered": rk[url].get("rebate_registered", 0)})
     return sorted(out, key=lambda c: (c["region"], c["city"]))
 
@@ -91,6 +91,7 @@ def page(path, title, desc, h1, badge, lead, crumbs, body_html, faqs, extra_ld=(
     refs = "<h2>Further reading</h2><ul>" + "".join(
         f'<li><a href="{u}" rel="noopener" target="_blank">{e(t)}</a></li>' for u, t in OUTSIDE) + \
         '<li><a href="/installers/how-we-rank/">How we rank installers</a></li>' \
+        '<li><a href="/installers/heat-pump/city-ratings/">Which cities have the best-reviewed installers</a></li>' \
         '<li><a href="/programs/national-heat-pump-rebate/">Canada\'s national heat pump rebate (opens early 2027)</a></li></ul>'
     nav = navfooter.render_nav("ca", "")
     footer = navfooter.render_footer("ca", "", "", path)

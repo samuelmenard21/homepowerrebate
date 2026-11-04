@@ -56,6 +56,7 @@ def pick():
         groups[(r["service"], r["region"], r["city"])].append(r)
     out = {sv: [] for sv in CATS}
     audit = []
+    counted = {}
     data_date = max((r["updated"] for r in rows if r["updated"]), default="")
     for (sv, region, city), inst in sorted(groups.items()):
         if len(inst) < MIN_COMPANIES:
@@ -75,6 +76,8 @@ def pick():
             audit.append({"service": sv, "region": region, "city": label, "result": "no award", "reason": f"only {len(elig)} eligible companies"})
             continue
         top = [r for r, _ in elig[:WINNERS]]
+        for r in inst:
+            counted[(r["region"], r["city"], r["name"])] = r["reviews"]
         raw_top = ranked[:WINNERS]
         replaced = [{"name": r["name"], "reason": w} for r, w in skipped if any(r is x for x in raw_top)]
         nxt = elig[WINNERS][0] if len(elig) > WINNERS else None
@@ -94,7 +97,7 @@ def pick():
             if r["region"] not in best or r["reviews"] > best[r["region"]]["reviews"]:
                 best[r["region"]] = r
         special[sv] = {rg: {"name": br.display_name(r["name"]), "city": r["city"], "reviews": r["reviews"], "rating": r["rating"]} for rg, r in best.items()}
-    return out, special, audit, data_date
+    return out, special, audit, data_date, sum(counted.values()), len(counted)
 
 
 def region_groups(cities):
@@ -116,7 +119,9 @@ def write(path, title, desc, h1, badge, lead, crumbs, body, faqs):
     ld = [kit.breadcrumb_ld(trail), {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faqs]}]
     faq = "<h2>Questions about the awards</h2>" + "".join(f"<h3>{e(q)}</h3><p>{e(a)}</p>" for q, a in faqs)
-    hero = f'<section class="hero"><div class="wrap"><div class="amount-badge">{e(badge)}</div><h1>{e(h1)}</h1><p>{lead}</p></div></section>'
+    hero = (f'<section class="hero"><div class="wrap"><div style="font-weight:700;font-size:14px;letter-spacing:0.1em;text-transform:uppercase;color:#e88a2e">{e(badge)}</div>'
+            f'<h1 style="margin:12px 0 0;font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(40px,6.2vw,72px);line-height:1.04;letter-spacing:-0.03em;color:#ffffff">{e(h1)}</h1>'
+            f'<p style="margin-top:18px">{lead}</p></div></section>')
     kit.write_page(path, title, desc, kit.ld_scripts(ld), navfooter.render_nav("ca", ""), kit.breadcrumb(trail), hero, None, body + faq,
                    navfooter.render_footer("ca", "", "", path))
     if not LIVE:
@@ -127,7 +132,7 @@ def write(path, title, desc, h1, badge, lead, crumbs, body, faqs):
 
 
 def main():
-    out, special, audit, data_date = pick()
+    out, special, audit, data_date, n_reviews, n_companies = pick()
     total_w = sum(len(c["winners"]) for v in out.values() for c in v)
     (ROOT / "data" / "awards").mkdir(parents=True, exist_ok=True)
     (ROOT / "data" / "awards" / "2026.json").write_text(json.dumps({
@@ -166,12 +171,22 @@ def main():
             ("Why three winners and not one?", "Because the scores at the top are often very close. A tiny gap in a rating is not a good reason to name one company the best, so the top three are all winners, listed in alphabetical order."),
             ("I think my company's rating or listing is wrong. What can I do?", "Email hello@homepowerrebate.com. Ratings and review counts come from Google Maps, so a fix to your Google listing shows up in the next refresh. If you do not want to be listed, we remove you the same day."),
             ("Why is my city missing?", f"A city needs at least {MIN_COMPANIES} ranked companies in a category before we name winners, and at least {WINNERS} of them must meet the review and rating tests.")]
-    write(BASE, f"Top-Rated Installer Awards {YEAR}: Winners by City", f"Award winners for heat pump, home battery and solar installers in cities across Canada and the US, chosen from Google reviews. Nobody pays to win.",
-          f"Top-Rated Installer Awards {YEAR}", f"{total_w:,} winners", "The best-reviewed local installers in each city, chosen from Google reviews. Nobody pays to enter, win or rank higher.",
+    blurbs = {"heat-pump": "Warm in winter, cool in summer. See who your neighbours trust.", "battery": "Lights on when the grid goes off. See who your neighbours trust.",
+              "solar": "Sunshine, handled. See who your neighbours trust."}
+    cats_html = ""
+    for sv, (label, plural) in CATS.items():
+        cs = out[sv]
+        cats_html += (f'<div style="display:flex;gap:18px;align-items:center;margin:16px 0"><img src="/assets/awards/shield-{sv}-{YEAR}.svg" width="120" height="124" alt="Award Winner {YEAR} badge for {e(label.lower())}">'
+                      f'<div><h3 style="margin:0"><a href="{BASE}{sv}/">Best {e(SINGULAR[sv].lower())} installers: {sum(len(c["winners"]) for c in cs)} winners in {len(cs)} cities</a></h3>'
+                      f'<p style="margin:4px 0 0">{blurbs[sv]}</p></div></div>')
+    write(BASE, f"Best Installers {YEAR}: Heat Pump, Solar and Battery Award Winners",
+          f"The best-reviewed heat pump, solar and battery installers in your city, picked from {n_reviews:,} Google reviews. Nobody pays to win.",
+          f"The {YEAR} Best Installers", "And the winners are...",
+          f"Your neighbours left {n_reviews:,} Google reviews. We counted every one. Here are the {total_w:,} companies they loved most, city by city. Nobody paid to be here.",
           [("Installers", "/installers/"), ("Awards " + YEAR, None)],
-          draft + f'<div class="callout"><p><strong>Short answer:</strong> {total_w:,} companies won in {sum(len(v) for v in out.values())} city and category lists. '
-          f"Each winner ranked in the top {WINNERS} for its city, with {MIN_REVIEWS}+ reviews and a {MIN_RATING:.1f}+ rating. Nobody paid.</p></div><h2>The winners, by category</h2>{cats_html}"
-          f"<h2>How we picked them</h2>{rules}{sp}", faqs)
+          draft + f'<div class="callout"><p><strong>The short version:</strong> {total_w:,} companies won in {sum(len(v) for v in out.values())} city lists. '
+          f"Each one is in the top {WINNERS} for its city, with {MIN_REVIEWS}+ reviews and a {MIN_RATING:.1f}+ rating. No fees, no ads, no paid spots.</p></div><h2>Pick your trade</h2>{cats_html}"
+          f"<h2>How we picked the winners</h2>{rules}{sp}", faqs)
     for sv, (label, plural) in CATS.items():
         cs = out[sv]
         close = sum(1 for c in cs if c["third_vs_fourth_gap"] is not None and c["third_vs_fourth_gap"] < 0.02)
@@ -189,8 +204,8 @@ def main():
                 body += (f'<tr><td><a href="{c["ranking_url"]}"><b>{e(c["city"])}</b></a><br><span class="muted">{c["companies"]} companies ranked</span></td>'
                          f'<td><ul style="margin:0;padding-left:18px">{"".join(winner_li(w) for w in c["winners"])}</ul></td></tr>')
             body += "</tbody></table></div>"
-        write(f"{BASE}{sv}/", f"{SINGULAR[sv]} Installer Award Winners {YEAR}: By City", f"The top-rated {plural} in {len(cs)} cities, chosen from Google reviews for the {YEAR} awards. Nobody pays to win.",
-              f"{SINGULAR[sv]} installer award winners", f"{sum(len(c['winners']) for c in cs):,} winners", f"The top {WINNERS} {plural} in {len(cs)} cities, chosen from Google reviews.",
+        write(f"{BASE}{sv}/", f"Best {SINGULAR[sv]} Installers {YEAR}: Award Winners by City", f"The best-reviewed {plural} in {len(cs)} cities, picked from Google reviews for the {YEAR} awards. Nobody pays to win.",
+              f"Best {SINGULAR[sv]} installers {YEAR}", "Your neighbours' favourites", f"The top {WINNERS} in each of {len(cs)} cities, picked from Google reviews. Find yours.",
               [("Installers", "/installers/"), ("Awards " + YEAR, BASE), (label, None)], body, faqs[:4])
     for sv, cs in out.items():
         print(sv, len(cs), "cities,", sum(len(c["winners"]) for c in cs), "winners,", sum(1 for c in cs if c["replaced"]), "cities with a skipped company")

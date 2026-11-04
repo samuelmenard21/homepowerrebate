@@ -550,7 +550,7 @@ def head(regs, total, faqs, modified, keep):
     og_title = "Every home energy rebate in your city, checked monthly"
     area = [{"@type": "AdministrativeArea", "name": f'{r["n"]}, {"Canada" if r["country"] == "ca" else "United States"}'} for r in ca + us]
     org = {"@type": "Organization", "@id": f"{SITE}/#org", "name": "HomePowerRebate", "alternateName": ["Home Power Rebate", "HomePowerRebate.com"],
-           "url": f"{SITE}/", "logo": f"{SITE}/logo.png", "email": "hello@homepowerrebate.com",
+           "url": f"{SITE}/", "logo": f"{SITE}/apple-touch-icon.png", "email": "hello@homepowerrebate.com",
            "description": (f"Independent guide to home energy rebates in {total} cities across Canada and the United States. Every amount links to the "
                            "official program and is re-checked monthly. Installers are ranked by Google reviews; nobody pays to be listed."),
            "sameAs": ["https://www.youtube.com/@HomePowerRebate", "https://www.facebook.com/profile.php?id=61592376033225"],

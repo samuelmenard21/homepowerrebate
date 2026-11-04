@@ -105,3 +105,41 @@ body.tpl-ranking { --gut: clamp(20px, 3.2vw, 56px); }
 .tpl-ranking ul.nearby a{display:block;padding:14px 16px;border:1px solid var(--card-rule,#d9d0c1);border-radius:var(--radius-card,12px);background:#fff;text-decoration:none;color:var(--ink,#0a2a2e)}
 .tpl-ranking ul.nearby a span{display:block;font-size:13.5px;color:var(--muted,#4a5d60);margin-top:2px}
 .tpl-ranking [id]{scroll-margin-top:84px}
+/* quote form, 2026-11-04: three steps, searchable company cards, chips, segmented timeline (steps show without JS) */
+.tpl-ranking .qf-steps{display:flex;gap:6px;list-style:none;margin:18px 0 8px;padding:0;font-size:13px;font-weight:600;color:#6b7c7f}
+.tpl-ranking .qf-steps li{flex:1;padding:8px 0 0;border-top:4px solid #e3e8e6;border-radius:2px}.tpl-ranking .qf-steps li.on{border-top-color:var(--amber,#d4751c);color:var(--ink,#0a2a2e)}
+.tpl-ranking .qf fieldset{border:0;padding:0;margin:0;min-width:0}.tpl-ranking .qf legend{font-family:'Fraunces',Georgia,serif;font-size:22px;font-weight:600;margin:14px 0 10px;padding:0}
+.tpl-ranking .qf fieldset.qf-step{display:block}.js .tpl-ranking .qf fieldset.qf-step:not(.on){display:none}
+.tpl-ranking .qf-search{position:relative;margin:6px 0 10px}.tpl-ranking .qf-search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#6b7c7f}
+.tpl-ranking .qf-search input{width:100%;box-sizing:border-box;height:50px;padding:0 16px 0 44px;border:1.5px solid #cfdcd9;border-radius:999px;font:inherit;font-size:16px;background:#fff}
+.tpl-ranking .qf-search input:focus,.tpl-ranking .qf-field input:focus,.tpl-ranking .qf-field textarea:focus{outline:3px solid rgba(13,79,92,.25);border-color:var(--teal,#0d4f5c)}
+.tpl-ranking .qf-tools{display:flex;justify-content:space-between;align-items:center;margin:4px 0 10px;font-size:14.5px;color:#4a5d60}
+.tpl-ranking .qf-link{background:none;border:0;padding:6px 0;font:inherit;font-weight:700;color:var(--teal,#0d4f5c);text-decoration:underline;cursor:pointer}
+.tpl-ranking .qf-list{display:grid;gap:10px;max-height:420px;overflow:auto;padding:2px}
+@media(min-width:760px){.tpl-ranking .qf-list{grid-template-columns:1fr 1fr}}
+.tpl-ranking .qf-card{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1.5px solid #d9e3e0;border-radius:14px;background:#fff;cursor:pointer;min-height:64px;position:relative}
+.tpl-ranking .qf-card[hidden]{display:none}.tpl-ranking .qf-card input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.tpl-ranking .qf-card.sel{border-color:var(--teal,#0d4f5c);background:#eef6f5;box-shadow:0 0 0 2px rgba(13,79,92,.15)}
+.tpl-ranking .qf-card:focus-within{outline:3px solid rgba(13,79,92,.3)}
+.tpl-ranking .qf-rank{flex:none;width:30px;height:30px;border-radius:50%;background:#f5efe5;font-weight:700;font-size:14px;display:grid;place-items:center}
+.tpl-ranking .qf-meta{flex:1;min-width:0}.tpl-ranking .qf-meta b{display:block;line-height:1.25}.tpl-ranking .qf-meta small{color:#4a5d60;font-size:13px}
+.tpl-ranking .qf-tick{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid #b9c9c6;display:grid;place-items:center}
+.tpl-ranking .qf-card.sel .qf-tick{background:var(--teal,#0d4f5c);border-color:var(--teal,#0d4f5c)}.tpl-ranking .qf-card.sel .qf-tick::after{content:"✓";color:#fff;font-size:14px;font-weight:700}
+.tpl-ranking .qf-none{color:#4a5d60;margin:10px 0}
+.tpl-ranking .qf-chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 16px}.tpl-ranking .qf-chips.bad{outline:2px solid #b3261e;outline-offset:6px;border-radius:12px}
+.tpl-ranking .qf-chip input,.tpl-ranking .qf-seg input{position:absolute;opacity:0;pointer-events:none}
+.tpl-ranking .qf-chip span,.tpl-ranking .qf-seg span{display:inline-block;padding:10px 16px;border:1.5px solid #cfdcd9;border-radius:999px;background:#fff;font-weight:600;font-size:15px;cursor:pointer}
+.tpl-ranking .qf-chip input:checked+span,.tpl-ranking .qf-seg input:checked+span{background:var(--teal,#0d4f5c);border-color:var(--teal,#0d4f5c);color:#fff}
+.tpl-ranking .qf-chip input:focus-visible+span,.tpl-ranking .qf-seg input:focus-visible+span{outline:3px solid rgba(13,79,92,.35);outline-offset:2px}
+.tpl-ranking .qf-seg{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}.tpl-ranking .qf-seg label{position:relative}
+.tpl-ranking .qf-field{display:block;font-weight:600;font-size:14.5px;margin:12px 0 0}.tpl-ranking .qf-field input,.tpl-ranking .qf-field textarea{display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:13px 14px;border:1.5px solid #cfdcd9;border-radius:12px;font:inherit;font-size:16px;background:#fff}
+.tpl-ranking .qf-row{display:grid;gap:0 14px}@media(min-width:640px){.tpl-ranking .qf-row{grid-template-columns:1fr 1fr}}
+.tpl-ranking .qf-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px}.tpl-ranking .qf-nav .qf-btn{margin-top:0;margin-left:auto}
+.tpl-ranking .qf-back{background:none;border:0;font:inherit;font-weight:700;color:var(--teal,#0d4f5c);padding:12px 8px;cursor:pointer}
+.tpl-ranking .qf-ok{font-size:18px;padding:10px 0}
+
+/* older '.qf label:not(.qf-pick)' rule (display:block, margin, bold) beat the card layout: restate it with more weight */
+.tpl-ranking .qf label.qf-card{display:flex;margin:0;font-weight:400;font-size:inherit}.tpl-ranking .qf label.qf-card[hidden]{display:none}
+.tpl-ranking .qf label.qf-chip,.tpl-ranking .qf .qf-seg label{display:inline-block;margin:0;font-weight:400}
+.tpl-ranking .qf-steps li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12.5px}
+.tpl-ranking .qf-list{scrollbar-width:thin}

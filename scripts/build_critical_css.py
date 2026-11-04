@@ -65,15 +65,23 @@ def main():
     ap.add_argument("--samples", type=int, default=5)
     ap.add_argument("--base", default="http://localhost:8888")
     ap.add_argument("--update", action="store_true", help="only combinations with a stylesheet link in the body; keep the other files")
+    ap.add_argument("--sig", help="only the combination whose id starts with this (implies --update)")
+    ap.add_argument("--extra", default="", help="comma-separated page paths (relative, e.g. blog/x/index.html) added to every sampled combination that contains them")
     ap.add_argument("--reuse", help="reuse a saved capture json instead of running Chrome")
     a = ap.parse_args()
     sys.path.insert(0, str(ROOT / "scripts"))
     from apply_canonical_nav_footer import minify_css
     allsigs = signatures()
     sigs = {k: v for k, v in allsigs.items() if len(v) >= a.min_pages or "/assets/fam/home.css" in k or any("hub" in l for l in k)}
-    if a.update:
+    if a.sig:
+        a.update = True
+        sigs = {k: v for k, v in allsigs.items() if sig_id(k).startswith(a.sig)}
+    elif a.update:
         sigs = {k: v for k, v in allsigs.items() if k in BODY_LINKED}
     samples = {k: pick(v, a.samples * 2 if len(v) >= 100 else a.samples) for k, v in sigs.items()}
+    extra = [x for x in a.extra.split(",") if x]
+    for k, v in sigs.items():
+        samples[k] = list(dict.fromkeys(samples[k] + [x for x in extra if x in v]))
     paths = sorted({url_of(r) for v in samples.values() for r in v})
     cap = Path(a.reuse) if a.reuse else Path(tempfile.gettempdir()) / "critical-capture.json"
     if not a.reuse:

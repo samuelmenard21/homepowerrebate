@@ -40,6 +40,7 @@ body.tpl-article:has(main:not(.has-rail)) { --article: clamp(720px, 56vw, 800px)
 .tpl-article :is(.hero, .post-header) p { max-width: 37.2em; margin: 0; font-size: clamp(19px, 1.7vw, 23px); line-height: 1.5; color: rgba(250, 247, 242, .92); text-wrap: pretty; }
 .tpl-article :is(.hero, .post-header) p a { color: #fff; }
 /* blog post header: eyebrow and byline */
+.tpl-article header.post-header h1 { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; }
 .tpl-article header.post-header .post-eyebrow { margin: 0 0 16px; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #f5b566; }
 .tpl-article header.post-header .post-meta { margin-top: 16px; font-size: 15px; color: rgba(250, 247, 242, .74); }
 .tpl-article header.post-header .post-meta a { color: #fff !important; }
@@ -180,3 +181,22 @@ body.tpl-article section.hero.about-hero { background: linear-gradient(180deg, r
 /* ---- Wide tables scroll inside their box on phones instead of being cut off (learn hubs, 2026-10-23) ---- */
 .tpl-article .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .tpl-article .table-wrap table { min-width: 520px; }
+
+/* ---------- post components (2026-11-04): tables, call-to-action box, source and city lists used by the BC city guides (build_bc_blog_city_guides.py).
+   They used to be a per-page <style id="bcblog-css"> block, which left every guide on its own stylesheet combination. ---------- */
+.tpl-article .hpr-table { overflow-x: auto; margin: 20px 0; }
+.tpl-article .hpr-table table { width: 100%; border-collapse: collapse; font-size: 15px; background: #fff; }
+.tpl-article .hpr-table th, .tpl-article .hpr-table td { border: 1px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+.tpl-article .hpr-table th { background: var(--paper-warm); }
+.tpl-article .hpr-cta { background: var(--teal-deep); color: #fff; border-radius: 16px; padding: 28px 24px; margin: 36px 0; text-align: center; }
+.tpl-article .hpr-cta h3 { color: #fff; margin-bottom: 8px; }
+.tpl-article .hpr-cta p { color: rgba(255, 255, 255, .88) !important; }
+.tpl-article .hpr-btn { display: inline-block; background: var(--amber-text); color: #fff !important; padding: 12px 22px; border-radius: 999px; text-decoration: none !important; font-weight: 700; }
+.tpl-article .hpr-btn:hover { background: var(--amber-text-deep); }
+.tpl-article .hpr-sources { font-size: 14px !important; }
+.tpl-article .hpr-cities { font-size: 15px !important; line-height: 1.9; }
+.tpl-article .related { border-top: 1px solid var(--rule); margin-top: 48px; padding-top: 32px; }
+.tpl-article .related h4 { font-size: 14px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 16px; }
+.tpl-article .related a { display: block; color: var(--ink); font-weight: 600; text-decoration: none; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.tpl-article .related a:hover { color: var(--amber-text); }
+.tpl-article .callout h4 { font-size: 15px; font-weight: 700; color: var(--teal-deep); margin-bottom: 8px; }

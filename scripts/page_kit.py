@@ -31,7 +31,8 @@ def load_facts():
 FACTS = load_facts()
 # The article family's CSS as the restamp leaves it, read from a built article page: its family stylesheet link plus any
 # inline <style> blocks, minus the font faces (the restamp adds those as the FONT-PRELOAD block) and dead blocks.
-TEMPLATE = (ROOT / "ca/on/kitchener/heat-pump/index.html").read_text(encoding="utf-8")
+# undo_critical: the built page has its stylesheet links in the critical-CSS form (preload + onload), which TPL_LINK_RE does not read
+TEMPLATE = navfooter.undo_critical((ROOT / "ca/on/kitchener/heat-pump/index.html").read_text(encoding="utf-8"))
 _TPL_HEAD = re.sub(r"<!-- FONT-PRELOAD-START -->.*?<!-- FONT-PRELOAD-END -->", "", TEMPLATE, flags=re.S).split("</head>")[0]
 CSS = "".join([navfooter.tpl_link(v).rstrip("\n") for v in navfooter.TPL_LINK_RE.findall(_TPL_HEAD) if v in navfooter.TEMPLATE_VARIANTS and v not in navfooter.DEAD_VARIANTS]
               + [m.group(0) for m in navfooter.STYLE_RE.finditer(_TPL_HEAD) if not navfooter.dead_css(m.group(2))])

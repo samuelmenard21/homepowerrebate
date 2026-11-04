@@ -3,10 +3,12 @@
 Why: installers do not answer link or badge requests, but they do share an honest award. It gives us a real reason to write to every company, earns links without asking for them, and gives local news a story per city.
 
 ## Rules (publish them on the awards page; keep them simple and never pay-to-play)
-- Winner = the company ranked first on our city ranking for that service (rating weighted by review count). Finalists = the next two. Nobody pays, applies or is asked to buy anything.
-- Only cities with at least 8 ranked companies; winners need at least 50 Google reviews and a 4.5 rating or better. Companies on `data/installer-blocklist.json` or `outreach/suppress.txt` are never named or contacted.
-- Data date shown on every page. Refresh the Google ratings before announcing: the current files are from September 2026, and an award built on stale numbers invites a dispute.
-- Extra awards from the same data, no new claims: most-reviewed company in each province or state, largest review count in each country.
+- **Three winners per city and category, equal.** The three companies with the highest score on the city ranking each get the "Award Winner 2026" seal. They are listed alphabetically on the awards page, because in 42% of heat pump cities the top two scores are within 0.02 of each other (checked 2026-11-04) and naming one "best" would be fragile. Nobody pays, applies or is asked to buy anything.
+- **Score:** the same published score the city rankings use (Google rating weighted by review count). Ties go to the company with more reviews.
+- **Eligibility:** the city has at least 8 ranked companies; each winner has at least 50 Google reviews and a 4.5 rating or better; its website or phone still works; it is not on `data/installer-blocklist.json` or in `outreach/suppress.txt`. If a company fails a test, the next one up takes its place.
+- **Where:** heat pumps (about 125 cities), home batteries (43) and solar (28) in December; insulation (9 cities) and the other categories later. Cities under 8 companies get no city award.
+- **Extra single awards from counts, not scores:** most-reviewed company in each province or state.
+- Data date shown on every page. Refresh the Google ratings before announcing: the current files are from September, and an award built on stale numbers invites a dispute.
 - A company can ask to be removed, and we do it the same day.
 
 ## Logo and assets (done 2026-11-04)

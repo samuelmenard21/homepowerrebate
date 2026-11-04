@@ -15,6 +15,27 @@ body.tpl-home { --hm-w: min(1200px, 100% - 2 * var(--gutter)); background: var(-
 /* ---------- section rhythm ---------- */
 .tpl-home .hm-sec { padding: clamp(56px, 7vw, 104px) 0; }
 .tpl-home .hm-sec + .hm-sec { border-top: 1px solid var(--rule); }
+/* sections below the first screen are laid out when they come near (content-visibility): the first layout of this long page was the biggest main-thread task. The remembered size avoids scroll jumps. */
+.tpl-home .hm-sec { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+/* measured heights (phone, then desktop): a placeholder close to the real height keeps the scroll bar and anchor jumps steady until the section renders */
+.tpl-home .hm-quiz { contain-intrinsic-size: auto 730px; }
+.tpl-home .hm-plan { contain-intrinsic-size: auto 590px; }
+.tpl-home .hm-psec { contain-intrinsic-size: auto 975px; }
+.tpl-home .hm-ledger { contain-intrinsic-size: auto 11600px; }
+.tpl-home .hm-changes { contain-intrinsic-size: auto 1770px; }
+.tpl-home .hm-how { contain-intrinsic-size: auto 1160px; }
+.tpl-home .hm-guides { contain-intrinsic-size: auto 1110px; }
+.tpl-home .hm-faq { contain-intrinsic-size: auto 890px; }
+@media (min-width: 761px) {
+  .tpl-home .hm-quiz { contain-intrinsic-size: auto 810px; }
+  .tpl-home .hm-plan { contain-intrinsic-size: auto 710px; }
+  .tpl-home .hm-psec { contain-intrinsic-size: auto 735px; }
+  .tpl-home .hm-ledger { contain-intrinsic-size: auto 1620px; }
+  .tpl-home .hm-changes { contain-intrinsic-size: auto 975px; }
+  .tpl-home .hm-how { contain-intrinsic-size: auto 895px; }
+  .tpl-home .hm-guides { contain-intrinsic-size: auto 1090px; }
+  .tpl-home .hm-faq { contain-intrinsic-size: auto 1010px; }
+}
 .tpl-home .hm-sec h2 { max-width: 13.2em; margin: 0 0 14px; font-family: 'Fraunces', Georgia, serif; font-size: clamp(30px, 3.4vw, 46px); font-weight: 600; line-height: 1.08; letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
 .tpl-home .hm-sec h3 { margin: 0 0 12px; font-size: 17px; font-weight: 700; color: var(--ink); }
 .tpl-home .hm-intro { max-width: 37.2em; margin: 0 0 clamp(28px, 3vw, 40px); font-size: 18px; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }

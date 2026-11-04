@@ -725,6 +725,92 @@ def best_for(ranked, other_names):
 _ADVISOR_CTX = {}
 
 
+# ---- Search-match version of the page (2026-11-03) ----------------------------------------------------------
+# Search Console showed searchers type "heat pump installation <place>" and "<service> installers near me", while
+# the page said "Best Heat Pump Installers in <city> (2026)" and named no neighbouring community. Heat pump pages
+# get the new title, answer box, jump bar, "where they are based / communities covered" and "nearby cities" blocks;
+# other services follow once heat pump pages show lift (docs/seo/heat-pump-near-me-strategy.md).
+SEARCH_V2 = {"heat-pump"}
+NEARBY_PAGES = {}      # (region, service) -> [{"city", "url", "count", "lat", "lon"}], filled by main() before pages are built
+CITY_COORDS = {}
+
+
+def _coords():
+    if not CITY_COORDS:
+        for f in ("city-climate-data.json", "city-solar-data.json"):
+            p = ROOT / f
+            if p.exists():
+                for k, v in json.loads(p.read_text(encoding="utf-8")).items():
+                    if v.get("lat") is not None and v.get("lon") is not None:
+                        CITY_COORDS.setdefault(k, (v["lat"], v["lon"]))
+    return CITY_COORDS
+
+
+def city_xy(region, label):
+    c = _coords()
+    return c.get(f"{region}|{label.lower()}") or c.get(f"{region}|{slugify(label).replace('-', ' ')}")
+
+
+def _km(a, b):
+    from math import asin, cos, radians, sin, sqrt
+    la1, lo1, la2, lo2 = map(radians, (a[0], a[1], b[0], b[1]))
+    h = sin((la2 - la1) / 2) ** 2 + cos(la1) * cos(la2) * sin((lo2 - lo1) / 2) ** 2
+    return 12742 * asin(sqrt(h))
+
+
+def address_locality(addr):
+    """'1527 Upper Ottawa St, Hamilton, ON L8W 3J4' -> 'Hamilton' (the part before the province or state)."""
+    parts = [p.strip() for p in addr.split(",")]
+    for i, p in enumerate(parts):
+        if i and re.match(r"[A-Z]{2}\b", p):
+            return parts[i - 1]
+    return ""
+
+
+def curated_areas(region, city_slug):
+    p = ROOT / "data" / "city-areas.json"
+    return json.loads(p.read_text(encoding="utf-8")).get(f"{region}/{city_slug}") if p.exists() else None
+
+
+def areas_section(region, service, city_label, city_slug, ranked):
+    """Communities inside the city (curated, with a source) and where the ranked companies are based (from their Google addresses)."""
+    out = []
+    cur = curated_areas(region, city_slug)
+    if cur:
+        names = cur["communities"]
+        out.append(f'<p>{esc(cur["lead"])} Companies in the ranking above take jobs across {esc(city_label)}: '
+                   + ", ".join(f'<b>{esc(n)}</b>' for n in names[:-1]) + f', and <b>{esc(names[-1])}</b>. '
+                   f'Ask each one whether your address is inside its service area before you book a visit. '
+                   f'<a href="{esc(cur["source_url"])}" rel="noopener" target="_blank">Source: {esc(cur["source"])}</a>.</p>')
+    loc = {}
+    for r in ranked:
+        l = address_locality(r["address"])
+        if l:
+            loc.setdefault(l, []).append(display_name(r["name"]))
+    if len(loc) >= 2:
+        rows = "".join(f'<li><b>{esc(l)}</b>: {esc(", ".join(ns[:4]))}{" and " + str(len(ns) - 4) + " more" if len(ns) > 4 else ""}</li>'
+                       for l, ns in sorted(loc.items(), key=lambda kv: (-len(kv[1]), kv[0])))
+        out.append(f'<p>Where the ranked {SERVICES[service]["pros_l"]} list their office on Google Maps:</p><ul class="areas">{rows}</ul>'
+                   f'<p class="small">An office in a town does not limit where a company works. It shows who is closest to you, which can mean a faster visit.</p>')
+    if not out:
+        return ""
+    return f'<h2 id="areas">Where to find {SERVICES[service]["pros_l"]} around {esc(city_label)}</h2>' + "".join(out)
+
+
+def nearby_section(region, service, city_label):
+    me = city_xy(region, city_label)
+    pool = NEARBY_PAGES.get((region, service), [])
+    if not me:
+        return ""
+    near = sorted(((_km(me, (p["lat"], p["lon"])), p) for p in pool if p["city"] != city_label), key=lambda t: t[0])
+    near = [(d, p) for d, p in near if d <= 120][:6]
+    if not near:
+        return ""
+    lis = "".join(f'<li><a href="{p["url"]}"><b>{esc(p["city"])}</b> <span>{p["count"]} companies · about {round(d / 5) * 5 or 5} km away</span></a></li>' for d, p in near)
+    return (f'<h2 id="nearby">Not in {esc(city_label)}? Nearby {SERVICES[service]["pro_l"]} lists</h2>'
+            f'<ul class="nearby">{lis}</ul><p class="small">Distances are straight-line between city centres.</p>')
+
+
 def build_page(region, service, city_label, hub, installers, other_service_url, other_names=None):
     _ADVISOR_CTX["on"] = service in ADVISORS
     c_dir, r_dir, short, long_name = REGIONS[region]
@@ -742,9 +828,19 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
     upd_h = date.fromisoformat(updated).strftime("%B %Y") if re.match(r"\d{4}-\d\d-\d\d$", updated) else updated
     upd_short = date.fromisoformat(updated).strftime("%b %Y") if re.match(r"\d{4}-\d\d-\d\d$", updated) else updated
 
+    v2 = service in SEARCH_V2
     title = f"Best {svc['pros_t']} in {city_label}, {short} (2026)"
     desc = (f"The top-rated {svc['pros_l']} in {city_label}, {short}, ranked by "
             f"{total_reviews:,} Google reviews. Compare {n} local companies, plus what to ask before you hire.")
+    h1_text = f"Top-Rated {svc['pros_t']} in {city_label}, {short}"
+    if v2:
+        # the searcher's words ("installation", the city), under 60 characters so Google keeps the whole title
+        inst = f"{svc['name']} Installation"
+        title = next(t for t in (f"{inst} in {city_label}: {n} Top-Rated Installers", f"{inst} in {city_label}: Top-Rated Installers",
+                                 f"{inst} in {city_label}, {short}", f"{inst} in {city_label}") if len(t) <= 60 or t == f"{inst} in {city_label}")
+        desc = (f"Compare {n} top-rated {svc['pro_l']}s for {svc['lower']} installation in {city_label}, {short}, ranked by "
+                f"{total_reviews:,} Google reviews. See typical cost, open rebates and what to ask before you hire.")
+        h1_text = f"{inst} in {city_label}, {short}: Top-Rated Installers"
     top_line = ", ".join(f"{display_name(r['name'])} ({r['rating']:.1f}★, {r['reviews']:,} reviews)" for r in top3)
 
     items = []
@@ -835,19 +931,32 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
                 + "".join(f'<div class="faq-item"><h3>{esc(q)}</h3><p>{esc(a)}</p></div>' for q, a in faqs) + "</div>")
     ld_html = "\n".join(f'<script type="application/ld+json">\n{json.dumps(o, ensure_ascii=False, indent=1)}\n</script>' for o in ld)
 
+    answer_extra = jump_bar = areas_html = nearby_html = ""
+    if v2:
+        _price = (US_HP_COST if REGIONS[region][0] == "us" else CA_HP_COST) if service == "heat-pump" else None
+        answer_extra = (f'<p>{n} companies are listed, with {total_reviews:,} Google reviews between them and a {avg:.1f}★ average. '
+                        + (f'A typical installed {svc["lower"]} system costs {esc(_price[0])} ({esc(_price[1])}). ' if _price else "")
+                        + f'<a href="#ranking">See the full ranking</a> or <a href="#cost">what it costs and which rebates are open</a>.</p>')
+        areas_html = areas_section(region, service, city_label, city_slug, ranked)
+        nearby_html = nearby_section(region, service, city_label)
+        links = [("#ranking", "Ranking"), ("#cost", "Cost and rebates"), ("#quotes", "Get quotes"), ("#hire", "Before you hire")]
+        if areas_html: links.insert(3, ("#areas", "Areas"))
+        links.append(("#faq", "FAQ"))
+        jump_bar = '<nav class="jump" aria-label="On this page">' + "".join(f'<a href="{h}">{t}</a>' for h, t in links) + "</nav>"
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol>{crumb_html}</ol></nav>
 <header class="hero"><div class="wrap">
 <div class="hero-top"><div class="hero-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{ICONS.get(service, ICONS["solar"])}</svg></div>
-<h1>Top-Rated {svc['pros_t']} in {esc(city_label)}, {short}</h1></div>
+<h1>{esc(h1_text)}</h1></div>
 <p>{n} local {"advisors" if service == ADVISOR else "auditors" if service in ADVISORS else "companies"} ranked by {total_reviews:,} Google reviews. Free to compare, no sign-up.</p>
 <p class="meta">Ratings and review counts from Google Maps, collected {upd_h} · Page updated @@PAGE-UPDATED@@</p>
 </div></header>
 <section class="body"><div class="wrap">
 <div class="stats"><div class="stat"><b>{n}</b><span>Companies</span></div><div class="stat"><b>{total_reviews:,}</b><span>Google reviews</span></div><div class="stat"><b>{avg:.1f}★</b><span>Average rating</span></div><div class="stat"><b>{upd_short}</b><span>Data collected</span></div></div>
 <div class="trust"><span>Ranked by Google reviews</span><span>Not paid for</span><span>Free to compare</span></div>
-<div class="callout"><p><strong>Short answer:</strong> The top-rated {svc['pros_l']} in {esc(city_label)} are {esc(top_line)}.</p>{reg_callout}</div>
+<div class="callout"><p><strong>Short answer:</strong> The top-rated {svc['pros_l']} in {esc(city_label)} are {esc(top_line)}.</p>{answer_extra}{reg_callout}</div>
+{jump_bar}
 
-<h2 class="sec-h">{svc['pros_t'][:1] + svc['pros_t'][1:].lower() if service in ADVISORS else svc['name'] + ' installers'} in {esc(city_label)}, ranked <span class="chip" aria-hidden="true">{n} listed</span></h2>
+<h2 class="sec-h"{' id="ranking"' if v2 else ""}>{svc['pros_t'][:1] + svc['pros_t'][1:].lower() if service in ADVISORS else svc['name'] + ' installers'} in {esc(city_label)}, ranked <span class="chip" aria-hidden="true">{n} listed</span></h2>
 <div class="sortbar" role="group" aria-label="Sort installers"><span>Sort by</span><button type="button" class="on" data-s="rank" aria-pressed="true">Our ranking</button><button type="button" data-s="reviews" aria-pressed="false">Most reviews</button><button type="button" data-s="rating" aria-pressed="false">Highest rating</button>{reg_filter}</div>
 <ol class="rank-list">
 {chr(10).join(items)}
@@ -860,19 +969,22 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
 <p class="small">Ranked by Google rating weighted by review count, collected {upd_h}. Rankings are not paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
 {pro_box(region, service, city_slug, city_label)}
 
-{cost_box(region, service, city_label, hub)}
+{cost_box(region, service, city_label, hub).replace("<h2>", '<h2 id="cost">', 1) if v2 else cost_box(region, service, city_label, hub)}
 
 {advisor_pair_box(region, service, city_label, other_service_url)}
 
-{"" if service in ADVISORS else quote_form(region, service, city_label, ranked)}
+{"" if service in ADVISORS else ('<div id="quotes"></div>' if v2 else "") + quote_form(region, service, city_label, ranked)}
 
 {climate_section(region, service, city_label)}
 
-<h2>Before you hire {"an" if svc['pro_l'][0] in "aeiou" else "a"} {svc['pro_l']}</h2>
+{areas_html}
+
+<h2{' id="hire"' if v2 else ""}>Before you hire {"an" if svc['pro_l'][0] in "aeiou" else "a"} {svc['pro_l']}</h2>
 <ol>
 {chr(10).join('<li>' + esc(t) + '</li>' for t in hire_tips(region, service))}
 </ol>
 {vet_line}
+{nearby_html}
 {faq_html}
 {rebate_line}
 {other_line}
@@ -1547,6 +1659,13 @@ def main():
         hub = find_hub(hubs, region, city)
         return f"/installers/{region}/{hub['slug'] if hub else slugify(city)}/{service}/"
 
+    for (region, service, city), inst in eligible.items():
+        if service in SEARCH_V2:
+            hub = find_hub(hubs, region, city)
+            xy = city_xy(region, hub["label"] if hub else city)
+            if xy:
+                NEARBY_PAGES.setdefault((region, service), []).append({
+                    "city": hub["label"] if hub else city, "url": page_path(region, service, city), "count": len(inst), "lat": xy[0], "lon": xy[1]})
     index, built, written, no_hub = [], [], 0, []
     for (region, service, city), inst in sorted(eligible.items()):
         hub = find_hub(hubs, region, city)

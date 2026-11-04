@@ -56,8 +56,9 @@ def service(meta):
 
 SCRIPT = """<script>(function(){var f=document.currentScript.previousElementSibling;if(!f||!('IntersectionObserver' in window))return;
 var io=new IntersectionObserver(function(es){if(!es[0].isIntersecting)return;io.disconnect();
-fetch(%(worker)s+'/photo?id='+encodeURIComponent(f.dataset.place)+'&w=900').then(function(r){return r.json()}).then(function(d){if(!d||!d.src)return;
-var i=new Image();i.alt=f.dataset.name;i.className='ipf-img';i.decoding='async';i.referrerPolicy='no-referrer';
+var w=Math.min(800,Math.max(400,Math.ceil(f.clientWidth*Math.min(window.devicePixelRatio||1,2)/100)*100));
+fetch(%(worker)s+'/photo?id='+encodeURIComponent(f.dataset.place)+'&w='+w).then(function(r){return r.json()}).then(function(d){if(!d||!d.src)return;
+var i=new Image();i.alt=f.dataset.name;i.className='ipf-img';i.decoding='async';i.fetchPriority='high';i.referrerPolicy='no-referrer';
 i.onload=function(){f.insertBefore(i,f.firstChild);f.classList.add('has-photo');var c=f.querySelector('.ipf-cap'),h='';
 var e=function(t){var x=document.createElement('span');x.textContent=t;return x.innerHTML};
 if(d.author)h+='Photo: '+(d.authorUri?'<a href="'+e(d.authorUri)+'" target="_blank" rel="noopener nofollow">'+e(d.author)+'</a>':e(d.author));
@@ -71,7 +72,8 @@ def block(name, meta, place, cfg):
     live = bool(worker and place)
     data = f' data-place="{html.escape(place)}" data-name="{html.escape(html.unescape(name))}"' if live else ""
     icon = f'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{ICONS[svc]}</svg>'
-    out = (f'<!-- PROFILE-PHOTO-START -->\n  <figure class="ipf"{data}><div class="ipf-tile" aria-hidden="true">'
+    pre = f'<link rel="preconnect" href="{html.escape(worker)}" crossorigin>\n  ' if live else ""
+    out = (f'<!-- PROFILE-PHOTO-START -->\n  {pre}<figure class="ipf"{data}><div class="ipf-tile" aria-hidden="true">'
            f'<span class="ipf-init">{html.escape(initials(name))}</span><span class="ipf-svc">{icon}{LABEL[svc]}</span></div>'
            f'<figcaption class="ipf-cap" hidden></figcaption></figure>')
     if live:

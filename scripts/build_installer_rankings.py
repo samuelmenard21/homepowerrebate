@@ -777,15 +777,10 @@ def areas_section(region, service, city_label, city_slug, ranked):
     out = []
     cur = curated_areas(region, city_slug)
     if cur:
-        # "inside": communities within the city's limits; "nearby": neighbouring towns. Both come from the cited page.
-        bits = []
-        if cur.get("lead"):
-            bits.append(esc(cur["lead"]))
-        if cur.get("inside"):
-            bits.append(f'Communities inside {esc(cur.get("place") or city_label)}: ' + ", ".join(f"<b>{esc(n)}</b>" for n in cur["inside"]) + ".")
-        if cur.get("nearby"):
-            bits.append("Neighbouring towns: " + ", ".join(f"<b>{esc(n)}</b>" for n in cur["nearby"]) + ".")
-        out.append(f'<p>{" ".join(bits)} Ask each company whether it serves your address before you book a visit. '
+        names = cur["communities"]
+        out.append(f'<p>{esc(cur["lead"])} Companies in the ranking above take jobs across {esc(city_label)}: '
+                   + ", ".join(f'<b>{esc(n)}</b>' for n in names[:-1]) + f', and <b>{esc(names[-1])}</b>. '
+                   f'Ask each one whether your address is inside its service area before you book a visit. '
                    f'<a href="{esc(cur["source_url"])}" rel="noopener" target="_blank">Source: {esc(cur["source"])}</a>.</p>')
     loc = {}
     for r in ranked:
@@ -843,8 +838,8 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
         inst = f"{svc['name']} Installation"
         title = next(t for t in (f"{inst} in {city_label}: {n} Top-Rated Installers", f"{inst} in {city_label}: Top-Rated Installers",
                                  f"{inst} in {city_label}, {short}", f"{inst} in {city_label}") if len(t) <= 60 or t == f"{inst} in {city_label}")
-        desc = (f"Compare {n} top-rated {svc['pro_l']}s near you in {city_label}, {short}, ranked by "
-                f"{total_reviews:,} Google reviews. See typical cost and open rebates.")
+        desc = (f"Compare {n} top-rated {svc['pro_l']}s for {svc['lower']} installation in {city_label}, {short}, ranked by "
+                f"{total_reviews:,} Google reviews. See typical cost, open rebates and what to ask before you hire.")
         h1_text = f"{inst} in {city_label}, {short}: Top-Rated Installers"
     top_line = ", ".join(f"{display_name(r['name'])} ({r['rating']:.1f}★, {r['reviews']:,} reviews)" for r in top3)
 

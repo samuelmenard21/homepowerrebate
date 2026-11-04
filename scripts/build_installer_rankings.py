@@ -678,7 +678,7 @@ def faq_items(region, service, city_label, hub, ranked, n, total_reviews, avg, m
                           f"Square footage alone does not set the price. The size of the system comes from how much heat your house loses, so a well-insulated 1,500 square foot house can need a smaller system than a drafty one. "
                           f"The source above prices {_plain(price[1])} at {price[0]}. Ask for a written heat-loss calculation before you accept a quote, and use it to compare sizes."))
         where = "the US" if us else "Canada"
-        items.append((f"What is the most reliable {low} in {where}?",
+        if service == "heat-pump": items.append((f"What is the most reliable {low} in {where}?",
                       f"We could not find an independent reliability ranking by brand that we can verify, so we do not name one. What you can check: that the model is rated for cold climates, "
                       f"that it is on the qualified product list for the rebate you want, the length of the warranty on parts and labour, and the installer's reviews. "
                       f"Installation quality matters as much as the brand, which is why the {pros} above are ranked by Google reviews."))
@@ -747,7 +747,7 @@ _ADVISOR_CTX = {}
 # the page said "Best Heat Pump Installers in <city> (2026)" and named no neighbouring community. Heat pump pages
 # get the new title, answer box, jump bar, "where they are based / communities covered" and "nearby cities" blocks;
 # other services follow once heat pump pages show lift (docs/seo/heat-pump-near-me-strategy.md).
-SEARCH_V2 = {"heat-pump"}
+SEARCH_V2 = {"heat-pump", "insulation"}   # insulation joined 2026-11-04: its pages already sat at positions 9 to 14 for "insulation near me"
 TITLE_B = set(json.loads((ROOT / "data" / "title-test.json").read_text(encoding="utf-8"))["title_b"]) if (ROOT / "data" / "title-test.json").exists() else set()
 NEARBY_PAGES = {}      # (region, service) -> [{"city", "url", "count", "lat", "lon"}], filled by main() before pages are built
 CITY_COORDS = {}
@@ -867,7 +867,7 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
             title = next(t for t in (f"Best {svc['pros_t']} in {city_label}: Top {n} Ranked by Reviews", f"Best {svc['pros_t']} in {city_label}: Ranked by Reviews",
                                      f"Best {svc['pros_t']} in {city_label}, {short}", f"Best {svc['pros_t']} in {city_label}") if len(t) <= 60 or t == f"Best {svc['pros_t']} in {city_label}")
         desc = (f"Compare {n} top-rated {svc['pro_l']}s near you in {city_label}, {short}, ranked by "
-                f"{total_reviews:,} Google reviews. " + (f"Heat pump rebates open: up to ${_reb:,.0f}." if _reb else "See typical cost and open rebates."))
+                f"{total_reviews:,} Google reviews. " + (f"{svc['name']} rebates open: up to ${_reb:,.0f}." if _reb else "See typical cost and open rebates."))
         h1_text = f"{inst} in {city_label}, {short}: Top-Rated Installers"
     top_line = ", ".join(f"{display_name(r['name'])} ({r['rating']:.1f}★, {r['reviews']:,} reviews)" for r in top3)
 

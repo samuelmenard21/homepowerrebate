@@ -782,7 +782,7 @@ def ensure_fast_head(content: str) -> str:
 
 HERO_PRE_S, HERO_PRE_E = "<!-- HERO-PRELOAD-START -->", "<!-- HERO-PRELOAD-END -->"
 _HERO_PRE_RE = re.compile(re.escape(HERO_PRE_S) + r".*?" + re.escape(HERO_PRE_E) + r"\n?", re.S)
-_HERO_IMG_RE = re.compile(r'<(?:section|header)\b[^>]*\bclass="[^"]*\b(?:hero-img-([a-z-]+)|hero-photo|hm-hero|gq-hero)\b[^"]*"')
+_HERO_IMG_RE = re.compile(r'<(?:section|header)\b[^>]*\bclass="[^"]*\b(?:hero-img-([a-z-]+)|hero-photo|hm-hero|gq-hero|hub-hero)\b[^"]*"')
 
 
 def ensure_hero_preload(content: str) -> str:

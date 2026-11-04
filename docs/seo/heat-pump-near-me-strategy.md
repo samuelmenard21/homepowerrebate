@@ -62,3 +62,13 @@ Same template, same order, once heat pump phase 1 shows lift (check 2026-12-01):
 - Titles that over-promise ("near me") on city pages: keep "near me" only on the hub.
 - Areas-served lists drifting into doorway text: each must name a source and differ per city; run `check_duplicate_content.py` before shipping.
 - Changing the shared generator touches 424 ranking pages: run `check_generator_sync.py` and review the diff list.
+
+## What the live results show (Burlington, ON, "heat pump installers near me", seen 2026-11-03 by the site owner)
+
+Order on the page: 4 ads, an AI Overview ("Top-rated heat pump installers in and around Burlington include..." naming HAMCO, 4.8 stars, 797 reviews), the map pack (3 businesses plus a sponsored one), then organic results, then "People also ask", more ads, "People also search for".
+- First organic results are the installers' own city pages (HAMCO "Burlington Heat Pump Installation Pros", Cozy World "Heat Pump Installation in Burlington, ON"). No directory or comparison site is on the first screen.
+- Winning snippets lead with a dollar amount ("up to $7,500") or "free quote".
+- People also ask: average cost of a heat pump installation; most reliable heat pump in Canada; labour cost; cost for a 1,500 sq ft house.
+- People also search for: "heat pump installers near Oakville, ON", "residential heat pump installers near me", "best heat pump installers near me".
+
+What we did with it (2026-11-03): FAQ answers worded like those four questions on every heat pump page (answers use only the sourced price range and say plainly when no verified figure exists); the open rebate amount in the meta description; nearby-city links already answer "near Oakville". Still to do: get cited in the AI Overview (it quotes review counts, which our ranked lists carry), and test whether a "Best ..." title lifts clicks against the current one.

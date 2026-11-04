@@ -9,7 +9,13 @@ Everything else on the page (nav, rebate finder, category links, footer) is kept
 Idempotent: the body is wrapped in <!-- ny-verified:start/end --> markers.
 
 Usage: python3 scripts/ny_verified_hubs.py
+
+RETIRED 2026-11-04: the 21 city hubs and 4 utility hubs are built by the page engine from data/ny/pages/<utility>/<city>/index.json and
+data/ny/pages/<utility>/hub.json (python3 scripts/build_ny_pages.py --hubs). scripts/convert_ny_hubs.py reads this file to write that JSON; edit the JSON.
 """
+import sys as _sys
+if __name__ == "__main__":
+    raise SystemExit("ny_verified_hubs.py is retired: edit data/ny/pages JSON and run scripts/build_ny_pages.py --hubs")
 import json, re, html, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))

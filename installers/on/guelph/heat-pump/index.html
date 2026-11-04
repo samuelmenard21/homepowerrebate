@@ -476,7 +476,7 @@ else{b.disabled=false;m.textContent='Something went wrong. Please try again or e
 
 <h2>What Guelph's winter means for your heat pump</h2><p>In Guelph, the average January low is <b>-9°C</b>, and the coldest temperature recorded from 2015-2024 was <b>-31°C</b>. That's milder than 14% of the 123 cities we track. That's true cold-climate territory. Ask for models rated to keep heating near your coldest temperatures, compare each model's heating output at -25°C, and plan for backup heat on the worst nights.</p><p class="small">Source: Open-Meteo historical weather data, 2015-2024.</p>
 
-<h2 id="areas">Where to find heat pump installers around Guelph</h2><p>Where the ranked heat pump installers list their office on Google Maps:</p><ul class="areas"><li><b>Guelph</b>: Aire One Heating &amp; Cooling Guelph, Superior HVAC Service, Heating &amp; Air Conditioning, Cornerstone Trade Solutions Inc., Aido Climate Solutions Inc. and 10 more</li><li><b>7075 Woodlawn W</b>: UC Experts / Ultra Comfort Guelph</li></ul><p class="small">An office in a town does not limit where a company works. It shows who is closest to you, which can mean a faster visit.</p>
+<h2 id="areas">Where to find heat pump installers around Guelph</h2><p>Communities inside Guelph: <b>Onward Willow</b>, <b>Exhibition Park</b>, <b>Kortright Hills</b>, <b>Hanlon Creek</b>, <b>Westminster Woods</b>, <b>Old University</b>, <b>Clairfields</b>, <b>Grange Hill East</b>. Ask each company whether it serves your address before you book a visit. <a href="https://guelph.ca/living/neighbourhood-groups/neighbourhood-groups-lis/" rel="noopener" target="_blank">Source: City of Guelph neighbourhood groups list</a>.</p><p>Where the ranked heat pump installers list their office on Google Maps:</p><ul class="areas"><li><b>Guelph</b>: Aire One Heating &amp; Cooling Guelph, Superior HVAC Service, Heating &amp; Air Conditioning, Cornerstone Trade Solutions Inc., Aido Climate Solutions Inc. and 10 more</li><li><b>7075 Woodlawn W</b>: UC Experts / Ultra Comfort Guelph</li></ul><p class="small">An office in a town does not limit where a company works. It shows who is closest to you, which can mean a faster visit.</p>
 
 <h2 id="hire">Before you hire a heat pump installer</h2>
 <ol>
@@ -778,6 +778,24 @@ document.addEventListener('click', function (e) {
   var u; try { u = new URL(a.href); } catch (x) { return; }
   window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
 }, true);
+// Installer ranking pages: which lead actions each city page earns (2026-11-04). One GA4 event per click on a ranking card's call, email, profile,
+// website or Google reviews link, with the city, service and rank (read from the page path and the card), and one when someone starts the quote
+// form. generate_lead (on submit) already exists. No personal data: no phone number, email or company name is sent.
+(function () {
+  var m = location.pathname.match(/^\/installers\/([a-z]{2})\/([a-z0-9-]+)\/([a-z-]+)\/$/);
+  if (!m || !document.querySelector('.rank-list')) return;
+  var ctx = { region: m[1], city: m[2], service: m[3], page_path: location.pathname };
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('.rank-list a');
+    if (!a || !window.gtag) return;
+    var kind = a.classList.contains('btn-call') ? 'call' : a.classList.contains('em') ? 'email' : a.classList.contains('btn-prof') ? (/^https?:/.test(a.getAttribute('href')) ? 'website' : 'profile')
+      : a.classList.contains('lnk') ? 'reviews' : 'profile';
+    var li = a.closest('li');
+    window.gtag('event', 'installer_click', Object.assign({ action: kind, rank: li ? +li.dataset.rank : 0, transport_type: 'beacon' }, ctx));
+  }, true);
+  var qf = document.getElementById('qf-form'), started = false;
+  if (qf) qf.addEventListener('change', function () { if (started || !window.gtag) return; started = true; window.gtag('event', 'quote_start', ctx); });
+})();
 // Program alert boxes (scripts/add_program_alerts.py): POST /alert with the box's list id and region; one confirmation email, one list per program.
 document.addEventListener('submit', async function (e) {
   var f = e.target;

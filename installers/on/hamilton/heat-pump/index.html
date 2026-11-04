@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Heat Pump Installation in Hamilton: 12 Top-Rated Installers</title>
+<title>Best Heat Pump Installers in Hamilton: Ranked by Reviews</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W33G4TGRHD"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W33G4TGRHD');</script>
 <meta name="description" content="Compare 12 top-rated heat pump installers near you in Hamilton, ON, ranked by 3,762 Google reviews. Heat pump rebates open: up to $12,000.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://homepowerrebate.com/installers/on/hamilton/heat-pump/">
-<meta property="og:title" content="Heat Pump Installation in Hamilton: 12 Top-Rated Installers">
+<meta property="og:title" content="Best Heat Pump Installers in Hamilton: Ranked by Reviews">
 <meta property="og:description" content="Compare 12 top-rated heat pump installers near you in Hamilton, ON, ranked by 3,762 Google reviews. Heat pump rebates open: up to $12,000.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://homepowerrebate.com/installers/on/hamilton/heat-pump/">
@@ -56,7 +56,7 @@
 {
  "@context": "https://schema.org",
  "@type": "ItemList",
- "name": "Heat Pump Installation in Hamilton: 12 Top-Rated Installers",
+ "name": "Best Heat Pump Installers in Hamilton: Ranked by Reviews",
  "numberOfItems": 12,
  "itemListElement": [
   {
@@ -215,7 +215,7 @@
 }
 </script>
 <link rel="preload" as="style" href="/assets/site.css?v=0a8518e40f" onload="this.onload=null;this.rel='stylesheet'" data-hpr-site-css><noscript><link rel="stylesheet" href="/assets/site.css?v=0a8518e40f"></noscript>
-<meta name="twitter:title" content="Heat Pump Installation in Hamilton: 12 Top-Rated Installers">
+<meta name="twitter:title" content="Best Heat Pump Installers in Hamilton: Ranked by Reviews">
 <meta name="twitter:description" content="Compare 12 top-rated heat pump installers near you in Hamilton, ON, ranked by 3,762 Google reviews. Heat pump rebates open: up to $12,000.">
 <meta name="theme-color" content="#faf7f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -226,7 +226,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:alt" content="Heat Pump Installation in Hamilton: 12 Top-Rated Installers">
+<meta property="og:image:alt" content="Best Heat Pump Installers in Hamilton: Ranked by Reviews">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/installers/on/hamilton/heat-pump.jpg?v=91f43aac5aaa">
 <!-- OG-CARD-END -->
@@ -757,6 +757,24 @@ document.addEventListener('click', function (e) {
   var u; try { u = new URL(a.href); } catch (x) { return; }
   window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
 }, true);
+// Installer ranking pages: which lead actions each city page earns (2026-11-04). One GA4 event per click on a ranking card's call, email, profile,
+// website or Google reviews link, with the city, service and rank (read from the page path and the card), and one when someone starts the quote
+// form. generate_lead (on submit) already exists. No personal data: no phone number, email or company name is sent.
+(function () {
+  var m = location.pathname.match(/^\/installers\/([a-z]{2})\/([a-z0-9-]+)\/([a-z-]+)\/$/);
+  if (!m || !document.querySelector('.rank-list')) return;
+  var ctx = { region: m[1], city: m[2], service: m[3], page_path: location.pathname };
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('.rank-list a');
+    if (!a || !window.gtag) return;
+    var kind = a.classList.contains('btn-call') ? 'call' : a.classList.contains('em') ? 'email' : a.classList.contains('btn-prof') ? (/^https?:/.test(a.getAttribute('href')) ? 'website' : 'profile')
+      : a.classList.contains('lnk') ? 'reviews' : 'profile';
+    var li = a.closest('li');
+    window.gtag('event', 'installer_click', Object.assign({ action: kind, rank: li ? +li.dataset.rank : 0, transport_type: 'beacon' }, ctx));
+  }, true);
+  var qf = document.getElementById('qf-form'), started = false;
+  if (qf) qf.addEventListener('change', function () { if (started || !window.gtag) return; started = true; window.gtag('event', 'quote_start', ctx); });
+})();
 // Program alert boxes (scripts/add_program_alerts.py): POST /alert with the box's list id and region; one confirmation email, one list per program.
 document.addEventListener('submit', async function (e) {
   var f = e.target;

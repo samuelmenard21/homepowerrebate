@@ -748,6 +748,7 @@ _ADVISOR_CTX = {}
 # get the new title, answer box, jump bar, "where they are based / communities covered" and "nearby cities" blocks;
 # other services follow once heat pump pages show lift (docs/seo/heat-pump-near-me-strategy.md).
 SEARCH_V2 = {"heat-pump"}
+TITLE_B = set(json.loads((ROOT / "data" / "title-test.json").read_text(encoding="utf-8"))["title_b"]) if (ROOT / "data" / "title-test.json").exists() else set()
 NEARBY_PAGES = {}      # (region, service) -> [{"city", "url", "count", "lat", "lon"}], filled by main() before pages are built
 CITY_COORDS = {}
 
@@ -862,6 +863,9 @@ def build_page(region, service, city_label, hub, installers, other_service_url, 
         _reb = round(_d["dollar_value"]) if _d.get("status") == "open" and _d.get("dollar_value") else 0
         title = next(t for t in (f"{inst} in {city_label}: {n} Top-Rated Installers", f"{inst} in {city_label}: Top-Rated Installers",
                                  f"{inst} in {city_label}, {short}", f"{inst} in {city_label}") if len(t) <= 60 or t == f"{inst} in {city_label}")
+        if f"{region}/{city_slug}" in TITLE_B:   # title test (data/title-test.json): "Best ... installers" against "... installation"
+            title = next(t for t in (f"Best {svc['pros_t']} in {city_label}: Top {n} Ranked by Reviews", f"Best {svc['pros_t']} in {city_label}: Ranked by Reviews",
+                                     f"Best {svc['pros_t']} in {city_label}, {short}", f"Best {svc['pros_t']} in {city_label}") if len(t) <= 60 or t == f"Best {svc['pros_t']} in {city_label}")
         desc = (f"Compare {n} top-rated {svc['pro_l']}s near you in {city_label}, {short}, ranked by "
                 f"{total_reviews:,} Google reviews. " + (f"Heat pump rebates open: up to ${_reb:,.0f}." if _reb else "See typical cost and open rebates."))
         h1_text = f"{inst} in {city_label}, {short}: Top-Rated Installers"

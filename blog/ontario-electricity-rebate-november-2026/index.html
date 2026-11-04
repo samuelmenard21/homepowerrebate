@@ -614,6 +614,24 @@ document.addEventListener('click', function (e) {
   var u; try { u = new URL(a.href); } catch (x) { return; }
   window.gtag('event', 'official_click', { link_domain: u.hostname.replace(/^www\./, ''), link_path: u.pathname.slice(0, 100), page_path: location.pathname, transport_type: 'beacon' });
 }, true);
+// Installer ranking pages: which lead actions each city page earns (2026-11-04). One GA4 event per click on a ranking card's call, email, profile,
+// website or Google reviews link, with the city, service and rank (read from the page path and the card), and one when someone starts the quote
+// form. generate_lead (on submit) already exists. No personal data: no phone number, email or company name is sent.
+(function () {
+  var m = location.pathname.match(/^\/installers\/([a-z]{2})\/([a-z0-9-]+)\/([a-z-]+)\/$/);
+  if (!m || !document.querySelector('.rank-list')) return;
+  var ctx = { region: m[1], city: m[2], service: m[3], page_path: location.pathname };
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('.rank-list a');
+    if (!a || !window.gtag) return;
+    var kind = a.classList.contains('btn-call') ? 'call' : a.classList.contains('em') ? 'email' : a.classList.contains('btn-prof') ? (/^https?:/.test(a.getAttribute('href')) ? 'website' : 'profile')
+      : a.classList.contains('lnk') ? 'reviews' : 'profile';
+    var li = a.closest('li');
+    window.gtag('event', 'installer_click', Object.assign({ action: kind, rank: li ? +li.dataset.rank : 0, transport_type: 'beacon' }, ctx));
+  }, true);
+  var qf = document.getElementById('qf-form'), started = false;
+  if (qf) qf.addEventListener('change', function () { if (started || !window.gtag) return; started = true; window.gtag('event', 'quote_start', ctx); });
+})();
 // Program alert boxes (scripts/add_program_alerts.py): POST /alert with the box's list id and region; one confirmation email, one list per program.
 document.addEventListener('submit', async function (e) {
   var f = e.target;

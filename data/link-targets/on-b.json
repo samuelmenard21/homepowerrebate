@@ -1,0 +1,44 @@
+{
+"on/kitchener": {
+ "chamber": {"name":"Chamber of Commerce Greater Kitchener-Waterloo","home_url":"https://greaterkwchamber.com","directory_url":"https://greaterkwchamber.com/membership/business-directory/","resources_url":"https://greaterkwchamber.com/business-resources/","contact_url":"https://greaterkwchamber.com/about/contact-us/","note":"Covers Kitchener and Waterloo; no green business page found."},
+ "city_office": {"name":"City of Kitchener corporate sustainability / climate action","url":"https://www.kitchener.ca/en/water-and-environment/corporate-sustainability.aspx","rebate_page_url":null,"rebate_page_note":"Kitchener pages read cover city operations and TransformWR only; no resident rebate or retrofit page found on kitchener.ca. Closest regional page: Region of Waterloo RetrofitWR (https://www.regionofwaterloo.ca/programs-and-services/climate-and-environment/climate-action/retrofit-waterloo-region/), which said GrandBridge loans cover Cambridge and North Dumfries, with free Energy Coach for all Waterloo Region residents (https://retrofitwr.ca/energy-coaching/).","related":[{"name":"WR Community Energy (Region, municipalities, utilities)","url":"https://wrcommunityenergy.ca/about-us/","note":"Buildings page https://wrcommunityenergy.ca/buildings/ not read"}]},
+ "community_groups": [
+  {"name":"Reep Green Solutions","url":"https://reepgreen.ca/","resources_url":null,"note":"Site returned 403 to the fetcher; URL taken from climateactionwr.ca partner list. Non-profit home energy evaluations and REEP House in Kitchener (per search results)."},
+  {"name":"Sustainable Waterloo Region","url":"https://www.sustainablewaterlooregion.ca/","resources_url":"https://www.sustainablewaterlooregion.ca/blog/","note":"Organization-focused sustainability network, Waterloo."},
+  {"name":"ClimateActionWR","url":"https://climateactionwr.ca","resources_url":"https://climateactionwr.ca/resources/sustainability-resources/","note":"Collaboration led by Reep and Sustainable Waterloo Region; has a sustainability resources page."}
+ ],
+ "news": [
+  {"name":"CityNews Kitchener (KitchenerToday redirects here)","url":"https://kitchener.citynews.ca/","reporter":null,"staff_url":null,"note":"Fetcher was blocked; no reporter verified."},
+  {"name":"Waterloo Region Record","url":"https://www.therecord.com","reporter":null,"staff_url":null,"note":"Fetcher blocked; search results show Record coverage of Reep and climate targets but no bylines were read."},
+  {"name":"CBC Kitchener-Waterloo","url":"https://www.cbc.ca/news/canada/kitchener-waterloo","reporter":null,"staff_url":null,"note":"403 to fetcher; section exists, no reporter verified."}
+ ],
+ "notes":"Best fit is Reep Green Solutions plus the Greater KW Chamber directory; Kitchener has no resident rebate page of its own and RetrofitWR loans are not yet for Kitchener, so a pitch should lean on rebates and installers, not the city program."
+},
+"on/cambridge": {
+ "chamber": {"name":"Cambridge Chamber of Commerce","home_url":"https://www.cambridgechamber.com","directory_url":"https://www.cambridgechamber.com/Business-Directory-Online.htm","resources_url":"https://www.cambridgechamber.com/Membership-Resources.htm","contact_url":"https://www.cambridgechamber.com/Contact.htm","note":"Directory page showed no listings, only a member login and mention of a printed directory. Paths are relative on the home page; full URLs assumed on the same domain."},
+ "city_office": {"name":"City of Cambridge Environment & Sustainability","url":"https://www.cambridge.ca/resident-services/environment-sustainability/","rebate_page_url":"https://www.cambridge.ca/news/posts/upgrade-your-home-with-retrofitwr/","rebate_page_note":"City news post (dated June 29, 2026) on RetrofitWR loans up to $40,000 for GrandBridge Energy customers. Also https://cambridge.ca/resident-services/utilities/ (not read). The Environment page itself links to no home retrofit info.","related":[{"name":"RetrofitWR","url":"https://retrofitwr.ca/","note":"Region program site"}]},
+ "community_groups": [
+  {"name":"Reep Green Solutions","url":"https://reepgreen.ca/","resources_url":null,"note":"Regional, not Cambridge-based; delivery partner of RetrofitWR per the Region page. Site 403 to fetcher."},
+  {"name":"Sustainable Waterloo Region","url":"https://www.sustainablewaterlooregion.ca/","resources_url":"https://www.sustainablewaterlooregion.ca/blog/","note":"Regional."},
+  {"name":"ClimateActionWR","url":"https://climateactionwr.ca","resources_url":"https://climateactionwr.ca/resources/sustainability-resources/","note":"Regional collaboration."}
+ ],
+ "news": [
+  {"name":"CambridgeToday","url":"https://www.cambridgetoday.ca","reporter":null,"staff_url":null,"note":"403 to fetcher; could not confirm sections or staff."},
+  {"name":"Waterloo Region Record","url":"https://www.therecord.com","reporter":null,"staff_url":null,"note":"Fetcher blocked."}
+ ],
+ "notes":"Cambridge is the one city here where the City itself promotes a retrofit program (RetrofitWR), so a rebate and installer page is a natural resource next to it; no Cambridge-only home energy non-profit was found, and RetrofitWR is a loan, not a rebate."
+},
+"on/peterborough": {
+ "chamber": {"name":"Peterborough + Kawarthas Chamber of Commerce","home_url":"http://www.pkchamber.ca","directory_url":"https://www.pkchamber.ca/directory.html","resources_url":"https://www.pkchamber.ca/resources1.html","contact_url":"https://www.pkchamber.ca/contact-us.html","note":"Full URLs were inferred from relative links on the home page; peterboroughchamber.ca has a bad certificate and could not be fetched."},
+ "city_office": {"name":"City of Peterborough Climate Change and Environment","url":"https://www.peterborough.ca/council-city-hall/climate-change-and-environment/","rebate_page_url":"https://www.peterborough.ca/council-city-hall/climate-change-and-environment/better-homes-peterborough/","rebate_page_note":"Better Homes Peterborough: low-interest financing, incentives and support, program site https://betterhomesptbo.ca/ ; the page names no department or office.","related":[]},
+ "community_groups": [
+  {"name":"GreenUP","url":"https://greenup.on.ca/","resources_url":"https://greenup.on.ca/home-energy/","note":"Also https://greenup.on.ca/resources/ . Its Home Energy page already links Better Homes Peterborough and Home Renovation Savings."},
+  {"name":"EnviroCentre","url":"https://envirocentre.ca/","resources_url":null,"note":"Ottawa-based non-profit, core delivery partner of Better Homes Peterborough per the City; not local."}
+ ],
+ "news": [
+  {"name":"kawarthaNOW","url":"https://kawarthanow.com","reporter":"Bethan Bates (Local Journalism Initiative reporter, no beat stated)","staff_url":"https://kawarthanow.com/editorial-team/","note":"Contact page https://kawarthanow.com/contact-us/ . Has run many home retrofit stories. Page lists no environment, housing or business reporter."},
+  {"name":"PTBOCanada","url":"https://www.ptbocanada.com","reporter":null,"staff_url":null,"note":"No bylines or contact page; tips@ptbocanada.com is published, About Us at https://www.ptbocanada.com/about-us-2"}
+ ],
+ "notes":"Best fit is GreenUP's Home Energy page and the City's Better Homes Peterborough page; awkward because Better Homes Peterborough is itself a city-backed program with its own installer list, so frame our page as a neutral rebates and reviews companion."
+}
+}

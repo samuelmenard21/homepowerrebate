@@ -17,6 +17,7 @@ from build_calculator import load_facts, money  # noqa: E402
 
 e = html.escape
 READ = "2026-09-30"
+READ_H2 = "November 4, 2026"
 READ_H = date.fromisoformat(READ).strftime("%B %-d, %Y")
 
 POSTS = [
@@ -30,6 +31,9 @@ POSTS = [
   "desc": "Quilt, a US ductless heat pump maker, launched in Canada in December 2025. Where it is sold, who installs it, its cold-weather ratings and the open questions on price and rebates.",
   "kicker": "Heating", "summary": "A design-led ductless heat pump is now sold in five provinces. Here is what is confirmed and what is not."},
 ]
+POSTS.insert(0, {"slug": "itron-eguana-grid-edge-battery", "title": "Itron and Eguana: Your Battery Meets Your Meter",
+  "desc": "Itron and Eguana tested a home battery that a smart meter can monitor and control using a standard protocol. What was announced, what it means for a home, and what is not confirmed.",
+  "kicker": "Batteries", "summary": "A home battery and a utility smart meter were tested working together. Here is what that means for a home, and what is still unknown."})
 COMING = ["Sodium-ion vs lithium home batteries: what to wait for", "Can your EV power your house? Which cars, what it costs, why it is stuck",
           "Solar panels: what 26.9% efficiency means and when you can buy it"]
 
@@ -108,6 +112,34 @@ def post_hp():
 <p>Model lists and ratings for Lennox, Bosch, Trane, Daikin and Rheem's 2026 launches. Prices for any brand.</p>"""
 
 
+def post_itron():
+    return f"""<p class="meta">By {e(AUTHOR['name'])} · Source read {READ_H2}</p>
+<div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;"><b>Short answer:</b> Itron, which makes smart meters and grid software for utilities, and Eguana, the maker of the Evolve home battery, say they tested the battery working directly with Itron's meter system. The idea: your utility can see and manage many home batteries through the meter you already have, using a standard language. It is a test result, not a program you can join today.</p></div>
+<h2>What was announced</h2>
+<p>In a September 23, 2025 blog post, Itron and Eguana report successful interoperability testing of Eguana's home battery with Itron's "Grid Edge Intelligence" system. {pill('Lab result: announced by the makers', 'lab')}</p>
+<table><tr><th>What the post states</th><th>Detail</th></tr>
+<tr><td>The link</td><td>The battery connects to Itron's system, so an Itron Riva electric meter can monitor and control it.</td></tr>
+<tr><td>The language</td><td>IEEE 2030.5, a published standard for how utilities talk to home energy devices. It is the only standard the post names.</td></tr>
+<tr><td>Where the control runs</td><td>On a secure utility server built into the smart meter, not a separate box.</td></tr>
+<tr><td>Scale</td><td>Itron says more than 15 million meters with this "distributed intelligence" technology have shipped worldwide.</td></tr>
+<tr><td>The battery</td><td>Eguana describes its Evolve as quick and accurate to respond, able to run on its own, and good at reporting what it did.</td></tr></table>
+<p class="small">Source: <a href="https://na.itron.com/w/unlocking-grid-edge-potential-itron-and-eguana-pioneer-grid-edge-intelligence-based-standards-driven-control-of-distributed-energy-storage" target="_blank" rel="noopener">Itron and Eguana blog post</a>, read {READ_H2}.</p>
+<h2>What this could mean in a home</h2>
+<p>The post is written for utilities, not homeowners. It talks about handling growing demand, using the wires they already have, and seeing home batteries in real time. It does not say what a homeowner would save or get. Here is how we read it, and it is our reading, not a claim from Itron or Eguana:</p>
+<ul><li><b>Your battery can help the grid at busy times.</b> Many home batteries, each told to give back a little power during a cold-snap evening, can ease the load on a neighbourhood.</li>
+<li><b>It uses a standard.</b> A battery that speaks a standard language can work with more than one utility's system, so you are less tied to one brand's app.</li>
+<li><b>It keeps the controls in the meter.</b> You do not add another device on your wall.</li></ul>
+<h2>Where this already happens in a rebate</h2>
+<p>Utilities already pay homeowners to let them use a battery at peak times. In BC, <a href="/programs/bc-hydro-peak-saver/">BC Hydro Peak Saver</a> pays $500 one time for enrolling a battery and about $250 each winter, and events run November to March for up to four hours with the option to opt out. {pill('Available: BC Hydro page read', 'ok')} See <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/peak-saver/enroll-smart-home-devices.html" target="_blank" rel="noopener">BC Hydro's enrolment page</a>. We have no source saying BC Hydro uses Itron's system, so do not read this page as a link between the two.</p>
+<p>Eguana's Evolve is on BC Hydro's approved list for the battery rebate. Read <a href="/eguana">our Eguana Evolve explainer</a> and the <a href="/calculator/bc/">BC rebate calculator</a> for amounts.</p>
+<h2>What we could not confirm</h2>
+<ul><li>Whether any utility offers this to customers today. The post names no utility, place, program or pilot size.</li>
+<li>Any savings, payment or backup-power benefit for a homeowner.</li>
+<li>Test data or timing. The post gives none, and it is a company blog post, not a press release or an outside study.</li>
+<li>Which utilities buy Itron's system for batteries, and whether yours does. Ask your utility if your battery can join a program.</li></ul>
+<p>Planning a battery? <a href="/calculator/">Use the rebate calculator</a>, then <a href="/get-quotes/">see top-rated installers in your city</a>.</p>"""
+
+
 def post_quilt():
     return f"""<p class="meta">By {e(AUTHOR['name'])} · Sources read {READ_H}</p>
 <div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;"><p style="margin:0;"><b>Short answer:</b> Quilt is a ductless heat pump with a modern design, and it is now sold in Ontario, British Columbia, Nova Scotia, New Brunswick and Manitoba. It is installed only through Quilt's own partners. We could not find a price, and we do not yet know whether leased or rented systems qualify for rebates.</p></div>
@@ -166,7 +198,7 @@ def hub():
 
 
 def main():
-    outs = [hub(), page(POSTS[0], post_water()), page(POSTS[1], post_hp()), page(POSTS[2], post_quilt())]
+    outs = [hub(), page(POSTS[0], post_itron()), page(POSTS[1], post_water()), page(POSTS[2], post_hp()), page(POSTS[3], post_quilt())]
     for path, html_ in outs:
         f = ROOT / path.strip("/") / "index.html"
         f.parent.mkdir(parents=True, exist_ok=True)

@@ -36,6 +36,8 @@ def body(r, address):
 def main():
     a = argparse.ArgumentParser(); a.add_argument("--test"); a.add_argument("--send", action="store_true")
     a.add_argument("--limit", type=int, default=DAILY_CAP); a.add_argument("--preview", action="store_true"); o = a.parse_args()
+    if o.send and os.path.exists(f"{D}/PAUSED"):  # 2026-11-08: delete outreach/PAUSED to resume (see CLAUDE.md)
+        sys.exit("Outreach is paused: " + open(f"{D}/PAUSED").read().strip().splitlines()[0])
     rows = list(csv.DictReader(open(f"{D}/advisor-list.csv")))
     subj = lambda r: f"Featured: {short_name(r['name'])} on HomePowerRebate (+ {REGION_NAMES.get(r['regions'].split(',')[0], '')} rebate tool)"
     addr = json.load(open(f"{D}/config.json")).get("mailing_address", "")

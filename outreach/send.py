@@ -125,6 +125,8 @@ def send(to, subject, htm, key):
 def main():
     a = argparse.ArgumentParser(); a.add_argument("--test"); a.add_argument("--send", action="store_true")
     a.add_argument("--limit", type=int, default=50); a.add_argument("--preview", action="store_true"); o = a.parse_args()
+    if o.send and os.path.exists(f"{D}/PAUSED"):  # 2026-11-08: delete outreach/PAUSED to resume (see CLAUDE.md)
+        sys.exit("Outreach is paused: " + open(f"{D}/PAUSED").read().strip().splitlines()[0])
     key, addr = os.environ.get("RESEND_API_KEY"), os.environ.get("MAILING_ADDRESS")
     rows = list(csv.DictReader(open(f"{D}/installer-list.csv")))
     subj = lambda r: f"Featured: {short_name(r['name'])} on HomePowerRebate (+ congrats on the great reviews!)"

@@ -226,6 +226,9 @@ export default {
   }
 };
 
+// POST routes that only bump an anonymous counter (one per page view or quiz answer), so they get a looser limit.
+const PING_ROUTES = new Set(['/alert/seen', '/quiz/stat']);
+
 async function handleFetch(request, env, ctx) {
     // CORS preflight (applies to every route)
     if (request.method === 'OPTIONS') {
@@ -265,6 +268,26 @@ async function handleFetch(request, env, ctx) {
 
     if (request.method !== 'POST') {
       return jsonResponse({ error: 'Method not allowed' }, 405);
+    }
+
+    // Per-visitor limits (added 2026-11-13 after the security review). The forms had only a honeypot, so a script
+    // could make us email thousands of strangers or flood a listed installer with fake referrals.
+    // FORM_LIMITER: routes that send email or write a lead. PING_LIMITER: the anonymous counters.
+    // Bindings are in wrangler.toml ([[ratelimits]]); if one is missing the route still works (no limit).
+    const limiter = PING_ROUTES.has(path) ? env.PING_LIMITER : env.FORM_LIMITER;
+    if (limiter) {
+      const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+      try {
+        const { success } = await limiter.limit({ key: ip });
+        if (!success) {
+          return new Response(JSON.stringify({ error: 'Too many requests. Please wait a minute and try again.' }), {
+            status: 429,
+            headers: { 'Content-Type': 'application/json', 'Retry-After': '60', ...CORS_HEADERS }
+          });
+        }
+      } catch (e) {
+        console.error('Rate limiter failed (request allowed):', e?.message || e);
+      }
     }
 
     if (path === '/submit') return handleLeadSubmit(request, env);
@@ -1075,7 +1098,8 @@ async function handleAlertSeen(request, env) {
   try { p = JSON.parse(await request.text()); } catch (e) { return new Response(null, { status: 204, headers: CORS_HEADERS }); }
   const list = cleanString(p.list || 'federal-hp');
   const page = cleanString(p.page).slice(0, 200);
-  if (!ALERT_LISTS.has(list) || !page.startsWith('/') || !env.OUTCOMES_DB) return new Response(null, { status: 204, headers: CORS_HEADERS });
+  // Only real site paths (with an optional ?src= style query), so junk strings cannot fill the table.
+  if (!ALERT_LISTS.has(list) || !/^\/[A-Za-z0-9\/_.~%-]*(\?[A-Za-z0-9_.~%&=+-]*)?$/.test(page) || !env.OUTCOMES_DB) return new Response(null, { status: 204, headers: CORS_HEADERS });
   const day = new Date().toISOString().slice(0, 10);
   await env.OUTCOMES_DB.prepare(
     `INSERT INTO alert_views (day, list, page, views) VALUES (?, ?, ?, 1)
@@ -2694,10 +2718,20 @@ async function sendOpsWaitlistAlert(waitlist, env) {
 async function logToSheet(record, env) {
   if (!env.GSHEET_WEBHOOK_URL) return Promise.resolve();
 
+  // Google Sheets runs any cell that starts with = + - or @ as a formula, and these values come from public forms.
+  // A leading apostrophe makes Sheets keep the cell as plain text (the apostrophe itself is not shown).
+  const safe = {};
+  for (const [k, v] of Object.entries(record)) {
+    safe[k] = typeof v === 'string' && /^[=+\-@\t\r]/.test(v) ? `'${v}` : v;
+  }
+  // Optional shared secret: set GSHEET_WEBHOOK_SECRET here and SHARED_SECRET in the Apps Script to the same value,
+  // and the script refuses rows from anyone else who learns the webhook URL.
+  if (env.GSHEET_WEBHOOK_SECRET) safe.webhook_secret = env.GSHEET_WEBHOOK_SECRET;
+
   return fetch(env.GSHEET_WEBHOOK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(record)
+    body: JSON.stringify(safe)
   });
 }
 

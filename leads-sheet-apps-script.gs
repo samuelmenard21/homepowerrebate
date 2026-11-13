@@ -33,7 +33,16 @@
 var SHEET_ID = '1MQAx_i-e4DqEf1E9eXCWjE-nFWD08YR9P2OHfTKi-8M'; // the leads Google Sheet (from its URL)
 var NOTIFY_EMAIL = 'samuelmenard@gmail.com';   // where lead alerts go
 var NOTIFY_ON = ['lead', 'waitlist']; // record types that email you (subscribers are reported in the Monday summary instead)
+// Optional. Set this and the Worker secret GSHEET_WEBHOOK_SECRET (wrangler secret put GSHEET_WEBHOOK_SECRET) to the
+// same long random value, and rows from anyone else who learns this script's URL are refused. Leave '' to accept all.
+// Do not commit the real value: type it only in the Apps Script editor.
+var SHARED_SECRET = '';
 // ==================================
+
+// Sheets runs any cell that starts with = + - or @ as a formula. These values come from public forms, so keep them as text.
+function safeCell(v) {
+  return (typeof v === 'string' && /^[=+\-@\t\r]/.test(v)) ? "'" + v : v;
+}
 
 var TAB_FOR = {
   lead: 'Leads',
@@ -44,6 +53,10 @@ var TAB_FOR = {
 function doPost(e) {
   try {
     var record = JSON.parse(e.postData.contents);
+    if (SHARED_SECRET && record.webhook_secret !== SHARED_SECRET) {
+      return json({ success: false, error: 'forbidden' });
+    }
+    delete record.webhook_secret; // never written to the sheet
     var type = String(record.record_type || 'other');
     var tabName = TAB_FOR[type] || 'Other';
 
@@ -112,7 +125,7 @@ function writeRow(tabName, record) {
     } else if (key === 'status') {
       row.push(record.status || 'new');
     } else {
-      row.push(record[key] !== undefined ? record[key] : '');
+      row.push(record[key] !== undefined ? safeCell(record[key]) : '');
     }
   }
   sheet.appendRow(row);

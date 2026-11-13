@@ -31,6 +31,19 @@ binding = "PROGRAMS_DB"
 database_name = "homepowerrebate-programs"
 database_id = "bb6229a3-8fe0-4ad2-8a5d-81781c5e38f6"  # Will be created via wrangler d1 create
 
+# Per-visitor rate limits (keyed by IP in lead-router.js). period must be 10 or 60 seconds.
+# FORM_LIMITER: routes that send email or save a lead (8 a minute is far above any real visitor).
+# PING_LIMITER: anonymous counters (/alert/seen, /quiz/stat), one per page view or quiz answer.
+[[ratelimits]]
+name = "FORM_LIMITER"
+namespace_id = "1001"
+simple = { limit = 8, period = 60 }
+
+[[ratelimits]]
+name = "PING_LIMITER"
+namespace_id = "1002"
+simple = { limit = 60, period = 60 }
+
 # Secrets are set via `wrangler secret put` in the terminal — not stored in this file
 # Required secrets:
 #   - RESEND_API_KEY          (from https://resend.com)

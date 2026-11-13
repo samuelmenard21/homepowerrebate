@@ -1,2 +1,18 @@
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Security headers (added 2026-11-13). Browsers must use HTTPS, and other sites cannot put our pages
+# (and their lead forms) inside a frame.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Security-Policy: frame-ancestors 'self'
+  X-Frame-Options: SAMEORIGIN
+
+# Framed widgets are made to sit on installer and partner sites, so they drop the frame rules.
+/embed/*
+  ! Content-Security-Policy
+  ! X-Frame-Options
+
+/calculator/embed/*
+  ! Content-Security-Policy
+  ! X-Frame-Options

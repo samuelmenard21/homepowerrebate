@@ -223,11 +223,42 @@ export default {
     ctx.waitUntil(runLeadFollowupQueue(env));
     ctx.waitUntil(runMonthlyNewsletter(env));
     ctx.waitUntil(runWeeklySummary(env));
+    ctx.waitUntil(cleanRateLimits(env));
   }
 };
 
 // POST routes that only bump an anonymous counter (one per page view or quiz answer), so they get a looser limit.
 const PING_ROUTES = new Set(['/alert/seen', '/quiz/stat']);
+
+// Exact per-visitor and per-recipient caps on form routes (table rate_limits, schema-ratelimit.sql).
+// ipPerMinute/ipPerDay: one visitor. emailPerDay: form posts naming the same email address, from anyone,
+// so nobody can make us send one person a pile of confirmation emails.
+const STRICT_LIMITS = { ipPerMinute: 8, ipPerDay: 60, emailPerDay: 6 };
+
+// Counts one hit for `key` and says whether it is still within `limit`. The key is stored only as a hash, so the
+// table never holds an IP or email address, and rows are deleted after they expire (cleanRateLimits, daily cron).
+// If the table is missing or the database errors, the request is allowed: a broken counter must never lose a lead.
+async function strictLimitOk(env, key, limit, ttlSeconds) {
+  try {
+    const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(key));
+    const k = [...new Uint8Array(digest)].slice(0, 16).map(b => b.toString(16).padStart(2, '0')).join('');
+    const row = await env.OUTCOMES_DB.prepare(
+      `INSERT INTO rate_limits (k, n, expires) VALUES (?, 1, ?)
+       ON CONFLICT(k) DO UPDATE SET n = n + 1 RETURNING n`
+    ).bind(k, Math.floor(Date.now() / 1000) + ttlSeconds).first();
+    return (row?.n || 0) <= limit;
+  } catch (e) {
+    console.error('Strict rate limit failed (request allowed):', e?.message || e);
+    return true;
+  }
+}
+
+async function cleanRateLimits(env) {
+  if (!env.OUTCOMES_DB) return;
+  try {
+    await env.OUTCOMES_DB.prepare('DELETE FROM rate_limits WHERE expires < ?').bind(Math.floor(Date.now() / 1000)).run();
+  } catch (e) { console.error('rate_limits cleanup failed:', e?.message || e); }
+}
 
 async function handleFetch(request, env, ctx) {
     // CORS preflight (applies to every route)
@@ -287,6 +318,32 @@ async function handleFetch(request, env, ctx) {
         }
       } catch (e) {
         console.error('Rate limiter failed (request allowed):', e?.message || e);
+      }
+    }
+
+    // Strict limits for the routes that send email or save a lead. The binding above only counts roughly
+    // (live test 2026-11-13: 19 requests passed before the first refusal), so these exact counters sit behind it.
+    if (!PING_ROUTES.has(path) && env.OUTCOMES_DB) {
+      const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+      const minute = Math.floor(Date.now() / 60000);
+      const day = new Date().toISOString().slice(0, 10);
+      let email = '';
+      try {
+        const body = await request.clone().json();
+        if (body && typeof body.email === 'string') email = body.email.trim().toLowerCase().slice(0, 200);
+      } catch (e) { /* the route handler answers a bad body itself */ }
+      const checks = [
+        [`ip:${ip}:m${minute}`, STRICT_LIMITS.ipPerMinute, 120],
+        [`ip:${ip}:d${day}`, STRICT_LIMITS.ipPerDay, 90000]
+      ];
+      if (email) checks.push([`to:${email}:d${day}`, STRICT_LIMITS.emailPerDay, 90000]);
+      for (const [key, limit, ttl] of checks) {
+        if (!(await strictLimitOk(env, key, limit, ttl))) {
+          return new Response(JSON.stringify({ error: 'Too many requests. Please try again later.' }), {
+            status: 429,
+            headers: { 'Content-Type': 'application/json', 'Retry-After': '60', ...CORS_HEADERS }
+          });
+        }
       }
     }
 

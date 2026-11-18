@@ -4,7 +4,8 @@
     "installers/"
   ],
   "keep_indexed": [
-    "installers/how-we-rank/"
+    "installers/how-we-rank/",
+    "installers/heat-pump/index.html"
   ],
   "_why_pages": "2026-11-09: tranche 2 brought forward from Dec 1. These 143 city category pages had zero Google impressions from 2026-08-10 to 2026-11-08 (GSC page dimension, re-pulled 2026-11-09; list from data/prune-candidates-2026-12.json). They stay live and linked; Google is told not to index them. To bring one back, remove it here and rebuild it with its generator.",
   "pages": [
@@ -206,5 +207,6 @@
     "us/wa/vancouver/water-heater/",
     "us/wa/vancouver/windows-doors/"
   ],
-  "_why_blog_variants": "2026-11-09: the 54 BC blog posts repeated per city (energy-saving-ideas-bc-home-<city>, free-heat-pump-bc-income-qualified-<city>, window-doors-replacement-rebates-bc-guide-<city>; 18 cities each) had 88 impressions and 0 clicks in 90 days between them. They are in pages below with the city category pages."
+  "_why_blog_variants": "2026-11-09: the 54 BC blog posts repeated per city (energy-saving-ideas-bc-home-<city>, free-heat-pump-bc-income-qualified-<city>, window-doors-replacement-rebates-bc-guide-<city>; 18 cities each) had 88 impressions and 0 clicks in 90 days between them. They are in pages below with the city category pages.",
+  "_why_keep": "2026-11-18: the heat pump installer hub is the page that should rank for 'heat pump installers near me' (the city ranking pages stay noindex). It is one page with real content, a city finder and links to the 140 city lists."
 }

@@ -30,6 +30,18 @@ SERVICES = {"heat-pump", "solar", "battery"}
 NO_ROW = {("bc", "solar"), ("on", "index"), ("on", "battery")}  # ("on", "index") means Ontario city hubs; the region hub keeps its row
 
 
+def blog_quiz_index(t, fallback):
+    """Where a blog post's quiz goes (2026-11-19): after the post's first answer, not above its headline. On 38 posts the photo block sits above the
+    H1, so the old anchor put a quiz (often about another topic) ahead of the title, which is the first thing a searcher saw. The answer is
+    everything between the H1 and the first H2 (lead, short answer, deadline and alert boxes); the quiz goes right before that first H2. A post
+    with no H1 or no H2 after it keeps the old position. Called with the page already stripped of its old quiz, so no quiz heading is in the way."""
+    h1 = t.find("<h1")
+    if h1 < 0:
+        return fallback
+    m = re.search(r"<h2\b", t[h1:])
+    return h1 + m.start() if m else fallback
+
+
 def place(f, t, block):
     """Replace any old block, then insert the new one; returns the new text or None when the page has no place for it."""
     t2 = OLD.sub("", t)
@@ -166,6 +178,8 @@ def wide():
         anchor = next((m for m in ("<!-- HUB-STATS-END -->" if region_hub else "", "<!-- HUB-SEARCH-END -->", "<!-- BLOG-PHOTO-START -->") if m and m in t2), None)
         if quiz and anchor:
             i = t2.index(anchor) + (0 if anchor.endswith("PHOTO-START -->") else len(anchor))  # blog posts: the quiz goes above the photo
+            if kind == "blog":
+                i = blog_quiz_index(t2, i)
             t2 = t2[:i] + f"\n{QS}\n<div class=\"learn-wrap\">{quiz}</div>\n{QE}" + t2[i:]
         elif quiz:
             row += quiz  # no top anchor on this page: the quiz sits with the row

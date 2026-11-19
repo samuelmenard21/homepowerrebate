@@ -129,7 +129,7 @@ def build():
 <p>The Canada Greener Homes Affordability Program is separate. It gives free insulation and heat pump upgrades to homeowners and tenants with low to median incomes, and you apply through your province, not through Ottawa. NRCan's page lists British Columbia, Manitoba, Nova Scotia, Prince Edward Island and Quebec as taking applications (page updated August 31, 2026). Read the <a href="{GHAP}" rel="noopener" target="_blank">program page</a> for the steps in your province.</p>
 <h2 id="faq">Common questions</h2>
 {kit.faq({"faq": FAQ})}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read October 9, 2026: <a href="{RELEASE}" rel="noopener" target="_blank">Government of Canada news release</a>, <a href="{CAMPAIGN}" rel="noopener" target="_blank">campaign page</a>, <a href="{PM}" rel="noopener" target="_blank">Prime Minister's release</a>, <a href="{CBC}" rel="noopener" target="_blank">CBC</a>, <a href="{GHAP}" rel="noopener" target="_blank">NRCan</a>. We are an independent site, not the Government of Canada.</p>
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read October 9, 2026: <a href="{RELEASE}" rel="noopener" target="_blank">Government of Canada news release</a>, <a href="{CAMPAIGN}" rel="noopener" target="_blank">campaign page</a>, <a href="{PM}" rel="noopener" target="_blank">Prime Minister's release</a>, <a href="{CBC}" rel="noopener" target="_blank">CBC</a>, <a href="{GHAP}" rel="noopener" target="_blank">NRCan</a>. We are an independent site, not the Government of Canada.</p>
 <script>
 (function () {{
   var D = {data}, form = document.getElementById('dq-form'), out = document.getElementById('dq-out');

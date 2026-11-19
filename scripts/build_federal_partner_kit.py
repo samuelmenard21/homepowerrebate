@@ -232,7 +232,7 @@ def kit_article():
 <p>The name you put in the link is saved with each signup as a source, so we can tell you how many people from your card or link joined the launch list. Ask at <a href="mailto:hello@homepowerrebate.com">hello@homepowerrebate.com</a>. We count signups only. We do not track visitors on your site.</p>
 <h2 id="faq">Common questions</h2>
 {kit.faq({"faq": FAQ})}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Source: the Government of Canada <a href="{RELEASE}" rel="noopener" target="_blank">news release of October 8, 2026</a> and our <a href="{GUIDE}">guide</a>, last read {CHECKED}. We are an independent site, not the Government of Canada.</p>
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Source: the Government of Canada <a href="{RELEASE}" rel="noopener" target="_blank">news release of October 8, 2026</a> and our <a href="{GUIDE}">guide</a>, last read {CHECKED}. We are an independent site, not the Government of Canada.</p>
 <script>
 (function () {{
   var s = document.getElementById('k-p'), c = document.getElementById('k-code'), base = c.textContent, pv = document.getElementById('k-prev'), bl = document.getElementById('k-blurb'), b0 = bl.textContent;

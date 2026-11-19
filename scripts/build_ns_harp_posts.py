@@ -32,7 +32,7 @@ def build(path):
     t = t.replace("https://homepowerrebate.com/blog/nova-scotia-heat-pump-rebate-disappeared/", url)
     # swap all JSON-LD blocks in the head for ours
     t = re.sub(r'<script type="application/ld\+json">[\s\S]*?</script>\s*', "", t)
-    person = {"@type": "Person", "name": "Sam Menard", "url": f"{BASE}/about"}
+    person = {"@type": "Person", "name": "Sam Menard", "url": f"{BASE}/author/sam-menard/"}
     blog = {"@context": "https://schema.org", "@type": "BlogPosting", "headline": d["h1"], "description": d["desc"],
             "datePublished": d["published"], "dateModified": d["updated"], "author": person,
             "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": BASE + "/"}, "mainEntityOfPage": url}
@@ -45,7 +45,7 @@ def build(path):
     t = t.replace("</head>", ld(blog) + ld(crumbs) + ld(faq) + "</head>", 1)
     t = re.sub(r'(<li aria-current="page">).*?(</li>)', lambda m: m.group(1) + e(d["crumb"]) + m.group(2), t, count=1)
     hero = (f'<section class="hero">\n  <div class="wrap">\n    <h1>{e(d["h1"])}</h1>\n    <p>{d["lead"]}</p>\n'
-            f'    <p class="meta">By <a href="/about" style="color:inherit;text-decoration:underline;">Sam Menard</a> &middot; Updated {nice} &middot; {d["read"]} min read</p>\n  </div>\n</section>')
+            f'    <p class="meta">By <a href="/author/sam-menard/" style="color:inherit;text-decoration:underline;">Sam Menard</a> &middot; Updated {nice} &middot; {d["read"]} min read</p>\n  </div>\n</section>')
     t = re.sub(r'<section class="hero">[\s\S]*?</section>', lambda m: hero, t, count=1)
     body = f'<div class="callout">{d["callout"]}</div>\n'
     body += "".join(f"<h2>{h}</h2>\n{b}\n" for h, b in d["sections"])

@@ -59,7 +59,7 @@ def build(d):
         if r["source"] and all(r["source"] != u for _, u in refs):
             refs.append((f"{r['region']}: {r['program']}", r["source"]))
     refs_html = ", ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>' for t, u in refs)
-    article = f"""<p class="byline">By <a href="/about">Sam Menard</a> · Rebate amounts checked {nice}</p>
+    article = f"""<p class="byline">By <a href="/author/sam-menard/">Sam Menard</a> · Rebate amounts checked {nice}</p>
 {quiz}
 {facts}
 {d["intro"]}

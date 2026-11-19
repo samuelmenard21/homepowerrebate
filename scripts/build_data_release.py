@@ -168,7 +168,7 @@ def build(ym, baseline):
 <p>We compare our verified program facts today with the same facts in the last version saved before {e(base_date)}. A fact is a program, its status, its amount, its rules and the official page it came from, with the date we last read that page. We change a fact only after reading the official page. The monthly <a href="/rebate-tracker/">rebate tracker</a> lists dated news; this release lists what changed in our data. Past releases are on the <a href="/data-release/">data release page</a>.</p>
 <h2 id="faq">Common questions</h2>
 {kit.faq({"faq": FAQ})}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Cite as: HomePowerRebate, {month} data release, homepowerrebate.com{path}.</p>
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Cite as: HomePowerRebate, {month} data release, homepowerrebate.com{path}.</p>
 <script>
 (function () {{
   var D = {payload};

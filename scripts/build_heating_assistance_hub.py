@@ -63,7 +63,7 @@ def main():
 <p>Bill help covers a gap. Insulation, a heat pump or a smart thermostat lowers what you use every year, and some programs give them free to lower-income households. See the <a href="/calculator/">rebate calculator</a> for your province or state, or the <a href="/programs/national-heat-pump-rebate/do-i-qualify/">federal heat pump rebate checker</a> in Canada.</p>
 <h2 id="faq">Common questions</h2>
 {kit.faq({"faq": FAQ})}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Each program was read on its official page on October 21, 2026; the region pages list the sources.</p>"""
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Each program was read on its official page on October 21, 2026; the region pages list the sources.</p>"""
     title = "Heating Bill Help 2026-27: LIHEAP and Programs by State and Province"
     desc = f"Every heating and energy bill assistance program we have checked, with status, dates and amounts: {n_open} open now. LIHEAP by state and help in Canada."
     hero = {"badge": f"{n_open} programs open now", "h1": "Heating Bill Help for 2026-27, by State and Province",

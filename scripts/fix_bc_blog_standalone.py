@@ -499,7 +499,7 @@ def render(slug, p):
     parts = [f'<main class="hpr-post">',
              f'  <div class="hpr-eyebrow">{p["eyebrow"]}</div>',
              f'  <h1>{html.escape(p["title"])}</h1>',
-             f'  <p class="hpr-meta">By <a href="/about">Sam Menard</a> &middot; Updated {TODAY_H}</p>']
+             f'  <p class="hpr-meta">By <a href="/author/sam-menard/">Sam Menard</a> &middot; Updated {TODAY_H}</p>']
     parts += p["body"]
     parts.append("<h2>What to do next</h2>" if not any("What to do next" in b for b in p["body"]) else "")
     if "What to do next" not in "".join(p["body"]):
@@ -537,7 +537,7 @@ def apply(slug, p):
             t = t[:m.start()] + g.jld(d) + "\n" + t[m.end():]
     art = {"@context": "https://schema.org", "@type": "Article", "headline": title, "description": desc,
            "datePublished": pub, "dateModified": g.TODAY,
-           "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"},
+           "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/author/sam-menard/"},
            "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com"},
            "mainEntityOfPage": f"https://homepowerrebate.com/blog/{slug}/"}
     faq = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [

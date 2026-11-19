@@ -80,7 +80,7 @@ def main():
 <ul><li><a href="/batteries/">Home battery guides: specs and rebates by product</a></li><li>Pick your place: {" · ".join(f'<a href="{PAGES[c]}">{n}</a>' for c, n in [("bc", "British Columbia"), ("on", "Ontario"), ("co", "Colorado"), ("ma", "Massachusetts"), ("nj", "New Jersey"), ("ny", "New York"), ("pa", "Pennsylvania"), ("vt", "Vermont"), ("wa", "Washington"), ("ca", "California")])}</li><li><a href="/calculator/">Rebate calculator for your province or state</a></li></ul>
 <h2 id="faq">Common questions</h2>
 {kit.faq({"faq": FAQ})}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Each program's source link and the date we last checked it are in the table. Biggest-rebate figures come from <a href="/powerscore/">PowerScore</a>, generated {e(d["generated"])}.</p>"""
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Each program's source link and the date we last checked it are in the table. Biggest-rebate figures come from <a href="/powerscore/">PowerScore</a>, generated {e(d["generated"])}.</p>"""
     title = "Home Battery Rebates 2026: Every Program by Region"
     desc = f"Home battery rebates and incentives in Canada and the US: {n_open} programs open now, what each pays, the rules and where the biggest rebates are."
     hero = {"badge": f"{n_open} programs open now", "h1": "Home Battery Rebates in 2026: What Each Program Pays",

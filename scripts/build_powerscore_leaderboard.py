@@ -107,7 +107,7 @@ def main():
 <p>Want your own number? Use the <a href="/calculator/">rebate calculator</a> or <a href="/get-quotes/">see my rebates</a>.</p>
 <h2 id="faq">Common questions</h2>
 {kit.faq({"faq": FAQ})}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Data generated {e(gen)} from the program amounts we verify on official pages. Details are in the <a href="/powerscore/">PowerScore method</a>.</p>"""
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Data generated {e(gen)} from the program amounts we verify on official pages. Details are in the <a href="/powerscore/">PowerScore method</a>.</p>"""
     hero = {"badge": f"{n} cities ranked", "h1": "The Best Places for Home Energy Rebates in Canada and the US",
             "lead": f"We add up every open rebate in {n} cities across {len(d['regions'])} provinces and states, in one currency, and rank them. See who leads overall, for each upgrade and in each province or state."}
     title = "Best Places for Home Energy Rebates: National Leaderboard"

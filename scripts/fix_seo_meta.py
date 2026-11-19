@@ -16,7 +16,7 @@ import regions
 ROOT = Path(__file__).resolve().parent.parent
 SKIP = ("_partials/", "scripts/", "claude/", "calculator/embed/", "embed/", "data/", "ONTARIO_", "CITY_", "city-page", "installer-", "pinterest", "unified", "solar-carousel", "og-image", "preview", "nav-footer", "node_modules")
 REGION = regions.ABBR_BY_PATH
-AUTHOR = '"author": {"@type": "Person", "@id": "https://homepowerrebate.com/about#sam-menard", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"}'
+AUTHOR = '"author": {"@type": "Person", "@id": "https://homepowerrebate.com/about#sam-menard", "name": "Sam Menard", "url": "https://homepowerrebate.com/author/sam-menard/"}'
 AUTHOR_RE = re.compile(r'"author":\s*\{\s*"@type":\s*"Organization",\s*"name":\s*"HomePowerRebate"(?:,\s*"url":\s*"[^"]*")?\s*\}')
 RATING_RE = re.compile(r',?\s*"aggregateRating":\s*\{[^{}]*\}|,?\s*"AggregateRating":\s*\{[^{}]*\}', re.I)
 TITLE_RE = re.compile(r"<title>(.*?)</title>", re.S)

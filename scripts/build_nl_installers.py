@@ -284,7 +284,7 @@ def build():
 {links}</ul>
 <h2>Common questions</h2>
 {kit.faq(d)}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}. Phone numbers are as printed by takeCHARGE; confirm details with the installer.</p>"""
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}. Phone numbers are as printed by takeCHARGE; confirm details with the installer.</p>"""
     w = kit.quality_gate(article, d, d["path"], loose_refs=True)
     trail = [("Home", "/"), (d["hub_name"], d["hub"]), (d["short"], d["path"])]
     lds = kit.ld_scripts([kit.article_ld(d["title"], d["desc"], iso, d["path"]), kit.breadcrumb_ld(trail, home_slash=True), kit.faq_ld(d)])

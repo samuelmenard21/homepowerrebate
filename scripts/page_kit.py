@@ -16,7 +16,7 @@ from status_pills import STATUS as _STATUS  # one status vocabulary site-wide
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://homepowerrebate.com"
-AUTHOR = {"@type": "Person", "@id": f"{BASE}/about#sam-menard", "name": "Sam Menard", "url": f"{BASE}/about"}
+AUTHOR = {"@type": "Person", "@id": f"{BASE}/about#sam-menard", "name": "Sam Menard", "url": f"{BASE}/author/sam-menard/"}
 
 
 def load_facts():

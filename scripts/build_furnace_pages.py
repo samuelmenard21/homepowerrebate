@@ -26,7 +26,7 @@ CSS = page_css()
 
 CHECKED = "October 3, 2026"
 ISO = "2026-10-03"
-AUTHOR = {"@type": "Person", "name": "Sam Menard", "url": f"{BASE}/about"}
+AUTHOR = {"@type": "Person", "name": "Sam Menard", "url": f"{BASE}/author/sam-menard/"}
 
 REGIONS = {
     "bc": {
@@ -256,7 +256,7 @@ def page(r):
     ]
     body = f"""<nav class="hpr-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/furnace-rebates/">Furnace rebates</a></li><li aria-current="page">{e(r['long'])}</li></ol></nav>
 <header class="hero"><div class="wrap"><h1>{e(r['h1'])}</h1>
-<p>Updated {r.get("checked", CHECKED)}. Written by <a href="/about" style="color:inherit;text-decoration:underline;">Sam Menard</a>.</p></div></header>
+<p>Updated {r.get("checked", CHECKED)}. Written by <a href="/author/sam-menard/" style="color:inherit;text-decoration:underline;">Sam Menard</a>.</p></div></header>
 <section class="body"><div class="wrap">
 <div style="background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;padding:18px 20px;margin-bottom:28px;"><p style="margin:0;"><b>Short answer:</b> {r['short']}</p></div>
 <h2>What rebates exist for heating and cooling in {e(r['name'])}?</h2>

@@ -566,7 +566,7 @@ def rewrite(path, slug_dir, title, desc, crumb, eyebrow, faqs, body, sub):
             t = t[:m.start()] + jld(d) + "\n" + t[m.end():]
     art = {"@context": "https://schema.org", "@type": "Article", "headline": title, "description": desc,
            "datePublished": pub, "dateModified": TODAY,
-           "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/about"},
+           "author": {"@type": "Person", "name": "Sam Menard", "url": "https://homepowerrebate.com/author/sam-menard/"},
            "publisher": {"@type": "Organization", "name": "HomePowerRebate", "url": "https://homepowerrebate.com"},
            "mainEntityOfPage": url}
     faq = {"@context": "https://schema.org", "@type": "FAQPage",
@@ -582,7 +582,7 @@ def rewrite(path, slug_dir, title, desc, crumb, eyebrow, faqs, body, sub):
     # body region
     s = t.index("<!-- CANONICAL-BREADCRUMB-END -->") + len("<!-- CANONICAL-BREADCRUMB-END -->")
     e = t.index("</article>") + len("</article>")
-    meta = f'<p class="post-meta meta">By <a href="/about" style="color:inherit;text-decoration:underline;">Sam Menard</a> &middot; Updated {TODAY_H}</p>'
+    meta = f'<p class="post-meta meta">By <a href="/author/sam-menard/" style="color:inherit;text-decoration:underline;">Sam Menard</a> &middot; Updated {TODAY_H}</p>'
     if 'class="post-header"' in t[s:e]:
         head = (f'\n\n<header class="post-header">\n  <div class="wrap">\n    <div class="post-eyebrow">{eyebrow or "Guide"}</div>\n'
                 f'    <h1>{esc(title)}</h1>\n    {meta}\n  </div>\n</header>\n\n<article>\n  <div class="wrap">\n')

@@ -23,7 +23,7 @@ def build(slug, d):
     nice = date.fromisoformat(d["updated"]).strftime("%B %-d, %Y")
     refs = ", ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>' for t, u in d["refs"])
     quote = f'<blockquote class="learn-quote">{d["quote"]}</blockquote>' if d.get("quote") else ""
-    article = f"""<p class="byline">By <a href="/about">Sam Menard</a> · {e(d["read"])} · Updated {nice}</p>
+    article = f"""<p class="byline">By <a href="/author/sam-menard/">Sam Menard</a> · {e(d["read"])} · Updated {nice}</p>
 {lk.quiz(slug, d["quiz"])}
 {lk.figure(d)}
 {lk.takeaways(d)}

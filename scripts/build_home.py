@@ -445,7 +445,7 @@ def trust_inner(regs):
       <p><b>{shut}</b>of them are closed, paused or on hold right now. We show them that way instead of hiding them, so you know what not to count on.</p>
       <p><b>$0</b>paid by any installer to be listed or to rank higher. We rank by Google reviews only, and our <a href="/installers/how-we-rank/">ranking page</a> will say so if that ever changes.</p>
     </div>
-    <p class="hm-founder">HomePowerRebate is independent. It is not run by a utility, an installer or a government. It was built by <a href="/about">Sam Menard</a>. Spot a mistake? <a href="/contact/">Tell us</a> and we will fix it.</p>
+    <p class="hm-founder">HomePowerRebate is independent. It is not run by a utility, an installer or a government. It was built by <a href="/author/sam-menard/">Sam Menard</a>. Spot a mistake? <a href="/contact/">Tell us</a> and we will fix it.</p>
 </div>'''
 
 

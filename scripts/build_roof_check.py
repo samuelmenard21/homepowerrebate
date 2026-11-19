@@ -155,7 +155,7 @@ page = f"""<!DOCTYPE html>
 <p>Google models your roof from aerial imagery. We take its panel count and yearly output, then apply published program rules for your province or state. Each rebate shows its source and the date we last read it. Where we have not verified a program, we say so and show no number.</p>
 <h2>Common questions</h2>
 {faq_html}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. See also the <a href="/calculator/">rebate calculator</a> and <a href="/solar-quote-checker/">solar quote checker</a>.</p>
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. See also the <a href="/calculator/">rebate calculator</a> and <a href="/solar-quote-checker/">solar quote checker</a>.</p>
 </main>
 {navfooter.render_footer("on", "", "", path)}
 <script>{js}</script>

@@ -55,7 +55,7 @@ def empower():
     body = f'''<section class="hero">
   <div class="wrap">
     <h1>EmPower+ New York 2026: Free or Half-Price Home Upgrades</h1>
-    <p>By <a href="/about">Sam Menard</a> &middot; Updated September 26, 2026</p>
+    <p>By <a href="/author/sam-menard/">Sam Menard</a> &middot; Updated September 26, 2026</p>
   </div>
 </section>
 

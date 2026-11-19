@@ -204,7 +204,7 @@ class Region:
 {kit.faq(d)}
 <h2>What to do next</h2>
 {d['next']}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}. <a href="{hub}">All {e(name)} rebates &rarr;</a>{(" " + pl) if pl else ""}</p>"""
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}. <a href="{hub}">All {e(name)} rebates &rarr;</a>{(" " + pl) if pl else ""}</p>"""
         bans = [((lambda a, b=b: re.search(b["if"], a) and not any(u in a for u in b.get("unless", []))), b["msg"]) for b in self.cfg.get("bans", [])]
         w = kit.quality_gate(article, d, path, bans)
         g = self.group_of.get(slug)
@@ -235,7 +235,7 @@ class Region:
         path = f"/{self.path}/{g}/"
         iso, when = kit.checked(d["facts"])
         article = (f'<div class="callout">{d["short"]}</div>\n' + kit.sections(d) + f"\n<h2>Common questions</h2>\n{kit.faq(d)}\n"
-                   f'<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}. <a href="/{self.path}/">All {e(self.name)} rebates &rarr;</a></p>')
+                   f'<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}. <a href="/{self.path}/">All {e(self.name)} rebates &rarr;</a></p>')
         w = kit.quality_gate(article, d, path, loose_refs=True, min_words=450)
         name = self.groups[g]["name"]
         trail = [("Home", "/"), (self.name, f"/{self.path}/"), (name, path)]
@@ -279,7 +279,7 @@ class Region:
         article = f"""{body}
 <h2>Common questions</h2>
 {kit.faq(d)}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}.</p>"""
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}.</p>"""
         w = kit.quality_gate(article, d, path, loose_refs=True, min_words=450)
         trail = [("Home", "/"), (self.name, path)]
         lds = kit.ld_scripts([kit.article_ld(d["title"], d["desc"], iso, path), kit.breadcrumb_ld(trail), kit.faq_ld(d)])

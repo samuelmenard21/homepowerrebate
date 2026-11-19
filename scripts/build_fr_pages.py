@@ -70,7 +70,7 @@ def build(d):
 {links}</ul>
 <h2>Questions fréquentes</h2>
 {faq}
-<p style="font-size:14px;">Par <a href="/about">Sam Menard</a>. Sources, lues le {when} : {sources}.</p>"""
+<p style="font-size:14px;">Par <a href="/author/sam-menard/">Sam Menard</a>. Sources, lues le {when} : {sources}.</p>"""
     w = ca.words(article)
     ext = {u for u in re.findall(r'href="(https?://[^"]+)"', article) if "homepowerrebate" not in u}
     problems = []

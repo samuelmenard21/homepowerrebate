@@ -27,7 +27,7 @@ def apply(slug):
         t = re.sub(pat, lambda m: m.group(1) + e(val), t, count=1)
     t = re.sub(r'(<li aria-current="page">).*?(</li>)', lambda m: m.group(1) + e(d["h1"]) + m.group(2), t, count=1)
     t = re.sub(r"(<section class=\"hero\">\s*<div class=\"wrap\">\s*)<h1>.*?</h1>\s*<p>.*?</p>", lambda m: m.group(1) + f"<h1>{e(d['h1'])}</h1>\n    <p>{d['lead']}</p>", t, count=1, flags=re.S)
-    body = f'<p class="byline">By <a href="/about">Sam Menard</a> · Updated {nice}</p>\n'
+    body = f'<p class="byline">By <a href="/author/sam-menard/">Sam Menard</a> · Updated {nice}</p>\n'
     body += "".join(f"<h2>{h}</h2>\n{b}\n" for h, b in d["sections"])
     if d.get("faq"):
         body += "<h2>Common questions</h2>\n" + "".join(f'<div class="faq-item"><h3>{e(q)}</h3><p>{a}</p></div>\n' for q, a in d["faq"])
@@ -36,7 +36,7 @@ def apply(slug):
     t = re.sub(r'(<article class="article">\s*<div class="wrap">).*?(</div>\s*</article>)', lambda m: m.group(1) + "\n" + body + "\n  " + m.group(2), t, count=1, flags=re.S)
     t = re.sub(r'<script type="application/ld\+json">\{[^<]*?"@type": ?"(?:Article|FAQPage)"[\s\S]*?</script>\s*', "", t)
     ld = [{"@context": "https://schema.org", "@type": "Article", "headline": d["h1"], "description": d["desc"], "datePublished": d.get("published", upd), "dateModified": upd,
-           "author": {"@type": "Person", "@id": f"{BASE}/about#sam-menard", "name": "Sam Menard", "url": f"{BASE}/about"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"},
+           "author": {"@type": "Person", "@id": f"{BASE}/about#sam-menard", "name": "Sam Menard", "url": f"{BASE}/author/sam-menard/"}, "publisher": {"@type": "Organization", "name": "HomePowerRebate"},
            "mainEntityOfPage": f"{BASE}/blog/{slug}/"}]
     if d.get("faq"):
         ld.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", html.unescape(a))}} for q, a in d["faq"]]})

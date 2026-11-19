@@ -50,7 +50,7 @@ def build(slug):
 {kit.callout(calc_url, calc_name, "/get-quotes/", "", near_you=True)}
 <h2>Common questions</h2>
 {kit.faq(d)}
-<p style="font-size:14px;">By <a href="/about">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}. <a href="/programs/">All rebate programs &rarr;</a></p>"""
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read {when}: {kit.sources(d)}. <a href="/programs/">All rebate programs &rarr;</a></p>"""
     w = kit.quality_gate(article, d, path, loose_refs=True, min_words=700)
     trail = [("Home", "/"), ("Rebate programs", "/programs/"), (d["short"], path)]
     lds = kit.ld_scripts([kit.article_ld(d["title"], d["desc"], iso, path), kit.breadcrumb_ld(trail), kit.faq_ld(d)])

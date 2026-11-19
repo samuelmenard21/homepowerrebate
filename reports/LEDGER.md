@@ -31,6 +31,7 @@ Rules:
 | 2026-11-18 | /blog/bc-hydro-product-rebates-appliances/ | bc hydro air fryer rebate, bc hydro rebates | 9.7 / 50 and 4.1 / 45, 0 clicks (Nov 11-14) | seo | Title now "BC Hydro Rebates 2026: $25 Air Fryer, Appliances, AC" (dropped "Free Thermostats" to fit the air fryer) | 2027-02-16 |
 | 2026-11-18 | /blog/heat-pump-brands-comparison-mitsubishi-daikin-bosch/ | bosch vs mitsubishi heat pump | 4.9 / 36, 0 clicks (Nov 11-14) | seo | Title "Bosch vs Mitsubishi Heat Pump 2026: Which Wins?" (was "(2026)") | 2027-02-16 |
 | 2026-11-18 | /installers/heat-pump/ | heat pump installers near me, heat pump installation near me | 17.8 / 56 and 44.2 / 80 (Nov 11-14; landed on city pages) | seo | Hub taken off noindex (`keep_indexed`); the 13 state hubs and all city ranking pages stay noindex. Back in the sitemap | 2027-02-16 |
+| 2026-11-19 | /programs/national-heat-pump-rebate/ | federal heat pump rebate 2026, canada federal heat pump rebate, heat pump rebate end date | pos 56 / 1 impr, pos 63 / 1 impr, pos 76 / 3 impr (Oct 9 to Nov 17); page avg pos 41, 112 impr, 0 clicks | seo | Retitled "Federal Heat Pump Rebate: $10,000 or $2,000 from Early 2027" (matches how people search; "National" dropped); meta rewritten; new FAQ "When does the federal heat pump rebate end?" from the Oct 9 releases (no end date published, up to 820,000 households over eight years) | 2027-02-17 |
 
 ## Open items for the next review (2026-11-09)
 - Read the 11-02 week as a baseline for the rows above. Recommend edits to them only if a page clearly fails to answer its query.

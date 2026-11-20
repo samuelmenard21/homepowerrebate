@@ -18,8 +18,8 @@ import page_kit as kit  # noqa: E402
 e = html.escape
 PATH = "/programs/national-heat-pump-rebate/do-i-qualify/"
 GUIDE = "/programs/national-heat-pump-rebate/"
-TITLE = "Federal Heat Pump Rebate: Do I Qualify? $10,000 or $2,000 Checker"
-DESC = "Find out if you get $10,000 or $2,000 from the federal heat pump rebate. Enter your province, household size and income; check fuel, ownership and install date."
+TITLE = "Federal Heat Pump Rebate Income Limits by Province (2026)"
+DESC = "Ottawa's income limit for the $10,000 federal heat pump rebate, by province and household size. Check your income, fuel and home in one minute."
 RELEASE = "https://www.canada.ca/en/environment-climate-change/news/2026/10/prime-minister-carney-announces-landmark-investment-to-retrofit-one-million-homes-cutting-energy-costs-and-emissions.html"
 CAMPAIGN = "https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html"
 PM = "https://www.pm.gc.ca/en/news/news-releases/2026/10/08/prime-minister-carney-announces-landmark-investment-retrofit-one"
@@ -97,6 +97,12 @@ CSS = """<style>
 .dq-form button{min-height:48px;padding:0 22px;font:inherit;font-weight:700;color:#fff;background:#a4540a;border:0;border-radius:8px;cursor:pointer}
 .dq-form button:hover{background:#8a4607}
 @media(min-width:720px){.dq-form{grid-template-columns:1fr 1fr}.dq-form .dq-wide{grid-column:1/-1}}
+.dq-tablewrap{margin:16px 0;overflow-x:auto;border:1px solid var(--card-rule);border-radius:12px;background:#fff}
+.dq-table{width:100%;min-width:560px;border-collapse:collapse;font-size:15px}
+.dq-table th,.dq-table td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--card-rule);white-space:nowrap}
+.dq-table th[scope=row],.dq-table thead th:first-child{text-align:left;white-space:normal;position:sticky;left:0;background:#fff}
+.dq-table thead th{background:#f6f0e6;font-size:14px}
+.dq-table tr:last-child th,.dq-table tr:last-child td{border-bottom:0}
 .dq-out{margin:22px 0}
 .dq-out[hidden]{display:none}
 .dq-verdict{padding:18px 20px;border-radius:var(--radius-card);color:var(--paper);background:linear-gradient(165deg,#0f5361,#08363f)}
@@ -120,7 +126,11 @@ def build():
     data = json.dumps({"rules": RULES, "provs": pl, "thr": thresholds(), "notyet": NOT_YET,
                        "pages": {"gas": "/blog/heat-pump-natural-gas-home-federal-rebate/", "rent": "/blog/federal-heat-pump-rebate-renters-condos-landlords/",
                                  "wait": "/blog/should-you-wait-federal-heat-pump-rebate/", "stack": "/blog/federal-heat-pump-rebate-stacking-by-province/"}}, ensure_ascii=False).replace("</", "<\\/")
-    article = f"""<p>Ottawa now says who gets the National Heat Pump Rebate: <b>$10,000</b> if your after-tax household income is at or below your province's line for your household size, <b>$2,000</b> if it is above. Gas, oil, propane, electric and wood homes can all apply, and so can a rental property you own. Answer the questions below to see your tier. The portal opens in early 2027, and Ottawa says the rules can still change, so check the date we last read its page.</p>
+    th = thresholds()
+    limits_table = ('<div class="dq-tablewrap" tabindex="0" role="region" aria-label="Income limits by province and household size"><table class="dq-table"><thead><tr><th scope="col">Province or territory</th>'
+                    + "".join(f'<th scope="col">{h}</th>' for h in ("1 person", "2 people", "3 people", "4 people", "5 or more")) + "</tr></thead><tbody>"
+                    + "".join(f'<tr><th scope="row">{e(n)}</th>' + "".join(f"<td>${v:,}</td>" for v in vals) + "</tr>" for n, vals in th.items()) + "</tbody></table></div>")
+    article = f"""<p>Ottawa now says who gets the National Heat Pump Rebate who gets the National Heat Pump Rebate: <b>$10,000</b> if your after-tax household income is at or below your province's line for your household size, <b>$2,000</b> if it is above. Gas, oil, propane, electric and wood homes can all apply, and so can a rental property you own. Answer the questions below to see your tier. The portal opens in early 2027, and Ottawa says the rules can still change, so check the date we last read its page.</p>
 <h2 id="check">Check your home</h2>
 <form class="dq-form" id="dq-form">
 <div><label for="dq-prov">Where is your home?</label><select id="dq-prov" required><option value="">Choose your province</option>{opts}</select></div>
@@ -133,6 +143,10 @@ def build():
 </form>
 <div class="dq-out" id="dq-out" hidden aria-live="polite"></div>
 <!-- FED-ALERT-HERE -->
+<h2 id="limits">Income limits by province and household size</h2>
+<p>Ottawa's table shows median after-tax household income in 2025 dollars (Statistics Canada 2021, adjusted for inflation). If your after-tax household income is equal to or less than the number for your province or territory and household size, the rebate is up to $10,000. Above it, $2,000. Add line 23600 minus line 43500 of your 2025 return, plus a spouse's or common-law partner's.</p>
+{limits_table}
+<p>Source: <a href="{CAMPAIGN}" rel="noopener" target="_blank">Government of Canada, National Heat Pump Rebate</a>. Saskatchewan's number for 5 or more people is lower than for 4 people as Ottawa posted it. The rules can still change.</p>
 <h2 id="said">What Ottawa has said</h2>
 <ul>{said}</ul>
 <p>These points come from the Government of Canada's <a href="{CAMPAIGN}" rel="noopener" target="_blank">campaign page</a>, which we re-read in full on November 19, 2026, and the <a href="{RELEASE}" rel="noopener" target="_blank">October 8 news release</a>. The approval and payment timings in the release (24 hours and five days) are not repeated on the campaign page.</p>
@@ -188,7 +202,7 @@ def main():
     article = build()
     trail = [("Home", "/"), ("Programs", "/programs/"), ("National Heat Pump Rebate", GUIDE), ("Do I qualify?", PATH)]
     lds = kit.ld_scripts([kit.article_ld(TITLE, DESC, "2026-11-20", PATH, published="2026-10-22"), kit.breadcrumb_ld(trail, home_slash=True), kit.faq_ld({"faq": FAQ})])
-    hero = {"badge": "$10,000 or $2,000", "h1": "Do I Qualify for the Federal Heat Pump Rebate?",
+    hero = {"badge": "$10,000 or $2,000", "h1": "Federal Heat Pump Rebate Income Limits: Do I Qualify?",
             "lead": "Enter your province, household size and income to see your tier, then check your fuel, ownership and install date."}
     kit.write_page(PATH, TITLE, DESC, lds, navfooter.render_nav("", ""), kit.breadcrumb(trail), kit.hero(hero), None, article,
                    navfooter.render_footer("", "", "", PATH), extra_css=CSS)

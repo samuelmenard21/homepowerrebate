@@ -219,7 +219,7 @@ def hp_furnace_30():
             tile(60, 280, 960, 520, TEAL, CREAM, 118, words=True, html="Most people replace heat <em>after</em> it breaks \U0001F4A5", rot=-1),
             sticker(150, 870, "8 in 10, says Ottawa", "cream", 50, 3, 0.9)]},
         {"at": 5.5, "end": 9.5, "theme": "dark", "items": [
-            tile(60, 260, 960, 330, CREAM, TEAL, 104, words=True, html="Ottawa just announced a <em>heat pump</em> rebate", rot=1),
+            tile(60, 260, 960, 330, CREAM, TEAL, 90, words=True, html="Ottawa just announced a <em>heat pump</em> rebate", rot=1),
             tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your income is at or below your province's limit", rot=1.5, delay=0.5),
             tile(552, 640, 468, 440, TAN, "#7a4a00", 56, font="sans", center=True, html="<b>$2,000</b> for other homes", rot=-1.5, delay=0.7)]},
         {"at": 9.5, "end": 13.5, "theme": "light", "items": [
@@ -250,7 +250,7 @@ def hp_cold_air_15():
             tile(60, 280, 960, 520, TEAL, CREAM, 118, words=True, html="It doesn't make heat. It <em>moves</em> it \U0001F69A", rot=-1),
             sticker(160, 870, "like a fridge, but backwards \U0001F9CA", "cream", 46, 3, 0.9)]},
         {"at": 6.0, "end": 10.5, "theme": "dark", "items": [
-            tile(60, 270, 960, 420, AMBER, "#fff", 112, words=True, html="Homes on oil, propane or plain electric heat save over <em>$1,400</em> a year", rot=1),
+            tile(60, 270, 960, 460, AMBER, "#fff", 84, words=True, html="Homes on oil, propane or plain electric heat save over <em>$1,400</em> a year", rot=1),
             sticker(150, 760, "average, says Ottawa", "cream", 48, -3, 0.9)]},
         _fed_cta(10.5, 15.0, h["foot"], "Ottawa will help pay. Hear <em>first</em>? \U0001F4EC")]}
 
@@ -275,7 +275,7 @@ def hp_cold_air_30():
             tile(60, 280, 960, 440, CREAM, TEAL, 118, words=True, html="Even when it's <em>freezing</em> outside \U0001F976", rot=1),
             sticker(110, 800, "pick a model made for cold winters", "cream", 44, -3, 0.8)]},
         {"at": 18.0, "end": 22.0, "theme": "dark", "items": [
-            tile(60, 260, 960, 440, AMBER, "#fff", 108, words=True, html="Oil, propane or plain electric heat? Save over <em>$1,400</em> a year", rot=1),
+            tile(60, 260, 960, 440, AMBER, "#fff", 92, words=True, html="Oil, propane or plain electric heat? Save over <em>$1,400</em> a year", rot=1),
             sticker(150, 780, "on average, says Ottawa", "cream", 48, -3, 0.9)]},
         {"at": 22.0, "end": 26.0, "theme": "light", "items": [
             tile(60, 260, 960, 330, "#ffffff", TEAL, 100, words=True, html="And Ottawa will <em>help pay</em> \U0001F4B5"),
@@ -307,10 +307,10 @@ def hp_explainer_60():
             tile(60, 280, 960, 440, "#ffffff", TEAL, 118, words=True, html="Even when it's <em>freezing</em> out \U0001F976"),
             sticker(110, 800, "pick a model made for cold winters", "teal", 46, -3, 0.8)]},
         {"at": 14.0, "end": 18.5, "theme": "dark", "items": [
-            tile(60, 260, 960, 470, AMBER, "#fff", 108, words=True, html="Oil, propane or plain electric heat? Save over <em>$1,400</em> a year", rot=1),
+            tile(60, 260, 960, 470, AMBER, "#fff", 92, words=True, html="Oil, propane or plain electric heat? Save over <em>$1,400</em> a year", rot=1),
             sticker(150, 800, "on average, says Ottawa", "cream", 50, -3, 0.9)]},
         {"at": 18.5, "end": 23.0, "theme": "light", "items": [
-            tile(60, 260, 960, 330, "#ffffff", TEAL, 100, words=True, html="That's why Ottawa made a <em>national</em> rebate \U0001F341"),
+            tile(60, 260, 960, 330, "#ffffff", TEAL, 86, words=True, html="That's why Ottawa made a <em>national</em> rebate \U0001F341"),
             tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your income is at or below your province's limit", rot=1.5, delay=0.5),
             tile(552, 640, 468, 440, TAN, "#7a4a00", 56, font="sans", center=True, html="<b>$2,000</b> for other eligible homes", rot=-1.5, delay=0.7)]},
         {"at": 23.0, "end": 27.5, "theme": "dark", "items": [
@@ -424,8 +424,36 @@ BENTO = {"ns-harp-status-6": ns_harp_status_6, "ns-harp-status-15": ns_harp_stat
          "nl-oil-15": nl_oil_15, "nl-oil-30": nl_oil_30}
 
 
+# Photos behind each scene (faceless style, 2026-11-20): free-licence house, kitchen and thermostat photos from assets/learn (credits in data/learn-photos.json),
+# no people. One name per scene; a slow zoom and a colour shade keep the white and cream cards readable on top of them.
+PHOTO_POOL = ["living-room", "heat-pump-house", "duplex-home", "thermostat", "kitchen", "modern-home", "heat-pump-house", "living-room"]
+PHOTOS = {"hp-furnace-15": ["living-room", "kitchen", "heat-pump-house", "modern-home"],
+          "hp-cold-air-15": ["heat-pump-house", "kitchen", "duplex-home", "modern-home"]}
+
+
+def add_photos(name, spec):
+    """Give every scene a background photo: the list in PHOTOS, else a rotation through PHOTO_POOL that always ends on the house shot behind the call to action."""
+    sc = spec["scenes"]
+    names = PHOTOS.get(name) or [PHOTO_POOL[i % len(PHOTO_POOL)] for i in range(len(sc))]
+    names = list(names) + [names[-1]] * (len(sc) - len(names))
+    for s, p in zip(sc, names):
+        s.setdefault("photo", p)
+    sc[-1]["photo"] = "modern-home"
+    return spec
+
+
+def check_fit(name):
+    """Draw every scene of a video near its end and report text that overflows, items off the frame and overlapping cards (scripts/video/check_fit.js)."""
+    spec = add_photos(name, BENTO[name]()) if name.startswith("hp-") else BENTO[name]()
+    tmp = Path(tempfile.mkdtemp(prefix="hpr-fit-"))
+    (tmp / "spec.json").write_text(json.dumps(spec))
+    r = subprocess.run(["node", str(ROOT / "scripts/video/check_fit.js"), str(tmp / "spec.json"), str(tmp / "scenes"), str(ROOT)])
+    print("scene pictures in", tmp / "scenes")
+    return r.returncode
+
+
 def build_bento(name):
-    spec = BENTO[name]()
+    spec = add_photos(name, BENTO[name]()) if name.startswith("hp-") else BENTO[name]()
     out_dir = ROOT / "videos"
     out_dir.mkdir(exist_ok=True)
     tmp = Path(tempfile.mkdtemp(prefix="hpr-bento-"))
@@ -479,7 +507,9 @@ def build(name, keep=False):
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    if args and args[0] in BENTO:
+    if args and args[0] in BENTO and "--check" in sys.argv:
+        sys.exit(check_fit(args[0]))
+    elif args and args[0] in BENTO:
         build_bento(args[0])
     elif args and args[0] in VIDEOS:
         build(args[0], keep="--keep" in sys.argv)

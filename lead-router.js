@@ -354,11 +354,42 @@ async function handleFetch(request, env, ctx) {
     if (path === '/alert/seen') return handleAlertSeen(request, env);
     if (path === '/quiz/stat') return handleQuizStat(request, env);
     if (path === '/estimate-lead') return handleEstimateLead(request, env);
+    if (path === '/admin/send') return handleAdminSend(request, env);
     if (path === '/outcomes/submit') return handleOutcomeSubmit(request, env);
     if (path === '/contact') return handleContactSubmit(request, env);
     if (path === '/installer-survey') return handleInstallerSurvey(request, env);
 
     return jsonResponse({ error: `Unknown route: ${path}` }, 404);
+}
+
+// ===========================================================================
+// ROUTE — /admin/send (operator only): one personal note from hello@.
+// Needs the ADMIN_SEND_TOKEN secret as a Bearer token. Body: { to, subject, text }.
+// ===========================================================================
+async function handleAdminSend(request, env) {
+  if (request.method !== 'POST') return jsonResponse({ error: 'POST only' }, 405);
+  const auth = request.headers.get('Authorization') || '';
+  if (!env.ADMIN_SEND_TOKEN || auth !== `Bearer ${env.ADMIN_SEND_TOKEN}`) {
+    return jsonResponse({ error: 'Unauthorized' }, 401);
+  }
+  let p;
+  try { p = await request.json(); } catch (e) { return jsonResponse({ error: 'Invalid JSON' }, 400); }
+  const to = String(p.to || '').trim();
+  const subject = String(p.subject || '').trim();
+  const text = String(p.text || '').trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to) || !subject || !text) {
+    return jsonResponse({ error: 'Need to, subject and text' }, 400);
+  }
+  const paras = text.split(/\n\s*\n/).map(par => `<p style="margin:0 0 14px;">${escapeHtml(par).replace(/\n/g, '<br>')}</p>`).join('');
+  const html = `<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:15px;line-height:1.6;color:#0a2a2e;">${paras}</div>`;
+  await resendEmail(env.RESEND_API_KEY, {
+    from: 'HomePowerRebate <hello@homepowerrebate.com>',
+    to,
+    subject,
+    html,
+    reply_to: 'hello@homepowerrebate.com'
+  });
+  return jsonResponse({ success: true }, 200);
 }
 
 // ===========================================================================

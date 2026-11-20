@@ -30,17 +30,18 @@ EMBED = "/embed/federal-heat-pump-rebate/"
 QUALIFY = "/programs/national-heat-pump-rebate/do-i-qualify/"
 GUIDE = "/programs/national-heat-pump-rebate/"
 RELEASE = "https://www.canada.ca/en/environment-climate-change/news/2026/10/prime-minister-carney-announces-landmark-investment-to-retrofit-one-million-homes-cutting-energy-costs-and-emissions.html"
-CHECKED = "October 9, 2026"   # when federal-0 to federal-3 were last read (verified_on)
+CHECKED = "November 19, 2026"   # when federal-0 to federal-3 were last read (verified_on)
 PROVS = [("bc", "British Columbia"), ("on", "Ontario"), ("ab", "Alberta"), ("sk", "Saskatchewan"), ("mb", "Manitoba"), ("qc", "Quebec"), ("nb", "New Brunswick"),
          ("ns", "Nova Scotia"), ("pe", "Prince Edward Island"), ("nl", "Newfoundland and Labrador"), ("yt", "Yukon"), ("nt", "Northwest Territories")]
 
-SAID = ["Up to $10,000 for households below the median income, and $2,000 for other eligible homeowners.",
-        "Applications are expected to open in early 2027. They are not open yet.",
-        "Installs from November 1, 2026 can apply once the portal opens. Ottawa says full details will be published as of November 1, 2026.",
-        "One rebate per person, and the heat pump must be on the Eligible Products List.",
+SAID = ["$10,000 if your after-tax household income is at or below your province's line for your household size, and $2,000 above it. Incomes are checked by the Canada Revenue Agency when you apply.",
+        "Applications are expected to open in early 2027. They are not open yet. The program closes in March 2034.",
+        "Installs from November 1, 2026 can apply once the portal opens. Receipts must be sent within 6 months.",
+        "You must own the home (a rental property you own counts). Natural gas, oil, propane, electric, diesel, coal and wood homes can all apply. One rebate per household.",
+        "The heat pump must be on the eligible product list (by AHRI number), bought from and installed by an HVAC contractor, and heat the whole home.",
         "It can be combined with provincial programs. Each program has its own rules."]
-NOT_YET = ["The income line that decides $10,000 or $2,000", "Which home types and heating fuels qualify, including natural gas", "The exact launch date, and whether anything installed before November 1, 2026 counts"]
-STEPS = "Ottawa's plan, as reported by CBC from the government document: apply in an online portal, get approval within 24 hours, buy and install an approved heat pump, upload receipts, payment within five days. No energy audit before or after."
+NOT_YET = ["Changes: Ottawa says the rules are still being finalized and uses the rules in force on your install date", "Anything installed before November 1, 2026 (the page does not mention it)", "Rented or leased heat pumps (may be eligible after launch, details later)"]
+STEPS = "Ottawa's steps: buy and install a listed heat pump through an HVAC contractor, apply in the online portal in early 2027 (the Canada Revenue Agency checks income with your Social Insurance Number), and send receipts within 6 months. No energy audit before or after."
 
 
 def province_data():
@@ -83,7 +84,7 @@ body{{margin:0;padding:10px;font-family:'Inter Tight',system-ui,sans-serif;color
 </style></head><body>
 <div class="fe"><span class="fe-badge">Opens early 2027</span>
 <h1>Ottawa's new heat pump rebate</h1>
-<p><b class="amt">Up to $10,000</b> for households below the median income. <b class="amt">$2,000</b> for other eligible homeowners.</p>
+<p><b class="amt">Up to $10,000</b> at or below your province's income line. <b class="amt">$2,000</b> above it.</p>
 <ul>{"".join(f"<li>{e(t)}</li>" for t in SAID[1:])}</ul>
 <p><a id="q" href="{BASE}{QUALIFY}" target="_blank" rel="noopener">Check what Ottawa has said about your home</a></p>
 <form id="f"><label for="em" style="position:absolute;left:-9999px">Email</label><input id="em" type="email" required autocomplete="email" placeholder="Your email"><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">Email me when it opens</button></form>
@@ -158,10 +159,10 @@ def sheet_article(pdata):
 <article class="ps-sheet">
 <div class="ps-head"><div><h2>The federal heat pump rebate: what we know</h2><p>Information checked {CHECKED}. Applications are not open yet.</p></div>
 <div class="ps-by" id="ps-by" hidden><span class="ps-small">Prepared for you by</span><b id="o-name"></b><span id="o-phone"></span><br><span id="o-email"></span><br><span id="o-site"></span></div></div>
-<div class="ps-amts"><div class="ps-amt"><b>Up to $10,000</b>Households below the median income</div><div class="ps-amt"><b>$2,000</b>Other eligible homeowners</div></div>
+<div class="ps-amts"><div class="ps-amt"><b>Up to $10,000</b>At or below the province's income line</div><div class="ps-amt"><b>$2,000</b>Above the income line</div></div>
 <h2>What Ottawa has said</h2><ul>{said}</ul>
 <p class="ps-small">{e(STEPS)}</p>
-<h2>What Ottawa has not said yet</h2><ul>{notyet}</ul>
+<h2>What can still change</h2><ul>{notyet}</ul>
 <h2 id="o-prov-h">Open today for a heat pump</h2>
 <div id="o-prov"><p class="ps-small">Pick a province above to list the heat pump rebates that are open today there.</p></div>
 <h2>What to do now</h2><ul><li>Find out what heats your home today and what your heat pump options are.</li><li>If your system fails before launch, keep every invoice. Ottawa says installs from November 1, 2026 can apply once the portal opens. It has said nothing about earlier installs.</li><li>Get the launch alert and check your home at homepowerrebate.com{QUALIFY}</li></ul>
@@ -205,7 +206,7 @@ def kit_article():
     snippet = (f'<iframe src="{BASE}{EMBED}?p=YOUR-NAME" title="Federal heat pump rebate" width="100%" height="560" '
                'style="max-width:580px;border:0;" loading="lazy"></iframe>\n'
                f'<p><a href="{BASE}{GUIDE}">Federal heat pump rebate guide by HomePowerRebate</a></p>')
-    blurb = ("Ottawa has announced a new heat pump rebate: up to $10,000 for households below the median income and $2,000 for other eligible homeowners, "
+    blurb = ("Ottawa has announced a new heat pump rebate: up to $10,000 at or below your province's income line and $2,000 above it, "
              "with applications expected to open in early 2027. The income line, home types and fuels that qualify have not been published yet. "
              f"If you are thinking about a heat pump, you can check what Ottawa has said about your home and get one email the day applications open at {BASE}{QUALIFY}?src=partner-YOUR-NAME")
     return f"""<p>Ottawa announced a new heat pump rebate on October 8, 2026. Your customers, members and clients will ask about it. This kit gives you something accurate to hand them, with your name on it, and it changes by itself when Ottawa publishes the rules. Everything is free to use.</p>
@@ -217,7 +218,7 @@ def kit_article():
 <h3>Preview</h3>
 <iframe id="k-prev" src="{EMBED}" title="Federal heat pump rebate preview" width="100%" height="560" style="max-width:580px;border:1px solid #d9d0c1;border-radius:12px;" loading="lazy"></iframe>
 <h2 id="sheet">2. Print a one-page sheet with your name on it</h2>
-<p>A single page you can print or save as a PDF. It shows what Ottawa has said and has not said, and lists the heat pump rebates that are open today in your province. Type your business name and contact details into the sheet. They stay in your browser; nothing is sent to us.</p>
+<p>A single page you can print or save as a PDF. It shows what Ottawa has said and what can still change, and lists the heat pump rebates that are open today in your province. Type your business name and contact details into the sheet. They stay in your browser; nothing is sent to us.</p>
 <p><a class="btn" href="{SHEET}"><b>Make my sheet</b></a></p>
 <h2 id="email">3. Send it in your newsletter or email</h2>
 <p>Copy and paste this. It states only what Ottawa has published.</p>
@@ -225,7 +226,7 @@ def kit_article():
 <p><button type="button" id="k-copy2" style="min-height:44px;font:inherit;font-weight:700;padding:10px 20px;color:#fff;background:#a4540a;border:0;border-radius:8px;cursor:pointer">Copy text</button> <span id="k-done2" role="status"></span></p>
 <h2 id="rules">What we ask, and what we do not</h2>
 <ul><li>Keep the small credit link under the card. It is a normal link.</li>
-<li>Do not tell people they qualify. Ottawa has not published who does. The card and sheet say so, and so should you.</li>
+<li>Do not promise a rebate amount. Ottawa says the rules can still change, and the $10,000 tier depends on the customer's household income. Point them to the income table and the official page.</li>
 <li>We never sell or share the emails people enter. They get messages about this rebate only.</li>
 <li>Being in this kit never changes where an installer ranks. Installers are ranked by Google reviews only.</li></ul>
 <h2 id="track">How you see what works</h2>
@@ -249,7 +250,7 @@ def kit_article():
 FAQ = [("Is this free?", "Yes. The card, the sheet and the email text are free to use. We ask you to keep the small credit link under the card."),
        ("Will the card update when Ottawa publishes the rules?", "Yes. The card is loaded from our site, so when we update it, every site that shows it updates. You do not change anything."),
        ("Does the sheet send my details to HomePowerRebate?", "No. What you type into the sheet stays in your browser and in the page link. Nothing is stored on our side."),
-       ("Can I say my customers qualify?", "No. Ottawa has not published the income line, home types or heating fuels that qualify. The materials say so. Please say the same."),
+       ("Can I say my customers qualify?", "Say what Ottawa publishes: owners of homes heated by gas, oil, propane, electricity or wood can apply, with $10,000 at or below the income line for the province and household size and $2,000 above it. Do not promise an amount. Ottawa says rules can still change and the portal is not open."),
        ("Can I use the sheet for a province that is not listed?", "The sheet lists the twelve provinces and territories where we have verified the open heat pump rebates. For another place, leave the province blank and the sheet still shows what Ottawa has said.")]
 
 

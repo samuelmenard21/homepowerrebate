@@ -11,8 +11,8 @@ import regions  # noqa: E402
 from build_get_quotes import city_slugs  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-FEDERAL = ("- Canada (federal) — National Heat Pump Rebate announced Oct 8, 2026: up to $10,000 below the median income, $2,000 otherwise, "
-           "launch expected early 2027, eligibility rules not yet published. /programs/national-heat-pump-rebate/ and guides at "
+FEDERAL = ("- Canada (federal) — National Heat Pump Rebate announced Oct 8, 2026: $10,000 at or below the province's after-tax income line, $2,000 above it, "
+           "gas, oil, propane, electric and wood homes can apply, installs from Nov 1, 2026 count, portal opens early 2027, closes March 2034. /programs/national-heat-pump-rebate/ and guides at "
            "/blog/should-you-wait-federal-heat-pump-rebate/, /blog/federal-heat-pump-rebate-stacking-by-province/")
 
 

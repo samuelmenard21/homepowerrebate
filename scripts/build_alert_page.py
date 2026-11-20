@@ -7,8 +7,7 @@ submit handler, share row and analytics events work unchanged. Design lives in _
 under .ap). noindex, follow: the full guide (/programs/national-heat-pump-rebate/) is the page that should rank; this one
 would only compete with it. Links shared from here carry ?src=, so the weekly report (federal_alert_report.py) shows what works.
 Copy is Grade 6 and states only what data/verified-facts/federal.json says (federal-0 amounts and date, federal-2 steps,
-federal-3 stacking, the $1,400 savings line in federal-0's eligibility). Never add retroactivity, an income line or a date
-before Ottawa does. The video comes from data/youtube-embeds.json (id bU26pKKzwQg's 60 second sibling, see that file).
+federal-3 stacking, the $1,400 savings line in federal-0's eligibility). Updated 2026-11-20 from federal-0, -1, -6, -7 (Canada.ca page read 2026-11-19). The video comes from data/youtube-embeds.json (id bU26pKKzwQg's 60 second sibling, see that file).
 Usage: python3 scripts/build_alert_page.py, then python3 scripts/post_steps.py and python3 scripts/build_og_cards.py --only heat-pump-rebate-alert"""
 import html
 import json
@@ -24,7 +23,7 @@ import page_kit as kit  # noqa: E402
 
 PATH = "/heat-pump-rebate-alert/"
 TITLE = "Up to $10,000 for a Heat Pump: Get an Email the Day It Opens"
-DESC = "Ottawa's new heat pump rebate opens in early 2027: up to $10,000 below the median income, $2,000 for other homeowners. Get one email the day applications open."
+DESC = "Ottawa's new heat pump rebate opens in early 2027: $10,000 at or below your province's income line, $2,000 above it. Get one email the day applications open."
 OTTAWA = fed.OTTAWA
 RELEASE = "https://www.canada.ca/en/environment-climate-change/news/2026/10/prime-minister-carney-announces-landmark-investment-to-retrofit-one-million-homes-cutting-energy-costs-and-emissions.html"
 VIDEO_ID = "gsgLyL0gCH0"
@@ -72,7 +71,7 @@ def hero():
             '<h1>Up to $10,000 for a heat pump. <span>Be first in line.</span></h1>'
             "<p class=\"ap-lead\">Ottawa is bringing in a new heat pump rebate in early 2027. Put in your email and we'll tell you the day it opens.</p>"
             '<ul class="ap-stats">'
-            + stat("house-dollar", "<small>Up to</small>$10,000", "if your household earns below the median income", "is-lead")
+            + stat("house-dollar", "<small>Up to</small>$10,000", "if your after-tax household income is at or below your province's line", "is-lead")
             + stat("coins", "<small>Other homeowners</small>$2,000", "if you qualify")
             + '</ul>'
             '<ul class="ap-trust">'
@@ -83,16 +82,16 @@ def hero():
 
 
 def steps():
-    cards = [("laptop", "Apply online", "when your heating breaks or gets old"),
-             ("clock-check", "Approved in 24 hours", "no home energy audit needed"),
-             ("bank", "Payment approved in 5 days", "sent by direct deposit after you upload receipts")]
+    cards = [("laptop", "Install a listed heat pump", "from November 1, 2026 can apply once the portal opens"),
+             ("clock-check", "Apply online in early 2027", "the CRA checks your income with your SIN"),
+             ("bank", "Send receipts within 6 months", "no home energy audit needed")]
     li = "".join(f'<li class="ap-step"><span class="ap-step-n" aria-hidden="true">{i}</span>{icon(ic, "ap-step-ico")}<h3>{e(h)}</h3><p>{e(b)}</p></li>'
                  for i, (ic, h, b) in enumerate(cards, 1))
     return ('<section class="ap-band" aria-labelledby="ap-how"><div class="ap-wrap"><div class="ap-head"><p class="ap-eyebrow">The plan so far</p>'
-            '<h2 id="ap-how">How Ottawa says it will work</h2><p>These are plans from the announcement, not final rules. '
-            "Who qualifies, which homes and which heating fuels count are not published yet.</p></div>"
+            '<h2 id="ap-how">How Ottawa says it will work</h2><p>Ottawa says the rules can still change. '
+            "Gas, oil, propane, electric and wood homes can apply, and so can a rental property you own.</p></div>"
             f'<ol class="ap-steps">{li}</ol>'
-            f'<p class="ap-source">Source: <a class="ap-link" href="{RELEASE}" rel="noopener" target="_blank">Government of Canada announcement, October 8, 2026{icon("ext", "ap-ext")}</a></p></div></section>')
+            f'<p class="ap-source">Source: <a class="ap-link" href="https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html" rel="noopener" target="_blank">Government of Canada campaign page, read November 19, 2026{icon("ext", "ap-ext")}</a></p></div></section>')
 
 
 def video():
@@ -104,7 +103,7 @@ def video():
 def emails():
     items = [("mail", "A quick hello now", "So you know it worked."),
              ("bell", "One email the day applications open", "So you can apply right away, not weeks later."),
-             ("doc", "One email when Ottawa says who gets $10,000", "When the income line is published.")]
+             ("doc", "One email if the rules or income line change", "Ottawa says they can still change.")]
     li = "".join(f'<li class="ap-card">{icon(ic, "ap-card-ico")}<h3>{e(h)}</h3><p>{e(b)}</p></li>' for ic, h, b in items)
     return ('<section class="ap-band ap-band-warm" aria-labelledby="ap-emails"><div class="ap-wrap ap-split">'
             '<div class="ap-split-copy"><p class="ap-eyebrow">What you will get</p><h2 id="ap-emails">Three emails. That is all.</h2>'

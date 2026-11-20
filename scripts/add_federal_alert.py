@@ -13,7 +13,7 @@ The form posts to the lead router's /alert route (table `alerts`, schema-alerts.
 plain HTML from block(), styles are .fed-alert in _partials/nav-footer.html, and the submit handler sits once in the same partial's
 SHARED JS (stamped on every page), so a change to the box is one edit here or there, never per page. Which pages get it, with
 what words and where, is the JOBS table in main(). Wording states only what data/verified-facts/federal.json says: amounts, early 2027,
-and that the income line is not published. Never add retroactivity or a launch date until an official page states it.
+retroactivity from November 1, 2026 and the March 2034 close (facts federal-0, -1, -6, -7, re-read 2026-11-19). Ottawa says the rules can still change.
 The block sits between FED-ALERT-START/END, so re-runs replace it. Placement: right after the FED-HP callout when a page has
 one (add_federal_links.py), otherwise before the second <h2> of the article, so readers get the first answer first.
 Usage: python3 scripts/add_federal_alert.py"""
@@ -47,10 +47,10 @@ NAMES = {"st-albert": "St. Albert", "fort-st-john": "Fort St. John", "fort-mcmur
 # rebate to what the reader came for. Grade-6 words. Only claims from data/verified-facts/federal.json (amounts, early 2027,
 # stacking, $1,400 savings, $2 billion). Redesigned 2026-10-17: the headline used to change per page and never said "heat pump".
 # What a signup gets, shown as a list right above the email field (the promise the confirmation email and the list keep).
-GETS = ["Launch-day email, with what to do first", "Who qualifies for the $10,000, once Ottawa says",
+GETS = ["Launch-day email, with what to do first", "Any change to the rules or the income line",
         "A short hello now, so you know it worked"]
 HEADLINE = "Canada\u2019s new heat pump rebate is worth up to $10,000. Get an email the day it opens"
-FEDERAL = "Applications are not open yet. Ottawa says they open in early 2027, and that you can add this rebate on top of provincial ones."
+FEDERAL = "Applications are not open yet. Ottawa says they open in early 2027, installs from November 1, 2026 can apply, and you can add this rebate on top of provincial ones."
 CITY = "Ottawa says you can add it on top of provincial rebates like the ones on this page."
 HARP = ("Getting the heating rebate? A bigger one is coming. Ottawa says homes that switch off oil, propane or electric "
         "baseboard heat save over $1,400 a year on average.")
@@ -81,9 +81,9 @@ BLOG_TOPIC = re.compile(r"heat-pump|cleanbc|federal|greener|canada|provinces|hpc
                         r"rebate-rejected|insulation-rebates|alberta-100|alberta-16|ranked|newfoundland|stack-bc-hydro|energy-saving-ideas")
 
 
-# How Ottawa says it will work (fact federal-2: canada.ca release, direct deposit per CBC's reading of the government document)
-STEPS = [("Apply online", "when your heating breaks or gets old"), ("Approved in 24 hours", "no home energy audit needed"),
-         ("Payment approved in 5 days", "sent by direct deposit after you upload receipts")]
+# How Ottawa says it will work (facts federal-1 and federal-2: the Canada.ca campaign page, re-read 2026-11-19)
+STEPS = [("Install a listed heat pump", "from November 1, 2026 can apply"), ("Apply online in early 2027", "income checked with the CRA"),
+         ("Send receipts in 6 months", "no home energy audit needed")]
 
 
 _STACK = None
@@ -186,7 +186,7 @@ def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=F
             f'<span class="fed-alert-off">Official page: <a href="{OTTAWA}">canada.ca</a></span></p>') if more else ""
     steps = ""
     if big:
-        steps = ('<p class="fed-alert-steps-h">How Ottawa says it will work (plans, not final rules)</p><ol class="fed-alert-steps">'
+        steps = ('<p class="fed-alert-steps-h">How Ottawa says it will work (rules can still change)</p><ol class="fed-alert-steps">'
                  + "".join(f"<li><b>{html.escape(a)}</b> {html.escape(b)}</li>" for a, b in STEPS) + "</ol>")
     pre, post = ('<div class="hp-fed-wrap">', "</div>") if wrap else ("", "")
     how = f'<div class="fed-alert-how">{steps}{link}</div>' if steps or link else ""
@@ -194,8 +194,8 @@ def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=F
             '<div class="fed-alert-left"><div class="fed-alert-main">'
             f'<div class="fed-alert-head">{UNIT}<p class="fed-alert-title">{html.escape(HEADLINE).replace("heat pump rebate", "<em>heat pump rebate</em>")}</p></div>'
             f'<p class="fed-alert-body">{html.escape(lead)}</p>'
-            '<dl class="fed-alert-amounts"><div><dt>Up to $10,000</dt><dd>if your household earns below the median income</dd></div>'
-            '<div><dt>$2,000</dt><dd>for other homeowners who qualify</dd></div></dl></div>'
+            '<dl class="fed-alert-amounts"><div><dt>Up to $10,000</dt><dd>if your after-tax income is at or below your province\'s line</dd></div>'
+            '<div><dt>$2,000</dt><dd>for other eligible homeowners, above the line</dd></div></dl></div>'
             f'{stack(province)}</div>'
             f'{stub(sel, data, share_open)}</div>{how}</section>{post}{E}\n')
 

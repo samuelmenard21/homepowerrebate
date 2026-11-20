@@ -37,3 +37,6 @@ Rules:
 ## Open items for the next review (2026-11-09)
 - Read the 11-02 week as a baseline for the rows above. Recommend edits to them only if a page clearly fails to answer its query.
 - Pages in the 10-17 to 10-23 data that are NOT in this ledger and are fair game: Logivert (Quebec) pages, /us/pa/, /us/co/, Hamilton and Kitchener installer pages, /furnace-rebates/bc/, the Bosch vs Mitsubishi and Mysa comparison posts, /blog/bc-hydro-product-rebates-appliances/.
+| 2026-11-20 | /programs/national-heat-pump-rebate/do-i-qualify/ | federal heat pump rebate income limit, national heat pump rebate income threshold | no data yet | fact | Added Ottawa's full income table (fact federal-6) and retitled "Federal Heat Pump Rebate Income Limits by Province (2026)", h1 "Federal Heat Pump Rebate Income Limits: Do I Qualify?" | 2027-02-18 |
+| 2026-11-20 | AB, BC, NS, ON heat pump pages, gas-home and renters articles | n/a | n/a | fact | Removed leftover "rules not published" wording; badges now say gas homes can qualify and owners only | 2027-02-18 |
+

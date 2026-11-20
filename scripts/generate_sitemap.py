@@ -30,6 +30,7 @@ Run from the Powerrebate root:
 import argparse
 import datetime
 import glob
+import hashlib
 import os
 import re
 
@@ -169,25 +170,52 @@ def last_changed():
     return dates
 
 
+# Blocks other scripts inject into many pages (quizzes, alert boxes, link boxes, rails). Changing one of them
+# on hundreds of pages is not a change to what the page says, so it must not move <lastmod>.
+BOILERPLATE_MARKERS = {
+    "LEARN", "LEARN-QUIZ", "NATIONAL-QUIZ", "FED-ALERT", "FED-HP", "PROG-ALERT", "YT-EMBED", "CORE-CALC",
+    "PAGE-RAIL", "MOBILE-TOC", "HUB-SEARCH", "AEO-SPEAKABLE", "BLOG-PHOTO", "RANKINGS-LINK", "DISCOVERED-LINKS",
+    "HERO-PRELOAD", "FONT-PRELOAD", "CRITICAL-CSS", "OG-CARD", "PROFILE-QUOTE", "PROFILE-PHOTO", "PROFILE-BADGE",
+}
+_BLOCK = re.compile(r"<!--\s*([A-Z0-9][A-Z0-9 _-]*?)-START\s*-->.*?<!--\s*\1-END\s*-->", re.S)
+ALGO = 2
+
+
+def _drop_boilerplate(m):
+    n = m.group(1).strip()
+    return " " if (n in BOILERPLATE_MARKERS or n.endswith("-LINK") or n.endswith("-LINKS")) else m.group(0)
+
+
+def visible_digest(h, algo=ALGO):
+    if algo >= 2:
+        h = _BLOCK.sub(_drop_boilerplate, h)
+    h = re.sub(r"<script.*?</script>|<style.*?</style>|<nav.*?</nav>|<footer.*?</footer>|<!--.*?-->", " ", h, flags=re.S)
+    h = re.sub(r"<[^>]+>", " ", h)
+    return hashlib.sha1(re.sub(r"\s+", " ", h).strip().encode("utf-8")).hexdigest()[:16]
+
+
 def content_dates(entries, git_dates):
     """lastmod from the page's visible text, not from commits. Site-wide restamps (menu, footer, link checks) touch thousands of files and would date them all today,
-    which teaches Google to ignore lastmod. State is kept in data/sitemap-lastmod.json (git add -f); a page with no state yet starts from its git date."""
-    import hashlib, json, re
+    which teaches Google to ignore lastmod. State is kept in data/sitemap-lastmod.json (git add -f); a page with no state yet starts from its git date.
+    Blocks injected into many pages (BOILERPLATE_MARKERS, *-LINK) are ignored. When the recipe changes (ALGO), stored hashes are
+    converted in place for pages unchanged since the last run, so a recipe change never re-dates the site."""
+    import json
     sp = os.path.join(ROOT, "data", "sitemap-lastmod.json")
     try:
         state = json.load(open(sp))
     except Exception:
         state = {}
+    migrate = state.pop("__algo", 1) < ALGO
     out, new_state = {}, {}
     for _, _, _, rel_file in entries:
         try:
             h = open(os.path.join(ROOT, rel_file), encoding="utf-8", errors="ignore").read()
         except OSError:
             continue
-        h = re.sub(r"<script.*?</script>|<style.*?</style>|<nav.*?</nav>|<footer.*?</footer>|<!--.*?-->", " ", h, flags=re.S)
-        h = re.sub(r"<[^>]+>", " ", h)
-        digest = hashlib.sha1(re.sub(r"\s+", " ", h).strip().encode("utf-8")).hexdigest()[:16]
+        digest = visible_digest(h)
         prev = state.get(rel_file)
+        if prev and migrate and prev["h"] == visible_digest(h, 1):
+            prev = {"h": digest, "d": prev["d"]}
         if prev and prev["h"] == digest:
             d = prev["d"]
         elif prev:
@@ -196,6 +224,7 @@ def content_dates(entries, git_dates):
             d = git_dates.get(rel_file, TODAY)
         out[rel_file] = d
         new_state[rel_file] = {"h": digest, "d": d}
+    new_state["__algo"] = ALGO
     json.dump(new_state, open(sp, "w"), indent=0, sort_keys=True)
     return out
 

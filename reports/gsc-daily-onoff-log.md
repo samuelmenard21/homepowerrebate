@@ -1,6 +1,6 @@
 # Search Console daily on/off log
 
-Updated 2026-11-19. Source: `python3 scripts/gsc_onoff_check.py --write-log`.
+Updated 2026-11-20. Source: `python3 scripts/gsc_onoff_check.py --write-log`.
 ON = 1000+ impressions a day, off = under 150.
 
 | Date | Impressions | Clicks | Avg position | State |
@@ -22,6 +22,7 @@ ON = 1000+ impressions a day, off = under 150.
 | 2026-11-15 | 115 | 0 | 23.8 | off |
 | 2026-11-16 | 158 | 0 | 21.0 | mid |
 | 2026-11-17 | 2037 | 13 | 18.9 | ON |
+| 2026-11-18 | 2741 | 19 | 23.7 | ON |
 
 ON in the last 5 reported days: 3. Step 2 gate: 3 of 5.
 

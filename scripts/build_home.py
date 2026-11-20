@@ -439,9 +439,10 @@ def trust_inner(regs):
     n = len(FACTS)
     shut = sum(1 for x in FACTS.values() if x.get("status") in ("closed", "paused", "waitlist"))
     latest = max(x.get("verified_on", "") for x in FACTS.values())
+    full = json.loads((ROOT / "rebate-tracker" / "changes.json").read_text())["checked"]  # the last check of every program, from the tracker
     return f'''<div class="hm-trustbox">
     <div class="hm-trust-grid">
-      <p><b>{n:,}</b>rebate amounts and rules we track. Each one has the official page we read it on and the date we read it. The latest check was {esc(short_date(latest))}.</p>
+      <p><b>{n:,}</b>rebate amounts and rules we track. Each one has the official page we read it on and the date we read it. The newest reading was {esc(short_date(latest))}, and the last check of every program was {esc(short_date(full))}.</p>
       <p><b>{shut}</b>of them are closed, paused or on hold right now. We show them that way instead of hiding them, so you know what not to count on.</p>
       <p><b>$0</b>paid by any installer to be listed or to rank higher. We rank by Google reviews only, and our <a href="/installers/how-we-rank/">ranking page</a> will say so if that ever changes.</p>
     </div>
@@ -481,7 +482,7 @@ def faq_items(regs, total):
         ("How do you know the amounts are right?",
          f"We keep {len(FACTS):,} rebate amounts and rules, each with its source page and the date we read it, and we re-read them every month. When a program closes or pauses, we mark it that way."),
         ("Can I get Canada's new federal heat pump rebate now?",
-         "Not yet. Ottawa plans up to $10,000 for households below the median income and $2,000 for other eligible homeowners, starting in early 2027. The income line is not published yet. You can sign up above to get an email when it opens."),
+         "Not yet. Applications open in early 2027, and installs from November 1, 2026 can apply once it opens. Ottawa pays up to $10,000 if your after-tax household income is at or below the threshold for your province and household size (for example $46,981 for one person in Ontario), and $2,000 for other eligible homeowners. Homes heated with electricity, gas, oil, propane or wood can qualify, but Ottawa says the rules can still change. You can sign up above to get an email when it opens."),
         ("Is there still a US federal tax credit for heat pumps or solar?",
          "No. The 25C and 25D tax credits ended on December 31, 2025, and only cover work finished before then. State, city and utility rebates are still open in many places."),
         ("Which places do you cover?",

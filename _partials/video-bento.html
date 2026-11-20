@@ -6,6 +6,10 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#faf7f2;font-fam
 #stage{position:relative;width:1080px;height:1920px;overflow:hidden;transition:none}
 .bg-dark{background:radial-gradient(90% 55% at 100% 0%,rgba(232,138,46,.25),rgba(232,138,46,0) 60%),linear-gradient(165deg,#0f5361 0%,#08363f 60%,#062c33 100%)}
 .bg-light{background:#faf7f2}
+.photo{position:absolute;left:-60px;top:-100px;width:1200px;height:2120px;background-size:cover;background-position:center;will-change:transform}
+.shade{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.has-photo .logo{color:#faf7f2;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+.has-photo .src{color:#faf7f2;text-shadow:0 2px 10px rgba(0,0,0,.6);opacity:1}
 .logo{position:absolute;left:60px;top:78px;font-family:'Fraunces',Georgia,serif;font-weight:800;font-size:46px;letter-spacing:-.01em;color:#faf7f2}
 .bg-light .logo{color:#0a2a2e}
 .logo b{color:#e88a2e}
@@ -33,6 +37,9 @@ window.render=function(spec,t){
   var st=document.getElementById('stage'); st.innerHTML='';
   var sc=spec.scenes.filter(function(s){return t>=s.at&&t<s.end})[0]||spec.scenes[spec.scenes.length-1];
   st.className=sc.theme==='light'?'bg-light':'bg-dark';
+  if(sc.photo){ st.className+=' has-photo'; var ph=document.createElement('div'); ph.className='photo'; ph.style.backgroundImage="url('../assets/learn/"+sc.photo+"-1200.webp')";
+    var dur=Math.max(1,sc.end-sc.at); var z=1+0.12*clamp((t-sc.at)/dur); ph.style.transform='scale('+z+') translate('+(-14*clamp((t-sc.at)/dur))+'px,0)'; st.appendChild(ph);
+    var sh=document.createElement('div'); sh.className='shade'; sh.style.background=sc.theme==='light'?'linear-gradient(180deg,rgba(250,247,242,.55),rgba(250,247,242,.30) 45%,rgba(6,44,51,.55))':'linear-gradient(180deg,rgba(6,44,51,.72),rgba(6,44,51,.40) 45%,rgba(6,44,51,.78))'; st.appendChild(sh); }
   var logo=document.createElement('div'); logo.className='logo'; logo.innerHTML='Home<b>Power</b>Rebate'; st.appendChild(logo);
   var local=t-sc.at, outP=clamp((t-(sc.end-0.22))/0.22);
   var idx=0;

@@ -32,6 +32,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Bellevue Water Heater Rebates 2026: Puget Sound Energy $1">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/us/wa/bellevue/water-heater.jpg?v=def66934eccb">
 <!-- OG-CARD-END -->
@@ -46,12 +47,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?city=bellevue&province=wa" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=bellevue&province=wa" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?city=bellevue&province=wa" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=bellevue&province=wa" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -218,7 +219,7 @@
 
 <h2>What to do next</h2>
 <p>Next, see the <a href='/us/wa/bellevue/heat-pump/'>Bellevue heat pump page</a> or return to the <a href='/us/wa/bellevue/'>Bellevue rebate hub</a>.</p>
-<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.pse.com/en/rebates/water-heating/heat-pump-water-heater-rebate" target="_blank" rel="noopener">PSE heat pump water heater rebate</a>, <a href="https://www.pse.com/en/rebates/efficiency-boost" target="_blank" rel="noopener">PSE Efficiency Boost</a>, <a href="https://www.commerce.wa.gov/energy-incentives/hear/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Washington Commerce HEAR program</a>, <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">IRS Energy Efficient Home Improvement Credit</a>. <a href="/us/wa/bellevue/">All Bellevue rebates &rarr;</a> <a href="/programs/puget-sound-energy-rebates/">Every Puget Sound Energy rebate &rarr;</a></p>
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.pse.com/en/rebates/water-heating/heat-pump-water-heater-rebate" target="_blank" rel="noopener">PSE heat pump water heater rebate</a>, <a href="https://www.pse.com/en/rebates/efficiency-boost" target="_blank" rel="noopener">PSE Efficiency Boost</a>, <a href="https://www.commerce.wa.gov/energy/clean-buildings/energy-incentives/hear/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Washington Commerce HEAR program</a>, <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">IRS Energy Efficient Home Improvement Credit</a>. <a href="/us/wa/bellevue/">All Bellevue rebates &rarr;</a> <a href="/programs/puget-sound-energy-rebates/">Every Puget Sound Energy rebate &rarr;</a></p>
 </div></article>
 <!-- STATE-US-WA-HEATING-ASSISTANCE-LINK-START --><section style="max-width:880px;margin:24px auto;padding:0 20px;"><p style="background:#f5efe5;border-radius:8px;padding:14px 18px;margin:0;"><b>Statewide answer:</b> see <a href="/us/wa/heating-assistance/">Washington heating bill help: LIHEAP dates and income limits</a>, with what is open, what has closed and the dates to watch.</p></section><!-- STATE-US-WA-HEATING-ASSISTANCE-LINK-END -->
 <!-- LEARN-START -->
@@ -296,7 +297,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?city=bellevue&province=wa">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="city=bellevue&province=wa">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -328,6 +329,13 @@
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

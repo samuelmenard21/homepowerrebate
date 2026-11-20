@@ -61,6 +61,11 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Canada Greener Homes Loan Closed: Ontario Options 2026">
+<meta property="og:title" content="Canada Greener Homes Loan Closed: Ontario Options 2026">
+<meta property="og:description" content="The Canada Greener Homes Loan closed to new applicants Oct 1, 2025. What Ontario homeowners can still use: HRS rebates, Toronto HELP and Better Homes Ottawa.">
+<meta property="og:url" content="https://homepowerrebate.com/blog/ontario-loan-closed/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/blog/ontario-loan-closed.jpg?v=b0ecd22886b7">
 <!-- OG-CARD-END -->
@@ -77,12 +82,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -263,7 +268,7 @@
       <li><a href="/installers/">See your city's rebates</a> and compare top-rated local installers, ranked by Google reviews. Free for homeowners.</li>
     </ol>
 
-    <p style="font-size:13px;">Sources, checked September 26, 2026: <a href="https://www.cghli.ca/" target="_blank" rel="noopener">Canada Greener Homes Loan portal</a>, <a href="https://homerenovationsavings.ca/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Home Renovation Savings</a>, <a href="https://saveonenergy.ca/For-Your-Home/Energy-Affordability-Program?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Energy Affordability Program</a>, <a href="https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/" target="_blank" rel="noopener">Toronto HELP</a>, <a href="https://ottawa.ca/en/city-hall/budget-finance-and-corporate-planning/funding/environmental-funding/better-homes-ottawa/better-homes-ottawa-loan-program" target="_blank" rel="noopener">Better Homes Ottawa</a>.</p>
+    <p style="font-size:13px;">Sources, checked September 26, 2026: <a href="https://www.cghli.ca/" target="_blank" rel="noopener">Canada Greener Homes Loan portal</a>, <a href="https://www.homerenovationsavings.ca/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Home Renovation Savings</a>, <a href="https://saveonenergy.ca/For-Your-Home/Energy-Affordability-Program?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Energy Affordability Program</a>, <a href="https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/" target="_blank" rel="noopener">Toronto HELP</a>, <a href="https://ottawa.ca/en/city-hall/budget-finance-and-corporate-planning/funding/environmental-funding/better-homes-ottawa/better-homes-ottawa-loan-program" target="_blank" rel="noopener">Better Homes Ottawa</a>.</p>
   </div>
 </article>
 
@@ -346,7 +351,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?province=on">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="province=on">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -379,6 +384,13 @@
 
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

@@ -71,6 +71,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="The Home of 2030: What a Fully Electrified House Looks Like">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/blog/home-of-the-future-2030.jpg?v=7e382427d4c5">
 <!-- OG-CARD-END -->
@@ -87,12 +88,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -283,7 +284,7 @@
     <h2>The takeaway</h2>
     <p>The 2030 home isn't exotic &mdash; it's a heat pump, solar, a battery, EV-ready wiring, and a smart thermostat coordinating all four. Most of that is buildable today, several years ahead of "standard," while rebates are still open and before installer demand catches up with the trend. For the incentive side of this shift, read <a href="/blog/will-technology-replace-rebates/">why falling tech costs won't fully replace rebates</a> before 2030.</p>
 
-    <p style="font-size:13px;color:var(--ink-soft);margin-top:24px;">Sources: <a href="https://rmi.org/the-energy-transition-in-2026-10-trends-to-watch/" target="_blank" rel="noopener">RMI &mdash; The Energy Transition in 2026</a>; <a href="https://www.iea.org/reports/electricity-2026/executive-summary" target="_blank" rel="noopener">IEA &mdash; Electricity 2026</a>; <a href="https://www.facilitiesdive.com/news/electrification-outlook-trends-heat-pumps-ev-/810541/" target="_blank" rel="noopener">Facilities Dive &mdash; Electrification Outlook 2026</a>.</p>
+    <p style="font-size:13px;color:var(--ink-soft);margin-top:24px;">Sources: <a href="https://rmi.org/resources/the-energy-transition-in-2026-10-trends-to-watch/" target="_blank" rel="noopener">RMI &mdash; The Energy Transition in 2026</a>; <a href="https://www.iea.org/reports/electricity-2026/executive-summary" target="_blank" rel="noopener">IEA &mdash; Electricity 2026</a>; <a href="https://www.facilitiesdive.com/news/electrification-outlook-trends-heat-pumps-ev-/810541/" target="_blank" rel="noopener">Facilities Dive &mdash; Electrification Outlook 2026</a>.</p>
   </div>
 </article>
 
@@ -363,7 +364,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?province=on">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="province=on">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -396,6 +397,13 @@
 
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

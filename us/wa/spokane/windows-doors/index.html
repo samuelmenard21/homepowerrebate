@@ -32,6 +32,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Spokane Window Rebates 2026">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/us/wa/spokane/windows-doors.jpg?v=dba99527cb58">
 <!-- OG-CARD-END -->
@@ -46,12 +47,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?city=spokane&province=wa" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=spokane&province=wa" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?city=spokane&province=wa" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=spokane&province=wa" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -226,7 +227,7 @@
 
 <h2 id="what-to-do-next">What to do next</h2>
 <p>Go back to the <a href='/us/wa/spokane/'>Spokane rebate hub</a> or read the <a href='/us/wa/spokane/insulation/'>Spokane insulation page</a>, since a well-insulated home with new windows can use a smaller heat pump.</p>
-<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington/windows" target="_blank" rel="noopener">Avista window rebates</a>, <a href="https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington" target="_blank" rel="noopener">Avista single-family rebates in Washington</a>, <a href="https://www.nfrc.org/" target="_blank" rel="noopener">National Fenestration Rating Council window ratings</a>. <a href="/us/wa/spokane/">All Spokane rebates &rarr;</a> <a href="/programs/avista-washington-rebates/">Every Avista Washington rebate &rarr;</a></p>
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington/windows" target="_blank" rel="noopener">Avista window rebates</a>, <a href="https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington" target="_blank" rel="noopener">Avista single-family rebates in Washington</a>, <a href="https://nfrc.org/" target="_blank" rel="noopener">National Fenestration Rating Council window ratings</a>. <a href="/us/wa/spokane/">All Spokane rebates &rarr;</a> <a href="/programs/avista-washington-rebates/">Every Avista Washington rebate &rarr;</a></p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#quick-quiz-windows-and-doors-in-spokane">Quick quiz: windows and doors in Spokane</a></li><li><a href="#what-window-rebates-pay-in-spokane">What window rebates pay in Spokane</a></li><li><a href="#why-windows-matter-in-spokane">Why windows matter in Spokane</a></li><li><a href="#how-to-read-a-window-label">How to read a window label</a></li><li><a href="#deadlines-and-paperwork">Deadlines and paperwork</a></li><li><a href="#how-to-claim-spokane-window-rebates">How to claim Spokane window rebates</a></li><li><a href="#common-questions">Common questions</a></li><li><a href="#what-to-do-next">What to do next</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?city=spokane&province=wa">See my rebates</a></div></aside>
@@ -308,7 +309,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?city=spokane&province=wa">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="city=spokane&province=wa">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -340,6 +341,13 @@
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

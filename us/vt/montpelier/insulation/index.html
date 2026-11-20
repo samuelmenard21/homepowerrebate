@@ -32,6 +32,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Montpelier VT Insulation Rebates 2026: Up to $3">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/us/vt/montpelier/insulation.jpg?v=3cc11ba05c70">
 <!-- OG-CARD-END -->
@@ -46,12 +47,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?city=montpelier&province=vt" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=montpelier&province=vt" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?city=montpelier&province=vt" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=montpelier&province=vt" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -211,7 +212,7 @@
 <li>If your income may qualify, ask Efficiency Vermont about the $7,000 tier before the work starts.</li>
 <li>Keep the before-and-after test results with your invoice.</li>
 </ol>
-<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/vt/" style="color:var(--teal,#0d4f5c); font-weight:600;">Vermont rebate calculator</a>, or <a href="/get-quotes/?city=montpelier&amp;province=vt" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Montpelier</a>.</div>
+<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/vt/" style="color:var(--teal,#0d4f5c); font-weight:600;">Vermont rebate calculator</a>, or <a href="/get-quotes/" data-query="city=montpelier&amp;province=vt" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Montpelier</a>.</div>
 <h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Does Montpelier have a local weatherization rebate on top of Efficiency Vermont?</h3><p>We did not find one. Efficiency Vermont's offer is the one we verified for Montpelier.</p></div>
 <div class="faq-item"><h3>How do I qualify for the $7,000 tier?</h3><p>Be a low- or moderate-income household and live in the property as your primary residence. Efficiency Vermont lists the current income limits.</p></div>
@@ -306,7 +307,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?city=montpelier&province=vt">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="city=montpelier&province=vt">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -338,6 +339,13 @@
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

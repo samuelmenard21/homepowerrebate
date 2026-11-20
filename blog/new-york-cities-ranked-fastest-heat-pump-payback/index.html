@@ -42,6 +42,11 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="New York Cities Ranked by Fastest Heat Pump Payback">
+<meta property="og:title" content="New York Cities Ranked by Fastest Heat Pump Payback">
+<meta property="og:description" content="Which New York city pays back your heat pump investment fastest? Rank: Syracuse (2 years), Buffalo, Rochester, NYC, Yonkers.">
+<meta property="og:url" content="https://homepowerrebate.com/blog/new-york-cities-ranked-fastest-heat-pump-payback/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/blog/new-york-cities-ranked-fastest-heat-pump-payback.jpg?v=76de5e125867">
 <!-- OG-CARD-END -->
@@ -58,12 +63,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -302,7 +307,7 @@
       <h3>2. Rochester (2–3 Year Payback)</h3>
       <p>Rochester gets almost as much snow as Syracuse. Same heating season length, nearly identical savings.</p>
       <p><strong>Heat pump savings:</strong> $1,200–$1,400/year.</p>
-      <p><strong>Utility:</strong> <a href="https://www.nationalgridus.com/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" data-official="1">National Grid</a>. Rebate: $1,500–$4,000.</p>
+      <p><strong>Utility:</strong> <a href="https://www.nationalgridus.com/Default.aspx?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" data-official="1">National Grid</a>. Rebate: $1,500–$4,000.</p>
       <p><strong>State + federal:</strong> Same as Syracuse: $13,200–$17,200 total.</p>
       <p><strong>Payback: 2–3 years.</strong></p>
     </div>
@@ -446,7 +451,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?province=on">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="province=on">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -479,6 +484,13 @@
 
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

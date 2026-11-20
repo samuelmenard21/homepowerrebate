@@ -141,6 +141,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Best Home Battery Installers in San Bernardino, CA (2026)">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/installers/ca/san-bernardino/battery.jpg?v=897686584745">
 <!-- OG-CARD-END -->
@@ -156,12 +157,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?city=san-bernardino&province=ca" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=san-bernardino&province=ca" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?city=san-bernardino&province=ca" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=san-bernardino&province=ca" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -315,7 +316,7 @@
 <p class="small">Together these 3 companies average 4.8★ across 594 reviews. EnergyAid has the most reviews (571).</p>
 
 <p class="small">Ranked by Google rating weighted by review count, collected September 2026. Rankings are not paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
-<p class="small"><b>Listed here?</b> <a href="/installers/badge/?r=ca&amp;c=san-bernardino&amp;s=battery">Get your top-rated badge</a> for your website or print the <a href="/rebate-sheet/ca/san-bernardino/">San Bernardino rebate sheet</a> for your customers.</p>
+<p class="small"><b>Listed here?</b> <a href="/installers/badge/" data-query="r=ca&amp;c=san-bernardino&amp;s=battery">Get your top-rated badge</a> for your website or print the <a href="/rebate-sheet/ca/san-bernardino/">San Bernardino rebate sheet</a> for your customers.</p>
 
 <h2>What a home battery costs in San Bernardino</h2><div class="cb"><div class="cb-row"><span>Typical installed price</span><b>Varies by battery</b></div><p class="cb-note">Price depends on the brand, how much storage you want, and whether you need a panel upgrade. Ask for the price per usable kWh so quotes are easy to compare.</p><div class="cb-row"><span>Rebates open in San Bernardino</span><b>None confirmed right now</b></div><p class="cb-note">Financing or future programs may still help. Check the rebate page before you sign.</p></div><p class="small">Rebates: our verified program data, checked monthly. Always confirm the exact amount for your home.</p>
 
@@ -494,7 +495,7 @@ setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600)
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?city=san-bernardino&province=ca">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="city=san-bernardino&province=ca">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -526,6 +527,13 @@ setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600)
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

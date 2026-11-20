@@ -32,6 +32,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Insulation Rebates in Abbotsford 2026: Up to $5">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/ca/bc/abbotsford/insulation.jpg?v=9323e8aee89a">
 <!-- OG-CARD-END -->
@@ -46,12 +47,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?city=abbotsford&province=bc" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=abbotsford&province=bc" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?city=abbotsford&province=bc" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=abbotsford&province=bc" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -212,7 +213,7 @@
 <h2 id="top-rated-installers-in-abbotsford">Top-rated installers in Abbotsford</h2><p>These Abbotsford insulation companies have the best Google review records in our data, weighted by number of reviews. Nobody pays to be listed.</p>
 <div class="installer-card"><div><div class="name">Pinnacle West - Spray Foam &amp; Coatings</div><div class="stars">&#9733; 4.9 (164 Google reviews)</div></div><a class="site-link" href="https://pinnacleweststore.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <div class="installer-card"><div><div class="name">MSA Insulating Inc</div><div class="stars">&#9733; 4.8 (17 Google reviews)</div></div><a class="site-link" href="https://msainsulating.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
-<div class="installer-card"><div><div class="name">Element Spray Foam Inc</div><div class="stars">&#9733; 4.8 (16 Google reviews)</div></div><a class="site-link" href="http://www.elementsprayfoam.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
+<div class="installer-card"><div><div class="name">Element Spray Foam Inc</div><div class="stars">&#9733; 4.8 (16 Google reviews)</div></div><a class="site-link" href="https://elementsprayfoam.com/" target="_blank" rel="noopener">Visit site &rarr;</a></div>
 <p style="margin-top:8px;"><a href="/installers/bc/abbotsford/insulation/">See all Abbotsford installers &rarr;</a></p>
 <h2 id="how-to-claim-in-abbotsford">How to claim in Abbotsford</h2>
 <ol>
@@ -222,7 +223,7 @@
 <li>Apply online within six months.</li>
 <li>Add another eligible upgrade to check the bonus.</li>
 </ol>
-<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/bc/" style="color:var(--teal,#0d4f5c); font-weight:600;">BC rebate calculator</a>, or <a href="/get-quotes/?province=bc&amp;city=abbotsford" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Abbotsford</a>.</div>
+<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/bc/" style="color:var(--teal,#0d4f5c); font-weight:600;">BC rebate calculator</a>, or <a href="/get-quotes/" data-query="province=bc&amp;city=abbotsford" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Abbotsford</a>.</div>
 <h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How cold does Abbotsford get?</h3><p>The average January low from 2015 to 2024 was 0.1°C and the coldest day was -18.3°C.</p></div>
 <div class="faq-item"><h3>Which areas pay the most per square foot?</h3><p>Walls and basements, at $0.09 per R per square foot, against $0.02 for attics.</p></div>
@@ -318,7 +319,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?city=abbotsford&province=bc">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="city=abbotsford&province=bc">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -350,6 +351,13 @@
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

@@ -32,6 +32,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Charlottetown Home Rebates 2026: Free Insulation">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/ca/pe/charlottetown.jpg?v=b880f60b41fd">
 <!-- OG-CARD-END -->
@@ -46,12 +47,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?city=charlottetown&province=pe" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=charlottetown&province=pe" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?city=charlottetown&province=pe" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=charlottetown&province=pe" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -206,7 +207,7 @@
 <li>Finish the work, get the follow-up inspection and keep every receipt.</li>
 <li>Send your proof of income and payment form to efficiencyPEI.</li>
 </ol>
-<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/pe/" style="color:var(--teal,#0d4f5c); font-weight:600;">Prince Edward Island rebate calculator</a>, or <a href="/get-quotes/?province=pe&amp;city=charlottetown" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Charlottetown</a>.</div>
+<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/pe/" style="color:var(--teal,#0d4f5c); font-weight:600;">Prince Edward Island rebate calculator</a>, or <a href="/get-quotes/" data-query="province=pe&amp;city=charlottetown" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Charlottetown</a>.</div>
 <h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Can renters in Charlottetown get a PEI rebate?</h3><p>Not directly. The insulation rebates are for homeowners and landlords, and free insulation is for homeowners. A renter can ask the landlord to apply.</p></div>
 <div class="faq-item"><h3>Is there a heat pump rebate in Charlottetown?</h3><p>Not for new purchases. PEI's heat pump rebates ended on April 15, 2026. If you bought one between April 15, 2025 and April 15, 2026, you can still apply within one year of the purchase.</p></div>
@@ -297,7 +298,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?city=charlottetown&province=pe">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="city=charlottetown&province=pe">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -329,6 +330,13 @@
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

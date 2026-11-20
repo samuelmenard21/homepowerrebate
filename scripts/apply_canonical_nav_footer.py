@@ -508,9 +508,27 @@ def ensure_og(content: str) -> str:
         return content
     title = html.unescape((re.search(r"<title>(.*?)</title>", content, re.S) or [None, ""])[1]).strip()
     url = f"https://homepowerrebate.com/{card}?v={v}"
+    # Text tags the page does not already carry (checked outside this block, so reruns are stable).
+    rest = OG_BLOCK_RE.sub("", content)
+    extra = []
+    def has(prop):
+        return re.search(r'<meta (?:property|name)="' + re.escape(prop) + '"', rest) is not None
+    desc_m = re.search(r'<meta name="description" content="([^"]*)"', rest)
+    canon_m = CANON_RE.search(content)
+    if not has("og:title") and title:
+        extra.append(f'<meta property="og:title" content="{html.escape(title, quote=True)}">')
+    if not has("og:description") and desc_m:
+        extra.append(f'<meta property="og:description" content="{desc_m.group(1)}">')
+    if not has("og:url") and canon_m:
+        extra.append(f'<meta property="og:url" content="https://homepowerrebate.com{html.escape(canon_m.group(1), quote=True)}">')
+    if not has("og:type"):
+        extra.append('<meta property="og:type" content="website">')
+    if not has("og:site_name"):
+        extra.append('<meta property="og:site_name" content="HomePowerRebate">')
     block = (f'{OG_S}\n<meta property="og:image" content="{url}">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n'
              f'<meta property="og:image:type" content="image/jpeg">\n<meta property="og:image:alt" content="{html.escape(title, quote=True)}">\n'
-             f'<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:image" content="{url}">\n{OG_E}\n')
+             + "".join(e + "\n" for e in extra)
+             + f'<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:image" content="{url}">\n{OG_E}\n')
     content = OG_BLOCK_RE.sub("", content)
     content = OG_OLD_RE.sub("", content)
     return content.replace("</head>", block + "</head>", 1)
@@ -919,6 +937,37 @@ def ensure_landmarks(content: str) -> str:
     return content
 
 
+QUERY_LINK_RE = re.compile(r'<a href="(/(?:get-quotes|contact|installers/badge)/)\?([^"]*)"')
+
+
+def strip_query_links(content: str) -> str:
+    """Move the prefill query of quote, contact and badge links into data-query.
+
+    The shared JS (nav-footer partial) adds it back when a visitor points at or focuses the link.
+    Without this, every page linked get-quotes/?city=..&province=.. and crawlers queued thousands of
+    near-identical URLs (Ahrefs, 2026-11-20). Visible text is unchanged; idempotent."""
+    return QUERY_LINK_RE.sub(lambda m: f'<a href="{m.group(1)}" data-query="{m.group(2)}"', content)
+
+
+_EXT_MAP = {}
+EXT_HREF_RE = re.compile(r'href="(https?://[^"]+)"')
+
+
+def map_external_links(content: str) -> str:
+    """Point external links at the final URL where the official site has moved (data/external-redirects.json,
+    built from a live check of every link Ahrefs flagged as redirecting). Tracking tags are kept. Idempotent."""
+    if not _EXT_MAP:
+        mp = ROOT / "data" / "external-redirects.json"
+        _EXT_MAP.update(json.loads(mp.read_text()) if mp.exists() else {})
+    if not _EXT_MAP:
+        return content
+
+    def sub(m):
+        new = _EXT_MAP.get(html.unescape(m.group(1)))
+        return f'href="{html.escape(new, quote=True)}"' if new else m.group(0)
+    return EXT_HREF_RE.sub(sub, content)
+
+
 def process_file(path: Path, dry_run: bool):
     rel = path.relative_to(ROOT)
     content = path.read_text(errors="ignore")
@@ -974,6 +1023,8 @@ def process_file(path: Path, dry_run: bool):
         action.append("footer:inserted")
 
     content = ensure_shared_assets(content)
+    content = strip_query_links(content)
+    content = map_external_links(content)
     content = ensure_landmarks(content)
     _pm = re.search(r'href="(/get-quotes/[^"]*)"', nav_html)
     content = ensure_rail(content, rel, _pm.group(1) if _pm else "/get-quotes/")

@@ -74,6 +74,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Canada&#x27;s Home Energy Rebates Ranked by Province 2026">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/blog/canada-provinces-ranked-home-energy-rebates.jpg?v=1c7f7c854591">
 <!-- OG-CARD-END -->
@@ -90,12 +91,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -347,7 +348,7 @@
         <span class="rank-title">Alberta</span>
       </div>
       <span class="rank-stack weak">$2,000&ndash;$5,000 stack</span>
-      <p>Alberta has no provincial rebate program for home energy upgrades. What it has is the <a href="https://ceip.abmunis.ca/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Clean Energy Improvement Program (CEIP)</a> &mdash; which is <strong>financing</strong>, not a rebate, a low-interest loan attached to your property tax bill, sometimes with a small incentive on top. Utility rebates from <a href="https://www.enmax.com/electricity-and-natural-gas" target="_blank" rel="noopener">ENMAX</a> and <a href="https://energy.atco.com/" target="_blank" rel="noopener">ATCO</a> run $500 to $2,000 per unit and are described by installers as changing "throughout the year," which is not a confidence-inspiring way to plan a $12,000 purchase. There's no solar rebate, no battery rebate, and no EV charger rebate in Alberta at all.</p>
+      <p>Alberta has no provincial rebate program for home energy upgrades. What it has is the <a href="https://ceip.abmunis.ca/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Clean Energy Improvement Program (CEIP)</a> &mdash; which is <strong>financing</strong>, not a rebate, a low-interest loan attached to your property tax bill, sometimes with a small incentive on top. Utility rebates from <a href="https://www.enmax.com/electricity-and-natural-gas" target="_blank" rel="noopener">ENMAX</a> and <a href="https://www.atcoenergy.com/" target="_blank" rel="noopener">ATCO</a> run $500 to $2,000 per unit and are described by installers as changing "throughout the year," which is not a confidence-inspiring way to plan a $12,000 purchase. There's no solar rebate, no battery rebate, and no EV charger rebate in Alberta at all.</p>
       <p>The clearest sign of how thin this is: as of January 2026, the federal Oil to Heat Pump program &mdash; Albertans' best available option for heat pump help &mdash; had received just <strong>16 applications and issued a single grant</strong> — province-wide, not per city.</p>
       <p>Some cities do better than the provincial baseline. Calgary runs a free Home Upgrades Program for income-qualified residents (currently waitlisted). Lethbridge, which has its own municipal electric utility, offers a small $400 environmental incentive. St. Albert adds a $1,400 cash bonus on top of CEIP. Red Deer brought back a $50 smart thermostat rebate. None of it changes the province's overall ranking, but it means the city you live in matters more in Alberta than almost anywhere else in Canada.</p>
       <p>For a province with Alberta's population and home values, this is a real gap, not a rounding error. Full breakdown, all 8 categories: <a href="/ca/ab/">Alberta Home Energy Rebates</a>.</p>
@@ -475,7 +476,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?province=on">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="province=on">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -508,6 +509,13 @@
 
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

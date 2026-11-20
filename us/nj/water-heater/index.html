@@ -28,6 +28,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="New Jersey Heat Pump Water Heater Rebates 2026: $450 to $750">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/us/nj/water-heater.jpg?v=ba3010bf631d">
 <!-- OG-CARD-END -->
@@ -42,12 +43,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?province=nj" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=nj" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?province=nj" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=nj" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -214,7 +215,7 @@
 <div class="faq-item"><h3>Does the water heater rebate stack with a heat pump rebate?</h3><p>Programs list them as separate lines, but each utility has its own rules, so ask for the combined amount in writing.</p></div>
 <div class="faq-item"><h3>Is the Atlantic City Electric rebate ending?</h3><p>Its terms say the residential program ends December 31, 2026 or earlier if funding is used up.</p></div>
 
-<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://myhomeenergy.pseg.com/heatingandcooling" target="_blank" rel="noopener">PSE&amp;G HVAC Instant Rebates Program</a>, <a href="https://myhomeenergy.pseg.com/rebates" target="_blank" rel="noopener">PSE&amp;G appliance rebates</a>, <a href="https://jcpl.clearesult.com/shop-products/appliances" target="_blank" rel="noopener">JCP&amp;L appliance rebates</a>, <a href="https://ace.clearesult.com/shop-products" target="_blank" rel="noopener">Atlantic City Electric rebate store</a>.</p>
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://myhomeenergy.pseg.com/appliance-offers/heatingandcooling" target="_blank" rel="noopener">PSE&amp;G HVAC Instant Rebates Program</a>, <a href="https://myhomeenergy.pseg.com/appliance-offers/all-appliances" target="_blank" rel="noopener">PSE&amp;G appliance rebates</a>, <a href="https://jcpl.clearesult.com/shop-products/appliances" target="_blank" rel="noopener">JCP&amp;L appliance rebates</a>, <a href="https://ace.clearesult.com/shop-products" target="_blank" rel="noopener">Atlantic City Electric rebate store</a>.</p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#heat-pump-water-heater-rebates-by-utility">Heat pump water heater rebates by utility</a></li><li><a href="#how-the-rules-differ">How the rules differ</a></li><li><a href="#what-the-savings-look-like">What the savings look like</a></li><li><a href="#where-it-goes-matters">Where it goes matters</a></li><li><a href="#pair-it-with-other-work">Pair it with other work</a></li><li><a href="#how-to-claim-a-heat-pump-water-heater-rebate">How to claim a heat pump water heater rebate</a></li><li><a href="#more-for-new-jersey-homes">More for New Jersey homes</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?province=nj">See my rebates</a></div></aside>
@@ -296,7 +297,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?province=nj">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="province=nj">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -328,6 +329,13 @@
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

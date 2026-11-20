@@ -93,6 +93,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Atlantis HVAC Systems — Oakville, ON | HomePowerRebate">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/installers/profiles/on/oakville/atlantis-hvac-systems.jpg?v=ac0189e94920">
 <!-- OG-CARD-END -->
@@ -108,12 +109,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -335,9 +336,9 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
   <a href="https://homepowerrebate.com/ca/on/oakville/" class="ip-city-link">See all Oakville rebates &rarr;</a>
 
 <!-- PROFILE-BADGE-START -->
-  <aside class="ip-programs" aria-label="For this company"><a href="/installers/badge/?r=on&amp;c=oakville&amp;s=heat-pump" class="ip-program"><div class="ip-program-name">Is this your company? Get your badge</div><div class="ip-program-detail">You&#39;re on our top-rated heat pump installers in Oakville list. Add the badge to your website. Showing it doesn&#39;t change your rank.</div><span class="ip-program-arrow">&rarr;</span></a></aside>
+  <aside class="ip-programs" aria-label="For this company"><a href="/installers/badge/" data-query="r=on&amp;c=oakville&amp;s=heat-pump" class="ip-program"><div class="ip-program-name">Is this your company? Get your badge</div><div class="ip-program-detail">You&#39;re on our top-rated heat pump installers in Oakville list. Add the badge to your website. Showing it doesn&#39;t change your rank.</div><span class="ip-program-arrow">&rarr;</span></a></aside>
 <!-- PROFILE-BADGE-END -->
-  <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked via Google Places API. Spot an error? <a href="/contact/?subject=Correction: Atlantis HVAC Systems">Let us know</a>.</p>
+  <p class="ip-footer-note">Business details sourced from Google Business Profile, last checked via Google Places API. Spot an error? <a href="/contact/" data-query="subject=Correction: Atlantis HVAC Systems">Let us know</a>.</p>
 </div>
 <!-- PROFILE-QUOTE-START -->
 <script>
@@ -445,7 +446,7 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?province=on">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="province=on">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -477,6 +478,13 @@ h+=' <img class="ipf-g" src="/assets/google-maps-logo-gray.svg" alt="Google Maps
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

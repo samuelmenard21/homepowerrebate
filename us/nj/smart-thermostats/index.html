@@ -28,6 +28,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="New Jersey Smart Thermostat Rebates 2026: Free to $150">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/us/nj/smart-thermostats.jpg?v=f694e582a31a">
 <!-- OG-CARD-END -->
@@ -42,12 +43,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?province=nj" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=nj" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?province=nj" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=nj" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -214,7 +215,7 @@
 <div class="faq-item"><h3>Do I need a heat pump to get a thermostat rebate?</h3><p>No. The thermostat rebates stand on their own, though some are bigger when installed with a heating or cooling job.</p></div>
 <div class="faq-item"><h3>Does the thermostat rebate end?</h3><p>The pages we read give no end date for PSE&G, give June 30, 2027 for JCP&L and the Atlantic City Electric limited-time $150, and can change without notice.</p></div>
 
-<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://myhomeenergy.pseg.com/rebates" target="_blank" rel="noopener">PSE&amp;G appliance rebates</a>, <a href="https://myhomeenergy.pseg.com/en/Home-Energy-Assessments/WHAssessment" target="_blank" rel="noopener">PSE&amp;G Whole Home Energy Assessment</a>, <a href="https://jcpl.clearesult.com/shop-products/heating-and-cooling" target="_blank" rel="noopener">JCP&amp;L heating and cooling rebates</a>, <a href="https://homeenergysavings.atlanticcityelectric.com/residential/rebates/hvac-efficiency-program" target="_blank" rel="noopener">Atlantic City Electric HVAC Efficiency Program</a>.</p>
+<p style="font-size:14px;">By <a href="/author/sam-menard/">Sam Menard</a>. Sources, last read October 6, 2026: <a href="https://myhomeenergy.pseg.com/appliance-offers/all-appliances" target="_blank" rel="noopener">PSE&amp;G appliance rebates</a>, <a href="https://myhomeenergy.pseg.com/en/Home-Energy-Assessments/WHAssessment" target="_blank" rel="noopener">PSE&amp;G Whole Home Energy Assessment</a>, <a href="https://jcpl.clearesult.com/shop-products/heating-and-cooling" target="_blank" rel="noopener">JCP&amp;L heating and cooling rebates</a>, <a href="https://homeenergysavings.atlanticcityelectric.com/residential/rebates/hvac-efficiency-program" target="_blank" rel="noopener">Atlantic City Electric HVAC Efficiency Program</a>.</p>
 </div></article>
 <!-- PAGE-RAIL-START -->
 <aside class="page-rail" aria-label="On this page" style="grid-row: 3 / span 400"><nav class="rail-toc" aria-label="Page sections"><p class="rail-h">On this page</p><ol><li><a href="#smart-thermostat-offers-by-utility">Smart thermostat offers by utility</a></li><li><a href="#the-free-route-first">The free route first</a></li><li><a href="#what-a-smart-thermostat-does-for-savings">What a smart thermostat does for savings</a></li><li><a href="#heat-pumps-and-thermostats">Heat pumps and thermostats</a></li><li><a href="#which-one-should-you-buy">Which one should you buy</a></li><li><a href="#demand-programs">Demand programs</a></li><li><a href="#how-to-get-a-smart-thermostat-rebate">How to get a smart thermostat rebate</a></li><li><a href="#more-for-new-jersey-homes">More for New Jersey homes</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav><div class="rail-cta"><p class="rail-cta-h">See what you can claim</p><p>Pick your city to see the open rebates and top-rated installers near you. Free, and no sales calls.</p><a class="rail-btn" href="/get-quotes/?province=nj">See my rebates</a></div></aside>
@@ -296,7 +297,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?province=nj">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="province=nj">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -328,6 +329,13 @@
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

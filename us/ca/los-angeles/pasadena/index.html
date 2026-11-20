@@ -32,6 +32,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Pasadena Home Energy Rebates 2026">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/us/ca/los-angeles/pasadena.jpg?v=639f7092f126">
 <!-- OG-CARD-END -->
@@ -46,12 +47,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?city=pasadena&province=ca" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=pasadena&province=ca" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?city=pasadena&province=ca" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=pasadena&province=ca" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -214,7 +215,7 @@
 <li>Keep the paid invoice, the model number and the dates. Every PWP rebate asks for them.</li>
 <li>Apply through your PWP account within 180 days of purchase.</li>
 </ol>
-<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/?province=ca&amp;city=pasadena" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Pasadena</a>.</div>
+<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/ca/" style="color:var(--teal,#0d4f5c); font-weight:600;">California rebate calculator</a>, or <a href="/get-quotes/" data-query="province=ca&amp;city=pasadena" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Pasadena</a>.</div>
 <h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>Does Southern California Edison serve Pasadena?</h3><p>The City's own utility, Pasadena Water and Power, serves the electric accounts these rebates cover. Check the name on your bill, because a Pasadena address does not always mean PWP.</p></div>
 <div class="faq-item"><h3>Which PWP rebate pays the most?</h3><p>Per project, solar. At $0.60 per watt a 6,000-watt system earns $3,600, and income-qualified customers get $1.00 per watt. Batteries can pay up to $550 per kWh under the pilot.</p></div>
@@ -309,7 +310,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?city=pasadena&province=ca">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="city=pasadena&province=ca">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -341,6 +342,13 @@
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

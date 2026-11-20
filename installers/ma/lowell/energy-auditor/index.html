@@ -214,12 +214,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?city=lowell&province=ma" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=lowell&province=ma" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?city=lowell&province=ma" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=lowell&province=ma" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -383,7 +383,7 @@
 <p class="small">Together these 13 companies average 4.8★ across 328 reviews. Home Energy Efficiency Consultants has the most reviews (90).</p>
 
 <p class="small">Ranked by Google rating weighted by review count, collected October 2026. Rankings are not paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
-<div class="callout"><p><strong>Are you one of the home energy auditors in Lowell?</strong> These are yours to use with clients:</p><ul><li><b>A rebate calculator for your website.</b> Clients answer a few questions and see the rebates they can stack. <a href="/calculator/widget/?r=ma">Get the embed code</a>.</li><li><b>A one-page Lowell rebate sheet</b> to print or email to clients, with every open program, the main rule and the official source. <a href="/rebate-sheet/ma/lowell/">Open the rebate sheet</a>.</li><li><b>Your top-rated badge</b>, if you are listed here. <a href="/installers/badge/?r=ma&amp;c=lowell&amp;s=energy-auditor">Get your badge</a>.</li></ul></div>
+<div class="callout"><p><strong>Are you one of the home energy auditors in Lowell?</strong> These are yours to use with clients:</p><ul><li><b>A rebate calculator for your website.</b> Clients answer a few questions and see the rebates they can stack. <a href="/calculator/widget/?r=ma">Get the embed code</a>.</li><li><b>A one-page Lowell rebate sheet</b> to print or email to clients, with every open program, the main rule and the official source. <a href="/rebate-sheet/ma/lowell/">Open the rebate sheet</a>.</li><li><b>Your top-rated badge</b>, if you are listed here. <a href="/installers/badge/" data-query="r=ma&amp;c=lowell&amp;s=energy-auditor">Get your badge</a>.</li></ul></div>
 
 <h2>What a home energy audit costs in Lowell</h2><div class="cb"><div class="cb-row"><span>Typical price</span><b>Varies by auditor</b></div><p class="cb-note">Some utility programs pay for the assessment. Ask each auditor for the price of the audit and any test-out visit after the work, so you can compare.</p><div class="cb-row cb-reb"><span>Heat pump rebates open in Lowell</span><b>up to $16,000</b></div><p class="cb-note">Check whether each one needs an energy assessment or pre-approval before work starts. That could cut your cost by up to <b>$16,000</b> if you qualify. Most rebates have rules (income, your current heating, a registered contractor, approval before work starts).</p></div><p class="small">Rebates: our verified program data, checked monthly. Always confirm the exact amount for your home.</p>
 
@@ -501,7 +501,7 @@ setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600)
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?city=lowell&province=ma">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="city=lowell&province=ma">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -533,6 +533,13 @@ setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600)
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

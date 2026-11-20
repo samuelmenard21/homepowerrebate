@@ -72,6 +72,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="How Much Does a Home Battery Actually Save You During a">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/blog/how-much-does-battery-save-during-outage.jpg?v=c596102515b7">
 <!-- OG-CARD-END -->
@@ -88,12 +89,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -257,7 +258,7 @@
     <p>The real cost of a multi-day outage isn't dramatic &mdash; it's a few hundred dollars in spoiled groceries, a hotel night if your heat is out and it's freezing, and for some households, a genuine safety issue if someone depends on powered medical equipment. None of that shows up on a spreadsheet until it happens to you.</p>
 
     <h2 id="how-this-connects-to-the-rebate">How this connects to the rebate</h2>
-    <p>The <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/solar-battery.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro rebate</a> exists specifically to encourage this kind of resilience at the household level &mdash; up to $5,000 toward a battery, plus <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/peak-saver.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Peak Saver</a> rewards for keeping it enrolled in the grid's demand-response program. The rebate is the financial case; outage protection is the actual reason most BC homeowners pull the trigger.</p>
+    <p>The <a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro rebate</a> exists specifically to encourage this kind of resilience at the household level &mdash; up to $5,000 toward a battery, plus <a href="https://www.bchydro.com/powersmart/residential/rebates-programs/peak-saver.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">Peak Saver</a> rewards for keeping it enrolled in the grid's demand-response program. The rebate is the financial case; outage protection is the actual reason most BC homeowners pull the trigger.</p>
 
     <div class="callout">
       <p><strong>Sizing tip:</strong> talk to your installer about which circuits actually need backup. A smaller, correctly-scoped system covering your essentials is usually a better value than an oversized system trying to run everything.</p>
@@ -356,7 +357,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?province=on">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="province=on">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -389,6 +390,13 @@
 
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

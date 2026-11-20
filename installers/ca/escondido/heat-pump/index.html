@@ -233,6 +233,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Heat Pump Installation in Escondido: 13 Top-Rated Installers">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/installers/ca/escondido/heat-pump.jpg?v=7e5b296d4c3c">
 <!-- OG-CARD-END -->
@@ -248,12 +249,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?city=escondido&province=ca" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=escondido&province=ca" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?city=escondido&province=ca" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=escondido&province=ca" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -417,7 +418,7 @@
 <p class="small">Together these 13 companies average 4.8★ across 4,347 reviews. Mauzy Cooling, Heating, Plumbing, and Electrical has the most reviews (1,375).</p>
 
 <p class="small">Ranked by Google rating weighted by review count, collected October 2026. Rankings are not paid for. <a href="/installers/how-we-rank/">How we rank and how we make money</a>.</p>
-<p class="small"><b>Listed here?</b> <a href="/installers/badge/?r=ca&amp;c=escondido&amp;s=heat-pump">Get your top-rated badge</a> for your website or print the <a href="/rebate-sheet/ca/escondido/">Escondido rebate sheet</a> for your customers.</p>
+<p class="small"><b>Listed here?</b> <a href="/installers/badge/" data-query="r=ca&amp;c=escondido&amp;s=heat-pump">Get your top-rated badge</a> for your website or print the <a href="/rebate-sheet/ca/escondido/">Escondido rebate sheet</a> for your customers.</p>
 
 <h2 id="cost">What a heat pump costs in Escondido</h2><div class="cb"><div class="cb-row"><span>Typical installed price</span><b>about $17,500 to $20,700</b></div><p class="cb-note">For a typical 3-ton system ($5,830 per ton for ductless up to $6,914 per ton for ducted). Your home may cost more or less.</p><div class="cb-row"><span>Rebates open in Escondido</span><b>None confirmed right now</b></div><p class="cb-note">Financing or future programs may still help. Check the rebate page before you sign.</p></div><p class="small">Price source: <a href="https://ma-eeac.org/wp-content/uploads/MA23X14-B-RHPINV-Residential-Heat-Pump-Invoice-Cost-Study-Web.pdf" rel="noopener" target="_blank">Massachusetts Residential Heat Pump Invoice Cost Study, based on real Mass Save and MassCEC invoices (January 2024 dollars)</a>. Rebates: our verified program data, checked monthly. Always confirm the exact amount for your home.</p>
 
@@ -595,7 +596,7 @@ setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600)
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?city=escondido&province=ca">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="city=escondido&province=ca">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -627,6 +628,13 @@ setTimeout(function(){items.forEach(function(x){x.classList.add('in');});},1600)
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

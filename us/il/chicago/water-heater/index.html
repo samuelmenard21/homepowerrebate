@@ -32,6 +32,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Chicago Water Heater Rebates 2026: ComEd $750 Heat Pump">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/us/il/chicago/water-heater.jpg?v=b887cd4aafc4">
 <!-- OG-CARD-END -->
@@ -46,12 +47,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?city=chicago&province=il" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=chicago&province=il" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?city=chicago&province=il" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="city=chicago&province=il" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -211,7 +212,7 @@
 <li>Send the Peoples Gas application within 30 days of installation.</li>
 <li>If your income is low, call ComEd about free products before buying.</li>
 </ol>
-<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/il/" style="color:var(--teal,#0d4f5c); font-weight:600;">Illinois rebate calculator</a>, or <a href="/get-quotes/?province=il&amp;city=chicago" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Chicago</a>.</div>
+<div class="callout"><strong>Want a number for your home?</strong> Run our <a href="/calculator/il/" style="color:var(--teal,#0d4f5c); font-weight:600;">Illinois rebate calculator</a>, or <a href="/get-quotes/" data-query="province=il&amp;city=chicago" style="color:var(--teal,#0d4f5c); font-weight:600;">get a plan emailed with the top-rated installers in Chicago</a>.</div>
 <h2 id="common-questions">Common questions</h2>
 <div class="faq-item"><h3>How much is the ComEd heat pump water heater rebate?</h3><p>ComEd's heating and cooling page and appliance page both list up to $750. One older help page says there is none, so confirm before you buy.</p></div>
 <div class="faq-item"><h3>What does Peoples Gas pay for a water heater?</h3><p>$150 for a gas tankless unit rated 0.95 UEF or better, and $150 for an indirect water heater rated 88% AFUE or better.</p></div>
@@ -303,7 +304,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?city=chicago&province=il">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="city=chicago&province=il">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -335,6 +336,13 @@
 <!-- CANONICAL-FOOTER-END -->
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

@@ -71,6 +71,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Will Falling Tech Costs Replace Rebates? (2026–2030 Outlook)">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/blog/will-technology-replace-rebates.jpg?v=d81137897a33">
 <!-- OG-CARD-END -->
@@ -87,12 +88,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -281,7 +282,7 @@
     <h2>The takeaway</h2>
     <p>Technology is doing real work to close the affordability gap &mdash; batteries especially. But labour and site costs aren't falling at the same rate, so the gap rebates fill today will still exist, just smaller, through at least 2030. The practical move isn't waiting for tech to make rebates unnecessary; it's using both at once while the incentives are still open. Read next: <a href="/blog/home-of-the-future-2030/">what the average home actually looks like by 2030</a> if these trends hold. And if you've already installed, help make these estimates less theoretical &mdash; <a href="/blog/why-were-building-a-real-cost-database/">tell us what you actually paid</a>.</p>
 
-    <p style="font-size:13px;color:var(--ink-soft);margin-top:24px;">Sources: <a href="https://rmi.org/the-energy-transition-in-2026-10-trends-to-watch/" target="_blank" rel="noopener">RMI &mdash; The Energy Transition in 2026</a>; <a href="https://www.iea.org/reports/electricity-2026/executive-summary" target="_blank" rel="noopener">IEA &mdash; Electricity 2026</a>; <a href="https://www.acdirect.com/blog/federal-hvac-tax-credits-2026/" target="_blank" rel="noopener">Federal HVAC Tax Credits 2026</a>; <a href="https://rmi.org/resources/reforming-energy-efficiency-programs-to-increase-heat-pump-adoption/" target="_blank" rel="noopener">RMI &mdash; Reforming Energy Efficiency Programs</a>.</p>
+    <p style="font-size:13px;color:var(--ink-soft);margin-top:24px;">Sources: <a href="https://rmi.org/resources/the-energy-transition-in-2026-10-trends-to-watch/" target="_blank" rel="noopener">RMI &mdash; The Energy Transition in 2026</a>; <a href="https://www.iea.org/reports/electricity-2026/executive-summary" target="_blank" rel="noopener">IEA &mdash; Electricity 2026</a>; <a href="https://acdirect.com/blogs/learn/federal-hvac-tax-credits-2026" target="_blank" rel="noopener">Federal HVAC Tax Credits 2026</a>; <a href="https://rmi.org/resources/reforming-energy-efficiency-programs-to-increase-heat-pump-adoption/" target="_blank" rel="noopener">RMI &mdash; Reforming Energy Efficiency Programs</a>.</p>
   </div>
 </article>
 
@@ -361,7 +362,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?province=on">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="province=on">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -394,6 +395,13 @@
 
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

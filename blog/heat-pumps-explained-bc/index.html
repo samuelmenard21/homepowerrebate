@@ -71,6 +71,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Heat Pumps Explained for BC Homeowners (2026)">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/blog/heat-pumps-explained-bc.jpg?v=f89420ef720e">
 <!-- OG-CARD-END -->
@@ -87,12 +88,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -300,7 +301,7 @@
 
     <p style="margin-top:24px;">Want to compare brands? See <a href="/blog/heat-pump-brands-comparison-mitsubishi-daikin-bosch/">Mitsubishi vs. Daikin vs. Bosch</a>. Wondering if it replaces your AC too? <a href="/blog/heat-pump-vs-air-conditioner-furnace/">Heat pump vs. AC vs. furnace</a>. Curious which city adds the most on top? <a href="/blog/bc-cities-ranked-total-rebate-stack/">12 BC cities ranked by total rebate stack</a>. And if you're planning further ahead, see <a href="/blog/home-of-the-future-2030/">what a fully electrified home looks like by 2030</a>. Already installed one? <a href="/blog/why-were-building-a-real-cost-database/">Tell us what you actually paid</a> and see how it compares.</p>
 
-    <p style="font-size:13px;color:var(--ink-soft);margin-top:24px;">Source: <a href="https://www.bchydro.com/powersmart/residential/tips-technologies/heat-pumps.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro — Heat pumps</a>. Rebate amounts change; confirm current figures at <a href="https://betterhomesbc.ca/rebates/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BetterHomes BC</a>.</p>
+    <p style="font-size:13px;color:var(--ink-soft);margin-top:24px;">Source: <a href="https://www.bchydro.com/powersmart/residential/tips-technologies/heat-pumps.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro — Heat pumps</a>. Rebate amounts change; confirm current figures at <a href="https://betterhomesbc.ca/find-rebates/?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BetterHomes BC</a>.</p>
   </div>
 </article>
 <!-- INSTALLER-HUB-START --><section style="max-width:880px;margin:24px auto;padding:16px 22px;background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;font-size:15.5px;line-height:1.6;"><b>Ready to hire?</b> <a href="/installers/heat-pump/">See the top-rated heat pump installers in your city</a> (ranked by Google reviews). Free to compare.</section><!-- INSTALLER-HUB-END -->
@@ -382,7 +383,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?province=on">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="province=on">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -415,6 +416,13 @@
 
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

@@ -72,6 +72,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Do Heat Pumps Actually Work in a BC Winter?">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/blog/heat-pumps-cold-climate-bc-winter.jpg?v=2aa6545978e3">
 <!-- OG-CARD-END -->
@@ -88,12 +89,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -248,7 +249,7 @@
     <p>The heat pumps that gave the technology a bad reputation years ago lost most of their heating capacity below freezing, sometimes requiring backup electric heat to kick in constantly. Modern <strong>cold-climate air source heat pumps (ccASHP)</strong> are a different category of equipment, engineered specifically to maintain heating output well below 0&deg;C.</p>
 
     <h2 id="what-cold-climate-rated-actually-means">What "cold-climate rated" actually means</h2>
-    <p><a href="https://www.bchydro.com/powersmart/residential/rebates-programs/solar-battery.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro's rebate program</a> only covers heat pumps on its qualified product list, and that list requires cold-climate rating. In practice, that means the unit is tested and rated to maintain a meaningful percentage of its heating capacity down to around -15&deg;C to -25&deg;C, depending on the specific model.</p>
+    <p><a href="https://app.bchydro.com/accounts-billing/electrical-connections/customer-generation/solar-battery-rebates.html?utm_source=homepowerrebate&amp;utm_medium=referral&amp;utm_campaign=program-link" target="_blank" rel="noopener" data-official="1">BC Hydro's rebate program</a> only covers heat pumps on its qualified product list, and that list requires cold-climate rating. In practice, that means the unit is tested and rated to maintain a meaningful percentage of its heating capacity down to around -15&deg;C to -25&deg;C, depending on the specific model.</p>
     <p>For context: even in Prince George and other Northern BC cities, where winter lows regularly hit -15&deg;C to -20&deg;C, properly sized ccASHP units are installed and performing as the primary heat source &mdash; not just a summer AC unit that happens to also heat.</p>
 
     <h2 id="what-actually-matters-for-winter-performance">What actually matters for winter performance</h2>
@@ -357,7 +358,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?province=on">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="province=on">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -390,6 +391,13 @@
 
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

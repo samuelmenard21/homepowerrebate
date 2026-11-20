@@ -66,6 +66,11 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Are You in an NY Disadvantaged Community? Rebate Guide">
+<meta property="og:title" content="Are You in an NY Disadvantaged Community? Rebate Guide">
+<meta property="og:description" content="NY's Disadvantaged Community designation can unlock much bigger heat pump rebates. Here's how to check your address and what it means in plain English.">
+<meta property="og:url" content="https://homepowerrebate.com/blog/new-york-dac-mapping-eligibility-guide/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HomePowerRebate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://homepowerrebate.com/og/blog/new-york-dac-mapping-eligibility-guide.jpg?v=b329e3b19a3d">
 <!-- OG-CARD-END -->
@@ -82,12 +87,12 @@
     </a>
     <div style="display:flex; align-items:center; gap:16px;" class="nav-desktop-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Find an Installer</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:15px; text-decoration:none;">Blog</a>
     </div>
     <div style="display:none; align-items:center; gap:12px;" class="nav-mobile-only">
       <a href="/installers/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Installers</a>
-      <a href="/get-quotes/?province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
+      <a href="/get-quotes/" data-query="province=on" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">See my rebates</a>
       <a href="/blog/" style="color:var(--ink-soft); font-weight:600; font-size:14px; text-decoration:none;">Blog</a>
     </div>
     <form class="nav-search" action="/search/" method="get" role="search">
@@ -249,7 +254,7 @@
 </ol>
 
 <h2 id="where-to-read-more">Where to Read More</h2>
-<p>For a broader look at how New York's heat pump rebate programs work together: <a href="https://heatpumpnetwork.com/heat-pump-rebates-new-york/" target="_blank" rel="noopener">heatpumpnetwork.com</a> and <a href="https://rebateatlas.org/states/new-york/" target="_blank" rel="noopener">rebateatlas.org</a>.</p>
+<p>For a broader look at how New York's heat pump rebate programs work together: <a href="https://heatpumpnetwork.com/incentives/new-york" target="_blank" rel="noopener">heatpumpnetwork.com</a> and <a href="https://rebateatlas.org/states/new-york/" target="_blank" rel="noopener">rebateatlas.org</a>.</p>
 
 <h2 id="bottom-line">Bottom Line</h2>
 <p>Don't assume the standard $10,000 Con Edison figure is your ceiling. Check your address against the DAC map before you finalize a quote &mdash; it's a five-minute check that can significantly change your numbers.</p>
@@ -338,7 +343,7 @@
           <li><a href="/installers/">Find an Installer</a></li>
           <li><a href="/installers/heat-pump/">Heat Pump Installers by City</a></li>
           <li><a href="/search/">Search the Site</a></li>
-          <li><a href="/get-quotes/?province=on">See My Rebates</a></li>
+          <li><a href="/get-quotes/" data-query="province=on">See My Rebates</a></li>
           <li><a href="/share-your-cost/">Share Your Cost</a></li>
           <li><a href="/blog/">Full Blog</a></li>
           <li><a href="/questions/">Rebate Questions</a></li>
@@ -371,6 +376,13 @@
 
 <script>
 /* CANONICAL-NAV-FOOTER-JS-START */
+/* Links that carry a prefill (quote finder, contact correction, installer badge) keep the bare path in the HTML, so crawlers only see one URL per page; the query is added when a visitor points at or focuses the link. */
+(function(){
+  function full(a){ var q = a.getAttribute('data-query'); if (q && !a.dataset.full) { a.setAttribute('href', a.getAttribute('href') + '?' + q); a.dataset.full = '1'; } }
+  ['pointerdown','focusin','click'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ var a = e.target && e.target.closest && e.target.closest('a[data-query]'); if (a) full(a); }, true);
+  });
+})();
 function toggleCityDropdown() {
   const modal = document.getElementById('city-dropdown-modal');
   if (!modal) return;

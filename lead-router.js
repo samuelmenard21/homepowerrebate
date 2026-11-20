@@ -1174,7 +1174,7 @@ const FED_ALERT_PROVINCE_NOW = {
 };
 
 // Fun but factual. Every figure follows data/verified-facts/federal.json (federal-0 to federal-3), "as announced":
-// never the income line, home types or a launch date until an official page states them. Retroactivity: Canada.ca says the period starts Nov 1, 2026 (federal-1).
+// Canada.ca campaign page re-read 2026-11-19 (federal-0, -1, -2, -6, -7): income table, eligible fuels, Nov 1, 2026 retroactivity, March 2034 close. Ottawa says rules can still change.
 async function sendFederalAlertConfirmation(a, env) {
   const site = 'https://homepowerrebate.com';
   const hub = HEAT_PUMP_PAGE_PROVINCES.has(a.province) ? `${site}/ca/${a.province.toLowerCase()}/heat-pump/` : `${site}/programs/national-heat-pump-rebate/`;
@@ -1206,24 +1206,24 @@ async function sendFederalAlertConfirmation(a, env) {
 
     <h2 style="${h2}">The rebate in 30 seconds</h2>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="8" style="margin:0 -8px;"><tr>
-      ${stat('$10,000', 'Up to this much for households below the median income')}
-      ${stat('$2,000', 'For other eligible homeowners')}
+      ${stat('$10,000', 'Up to this much if your after-tax household income is at or below your province\'s line')}
+      ${stat('$2,000', 'For other eligible homeowners, above the line')}
     </tr></table>
     <p style="${p}margin-top:10px;">It's a $2 billion program over eight years, aimed at up to 820,000 homes. Fun fact: Ottawa says homes moving off oil, propane or electric baseboard-style heat save over $1,400 a year on average. That's close to $120 a month back in your pocket.</p>
 
     <h2 style="${h2}">How it should work (as announced)</h2>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-      ${step(1, 'Apply online when your heating breaks or is near the end of its life. No energy audit needed.')}
-      ${step(2, 'Get approved. Ottawa is aiming for 24 hours.')}
-      ${step(3, 'Install a heat pump from the approved list. It has over 100,000 options, so you will have choices.')}
-      ${step(4, 'Upload your receipts. Ottawa says payment is approved within five days and sent by direct deposit.')}
+      ${step(1, 'Buy and install a heat pump from the eligible product list, through an HVAC contractor. It should heat the whole home. No energy audit needed.')}
+      ${step(2, 'When the portal opens in early 2027, apply online. For the $10,000 tier the Canada Revenue Agency checks your income with your Social Insurance Number.')}
+      ${step(3, 'Upload your receipts within 6 months. They must show the make, model and AHRI number.')}
+      ${step(4, 'Ottawa\'s October announcement said approval in 24 hours and payment within five days by direct deposit. The campaign page does not repeat those timings.')}
     </table>
 
     <h2 style="${h2}">One date to know: November 1</h2>
-    <p style="${p}">Ottawa says its retroactivity period starts on <strong>November 1, 2026</strong>. If you meet the rules and install an eligible heat pump from that date, you can apply once the portal opens in early 2027. Ottawa says it will publish the full details on November 1.</p>
+    <p style="${p}">Ottawa says its retroactivity period starts on <strong>November 1, 2026</strong>. If you meet the rules and install an eligible heat pump from that date, you can apply once the portal opens in early 2027. The program closes in March 2034.</p>
 
-    <h2 style="${h2}">Still a mystery</h2>
-    <p style="${p}">Ottawa hasn't said where the income line is, which homes qualify, or the exact start date. It has said nothing about heat pumps installed before November 1. Lots of websites are guessing. We won't. When Ottawa fills in a blank, you'll hear it from us.</p>
+    <h2 style="${h2}">Who qualifies</h2>
+    <p style="${p}">You must live in Canada and own the home. A rental property you own counts. Gas, oil, propane, electric, wood, diesel and coal homes can all apply. The $10,000 tier is for households at or below your province's after-tax income line, so check the table on our guide. Ottawa says the rules can still change, and it has said nothing about installs before November 1. If anything changes, you'll hear it from us.</p>
 
     <h2 style="${h2}">Three smart things to do while you wait</h2>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">

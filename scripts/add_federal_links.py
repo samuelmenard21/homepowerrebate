@@ -17,9 +17,9 @@ S, E = "<!-- FED-HP-START -->", "<!-- FED-HP-END -->"
 PS, PE = "<!-- FED-POSTS-START -->", "<!-- FED-POSTS-END -->"
 P = "/programs/national-heat-pump-rebate/"
 BOX = 'style="max-width:880px;margin:18px auto;padding:14px 20px;background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;font-size:15px;line-height:1.6;"'
-LEAD = "Federal heat pump rebate coming in early 2027: up to $10,000 for households below the median income and $2,000 for other eligible homeowners. "
+LEAD = "Federal heat pump rebate opens in early 2027: $10,000 at or below your province's income line and $2,000 above it, and installs from November 1, 2026 can apply. "
 HUB = {
-    "bc": ("Ottawa says the new rebate can be combined with provincial programs, which in BC means BC Hydro (up to $4,000 for a whole-home heat pump replacing electric heat) and CleanBC for income-qualified households. BC Hydro's $1,000 bonus ends with installs finished by October 31, 2026.",
+    "bc": ("Ottawa says the new rebate can be combined with provincial programs, which in BC means BC Hydro (up to $4,000 for a whole-home heat pump replacing electric heat) and CleanBC for income-qualified households.",
            [("Should you wait?", "should-you-wait-federal-heat-pump-rebate"), ("What stacks in BC", "federal-heat-pump-rebate-stacking-by-province")]),
     "on": ("Ottawa says it can be combined with provincial programs. In Ontario that is Home Renovation Savings, which pays $1,250 per ton up to $7,500 for electric, oil, propane and wood homes and $500 per ton up to $2,000 for gas homes.",
            [("Should you wait?", "should-you-wait-federal-heat-pump-rebate"), ("Heat pump on a gas home", "heat-pump-natural-gas-home-federal-rebate")]),
@@ -91,7 +91,7 @@ def main():
             continue
         city = NAMES.get(slug, slug.replace("-", " ").title())
         t = f.read_text(encoding="utf-8")
-        txt = f'<b>{html.escape(city)}: {LEAD}</b>{CITY_OVERRIDE.get((code, slug), CITY[code])} <a href="{P}">Read what is confirmed</a> or <a href="/blog/should-you-wait-federal-heat-pump-rebate/">decide whether to wait</a>.'
+        txt = f'<b>{html.escape(city)}: {LEAD}</b>{CITY_OVERRIDE.get((code, slug), CITY[code])} <a href="{P}">Check your tier</a> or <a href="/blog/should-you-wait-federal-heat-pump-rebate/">decide whether to wait</a>.'
         out = after_grid(t, f'<div class="callout fed-callout"><p>{txt}</p></div>')
         f.write_text(out if out is not None else put(t, f'<p {BOX}>{txt}</p>'), encoding="utf-8"); n += 1
     f = ROOT / "blog" / "index.html"

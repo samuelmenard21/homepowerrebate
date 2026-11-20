@@ -380,6 +380,19 @@ async function handleAdminSend(request, env) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to) || !subject || !text) {
     return jsonResponse({ error: 'Need to, subject and text' }, 400);
   }
+  // Optional threading: pass the Message-ID of the email being answered
+  // (e.g. "<abc@mail.gmail.com>") as in_reply_to, and optionally the full
+  // references chain. Both must be a single bare Message-ID.
+  const msgId = /^<[^<>\s]+>$/;
+  const inReplyTo = String(p.in_reply_to || '').trim();
+  const references = String(p.references || '').trim();
+  if ((inReplyTo && !msgId.test(inReplyTo)) || (references && !references.split(/\s+/).every(r => msgId.test(r)))) {
+    return jsonResponse({ error: 'in_reply_to and references must be Message-IDs like <id@host>' }, 400);
+  }
+  const headers = inReplyTo
+    ? { 'In-Reply-To': inReplyTo, 'References': references || inReplyTo }
+    : undefined;
+
   const paras = text.split(/\n\s*\n/).map(par => `<p style="margin:0 0 14px;">${escapeHtml(par).replace(/\n/g, '<br>')}</p>`).join('');
   const html = `<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:15px;line-height:1.6;color:#0a2a2e;">${paras}</div>`;
   await resendEmail(env.RESEND_API_KEY, {
@@ -387,7 +400,8 @@ async function handleAdminSend(request, env) {
     to,
     subject,
     html,
-    reply_to: 'hello@homepowerrebate.com'
+    reply_to: 'hello@homepowerrebate.com',
+    headers
   });
   return jsonResponse({ success: true }, 200);
 }

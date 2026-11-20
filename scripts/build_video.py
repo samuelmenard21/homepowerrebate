@@ -168,12 +168,15 @@ FED_VANITY = "homepowerrebate.com/federal"
 
 
 def _fed():
-    """The federal facts the heat pump videos use, checked. Nothing about who qualifies or a start date beyond what the facts say; the November 1, 2026 retroactivity start is in federal-1."""
+    """The federal facts the heat pump videos use, checked. Only what the facts say: amounts and the income rule (federal-0, -6), the November 1, 2026 retroactivity start (federal-1), no exact launch date. Rewritten 2026-11-20 after Ottawa published the income table."""
     f0 = kit.FACTS["federal-0-national-heat-pump-rebate"]
     f1 = kit.FACTS["federal-1-launch-and-retroactivity"]
     f2 = kit.FACTS["federal-2-how-it-works"]
     assert "$10,000" in f0["amount"] and "$2,000" in f0["amount"], "federal amounts changed: re-read before rendering"
-    assert "$1,400" in f0["eligibility"] and "not published" in f0["eligibility"], "federal eligibility changed: re-read before rendering"
+    f8 = kit.FACTS["federal-8-savings-and-product-list"]
+    f6 = kit.FACTS["federal-6-income-thresholds"]
+    assert "$1,400" in f8["claim"] and "100,000" in f8["claim"], "federal savings figure changed: re-read before rendering"
+    assert "natural gas" in f0["eligibility"] and "threshold" in f0["eligibility"] and "equal to or less than" in f6["claim"], "federal eligibility changed: re-read before rendering"
     assert "early 2027" in f0["dates"] and "early 2027" in f1["dates"], "federal launch wording changed: re-read before rendering"
     assert "24 hours" in f2["claim"] and "five days" in f2["claim"] and "80 per cent" in f2["eligibility"], "federal process changed: re-read before rendering"
     assert "November 1, 2026" in f1["claim"], "federal retroactivity wording changed: re-read before rendering"
@@ -200,13 +203,13 @@ def hp_furnace_15():
             tile(60, 850, 960, 230, AMBER, "#fff", 58, font="sans", center=True, html="Ottawa's own numbers: 8 in 10", rot=1, delay=0.7)]},
         {"at": 6.0, "end": 10.5, "theme": "dark", "items": [
             tile(60, 260, 960, 330, CREAM, TEAL, 104, words=True, html="Ottawa will pay for a <em>heat pump</em>", rot=1),
-            tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your home earns less than the middle", rot=1.5, delay=0.5),
+            tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your income is at or below your province's limit", rot=1.5, delay=0.5),
             tile(552, 640, 468, 440, TAN, "#7a4a00", 56, font="sans", center=True, html="<b>$2,000</b> for other homes", rot=-1.5, delay=0.7)]},
         _fed_cta(10.5, 15.0, h["foot"], "Not open yet. Want to hear <em>first</em>? \U0001F4EC")]}
 
 
 def hp_furnace_30():
-    """30 seconds: the same hook, then how it is meant to work, what is still unknown, and the launch alert."""
+    """30 seconds: the same hook, then how it is meant to work, and the launch alert."""
     h = _fed()
     return {"scenes": [
         {"at": 0.0, "end": 2.5, "theme": "dark", "items": [
@@ -217,7 +220,7 @@ def hp_furnace_30():
             sticker(150, 870, "8 in 10, says Ottawa", "cream", 50, 3, 0.9)]},
         {"at": 5.5, "end": 9.5, "theme": "dark", "items": [
             tile(60, 260, 960, 330, CREAM, TEAL, 104, words=True, html="Ottawa just announced a <em>heat pump</em> rebate", rot=1),
-            tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your home earns less than the middle", rot=1.5, delay=0.5),
+            tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your income is at or below your province's limit", rot=1.5, delay=0.5),
             tile(552, 640, 468, 440, TAN, "#7a4a00", 56, font="sans", center=True, html="<b>$2,000</b> for other homes", rot=-1.5, delay=0.7)]},
         {"at": 9.5, "end": 13.5, "theme": "light", "items": [
             tile(60, 260, 960, 330, "#ffffff", TEAL, 100, words=True, html="Here's the plan, <em>step by step</em> \U0001FA9C"),
@@ -232,7 +235,7 @@ def hp_furnace_30():
             sticker(150, 800, "says Ottawa's plan", "cream", 48, 3, 0.8)]},
         {"at": 21.5, "end": 25.5, "theme": "light", "items": [
             tile(60, 260, 960, 440, AMBER, "#fff", 118, words=True, html="But it's <em>not open yet</em> \u23F3", rot=1),
-            tile(60, 750, 960, 300, TEAL, CREAM, 62, font="sans", center=True, html="Expected early 2027. Installs from Nov 1, 2026 can apply. Who qualifies isn't published yet.", rot=-1, delay=0.6)]},
+            tile(60, 750, 960, 300, TEAL, CREAM, 62, font="sans", center=True, html="Expected early 2027. Installs from Nov 1, 2026 can apply. Rules can still change.", rot=-1, delay=0.6)]},
         _fed_cta(25.5, 30.0, h["foot"])]}
 
 
@@ -276,19 +279,19 @@ def hp_cold_air_30():
             sticker(150, 780, "on average, says Ottawa", "cream", 48, -3, 0.9)]},
         {"at": 22.0, "end": 26.0, "theme": "light", "items": [
             tile(60, 260, 960, 330, "#ffffff", TEAL, 100, words=True, html="And Ottawa will <em>help pay</em> \U0001F4B5"),
-            tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your home earns less than the middle", rot=1.5, delay=0.5),
+            tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your income is at or below your province's limit", rot=1.5, delay=0.5),
             tile(552, 640, 468, 440, TAN, "#7a4a00", 56, font="sans", center=True, html="<b>$2,000</b> for other homes", rot=-1.5, delay=0.7)]},
         _fed_cta(26.0, 30.0, h["foot"], "Not open yet. Hear <em>first</em>? \U0001F4EC")]}
 
 
 def hp_explainer_60():
     """60 seconds: hook, how a heat pump works, why people switch, the national rebate (two levels, scale, how Ottawa says it will work, can be
-    combined with provincial programs), what is still unknown, and the launch alert. Facts only: federal-0/1/2/3. Never says who qualifies, which provinces,
-    gas homes, retroactivity or an exact start date."""
+    combined with provincial programs), who qualifies (income limit by province and household size, owners only), and the launch alert. Facts only: federal-0/1/2/3/6/8.
+    Never promises a rebate or states an exact start date."""
     h = _fed()
     f0 = kit.FACTS["federal-0-national-heat-pump-rebate"]
     f3 = kit.FACTS["federal-3-stacking"]
-    assert "820,000" in f0["claim"] and "$2 billion" in f0["claim"] and "100,000" in f0["eligibility"], "federal scale changed: re-read before rendering"
+    assert "820,000" in f0["claim"] and "$2 billion" in f0["claim"], "federal scale changed: re-read before rendering"
     assert "combined" in f3["claim"] and "provincial" in f3["claim"], "federal stacking wording changed: re-read before rendering"
     return {"scenes": [
         {"at": 0.0, "end": 2.5, "theme": "dark", "items": [
@@ -308,7 +311,7 @@ def hp_explainer_60():
             sticker(150, 800, "on average, says Ottawa", "cream", 50, -3, 0.9)]},
         {"at": 18.5, "end": 23.0, "theme": "light", "items": [
             tile(60, 260, 960, 330, "#ffffff", TEAL, 100, words=True, html="That's why Ottawa made a <em>national</em> rebate \U0001F341"),
-            tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your home earns less than the middle", rot=1.5, delay=0.5),
+            tile(60, 640, 468, 440, AMBER, "#fff", 56, font="sans", center=True, html="Up to <b>$10,000</b> if your income is at or below your province's limit", rot=1.5, delay=0.5),
             tile(552, 640, 468, 440, TAN, "#7a4a00", 56, font="sans", center=True, html="<b>$2,000</b> for other eligible homes", rot=-1.5, delay=0.7)]},
         {"at": 23.0, "end": 27.5, "theme": "dark", "items": [
             tile(60, 260, 960, 440, CREAM, TEAL, 118, words=True, html="Built for <em>a lot</em> of Canadian homes", rot=-1),
@@ -328,8 +331,8 @@ def hp_explainer_60():
             tile(60, 260, 960, 400, TEAL, CREAM, 108, words=True, html="Your province may add <em>more</em> \U0001F4B0", rot=1),
             tile(60, 710, 960, 340, AMBER, "#fff", 62, font="sans", center=True, html="Ottawa says it can be combined with provincial programs. Check your province's rules.", rot=-1, delay=0.6)]},
         {"at": 46.0, "end": 51.0, "theme": "dark", "items": [
-            tile(60, 260, 960, 400, CREAM, TEAL, 112, words=True, html="What we <em>don't</em> know yet \U0001F937", rot=-1),
-            tile(60, 710, 960, 340, TEAL, CREAM, 60, font="sans", center=True, html="Where the income line is. Which homes and which heating types qualify.", rot=1, delay=0.6)]},
+            tile(60, 260, 960, 400, CREAM, TEAL, 112, words=True, html="Will <em>you</em> qualify? \U0001F937", rot=-1),
+            tile(60, 710, 960, 340, TEAL, CREAM, 60, font="sans", center=True, html="Your limit depends on your province and household. You must own the home.", rot=1, delay=0.6)]},
         {"at": 51.0, "end": 55.0, "theme": "light", "items": [
             tile(60, 260, 960, 440, AMBER, "#fff", 118, words=True, html="And it's <em>not open yet</em> \u23F3", rot=1),
             tile(60, 750, 960, 280, TEAL, CREAM, 66, font="sans", center=True, html="Expected early 2027. Installs from Nov 1, 2026 can apply.", rot=-1, delay=0.6)]},

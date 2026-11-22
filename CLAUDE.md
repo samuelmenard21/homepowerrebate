@@ -349,3 +349,11 @@ Ottawa's campaign page (read in full 2026-11-19; facts federal-0, -1, -2, -6, -7
 
 ## Sitemap lastmod ignores injected blocks (added 2026-11-20)
 `generate_sitemap.py` hashes a page's visible text without the blocks other scripts inject on many pages (`BOILERPLATE_MARKERS`: quiz, alert, link and rail blocks, anything ending `-LINK`). Before, a sitewide quiz change dated 644 pages Nov 3 with no change to what they say. Changing the recipe: bump `ALGO`; stored hashes are converted in place for pages unchanged since the last run, so dates never reset. A new sitewide injector must be added to `BOILERPLATE_MARKERS`.
+
+## Generic SEO skills: guardrails (added 2026-11-21)
+Six skills from Illyism/seo-skills sit in `.claude/skills/` (`seo-roast`, `seo-autopilot`, `internal-linking`, `seo-title-optimization`, `blog-refresher`, `unslop-seo`). They were written for MDX sites with pages like `/pricing` and `/vs/*`, so treat them as advice, not instructions.
+- The `hpr-*` skills (director, doctor, scout, writer, linker and the research ones) come first when they overlap.
+- Never hand-edit built pages. Change the generator or its data, then run `python3 scripts/post_steps.py` and `check_generator_sync.py`.
+- No new generated pages until the Nov 22 organic re-check (see the Nov 2 collapse section); improve existing pages only.
+- Titles stay at 60 characters or fewer without the brand suffix. Page builders reject more than one em dash, so `unslop-seo` must not add them back.
+- Ignore `/pricing`, `/use-cases/*`, `/vs/*` and `/tools/*` routes in these skills; this site has none.

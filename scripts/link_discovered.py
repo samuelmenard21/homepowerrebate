@@ -105,6 +105,25 @@ add("/questions/kelowna-solar/", "Related:", "/questions/kelowna-heat_pump/")
 add("/questions/kamloops-solar/", "Related:", "/questions/vancouver-solar/")
 
 
+# Added 2026-11-22 (roast: /installers/heat-pump/ had 63 inbound links against 1,100 for the rebate finder).
+# Every indexable city heat pump page links the hub with its own anchor, so no exact anchor repeats.
+HUB = "/installers/heat-pump/"
+
+
+def _heat_pump_city_pages():
+    for f in sorted(ROOT.glob("*/**/heat-pump/index.html")):
+        parts = f.relative_to(ROOT).parts[:-1]
+        if parts[0] not in ("ca", "us") or len(parts) < 4:
+            continue
+        if re.search(r'name="robots"[^>]*noindex', f.read_text(encoding="utf-8", errors="ignore")[:8000]):
+            continue
+        yield "/" + "/".join(parts) + "/", parts[-2].replace("-", " ").title()
+
+
+for _p, _city in _heat_pump_city_pages():
+    add(_p, "Find an installer:", (HUB, f"Find a heat pump installer near {_city}"))
+
+
 def file_of(path):
     return ROOT / path.strip("/") / "index.html"
 
@@ -126,10 +145,11 @@ def main():
         s = pf.read_text(encoding="utf-8")
         seen, links = set(), []
         for t in targets:
+            t, anchor = t if isinstance(t, tuple) else (t, None)
             if t in seen or not file_of(t).exists():
                 continue
             seen.add(t)
-            links.append(f'<a href="{t}">{title(t)}</a>')
+            links.append(f'<a href="{t}">{html.escape(anchor) if anchor else title(t)}</a>')
         if not links:
             continue
         block = f"<!-- {MARK}-START -->{BOX.format(label, ' · '.join(links))}<!-- {MARK}-END -->"

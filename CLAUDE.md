@@ -357,3 +357,13 @@ Six skills from Illyism/seo-skills sit in `.claude/skills/` (`seo-roast`, `seo-a
 - No new generated pages until the Nov 22 organic re-check (see the Nov 2 collapse section); improve existing pages only.
 - Titles stay at 60 characters or fewer without the brand suffix. Page builders reject more than one em dash, so `unslop-seo` must not add them back.
 - Ignore `/pricing`, `/use-cases/*`, `/vs/*` and `/tools/*` routes in these skills; this site has none.
+
+### How to apply the six SEO skills (from il.ly/blog/seo-skills, added 2026-11-22)
+Source: Ilias Ism's guide to Illyism/seo-skills. The author sells some of the paid tools he mentions, so use only the method.
+- **Order for this site:** `seo-roast` first (find what blocks crawling or indexing), then `seo-title-optimization`, then `seo-autopilot` on a schedule. Use `internal-linking` for pages with fewer than 3 contextual inbound links, `blog-refresher` for a post that slipped in Search Console, and `unslop-seo` last on any draft that reads as AI-written.
+- **Fix in tiers.** FATAL (blocks crawling, indexing or rendering of a page that earns) is fixed first and nothing else ships until none are left. REVENUE (indexes but cannot rank or convert) is fixed if it takes under an hour, else it goes to the top of `seo/roast-roadmap.md`. COMPOUNDING (links, AI citations) goes on the roadmap. FLUFF (alt text, meta length, heading order) is one line at the bottom.
+- **Never open a roast with a score out of 100.** Never fill a data gap with a guess; say what is unknown.
+- **Internal links:** anchors of 3 to 7 words, at least 5 distinct anchors per target, no exact anchor used more than 3 times. A suggestion with no edit is a failed run. Here the edit goes in `scripts/link_discovered.py`, not in a page.
+- **Redirects:** one hop per old URL, a removed page returns 410, never a redirect to the homepage. Check production, not just the repo.
+- **Routines:** `seo-autopilot` daily (checks the sitemap, ships one backlog item as a PR for review) and weekly (queries at position 8 to 20, report under 300 words). Its memory lives in `seo/` (context, keyword map, backlog, log, reports). It drafts outreach but never sends it, and nothing is merged without review.
+- **Not for us now:** `/vs` and alternatives pages, blitz-seo and directory or link-buying skills. Outreach stays paused (see the outreach section), and no new pages until the Nov 22 check says organic is back.

@@ -64,6 +64,46 @@ add("/rebate-tracker/", "Past months:", "/rebate-tracker/2026-09/")
 add("/blog/", "Before you hire:", "/blog/not-all-installers-trustworthy/", "/blog/solar-snow-coverage/")
 add("/calculator/", "For installers:", "/calculator/widget/")
 
+# Added 2026-11-21 after an internal-link audit (seo/internal-links-report.md): pages with fewer than 3 body links.
+add("/ca/bc/", "More BC guides:", "/blog/heat-pump-winter-bc/", "/blog/heat-pumps-cold-climate-bc-winter/",
+    "/blog/mitsubishi-vs-daikin-heat-pump-bc-cost/", "/blog/bc-hydro-schedule-2289-battery-payback/",
+    "/blog/peak-saver-14-day-window-3500-mistake/", "/blog/smart-thermostat-peak-saver-optimization/",
+    "/blog/cleanbc-income-qualified-free-heat-pump-2026/", "/questions/ev-charger-rebate-bc-2026/",
+    "/ca/bc/fraser-valley/")
+add("/ca/bc/vancouver/", "More for your home:", "/questions/vancouver-solar/", "/questions/vancouver-heat_pump/")
+add("/ca/bc/victoria/", "More for your home:", "/questions/victoria-heat_pump/")
+add("/ca/on/", "Renting in Ontario:", "/questions/renter-eligible-heat-pump-rebate/")
+add("/ca/ab/red-deer/", "More for Red Deer homes:", "/ca/ab/red-deer/smart-thermostats/")
+add("/ca/nb/", "En français:", "/ca/nb/fr/")
+add("/ca/nb/moncton/", "En français:", "/ca/nb/moncton/fr/")
+add("/ca/qc/", "En français:", "/ca/qc/fr/", "/ca/qc/heat-pump/fr/")
+add("/ca/qc/montreal/", "En français:", "/ca/qc/montreal/fr/")
+add("/ca/qc/quebec-city/", "En français:", "/ca/qc/quebec-city/fr/")
+add("/ca/qc/heat-pump/", "En français:", "/ca/qc/heat-pump/fr/")
+add("/us/ny/", "New York guides:", "/blog/new-york-dac-mapping-eligibility-guide/",
+    "/blog/new-york-cities-ranked-fastest-heat-pump-payback/", "/blog/heat-pump-or-solar-new-york/",
+    "/blog/6-new-york-heat-pump-programs-stack-together/", "/blog/upstate-ny-rebate-guide-buffalo-rochester-syracuse/",
+    "/blog/energy-saving-ideas-ny-home/", "/programs/orange-and-rockland-rebates/")
+add("/us/ca/", "More California guides:", "/blog/smud-fringe-alternatives/", "/blog/inland-empire-often-overlooked/",
+    "/blog/heat-pump-or-solar-inland-empire/", "/blog/solar-battery-stack-vs-heat-pump-only/")
+add("/us/ca/inland-empire/", "More for the Inland Empire:", "/blog/inland-empire-often-overlooked/",
+    "/blog/heat-pump-or-solar-inland-empire/")
+add("/us/ca/sacramento/", "More for Sacramento homes:", "/blog/smud-fringe-alternatives/")
+add("/us/vt/", "Vermont guides:", "/blog/vermont-virtual-power-plant-battery-rebates/",
+    "/blog/vermont-heat-pump-rebates-efficiency-vermont-2026/")
+add("/us/ma/", "Massachusetts guides:", "/blog/heat-pump-or-solar-massachusetts/")
+add("/rebate-tracker/", "Monthly data:", "/data-release/", "/data-release/2026-10/")
+add("/programs/", "How we check:", "/how-we-check-rebate-facts/", "/blog/powerscore-standings-aug-2026/")
+add("/blog/", "Also worth reading:", "/blog/solar-installer-red-flags-how-to-choose/",
+    "/guides/heat-pump-buyers-guide/", "/hrv-heat-recovery-ventilation/")
+add("/technology/", "More technology:", "/technology/quilt-heat-pump-canada/")
+add("/programs/national-heat-pump-rebate/", "For partners:", "/partners/federal-heat-pump-rebate/")
+add("/calculator/widget/", "For partners:", "/partners/federal-heat-pump-rebate/")
+add("/questions/heat-pump-rebate-income-limits/", "Related:", "/questions/renter-eligible-heat-pump-rebate/")
+add("/questions/kelowna-heat_pump/", "Related:", "/questions/kelowna-solar/")
+add("/questions/kelowna-solar/", "Related:", "/questions/kelowna-heat_pump/")
+add("/questions/kamloops-solar/", "Related:", "/questions/vancouver-solar/")
+
 
 def file_of(path):
     return ROOT / path.strip("/") / "index.html"

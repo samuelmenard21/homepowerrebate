@@ -16,6 +16,7 @@ import apply_canonical_nav_footer as navfooter  # noqa: E402
 S, E = "<!-- FED-HP-START -->", "<!-- FED-HP-END -->"
 PS, PE = "<!-- FED-POSTS-START -->", "<!-- FED-POSTS-END -->"
 P = "/programs/national-heat-pump-rebate/"
+Q = P + "do-i-qualify/"  # the tier tool: a short quiz that says which Ottawa level fits
 BOX = 'style="max-width:880px;margin:18px auto;padding:14px 20px;background:#f5efe5;border-left:4px solid #d4751c;border-radius:8px;font-size:15px;line-height:1.6;"'
 LEAD = "Federal heat pump rebate opens in early 2027: $10,000 at or below your province's income line and $2,000 above it, and installs from November 1, 2026 can apply. "
 HUB = {
@@ -83,7 +84,7 @@ def main():
         t = f.read_text(encoding="utf-8")
         ln = " &middot; ".join(f'<a href="/blog/{s}/">{html.escape(a)}</a>' for a, s in links)
         nm, hp = HPPAGE[code]
-        blk = f'<section {BOX}><b>{LEAD}</b>{text} <a href="{P}">Everything confirmed so far</a> &middot; <a href="{hp}">{nm} heat pump rebate guide</a> &middot; {ln}</section>'
+        blk = f'<section {BOX}><b>{LEAD}</b>{text} <a href="{Q}">Check your tier</a> &middot; <a href="{P}">Everything confirmed so far</a> &middot; <a href="{hp}">{nm} heat pump rebate guide</a> &middot; {ln}</section>'
         f.write_text(put(t, blk), encoding="utf-8"); n += 1
     for f in sorted((ROOT / "ca").glob("*/*/heat-pump/index.html")):
         code, slug = f.parts[-4], f.parts[-3]
@@ -91,7 +92,7 @@ def main():
             continue
         city = NAMES.get(slug, slug.replace("-", " ").title())
         t = f.read_text(encoding="utf-8")
-        txt = f'<b>{html.escape(city)}: {LEAD}</b>{CITY_OVERRIDE.get((code, slug), CITY[code])} <a href="{P}">Check your tier</a> or <a href="/blog/should-you-wait-federal-heat-pump-rebate/">decide whether to wait</a>.'
+        txt = f'<b>{html.escape(city)}: {LEAD}</b>{CITY_OVERRIDE.get((code, slug), CITY[code])} <a href="{Q}">Check your tier</a>, see <a href="{P}">what is confirmed</a>, or <a href="/blog/should-you-wait-federal-heat-pump-rebate/">decide whether to wait</a>.'
         out = after_grid(t, f'<div class="callout fed-callout"><p>{txt}</p></div>')
         f.write_text(out if out is not None else put(t, f'<p {BOX}>{txt}</p>'), encoding="utf-8"); n += 1
     f = ROOT / "blog" / "index.html"

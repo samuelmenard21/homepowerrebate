@@ -126,6 +126,21 @@ for f, s in pages.items():
             at = "<!-- OG-CARD-START -->" if "<!-- OG-CARD-START -->" in s else '<meta name="twitter:card"'
             s = s.replace(at, add + at, 1)
             changed["xcard"] += 1
+    if indexable and 'name="twitter:card"' not in s and "</head>" in s and "http-equiv=\"refresh\"" not in s:
+        # pages whose builder wrote no share card at all (new regions, deadlines page): add the site card
+        img = re.search(r'property="og:image" content="([^"]+)"', s)
+        img_url = img.group(1) if img else "https://homepowerrebate.com/og-image.jpg"
+        add = ""
+        if not img:
+            add += f'<meta property="og:image" content="{img_url}">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n'
+        add += f'<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:image" content="{img_url}">\n'
+        tt, dd = TITLE_RE.search(s), DESC_RE.search(s)
+        if tt and 'name="twitter:title"' not in s:
+            add += f'<meta name="twitter:title" content="{tt.group(1).strip().replace(chr(34), "&quot;")}">\n'
+        if dd and 'name="twitter:description"' not in s:
+            add += f'<meta name="twitter:description" content="{fit_desc(dd.group(2)) if len(dd.group(2)) > 160 else dd.group(2)}">\n'
+        s = s.replace("</head>", add + "</head>", 1)
+        changed["card"] += 1
     pages[f] = s
 for t, fs in titles.items():
     if len(fs) < 2:

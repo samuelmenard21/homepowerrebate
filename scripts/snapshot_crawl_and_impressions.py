@@ -9,6 +9,7 @@ about 10 days, so the switch hours had gone before anyone could look. This keeps
 What it saves, one JSON file per run in the snapshot folder (default ~/.homepowerrebate/crawl-snapshots/), merged by hour
 so overlapping runs never double count:
   - cloudflare_crawlers: verified Googlebot, Bingbot and all other verified bots, requests per hour per status code
+  - cloudflare_robots_sitemap: verified-bot requests to /robots.txt and /sitemap.xml per hour per status code
   - cloudflare_zone: all requests per hour per status class (200/300/400/500)
   - gsc_hourly: impressions, clicks and position per hour (Pacific time)
 
@@ -64,6 +65,11 @@ CRAWLERS = """query($z:String!,$a:Time!,$b:Time!){viewer{zones(filter:{zoneTag:$
 limit:10000,filter:{datetime_geq:$a,datetime_leq:$b,verifiedBotCategory_neq:""},orderBy:[datetimeHour_ASC]){
 count dimensions{datetimeHour edgeResponseStatus userAgent}}}}}"""
 
+# robots.txt and sitemap.xml fetched by verified bots: a 4xx or 5xx on these is what Google reads as "blocked" or "unreachable"
+ROBOTSQ = """query($z:String!,$a:Time!,$b:Time!){viewer{zones(filter:{zoneTag:$z}){httpRequestsAdaptiveGroups(
+limit:10000,filter:{datetime_geq:$a,datetime_leq:$b,verifiedBotCategory_neq:"",clientRequestPath_in:["/robots.txt","/sitemap.xml"]},
+orderBy:[datetimeHour_ASC]){count dimensions{datetimeHour edgeResponseStatus userAgent clientRequestPath}}}}}"""
+
 ZONEQ = """query($z:String!,$a:Time!,$b:Time!){viewer{zones(filter:{zoneTag:$z}){httpRequests1hGroups(limit:200,
 filter:{datetime_geq:$a,datetime_leq:$b},orderBy:[datetime_ASC]){dimensions{datetime}
 sum{requests responseStatusMap{edgeResponseStatus requests}}}}}}"""
@@ -85,13 +91,18 @@ def cloudflare(now):
     for g in cf(CRAWLERS, {"z": ZONE, "a": a, "b": b})["httpRequestsAdaptiveGroups"]:
         d = g["dimensions"]
         out[d["datetimeHour"]][bot_name(d["userAgent"])][str(d["edgeResponseStatus"])] += g["count"]
+    robots = collections.defaultdict(lambda: collections.defaultdict(lambda: collections.defaultdict(collections.Counter)))
+    for g in cf(ROBOTSQ, {"z": ZONE, "a": a, "b": b})["httpRequestsAdaptiveGroups"]:
+        d = g["dimensions"]
+        robots[d["datetimeHour"]][d["clientRequestPath"]][bot_name(d["userAgent"])][str(d["edgeResponseStatus"])] += g["count"]
+    robots = {h: {p: {b: dict(c) for b, c in bots.items()} for p, bots in paths.items()} for h, paths in robots.items()}
     zone = {}
     for g in cf(ZONEQ, {"z": ZONE, "a": a, "b": b})["httpRequests1hGroups"]:
         cls = collections.Counter()
         for s in g["sum"]["responseStatusMap"]:
             cls[f"{s['edgeResponseStatus'] // 100}xx"] += s["requests"]
         zone[g["dimensions"]["datetime"]] = {"requests": g["sum"]["requests"], **cls}
-    return {h: {k: dict(v) for k, v in bots.items()} for h, bots in out.items()}, zone
+    return {h: {k: dict(v) for k, v in bots.items()} for h, bots in out.items()}, zone, robots
 
 
 def gsc_hourly(now):
@@ -120,6 +131,18 @@ def merge(path, key, new):
     return old
 
 
+def robots_report(data):
+    tot, bad = 0, collections.Counter()
+    for h, paths in data.get("cloudflare_robots_sitemap", {}).items():
+        for path, bots in paths.items():
+            for st, n in bots.get("Googlebot", {}).items():
+                tot += n
+                if not st.startswith("2"):
+                    bad[(path, st)] += n
+    if tot:
+        print(f"  Googlebot robots.txt and sitemap.xml fetches in the saved hours: {tot}, not 200: {sum(bad.values())} {dict(bad) or ''}")
+
+
 def report(gsc):
     hrs = sorted(gsc)
     for i in range(6, len(hrs)):
@@ -137,10 +160,11 @@ def main():
     now = dt.datetime.now(dt.timezone.utc)
     d = Path(a.dir)
     d.mkdir(parents=True, exist_ok=True)
-    crawlers, zone = cloudflare(now)
+    crawlers, zone, robots = cloudflare(now)
     gsc = gsc_hourly(now)
     f = d / "snapshot.json"  # one growing file, merged by hour
     data = merge(f, "cloudflare_crawlers", crawlers)
+    data["cloudflare_robots_sitemap"] = dict(sorted({**data.get("cloudflare_robots_sitemap", {}), **robots}.items()))
     data["cloudflare_zone"] = dict(sorted({**data.get("cloudflare_zone", {}), **zone}.items()))
     data["gsc_hourly"] = dict(sorted({**data.get("gsc_hourly", {}), **gsc}.items()))
     data["updated"] = now.isoformat(timespec="seconds")
@@ -149,6 +173,7 @@ def main():
           f"{len(data['gsc_hourly'])} Search Console hours")
     if a.report:
         report(data["gsc_hourly"])
+        robots_report(data)
 
 
 if __name__ == "__main__":

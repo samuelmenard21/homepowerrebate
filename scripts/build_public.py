@@ -22,7 +22,8 @@ DIST = ROOT / "dist"
 PUBLIC_EXT = {".html", ".css", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".gif", ".ico", ".avif",
               ".woff", ".woff2", ".ttf", ".otf", ".xml", ".webmanifest", ".mp4", ".webm", ".pdf"}
 PUBLIC_FILES = {"robots.txt", "llms.txt", "_redirects", "_headers", "_routes.json", "form-handlers.js",
-                "form-handlers-with-installer-select.js", "128e460777465d0f18b1a1d82780a08b.txt"}
+                "form-handlers-with-installer-select.js", "128e460777465d0f18b1a1d82780a08b.txt",
+                ".well-known/api-catalog", "api/openapi"}
 PUBLIC_PREFIXES = ("installers/json/", "rebate-tracker/changes.json")
 PRIVATE_DIRS = {"scripts", "data", "reports", ".claude", ".github", "node_modules", "_partials", "dist",
                 "meta-worker", "pinterest-worker", "roof-check-worker", "photo-worker", "powerscore-history"}
@@ -41,6 +42,8 @@ def tracked_files():
 
 def is_public(rel: Path) -> bool:
     s = rel.as_posix()
+    if s in PUBLIC_FILES:
+        return True
     if rel.parts[0] in PRIVATE_DIRS or any(part.startswith(".") for part in rel.parts):
         return False
     if s in PUBLIC_FILES or s.startswith(PUBLIC_PREFIXES):

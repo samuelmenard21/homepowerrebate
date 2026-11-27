@@ -1,0 +1,60 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "HomePowerRebate public API",
+    "version": "1.0.0",
+    "description": "Small public endpoints used by homepowerrebate.com. Read-only counters and the rebate alert sign-up. Lead forms are not part of this API."
+  },
+  "servers": [{ "url": "https://leads.homepowerrebate.com" }],
+  "paths": {
+    "/alert/count": {
+      "get": {
+        "summary": "Number of people on a rebate alert list",
+        "parameters": [
+          { "name": "list", "in": "query", "required": true, "schema": { "type": "string", "example": "federal-hp" } }
+        ],
+        "responses": {
+          "200": { "description": "Count for the list (cached about 5 minutes)" },
+          "400": { "description": "Unknown list" }
+        }
+      }
+    },
+    "/quiz/stats": {
+      "get": {
+        "summary": "Right and wrong answer counts for each question of a quiz",
+        "parameters": [
+          { "name": "quiz", "in": "query", "required": true, "schema": { "type": "string", "pattern": "^quiz-[a-z0-9-]+$" } }
+        ],
+        "responses": {
+          "200": { "description": "Object mapping question number to [right, wrong] (cached 5 minutes)" },
+          "400": { "description": "Unknown quiz" }
+        }
+      }
+    },
+    "/alert": {
+      "post": {
+        "summary": "Sign up for one email when a rebate program opens or changes",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "list"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "list": { "type": "string", "example": "federal-hp" },
+                  "province": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Signed up (a repeat signup sends nothing)" },
+          "429": { "description": "Too many requests" }
+        }
+      }
+    }
+  }
+}

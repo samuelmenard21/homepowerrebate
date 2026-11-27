@@ -16,3 +16,18 @@
 /calculator/embed/*
   ! Content-Security-Policy
   ! X-Frame-Options
+
+# Agent discovery (added 2026-11-26): RFC 8288 Link headers on the homepage, RFC 9727 API catalog.
+/
+  Link: </.well-known/api-catalog>; rel="api-catalog"
+  Link: </api/openapi>; rel="service-desc"; type="application/openapi+json"
+  Link: </api/>; rel="service-doc"; type="text/html"
+  Link: </llms.txt>; rel="describedby"; type="text/plain"
+
+/.well-known/api-catalog
+  Content-Type: application/linkset+json
+  Access-Control-Allow-Origin: *
+
+/api/openapi
+  Content-Type: application/openapi+json
+  Access-Control-Allow-Origin: *

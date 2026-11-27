@@ -129,6 +129,24 @@ def stack(province=""):
             f'<ul class="fed-alert-stack-list">{lis}</ul>{note}</details>')
 
 
+_LINES = None
+QUALIFY = GUIDE + "do-i-qualify/"
+LINE_NAMES = {"NL": "Newfoundland and Labrador"}
+
+
+def income_line(province):
+    """(one-person line, four-person line) of after-tax household income for a province, from fact federal-6 (read 2026-11-19),
+    or None when the table has no row for it. Shown on province and city pages so the reader sees the number that decides the
+    $10,000 tier, not just "your province's line". build_federal_qualify.thresholds() asserts the table's shape."""
+    global _LINES
+    if _LINES is None:
+        import build_federal_qualify
+        _LINES = build_federal_qualify.thresholds()
+    name = dict(PROVINCES).get(province)
+    row = _LINES.get(name) or _LINES.get(LINE_NAMES.get(province, ""))
+    return (row[0], row[3]) if row else None
+
+
 def share_row(open_=False):
     """Share buttons. Hidden until a signup on every page except the share page itself; each link carries its own src."""
     u = lambda s: f"{SHARE_URL}?src={s}"
@@ -167,6 +185,16 @@ def stub(sel="", data="", share_open=False, ask="Join the launch alert"):
             f'<p class="fed-alert-note">Only emails about this rebate. No spam, no sales calls. Unsubscribe anytime.</p></div>')
 
 
+def top_line(province):
+    """The $10,000 tier line. With a known province it names the income line (household after-tax income at or below $X for one
+    person, $Y for four) and links the tier tool; otherwise the generic wording."""
+    ln = income_line(province) if province else None
+    if not ln:
+        return "if your after-tax income is at or below your province\'s line"
+    return (f"if your household\'s after-tax income is at or below ${ln[0]:,} (1 person) or ${ln[1]:,} (4 people) in "
+            f"{html.escape(dict(PROVINCES)[province])}. <a href=\"{QUALIFY}\">Check yours</a>")
+
+
 def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=False, more=True, share_open=False, slim=False):
     """The one alert box: a light notice (headline, lead line, the two amounts, how it will work) and a dark sign-up stub.
     province "" shows a province picker; follow=True is the rebate finder version, hidden until a Canadian province is
@@ -194,7 +222,7 @@ def block(lead, province="", city="", follow=False, anchor="", big=False, wrap=F
             '<div class="fed-alert-left"><div class="fed-alert-main">'
             f'<div class="fed-alert-head">{UNIT}<p class="fed-alert-title">{html.escape(HEADLINE).replace("heat pump rebate", "<em>heat pump rebate</em>")}</p></div>'
             f'<p class="fed-alert-body">{html.escape(lead)}</p>'
-            '<dl class="fed-alert-amounts"><div><dt>Up to $10,000</dt><dd>if your after-tax income is at or below your province\'s line</dd></div>'
+            f'<dl class="fed-alert-amounts"><div><dt>Up to $10,000</dt><dd>{top_line(province)}</dd></div>'
             '<div><dt>$2,000</dt><dd>for other eligible homeowners, above the line</dd></div></dl></div>'
             f'{stack(province)}</div>'
             f'{stub(sel, data, share_open)}</div>{how}</section>{post}{E}\n')

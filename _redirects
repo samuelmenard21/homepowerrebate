@@ -1747,6 +1747,9 @@
 /installers/profiles/ma/somerville/airsupp-heating-cooling/ /installers/ma/somerville/heat-pump/ 301
 /installers/profiles/ma/somerville/airsupp-heating-cooling /installers/ma/somerville/heat-pump/ 301
 
+/installers/profiles/bc/squamish/business-name/ /installers/bc/squamish/heat-pump/ 301
+/installers/profiles/bc/squamish/business-name /installers/bc/squamish/heat-pump/ 301
+
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 /installers/profiles/ab/red-deer/express-plumbing-heating-inc/ /installers/ab/red-deer/heat-pump/ 301
 /installers/profiles/ab/red-deer/express-plumbing-heating-inc /installers/ab/red-deer/heat-pump/ 301
@@ -1799,6 +1802,10 @@
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 
 # Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
+/nl-oil /ca/nl/heating-assistance/?utm_source=video&utm_medium=short&utm_campaign=nl-oil 302
+/nl-oil/ /ca/nl/heating-assistance/?utm_source=video&utm_medium=short&utm_campaign=nl-oil 302
+
+# Dynamic rules (splats and :city placeholders) must come after all static rules on Cloudflare Pages.
 /us/ma/:city/appliances/ /us/ma/appliances/ 301
 /us/ma/:city/hrv /us/ma/hrv/ 301
 /us/ma/:city/windows-doors /us/ma/:city/ 301
@@ -1841,5 +1848,3 @@
 /ca/on/:city/ev-charger /ca/on/ev-charger/ 301
 /ca/on/:city/hrv/ /ca/on/hrv/ 301
 /ca/on/:city/hrv /ca/on/hrv/ 301
-/nl-oil /ca/nl/heating-assistance/?utm_source=video&utm_medium=short&utm_campaign=nl-oil 302
-/nl-oil/ /ca/nl/heating-assistance/?utm_source=video&utm_medium=short&utm_campaign=nl-oil 302

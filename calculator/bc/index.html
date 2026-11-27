@@ -676,6 +676,67 @@ table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:15px;}th,
       out.appendChild(links);
     }
     render();
+    if (!opts.embed) webmcp(region, form, fields, answers, function () { return plan; }, function (p) { plan = p; }, render, shown, ready);
+  }
+
+  /* WebMCP (agent tool). Registers one read-only tool so a browser agent can ask this page for a rebate estimate.
+     It fills the visible form (the visitor sees what the agent entered) and answers from the same evaluate() the page uses,
+     so the numbers can never differ from the screen. Closed or waiting programs are never counted. */
+  function webmcp(region, form, fields, answers, getPlan, setPlan, render, shown, ready) {
+    var mc = typeof navigator !== "undefined" && navigator.modelContext;
+    if (!mc || typeof mc.registerTool !== "function") return;
+    var props = {}, required = ["upgrades"];
+    region.questions.forEach(function (q) {
+      if (q.type === "select") {
+        props[q.id] = { type: "string", enum: q.options.map(function (o) { return o.value; }), description: q.label + " Options: " + q.options.map(function (o) { return o.value + " = " + o.label; }).join("; ") };
+      } else {
+        props[q.id] = { type: "string", description: q.label + (q.help ? " " + q.help : "") };
+      }
+      if (!q.optional && !q.for) required.push(q.id);
+    });
+    props.upgrades = { type: "array", minItems: 1, items: { type: "string", enum: region.upgrades.map(function (u) { return u.id; }) },
+      description: "Upgrades planned. " + region.upgrades.map(function (u) { return u.id + " = " + u.label; }).join("; ") };
+    try {
+      mc.registerTool({
+        name: "estimate_rebates_" + region.code,
+        description: "Estimate the most a homeowner in " + region.name + " could get in rebates for the upgrades they pick. Only programs open today are counted. Returns each program with its status, amount, rules, source link and the date we last checked it. These are estimates, not a promise of payment.",
+        inputSchema: { type: "object", properties: props, required: required },
+        annotations: { readOnlyHint: true },
+        execute: function (args) {
+          args = args || {};
+          var upgrades = (args.upgrades || []).filter(function (u) { return region.upgrades.some(function (x) { return x.id === u; }); });
+          region.questions.forEach(function (q) {
+            var el0 = fields[q.id] && fields[q.id].querySelector("select,input");
+            if (!el0) return;
+            var val = args[q.id] == null ? "" : String(args[q.id]);
+            if (q.type === "select" && val && !q.options.some(function (o) { return o.value === val; })) val = "";
+            el0.value = val; answers[q.id] = val;
+          });
+          form.querySelectorAll(".rc-plan input").forEach(function (cb) { cb.checked = upgrades.indexOf(cb.value) >= 0; });
+          setPlan(upgrades);
+          render();
+          var plan = getPlan();
+          var missing = region.questions.filter(function (q) { return !q.optional && shown(q) && !answers[q.id]; }).map(function (q) { return q.id; });
+          if (!plan.length) missing.unshift("upgrades");
+          if (missing.length) return { content: [{ type: "text", text: JSON.stringify({ error: "missing_or_invalid", missing: missing }) }] };
+          var live = {};
+          region.questions.forEach(function (q) { if (shown(q) && answers[q.id]) live[q.id] = answers[q.id]; });
+          var r = evaluate(region, live, plan);
+          var out = {
+            region: region.name, currency: region.currency, upgrades: plan,
+            most_you_could_get: Math.round(r.total),
+            income_level: r.incomeLevel, income_unknown: r.incomeUnknown,
+            programs: r.items.map(function (it) {
+              return { name: it.name, upgrade: it.upgrade, status: it.status, amount: Math.round(it.amount), amount_text: it.label, counted_in_total: it.counted,
+                       rules: it.rules, source_url: it.source_url, last_verified: it.verified_on };
+            }),
+            notes: (r.capNotes || []).concat(region.notes || []),
+            page: location.origin + location.pathname
+          };
+          return { content: [{ type: "text", text: JSON.stringify(out) }] };
+        }
+      });
+    } catch (e) { /* a second page load or an older WebMCP build: ignore */ }
   }
 
   /* Canadian results with a heat pump picked: the federal rebate is not in the total (not open, rules not published), so say so and offer the launch alert. Same /alert route as the alert box on the guides. */

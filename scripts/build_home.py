@@ -257,6 +257,15 @@ var U={{}};D.forEach(function(r){{r.k.forEach(function(k){{U[r.c+"|"+k[0]]=k[2]|
 document.getElementById("hero-find").addEventListener("submit",function(ev){{ev.preventDefault();if(!p.value||!c.value)return;var u=U[p.value+"|"+c.value]||("/get-quotes/?province="+encodeURIComponent(p.value)+"&city="+encodeURIComponent(c.value));
 if(window.gtag)gtag("event","home_city_go",{{province:p.value}});location.href=u}});
 p.addEventListener("change",function(){{}});}})();</script>
+<script>/* WebMCP: lets a browser agent find the right rebate calculator and city page. Reads the same list as the picker above. */
+(function(){{var mc=navigator.modelContext,D=window.HPR_CITIES;if(!mc||!mc.registerTool||!D)return;
+try{{mc.registerTool({{name:"find_rebate_pages",description:"Find HomePowerRebate's rebate guide, rebate calculator and city pages for a province or state. Call it with no region to list every region we cover. Then use the calculator page (it has its own estimate tool) to estimate what a home could get.",
+inputSchema:{{type:"object",properties:{{region:{{type:"string",enum:D.map(function(r){{return r.c}}),description:"Region code. "+D.map(function(r){{return r.c+" = "+r.n}}).join("; ")}},city:{{type:"string",description:"Optional city slug inside the region, for example kelowna"}}}}}},
+annotations:{{readOnlyHint:true}},
+execute:function(a){{a=a||{{}};var o=location.origin,r=D.filter(function(x){{return x.c===a.region}})[0],out;
+if(!r)out={{regions:D.map(function(x){{return {{code:x.c,name:x.n,country:x.g==="ca"?"Canada":"United States",cities:x.k.length}}}})}};
+else{{var k=r.k.filter(function(c){{return c[0]===a.city}})[0];out={{region:r.n,rebate_guide:o+"/"+r.g+"/"+r.c+"/",calculator:o+"/calculator/"+r.c+"/",rebate_finder:o+"/get-quotes/",city:k?{{name:k[1],page:o+k[2]}}:undefined,cities:r.k.map(function(c){{return {{slug:c[0],name:c[1],page:o+c[2]}}}})}}}}
+return {{content:[{{type:"text",text:JSON.stringify(out)}}]}}}}}})}}catch(e){{}}}})();</script>
 <!-- HOME-HERO-END -->'''
 
 

@@ -1575,6 +1575,35 @@ body{font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,sans-serif;color
 """
 
 
+_REGION_PATH = {r.get("installers_dir", r["code"]): r["path"] for r in regions.REGIONS}
+_LINK_DIR = {"heat-pump": "heat-pump", "solar": "solar", "battery": "battery", "insulation": "insulation"}
+
+
+def _page_indexable(rel):
+    f = ROOT / rel / "index.html"
+    return f.exists() and not re.search(r'name="robots"[^>]*noindex', f.read_text(encoding="utf-8", errors="ignore")[:8000])
+
+
+def badge_target(m):
+    """Where the installer's badge link goes. The ranking pages are noindex (data/noindex-sections.json), so a link to them
+    passes nothing useful. Link the installer's city page for the service (the rebate page, which lists its city ranking),
+    else the city page, else the region page; always one that is indexable. Chosen 2026-11-26."""
+    base = _REGION_PATH.get(m["region"])
+    if not base:
+        return m["url"]
+    city = m["url"].strip("/").split("/")[2]
+    svc = _LINK_DIR.get(m["service"])
+    # the city page sits at <region>/<city>/, or under a metro or utility folder (us/ca/<metro>/<city>/, us/ny/<utility>/<city>/)
+    homes = sorted((f.parent.relative_to(ROOT).as_posix() for f in (ROOT / base).glob(f"*/{city}/index.html")),
+                   key=len)
+    homes = ([f"{base}/{city}"] if (ROOT / base / city / "index.html").exists() else []) + homes
+    for home in homes:
+        for rel in ([f"{home}/{svc}"] if svc else []) + [home]:
+            if _page_indexable(rel):
+                return "/" + rel + "/"
+    return "/" + base + "/" if _page_indexable(base) else m["url"]
+
+
 def badge_page(index):
     path = "/installers/badge/"
     order = {sv: i for i, sv in enumerate(("heat-pump", "solar", "battery", "insulation", "energy-advisor"))}
@@ -1586,7 +1615,7 @@ def badge_page(index):
         reg = tree.setdefault(m["region"], {})
         city = reg.setdefault(slug, {"n": m["city"], "s": []})
         city["s"].append({"k": m["service"], "n": SERVICES[m["service"]]["name"], "l": SERVICES[m["service"]]["lower"], "p": SERVICES[m["service"]]["pro_l"],
-                          "u": m["url"], "t": m["top"]})
+                          "u": m["url"], "h": badge_target(m), "t": m["top"]})
     regions_out = []
     for code in sorted(tree, key=lambda c: (REGIONS[c][0] != "ca", REGIONS[c][3])):
         cities = []
@@ -1667,8 +1696,8 @@ function step(id,on){{$(id).classList.toggle('off',!on)}}
 function sync(){{var q=new URLSearchParams();if(reg)q.set('r',reg.k);if(city)q.set('c',city.k);if(svc)q.set('s',svc.k);
 try{{history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:''))}}catch(e){{}}}}
 function render(){{
-  if(svc){{var url=BASE+svc.u,t='Top-rated '+svc.p+' in '+city.n;
-    var c='<a href="'+url+'" title="'+t+'"><img src="'+url+'badge.svg" width="320" height="128" alt="'+t+' on HomePowerRebate"></a>';
+  if(svc){{var url=BASE+svc.u,link=BASE+(svc.h||svc.u),t='Top-rated '+svc.p+' in '+city.n;
+    var c='<a href="'+link+'" title="'+t+'"><img src="'+url+'badge.svg" width="320" height="128" alt="'+t+' on HomePowerRebate"></a>';
     code.value=c;code.disabled=false;copy.disabled=false;img.src=svc.u+'badge.svg';img.alt=t;stage.classList.add('ready');
     who.innerHTML='<b>On this ranking:</b> '+esc(svc.t.join(', '))+(svc.t.length>=3?' and others':'')+'. <a href="'+svc.u+'" target="_blank" rel="noopener">See the ranking page</a>';who.hidden=false;
   }}else{{code.value='Pick your city and service to get your code.';code.disabled=true;copy.disabled=true;img.src=SAMPLE;img.alt='Badge preview';stage.classList.remove('ready');who.hidden=true;}}

@@ -71,6 +71,31 @@ Generic primary category; keywords added to the name; wrong or missing holiday h
 5. Real photos on a schedule, posts, automatic review requests, replies within 48 hours
 6. FAQ answers on the website, profile matches website, directory citations match, monthly performance and grid check
 
+## Evaluating an installer's profile (to support them)
+Use the Whitespark top 10 as the audit table. For each installer, mark every factor Set (a field they control), Earned (reviews) or Fixed (distance, address in the searched city), then say which gaps they can close this week. Eight of ten are in their hands; the two they cannot move are distance and being based in the city.
+
+| # | Factor | Type | How to check |
+|---|---|---|---|
+| 1 | Primary category | Set | Is it the trade ("Heat pump contractor", "Solar energy contractor") or generic ("Contractor", "HVAC contractor" for a heat pump-only shop)? |
+| 3 | Keywords in name | Set | Real legal name only. Flag names stuffed with city or service as a suspension risk, never recommend adding one. |
+| 5 | Open at search time | Set | Hours listed, holiday hours set, emergency or after-hours line stated truthfully. |
+| 6 | Rating 4 to 5 | Earned | Rating on the Google listing. |
+| 7 | Address showing | Set | Shown, or a service area set (up to 20, not whole provinces or states). |
+| 8 | Additional categories | Set | Only real services (heat pump, solar, battery, insulation). |
+| 9 | Reviews with text | Earned | Count, and how many in the last 90 days. |
+| 10 | Pin correct | Set | Check on Maps. |
+| 2, 4 | Distance, address in city | Fixed | Note only; cannot be fixed. |
+
+Then add the non-score checks: every service listed with a description, real photos, owner replies on reviews, website link to the right page, phone local, name, address and phone identical on their website and directories.
+
+Output a short note per installer: three fixes ranked by effort, in Grade 6 words, each tied to a field above. No score out of 100 and no guessing when a field could not be read; say it is unknown.
+
+Rules for HPR:
+- Support only. The audit never changes a ranking: rankings stay ordered by Google reviews, and money or help given never affects them.
+- Read ratings, review counts and categories through the Places data we already hold under its attribution rules; do not store photos or reviews, and do not copy review text into notes.
+- Installer outreach is paused (CLAUDE.md, 2026-11-08). Build and test the audit now; send nothing until it resumes. Never say "free" or mention price to installers.
+- Heat pump rebate registration (BC registered contractor, NYS Clean Heat) is a separate check already on ranking cards; it is not a GBP factor.
+
 ## HomePowerRebate guardrails
 - Google Places ratings and reviews may be shown with attribution but must not feed LocalBusiness, AggregateRating or Review markup, and Places photos must not be stored (see CLAUDE.md, installer pages and photos). This skill is advice for businesses, not a reason to change that.
 - Installer outreach is paused; do not send profile advice to installers until it resumes. Never mention price or "free" in installer copy.

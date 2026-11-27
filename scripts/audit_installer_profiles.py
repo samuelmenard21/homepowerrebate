@@ -36,7 +36,7 @@ SOCIAL = ("wa.me", "whatsapp.", "facebook.", "fb.com", "instagram.", "linktr.ee"
 MAILBOX = re.compile(r"\b(p\.?\s?o\.?\s?box|po box|mailbox|ups store|pmb\s?\d|postal box|virtual office)\b", re.I)
 PHONE_IN_NAME = re.compile(r"\(?\d{3}\)?[-. ]\d{3}[-. ]\d{4}")
 URL_IN_NAME = re.compile(r"(www\.|https?://|\.com\b|\.ca\b|\.net\b)", re.I)
-BAD_NAME_BITS = re.compile(r"\s[|:]\s|\s-\s.*\b(near me|best|24/?7|emergency|#1)\b|\bnear me\b|\bbest\b", re.I)
+BAD_NAME_BITS = re.compile(r"\s[|:]\s|\s-\s.*\b(near me|24/?7|emergency|#1)\b|\bnear me\b|\bbest\s+\w+\s+(in|near)\b", re.I)
 
 # effort: 1 = ten minutes, 2 = an hour, 3 = a few weeks
 FIXES = {
@@ -122,7 +122,8 @@ def audit(group, top3):
     flags = []
     if PHONE_IN_NAME.search(name) or URL_IN_NAME.search(name):
         flags.append("name-url-phone")
-    elif BAD_NAME_BITS.search(name) or len(name) > 70:
+    elif (BAD_NAME_BITS.search(name) or len(name) > 70
+          or re.search(r"[-,(]\s*" + re.escape(r["City"]) + r"\)?\s*$", name, re.I)):
         flags.append("name-stuffed")
     letters = re.sub(r"[^A-Za-z]", "", name)
     if len(letters) > 4 and letters.isupper():
